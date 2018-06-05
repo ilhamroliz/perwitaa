@@ -1,0 +1,240 @@
+/* ======= text info Section ======= */
+.text-info-section {
+  padding-top: 60px;
+}
+.text-info-section .container{
+  background: #333;
+  padding:10px 0px 10px 0px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.about-content{
+  padding: 10px 40px 0px 40px ;
+}
+
+.image-about{
+  background: #333;
+}
+
+.testimonials-item{
+  background: #303346;
+}
+
+.testimonials-text{
+  background: #303346;
+  min-height: 327px;
+  padding: 130px 40px;
+  color: white;
+}
+
+.testimonials-text .title{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ======= image hover  ======= */
+.caption-style-1{
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  
+}
+
+.caption-style-1 li{
+  float: left;
+  padding: 0px;
+  position: relative;
+  overflow: hidden;
+}
+
+.caption-style-1 li:hover .caption{
+  opacity: 1;
+
+}
+
+.caption-style-1 img{
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  z-index: 4;
+}
+
+.caption-style-1 .caption{
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  -webkit-transition:all 0.45s ease-in-out;
+  -moz-transition:all 0.45s ease-in-out;
+  -o-transition:all 0.45s ease-in-out;
+  -ms-transition:all 0.45s ease-in-out;
+  transition:all 0.45s ease-in-out;
+
+}
+.caption-style-1 .blur{
+  background-color: rgba(0,0,0,0.65);
+  height: 327px;
+  width: 350px;
+  z-index: 5;
+  position: absolute;
+}
+
+.caption-style-1 .caption-text h1{
+  text-transform: uppercase;
+  font-size: 24px;
+}
+.caption-style-1 .caption-text{
+  z-index: 10;
+  color: #fff;
+  position: absolute;
+  width: 350px;
+  height: 327px;
+  text-align: center;
+  top:100px;
+}
+
+.caption-style-2{
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  
+}
+
+.caption-style-2 li{
+  float: left;
+  padding: 0px;
+  position: relative;
+  overflow: hidden;
+}
+
+.caption-style-2 li:hover .caption{
+  opacity: 1;
+  transform: translateY(-100px);
+  -webkit-transform:translateY(-100px);
+  -moz-transform:translateY(-100px);
+  -ms-transform:translateY(-100px);
+  -o-transform:translateY(-100px);
+
+}
+
+.caption-style-2 img{
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  z-index: 4;
+}
+
+.caption-style-2 .caption{
+  cursor: normal;
+  position: absolute;
+  opacity: 0;
+  top:220px;
+  -webkit-transition:all 0.15s ease-in-out;
+  -moz-transition:all 0.15s ease-in-out;
+  -o-transition:all 0.15s ease-in-out;
+  -ms-transition:all 0.15s ease-in-out;
+  transition:all 0.15s ease-in-out;
+
+}
+.caption-style-2 .blur{
+  background-color: rgba(0,0,0,0.7);
+  height: 327px;
+  width: 193px;
+  z-index: 5;
+  position: absolute;
+}
+
+.caption-style-2 .caption-text h1{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+}
+.caption-style-2 .caption-text{
+  z-index: 10;
+  color: #fff;
+  position: absolute;
+  width: 193px;
+  height: 327px;
+  font-size: 12px;
+  text-align: center;
+  top:0px;
+}
+
+/* ======= produk section  ======= */
+.produk-nav{
+  font-weight: 500;
+  font-size: 18px;
+}
+.produk-nav .link{
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
+.produk-nav .link.activeLink{
+  border-bottom: 2px solid #303346;
+  color: #b61c22;
+  font-weight: 600;
+}
+
+.produk-content{
+  background: #fff;
+  padding-left: 60px;
+}
+
+.item-wrapper{
+  margin-right: 40px;
+  margin-top:35px;
+}
+
+.item-wrapper .item-inner{
+  position: relative;
+  padding: 10px;
+  border: 0px solid red;
+}
+
+.item-wrapper .item-inner .title{
+  position: absolute;
+  color:#fff;
+  font-size: 16px;
+  width:100%;
+  text-shadow: 2px 2px 2px black;
+  padding: 10px 0px 10px 0px;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.6); 
+}
+.link-produk{
+  background: white;
+  padding: 10px;
+}
+.link-produk .custom{
+  font-weight: bold;
+  color: #303346;
+}
+.link-produk .addTo{
+  font-weight: bold;
+}
+.link-produk a{
+  text-decoration: none;
+}
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+  .testimonials-text{
+    background: #303346;
+    min-height: 100px;
+    padding: 40px 20px;
+    border: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .caption-style-1 .caption-text{
+    width: 295px;
+  }
+}
+
+@media (max-width: 450px) {
+  .caption-style-1 .caption-text{
+    width: 295px;
+  }
+}

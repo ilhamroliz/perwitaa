@@ -1,0 +1,81 @@
+
+.footer-wrap{
+	background: ;
+	padding: 0px;
+}
+.footer-wrap .left-side{
+	background: ;
+	padding: 0px;
+}
+.footer-wrap .left-side .footer-nav{
+	background: ;
+	padding: 0px;
+	text-align: center;
+	border-bottom: 2px dotted #555867;
+}
+.footer-wrap .left-side .footer-nav .nav{
+	list-style: none;
+	padding: 20px 0px 20px 0px;
+}
+.footer-wrap .left-side .footer-nav .nav li{
+	float: left;
+	margin-left: 80px;
+}
+.footer-wrap .left-side .footer-nav .nav li a{
+	padding: 0px;
+	color: #fff;
+}
+.footer-wrap .left-side .footer-nav .nav li a:hover{
+	background: none;
+}
+
+.footer-wrap .left-side .footer-bank{
+	background: ;
+	padding: 0px;
+	text-align: center;
+}
+.footer-wrap .left-side .footer-bank .img-wrap{
+	padding: 0px;
+	padding: 20px;
+	text-align: center;
+	background: ;
+}
+.footer-wrap .left-side .footer-bank .img-wrap img{
+	margin-bottom: 5px;
+}
+.footer-wrap .left-side .footer-bank .img-wrap small{
+	font-weight: 600;
+	margin-top: 50px;
+	font-size: 12px;
+}
+.footer-wrap .right-side{
+	background: ;
+	padding: 10px 0px 10px 0px;
+}
+.footer-wrap .right-side .logo-wrap{
+	padding: 0px 0px 0px 0px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+.footer-wrap .right-side .text{
+	font-weight: 600;
+	text-align: center;
+	font-size: 13px;
+	margin-bottom: 20px;
+}
+.footer-wrap .right-side .medsos{
+	padding: 0px 20px 0px 20px;
+}
+.footer-wrap .right-side .medsos .holder{
+	padding: 0px;
+	background: white;
+	padding: 5px 15px 5px 15px;
+	font-size: 28px;
+	color: #303346;
+}
+.footer-wrap .right-side .medsos i{
+	margin-left: 30px;
+}
+.footer-wrap .right-side .medsos a{
+	color: #303346;
+}

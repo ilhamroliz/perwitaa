@@ -1,0 +1,183 @@
+
+/* sentuhan */
+.sentuhan{
+	padding: 0px;
+	background: ;
+}
+
+.sentuhan .logo-wrap{
+	padding: 20px 20px 20px 40px;
+	background: ;
+	border-right: 4px dotted #303346;
+}
+
+.sentuhan .text{
+	font-weight: bold;
+	columns: #303346;
+	padding: 10px 0px 10px 20px;
+}
+
+
+/* section-1 */
+.content-wrap{
+	background: ;
+	padding: 10px 25px 10px 25px;
+	margin-top: 20px;
+}
+
+.content-inner{
+	padding: 0px;
+	background: ;
+}
+
+.content-inner .left-side{
+	padding: 0px;
+	background: #eaebed;
+	border-top:6px solid #303346;
+}
+
+.content-inner .left-side .title{
+	text-align: center;
+	font-style: italic;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+}
+.content-inner .left-side .content{
+	padding-left: 10px;
+}
+.content-inner .left-side .content .image{
+	height: 100px; /* width 70px */
+	padding: 0px;
+	background: ;
+}
+.content-inner .left-side .content .detail{
+	padding-left: 10px;
+	background: ;
+	font-size: 12px;
+	font-weight: 600;
+}
+.content-inner .left-side .content .detail td.bold{
+	font-weight: bold;
+}
+
+.content-inner .left-side .content .qty{
+	padding: 0px;
+	font-weight: 600;
+	font-size: 14px;
+}
+.content-inner .left-side .content .qty .head{
+	font-weight: bold;
+	padding-top: 13px;
+}
+.content-inner .left-side .content .qty .head small{
+	font-weight: bold;
+	font-size: 18px;
+}
+.content-inner .left-side .trash{
+	padding: 20px 0px 30px 30px;
+	font-weight: bold;
+	font-size: 30px; 
+}
+
+.content-inner .nota-wrap{
+	padding: 0px;
+}
+.content-inner .nota-wrap .content{
+	padding-left: 20px;
+	background: ;
+}
+.content-inner .nota-wrap .content .normal{
+	font-size: 14px;
+	padding-left: 0px;
+	font-weight: 600;
+}
+.content-inner .nota-wrap .content .prefix{
+	font-size: 14px;
+	padding-left: 0px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.content-inner .right-side{
+	padding: 0px;
+	border-top:6px solid #91939d;
+	background: #f9fafb;
+}
+.content-inner .right-side .content{
+	margin-top:10px;
+}
+.content-inner .right-side .title{
+	text-align: center;
+	font-style: italic;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+	padding-bottom: 
+}
+.content-inner .right-side .content .label-form{
+	font-size: 13px;
+	padding: 10px 0px 5px 0px;
+	font-weight: bold;
+}
+.content-inner .right-side .content .myform{
+	height: 30px;
+	background: #eaebed;
+	color: #303346;
+	border: 0px;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.img-content{
+	background:;
+}
+.img-content .text{
+	text-align: center;
+	color:#777;
+	font-size: 12px;
+	padding: 5px;
+}
+.img-content img{
+	border: 2px solid #fff;
+}
+.img-content img:hover,
+.img-content img.active{
+	cursor: pointer;
+	border: 2px solid #303346;
+}
+
+/* berhasil style */
+.berhasil{
+	border-top: 3px solid #eee;
+}
+
+.berhasil .text-top{
+	text-align: center;
+}
+
+.berhasil .text-top small{
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.berhasil .img-wrap{
+	background: ;
+	padding: 0px;
+	padding-bottom: 30px;
+	border-top: 2px dotted #ccc;
+	border-bottom: 2px dotted #ccc;
+	margin:10px 0px 20px 0px;
+}
+
+.berhasil .img-item{
+	background:;
+	padding: 20px;
+}
+
+.berhasil .img-wrap .rek{
+	text-align: center;
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 30px;
+}

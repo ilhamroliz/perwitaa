@@ -1,0 +1,4 @@
+/*tfoot input { width: 100%; padding: 3px; box-sizing: border-box; } tfoot { display: table-header-group;}.table-user-information > tbody > tr {    border-top: 1px solid rgb(221, 221, 221);}.table-user-information > tbody > tr:first-child {    border-top: 0;}.table-user-information > tbody > tr > td {    border-top: 0;}.toppad{margin-top:20px;}.panel-primary > .panel-heading{    background-color:#00818e;}.navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus{    background-color:#3ac8f8;}.navbar-fixed-top, .navbar-static-top{    background-color:#3ac8f8;    }.nav.navbar-right > li > a,.text-muted{    color: white;} thead > tr > th{    background : #3ac8f8 !important;    color: white;} tfoot> tr > th{    background : #3ac8f8 !important;    }td { white-space: nowrap;}*/
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background: none;
+}

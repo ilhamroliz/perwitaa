@@ -1,0 +1,327 @@
+
+.spacing-top{
+  margin-top:3px;
+}
+.wrapper-content{
+  padding: 10px 50px 0px 50px;
+}
+
+/*------ left content ------*/
+
+.left-content{
+  border: 0px solid red;
+  padding:0px;
+}
+
+.left-content .content-title{
+  border: 0px solid green;
+  padding: 0px;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.left-content .content-main{
+  border: 0px solid yellow;
+  padding:10px 0px 0px 0px;
+} 
+
+.content-main .left-canvas{
+  padding: 0px;
+}
+
+.content-main .left-canvas .control{
+  min-height: 215px;
+  border-right:1px dotted #303346;
+  padding-top:18px;
+}
+.content-main .left-canvas .control:hover{
+  border-right:3px dotted #303346;
+  cursor:pointer;
+}
+.content-main .left-canvas .control.active{
+  border-right:3px dotted #303346;
+}
+
+.content-main .canvas-content{
+  text-align: center;
+}
+
+.left-content .content-footer{
+  padding: 10px 20px 10px 20px;
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ------- right content --------*/
+
+.right-content{
+  padding: 0px;
+}
+
+.right-content .content-nav{
+  background: #333;
+  padding: 0px;
+}
+
+.right-content .content-main{
+  padding: 0px;
+  background: #fff;
+  margin-bottom: 10px;
+  min-height:455px;
+}
+
+.right-content .content-main .chest-content{
+  padding: 0px;
+  text-align: center;
+}
+
+.chest-content .title{
+  font-style: italic;
+  font-weight: 600;
+  padding: 5px 0px 5px 0px;
+}
+
+.chest-content .item{
+  padding: 0px;
+}
+
+.chest-content .item-list{
+  padding: 0px;
+  background: ;
+  border: 2px solid #fff;
+}
+
+.item-list-content{
+  padding: 0px;
+  background: green;
+  border: 2px solid #fff;
+  height: 97px;
+  background: url('../../images/pictures/tool-clothes.png');
+   background-size: 90px;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+
+.item-list-content .desain{
+  width: 25%;
+  height: 55%;
+  position: absolute;
+  left:38%;
+  top: 20%;
+}
+
+.item-list-content .desain-emblem{
+  width: 15%;
+  height: 7%;
+  position: absolute;
+  right:35%;
+  top: 15%;
+}
+
+.item-list-name{
+  padding: 0px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.btn-wrapper{
+  padding: 0px;
+  margin-top:;
+}
+
+/* carousel */
+ul.thumbnails { 
+      margin-bottom: 0px;
+    }
+.item-object li{
+  border: 4px solid #fff;
+}
+
+.item-object li:hover{
+  cursor: pointer;
+}
+
+.item-object li:hover,
+.item-object li:active,
+.item-object li.active{
+  border: 4px solid #888;
+}
+
+/* Thumbnail Box */
+.caption h4 {
+  color: #444;
+}
+
+.caption p {  
+  color: #999;
+}
+
+/* Carousel Control */
+.control-box {
+  text-align: right;
+  padding-right: 20px;
+  width: 100%;
+}
+.carousel-control{
+  display: inline-block;
+  font-size: 34px;
+  font-weight: 200;
+  opacity: 0.5;
+  padding: 4px 10px 0px;
+  position: static;
+  height: 30px;
+  width: 15px;
+}
+
+/* Mobile Only */
+@media (max-width: 767px) {
+  .page-header, .control-box {
+    text-align: center;
+  } 
+}
+@media (max-width: 479px) {
+  .caption {
+    word-break: break-all;
+  }
+}
+
+
+li { list-style-type:none;}
+
+::selection { background: #ff5e99; color: #FFFFFF; text-shadow: 0; }
+::-moz-selection { background: #ff5e99; color: #FFFFFF; }
+
+
+/* custom content */
+.custom-content{
+  padding: 0px;
+}
+
+.custom-content .menu-wrap{
+  background:;
+  text-align: center;
+  padding: 20px 0px 20px 0px;
+}
+
+.custom-content .text-tools{
+  padding: 0px;
+}
+
+.custom-content .text-tools .tools{
+  list-style: none;
+  padding: 10px 37px 10px 37px;
+}
+.custom-content .text-tools .tools li.parrent{
+  float: left;
+  text-align: center;
+  font-weight: bold;
+}
+.custom-content .text-tools .tools li .sm{
+  padding: 0px;
+  margin-right: 15px;
+  width:35px;
+  height: 33px;
+  font-size: 18px;
+  border: 3px solid #303346;
+}
+.custom-content .text-tools .tools li .sm:hover,
+.custom-content .text-tools .tools li .sm.active{
+  background: #303346;
+  color: #fff;
+  cursor: pointer;
+}
+
+.custom-content .text-tools .tools li .pd{
+  padding: 4px 20px 4px 20px;
+  margin-right: 15px;
+  height: 33px;
+  text-align: center;
+  font-size: 14px;
+  border: 3px solid #303346;
+  font-weight: bold;
+}
+.custom-content .text-tools .tools li .pd:hover{
+  background: #303346;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete{
+  background: #f4f5f7;
+  padding: 5px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 22px;
+  color: #b61c24;
+}
+.delete:hover{
+  cursor: pointer;
+}
+
+/* ukuran dan warna */
+.item-holder{
+  padding: 15px 5px 5px 11px;
+  margin-left: 20px;
+  text-align: center;
+  border-bottom:2px solid #fff;
+}
+
+.item-holder:hover{
+  cursor: pointer;
+}
+
+.item-holder:hover,
+.item-holder.active{
+  border-bottom:2px dotted #303346;
+}
+
+.item-holder .item{
+  height:30px;
+  width: 30px;
+  border-radius: 0%;
+}
+
+.item-size-holder{
+  padding: 0px 20px 0px 15px;
+  margin-left: 0px;
+  background: ;
+  border-bottom:2px solid #fff;
+}
+
+.item-size-holder .size{
+  border:2px solid #303346;
+  background: ;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.item-size-holder .size:hover,
+.item-size-holder .size.active{
+  background: #303346;
+  cursor: pointer;
+  color: #fff;
+}
+
+.footer-content{
+  font-weight: bold;
+  font-size: 14px;
+  margin-top:25px;
+}
+.footer-content a{
+  text-decoration: none;
+}
+
+.gambarList{
+  background: ; 
+  padding: 0px;
+  border-bottom: 2px solid #fff;
+  margin-top:15px;
+}
+
+.gambarList:hover{
+  border-bottom: 2px solid #303346;
+  cursor: pointer;
+}
