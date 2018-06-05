@@ -1,0 +1,7 @@
+{
+    "require": {
+        "laravelcollective/html": "^5.2.0",
+        "barryvdh/laravel-dompdf": "^0.7.0",
+		
+    }
+}
