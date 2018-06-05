@@ -117,6 +117,7 @@ class mitraPekerjaController extends Controller
             })
             ->select('m_name', 'md_name', 'mc_contractid', 'mc_no', 'mc_need', 'mc_fulfilled')
             ->where('mc_contractid', '=', $mc_contractid)
+            ->where('mc_no', '=', $no_kontrak)
             ->where('md_id', DB::raw('mc_divisi'))
             ->get();
 
@@ -169,7 +170,7 @@ dd($request);
                         'mp_mitra' => $info[0]->mc_mitra,
                         'mp_divisi' => $info[0]->mc_divisi,
                         'mp_mitra_nik' => $nik_mitra[$index],
-                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
+                        'mp_selection_date' => date('Y-m-d', strtotime($tgl_seleksi)),
                         'mp_workin_date' => date('Y-m-d', strtotime($tgl_kerja)),
                         'mp_contract' => $id_kontrak,
                         'mp_status' => 'Aktif'

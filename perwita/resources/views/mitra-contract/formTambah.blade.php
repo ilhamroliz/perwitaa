@@ -85,7 +85,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">
+                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">                                    
                                     <option value="" selected="true" readonly="true" disabled="">--Pilih Mitra--</option>
                                     @foreach($mitra as $data)
                                     <option value="{{$data->m_id}}">{{$data->m_name}}</option>

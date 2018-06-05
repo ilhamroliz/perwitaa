@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Data Permintaan</h5>
-        <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>  
+        <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -40,7 +40,7 @@
                 <div class="col-md-12">
 
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                 </div>
                 <center>
                     <div class="spiner-example">
@@ -54,26 +54,24 @@
                         <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Mitra</span>
                     </div>
                 </center>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                  <table id="mitra" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
-                        <tr>   
-                            <th>No</th>            
-                            <th>No Kotrak</th>            
-                            <th>Tanggal Kontrak</th>            
-                            <th>Kontrak Selesai</th>            
-                            <th>Nama Perusahaan</th>            
-                            <th>Nama Mitra</th>  
-                            <th>Nama divisi</th>                                           
-                            <th>Maksimal Pekerja</th>            
-                            <th>Jumlah Pekerja</th>            
-                            <th style="width: 8%;">Aksi</th>            
+                        <tr>
+                            <th>No</th>
+                            <th>No Kotrak</th>
+                            <th>Jabatan</th>
+                            <th>Nama Mitra</th>
+                            <th>Nama divisi</th>
+                            <th>Permintaan Pekerja</th>
+                            <th>Terpenuhi</th>
+                            <th style="width: 8%;">Aksi</th>
                         </tr>
-                    </thead>     
-                    <tbody>                       
+                    </thead>
+                    <tbody>
                     </tbody>
                 </table>
-            </div>  
+            </div>
         </div>
 
     </div>
@@ -87,7 +85,7 @@
     function tambah(){
         window.location = baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/tambah';
     }
-    function hapus(mitra,id_detail){    
+    function hapus(mitra,id_detail){
         swal({
           title: "Konfirmasi",
           text: "Apakah anda yakin ingin menghapus data kontrak mitra?",
@@ -164,23 +162,21 @@ setTimeout(function () {
     table = $("#mitra").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}',  
+        ajax: '{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}',
         dataType: 'json',
         columns: [
 
         {data: 'number', name: 'number'},
         {data: 'mc_no', name: 'mc_no'},
-        {data: 'mc_date', name: 'mc_date'},
-        {data: 'mc_expired', name: 'mc_expired'},
-        {data: 'c_name', name: 'c_name'},
+        {data: 'jp_name', name: 'jp_name'},
         {data: 'm_name', name: 'm_name'},
         {data: 'md_name', name: 'md_name'},
 
         {data: 'mc_need', name: 'mc_need'},
-        {data: 'mc_fulfilled', name: 'mc_fulfilled'},            
+        {data: 'mc_fulfilled', name: 'mc_fulfilled'},
         {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        responsive: true,        
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
             //"scrollY": '50vh',

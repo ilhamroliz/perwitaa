@@ -14,10 +14,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 
 </style>
@@ -38,11 +38,11 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
-                    
+
                     <form id="form-mitra-contract" >
                         <input value="{{$mitra_contract->mc_mitra}}" type="hidden" id="mitra" name="mitra">
                         <input value="{{$mitra_contract->mc_contractid}}" type="hidden" id="id_detail" name="id_detail">
@@ -75,7 +75,7 @@
                             <label for="perusahaan" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="perusahaan" id="perusahaan" required="">
-                                    
+
                                     @foreach($comp as $data)
                                     <option @if($mitra_contract->mc_comp==$data->c_id) selected @endif value="{{$data->c_id}}">{{$data->c_name}}</option>
                                     @endforeach
@@ -89,7 +89,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">                                    
+                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">
                                     @foreach($mitra as $data)
                                     <option @if($mitra_contract->mc_mitra==$data->m_id) selected @endif  value="{{$data->m_id}}">{{$data->m_name}}</option>
                                     @endforeach
@@ -102,8 +102,8 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Divisi</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="divisi" id="divisi" required="">   
-                                    
+                                <select class="form-control" name="divisi" id="divisi" required="">
+
                                     @foreach($d_mitra_divisi as $d)
                                     <option @if($mitra_contract->mc_divisi==$d->md_id) selected @endif value="{{$d->md_id}}">{{$d->md_name}}</option>
                                     @endforeach
@@ -113,11 +113,11 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                        <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Jenis Jabatan</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="jabatan" id="jabatan" required="">   
+                                <select class="form-control" name="jabatan" id="jabatan" required="">
                                     <option value="" selected="true" disabled="">--Pilih Jabatan--</option>
                                     @foreach($jabatan as $jab)
                                     <option @if($mitra_contract->mc_jenis_tk == $jab->jp_id) selected @endif value="{{$jab->jp_id}}">{{$jab->jp_name}}</option>
@@ -138,7 +138,7 @@
                             </div>
                             <label for="totalPekerja" class="col-sm-3 col-form-label" style="width:18%">Total Pekerja Terpenuhi</label>
                             <div class="col-sm-3">
-                                <input value="{{$mitra_contract->mc_fulfilled}}" type="number" class="form-control" name="totalPekerja" readonly="" id="totalPekerja"  required="">                                
+                                <input value="{{$mitra_contract->mc_fulfilled}}" type="number" class="form-control" name="totalPekerja" readonly="" id="totalPekerja"  required="">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -162,19 +162,19 @@
                         <div class="hr-line-dashed"></div>
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
-                                        <button class="btn btn-danger btn-flat" type="button">Kembali</button>
+                                        <a href="{{url('manajemen-kontrak-mitra/data-kontrak-mitra')}}" class="btn btn-danger btn-flat" type="button">Kembali</a>
                                         <button class="ladda-button ladda-button-demo btn btn-success btn-flat simpan" type="button" onclick="perbarui()">
                                             Perbarui
                                         </button>
                                     </div>
                                 </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-</div>      
+</div>
 
 
 
@@ -198,7 +198,7 @@
     $('#perusahaan').chosen({search_contains:true}) ;
     $('#divisi').select2();
     $('#jabatan').select2();
-    
+
     function perbarui() {
         var mitra=$('#mitra').val();
         var id_detail=$('#id_detail').val();
@@ -207,24 +207,24 @@
          if(validateForm()){
         $.ajax({
             url: baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra/perbarui/'+mitra+'/'+id_detail,
-            // type        : 'post',            
+            // type        : 'post',
             type: 'get',
             timeout: 10000,
             data: $('#form-mitra-contract').serialize(),
-            dataType: 'json',                    
+            dataType: 'json',
             success: function (response) {
                 if (response.status == 'berhasil') {
                     window.location = baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra';
                 } else if(response.status=='gagal'){
                     info.css('display','');
                     $.each(response.data, function(index, error) {
-                           info.find('ul').append('<li>' + error + '</li>');                      
-                    });                    
-                    buttonLadda.ladda('stop');                     
+                           info.find('ul').append('<li>' + error + '</li>');
+                    });
+                    buttonLadda.ladda('stop');
                 }
-                
-                
-                
+
+
+
             },
             error: function (xhr, status) {
                 if (status == 'timeout') {
@@ -244,13 +244,13 @@
             }
         });
          }else{
-              buttonLadda.ladda('stop');              
+              buttonLadda.ladda('stop');
          }
     }
-    
+
         function validateForm() {
         $('.reset').css('display', 'none');
-        
+
         var tglKontrak = document.getElementById('tglKontrak');
         var tglBatas = document.getElementById('tglBatas');
         var kontrak = document.getElementById('kontrak');

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\d_jabatan;
+
 use App\d_comp;
 
 use App\d_mitra;
@@ -36,35 +38,26 @@ class mitraContractController extends Controller
         DB::statement(DB::raw('set @rownum=0'));
         $mc = DB::table('d_mitra_contract')
             ->join('d_mitra', 'd_mitra.m_id', '=', 'd_mitra_contract.mc_mitra')
-            ->join('d_comp', 'd_comp.c_id', '=', 'd_mitra_contract.mc_comp')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'd_mitra_contract.mc_jabatan')
             ->join('d_mitra_divisi', function ($q){
                 $q->on('d_mitra_contract.mc_divisi', '=', 'd_mitra_divisi.md_id')
                     ->on('d_mitra_contract.mc_mitra', '=', 'd_mitra_divisi.md_mitra');
             })
             ->select('d_mitra_contract.mc_mitra', 'd_mitra_contract.mc_contractid', 'd_mitra_contract.mc_divisi', 'd_mitra_contract.mc_no'
                 , 'd_mitra_divisi.md_name'
-                , 'd_mitra_contract.mc_date'
-                , 'd_mitra_contract.mc_expired'
+                , 'd_jabatan_pelamar.jp_name', 'jp_id'
                 , 'd_mitra_contract.mc_need'
                 , 'd_mitra_contract.mc_fulfilled'
-                , 'd_mitra.m_name'
-                , 'd_comp.c_name',
+                , 'd_mitra.m_name',
                 DB::raw('@rownum  := @rownum  + 1 AS number')
             )
-            ->orderBy('d_mitra_contract.mc_date', 'DESC')
+            ->orderBy('d_mitra_contract.mc_insert', 'DESC')
             ->get();
 
         $mc = collect($mc);
 
         return Datatables::of($mc)
-            ->editColumn('mc_date', function ($mc) {
-                return $mc->mc_date ? with(new Carbon($mc->mc_date))->format('d-m-Y') : '';
 
-            })
-            ->editColumn('mc_expired', function ($mc) {
-                return $mc->mc_expired ? with(new Carbon($mc->mc_expired))->format('d-m-Y') : '';
-
-            })
             ->addColumn('action', function ($mc) {
                 return '<div class="text-center">
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-kontrak-mitra/' . $mc->mc_mitra . '/' . $mc->mc_contractid . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
@@ -96,7 +89,6 @@ class mitraContractController extends Controller
             'mc_contractid' => $mc_contractid,
             'mc_divisi' => $request->divisi,
             'mc_comp' => $request->perusahaan,
-            'mc_jabatan' => $request->jabatan,
             'mc_no' => $request->kontrak,
             'mc_date' => $request->Tanggal_Kontrak,
             'mc_expired' => $request->Batas_Kontrak,
