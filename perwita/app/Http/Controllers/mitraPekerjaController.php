@@ -65,6 +65,11 @@ class mitraPekerjaController extends Controller
         return Response::json($results);
     }
 
+    public function getDataPencarian(Request $request)
+    {
+        
+    }
+
     public function data()
     {
         DB::statement(DB::raw('set @rownum=0'));

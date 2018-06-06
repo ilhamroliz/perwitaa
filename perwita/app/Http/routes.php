@@ -114,6 +114,7 @@ Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/delete/{mp_pekerja}/{mp_c
 Route::get('get-data-mitra-kontrak/{mitra}/{kontrak}','mitraPekerjaController@mitraContrak');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari','mitraPekerjaController@cari');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari/pencarian','mitraPekerjaController@pencarian');
+Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari/getData','mitraPekerjaController@getDataPencarian');
 
 //penerimaan-pekerja
 Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra','PenerimaanPekerjaController@index');

@@ -39,7 +39,24 @@
             <div class="row m-b-lg">
                 <div class="col-md-12">
                     <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukan No Penerimaan Pekerja / Nama Mitra">
-                </div> 
+                </div>
+                <div class="col-md-12" style="margin-top: 30px;">
+                    <table class="table table-hover table-bordered table-striped" id="tabelcari">
+                        <thead>
+                            <tr>
+                                <th>No Kotrak</th>
+                                <th>Tanggal Kontrak</th>
+                                <th>Kontrak Selesai</th>            
+                                <th>Nama Perusahaan</th>            
+                                <th>Nama Mitra</th>
+                                <th>Nama Divisi</th>                                           
+                                <th>Dibutuhkan</th>            
+                                <th>Terpenuhi</th>            
+                                <th style="width: 8%;">Aksi</th>            
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -52,17 +69,68 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-
+    var table;
     $(document).ready(function(){
+
         $('#pencarian').autocomplete({
             source: baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/cari/pencarian',
             minLength: 3,
             select: function(event, ui) {
-                $('#id_tujuan').val(ui.item.id);
-                $('#tujuan').val(ui.item.label);
+                getData(ui.item.id);
             }
         });
+
+        table = $("#tabelcari").DataTable({
+            "language": dataTableLanguage,
+            "columnDefs": [{
+                "targets": 0,
+                "orderable": false
+            }]
+
+        });
+
     });
+
+    function getData(id){
+        $.ajax({
+            url: baseUrl + '/get-data-mitra-kontrak/' + mitra + '/' + contractid,
+            type: 'get',
+            dataType: 'json',
+            success: function (response) {
+                waitingDialog.hide();
+                if (response.status == 'berhasil') {
+                    $('#tglKontrak').val(response.data.mc_date);
+                    $('#tglBatas').val(response.data.mc_expired);
+                    $('#perusahaan').val(response.data.c_name);
+                    $('#mitra').val(response.data.m_name);
+                    $('#divisi').val(response.data.md_name);
+                    $('#jumlahPekerja').val(response.data.mc_need);
+                    $('.sembunyikan').css('display', '');
+                    $('#mc_contractid').val(response.data.mc_contractid);
+                    $('#perusahaan').data('perusahaan', response.data.mc_comp);
+                    $('#mitra').data('input-mitra', response.data.mc_mitra);
+                    $('#divisi').data('input-divisi', response.data.mc_divisi);
+                    $('#totalPekerja').val(response.data.mc_fulfilled);
+                    totalpekerja = response.data.mc_fulfilled;
+                }
+            },
+            error: function (xhr, status) {
+                if (xhr.status == 'timeout') {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 0) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 500) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                }
+                waitingDialog.hide();
+            }
+        });
+    }
 
     function tambah(){
         window.location = baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/tambah';
