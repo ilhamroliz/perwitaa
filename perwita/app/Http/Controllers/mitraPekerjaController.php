@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\d_mitra_pekerja;
-
+use Response;
 use App\d_pekerja;
 use App\surat;
 use Illuminate\Support\Facades\Session;
@@ -31,6 +31,38 @@ class mitraPekerjaController extends Controller
     {
         return view('mitra-pekerja.index');
 
+    }
+
+    public function cari()
+    {
+        return view('mitra-pekerja.cari');
+
+    }
+
+    public function pencarian(Request $request)
+    {
+        $kondisi = $request->term;
+
+        $data = DB::table('d_mitra_contract')
+            ->leftJoin('d_mitra', 'mc_mitra', '=', 'm_id')
+            ->select('mc_no', 'm_name', DB::raw('(mc_need - mc_fulfilled) as sisa'), 'mc_date', 'mc_expired', 'mc_contractid')
+            ->where(function ($q) use ($kondisi){
+                $q->orWhere('m_name', 'like', '%' . $kondisi . '%')
+                    ->orWhere('mc_no', 'like', '%' . $kondisi . '%');
+            })
+            ->take(50)
+            ->get();
+
+        if ($data == null) {
+            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+        } else {
+
+            foreach ($data as $query) {
+                $results[] = ['id' => $query->mc_contractid, 'label' => $query->mc_no . ' (' . $query->m_name . ' Sisa ' . $query->sisa. ')'];
+            }
+        }
+
+        return Response::json($results);
     }
 
     public function data()
