@@ -61,6 +61,7 @@ class mitraContractController extends Controller
 
             ->addColumn('action', function ($mc) {
                 return '<div class="text-center">
+                    <a style="margin-left:5px;" title="Detail" type="button" onclick="detail('.$mc->mc_contractid.')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-kontrak-mitra/' . $mc->mc_mitra . '/' . $mc->mc_contractid . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
                     <a style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $mc->mc_mitra . ',' . $mc->mc_contractid . ')"><i class="glyphicon glyphicon-trash"></i></a>
                   </div>';
@@ -220,5 +221,9 @@ class mitraContractController extends Controller
         return response()->json([
             'data' => $data
         ]);
+    }
+
+    public function detail($id){
+      
     }
 }

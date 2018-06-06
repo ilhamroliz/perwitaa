@@ -63,7 +63,7 @@
                             <th>Jabatan</th>
                             <th>Nama Mitra</th>
                             <th>Nama divisi</th>
-                            <th>Permintaan Pekerja</th>
+                            <th>Dibutuhkan</th>
                             <th>Terpenuhi</th>
                             <th style="width: 8%;">Aksi</th>
                         </tr>
@@ -77,6 +77,8 @@
     </div>
 </div>
 </div>
+
+@include('mitra-contract.detail')
 
 @endsection
 
@@ -184,5 +186,17 @@ setTimeout(function () {
             "language": dataTableLanguage,
         });
     }, 2000);
+
+   function detail(id){
+      $.ajax({
+        type : 'get',
+        data : {data},
+        url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+id+"/detail",
+        dataType : 'json',
+        success : function(result){
+          console.log(result);
+        }
+      });
+    }
 </script>
 @endsection

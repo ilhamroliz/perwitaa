@@ -50,6 +50,7 @@ Route::get('manajemen-kontrak-mitra/data-kontrak-mitra','mitraContractController
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/table','mitraContractController@data');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/tambah','mitraContractController@tambah');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/simpan','mitraContractController@simpan');
+Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/{id}/detail','mitraContractController@detail');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/{mitra}/{mc_contractid}/edit','mitraContractController@edit');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/perbarui/{mitra}/{mc_contractid}','mitraContractController@perbarui');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/update/{mitra}/{mc_contractid}','mitraContractController@update');
@@ -318,7 +319,7 @@ Route::get('data-master/master-transaksi-akun/set-akun/{code}/{cashtype}', [
         'uses' => 'd_comp_transController@setAkun',
         'as' => 'd_comp_trans.setAkun'
 ]);
-			
+
             //---selesai d_comp_trans
 
 //d_comp_trans
@@ -348,7 +349,7 @@ Route::get('surat/laporan-legalisir-data-upah','suratController@gege'); //CETAK 
 Route::get('surat/laporan-pengalaman-kerja','suratController@gege1'); //CETAK PENGALAMAN KERJA
 Route::get('surat/laporan-pekerja-resign','suratController@gege2'); //CETAK RESIGN KERJA
 Route::get('surat/laporan-pinjam-bank','suratController@gege3'); //CETAK PINJAM BANK
-Route::get('surat/laporan-pengajuan-kpr','suratController@gege4'); //CETAK PENGAJUAN KPR 
+Route::get('surat/laporan-pengajuan-kpr','suratController@gege4'); //CETAK PENGAJUAN KPR
 Route::get('surat/laporan-pendaftaran-bpjs','suratController@gege5'); //CETAK PENDAFTARAN BPJS
 Route::get('surat/laporan-tidak-aktif-bpjs','suratController@gege6'); //CETAK TIDAK AKTIF BPJS
 Route::get('surat/laporan-tidak-lagi-bekerja','suratController@gege7'); //CETAK TIDAK BEKERJA
@@ -487,7 +488,7 @@ Route::get('manajemen-stock/stock-opname/detail', 'StockOpnameController@detail'
 Route::get('manajemen-stock/stock-opname/get_data', 'StockOpnameController@get_data');
 Route::get('manajemen-stock/stock-opname/edit', 'StockOpnameController@edit');
 
-//thoriq 
+//thoriq
 
 /*System*/
 Route::get('/system/hakuser/user', 'aksesUserController@indexAksesUser');
