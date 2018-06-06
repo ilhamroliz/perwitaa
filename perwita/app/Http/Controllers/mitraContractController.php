@@ -126,6 +126,7 @@ class mitraContractController extends Controller
 
     public function perbarui(Request $request, $mitra, $id_detail)
     {
+      //  dd($request);
         return DB::transaction(function () use ($request, $mitra, $id_detail) {
             $request->Tanggal_Kontrak = date('Y-m-d', strtotime($request->Tanggal_Kontrak));
             $request->Batas_Kontrak = date('Y-m-d', strtotime($request->Batas_Kontrak));
@@ -164,8 +165,7 @@ class mitraContractController extends Controller
                     'mc_expired' => $request->Batas_Kontrak,
                     'mc_need' => $request->Jumlah_Pekerja,
                     'mc_fulfilled' => $request->totalPekerja,
-                    'mc_status_mp' => $request->statusmp,
-                    'mc_jenis_tk' => $request->jabatan,
+                    'mc_jabatan' => $request->jabatan,
                     'mc_jobdesk' => $request->jobdesk,
                     'mc_note' => $request->note,
                 ]);

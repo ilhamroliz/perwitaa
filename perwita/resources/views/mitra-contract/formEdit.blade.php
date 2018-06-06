@@ -85,7 +85,6 @@
                                 </span>
                             </div>
                         </div>
-                        <input type="hidden" name="statusmp" value="{{$mitra_contract->mc_status_mp}}">
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                             <div class="col-sm-10">
@@ -256,7 +255,7 @@
         var perusahaan = document.getElementById('perusahaan');
         var mitra = document.getElementById('mitra');
         var jumlahPekerja = document.getElementById('jumlahPekerja');
-        var divisi = document.getElementById('divisi');
+        var divisi = document.getElementById('divisiselect');
         var jabatan = document.getElementById('jabatan');
         var jobdesk = document.getElementById('jobdesk');
         var note = document.getElementById('note');
@@ -279,7 +278,7 @@
             $('#perusahaan-error').css('display', '');
             return false;
         }
-        else if (mitra.validity.valueMissing) {
+        else if (mitraselect.validity.valueMissing) {
             $('#mitra-error').css('display', '');
             return false;
         }
@@ -287,11 +286,11 @@
             $('#jumlahPekerja-error').css('display', '');
             return false;
         }
-        else if (divisi.validity.valueMissing) {
+        else if (divisiselect.validity.valueMissing) {
             $('#divisi-error').css('display', '');
             return false;
         }
-        else if (jabatan.validity.valueMissing) {
+        else if (jabatanselect.validity.valueMissing) {
             $('#jabatan-error').css('display', '');
             return false;
         }
