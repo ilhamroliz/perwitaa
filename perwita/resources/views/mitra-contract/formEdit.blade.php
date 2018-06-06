@@ -89,7 +89,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">
+                                <select class="form-control" name="mitra" id="mitraselect" required="" onchange="getDivisi()">
                                     @foreach($mitra as $data)
                                     <option @if($mitra_contract->mc_mitra==$data->m_id) selected @endif  value="{{$data->m_id}}">{{$data->m_name}}</option>
                                     @endforeach
@@ -194,10 +194,10 @@
         //endDate: 'today'
     });
 
-    $('#mitra').select2();
     $('#perusahaan').chosen({search_contains:true}) ;
     $('#divisi').select2();
     $('#jabatan').select2();
+    $('#mitraselect').select2();
 
     function perbarui() {
         var mitra=$('#mitra').val();
