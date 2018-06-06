@@ -118,9 +118,8 @@
                             <label for="mitra" class="col-sm-2 col-form-label">Jenis Jabatan</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="jabatan" id="jabatanselect" required="">
-                                    <option value="" selected="true" disabled="">--Pilih Jabatan--</option>
                                     @foreach($jabatan as $jab)
-                                    <option @if($mitra_contract->mc_jenis_tk == $jab->jp_id) selected @endif value="{{$jab->jp_id}}">{{$jab->jp_name}}</option>
+                                    <option @if($mitra_contract->mc_jabatan == $jab->jp_id) selected @endif value="{{$jab->jp_id}}">{{$jab->jp_name}}</option>
                                     @endforeach
                                 </select>
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="jabatan-error">
