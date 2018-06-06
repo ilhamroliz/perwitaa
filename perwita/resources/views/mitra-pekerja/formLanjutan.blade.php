@@ -127,7 +127,7 @@ function simpan(){
     });
     $.ajax({
         url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/simpan',       
-        type: 'get',
+        type: 'post',
         data: ar.find('input').serialize() + '&' + $('.form').serialize(),
         dataType: 'json',
         success: function (response) {
@@ -164,7 +164,6 @@ function simpan(){
                 $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
             }
             waitingDialog.hide();
-            buttonLadda.ladda('stop');
         }
     });
 }

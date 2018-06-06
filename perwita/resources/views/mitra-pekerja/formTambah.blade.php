@@ -84,10 +84,8 @@
                                 </div>
                             </div>
                             <div class="sembunyikan" style="display: none">
-                                @foreach($mitra_contract as $data)
                                     <input type="hidden" name="mc_contractid" id="mc_contractid"
                                            value="{{$data->mc_contractid}}">
-                                @endforeach
 
                                 <div class="form-group row">
                                     <label for="Nama" class="col-sm-2 col-form-label">Tanggal Kontrak</label>
@@ -366,7 +364,6 @@
             $.ajax({
                 url: baseUrl + '/get-data-mitra-kontrak/' + mitra + '/' + contractid,
                 type: 'get',
-                timeout: 10000,
                 dataType: 'json',
                 success: function (response) {
                     waitingDialog.hide();
@@ -378,6 +375,7 @@
                         $('#divisi').val(response.data.md_name);
                         $('#jumlahPekerja').val(response.data.mc_need);
                         $('.sembunyikan').css('display', '');
+                        $('#mc_contractid').val(response.data.mc_contractid);
                         $('#perusahaan').data('perusahaan', response.data.mc_comp);
                         $('#mitra').data('input-mitra', response.data.mc_mitra);
                         $('#divisi').data('input-divisi', response.data.mc_divisi);
@@ -421,7 +419,7 @@
             $.ajax({
                 url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/lanjut',
                 // type        : 'post',            
-                type: 'get',
+                type: 'post',
                 data: ar.find('input').serialize()
                 + '&kontrak=' + kontrak
                 + '&totalPekerja=' + totalPekerja
