@@ -196,7 +196,7 @@
             }
 $('#mitra').chosen({search_contains:true});
 $('#perusahaan').chosen({search_contains:true});
-$('#divisi').chosen({search_contains:true});
+$('#divisi').select2();
 $('#jabatan').chosen({search_contains:true});
 
 
