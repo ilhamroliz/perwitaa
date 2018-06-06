@@ -77,7 +77,7 @@
                                 <select class="form-control" name="perusahaan" id="perusahaan" required="">
 
                                     @foreach($comp as $data)
-                                    <option @if($mitra_contract->mc_comp==$data->c_id) selected @endif value="{{$data->c_id}}">{{$data->c_name}}</option>
+                                    <option @if($mitra_contract->mc_comp == $data->c_id) selected @endif value="{{$data->c_id}}">{{$data->c_name}}</option>
                                     @endforeach
                                 </select>
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="perusahaan-error">
