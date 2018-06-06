@@ -102,7 +102,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Divisi</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="divisi" id="divisi" required="">
+                                <select class="form-control" name="divisi" id="divisiselect" required="">
 
                                     @foreach($d_mitra_divisi as $d)
                                     <option @if($mitra_contract->mc_divisi==$d->md_id) selected @endif value="{{$d->md_id}}">{{$d->md_name}}</option>
@@ -117,7 +117,7 @@
                        <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Jenis Jabatan</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="jabatan" id="jabatan" required="">
+                                <select class="form-control" name="jabatan" id="jabatanselect" required="">
                                     <option value="" selected="true" disabled="">--Pilih Jabatan--</option>
                                     @foreach($jabatan as $jab)
                                     <option @if($mitra_contract->mc_jenis_tk == $jab->jp_id) selected @endif value="{{$jab->jp_id}}">{{$jab->jp_name}}</option>
@@ -194,10 +194,10 @@
         //endDate: 'today'
     });
 
-    $('#perusahaan').chosen({search_contains:true}) ;
-    $('#divisi').select2();
-    $('#jabatan').select2();
-    $('#mitraselect').select2();
+    $('#perusahaan').chosen({search_contains:true});
+    $('#divisiselect').chosen({search_contains:true});
+    $('#jabatanselect').chosen({search_contains:true});
+    $('#mitraselect').chosen({search_contains:true});
 
     function perbarui() {
         var mitra=$('#mitra').val();
