@@ -224,6 +224,34 @@ class mitraContractController extends Controller
     }
 
     public function detail($id){
-      
+      $data = DB::table('d_mitra_contract')
+                  ->join('d_mitra', 'm_id', '=', 'mc_mitra')
+                  ->join('d_jabatan_pelamar', 'jp_id', '=', 'mc_jabatan')
+                  ->join('d_comp', 'c_id', '=', 'mc_comp')
+                  ->join('d_mitra_divisi', function($e){
+                    $e->on('mc_mitra', '=', 'md_mitra')
+                    ->on('mc_divisi', '=', 'md_id');
+                  })
+                  ->select('m_name'
+                    , 'md_name'
+                    , 'jp_name'
+                    , 'c_name'
+                    , 'mc_no'
+                    , 'mc_jobdesk'
+                    , 'mc_note')
+                  ->where('mc_contractid', '=', $id)->get();
+
+      $pekerja = DB::table('d_mitra_pekerja')
+                ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+                ->select('mp_mitra_nik'
+                , 'p_name'
+                , 'p_nip'
+                , 'p_hp')
+                ->where('mp_contract', '=', $id)->get();
+
+              return response()->json([
+                'data' => $data,
+                'pekerja' => $pekerja
+              ]);
     }
 }

@@ -50,11 +50,36 @@
                                   <div class="col-lg-3">
                                       <h3 style="font-weight:normal;" id="mc_note">: -</h3>
                                   </div>
-                            </div>
+                                  </div>
+
+                                  <div class="col-lg-12">
+                                        <h3>&nbsp</h3>
+                                    </div>
+
+                                  <div class="col-lg-12">
+                                    <h3 style="font-style: italic; color: blue">List Pekerja</h3>
+                                </div>
+
+                                <div>
+                                  <table class="table table-striped table-bordered" id='table'>
+                                      <thead>
+                                        <tr>
+                                          <th>No</th>
+                                          <th>Nama Pekerja</th>
+                                          <th>NIK</th>
+                                          <th>No Hp</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id='showdata'>
+
+                                      </tbody>
+                                  </table>
+                                </div>
+
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        </div>
                       </div>
                     </div>
                   </div>
+                </div>

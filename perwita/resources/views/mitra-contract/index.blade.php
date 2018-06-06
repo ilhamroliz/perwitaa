@@ -65,7 +65,7 @@
                             <th>Nama divisi</th>
                             <th>Dibutuhkan</th>
                             <th>Terpenuhi</th>
-                            <th style="width: 8%;">Aksi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -187,14 +187,37 @@ setTimeout(function () {
         });
     }, 2000);
 
+
+
    function detail(id){
       $.ajax({
         type : 'get',
-        data : {data},
         url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+id+"/detail",
         dataType : 'json',
         success : function(result){
           console.log(result);
+          $('#mc_no').html(': '+result.data[0].mc_no);
+          $('#mc_mitra').html(': '+result.data[0].m_name);
+          $('#mc_divisi').html(': '+result.data[0].md_name);
+          $('#mc_comp').html(': '+result.data[0].c_name);
+          $('#mc_jabatan').html(': '+result.data[0].jp_name);
+          $('#mc_jobdesk').html(': '+result.data[0].mc_jobdesk);
+          $('#mc_note').html(': '+result.data[0].mc_note);
+
+          var html = '';
+          var i;
+          //alert(data.length);
+          for(i=0; i<result.pekerja.length; i++){
+            html +='<tr>'+
+                  '<td>'+(i + 1)+'</td>'+
+                  '<td>'+result.pekerja[i].p_name+'</td>'+
+                  '<td>'+result.pekerja[i].mp_mitra_nik+'</td>'+
+                  '<td>'+result.pekerja[i].p_hp+'</td>'+
+                  '</tr>';
+          }
+          $('#showdata').html(html);
+
+          $('#detail').modal('show');
         }
       });
     }
