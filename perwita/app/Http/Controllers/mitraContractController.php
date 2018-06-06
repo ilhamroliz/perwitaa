@@ -45,7 +45,8 @@ class mitraContractController extends Controller
             })
             ->select('d_mitra_contract.mc_mitra', 'd_mitra_contract.mc_contractid', 'd_mitra_contract.mc_divisi', 'd_mitra_contract.mc_no'
                 , 'd_mitra_divisi.md_name'
-                , 'd_jabatan_pelamar.jp_name', 'jp_id'
+                , 'd_jabatan_pelamar.jp_name'
+                , 'jp_id'
                 , 'd_mitra_contract.mc_need'
                 , 'd_mitra_contract.mc_fulfilled'
                 , 'd_mitra.m_name',
@@ -94,7 +95,7 @@ class mitraContractController extends Controller
             'mc_expired' => $request->Batas_Kontrak,
             'mc_need' => $request->Jumlah_Pekerja,
             'mc_fulfilled' => $request->totalPekerja,
-            'mc_jenis_tk' => $request->jabatan,
+            'mc_jabatan' => $request->jabatan,
             'mc_jobdesk' => $request->jobdesk,
             'mc_note' => $request->note,
 

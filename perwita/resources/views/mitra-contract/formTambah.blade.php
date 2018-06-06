@@ -14,10 +14,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 
 </style>
@@ -38,7 +38,7 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -85,7 +85,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">                                    
+                                <select class="form-control" name="mitra" id="mitra" required="" onchange="getDivisi()">
                                     <option value="" selected="true" readonly="true" disabled="">--Pilih Mitra--</option>
                                     @foreach($mitra as $data)
                                     <option value="{{$data->m_id}}">{{$data->m_name}}</option>
@@ -99,7 +99,7 @@
                          <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Nama Divisi</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="divisi" id="divisi" required="">   
+                                <select class="form-control" name="divisi" id="divisi" required="">
                                     <option value="" selected="true" disabled="">--Pilih Divisi--</option>
                                 </select>
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="divisi-error">
@@ -110,7 +110,7 @@
                         <div class="form-group row">
                             <label for="mitra" class="col-sm-2 col-form-label">Jenis Jabatan</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="jabatan" id="jabatan" required="">   
+                                <select class="form-control" name="jabatan" id="jabatan" required="">
                                     <option value="" selected="true" disabled="">--Pilih Jabatan--</option>
                                     @foreach($jabatan as $jab)
                                     <option value="{{$jab->jp_id}}">{{$jab->jp_name}}</option>
@@ -131,7 +131,7 @@
                             </div>
                             <label for="totalPekerja" class="col-sm-3 col-form-label" style="width:18%">Total Pekerja Terpenuhi</label>
                             <div class="col-sm-3">
-                                <input value="0" type="number" class="form-control" name="totalPekerja" readonly="" id="totalPekerja"  required="">                                
+                                <input value="0" type="number" class="form-control" name="totalPekerja" readonly="" id="totalPekerja"  required="">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -167,7 +167,7 @@
             </div>
         </div>
     </div>
-</div>      
+</div>
 
 
 
@@ -184,7 +184,7 @@
         autoclose: true,
         format: 'dd/mm/yyyy'
     }).datepicker("setDate", "0");
-    
+
       var config = {
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
                 //'.chosen-select-no-single' : {disable_search_threshold:10},
@@ -194,23 +194,23 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
-$('#mitra').select2();
-$('#perusahaan').chosen({search_contains:true}) ;
-$('#divisi').select2();
-$('#jabatan').select2();
-    
-    
+$('#mitra').chosen({search_contains:true});
+$('#perusahaan').chosen({search_contains:true});
+$('#divisi').chosen({search_contains:true});
+$('#jabatan').chosen({search_contains:true});
+
+
     function simpan() {
         var buttonLadda = $('.simpan').ladda();
-        buttonLadda.ladda('start');                
+        buttonLadda.ladda('start');
         if (validateForm()) {
             $.ajax({
                 url: baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra/simpan',
-                // type        : 'post',            
+                // type        : 'post',
                 type: 'get',
                 timeout: 10000,
                 data: $('#form-mitra-contract').serialize(),
-                dataType: 'json',                
+                dataType: 'json',
                 success: function (response) {
                     if (response.status == 'berhasil') {
                         window.location = baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra';
@@ -250,7 +250,7 @@ $('#jabatan').select2();
 
     function validateForm() {
         $('.reset').css('display', 'none');
-        
+
         var tglKontrak = document.getElementById('tglKontrak');
         var tglBatas = document.getElementById('tglBatas');
         var kontrak = document.getElementById('kontrak');
