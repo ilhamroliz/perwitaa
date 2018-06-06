@@ -128,12 +128,10 @@ class mitraContractController extends Controller
     {
       //  dd($request);
         return DB::transaction(function () use ($request, $mitra, $id_detail) {
-            $request->Tanggal_Kontrak = date('Y-m-d', strtotime($request->Tanggal_Kontrak));
-            $request->Batas_Kontrak = date('Y-m-d', strtotime($request->Batas_Kontrak));
+            $Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
+            $Batas_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Batas_Kontrak, 'Asia/Jakarta');
 
             $rules = [
-                "Tanggal_Kontrak" => 'required|date',
-                "Batas_Kontrak" => 'required|date',
                 "kontrak" => "required",
                 "perusahaan" => "required",
                 "mitra" => "required",
@@ -161,8 +159,8 @@ class mitraContractController extends Controller
                     'mc_divisi' => $request->divisi,
                     'mc_comp' => $request->perusahaan,
                     'mc_no' => $request->kontrak,
-                    'mc_date' => $request->Tanggal_Kontrak,
-                    'mc_expired' => $request->Batas_Kontrak,
+                    'mc_date' => $Tanggal_Kontrak,
+                    'mc_expired' => $Batas_Kontrak,
                     'mc_need' => $request->Jumlah_Pekerja,
                     'mc_fulfilled' => $request->totalPekerja,
                     'mc_jabatan' => $request->jabatan,
