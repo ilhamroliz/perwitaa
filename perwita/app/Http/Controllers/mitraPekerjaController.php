@@ -42,7 +42,6 @@ class mitraPekerjaController extends Controller
     public function pencarian(Request $request)
     {
         $kondisi = $request->term;
-
         $data = DB::table('d_mitra_contract')
             ->leftJoin('d_mitra', 'mc_mitra', '=', 'm_id')
             ->select('mc_no', 'm_name', DB::raw('(mc_need - mc_fulfilled) as sisa'), 'mc_date', 'mc_expired', 'mc_contractid')
