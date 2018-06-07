@@ -67,7 +67,33 @@ class mitraPekerjaController extends Controller
 
     public function getDataPencarian(Request $request)
     {
+        $id = $request->id;
+        $info = DB::table('d_mitra_contract')
+            ->join('d_mitra', 'd_mitra.m_id', '=', 'd_mitra_contract.mc_mitra')
+            ->join('d_comp', 'd_comp.c_id', '=', 'd_mitra_contract.mc_comp')
+            ->join('d_mitra_divisi', function ($q) {
+                $q->on('d_mitra_contract.mc_divisi', '=', 'd_mitra_divisi.md_id')
+                    ->on('d_mitra_contract.mc_mitra', '=', 'd_mitra_divisi.md_mitra');
+            })
+            ->select('d_mitra_contract.mc_mitra'
+                , 'd_mitra_contract.mc_contractid'
+                , 'd_mitra_contract.mc_no'
+                , 'd_mitra_contract.mc_divisi'
+                , 'd_mitra_divisi.md_name'
+                , DB::raw('STR_TO_DATE(mc_date, )')
+                , 'd_mitra_contract.mc_expired'
+                , 'd_mitra_contract.mc_need'
+                , 'd_mitra_contract.mc_fulfilled'
+                , 'd_mitra_divisi.md_id'
+                , 'd_mitra.m_name'
+                , 'd_comp.c_name'
+            )
+            ->where('mc_contractid', '=', $id)
+            ->groupBy('mc_no')
+            ->orderBy('d_mitra_contract.mc_date', 'DESC')
+            ->get();
 
+        return Response::json($info);
     }
 
     public function data()

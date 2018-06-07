@@ -44,10 +44,9 @@
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
                             <tr>
-                                <th>No Kotrak</th>
+                                <th>Nama Perusahaan</th>
                                 <th>Tanggal Kontrak</th>
-                                <th>Kontrak Selesai</th>            
-                                <th>Nama Perusahaan</th>            
+                                <th>Kontrak Selesai</th>
                                 <th>Nama Mitra</th>
                                 <th>Nama Divisi</th>                                           
                                 <th>Dibutuhkan</th>            
@@ -93,26 +92,24 @@
 
     function getData(id){
         $.ajax({
-            url: baseUrl + '/get-data-mitra-kontrak/' + mitra + '/' + contractid,
+            url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/cari/getData',
             type: 'get',
+            data: {id: id},
             dataType: 'json',
             success: function (response) {
+                console.log(response[0]);
                 waitingDialog.hide();
-                if (response.status == 'berhasil') {
-                    $('#tglKontrak').val(response.data.mc_date);
-                    $('#tglBatas').val(response.data.mc_expired);
-                    $('#perusahaan').val(response.data.c_name);
-                    $('#mitra').val(response.data.m_name);
-                    $('#divisi').val(response.data.md_name);
-                    $('#jumlahPekerja').val(response.data.mc_need);
-                    $('.sembunyikan').css('display', '');
-                    $('#mc_contractid').val(response.data.mc_contractid);
-                    $('#perusahaan').data('perusahaan', response.data.mc_comp);
-                    $('#mitra').data('input-mitra', response.data.mc_mitra);
-                    $('#divisi').data('input-divisi', response.data.mc_divisi);
-                    $('#totalPekerja').val(response.data.mc_fulfilled);
-                    totalpekerja = response.data.mc_fulfilled;
-                }
+                var rowNode = table
+                    .row.add( [
+                     'response',
+
+                     ] )
+                    .draw()
+                    .node();
+                 
+                $( rowNode )
+                    .css( 'color', 'red' )
+                    .animate( { color: 'black' } );
             },
             error: function (xhr, status) {
                 if (xhr.status == 'timeout') {
