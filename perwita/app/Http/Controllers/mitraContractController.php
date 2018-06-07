@@ -20,6 +20,8 @@ use App\Http\Controllers\pdmController;
 
 use Yajra\Datatables\Datatables;
 
+use Response;
+
 use Validator;
 
 use Carbon\carbon;
@@ -261,8 +263,8 @@ class mitraContractController extends Controller
     }
 
     public function searchresult(Request $request){
-      dd($request);
-      $keyword = $request->keyword;
+
+      $keyword = $request->term;
 
       $data = DB::table('d_mitra_contract')
       ->join('d_mitra', 'm_id', '=', 'mc_mitra')
@@ -272,11 +274,37 @@ class mitraContractController extends Controller
         ->on('md_id', '=', 'mc_divisi');
       })
       ->where('mc_no', 'LIKE', '%'.$keyword.'%')
-      ->ORwhere('mc_mitra', '=', 'm_id')
-      ->select('mc_no', 'mc_need', 'mc_fulfilled', 'jp_name', 'md_name', 'm_name')->get();
+      ->ORwhere('m_name', 'LIKE', '%'.$keyword.'%')
+      ->select('mc_contractid', 'mc_no', 'mc_need', 'mc_fulfilled', 'jp_name', 'md_name', 'm_name')->get();
 
-      return response()->json([
-        'data' => $data
-      ]);
+      if ($data == null) {
+          $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+      } else {
+
+          foreach ($data as $query) {
+              $results[] = ['id' => $query->mc_contractid, 'label' => $query->mc_no . ' (' . $query->m_name . ' Sisa ' . $query->mc_need. ')'];
+          }
+      }
+
+      return Response::json($results);
+    }
+
+    public function getdata(Request $request){
+        //dd($request);
+        $id = $request->id;
+
+        $data = DB::table('d_mitra_contract')
+        ->join('d_mitra', 'm_id', '=', 'mc_mitra')
+        ->join('d_jabatan_pelamar', 'jp_id', '=', 'mc_jabatan')
+        ->join('d_mitra_divisi', function($e){
+          $e->on('md_mitra', '=', 'mc_mitra')
+          ->on('md_id', '=', 'mc_divisi');
+        })
+        ->where('mc_contractid', '=', $id)
+        ->select('mc_mitra', 'mc_contractid', 'mc_no', 'mc_need', 'mc_fulfilled', 'jp_name', 'md_name', 'm_name')->get();
+
+        return response()->json([
+          'data' => $data
+        ]);
     }
 }
