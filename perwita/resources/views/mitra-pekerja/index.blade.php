@@ -33,7 +33,7 @@
     <div class="ibox-title">
         <h5>Data Permintaan Pekerja</h5>
         <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
-        <a href="{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -74,6 +74,39 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            var table = $("#mitra").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/table') }}',  
+                dataType: 'json',
+                columns: [
+                    {data: 'mc_no', name: 'mc_no', orderable:false},
+                    {data: 'mc_date', name: 'mc_date'},
+                    {data: 'mc_expired', name: 'mc_expired'},
+                    {data: 'c_name', name: 'c_name'},
+                    {data: 'm_name', name: 'm_name'},
+                    {data: 'md_name', name: 'md_name'},
+                    //{data: 'm_address', name: 'm_address'},
+                    {data: 'mc_need', name: 'mc_need'},
+                    {data: 'mc_fulfilled', name: 'mc_fulfilled'},            
+                    {data: 'action', name: 'action',orderable:false,searchable:false}
+                ],
+                responsive: true,        
+                "pageLength": 10,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                "language": dataTableLanguage,
+            });
+            /*table
+                .column( '0:visible' )
+                .order( 'desc' )
+                .draw();*/
+        },1500);
+    });
+
+
 function tambah(){
     window.location = baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/tambah';
 }
@@ -129,53 +162,6 @@ function hapus(mitra,mc_contractid){
       }, 2000);
 
     });
-    
-  
-
-    
 }
-                           
-                                //+"mc_mitra": 7
-//      +"mc_contractid": 0
-//      +"mc_no": "1"
-//      +"mc_date": "0000-00-00"
-//      +"mc_expired": "0000-00-00"
-//      +"mc_need": 0
-//      +"mc_fulfilled": 0
-//      +"m_name": "PT ALAM JAYA PRIMA NUSA"
-//      +"m_address": "Trosobo n"
-//      +"c_name": "Soto Sedaap Boyolali"
-//      +"number": 1
-
-
-                                    
-        var table = $("#mitra").DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/table') }}',  
-        dataType: 'json',
-        columns: [
-            {data: 'mc_date', name: 'mc_date'},
-            {data: 'mc_no', name: 'mc_no'},
-            {data: 'mc_expired', name: 'mc_expired'},
-            {data: 'c_name', name: 'c_name'},
-            {data: 'm_name', name: 'm_name'},
-            {data: 'md_name', name: 'md_name'},
-            //{data: 'm_address', name: 'm_address'},
-            {data: 'mc_need', name: 'mc_need'},
-            {data: 'mc_fulfilled', name: 'mc_fulfilled'},            
-            {data: 'action', name: 'action',orderable:false,searchable:false}
-        ],
-        responsive: true,        
-        "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-        //"scrollY": '50vh',
-        //"scrollCollapse": true,
-        "language": dataTableLanguage,
-    });
-table
-    .column( '0:visible' )
-    .order( 'desc' )
-    .draw();
 </script>
 @endsection

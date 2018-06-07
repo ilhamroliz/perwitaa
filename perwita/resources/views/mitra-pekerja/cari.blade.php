@@ -97,19 +97,26 @@
             data: {id: id},
             dataType: 'json',
             success: function (response) {
-                console.log(response[0]);
+                var data = response[0];
                 waitingDialog.hide();
+                table.clear();
                 var rowNode = table
                     .row.add( [
-                     'response',
-
+                     data.c_name,
+                     data.mc_date,
+                     data.mc_expired,
+                     data.m_name,
+                     data.md_name,
+                     data.mc_need,
+                     data.mc_fulfilled,
+                     getAksi(data.mc_mitra, data.mc_contractid)
                      ] )
                     .draw()
                     .node();
                  
-                $( rowNode )
+                /*$( rowNode )
                     .css( 'color', 'red' )
-                    .animate( { color: 'black' } );
+                    .animate( { color: 'blue' } );*/
             },
             error: function (xhr, status) {
                 if (xhr.status == 'timeout') {
@@ -127,6 +134,10 @@
                 waitingDialog.hide();
             }
         });
+    }
+
+    function getAksi(mitra, kontrak){
+        return '<div class="btn-group"><a href="data-pekerja-mitra/'+mitra+'/'+kontrak+'/edit" ><button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button></a><a class="btn-delete" onclick="hapus('+mitra+'/'+kontrak+')"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus"><i class="glyphicon glyphicon-trash"></i></button></a></div>';
     }
 
     function tambah(){
