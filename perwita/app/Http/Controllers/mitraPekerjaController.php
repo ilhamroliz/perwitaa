@@ -67,7 +67,7 @@ class mitraPekerjaController extends Controller
 
     public function getDataPencarian(Request $request)
     {
-        
+
     }
 
     public function data()
