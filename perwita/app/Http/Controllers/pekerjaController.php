@@ -497,7 +497,7 @@ class pekerjaController extends Controller
 
     public function hapus($id)
     {
-        
+
          return DB::transaction(function () use ($id) {
              $pekerja = d_pekerja::where('p_id', $id);
              $pekerja_mutasi = d_pekerja_mutation::where('pm_pekerja', $id);
@@ -569,10 +569,10 @@ class pekerjaController extends Controller
             if($key['mc_expired'] <= $datedefault) {$data[$i]['mc_expired'] = "-";}
             $i++;
         }
-        
-        // dd($data);        
+
+        // dd($data);
         echo json_encode($data);
-   
+
     }
 
     public function detail_mutasi(Request $request){
@@ -597,8 +597,8 @@ class pekerjaController extends Controller
             if ($key['pm_from'] == null) {$data[$i]['pm_from'] = '-';}
             $i++;
         }
-        
-        // dd($data);        
+
+        // dd($data);
         echo json_encode($data);
 
     }
@@ -620,6 +620,5 @@ class pekerjaController extends Controller
         }
         rmdir($dirPath);
     }
-
 
 }
