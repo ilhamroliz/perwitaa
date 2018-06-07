@@ -35,7 +35,7 @@ class mitraContractController extends Controller
 
     public function carii()
     {
-        return 'asdf';
+
     }
 
     public function data()

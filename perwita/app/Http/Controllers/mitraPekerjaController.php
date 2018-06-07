@@ -80,11 +80,11 @@ class mitraPekerjaController extends Controller
                 , 'd_mitra_contract.mc_no'
                 , 'd_mitra_contract.mc_divisi'
                 , 'd_mitra_divisi.md_name'
-                , DB::raw('STR_TO_DATE(mc_date, )')
-                , 'd_mitra_contract.mc_expired'
+                , DB::raw('date_format(mc_date, "%d/%m/%Y") as mc_date')
+                , DB::raw('date_format(mc_expired, "%d/%m/%Y") as mc_expired')
                 , 'd_mitra_contract.mc_need'
                 , 'd_mitra_contract.mc_fulfilled'
-                , 'd_mitra_divisi.md_id'
+                , 'd_mitra_divisi.md_name'
                 , 'd_mitra.m_name'
                 , 'd_comp.c_name'
             )
@@ -106,11 +106,6 @@ class mitraPekerjaController extends Controller
                 $q->on('d_mitra_contract.mc_divisi', '=', 'd_mitra_divisi.md_id')
                     ->on('d_mitra_contract.mc_mitra', '=', 'd_mitra_divisi.md_mitra');
             })
-            ->join('d_mitra_pekerja', function ($join) {
-                $join->on('d_mitra_pekerja.mp_contract', '=', 'd_mitra_contract.mc_contractid');
-                $join->on('d_mitra_pekerja.mp_mitra', '=', 'd_mitra_contract.mc_mitra');
-                $join->on('d_mitra_pekerja.mp_comp', '=', 'd_mitra_contract.mc_comp');
-            })
             ->select('d_mitra_contract.mc_mitra'
                 , 'd_mitra_contract.mc_contractid'
                 , 'd_mitra_contract.mc_no'
@@ -125,6 +120,7 @@ class mitraPekerjaController extends Controller
                 , 'd_comp.c_name',
                 DB::raw('@rownum  := @rownum  + 1 AS number')
             )
+            ->whereRaw('mc_need > mc_fulfilled')
             ->groupBy('mc_no')
             ->orderBy('d_mitra_contract.mc_date', 'DESC')
             ->get();
