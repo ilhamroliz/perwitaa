@@ -33,6 +33,11 @@ class mitraContractController extends Controller
         return view('mitra-contract.index');
     }
 
+    public function carii()
+    {
+        return 'asdf';
+    }
+
     public function data()
     {
         DB::statement(DB::raw('set @rownum=0'));
