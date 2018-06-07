@@ -98,6 +98,10 @@ $(document).ready(function(){
 
 });
 
+  function tambah(){
+      window.location = baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/tambah';
+  }
+
   function getdata(id){
     $.ajax({
       type: 'get',
