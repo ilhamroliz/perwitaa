@@ -33,9 +33,9 @@ class mitraContractController extends Controller
         return view('mitra-contract.index');
     }
 
-    public function carii()
+    public function cari()
     {
-        return 'asdf';
+        return view('mitra-contract.cari');
     }
 
     public function data()
@@ -258,5 +258,25 @@ class mitraContractController extends Controller
                 'data' => $data,
                 'pekerja' => $pekerja
               ]);
+    }
+
+    public function searchresult(Request $request){
+      dd($request);
+      $keyword = $request->keyword;
+
+      $data = DB::table('d_mitra_contract')
+      ->join('d_mitra', 'm_id', '=', 'mc_mitra')
+      ->join('d_jabatan_pelamar', 'jp_id', '=', 'mc_jabatan')
+      ->join('d_mitra_divisi', function($e){
+        $e->on('md_mitra', '=', 'mc_mitra')
+        ->on('md_id', '=', 'mc_divisi');
+      })
+      ->where('mc_no', 'LIKE', '%'.$keyword.'%')
+      ->ORwhere('mc_mitra', '=', 'm_id')
+      ->select('mc_no', 'mc_need', 'mc_fulfilled', 'jp_name', 'md_name', 'm_name')->get();
+
+      return response()->json([
+        'data' => $data
+      ]);
     }
 }

@@ -25,8 +25,8 @@ class mitraContractController extends Controller
     public function index() {
         return view('mitra-contract.index');
     }
-    public function carii(){
-      return 'dfg';
+    public function cari(){
+      return view('mitra-contract.cari');
     }
     public function data() {
         DB::statement(DB::raw('set @rownum=0'));
