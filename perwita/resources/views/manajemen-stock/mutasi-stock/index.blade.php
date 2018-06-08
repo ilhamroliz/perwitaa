@@ -41,18 +41,18 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
   </div>
     <div class="ibox">
         <div class="ibox-content">
           <div class="row">
                   <div class="col-xs-12">
-              
+
               <div class="box" id="seragam_box">
                 <div class="box-header">
                 </div><!-- /.box-header -->
-               
+
                 <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">
                 <div style="margin-left:-30px;">
                   <div class="col-md-1 col-sm-2 col-xs-12">
@@ -68,7 +68,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-6">
+                  <div class="col-md-5 col-sm-5 col-xs-5">
                       <select class="form-control chosen-select-width pull-right" name="barang" style="width:50%; cursor: pointer;" id="barang">
                             <option value="null" selected>--Semua Seragam--</option>
                         @foreach($databarang as $seragam)
@@ -82,12 +82,12 @@
                         @endforeach
                       </select>
                   </div>
-                    <button class="btn btn-info btn-md btn-flat " type="button" id="filter">Filter Cari</button> 
+                  <button class="btn btn-info btn-md btn-flat" style="float:right;" type="button" id="filter">Filter Cari</button>
                  </div>
                 </div>
-                   
+
               </div>
-             
+
                 <div class="box-body">
                   <table id="data" class="table table-bordered table-striped data" style="width:100%">
                     <thead>
@@ -102,15 +102,15 @@
                           <th style="text-align: center;" >NOTA</th>
                       </tr>
                     </thead>
-                    <tbody>          
-                    </tbody>           
+                    <tbody>
+                    </tbody>
                   </table>
                 </div><!-- /.box-body -->
                 <div class="footer">
                   <div class="pull-right">
 
                     </div>
-                  </div><!-- /.box-footer --> 
+                  </div><!-- /.box-footer -->
               </div><!-- /.box -->
             </div><!-- /.col -->
         </div>
@@ -151,7 +151,7 @@ $(document).ready(function() {
           "ajax":{
                 "url" : baseUrl + "/manajemen-stock/mutasi-stock/tabel",
                 "type": "GET",
-                
+
           },
            "columns": [
               { "data": "c_name" },
@@ -213,7 +213,7 @@ $(document).ready(function() {
                 "data": {gudang: kodegudang, tanggal1: tanggaljadi1, tanggal2: tanggaljadi2, barang: kodebarang},
                 "url" : baseUrl + "/manajemen-stock/mutasi-stock/tabel2",
                 "type": "GET",
-                
+
           },
            "columns": [
               { "data": "c_name" },
@@ -229,9 +229,9 @@ $(document).ready(function() {
 
       });
       waitingDialog.hide();
-    }); 
+    });
 
-   
+
     // ====select range date picker =====//
       var date_input=$('input[name="date"]'); //our date input has the name "date"
       var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
@@ -255,7 +255,7 @@ $(document).ready(function() {
 
       var bulanlalu = month1 + "/" + day + "/" + year;
       var today = month + "/" + day + "/" + year;
-      $("#tanggal1").attr("value", bulanlalu);      
+      $("#tanggal1").attr("value", bulanlalu);
       $("#tanggal2").attr("value", today);
     // ====select range date picker =====//
 
