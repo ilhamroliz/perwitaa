@@ -310,7 +310,7 @@ class mitraPekerjaController extends Controller
             /*  ->where('mp_workin_date',$update_mitra_pekerja->mp_workin_date)
               ->where('mp_selection_date',$update_mitra_pekerja->mp_selection_date)*/
             ->where('mp_contract', $update_mitra_contract->mc_contractid)
-            ->where('mp_contract', $update_mitra_contract->mc_status_mp)
+
             ->get();
 
         $pekerja = DB::table('d_pekerja')
@@ -370,8 +370,6 @@ class mitraPekerjaController extends Controller
         return response()->json([
             'status' => 'berhasil',
         ]);
-
-
     }
 
 
@@ -402,8 +400,8 @@ class mitraPekerjaController extends Controller
             ->where('d_mitra_contract.mc_contractid', $kontrak)
             ->first();
 
-        $mc->mc_date = date('d-F-Y', strtotime($mc->mc_date));
-        $mc->mc_expired = date('d-F-Y', strtotime($mc->mc_expired));
+        $mc->mc_date = Carbon::createFromFormat('Y-m-d', $mc->mc_date, 'Asia/Jakarta')->format('d/m/Y');
+        $mc->mc_expired = Carbon::createFromFormat('Y-m-d', $mc->mc_expired, 'Asia/Jakarta')->format('d/m/Y');
         if ($mc->mc_no != '' || $mc->mc_no != null) {
             return response()->json([
                 'status' => 'berhasil',
@@ -419,9 +417,4 @@ class mitraPekerjaController extends Controller
 
 
     }
-    /* public function hapus($mp_pekerja){
-
-       $osas = new pdmController();
-             $osas->hapus($mp_pekerja);
-     }*/
 }

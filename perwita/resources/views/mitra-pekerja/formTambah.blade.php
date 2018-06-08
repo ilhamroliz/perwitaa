@@ -158,7 +158,7 @@
                                     </div>
 
 
-                                    <label for="totalPekerja" class="col-sm-3 col-form-label" style="width:18%">Total Pekerja Terpenuhi</label>
+                                    <label for="totalPekerja" class="col-sm-3 col-form-label" style="width:18%">Pekerja Terpenuhi</label>
                                     <div class="col-sm-3">
                                         <input value="0" type="number" class="form-control" name="totalPekerja"
                                                readonly="" id="totalPekerja" required="">
@@ -207,12 +207,9 @@
                                     @foreach($pekerja as $index => $data)
                                         <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                                             <td>
-                                                {{-- <input type="hidden" name="chek[]" class="chek-all chek-{{$index}}" value="{{$data->p_id}}">
-                                                <input type="hidden" name="pekerja[]" value="{{$data->p_id}}"> --}}
                                                 <input class="pilih-{{$index}}" type="checkbox" name="pilih[]"
                                                        onclick="selectBox({{$index}})" value="{{$data->p_id}}">
                                             </td>
-                                            {{-- <td><input type="text" name="nik_mitra[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase"></td> --}}
                                             <td>{{$data->p_name}}</td>
                                             <td>{{$data->p_sex}}</td>
                                             <td>{{$data->p_address}}</td>
