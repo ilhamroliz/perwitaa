@@ -212,7 +212,7 @@ setTimeout(function () {
             html +='<tr>'+
                   '<td>'+(i + 1)+'</td>'+
                   '<td>'+result.pekerja[i].p_name+'</td>'+
-                  '<td>'+result.pekerja[i].mp_mitra_nik+'</td>'+
+                  '<td style="text-transform: uppercase;">'+result.pekerja[i].mp_mitra_nik+'</td>'+
                   '<td>'+result.pekerja[i].p_hp+'</td>'+
                   '</tr>';
           }
