@@ -430,9 +430,109 @@ class pekerjaController extends Controller
     public function edit($id)
     {
 
+        $jabatan = DB::table('d_jabatan_pelamar')
+                ->select('jp_name', 'jp_id')->get();
 
-        $pekerja = d_pekerja::where('p_id', $id)->first();
-        return view('pekerja.formEdit', compact('pekerja'));
+        $pekerja = DB::table('d_pekerja')
+              ->where('p_id', '=', $id)
+              ->select('p_name'
+                , 'p_address'
+                , 'p_rt_rw'
+                , 'p_kecamatan'
+                , 'p_kel'
+                , 'p_city'
+                , 'p_jabatan_lamaran'
+                , 'p_address_now'
+                , 'p_rt_rw_now'
+                , 'p_kecamatan_now'
+                , 'p_kel_now'
+                , 'p_city_now'
+                , 'p_birthplace'
+                , 'p_birthdate'
+                , 'p_ktp'
+                , 'p_telp'
+                , 'p_hp'
+                , 'p_sex'
+                , 'p_state'
+                , 'p_status'
+                , 'p_many_kids'
+                , 'p_religion'
+                , 'p_education'
+                , 'p_name_family'
+                , 'p_address_family'
+                , 'p_telp_family'
+                , 'p_hp_family'
+                , 'p_address_family'
+                , 'p_hubungan_family'
+                , 'p_dad_name'
+                , 'p_dad_job'
+                , 'p_mom_name'
+                , 'p_mom_job'
+                , 'p_job_now'
+                , 'p_weight'
+                , 'p_height'
+                , 'p_seragam_size'
+                , 'p_celana_size'
+                , 'p_sepatu_size'
+                , 'p_img')
+              ->get();
+
+          $child = DB::table('d_pekerja_child')
+                ->select('pc_child_name', 'pc_birth_place', 'pc_birth_date')
+                ->where('pc_pekerja', '=', $id)
+                ->get();
+
+          $keterampilan = DB::table('d_pekerja_keterampilan')
+                 ->select('pk_keterampilan')
+                 ->where('pk_pekerja', '=', $id)
+                 ->get();
+
+          $bahasa = DB::table('d_pekerja_language')
+                 ->select('pl_language')
+                 ->where('pl_pekerja', '=', $id)
+                 ->get();
+
+          $pengalaman = DB::table('d_pekerja_pengalaman')
+                  ->select('pp_perusahaan', 'pp_start', 'pp_end', 'pp_jabatan')
+                  ->where('pp_pekerja', '=', $id)
+                  ->get();
+
+          $referensi = DB::table('d_pekerja_referensi')
+                  ->select('pr_referensi')
+                  ->where('pr_pekerja', '=', $id)
+                  ->get();
+
+          $sim = DB::table('d_pekerja_sim')
+                  ->select('ps_sim')
+                  ->where('ps_pekerja', '=', $id)
+                  ->get();
+
+            /*  echo "<pre>";
+              print_r($pekerja);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($child);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($keterampilan);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($bahasa);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($pengalaman);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($referensi);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($sim);
+              echo "</pre>";
+              echo "<pre>";
+              print_r($jabatan);
+              echo "</pre>";*/
+
+       return view('pekerja.formEdit', compact('pekerja', 'jabatan', 'child', 'keterampilan', 'bahasa', 'pengalaman', 'referensi', 'sim'));
 
     }
 
