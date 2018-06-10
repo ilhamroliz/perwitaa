@@ -464,6 +464,9 @@ class pekerjaController extends Controller
                 , 'p_hp_family'
                 , 'p_address_family'
                 , 'p_hubungan_family'
+                , 'p_wife_name'
+                , 'p_wife_birth'
+                , 'p_wife_birthplace'
                 , 'p_dad_name'
                 , 'p_dad_job'
                 , 'p_mom_name'
@@ -503,7 +506,7 @@ class pekerjaController extends Controller
                   ->get();
 
           $sim = DB::table('d_pekerja_sim')
-                  ->select('ps_sim')
+                  ->select('ps_sim', 'ps_note')
                   ->where('ps_pekerja', '=', $id)
                   ->get();
 
