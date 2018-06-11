@@ -149,9 +149,7 @@ class mitraPekerjaController extends Controller
     {
 
         $mitra_contract = d_mitra_contract::where('mc_fulfilled', '<', DB::raw('mc_need'))->get();
-        $pekerja = d_pekerja::leftJoin('d_mitra_pekerja', 'd_pekerja.p_id', '=', 'd_mitra_pekerja.mp_pekerja')
-            ->where('mp_pekerja', '=', null)
-            ->get();
+        $pekerja = DB::select('select p_id, p_name, p_sex, p_address, p_hp, p_education from d_pekerja left join d_mitra_pekerja on mp_pekerja = p_id where p_id not in (select mp_pekerja from d_mitra_pekerja where mp_status = "Aktif")');
         $update_mitra_contract = DB::table('d_mitra_contract')->get();
         return view('mitra-pekerja.formTambah', compact('pekerja1', 'update_mitra_contract', 'pekerja', 'mitra_contract'));
     }
@@ -164,7 +162,7 @@ class mitraPekerjaController extends Controller
         $kerja = $request->mp_workin_date;
 
         $pekerja = DB::table('d_pekerja')
-            ->select('p_name', 'p_ktp', 'p_sex', 'p_hp', 'p_id')
+            ->select('p_name', 'p_ktp', 'p_sex', 'p_hp', 'p_id', 'p_nip', 'p_nip_mitra')
             ->whereIn('p_id', $request->pilih)
             ->get();
 
@@ -194,6 +192,7 @@ class mitraPekerjaController extends Controller
             $id_kontrak = $request->id_kontrak;
             $tgl_kerja = $request->tgl_kerja;
             $tgl_seleksi = $request->tgl_seleksi;
+            $nik = $request->nik;
 
             $cekSelected = count($request->id_pekerja);
             if ($cekSelected == 0) {
@@ -249,6 +248,15 @@ class mitraPekerjaController extends Controller
                     );
                     array_push($mutasi, $tempMutasi);
                     array_push($data, $temp);
+
+                    d_pekerja::where('p_id', $id_pekerja[$index])
+                        ->update(array(
+                            'p_note' => 'Seleksi',
+                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                            'p_nip' => strtoupper($nik[$index]),
+                            'p_nip_mitra' => strtoupper($nik_mitra[$index])
+                        ));
+
                 } else {
                     return response()->json([
                         'status' => 'gagal',
@@ -256,7 +264,7 @@ class mitraPekerjaController extends Controller
                     ]);
                 }
             }
-            d_pekerja::whereIn('p_id', $id_pekerja)->update(array('p_note' => 'Seleksi'));
+
             d_mitra_pekerja::insert($data);
             d_pekerja_mutation::insert($mutasi);
             d_mitra_contract::where('mc_contractid', $id_kontrak)->update([

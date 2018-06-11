@@ -38,7 +38,23 @@
     </style>
 @endsection
 @section('content')
-
+    
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-8">
+            <h2>Penerimaan Pekerja</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ url('/') }}">Home</a>
+                </li>
+                <li>
+                    Manajemen Pekerja
+                </li>
+                <li class="active">
+                    <strong>Penerimaan Pekerja</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="alert alert-danger pesan" style="display:none;">
             <ul></ul>
@@ -68,7 +84,8 @@
                         <table class="table table-bordered table-striped pilihMitraPekerja table-hover" id="pilihMitraPekerja">
                             <thead>
                                 <th>Nama Pekerja</th>
-                                <th>NIK</th>
+                                <th>NIK<sup>*</sup></th>
+                                <th>NIK Mitra<sup>*</sup></th>
                                 <th>No KTP</th>
                                 <th>JK</th>
                                 <th>No Hp</th>
@@ -78,8 +95,11 @@
                                 <tr>
                                     <td>{{$data->p_name}}</td>
                                     <td>
-                                        <input type="text" name="nik_mitra[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%">
+                                        <input type="text" name="nik[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip }}">
                                         <input type="hidden" name="id_pekerja[]" value="{{ $data->p_id }}">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="nik_mitra[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip_mitra }}">
                                     </td>
                                     <td>{{ $data->p_ktp }}</td>
                                     <td>{{$data->p_sex}}</td>
@@ -92,7 +112,10 @@
 
                         <div class="hr-line-dashed"></div>
                         <div class="form-group row">
-                            <div class="col-sm-12" style="float: right">
+                            <div class="col-sm-12">
+                                <div class="m-t" style="float: left">
+                                    <small><sup>*</sup>Jika sudah terisi, mungkin itu data lama dan bisa diganti sekarang</small>
+                                </div>
                                 <button class="btn btn-primary simpan" type="button" onclick="simpan()" style="float: right">
                                     Simpan
                                 </button>
