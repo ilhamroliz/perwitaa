@@ -30,7 +30,9 @@
                     <h5>Form Edit Data Pekerja</h5>
                 </div>
                 <div class="ibox-content">
-                    <form method="POST" class="form-horizontal form-pendaftaran" action="{{ url('manajemen-pekerja/data-pekerja/simpan') }}" accept-charset="UTF-8" id="tambahpekerja" enctype="multipart/form-data">
+                    <form method="POST" class="form-horizontal form-pekerja" action="{{ url('manajemen-pekerja/data-pekerja/perbarui') }}" accept-charset="UTF-8" id="perbaruipekerja" enctype="multipart/form-data">
+                      <input type="hidden" name="id" value="{{$id}}">
+                      <input type="hidden" name="imglama" value="{{$pekerja[0]->p_img}}">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
@@ -211,7 +213,7 @@
                                     <label for="single"> Single </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                  @if($pekerja[0]->p_status == "Single")
+                                  @if($pekerja[0]->p_status == "Kawin")
                                     <input type="radio" id="kawin" value="Kawin" name="status" checked="">
                                   @else
                                   <input type="radio" id="kawin" value="Kawin" name="status">
@@ -429,8 +431,8 @@
                                     <label for="mandarin"> Mandarin </label>
                                 </div>
                                 <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                                  @if($bahasa[3]->pl_language == "LAINNYA" || $bahasa[3]->pl_language != "LAINNYA" )
-                                  <input type="checkbox" id="bahasalain" value="LAINNYA" name="bahasa[]" checked>
+                                  @if($bahasa[3]->pl_language != "" || $bahasa[3]->pl_language != "LAINNYA" )
+                                  <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]" checked>
                                   <label for="bahasalain"> Lainnya </label>
                               </div>
                               <div class="col-sm-4">
@@ -718,65 +720,122 @@
                                 <input type="text" class="form-control" id="wifelahir" name="wifelahir" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$pekerja[0]->p_wife_birthplace}}">
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="wifettl" name="wifettl" placeholder="Tanggal" value="{{$pekerja[0]->p_wife_birth}}">
+                                <input type="text" class="form-control" id="wifettl" name="wifettl" placeholder="Tanggal" value="{{Carbon\Carbon::parse($pekerja[0]->p_wife_birth)->format('d/m/Y')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Anak 1</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase" value="{{$child[0]->pc_child_name}}">
+                                @if(!empty($child[0]) || !empty($child[1]) || !empty($child[2]))
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase" value="{{$child[0]->pc_child_name}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[0]->pc_birth_place}}">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[0]->pc_birth_date)->format('d/m/Y')}}">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[0]->pc_birth_place}}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Anak 2</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase" value="{{$child[1]->pc_child_name}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[1]->pc_birth_place}}">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[1]->pc_birth_date)->format('d/m/Y')}}">
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{$child[0]->pc_birth_date}}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Anak 3</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase" value="{{$child[2]->pc_child_name}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[2]->pc_birth_place}}">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[2]->pc_birth_date)->format('d/m/Y')}}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Anak 2</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase" value="{{$child[1]->pc_child_name}}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nama Ayah</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control dadname" id="dadname" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_name}}">
+                                </div>
+                                <label class="col-sm-2 control-label">Pekerjaan</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control dadjob" id="dadjob" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_job}}">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[1]->pc_birth_place}}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nama Ibu</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control momname" id="momname" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_name}}">
+                                </div>
+                                <label class="col-sm-2 control-label">Pekerjaan</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_job}}">
+                                </div>
+                                @else
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" >
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{$child[1]->pc_birth_date}}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Anak 2</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase" >
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Anak 3</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase" value="{{$child[2]->pc_child_name}}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Anak 3</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase" >
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$child[2]->pc_birth_place}}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nama Ayah</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control dadname" id="dadname" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_name}}">
+                                </div>
+                                <label class="col-sm-2 control-label">Pekerjaan</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control dadjob" id="dadjob" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_job}}">
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{$child[2]->pc_birth_date}}">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nama Ayah</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control dadname" id="dadname" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_name}}">
-                            </div>
-                            <label class="col-sm-2 control-label">Pekerjaan</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control dadjob" id="dadjob" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_job}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nama Ibu</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control momname" id="momname" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_name}}">
-                            </div>
-                            <label class="col-sm-2 control-label">Pekerjaan</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_job}}">
-                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nama Ibu</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control momname" id="momname" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_name}}">
+                                </div>
+                                <label class="col-sm-2 control-label">Pekerjaan</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_job}}">
+                                </div>
+                              @endif
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -800,7 +859,7 @@
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-1">
                                 <?php if(stristr($pekerja[0]->p_job_now, "KULIAH")) {?>
-                                    <input type="radio" id="kuliah" value="KULIAH" name="saatini" checked>
+                                    <input type="radio" id="kuliah" value="kuliah" name="saatini" checked>
                                     <label for="kuliah"> Kuliah </label>
                                 </div>
                                 <div class="col-sm-6">
@@ -884,7 +943,7 @@
                         </div> --}}
                         <div class="form-group">
                             <div class="col-sm-2" style="float: right">
-                                <button class="btn btn-primary" {{-- onclick="perbarui()" --}} type="simpan" style="float: right">Simpan</button>
+                                <button class="btn btn-primary"  {{-- onclick="perbarui({{$id}})" --}} type="perbarui" style="float: right">Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -1023,8 +1082,17 @@ function TambahPengalaman(){
     }
 
 
-    function Perbarui() {
-        var p_id=$('#p_id').val();
+    function perbarui(id) {
+        $.ajax({
+          type : 'get',
+          timeout : 10000,
+          url: baseUrl + '/manajemen-pekerja/data-pekerja/perbarui/',
+          dataType: 'json',
+          success : function(response){
+            console.log(response);
+          }
+        });
+        /*var p_id=$('#p_id').val();
         var buttonLadda = $('.simpan').ladda();
         buttonLadda.ladda('start');
          if(validateForm()){
@@ -1070,7 +1138,7 @@ function TambahPengalaman(){
         });
          }else{
               buttonLadda.ladda('stop');
-         }
+         }*/
     }
 
 </script>

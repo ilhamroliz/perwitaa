@@ -97,10 +97,10 @@
                                        style="width: 100%;">
                                     <thead>
                                     <tr>
-                                        <th style="width: 30%;">Nama</th>
+                                        <th style="width: 22%;">Nama</th>
                                         <th style="width: 5%;">Jk</th>
-                                        <th style="width: 20%;">No Telp.</th>
-                                        <th style="width: 30%;">Alamat</th>
+                                        <th style="width: 15%;">No Telp.</th>
+                                        <th style="width: 25%;">Alamat</th>
                                         <th style="width: 5%;">Status</th>
                                         <th style="width: 15%;">Aksi</th>
                                     </tr>
