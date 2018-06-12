@@ -25,7 +25,22 @@
 @endsection
 
 @section('content')
-
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Mitra Perusahaan</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url('/') }}">Home</a>
+            </li>
+            <li>
+                Manajemen Mitra
+            </li>
+            <li class="active">
+                <strong>Tambah Data Mitra Perusahaan</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="alert alert-danger pesan" style="display:none;">
         <ul></ul>
@@ -41,57 +56,85 @@
                         </a>
                     </div>
                 </div>
+                <div class="error-load">
+
+                </div>
                 <div class="ibox-content">
                     <form id="form-mitra">
                         <div class="form-group row">
-                            <label for="Nama" class="col-sm-2 col-form-label">Nama Mitra</label>
+                            <label for="nomou" class="col-sm-2 col-form-label">No MOU</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Nama Mitra" id="Nama" placeholder="Nama Mitra" required="">
+                                <input type="text" class="form-control" name="nomou" id="nomou" placeholder="No MOU" required="" onkeypress="validate(event)">
+                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="no-error">
+                                    <small>No Mou harus diisi! ...</small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="namamitra" class="col-sm-2 col-form-label">Nama Mitra</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="namamitra" id="namamitra" placeholder="Nama Mitra" required="">
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="nama-error">
-                                    <small>Nama Mitra harus diisi...!</small>
+                                    <small>Nama Mitra harus diisi! ...</small>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Alamat" class="col-sm-2 col-form-label">Alamat Mitra</label>
+                            <label for="tanggalmou" class="col-sm-2 col-form-label">Tanggal MOU</label>
+                              <div class="col-sm-2">
+                                  <input type="text" class="form-control start-mou date-mou" name="startmou" style="text-transform:uppercase" title="Start Mou"  placeholder="Start">
+                              </div>
+                              <div class="col-sm-2">
+                                  <input type="text" class="form-control end-mou date-mou" name="endmou" style="text-transform:uppercase" title="End Mou"  placeholder="End">
+                              </div>
+                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="tanggal-error">
+                                    <small>Tanggal Mou harus diisi! ...</small>
+                                </span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="alamat" class="col-sm-2 col-form-label">Alamat Mitra</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Alamat" id="Alamat" placeholder="Alamat Mitra" required="">
+                                <input type="text" class="form-control" name="alamatmitra" id="alamatmitra" placeholder="Alamat Mitra" required="">
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="alamat-error">
-                                    <small>Alamat harus diisi...!</small>
+                                    <small>Alamat Mitra harus diisi! ...</small>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Telp" class="col-sm-2 col-form-label">No Telp.</label>
+                            <label for="cperson" class="col-sm-2 col-form-label">Contact Person</label>
+                              <div class="col-sm-5">
+                                  <input type="text" class="form-control nama-cp" name="nama_cp" id="cperson" title="Nama Contact Person"  placeholder="Nama Contact Person">
+                              </div>
+                              <div class="col-sm-5">
+                                  <input type="text" class="form-control no-cp" name="no_cp" title="No Contact Person"  placeholder="No Contact Person" onkeypress="validate(event)">
+                              </div>
+                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="cperson-error">
+                                    <small>Contact Person harus diisi! ...</small>
+                                </span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="notelp" class="col-sm-2 col-form-label">Nomor Telepon</label>
                             <div class="col-sm-10">
-                                <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" class="form-control" name="No_Telp" id="Telp" placeholder="No Telp." required="">
-                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="telp-error">
-                                    <small>No Telp. harus diisi...!</small>
+                                <input type="text" class="form-control" name="notelp" id="notelp" placeholder="Nomor Telepon" required="">
+                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="notelp-error">
+                                    <small>Nomor Telepon harus diisi! ...</small>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Fax" class="col-sm-2 col-form-label">No Fax.</label>
+                            <label for="ket" class="col-sm-2 col-form-label">Keterangan</label>
                             <div class="col-sm-10">
-                                <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" class="form-control" name="Fax" id="Fax" placeholder="No Fax" required="">
-                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="fax-error">
-                                    <small>No Fax harus diisi...!</small>
+                                <input type="text" class="form-control" name="ket" id="ket" placeholder="Keterangan" required="">
+                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="ket-error">
+                                    <small>Keterangan harus diisi! ...</small>
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="Keterangan" class="col-sm-2 col-form-label">Keterangan</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Keterangan" id="Keterangan" placeholder="Keterangan" required="">
-                                <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="keterangan-error">
-                                    <small>Keterangan harus diisi...!</small>
-                                </span>
-                            </div>
-                        </div>
+
                         <div class="hr-line-dashed"></div>
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
-                                      <a href="{{url('/manajemen-mitra/data-mitra')}}" class="btn btn-danger btn-flat">Kembali</a> 
+                                      <a href="{{url('/manajemen-mitra/data-mitra')}}" class="btn btn-danger btn-flat">Kembali</a>
                                         <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="button" onclick="simpan()">
                                             Simpan
                                         </button>
@@ -111,42 +154,60 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-    var info = $('.pesan');
-    $('.tanggal').datepicker({
-        autoclose: true,
-        format: 'dd-M-yyyy',
-        endDate: 'today'
-    }).datepicker("setDate", "0");
+    $(document).ready(function(){
+      $('.start-mou').datepicker({
+          autoclose: true,
+          format: 'dd/mm/yyyy'
+      });
+      $('.end-mou').datepicker({
+          autoclose: true,
+          format: 'dd/mm/yyyy'
+      });
+    });
+
+    function validate(evt) {
+  var theEvent = evt || window.event;
+  var key = theEvent.keyCode || theEvent.which;
+  key = String.fromCharCode( key );
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+
     function simpan() {
-        var buttonLadda = $('.simpan').ladda();
-        buttonLadda.ladda('start');
         if (validateForm()) {
+          $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
             $.ajax({
                 url: baseUrl + '/manajemen-mitra/data-mitra/simpan',
-                // type        : 'post',
-                type: 'get',
-                timeout: 10000,
+                type: 'post',
                 data: $('#form-mitra').serialize(),
                 dataType: 'json',
-                enctype: 'multipart/form-data',
-                processData: false, // tell jQuery not to process the data
-                contentType: false,
                 success: function (response) {
-                    if (response.status == 'berhasil') {
-                        window.location = baseUrl + '/manajemen-mitra/data-mitra';
-                    } else if (response.status == 'gagal') {
-                        info.css('display', '');
-                        $.each(response.data, function (index, error) {
-                            info.find('ul').append('<li>' + error + '</li>');
-                        });
-                        buttonLadda.ladda('stop');
-                    }
-
-
-
+                  if (response.status == 'berhasil') {
+                          swal({
+                              title: "Sukses",
+                              text: "Data sudah tersimpan",
+                              type: "success"
+                          }, function () {
+                              window.location = baseUrl + '/manajemen-mitra/data-mitra';
+                          });
+                      } else if(response.status == 'gagal') {
+                          swal({
+                              title: "Gagal",
+                              text: "Sistem gagal menyimpan data",
+                              type: "error",
+                              showConfirmButton: false
+                          });
+                      }
                 },
-                error: function (xhr, status) {
-                    if (status == 'timeout') {
+                error : function(xhr, status){
+                  if (status == 'timeout') {
                         $('.error-load').css('visibility', 'visible');
                         $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
                     }
@@ -158,26 +219,27 @@
                         $('.error-load').css('visibility', 'visible');
                         $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
                     }
-
-                    buttonLadda.ladda('stop');
                 }
-            });
-        } else {
-            buttonLadda.ladda('stop');
-        }
-    }
+              });
+            }
+          }
 
     function validateForm() {
         $('.reset').css('display', 'none');
-        var nama = document.getElementById('Nama');
-        var alamat = document.getElementById('Alamat');
-        var telp = document.getElementById('Telp');
-        var fax = document.getElementById('Fax');
-        var keterangan = document.getElementById('Keterangan');
+        var no = document.getElementById('nomou');
+        var nama = document.getElementById('namamitra');
+        var alamat = document.getElementById('alamatmitra');
+        var cperson = document.getElementById('cperson');
+        var notelp = document.getElementById('notelp');
+        var keterangan = document.getElementById('ket');
 
         //alert(username.value);
 
-        if (nama.validity.valueMissing) {
+        if (no.validity.valueMissing) {
+            $('#no-error').css('display', '');
+            return false;
+        }
+        else if (nama.validity.valueMissing) {
             $('#nama-error').css('display', '');
             return false;
         }
@@ -185,16 +247,16 @@
             $('#alamat-error').css('display', '');
             return false;
         }
-        else if (telp.validity.valueMissing) {
-            $('#telp-error').css('display', '');
+        else if (cperson.validity.valueMissing) {
+            $('#cperson-error').css('display', '');
             return false;
         }
-        else if (fax.validity.valueMissing) {
-            $('#fax-error').css('display', '');
+        else if (notelp.validity.valueMissing) {
+            $('#notelp-error').css('display', '');
             return false;
         }
         else if (keterangan.validity.valueMissing) {
-            $('#keterangan-error').css('display', '');
+            $('#ket-error').css('display', '');
             return false;
         }
 
