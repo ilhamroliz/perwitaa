@@ -15,7 +15,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Data Mitra</h2>
+        <h2>Mitra Perusahaan</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -24,20 +24,20 @@
                 Manajemen Mitra
             </li>
             <li class="active">
-                <strong>Daftar Mitra</strong>
+                <strong>Mitra Perusahaan</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Data Mitra</h5>
+        <h5>Mitra Perusahaan</h5>
         <a href="{{ url('manajemen-mitra/data-mitra/tambah') }}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">     
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
 
                   <center>
                     <div class="spiner-example">
@@ -48,27 +48,27 @@
                             <div class="sk-rect4"></div>
                             <div class="sk-rect5"></div>
                         </div>
-                        <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Mitra</span>
+                        <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Mitra Perusahaan</span>
                     </div>
                 </center>
 
 
                 <table id="mitra" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
-                        <tr>           
-                            <th>No</th>            
-                            <th>Nama Mitra</th>            
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Mitra</th>
                             <th>Alamat Mitra</th>
                             <th>Nomor Hp</th>
-                            <th>Fax</th>                                
+                            <th>Fax</th>
                             <th>Keterangan</th>
                             <th style="width: 8%;">Action</th>
                         </tr>
-                    </thead>     
+                    </thead>
                     <tbody>
                     </tbody>
                 </table>
-            </div>  
+            </div>
         </div>
 
     </div>
@@ -93,18 +93,18 @@
         table = $("#mitra").DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ url('manajemen-mitra/data-mitra/table') }}',  
+            ajax: '{{ url('manajemen-mitra/data-mitra/table') }}',
             dataType: 'json',
-            columns: [            
+            columns: [
             {data: 'number', name: 'number'},
             {data: 'm_name', name: 'm_name'},
             {data: 'm_address', name: 'm_address'},
             {data: 'm_phone', name: 'm_phone'},
             {data: 'm_fax', name: 'm_fax'},
-            {data: 'm_note', name: 'm_note'},            
+            {data: 'm_note', name: 'm_note'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
             ],
-            responsive: true,        
+            responsive: true,
             "pageLength": 10,
             "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         //"scrollY": '50vh',
