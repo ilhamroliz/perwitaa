@@ -101,6 +101,7 @@ Route::get('manajemen-pekerja/data-pekerja/detail-mutasi','pekerjaController@det
 //mitra-pekerja
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra','mitraPekerjaController@index');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/table','mitraPekerjaController@data');
+Route::post('manajemen-pekerja-mitra/data-pekerja-mitra/table','mitraPekerjaController@data');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/tambah','mitraPekerjaController@tambah');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/lanjut','mitraPekerjaController@lanjutkan');
 Route::post('manajemen-pekerja-mitra/data-pekerja-mitra/lanjut','mitraPekerjaController@lanjutkan');

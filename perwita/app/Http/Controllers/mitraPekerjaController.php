@@ -299,8 +299,8 @@ class mitraPekerjaController extends Controller
             ->select('d_mitra_contract.mc_mitra'
                 , 'd_mitra_contract.mc_contractid'
                 , 'd_mitra_contract.mc_no'
-                , 'd_mitra_contract.mc_date'
-                , 'd_mitra_contract.mc_expired'
+                , DB::raw('DATE_FORMAT(mc_date, "%d/%m/%Y") as mc_date')
+                , DB::raw('DATE_FORMAT(mc_expired, "%d/%m/%Y") as mc_expired')
                 , 'd_mitra_contract.mc_need'
                 , 'd_mitra_contract.mc_fulfilled'
                 , 'd_mitra_contract.mc_comp'
@@ -316,13 +316,14 @@ class mitraPekerjaController extends Controller
             ->where('d_mitra_contract.mc_contractid', $kontrak)
             ->first();
 
-        $update_mitra_pekerja = d_mitra_pekerja::
-        where('mp_comp', $update_mitra_contract->mc_comp)
-            ->where('mp_mitra', $update_mitra_contract->mc_mitra)
-            ->where('mp_contract', $update_mitra_contract->mc_contractid)
+        $pekerja = DB::table('d_mitra_pekerja')
+            ->leftJoin('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->select('p_name', 'mp_mitra_nik', 'p_nip', 'mp_id', DB::raw('DATE_FORMAT(mp_selection_date, "%d/%m/%Y") as mp_selection_date'), DB::raw('DATE_FORMAT(mp_workin_date, "%d/%m/%Y") as mp_workin_date'), 'p_id')
+            ->where('mp_status', '=', 'Aktif')
+            ->where('mp_contract', '=', $kontrak)
             ->get();
 
-        return view('mitra-pekerja.formEdit', compact('mitra_contract', 'anjp', 'asw', 'a', 'd_datedate', 'd_mitra_pekerja', 'update_mitra_contract', 'update_mitra_pekerja', 'pekerja'));
+        return view('mitra-pekerja.formEdit', compact('pekerja', 'update_mitra_contract'));
     }
 
     public function perbarui(Request $request, $mitra, $mc_contractid)

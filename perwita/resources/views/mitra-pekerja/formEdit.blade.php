@@ -29,6 +29,10 @@
             margin-right: 10px;
         }
 
+        table.dataTable tbody td {
+            vertical-align: middle;
+        }
+
     </style>
 
 @endsection
@@ -136,8 +140,6 @@
 
 
                                     <div class="form-group row">
-
-
                                     </div>
                                     <div class="form-group row">
                                         <label for="jumlahPekerja" class="col-sm-2 col-form-label">Jumlah
@@ -163,66 +165,46 @@
 
                             </form>
 
-                            <div class="hr-line-dashed"></div>
-                            <div>
-                                {{-- <table class="table table-bordered table-striped pilihMitraPekerja">
+                            <div class="col-md-12" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped table-bordered" id="table-pekerja">
                                     <thead>
-                                    <th>
-                                        <input type="checkbox" class="setCek" onclick="cekAll()">
-                                    </th>
-                                    <th>Nama Pekerja</th>
-                                    <th>Usia</th>
-                                    <th>Alamat</th>
-                                    <th>No Hp</th>
-                                    <th>Pendidikan</th>
-                                    <th>mitranik</th>
-                                    <th hidden=""></th>
-                                    <th hidden=""></th>
-
-
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>NIK</th>
+                                            <th>NIK Mitra</th>
+                                            <th>Seleksi</th>
+                                            <th>Bekerja</th>
+                                            <th>Aksi</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($anjp as $index => $data)
-
-                                        <tr @if($data->mp_pekerja!='') style="background: #bbc4d6;"
-                                            @endif class="select-{{$index}}" onclick="select({{$index}})">
-                                            <td>
-                                                <input type="hidden" name="chek[]" @if($data->mp_pekerja!='') value="1"
-                                                       @endif class="chek-all chek-{{$index}}">
-                                                <input type="hidden" name="pekerja[]" value="{{$data->p_id}}">
-                                                <input @if($data->mp_pekerja!='') checked="checked"
-                                                       @endif class="pilih-{{$index}}" type="checkbox" name="pilih[]"
-                                                       onclick="selectBox({{$index}});cekAB({{$index}});">
-                                            </td>
-                                            <td>{{$data->p_name}}</td>
-                                            <td>{{$data->p_sex}}</td>
-                                            <td>{{$data->p_address}}</td>
-                                            <td>{{$data->p_hp}}</td>
-                                            <td>{{$data->p_education}}</td>
-                                            <td><input type="text" name="mitra_nik[]" value=""></td>
-                                            <td style="display: none;" style="width: 2px">
-                                                <input style="width: 50px" class="a-{{$index}} form-control " name="a[]"
-                                                       value="@if($data->mp_pekerja!='')1 @elseif($data->mp_pekerja=='') 0 @endif">
-                                            </td>
-                                            <td style="display: none ;" style="width: 2px">
-                                                <input style="width: 50px" class="b-{{$index}} form-control" name="b[]"
-                                                       value="0">
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
+                                        @foreach($pekerja as $pekerja)
+                                            <tr class="pekerja-{{ $pekerja->p_id }}">
+                                                <td style="width: 20%;">{{ $pekerja->p_name }}<input type="hidden" name="p_id[]" value="{{ $pekerja->p_id }}"></td>
+                                                <td><input class="form-control" type="text" name="nip[]" value="{{ $pekerja->p_nip }}" style="width: 100%;"></td>
+                                                <td><input class="form-control" type="text" name="nip_mitra[]" value="{{ $pekerja->mp_mitra_nik }}" style="width: 100%;"></td>
+                                                <td style="width: 15%;"><input class="form-control seleksi-date" type="text" name="seleksi[]" value="{{ $pekerja->mp_selection_date }}" style="width: 100%;"></td>
+                                                <td style="width: 15%;"><input class="form-control kerja-date" type="text" name="kerja[]" value="{{ $pekerja->mp_workin_date }}" style="width: 100%;"></td>
+                                                <td class="text-center"><button onclick="hapus('{{ $pekerja->p_id }}')" type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
-                                </table> --}}
+                                </table>
+                            </div>
 
-                                <div class="hr-line-dashed"></div>
+                            <div>
                                 <div class="form-group row">
-                                    <div class="col-sm-4 col-sm-offset-9">
-                                        <a href="{{url('manajemen-pekerja-mitra/data-pekerja-mitra')}}"
-                                           class="btn btn-danger btn-flat" type="button">Kembali</a>
-                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan"
-                                                type="button" id="button" onclick="perbarui()">
-                                            Simpan
+                                    <div class="col-sm-6" style="float: left;">
+                                        <a href="{{url('manajemen-pekerja-mitra/data-pekerja-mitra/tambah')}}"
+                                           class="btn btn-primary btn-flat" type="button" style="float: left;">Tambah Pekerja</a>
+                                    </div>
+                                    <div class="col-sm-6" style="float: right;">
+                                        <button class="ladda-button ladda-button-demo btn btn-success btn-flat simpan"
+                                                type="button" id="button" onclick="perbarui()" style="float: right; margin-left: 10px;">
+                                            Perbarui
                                         </button>
+                                        <a href="{{url('manajemen-pekerja-mitra/data-pekerja-mitra')}}"
+                                           class="btn btn-danger btn-flat" type="button" style="float: right;">Batal</a>
                                     </div>
                                 </div>
                             </div>
@@ -238,258 +220,27 @@
 
 @section('extra_scripts')
     <script type="text/javascript">
-        var info = $('.pesan');
-
-
-        table = $(".pilihMitraPekerja").DataTable({
-            "columnDefs": [{
-                "targets": 0,
-                "orderable": false
-            }]
-        });
-
-        function cekAB(index) {
-            $nilaiA = ($('.a-' + index).val());
-            $nilaiB = ($('.b-' + index).val());
-            kuantitas = ($('.chek-' + index).val());
-
-            if (kuantitas == '' && $nilaiA == 0 && $nilaiB == 0) {
-
-            }
-            else if (kuantitas == '' && $nilaiA == 0 && $nilaiB == 1) {
-
-                $('.b-' + index).val(0);
-
-            }
-            else if (kuantitas != '' && kuantitas != '0' && $nilaiA == 0 && $nilaiB == 0) {
-
-                $('.b-' + index).val(1);//insert
-
-
-            }
-            else if (kuantitas != '' && kuantitas != '0' && $nilaiA == 1 && $nilaiB == 0) {
-
-
-                $('.b-' + index).val(1);            //update
-            }
-            else if (kuantitas != '' && kuantitas != '0' && $nilaiA == 1 && $nilaiB == 2) {
-                $('.b-' + index).val(1);          //update
-
-            }
-            else if (kuantitas == '0' && $nilaiA == 1 && $nilaiB == 0 || kuantitas == '' && $nilaiA == 1 && $nilaiB == 0) {
-                $('.b-' + index).val(2);  //delete
-
-
-            }
-            else if (kuantitas == '' && $nilaiA == 1 && $nilaiB == 1 || kuantitas == '0' && $nilaiA == 1 && $nilaiB == 1) {
-                $('.b-' + index).val(2);          //delete  //
-
-            }
-
-
-        };
-
-        var countchecked = 0;
-
-        function cekAll() {
-
-            if ($('.setCek ').is(":checked")) {
-                table.$('input[name="pilih[]"]').prop("checked", true);
-
-
-                //table.$('input[name="pilih[]"]').css('background','red');
-                table.$('.chek-all').val('1');
-
-            } else {
-                table.$('input[name="pilih[]"]').prop("checked", false);
-
-
-                table.$('.chek-all').val('');
-
-            }
-
-            hitung();
-            hitungSelect();
-        }
-
-        function hitung() {
-            countchecked = table.$("input[name='pilih[]']:checked").length;
-            $('#totalPekerja').val(countchecked);
-            /* countchecked = table.$("input[name='milih[]']:checked").length;
-             $('#totalPekerja').val(countchecked);*/
-
-
-        }
-
-        function hitungSelect() {
-            for (i = 0; i <= table.$('tr').length; i++)
-                if (table.$('.pilih-' + i).is(":checked")) {
-                    table.$('.select-' + i).css('background', '#bbc4d6')
-                }
-                else {
-                    table.$('.select-' + i).css('background', '')
-                }
-
-            for (i = 0; i <= table.$('tr').length; i++)
-                if (table.$('.milih-' + i).is(":checked")) {
-                    table.$('.pencet-' + i).css('background', '#bbc4d6')
-                }
-                else {
-                    table.$('.pencet-' + i).css('background', '')
-                }
-
-
-        }
-
-        function selectBox(id) {
-            if (table.$('.pilih-' + id).is(":checked")) {
-                table.$('.pilih-' + id).prop("checked", false);
-                table.$('.chek-' + id).val('1');
-            } else {
-                table.$('.pilih-' + id).prop("checked", true);
-                table.$('.chek-' + id).val('');
-            }
-            hitungSelect();
-            hitung();
-
-        }
-
-        function select(id) {
-            if (table.$('.pilih-' + id).is(":checked")) {
-                table.$('.pilih-' + id).prop("checked", false);
-                table.$('.chek-' + id).val('');
-            } else {
-
-                table.$('.pilih-' + id).prop("checked", true);
-                table.$('.chek-' + id).val('1');
-            }
-            hitungSelect();
-            hitung();
-        }
-
-        /**//**//**//**//**//**//**/
-        function PENCETKOTAK(id) {
-            if (table.$('.milih-' + id).is(":checked")) {
-                table.$('.milih-' + id).prop("checked", false);
-                table.$('.chek-' + id).val('1');
-            } else {
-                table.$('.milih-' + id).prop("checked", true);
-                table.$('.chek-' + id).val('');
-            }
-            hitungSelect();
-            hitung();
-
-        }
-
-        function pencet(id) {
-            if (table.$('.milih-' + id).is(":checked")) {
-                table.$('.milih-' + id).prop("checked", false);
-                table.$('.chek-' + id).val('');
-            } else {
-
-                table.$('.milih-' + id).prop("checked", true);
-                table.$('.chek-' + id).val('1');
-            }
-            hitungSelect();
-            hitung();
-
-        }
-
-
-        function perbarui() {
-            var mitra = $('#mitra').val();
-            var mc_contractid = $('#mc_contractid').val();
-            /* var pekerja=$('#pekerja').val();*/
-            var buttonLadda = $('.simpan').ladda();
-            buttonLadda.ladda('start');
-            /*   if(validateForm()){*/
-            /*alert(pekerja);*/
-            $.ajax({
-
-                url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/perbarui/' + mitra + '/' + mc_contractid,
-                type: 'get',
-                timeout: 10000,
-                data: $('.red').serialize(),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status == 'berhasil') {
-                        window.location = baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra';
-                    } else if (response.status == 'gagal') {
-                        info.css('display', '');
-                        $.each(response.data, function (index, error) {
-                            info.find('ul').append('<li>' + error + '</li>');
-                        });
-                        buttonLadda.ladda('stop');
-                    }
-
-                },
-                error: function (xhr, status) {
-                    if (status == 'timeout') {
-                        $('.error-load').css('visibility', 'visible');
-                        $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
-                    }
-                    else if (xhr.status == 0) {
-                        $('.error-load').css('visibility', 'visible');
-                        $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
-                    }
-                    else if (xhr.status == 500) {
-                        $('.error-load').css('visibility', 'visible');
-                        $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
-                    }
-
-                    buttonLadda.ladda('stop');
-                }
+        var table;
+        $(document).ready(function(){
+            table = $("#table-pekerja").DataTable({
+                responsive: true,
+                "language": dataTableLanguage
             });
 
+            $('.seleksi-date').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            }).datepicker();
 
-            /* }else{
-                  buttonLadda.ladda('stop');
-             }*/
+            $('.kerja-date').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            }).datepicker();
+        });
+
+        function hapus(id){
+            $('.pekerja-'+id).remove();
         }
 
-        function validateForm() {
-            $('.reset').css('display', 'none');
-
-            var tglKontrak = document.getElementById('tglKontrak');
-            var tglBatas = document.getElementById('tglBatas');
-            var kontrak = document.getElementById('kontrak');
-            var perusahaan = document.getElementById('perusahaan');
-            var mitra = document.getElementById('mitra');
-            var jumlahPekerja = document.getElementById('jumlahPekerja');
-
-            //alert(username.value);
-
-            if (tglKontrak.validity.valueMissing) {
-                $('#tglKontrak-error').css('display', '');
-                return false;
-            }
-            else if (tglBatas.validity.valueMissing) {
-                $('#tglBatas-error').css('display', '');
-                return false;
-            }
-            else if (kontrak.validity.valueMissing) {
-                $('#kontrak-error').css('display', '');
-                return false;
-            }
-            else if (perusahaan.validity.valueMissing) {
-                $('#perusahaan-error').css('display', '');
-                return false;
-            }
-            else if (mitra.validity.valueMissing) {
-                $('#mitra-error').css('display', '');
-                return false;
-            }
-            else if (jumlahPekerja.validity.valueMissing) {
-                $('#jumlahPekerja-error').css('display', '');
-                return false;
-            }
-
-
-            return true;
-        }
-
-        /*document.getElementById("button").onclick = function() {
-          window.location.href = "/pwt/pekerja-di-mitra/pekerja-mitra";
-        };*/
     </script>
 @endsection

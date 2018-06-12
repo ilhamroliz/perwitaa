@@ -77,10 +77,18 @@
 
     $(document).ready(function(){
         setTimeout(function(){
+            $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+            });
             var table = $("#mitra").DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/table') }}',  
+                "ajax": {
+                      "url": "{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/table') }}",
+                      "type": "POST"
+                  },
                 dataType: 'json',
                 columns: [
                     {data: 'mc_no', name: 'mc_no', orderable:false},
