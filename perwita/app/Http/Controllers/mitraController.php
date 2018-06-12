@@ -8,11 +8,15 @@ use App\Http\Requests;
 
 use App\d_mitra;
 
+use App\d_mitra_mou;
+
 use Yajra\Datatables\Datatables;
 
 use Validator;
 
 use DB;
+
+use Carbon\carbon;
 
 class mitraController extends Controller
 {
@@ -21,8 +25,8 @@ class mitraController extends Controller
     }
     public function index() {
         return view('mitra.index');
-    } 
-    public function data() {       
+    }
+    public function data() {
         DB::statement(DB::raw('set @rownum=0'));
         $mitra = d_mitra::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'m_id','m_name','m_address','m_phone','m_fax'
                             ,'m_note')->orderBy('m_name')->get();
@@ -39,44 +43,63 @@ class mitraController extends Controller
         return view('mitra.formTambah');
     }
     public function simpan(Request $request) {
-      return DB::transaction(function() use ($request) {
-           $rules = [
-                'Nama_Mitra' => 'required',
-                'Alamat' => 'required',
-                'No_Telp' => 'required|numeric',
-                'Fax' => 'required',
-                'Keterangan' => 'required',               
-            ];
-      $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            return response()->json([
-                        'status' => 'gagal',
-                        'data' => $validator->errors()->toArray()
-            ]);
+        $rules = [
+          'nomou' => 'required|numeric',
+          'namamitra' => 'required',
+          'startmou' => 'required',
+          'endmou' => 'required',
+          'alamatmitra' => 'required',
+          'nama_cp' => 'required',
+          'no_cp' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+          return response()->json([
+            'status' => 'gagal',
+            'data' => $validator->errors->toArray(),
+          ]);
         }
-          
-      $id=d_mitra::max('m_id')+1;
-      d_mitra::create([          
-        "m_id"=>$id,
-        "m_name"=>$request->Nama_Mitra,
-        "m_address"=>$request->Alamat,
-        "m_phone"=>$request->No_Telp,
-        "m_fax"=>$request->Fax,
-        "m_note"=>$request->Keterangan,      
-      ]); 
-      
-       return response()->json([
-                        'status' => 'berhasil',                        
-            ]);
-      
-    });
+
+        $idmitra = d_mitra::max('m_id')+1;
+
+        $idmou = DB::table('d_mitra_mou')->where('mm_mitra' , '=', $idmitra)->max('mm_detailid');
+
+        if ($idmou < 1 || $idmou == null) {
+          $idmou = 1;
+        } else {
+          $idmou = $idmou + 1;
+        }
+
+        d_mitra::insert(array(
+          'm_id' => $idmitra,
+          'm_name' => $request->namamitra,
+          'm_address' => $request->alamatmitra,
+          'm_cp' => $request->nama_cp,
+          'm_cp_phone' => $request->no_cp,
+          'm_phone' => $request->notelp,
+          'm_note' => $request->ket,
+        ));
+        d_mitra_mou::insert(array(
+          'mm_mitra' => $idmitra,
+          'mm_detailid' => $idmou,
+          'mm_mou' => $request->nomou,
+          'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+          'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
+          'mm_status' => null,
+      ));
+
+        return response()->json([
+          'status' => 'berhasil',
+        ]);
+
     }
-    public function edit($id) {        
-        $mitra=d_mitra::where('m_id',$id)->first();        
+    public function edit($id) {
+        $mitra=d_mitra::where('m_id',$id)->first();
         return view('mitra.formEdit',compact('mitra'));
     }
-  
+
     public function hapus($id) {
         return DB::transaction(function() use ($id) {
             $cek = DB::table('d_mitra_contract')
@@ -91,10 +114,10 @@ class mitraController extends Controller
             $mitra=d_mitra::where('m_id',$id);
             if($mitra->delete()){
                    return response()->json([
-                        'status' => 'berhasil',                        
+                        'status' => 'berhasil',
                     ]);
             }
-        });        
+        });
     }
 
     public function perbarui(Request $request)

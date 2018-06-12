@@ -41,6 +41,7 @@ Route::get('manajemen-mitra/data-mitra','mitraController@index');
 Route::get('manajemen-mitra/data-mitra/table','mitraController@data');
 Route::get('manajemen-mitra/data-mitra/tambah','mitraController@tambah');
 Route::get('manajemen-mitra/data-mitra/simpan','mitraController@simpan');
+Route::POST('manajemen-mitra/data-mitra/simpan','mitraController@simpan');
 Route::get('manajemen-mitra/data-mitra/{id}/edit','mitraController@edit');
 Route::get('manajemen-mitra/data-mitra/perbarui/{id}','mitraController@perbarui');
 Route::get('manajemen-mitra/data-mitra/hapus/{id}','mitraController@hapus');
