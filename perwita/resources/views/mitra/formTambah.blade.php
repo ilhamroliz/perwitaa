@@ -14,10 +14,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 
 </style>
@@ -38,7 +38,7 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -91,7 +91,7 @@
                         <div class="hr-line-dashed"></div>
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
-                                        <button class="btn btn-danger btn-flat" type="button">Kembali</button>
+                                      <a href="{{url('/manajemen-mitra/data-mitra')}}" class="btn btn-danger btn-flat">Kembali</a> 
                                         <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="button" onclick="simpan()">
                                             Simpan
                                         </button>
@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-</div>      
+</div>
 
 
 
@@ -119,11 +119,11 @@
     }).datepicker("setDate", "0");
     function simpan() {
         var buttonLadda = $('.simpan').ladda();
-        buttonLadda.ladda('start');                
+        buttonLadda.ladda('start');
         if (validateForm()) {
             $.ajax({
                 url: baseUrl + '/manajemen-mitra/data-mitra/simpan',
-                // type        : 'post',            
+                // type        : 'post',
                 type: 'get',
                 timeout: 10000,
                 data: $('#form-mitra').serialize(),
