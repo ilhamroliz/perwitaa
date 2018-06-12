@@ -87,6 +87,7 @@ class mitraController extends Controller
           'mm_mou' => $request->nomou,
           'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
           'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
+          'mm_aktif' => null,
           'mm_status' => null,
       ));
 
@@ -102,21 +103,18 @@ class mitraController extends Controller
 
     public function hapus($id) {
         return DB::transaction(function() use ($id) {
-            $cek = DB::table('d_mitra_contract')
-                ->select('mc_no')
-                ->where('mc_mitra', '=', $id)
-                ->get();
-            if (count($cek) > 0){
-                return response()->json([
-                    'status' => 'gagal'
-                ]);
+            try {
+              DB::table('d_mitra')->where('m_id', '=', $id)->update(['m_status' => 'Tidak']);
+              DB::table('d_mitra_mou')->where('mm_mitra', '=', $id)->update(['mm_status' => 'Tidak']);
+              return response()->json([
+                   'status' => 'berhasil',
+               ]);
+            } catch (\Exception $e) {
+              return response()->json([
+                   'status' => 'gagal',
+               ]);
             }
-            $mitra=d_mitra::where('m_id',$id);
-            if($mitra->delete()){
-                   return response()->json([
-                        'status' => 'berhasil',
-                    ]);
-            }
+
         });
     }
 
