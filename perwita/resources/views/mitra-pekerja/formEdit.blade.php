@@ -95,7 +95,7 @@
                                     <div class="form-group row ">
                                         <label for="perusahaan" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                                         <div class="col-sm-10">
-                                            <input value="{{$update_mitra_contract->c_id}} ({{$update_mitra_contract->c_name}} )"
+                                            <input value="{{$update_mitra_contract->c_name}}"
                                                    readonly="" class="form-control" name="perusahaan" data-perusahaan
                                                    id="perusahaan" required=""
                                                    placeholder="Masukkan Nama Perusahaan"/>
@@ -109,7 +109,7 @@
                                     <div class="form-group row ">
                                         <label for="mitra" class="col-sm-2 col-form-label">Nama Mitra</label>
                                         <div class="col-sm-10">
-                                            <input value="{{$update_mitra_contract->m_id}}" readonly=""
+                                            <input value="{{$update_mitra_contract->m_name}}" readonly=""
                                                    class="form-control" name="mitra" data-input-mitra id="mitra"
                                                    required=""
                                                    placeholder="Masukkan Nama Mitra">{{-- {{$update_mitra_contract->m_name}} --}}
@@ -124,7 +124,7 @@
                                         <label for="mitra" class="col-sm-2 col-form-label">Nama Divisi</label>
                                         <div class="col-sm-10">
                                             <input readonly="" class="form-control"
-                                                   value="{{$update_mitra_contract->md_id}} {{-- ({{$update_mitra_contract->md_name}}) --}}"
+                                                   value="{{$update_mitra_contract->md_name}} {{-- ({{$update_mitra_contract->md_name}}) --}}"
                                                    name="divisi" data-input-divisi id="divisi" required=""
                                                    placeholder="Masukkan Nama Mitra">
                                             <span style="color:#ed5565;display:none" class="help-block m-b-none reset"
@@ -159,36 +159,13 @@
                                                    id="totalPekerja" required="">
                                         </div>
                                     </div>
-                                    @foreach ($d_datedate as $d)
-                                        <div class="form-group row">
-                                            <label for="Nama" class="col-sm-2 col-form-label">Tanggal Seleksi</label>
-                                            <div class="col-sm-3">
-
-                                                <input class="form-control" name="mp_selection_date"
-                                                       value="{{ Carbon\Carbon::createFromFormat('Y-m-d', $d->mp_selection_date, 'Asia/Jakarta')->format('d/m/Y') }}" id="mp_selection_date" required="">
-                                                <span style="color:#ed5565;display:none"
-                                                      class="help-block m-b-none reset" id="tglKontrak-error">
-                                                <small>Tanggal Kontrak harus diisi...!</small>
-                                            </span>
-                                            </div>
-                                            <label for="tglBatas" class="col-sm-2 col-form-label">Tanggal Masuk Kerja</label>
-                                            <div class="col-sm-3">
-                                                <input class="form-control" name="mp_workin_date"
-                                                       value="{{ Carbon\Carbon::createFromFormat('Y-m-d', $d->mp_workin_date, 'Asia/Jakarta')->format('d/m/Y') }}" id="mp_workin_date" required="">
-                                                <span style="color:#ed5565;display:none"
-                                                      class="help-block m-b-none reset" id="tglBatas-error">
-                                                    <small>Batas Kontrak harus diisi...!</small>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    @endforeach
                                 </div>
 
                             </form>
 
                             <div class="hr-line-dashed"></div>
                             <div>
-                                <table class="table table-bordered table-striped pilihMitraPekerja">
+                                {{-- <table class="table table-bordered table-striped pilihMitraPekerja">
                                     <thead>
                                     <th>
                                         <input type="checkbox" class="setCek" onclick="cekAll()">
@@ -235,7 +212,7 @@
                                     @endforeach
 
                                     </tbody>
-                                </table>
+                                </table> --}}
 
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group row">

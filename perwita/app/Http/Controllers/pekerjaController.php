@@ -419,10 +419,6 @@ class pekerjaController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Session::flash('gagal', 'data pekerja tidak dapat di simpan');
-            /*return response()->json([
-                'status' => 'gagal',
-                'data' => $e
-            ]);*/
             return redirect('manajemen-pekerja/data-pekerja');
         }
     }

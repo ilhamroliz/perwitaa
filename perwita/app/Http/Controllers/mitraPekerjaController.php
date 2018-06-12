@@ -124,8 +124,8 @@ class mitraPekerjaController extends Controller
             ->groupBy('mc_no')
             ->orderBy('d_mitra_contract.mc_date', 'DESC')
             ->get();
+        
         $mc = collect($mc);
-
         return Datatables::of($mc)
             ->editColumn('mc_date', function ($mc) {
                 return $mc->mc_date ? with(new Carbon($mc->mc_date))->format('d-m-Y') : '';
@@ -288,12 +288,14 @@ class mitraPekerjaController extends Controller
 
     public function edit($mitra, $kontrak)
     {
-
         $update_mitra_contract = DB::table('d_mitra_contract')
             ->join('d_mitra', 'd_mitra.m_id', '=', 'd_mitra_contract.mc_mitra')
             ->join('d_comp', 'd_comp.c_id', '=', 'd_mitra_contract.mc_comp')
             ->join('d_mitra_pekerja', 'd_mitra_contract.mc_contractid', '=', 'd_mitra_pekerja.mp_contract')
-            ->join('d_mitra_divisi', 'd_mitra_contract.mc_divisi', '=', 'd_mitra_divisi.md_id')
+            ->join('d_mitra_divisi', function ($q) {
+                $q->on('d_mitra_contract.mc_divisi', '=', 'd_mitra_divisi.md_id')
+                    ->on('d_mitra_contract.mc_mitra', '=', 'd_mitra_divisi.md_mitra');
+            })
             ->select('d_mitra_contract.mc_mitra'
                 , 'd_mitra_contract.mc_contractid'
                 , 'd_mitra_contract.mc_no'
@@ -307,6 +309,8 @@ class mitraPekerjaController extends Controller
                 , 'd_comp.c_id'
                 , 'd_comp.c_name'
                 , 'd_mitra_pekerja.mp_pekerja'
+                , 'm_name'
+                , 'md_name'
             )
             ->where('d_mitra_contract.mc_mitra', $mitra)
             ->where('d_mitra_contract.mc_contractid', $kontrak)
@@ -315,34 +319,9 @@ class mitraPekerjaController extends Controller
         $update_mitra_pekerja = d_mitra_pekerja::
         where('mp_comp', $update_mitra_contract->mc_comp)
             ->where('mp_mitra', $update_mitra_contract->mc_mitra)
-            /*  ->where('mp_workin_date',$update_mitra_pekerja->mp_workin_date)
-              ->where('mp_selection_date',$update_mitra_pekerja->mp_selection_date)*/
             ->where('mp_contract', $update_mitra_contract->mc_contractid)
-
             ->get();
 
-        $pekerja = DB::table('d_pekerja')
-            ->leftjoin('d_mitra_pekerja', 'd_mitra_pekerja.mp_pekerja', '=', 'd_pekerja.p_id')
-            ->where('d_mitra_pekerja.mp_contract', '=', $update_mitra_contract->mc_contractid)
-            ->where('d_mitra_pekerja.mp_mitra', '=', $update_mitra_contract->mc_mitra);
-
-        $asw = DB::table('d_pekerja')
-            ->leftjoin('d_mitra_pekerja', 'd_mitra_pekerja.mp_pekerja', '=', 'd_pekerja.p_id')
-            ->where('mp_pekerja', '=', null);
-
-        $anjp = $pekerja->union($asw)
-            ->groupBy('p_name')
-            ->get();
-
-        /*  $mitra_contract=d_mitra_contract::get();*/
-
-        $d_datedate = DB::table('d_mitra_pekerja')
-            ->join('d_pekerja', 'd_mitra_pekerja.mp_pekerja', '=', 'd_pekerja.p_id')
-            ->where('mp_contract', '=', $kontrak)
-            ->groupBy('mp_selection_date')
-            ->orderby('mp_contract')
-            ->get();
-        //dd($anjp);
         return view('mitra-pekerja.formEdit', compact('mitra_contract', 'anjp', 'asw', 'a', 'd_datedate', 'd_mitra_pekerja', 'update_mitra_contract', 'update_mitra_pekerja', 'pekerja'));
     }
 
