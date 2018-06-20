@@ -137,7 +137,7 @@ $(document).ready(function(){
        url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+id+"/detail",
        dataType : 'json',
        success : function(result){
-         console.log(result);
+         //console.log(result);
          $('#mc_no').html(': '+result.data[0].mc_no);
          $('#mc_mitra').html(': '+result.data[0].m_name);
          $('#mc_divisi').html(': '+result.data[0].md_name);
