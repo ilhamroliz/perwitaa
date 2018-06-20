@@ -99,12 +99,11 @@ class mitraController extends Controller
     public function edit($id) {
         $mitra=d_mitra::where('m_id',$id)->first();
 
-        $mou = DB::table('d_mitra')
-        ->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')
-        ->where('m_id', '=', $id)
+        $mou = DB::table('d_mitra_mou')
+        ->where('mm_mitra', '=', $id)
         ->get();
       // dd($mitra);
-       //dd($mou);
+      // dd($mou);
         return view('mitra.formEdit',compact('mitra', 'mou'));
     }
 
