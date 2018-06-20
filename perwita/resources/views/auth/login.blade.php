@@ -44,11 +44,11 @@
 
             <div class="row">
 
-                <div class="col-md-12">                
+                <div class="col-md-12">
                     <div class="ibox-content" style="margin-top: 0px; padding: 25px; border-radius: 15px;" >
 
-                        <div class="row">                             
-                            <div class="alert alert-danger pesan" style="display:none;">      
+                        <div class="row">
+                            <div class="alert alert-danger pesan" style="display:none;">
                                 <strong>Peringatan :</strong>
                                 <ul></ul>
                             </div>
@@ -57,17 +57,17 @@
                                 <div class="form-group">
                                     <div class="input-group m-t">
                                         <span class="input-group-addon"> <i class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control " placeholder="Nama Pengguna" required name="username" id="username">                                
+                                        <input type="text" class="form-control " placeholder="Nama Pengguna" required name="username" id="username">
                                     </div>
                                     <span style="padding-left: 40px;color:#ed5565;display:none;" class="help-block m-b-none" id="username-error"><small>Nama pengguna harus diisi.</small></span>
-                                </div>                            
+                                </div>
                                 <div class="form-group">
                                     <div class="input-group m-t">
                                         <span class="input-group-addon"> <i class="fa fa-key"></i></span>
                                         <input type="password" class="form-control" placeholder="Kata Sandi" required name="password" id="password">
                                     </div>
                                     <span style="padding-left: 40px;color:#ed5565; display:none;" class="help-block m-b-none" id="password-error"><small>Kata sandi ini wajib diisi !</small></span>
-                                </div>                                                        
+                                </div>
                                 <button type="button" class="ladda-button  ladda-button-demo  btn btn-primary block full-width m-b" data-style="zoom-in">Masuk</button>
 
                             </form>
@@ -91,7 +91,7 @@ var info       = $('.pesan');
 var buttonLadda = $('.ladda-button-demo').ladda();
 var baseUrl = '{{ url('/') }}';
 $('.ladda-button').click(function () {
-    if (validateForm()) {        
+    if (validateForm()) {
         buttonLadda.ladda('start');
         $.ajax({
             url: baseUrl+'/login',
@@ -108,12 +108,12 @@ $('.ladda-button').click(function () {
                 }
                 else if (response.status == 'gagal') {
                     if (response.content == 'Perusahaan') {
-                       info.css('display',''); 
+                       info.css('display','');
                        info.find('ul').html('<li>Maaf, Perusahaan Belum Ada Yang Aktif</li>');
                        buttonLadda.ladda('stop');
                     }else{
-                            info.css('display','');                            
-                            info.find('ul').html('<li>' + response.content + '</li>');                            
+                            info.css('display','');
+                            info.find('ul').html('<li>' + response.content + '</li>');
                     $('.error-load').css('visibility', 'visible');
                     $('.error-load small').text(response.content);
                     buttonLadda.ladda('stop');
