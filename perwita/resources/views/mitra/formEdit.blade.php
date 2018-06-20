@@ -147,8 +147,8 @@
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
                                       <a href="{{url('/manajemen-mitra/data-mitra')}}" class="btn btn-danger btn-flat">Kembali</a>
-                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="button" onclick="simpan()">
-                                            Simpan
+                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="button" onclick="perbarui({{$mitra->m_id}})">
+                                            Perbarui
                                         </button>
                                     </div>
                                 </div>
@@ -165,14 +165,28 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-    var info       = $('.pesan');
-    $('.tanggal').datepicker({
-        autoclose: true,
-        format: 'dd-M-yyyy',
-        endDate: 'today'
-    }).datepicker("setDate", "0");
-    function perbarui() {
-        var id=$('#m_id').val();
+$(document).ready(function(){
+  $('.start-mou').datepicker({
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
+  $('.end-mou').datepicker({
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
+});
+
+function validate(evt) {
+var theEvent = evt || window.event;
+var key = theEvent.keyCode || theEvent.which;
+key = String.fromCharCode( key );
+var regex = /[0-9]|\./;
+if( !regex.test(key) ) {
+theEvent.returnValue = false;
+if(theEvent.preventDefault) theEvent.preventDefault();
+}
+}
+    function perbarui(id) {
         var buttonLadda = $('.simpan').ladda();
         buttonLadda.ladda('start');
          if(validateForm()){
@@ -188,13 +202,20 @@
             contentType: false,
             success: function (response) {
                 if (response.status == 'berhasil') {
-                    window.location = baseUrl + '/manajemen-mitra/data-mitra';
+                  swal({
+                      title: "Sukses",
+                      text: "Data sudah tersimpan",
+                      type: "success"
+                  }, function () {
+                      window.location = baseUrl + '/manajemen-mitra/data-mitra';
+                  });
                 } else if(response.status=='gagal'){
-                    info.css('display','');
-                    $.each(response.data, function(index, error) {
-                           info.find('ul').append('<li>' + error + '</li>');
-                    });
-                    buttonLadda.ladda('stop');
+                  swal({
+                      title: "Gagal",
+                      text: "Sistem gagal menyimpan data",
+                      type: "error",
+                      showConfirmButton: false
+                  });
                 }
 
 
@@ -222,17 +243,22 @@
          }
     }
 
-        function validateForm() {
+    function validateForm() {
         $('.reset').css('display', 'none');
-        var nama = document.getElementById('Nama');
-        var alamat = document.getElementById('Alamat');
-        var telp = document.getElementById('Telp');
-        var fax = document.getElementById('Fax');
-        var keterangan = document.getElementById('Keterangan');
+        var no = document.getElementById('nomou');
+        var nama = document.getElementById('namamitra');
+        var alamat = document.getElementById('alamatmitra');
+        var cperson = document.getElementById('cperson');
+        var notelp = document.getElementById('notelp');
+        var keterangan = document.getElementById('ket');
 
         //alert(username.value);
 
-        if (nama.validity.valueMissing) {
+        if (no.validity.valueMissing) {
+            $('#no-error').css('display', '');
+            return false;
+        }
+        else if (nama.validity.valueMissing) {
             $('#nama-error').css('display', '');
             return false;
         }
@@ -240,16 +266,16 @@
             $('#alamat-error').css('display', '');
             return false;
         }
-        else if (telp.validity.valueMissing) {
-            $('#telp-error').css('display', '');
+        else if (cperson.validity.valueMissing) {
+            $('#cperson-error').css('display', '');
             return false;
         }
-        else if (fax.validity.valueMissing) {
-            $('#fax-error').css('display', '');
+        else if (notelp.validity.valueMissing) {
+            $('#notelp-error').css('display', '');
             return false;
         }
         else if (keterangan.validity.valueMissing) {
-            $('#keterangan-error').css('display', '');
+            $('#ket-error').css('display', '');
             return false;
         }
 

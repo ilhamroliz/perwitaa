@@ -125,19 +125,51 @@ class mitraController extends Controller
         });
     }
 
-    public function perbarui(Request $request)
+    public function perbarui(Request $request, $id)
     {
-        $data = array(
-            'm_name' => $request->Nama_Mitra,
-            'm_address' => $request->Alamat,
-            'm_phone' => $request->No_Telp,
-            'm_fax' => $request->Fax,
-            'm_note' => $request->Keterangan
-        );
-        d_mitra::where('m_id', '=', $request->m_id)->update($data);
-        return response()->json([
-            'status' => 'berhasil'
-        ]);
+      //return $request->all();
+        return DB::transaction(function() use ($request, $id) {
+          try {
+            $datamitra = array(
+              'm_name' => $request->namamitra,
+              'm_address' => $request->alamatmitra,
+              'm_cp' => $request->nama_cp,
+              'm_cp_phone' => $request->no_cp,
+              'm_phone' => $request->notelp,
+              'm_note' => $request->ket
+            );
+
+            $datamou = array(
+              'mm_mou' => $request->nomou,
+              'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+              'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta')
+            );
+
+            d_mitra::where('m_id', '=', $id)->update($datamitra);
+            d_mitra_mou::where('mm_mitra', '=', $id)->update($datamou);
+
+            return response()->json([
+                'status' => 'berhasil',
+            ]);
+          } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal',
+            ]);
+          }
+
+
+        });
+        // $data = array(
+        //     'm_name' => $request->Nama_Mitra,
+        //     'm_address' => $request->Alamat,
+        //     'm_phone' => $request->No_Telp,
+        //     'm_fax' => $request->Fax,
+        //     'm_note' => $request->Keterangan
+        // );
+        // d_mitra::where('m_id', '=', $request->m_id)->update($data);
+        // return response()->json([
+        //     'status' => 'berhasil'
+        // ]);
     }
 
 }
