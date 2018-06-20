@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -23,6 +23,8 @@ class mitraDivisiController extends Controller
   public function tabel(){
     $list = DB::table('d_mitra')
                   ->select('d_mitra.*')
+                  ->where('m_status', '=', 'Aktif')
+                  ->ORwhere('m_status', '=', null)
                   ->get();
         $data = array();
         foreach ($list as $r) {
@@ -52,9 +54,9 @@ class mitraDivisiController extends Controller
 
   public function tambah(Request $request){
 
-        for ($j=0; $j <count($request->nama_divisi) ; $j++) { 
+        for ($j=0; $j <count($request->nama_divisi) ; $j++) {
         if($request->nama_divisi[$j] == null){
-          return response()->json(['status' => 0]);  
+          return response()->json(['status' => 0]);
          }
         }
 
@@ -75,7 +77,7 @@ class mitraDivisiController extends Controller
               ]);
        }
 
-        return response()->json(['status' => 1]);  
+        return response()->json(['status' => 1]);
   }
 
   public function detail(Request $request){
@@ -132,14 +134,14 @@ class mitraDivisiController extends Controller
   }
 
   public function edit(Request $request){
-      for ($j=0; $j <count($request->nama_divisi) ; $j++) { 
+      for ($j=0; $j <count($request->nama_divisi) ; $j++) {
         if($request->nama_divisi[$j] == null){
-          return response()->json(['status' => 0]);  
+          return response()->json(['status' => 0]);
          }
         }
 
       for ($i=0; $i < count($request->nama_divisi); $i++) {
-          
+
         $save_mitra_divisi = DB::table('d_mitra_divisi')
                  ->where('md_mitra', $request->id_mitra[$i])
                  ->where('md_id', $request->id_divisi[$i])
@@ -148,9 +150,7 @@ class mitraDivisiController extends Controller
               ]);
        }
 
-        return response()->json(['status' => 1]); 
+        return response()->json(['status' => 1]);
   }
 
 }
-
-
