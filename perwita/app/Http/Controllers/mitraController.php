@@ -28,7 +28,7 @@ class mitraController extends Controller
     }
     public function data() {
         DB::statement(DB::raw('set @rownum=0'));
-        $mitra = d_mitra::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'m_id','m_name','m_address','m_phone','m_fax'
+        $mitra = d_mitra::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'m_id','m_name','m_address','m_phone'
                             ,'m_note')->where('m_status', '=', 'Aktif')->ORwhere('m_status', '=', null)->orderBy('m_name')->get();
         return Datatables::of($mitra)
                        ->addColumn('action', function ($mitra) {

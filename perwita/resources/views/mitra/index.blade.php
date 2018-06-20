@@ -59,8 +59,7 @@
                             <th>No</th>
                             <th>Nama Mitra</th>
                             <th>Alamat Mitra</th>
-                            <th>Nomor Hp</th>
-                            <th>Fax</th>
+                            <th>Nomor Telepon</th>
                             <th>Keterangan</th>
                             <th style="width: 8%;">Action</th>
                         </tr>
@@ -100,7 +99,6 @@
             {data: 'm_name', name: 'm_name'},
             {data: 'm_address', name: 'm_address'},
             {data: 'm_phone', name: 'm_phone'},
-            {data: 'm_fax', name: 'm_fax'},
             {data: 'm_note', name: 'm_note'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
             ],
