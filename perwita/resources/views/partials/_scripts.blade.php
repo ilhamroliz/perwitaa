@@ -29,47 +29,47 @@
 
     <!-- Datatable -->
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/datatables.min.js')}}"></script>
-	
-	  <!-- bootbox  -->    
+
+	  <!-- bootbox  -->
     <script src="{{ asset('assets/vendors/bootbox/bootbox.js') }}"></script>
-        
-    
+
+
     <script src="{{ asset('assets/vendors/bootstrapTour/bootstrap-tour.min.js') }}"></script>
-        
-    <!-- Money  --> 
+
+    <!-- Money  -->
     <script src="{{ asset('assets/vendors/money/dist/jquery.maskMoney.js') }}"></script>
-    
+
     <!--confirm -->
     <script src="{{ asset('assets/vendors/confirm/bootstrap-confirmation.js') }}"></script>
-    
-    
+
+
     <script src="{{ asset('assets/vendors/idle-timer/idle-timer.min.js') }}"></script>
-    
+
     <script src="{{ asset('assets/vendors/select2/dist/js/select2.full.min.js') }}"></script>
-    
+
     <script src="{{ asset('assets/dist/js/app.min.js') }}"></script>
-    
+
     <script src="{{ asset('assets/vendors/chosen/chosen.jquery.js') }}"></script>
-    
+
     <script src="{{ asset('assets/vendors/iCheck/icheck.min.js') }}"></script>
-    
+
     <script src="{{ asset('assets/autocomplete/autocomplete.js') }}"></script>
     <script src="{{ asset('assets/date-live/bootstrap-select.js') }}"></script>
     <script src="{{ asset('assets/accounting/accounting.js') }}"></script>
-    <!-- datepicker  --> 
+    <!-- datepicker  -->
     <script src="{{ asset('assets/vendors/datapicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/vendors/waitingfor/waitingfor.js') }}"></script>
-    
+
     <!-- cropper -->
     {{-- <script type="text/javascript" src="{{asset('assets/cropper/js/common.js')}}"></script> --}}
     <script type="text/javascript" src="{{asset('assets/cropper/js/cropper.min.js')}}"></script>
  {{--    <script type="text/javascript" src="{{asset('assets/cropper/js/main.js')}}"></script> --}}
 
-     
+
     <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
-    
-    
-    
+
+
+
     <script>
           $('[data-toggle="tooltip"]').tooltip({container : 'body'});
 //          if(screen.width > 768){
@@ -81,19 +81,19 @@
 //            $("body").toggleClass("mini-navbar");
 //            SmoothlyMenu();
 //          }
-          
-          if(screen.width <= 768){              
+
+          if(screen.width <= 768){
             $('body').removeClass('fixed-sidebar');
             $("body").toggleClass("mini-navbar");
             SmoothlyMenu();
           }
-          
-          
+
+
           var windowsize = $(window).width();
 
 //$(window).resize(function() {
 //  windowsize = $(window).width();
-//  if (windowsize > 768) {         
+//  if (windowsize > 768) {
 //     $('body').addClass('fixed-sidebar');
 //     $('#side-menu').hide();
 //        setTimeout(
@@ -101,14 +101,14 @@
 //                $('#side-menu').fadeIn(400);
 //            }, 100);
 //  }
-//  else if (windowsize <=  768) {           
+//  else if (windowsize <=  768) {
 //            $('body').removeClass('fixed-sidebar');
 //            $("body").toggleClass("mini-navbar");
 //            SmoothlyMenu();
 //  }
 //});
-          
-      
+
+
 
         var dataTableLanguage = {
            "emptyTable": "Tidak ada data",
@@ -192,10 +192,10 @@
             $(document).on("idle.idleTimer", function(event, elem, obj){    //            alert('klose');
                // window.location = baseUrl+"/logout";
             });
-            $(document).on("active.idleTimer", function(event, elem, obj, triggerevent){    
-    
+            $(document).on("active.idleTimer", function(event, elem, obj, triggerevent){
+
         });
-    
+
    // setTimeout(function(){ alert("Hello"); }, 3000);
 
 
