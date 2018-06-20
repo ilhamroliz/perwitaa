@@ -11,14 +11,30 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 </style>
 @endsection
 @section('content')
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Data Pekerja</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url('/') }}">Home</a>
+            </li>
+            <li>
+                Manajemen Pekerja
+            </li>
+            <li class="active">
+                <strong>Tambah Data Pekerja</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="alert alert-danger pesan" style="display:none;">
           <ul></ul>
@@ -28,7 +44,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Form Tambah Data Pekerja</h5>
-                </div>                    	
+                </div>
                 <div class="ibox-content">
                     <form method="POST" class="form-horizontal form-pendaftaran" action="{{ url('manajemen-pekerja/data-pekerja/simpan') }}" accept-charset="UTF-8" id="tambahpekerja" enctype="multipart/form-data">
                         <div class="form-group">
@@ -524,7 +540,7 @@
                                 <input type="text" class="form-control ukuransepatu" id="ukuransepatu" name="ukuransepatu" placeholder="Ukuran Sepatu" style="text-transform:uppercase">
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div> 
+                        <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             {{-- <div class="col-md-6">
                                 <div class="image-crop">
@@ -554,12 +570,12 @@
                                     <i class="fa fa-upload margin-correction"></i>upload gambar
                                 </label>
                             </div>
-                            <div class="col-sm-6 image-holder" style="padding:0px; ">                  
+                            <div class="col-sm-6 image-holder" style="padding:0px; ">
 
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        {{-- <div class="form-group">                            
+                        {{-- <div class="form-group">
                             <input type="file" name="abcd" id="abcd" onchange="ubah()">
                             <input type="file" name="abcdef" id="abcdef">
                         </div> --}}
@@ -869,7 +885,7 @@
             type: 'post',
             data: $('.form-pendaftaran').serialize(),
             success: function(response){
-                
+
                 waitingDialog.hide();
           }, error:function(x, e) {
             waitingDialog.hide();

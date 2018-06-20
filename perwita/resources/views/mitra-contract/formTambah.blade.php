@@ -25,7 +25,22 @@
 @endsection
 
 @section('content')
-
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Permintaan Tenaga Kerja</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url('/') }}">Home</a>
+            </li>
+            <li>
+                Manajemen Pekerja
+            </li>
+            <li class="active">
+                <strong>Tambah Permintaan Tenaga Kerja</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="alert alert-danger pesan" style="display:none;">
         <ul></ul>
@@ -34,7 +49,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Form Permintaan Tenaga Kerja</h5>
+                    <h5>Form Tambah Permintaan Tenaga Kerja</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>

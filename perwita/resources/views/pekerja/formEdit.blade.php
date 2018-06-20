@@ -19,6 +19,22 @@
 </style>
 @endsection
 @section('content')
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Data Pekerja</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url('/') }}">Home</a>
+            </li>
+            <li>
+                Manajemen Pekerja
+            </li>
+            <li class="active">
+                <strong>Edit Data Pekerja</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="alert alert-danger pesan" style="display:none;">
           <ul></ul>
