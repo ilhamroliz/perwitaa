@@ -249,9 +249,8 @@
                     }
             });
             $.ajax({
-                url: baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/hapus/'+mitra+'/'+mc_contractid,
+                url: baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/update',
                 type: 'get',
-                timeout: 10000,
                 success: function(response){
                     if(response.status=='berhasil'){
                         swal({

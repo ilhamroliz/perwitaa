@@ -326,6 +326,11 @@ class mitraPekerjaController extends Controller
         return view('mitra-pekerja.formEdit', compact('pekerja', 'update_mitra_contract'));
     }
 
+    public function update(Request $request)
+    {
+        dd($request);
+    }
+
     public function perbarui(Request $request, $mitra, $mc_contractid)
     {
 
