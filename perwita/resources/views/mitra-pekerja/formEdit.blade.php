@@ -242,5 +242,45 @@
             $('.pekerja-'+id).remove();
         }
 
+        function perbarui(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+            $.ajax({
+                url: baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/hapus/'+mitra+'/'+mc_contractid,
+                type: 'get',
+                timeout: 10000,
+                success: function(response){
+                    if(response.status=='berhasil'){
+                        swal({
+                            title:"Berhasil",
+                            text: "Data berhasil dihapus",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 900
+                        });
+                    }
+                },error:function(x,e) {
+                    var message;
+                    if (x.status==0) {
+                        message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+                    } else if(x.status==404) {
+                        message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+                    } else if(x.status==500) {
+                        message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+                    } else if(e =='parsererror') {
+                        message = 'Error.\nParsing JSON Request failed.';
+                    } else if(e =='timeout'){
+                        message = 'Request Time out. Harap coba lagi nanti';
+                    } else {
+                        message = 'Unknow Error.\n'+x.responseText;
+                    }
+                    throwLoadError(message);
+                }
+            });
+        }
+
     </script>
 @endsection

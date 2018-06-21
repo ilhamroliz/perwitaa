@@ -115,6 +115,8 @@ Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/simpan','mitraPekerjaCont
 Route::post('manajemen-pekerja-mitra/data-pekerja-mitra/simpan','mitraPekerjaController@simpan');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/{mitra}/{id_detail}/edit','mitraPekerjaController@edit');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/perbarui/{mitra}/{mc_contractid}','mitraPekerjaController@perbarui');
+Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/update','mitraPekerjaController@update');
+Route::post('manajemen-pekerja-mitra/data-pekerja-mitra/update','mitraPekerjaController@update');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/hapus/{mitra}/{iddetail}','mitraPekerjaController@hapus');
 Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/delete/{mp_pekerja}/{mp_contract}','suratController@delete');
 Route::get('get-data-mitra-kontrak/{mitra}/{kontrak}','mitraPekerjaController@mitraContrak');
