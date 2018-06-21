@@ -199,6 +199,21 @@
    // setTimeout(function(){ alert("Hello"); }, 3000);
 
 
+getApproval();
+       function getApproval(){
+         $.ajax({
+           type : 'get',
+           url : '{{url("cekapproval")}}',
+           success : function(data){
+             //console.log(data);
+             //console.log(notifOBJ);
+              if (data.notif > 0) {
+                $("#countnotif").text(data.notif);
 
+             }
+           }
+         });
+          setTimeout(function(){getApproval();}, 5000);
+       }
 
     </script>

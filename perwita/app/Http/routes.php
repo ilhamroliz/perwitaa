@@ -526,3 +526,6 @@ Route::get('manajemen-mitra/mitra-divisi/get_data_edit','mitraDivisiController@g
 Route::get('manajemen-mitra/mitra-divisi/tambah','mitraDivisiController@tambah');
 Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail');
 Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
+
+//Approval
+Route::get('/cekapproval', 'approvalController@index');
