@@ -410,7 +410,8 @@ class pekerjaController extends Controller
                 'pm_detailid' => 1,
                 'pm_date' => Carbon::now('Asia/Jakarta'),
                 'pm_detail' => 'Masuk',
-                'pm_status' => 'Calon'
+                'pm_status' => 'Calon',
+                'pm_insert_by' => Session::get('mem')
             ));
 
             DB::commit();
