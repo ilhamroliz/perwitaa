@@ -391,138 +391,116 @@
                                     <input type="radio" id="universitas" value="UNIVERSITAS" name="pendidikan">
                                     <label for="universitas"> UNIVERSITAS </label>
                                 </div>
-
-
-
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Bahasa</label>
                             <div class="col-sm-10">
-
-                                <div class="checkbox checkbox-primary checkbox-inline col-sm-2">
-                                  @if(empty($bahasa[0]) || empty($bahasa[1]) || empty($bahasa[2]) || empty($bahasa[3]) )
-                                      <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]">
-                                      <label for="indonesia"> Indonesia </label>
-                                  </div>
-                                  <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
-                                      <input type="checkbox" id="inggris" value="Inggris" name="bahasa[]">
-                                      <label for="inggris"> Inggris </label>
-                                  </div>
-                                  <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
-                                      <input type="checkbox" id="mandarin" value="Mandarin" name="bahasa[]">
-                                      <label for="mandarin"> Mandarin </label>
-                                  </div>
-                                  <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                                      <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]">
-                                      <label for="bahasalain"> Lainnya </label>
-                                  </div>
-                                  <div class="col-sm-4">
-                                      <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="bahasalain" placeholder="Lainnya">
-                                  </div>
-                                  @else
-                                    @if($bahasa[0]->pl_language == "INDONESIA")
-                                    <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]" checked>
-                                    @else
-                                    <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]">
-                                    @endif
-                                    <label for="indonesia"> Indonesia </label>
-                                </div>
-                                <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
-                                  @if($bahasa[1]->pl_language == "INGGRIS")
-                                  <input type="checkbox" id="inggris" value="INGGRIS" name="bahasa[]" checked>
-                                  @else
-                                  <input type="checkbox" id="inggris" value="INGGRIS" name="bahasa[]">
-                                  @endif
-
-                                    <label for="inggris"> Inggris </label>
-                                </div>
-                                <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
-                                  @if($bahasa[2]->pl_language == "MANDARIN")
-                                  <input type="checkbox" id="mandarin" value="MANDARIN" name="bahasa[]" checked>
-                                  @else
-                                  <input type="checkbox" id="mandarin" value="MANDARIN" name="bahasa[]">
-                                  @endif
-                                    <label for="mandarin"> Mandarin </label>
-                                </div>
-                                <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                                  @if($bahasa[3]->pl_language != "" || $bahasa[3]->pl_language != "LAINNYA" )
-                                  <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]" checked>
-                                  <label for="bahasalain"> Lainnya </label>
-                              </div>
-                              <div class="col-sm-4">
-                                  <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$bahasa[3]->pl_language}}" name="bahasalain" placeholder="Lainnya">
-                              </div>
-
-                                  @else
-                                  <input type="checkbox" id="bahasalain" value="LAINNYALAINNYA" name="bahasa[]">
-                                  <label for="bahasalain"> Lainnya </label>
-                              </div>
-                              <div class="col-sm-4">
-                                  <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="bahasalain" placeholder="Lainnya">
-                              </div>
-
-                                  @endif
+                              <div class="checkbox checkbox-primary checkbox-inline col-sm-2">
+                                @if(empty($bahasa[0]->indonesia))
+                                <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]">
+                                @elseif($bahasa[0]->indonesia == "INDONESIA")
+                                <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]" checked="">
+                                @else
+                                <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]">
                                 @endif
+                                <label for="indonesia"> Indonesia </label>
                             </div>
+                            <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
+                              @if(empty($bahasa[0]->inggris))
+                              <input type="checkbox" id="inggris" value="Inggris" name="bahasa[]">
+                              @elseif($bahasa[0]->inggris == "INGGRIS")
+                                <input type="checkbox" id="inggris" value="Inggris" name="bahasa[]" checked>
+                              @else
+                                <input type="checkbox" id="inggris" value="Inggris" name="bahasa[]">
+                              @endif
+                                <label for="inggris"> Inggris </label>
+                            </div>
+                            <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
+                              @if(empty($bahasa[0]->mandarin))
+                              <input type="checkbox" id="mandarin" value="Mandarin" name="bahasa[]">
+                              @elseif($bahasa[0]->mandarin == "MANDARIN")
+                                <input type="checkbox" id="mandarin" value="Mandarin" name="bahasa[]" checked>
+                              @else
+                                <input type="checkbox" id="mandarin" value="Mandarin" name="bahasa[]">
+                              @endif
+                                <label for="mandarin"> Mandarin </label>
+                            </div>
+                            <div class="checkbox checkbox-info checkbox-inline col-sm-1">
+                              @if(empty($bahasa[0]->lain))
+                              <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]">
+                              <label for="bahasalain"> Lainnya </label>
+                          </div>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="bahasalain" placeholder="Lainnya">
+                          </div>
+                              @elseif($bahasa[0]->lain != "")
+                                <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]" checked>
+                                <label for="bahasalain"> Lainnya </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$bahasa[0]->lain}}" name="bahasalain" placeholder="Lainnya">
+                            </div>
+                            @else
+                            <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]">
+                            <label for="bahasalain"> Lainnya </label>
                         </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="bahasalain" placeholder="Lainnya">
+                        </div>
+                              @endif
+
+                        </div>
+                    </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">SIM Driver</label>
                             <div class="col-sm-10">
                                 <div class="checkbox checkbox-primary checkbox-inline col-sm-2">
-                                  @if(empty($sim[0]) || empty($sim[1]) || empty($sim[2]))
+                                  @if(empty($sim[0]->simc))
                                   <input type="checkbox" id="simc" value="SIM C" name="sim[]">
+                                  @elseif($sim[0]->simc == "SIM C")
+                                  <input type="checkbox" id="simc" value="SIM C" name="sim[]" checked="">
+                                  @else
+                                  <input type="checkbox" id="simc" value="SIM C" name="sim[]">
+                                  @endif
                                   <label for="simc"> SIM C </label>
                               </div>
                               <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
+                                @if(empty($sim[0]->sima))
+                                <input type="checkbox" id="sima" value="SIM A" name="sim[]">
+                                @elseif($sim[0]->sima == "SIM A")
+                                  <input type="checkbox" id="sima" value="SIM A" name="sim[]" checked>
+                                @else
                                   <input type="checkbox" id="sima" value="SIM A" name="sim[]">
+                                @endif
                                   <label for="sima"> SIM A </label>
                               </div>
                               <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
+                                  @if(empty($sim[0]->simb))
                                   <input type="checkbox" id="simb" value="SIM B" name="sim[]">
                                   <label for="simb"> SIM B </label>
                               </div>
                               <div class="col-sm-5">
                                   <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="simket" placeholder="Keterangan">
-                              @else
-                                    @if($sim[0]->ps_sim == "SIM C")
-                                    <input type="checkbox" id="simc" value="SIM C" name="sim[]" checked>
-                                    @else
-                                    <input type="checkbox" id="simc" value="SIM C" name="sim[]">
-                                    @endif
-
-                                    <label for="simc"> SIM C </label>
-                                </div>
-                                <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
-                                  @if($sim[1]->ps_sim == "SIM A")
-                                  <input type="checkbox" id="sima" value="SIM A" name="sim[]" checked>
-                                  @else
-                                  <input type="checkbox" id="sima" value="SIM A" name="sim[]">
-                                  @endif
-
-                                    <label for="sima"> SIM A </label>
-                                </div>
-                                <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
-                                  @if($sim[2]->ps_sim == "SIM B")
+                              </div>
+                                  @elseif($sim[0]->simb == "SIM B")
                                   <input type="checkbox" id="simb" value="SIM B" name="sim[]" checked>
+                                  <label for="simb"> SIM B </label>
+                              </div>
+                              <div class="col-sm-5">
+                                  <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$sim[0]->note}}" name="simket" placeholder="Keterangan">
+                              </div>
                                   @else
                                   <input type="checkbox" id="simb" value="SIM B" name="sim[]">
+                                  <label for="simb"> SIM B </label>
+                              </div>
+                              <div class="col-sm-5">
+                                  <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="simket" placeholder="Keterangan">
+                              </div>
                                   @endif
 
-                                    <label for="simb"> SIM B </label>
-                                </div>
-                                <div class="col-sm-5">
-                                  @if(!empty($sim[0]->ps_note))
-                                    <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$sim[0]->ps_note}}" name="simket" placeholder="Keterangan">
-                                  @elseif(!empty($sim[1]->ps_note))
-                                    <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$sim[1]->ps_note}}" name="simket" placeholder="Keterangan">
-                                  @elseif(empty($sim[2]->ps_note))
-                                  <input type="text" class="form-control input-bahasa" id="bahasalain" value="{{$sim[2]->ps_note}}" name="simket" placeholder="Keterangan">
-                                  @endif
-                                @endif
-                                </div>
                             </div>
                         </div>
                         <div class="hr-line-solid"></div>
@@ -618,80 +596,63 @@
                         <div class="hr-line-solid"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Referensi dari</label>
-                            @if(empty($referensi[0]) || empty($referensi[1]) || empty($referensi[2]) || empty($referensi[3]) || empty($referensi[4]) )
                             <div class="checkbox checkbox-primary checkbox-inline col-sm-1" style="margin-left: 15px;">
+                              @if(empty($referensi[0]->teman))
+                              <input type="checkbox" id="teman" value="Teman" name="ref[]">
+                              @elseif($referensi[0]->teman == "TEMAN")
+                                <input type="checkbox" id="teman" value="Teman" name="ref[]" checked="">
+                              @else
                                 <input type="checkbox" id="teman" value="Teman" name="ref[]">
+                              @endif
                                 <label for="teman"> Teman </label>
                             </div>
                             <div class="checkbox checkbox-danger checkbox-inline col-sm-1">
+                              @if(empty($referensi[0]->keluarga))
                                 <input type="checkbox" id="keluarga" value="Keluarga" name="ref[]">
+                              @elseif($referensi[0]->keluarga == "KELUARGA")
+                                <input type="checkbox" id="keluarga" value="Keluarga" name="ref[]" checked>
+                              @else
+                                  <input type="checkbox" id="keluarga" value="Keluarga" name="ref[]">
+                              @endif
                                 <label for="keluarga"> Keluarga </label>
                             </div>
                             <div class="checkbox checkbox-warning checkbox-inline col-sm-1">
+                              @if(empty($referensi[0]->koran))
                                 <input type="checkbox" id="koran" value="Koran" name="ref[]">
+                              @elseif($referensi[0]->koran == "KORAN")
+                                <input type="checkbox" id="koran" value="Koran" name="ref[]" checked>
+                              @else
+                                <input type="checkbox" id="koran" value="Koran" name="ref[]">
+                              @endif
                                 <label for="koran"> Koran </label>
                             </div>
                             <div class="checkbox checkbox-info checkbox-inline col-sm-1">
+                              @if(empty($referensi[0]->internet))
                                 <input type="checkbox" id="internet" value="Internet" name="ref[]">
+                              @elseif($referensi[0]->internet == "INTERNET")
+                                <input type="checkbox" id="internet" value="Internet" name="ref[]" checked>
+                              @else
+                                <input type="checkbox" id="internet" value="Internet" name="ref[]">
+                              @endif
                                 <label for="internet"> Internet </label>
                             </div>
                             <div class="checkbox checkbox-success checkbox-inline col-sm-1">
+                              @if(empty($referensi[0]->lain))
                                 <input type="checkbox" id="reflain" value="Lain" name="ref[]">
                                 <label for="reflain"> Lainnya </label>
                             </div>
                             <div class="col-md-4">
                                 <input type="text" class="form-control input-referensi" id="reflain" value="" name="reflain" placeholder="Referensi" style="width: 100%;">
                             </div>
-                            @else
-                            <div class="checkbox checkbox-primary checkbox-inline col-sm-1" style="margin-left: 15px;">
-                              @if($referensi[0]->pr_referensi == "TEMAN")
-                                <input type="checkbox" id="teman" value="TEMAN" name="ref[]" checked>
-                              @else
-                                <input type="checkbox" id="teman" value="TEMAN" name="ref[]">
-                              @endif
-                                <label for="teman"> Teman </label>
-                            </div>
-                            <div class="checkbox checkbox-danger checkbox-inline col-sm-1">
-                              @if($referensi[1]->pr_referensi == "KELUARGA")
-                                <input type="checkbox" id="keluarga" value="KELUARGA" name="ref[]" checked>
-                              @else
-                                  <input type="checkbox" id="keluarga" value="KELUARGA" name="ref[]">
-                              @endif
-                                <label for="keluarga"> Keluarga </label>
-                            </div>
-                            <div class="checkbox checkbox-warning checkbox-inline col-sm-1">
-                              @if($referensi[2]->pr_referensi == "KORAN")
-                                <input type="checkbox" id="koran" value="KORAN" name="ref[]" checked>
-                              @else
-                                  <input type="checkbox" id="koran" value="KORAN" name="ref[]">
-                              @endif
-                                <label for="koran"> Koran </label>
-                            </div>
-                            <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                              @if($referensi[3]->pr_referensi == "INTERNET")
-                                <input type="checkbox" id="internet" value="INTERNET" name="ref[]" checked>
-                              @else
-                                <input type="checkbox" id="internet" value="INTERNET" name="ref[]">
-                              @endif
-                                <label for="internet"> Internet </label>
-                            </div>
-                            <div class="checkbox checkbox-success checkbox-inline col-sm-1">
-                              @if($referensi[4]->pr_referensi != "")
+                              @elseif($referensi[0]->lain != "")
                                 <input type="checkbox" id="reflain" value="Lain" name="ref[]" checked>
                                 <label for="reflain"> Lainnya </label>
                             </div>
                             <div class="col-md-4">
-                                <input type="text" class="form-control input-referensi" id="reflain" value="{{$referensi[4]->pr_referensi}}" name="reflain" placeholder="Referensi" style="width: 100%;">
-                            </div>
-                              @else
-                                <input type="checkbox" id="reflain" value="Lain" name="ref[]">
-                                <label for="reflain"> Lainnya </label>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control input-referensi" id="reflain" value="" name="reflain" placeholder="Referensi" style="width: 100%;">
+                                <input type="text" class="form-control input-referensi" id="reflain" value="{{$referensi[0]->lain}}" name="reflain" placeholder="Referensi" style="width: 100%;">
                             </div>
                               @endif
-                            @endif
+
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -1097,15 +1058,19 @@ function TambahPengalaman(){
         }
     }
 
-
     function perbarui(id) {
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+              });
         $.ajax({
-          type : 'get',
+          type : 'post',
           timeout : 10000,
           url: baseUrl + '/manajemen-pekerja/data-pekerja/perbarui/',
           dataType: 'json',
           success : function(response){
-            console.log(response);
+            //console.log(response);
           }
         });
         /*var p_id=$('#p_id').val();

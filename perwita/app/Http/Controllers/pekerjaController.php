@@ -485,50 +485,67 @@ class pekerjaController extends Controller
                  ->where('pk_pekerja', '=', $id)
                  ->get();
 
-          $bahasa = DB::table('d_pekerja_language')
-                 ->select('pl_language')
-                 ->where('pl_pekerja', '=', $id)
-                 ->get();
+          // $bahasa = DB::table('d_pekerja_language')
+          //        ->select('pl_language')
+          //        ->where('pl_pekerja', '=', $id)
+          //        ->get();
+
+            $bahasa = DB::select("select pl_pekerja, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'INDONESIA') as indonesia, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'INGGRIS') as inggris, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'MANDARIN') as mandarin, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language != 'INDONESIA' and pl.pl_language != 'INGGRIS' and pl.pl_language != 'MANDARIN') as lain from d_pekerja_language dpl where pl_pekerja = '$id' group by pl_pekerja");
+            //dd($bahasa);
 
           $pengalaman = DB::table('d_pekerja_pengalaman')
                   ->select('pp_perusahaan', 'pp_start', 'pp_end', 'pp_jabatan')
                   ->where('pp_pekerja', '=', $id)
                   ->get();
 
-          $referensi = DB::table('d_pekerja_referensi')
-                  ->select('pr_referensi')
-                  ->where('pr_pekerja', '=', $id)
-                  ->get();
+          $referensi = DB::select("select *,
+(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'TEMAN') as teman,
+(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'KELUARGA') as keluarga,
+(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'KORAN') as koran,
+(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'INTERNET') as internet,
+(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi != 'TEMAN' and pr.pr_referensi != 'KELUARGA' and pr.pr_referensi != 'KORAN' and pr.pr_referensi != 'INTERNET') as lain
+from d_pekerja_referensi dpr
+where pr_pekerja = '$id'
+group by pr_pekerja");
 
-          $sim = DB::table('d_pekerja_sim')
-                  ->select('ps_sim', 'ps_note')
-                  ->where('ps_pekerja', '=', $id)
-                  ->get();
+          $sim = DB::select("select ps_pekerja,
+(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM C') as simc,
+(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM A') as sima,
+(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM B') as simb,
+(select ps_note from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_note != '') as note
+from d_pekerja_sim dps
+where ps_pekerja = '$id'
+group by ps_pekerja");
+        //  dd($sim);
+          // $sim = DB::table('d_pekerja_sim')
+          //         ->select('ps_sim', 'ps_note')
+          //         ->where('ps_pekerja', '=', $id)
+          //         ->get();
 
-              /*echo "<pre>";
-              print_r($pekerja);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($child);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($keterampilan);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($bahasa);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($pengalaman);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($referensi);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($sim);
-              echo "</pre>";
-              echo "<pre>";
-              print_r($jabatan);
-              echo "</pre>";*/
+              // echo "<pre>";
+              // print_r($pekerja);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($child);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($keterampilan);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($bahasa);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($pengalaman);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($referensi);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($sim);
+              // echo "</pre>";
+              // echo "<pre>";
+              // print_r($jabatan);
+              // echo "</pre>";
 
        return view('pekerja.formEdit', compact('id', 'pekerja', 'jabatan', 'child', 'keterampilan', 'bahasa', 'pengalaman', 'referensi', 'sim'));
 
@@ -536,8 +553,9 @@ class pekerjaController extends Controller
 
     public function perbarui(Request $request)
     {
-       DB::beginTransaction();
-        try {
+      // dd($request);
+      //  DB::beginTransaction();
+      //   try {
           $id = $request->id;
           $imglama = $request->imglama;
 
@@ -919,12 +937,12 @@ class pekerjaController extends Controller
          DB::commit();
           Session::flash('sukses', 'data pekerja anda berhasil diperbarui');
           return redirect('manajemen-pekerja/data-pekerja');
-      } catch (\Exception $e) {
-          DB::rollback();
-          Session::flash('gagal', 'data pekerja anda tidak dapat di perbarui');
-
-          return redirect('manajemen-pekerja/data-pekerja');
-      }
+      // } catch (\Exception $e) {
+      //     DB::rollback();
+      //     Session::flash('gagal', 'data pekerja anda tidak dapat di perbarui');
+      //
+      //     return redirect('manajemen-pekerja/data-pekerja');
+      // }
 
     }
 
