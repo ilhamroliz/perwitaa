@@ -292,6 +292,7 @@ class pekerjaController extends Controller
                 "p_state" => strtoupper($warga_negara),
                 "p_note" => null,
                 "p_img" => $imgPath,
+                "p_insert_by" => Session::get('mem'),
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" =>Carbon::now('Asia/Jakarta')
             ));

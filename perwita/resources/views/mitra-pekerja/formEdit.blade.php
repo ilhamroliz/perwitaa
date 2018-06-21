@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form id="form-mitra-contract">
+                            <form id="form-edit">
                                 <div class="form-group row">
                                     <label for="kontrak" class="col-sm-2 col-form-label">No Kontrak</label>
                                     <div class="col-sm-10">
@@ -243,6 +243,10 @@
         }
 
         function perbarui(){
+            var ar = $();
+            for (var i = 0; i < table.rows()[0].length; i++) { 
+                ar = ar.add(table.row(i).node());
+            }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -250,6 +254,7 @@
             });
             $.ajax({
                 url: baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/update',
+                data: $('#form-edit').serialize(),
                 type: 'get',
                 success: function(response){
                     if(response.status=='berhasil'){
