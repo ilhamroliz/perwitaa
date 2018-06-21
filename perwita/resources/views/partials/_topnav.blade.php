@@ -1,24 +1,24 @@
 <div class="row border-bottom">
-    
+
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background: #F3F3F4;">
           <div class="navbar-header">
               <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
               <form role="search" class="navbar-form-custom" action="search_results.html">
-                  
+
               </form>
-          </div>              
+          </div>
             @if (Request::path() == 'dashboard')
             <ul class="nav navbar-top-links navbar-left">
                 <li>
                     <a class="disabled">
                    <div style="color: #C9C9C9;font-size: 20px; position: absolute;" class="text-muted welcome-message  wadah-mengetik">
                        Selamat Datang di Halaman Dashboard
-                    </div>                   
+                    </div>
                     </a>
-                </li>               
+                </li>
             </ul>
             @endif
-            <ul class="nav navbar-top-links navbar-right">              
+            <ul class="nav navbar-top-links navbar-right">
                 {{-- <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
@@ -115,26 +115,19 @@
                     </ul>
                 </li> --}}
                 <li>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                         <span class="text-muted text-xs block" style="color: #C9C9C9;"><i class="fa fa-user"></i>
-                          {{ Auth::user()->m_name }} <b class="caret"></b></span> 
+                  <a href="{{ url('logout') }}">
+                        <i class="fa fa-sign-out"></i> Log out
                     </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">                       
-                        <li><a href="{{url('profil')}}">Lihat Profile</a></li>                      
-                        <li class="divider"></li>
-                        <li><a href="{{ url('logout') }}">
-                                <i class="fa fa-sign-out" ></i> Logout</a></li>
-                    </ul>
                 </li>
-                
+
             </ul>
         </nav>
-      </div>      
-      <style>     
+      </div>
+      <style>
           a.disabled {
    pointer-events: none;
    cursor: default;
-   
+
 }
 
 
