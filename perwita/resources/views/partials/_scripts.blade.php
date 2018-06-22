@@ -199,21 +199,28 @@
    // setTimeout(function(){ alert("Hello"); }, 3000);
 
 
-getApproval();
-       function getApproval(){
+getApprovalpelamar();
+       function getApprovalpelamar(){
          $.ajax({
            type : 'get',
-           url : '{{url("cekapproval")}}',
+           url : '{{url("cekapprovalpelamar")}}',
            success : function(data){
              //console.log(data);
              //console.log(notifOBJ);
               if (data.notif > 0) {
                 $("#countnotif").text(data.notif);
+                $("#menit").html(data.insert);
+                $("#catatanapproval").text(data.catatan);
+                $("#isiapproval").html(" Anda Memiliki "+data.jumlah+" Persetujuan Approval");
+             }
+             else if (data.notif == 0) {
+                $("#countnotif").text(data.notif);
+                $("#pekerjaapproval").html("<center>Tidak Ada Permintaan Approval</center>");
 
              }
            }
          });
-          setTimeout(function(){getApproval();}, 5000);
+          setTimeout(function(){getApprovalpelamar();}, 5000);
        }
 
     </script>

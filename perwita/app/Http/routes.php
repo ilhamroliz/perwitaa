@@ -528,4 +528,4 @@ Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail')
 Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
 
 //Approval
-Route::get('/cekapproval', 'approvalController@index');
+Route::get('/cekapprovalpelamar', 'approvalController@cekapprovalpelamar');
