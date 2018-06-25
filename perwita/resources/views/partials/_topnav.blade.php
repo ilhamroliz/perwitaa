@@ -25,15 +25,7 @@
                                   </a>
                                   <ul class="dropdown-menu dropdown-alerts">
                                     <li id="pekerjaapproval">
-                                        <div class="dropdown-messages-box">
-                                            <a href="profile.html" class="pull-left">
-                                                <i class="fa fa-user modal-icon"></i>
-                                            </a>
-                                            <div class="media-body">
-                                                <small class="pull-right" id="menit"></small>
-                                                <strong id="catatanapproval"></strong><small id="isiapproval"></small><br>
-                                            </div>
-                                        </div>
+                                      
                                     </li>
 
                                         <div class="text-center link-block">

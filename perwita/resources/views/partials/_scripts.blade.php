@@ -201,17 +201,28 @@
 
 getApprovalpelamar();
        function getApprovalpelamar(){
+         var html = '';
          $.ajax({
            type : 'get',
-           url : '{{url("cekapprovalpelamar")}}',
+           url : '{{url("/approvalpekerja/cekapprovalpelamar")}}',
            success : function(data){
              //console.log(data);
              //console.log(notifOBJ);
+             html += '<div class="dropdown-messages-box">'+
+                   '<a href="{{url('/approvalpekerja')}}" class="pull-left" title="Lihat Daftar Approval">'+
+                       '<i class="fa fa-user modal-icon"></i>'+
+                   '</a>'+
+                   '<div class="media-body">'+
+                       '<small class="pull-right" id="menit"></small>'+
+                       '<strong id="catatanapproval"></strong><small id="isiapproval"></small><br>'+
+                   '</div>'+
+               '</div>';
               if (data.notif > 0) {
+                $("#pekerjaapproval").html(html);
                 $("#countnotif").text(data.notif);
                 $("#menit").html(data.insert);
                 $("#catatanapproval").text(data.catatan);
-                $("#isiapproval").html(" Anda Memiliki "+data.jumlah+" Persetujuan Approval");
+                $("#isiapproval").html(" Anda Memiliki "+data.jumlah+" Persetujuan");
              }
              else if (data.notif == 0) {
                 $("#countnotif").text(data.notif);

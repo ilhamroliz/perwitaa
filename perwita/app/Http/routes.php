@@ -528,4 +528,9 @@ Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail')
 Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
 
 //Approval
-Route::get('/cekapprovalpelamar', 'approvalController@cekapprovalpelamar');
+Route::get('approvalpekerja/cekapprovalpelamar', 'approvalController@cekapprovalpelamar');
+Route::get('approvalpekerja', 'approvalController@index');
+Route::get('approvalpekerja/table', 'approvalController@data');
+Route::get('approvalpekerja/detail', 'approvalController@detail');
+Route::get('approvalpekerja/setujui', 'approvalController@setujui');
+Route::get('approvalpekerja/tolak', 'approvalController@tolak');
