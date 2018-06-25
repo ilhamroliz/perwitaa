@@ -527,10 +527,15 @@ Route::get('manajemen-mitra/mitra-divisi/tambah','mitraDivisiController@tambah')
 Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail');
 Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
 
-//Approval
-Route::get('approvalpekerja/cekapprovalpelamar', 'approvalController@cekapprovalpelamar');
-Route::get('approvalpekerja', 'approvalController@index');
-Route::get('approvalpekerja/table', 'approvalController@data');
-Route::get('approvalpekerja/detail', 'approvalController@detail');
-Route::get('approvalpekerja/setujui', 'approvalController@setujui');
-Route::get('approvalpekerja/tolak', 'approvalController@tolak');
+//Approval pelamar
+Route::get('approvalpelamar/cekapprovalpelamar', 'approvalpelamarController@cekapprovalpelamar');
+Route::get('approvalpelamar', 'approvalpelamarController@index');
+Route::get('approvalpelamar/table', 'approvalpelamarController@data');
+Route::get('approvalpelamar/detail', 'approvalpelamarController@detail');
+Route::get('approvalpelamar/setujui', 'approvalpelamarController@setujui');
+Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
+
+//Approval Mitra
+Route::get('approvalmitra/cekapprovalmitra', 'approvalmitraController@cekapprovalmitra');
+Route::get('approvalmitra', 'approvalmitraController@index');
+Route::get('approvalmitra/table', 'approvalmitraController@data');

@@ -15,20 +15,20 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Approval Pekerja</h2>
+        <h2>Approval Mitra</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li class="active">
-                <strong>Daftar Approval Pekerja</strong>
+                <strong>Daftar Approval Mitra</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Daftar Approval Pekerja</h5>
+        <h5>Daftar Approval Mitra</h5>
       </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -49,15 +49,15 @@
                 </center>
 
 
-                <table id="approval" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
+                <table id="approvalmitra" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Pendidikan</th>
-                            <th>Alamat</th>
-                            <th>No Hp</th>
-                            <th>Action</th>
+                          <th>No</th>
+                          <th>Nama Mitra</th>
+                          <th>Alamat Mitra</th>
+                          <th>Nomor Telepon</th>
+                          <th>Keterangan</th>
+                          <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,12 +79,12 @@
                             <div class="image" id="showimage">
                                   <i class="fa fa-user modal-icon"></i>
                             </div>
-                <h4 class="modal-title">Detail Pekerja</h4>
+                <h4 class="modal-title">Detail Pelamar</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <div class="col-lg-3">
-                        <h3>Nama Pekerja </h3>
+                        <h3>Nama Pelamar </h3>
                     </div>
                     <div class="col-lg-3">
                         <h3 style="font-weight:normal;" id="p_name">: -</h3>
@@ -370,19 +370,19 @@
 var table;
 
 setTimeout(function () {
-    $('#approval').css('display', '')
-    $('.spiner-example').css('display', 'none')
-    table = $("#approval").DataTable({
+    $('#approvalmitra').css('display', '');
+    $('.spiner-example').css('display', 'none');
+    table = $("#approvalmitra").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('/approvalpekerja/table') }}',
+        ajax: '{{ url('/approvalmitra/table') }}',
         dataType: 'json',
         columns: [
         {data: 'number', name: 'number'},
-        {data: 'p_name', name: 'p_name'},
-        {data: 'p_education', name: 'p_education'},
-        {data: 'p_address', name: 'p_address'},
-        {data: 'p_hp', name: 'p_hp'},
+        {data: 'm_name', name: 'm_name'},
+        {data: 'm_address', name: 'm_address'},
+        {data: 'm_phone', name: 'm_phone'},
+        {data: 'm_note', name: 'm_note'},
         {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
         responsive: true,
@@ -398,7 +398,7 @@ function detail(id){
   $.ajax({
     type: 'get',
     data: {id:id},
-    url: baseUrl + '/approvalpekerja/detail',
+    url: baseUrl + '/approvalpelamar/detail',
     dataType: 'json',
     success : function(result){
       // console.log(result);
@@ -467,7 +467,7 @@ function detail(id){
   function setujui(id){
     swal({
             title: "Konfirmasi",
-            text: "Apakah anda yakin ingin menyetujui pekerja ini?",
+            text: "Apakah anda yakin ingin menyetujui Pelamar ini?",
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
@@ -481,15 +481,15 @@ function detail(id){
                 $.ajax({
                   type: 'get',
                   data: {id:id},
-                  url: baseUrl + '/approvalpekerja/setujui',
+                  url: baseUrl + '/approvalpelamar/setujui',
                   dataType: 'json',
                   timeout: 10000,
                     success: function (response) {
                         waitingDialog.hide();
                         if (response.status == 'berhasil') {
                             swal({
-                                title: "Pekerja Disetujui",
-                                text: "Pekerja Berhasil Disetujui",
+                                title: "Pelamar Disetujui",
+                                text: "Pelamar Berhasil Disetujui",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 900
@@ -525,7 +525,7 @@ function detail(id){
   function tolak(id){
     swal({
             title: "Konfirmasi",
-            text: "Apakah anda yakin ingin menolak pekerja ini?",
+            text: "Apakah anda yakin ingin menolak Pelamar ini?",
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
@@ -539,14 +539,14 @@ function detail(id){
                 $.ajax({
                   type: 'get',
                   data: {id:id},
-                  url: baseUrl + '/approvalpekerja/tolak',
+                  url: baseUrl + '/approvalpelamar/tolak',
                   dataType: 'json',
                   timeout: 10000,
                     success: function (response) {
                         waitingDialog.hide();
                         if (response.status == 'berhasil') {
                             swal({
-                                title: "Pekerja Ditolak",
+                                title: "Pelamar Ditolak",
                                 text: "Pekerja Berhasil Ditolak",
                                 type: "success",
                                 showConfirmButton: false,

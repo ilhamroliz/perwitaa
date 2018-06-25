@@ -21,13 +21,19 @@
             <ul class="nav navbar-top-links navbar-right">
                               <li class="dropdown">
                                   <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                      <input type="hidden" name="operatornotif" value="" id="operatornotif">
                                       <i class="fa fa-bell"></i>  <span class="label label-primary" id="countnotif">0</span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-alerts">
-                                    <li id="pekerjaapproval">
-                                      
-                                    </li>
+                                    <div class="media-body" id="showpelamar">
 
+                                    </div>
+                                    <div class="media-body" id="showmitra">
+
+                                    </div>
+                                    <div class="media-body" id="showkosong">
+
+                                    </div>
                                         <div class="text-center link-block">
                                             <a href="mailbox.html">
                                                 <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>

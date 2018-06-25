@@ -437,6 +437,7 @@ class pekerjaController extends Controller
                 , 'p_rt_rw'
                 , 'p_kecamatan'
                 , 'p_kel'
+                , 'p_nip'
                 , 'p_city'
                 , 'p_jabatan_lamaran'
                 , 'p_address_now'

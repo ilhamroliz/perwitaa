@@ -14,11 +14,11 @@ use Yajra\Datatables\Datatables;
 
 use App\d_pekerja;
 
-class approvalController extends Controller
+class approvalpelamarController extends Controller
 {
     public function index(){
 
-      return view("approvalpekerja.index");
+      return view("approvalpelamar.index");
     }
 
     public function data(){
@@ -37,22 +37,31 @@ class approvalController extends Controller
     }
 
     public function cekapprovalpelamar(){
-      $count = DB::select("select p_insert, count(p_id) as jumlah, 'Approval Pelamar' as catatan
+      $pekerja = DB::select("select p_insert, count(p_id) as jumlah, 'Approval Pelamar' as catatan
                 from d_pekerja
                 where p_date_approval is null
                 order by p_insert desc");
+
+      $mitra = DB::select("select m_insert, count(m_id) as jumlah, 'Approval Mitra' as catatan
+                from d_mitra
+                where m_date_approval is null
+                order by m_insert desc");
+
         $hitung = 0;
-        if (count($count) > 0) {
+        if (count($pekerja) > 0) {
+          $hitung += 1;
+        }
+        if (count($mitra) > 0) {
           $hitung += 1;
         }
 
         Carbon::setLocale('id');
-        $ago = Carbon::parse($count[0]->p_insert)->diffForHumans();
+        $ago = Carbon::parse($pekerja[0]->p_insert)->diffForHumans();
   //dd($ago);
       return response()->json([
         'insert' => $ago,
-        'jumlah' => $count[0]->jumlah,
-        'catatan' => $count[0]->catatan,
+        'jumlah' => $pekerja[0]->jumlah,
+        'catatan' => $pekerja[0]->catatan,
         'notif' => $hitung
       ]);
     //  dd($count);

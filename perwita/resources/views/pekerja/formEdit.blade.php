@@ -55,6 +55,14 @@
                                 <input type="text" class="form-control" id="nama-pekerja" name="nama" style="text-transform:uppercase" value="{{$pekerja[0]->p_name}}">
                             </div>
                         </div>
+                        @if(!empty($pekerja[0]->p_nip))
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">No NIK</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="no-nik" name="nama" style="text-transform:uppercase" value="{{$pekerja[0]->p_nip}}">
+                            </div>
+                        </div>
+                        @endif
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
