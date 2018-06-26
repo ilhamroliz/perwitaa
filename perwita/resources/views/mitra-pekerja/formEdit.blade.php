@@ -250,10 +250,10 @@
             var hitung = $('#totalPekerja').val();
             hitung = hitung - 1;
             $('#totalPekerja').val(hitung);
-            console.log(hapuspekerja);
         } );
 
         function perbarui(){
+            waitingDialog.show();
             var hapus = JSON.stringify(hapuspekerja);
             var ar = $();
             for (var i = 0; i < table.rows()[0].length; i++) { 
@@ -269,7 +269,8 @@
                 data: $('#form-edit').serialize() + '&' + ar.find('input').serialize() + '&hapus=' + hapus,
                 type: 'get',
                 success: function(response){
-                    if(response.status=='berhasil'){
+                    if(response.status=='sukses'){
+                        waitingDialog.hide();
                         swal({
                             title:"Berhasil",
                             text: "Data berhasil dihapus",
@@ -277,8 +278,18 @@
                             showConfirmButton: false,
                             timer: 900
                         });
+                        window.location = baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra';
+                    } else {
+                        waitingDialog.hide();
+                        swal({
+                            title: "Gagal",
+                            text: "Sistem gagal menyimpan data",
+                            type: "error",
+                            showConfirmButton: false
+                        });
                     }
                 },error:function(x,e) {
+                    waitingDialog.hide();
                     var message;
                     if (x.status==0) {
                         message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
@@ -296,6 +307,7 @@
                     throwLoadError(message);
                 }
             });
+            waitingDialog.hide();
         }
 
     </script>
