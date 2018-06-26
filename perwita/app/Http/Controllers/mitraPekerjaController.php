@@ -183,9 +183,9 @@ class mitraPekerjaController extends Controller
 
     public function simpan(Request $request)
     {
-        dd($request);
-        DB::beginTransaction();
-        try {
+        //dd($request);
+        /*DB::beginTransaction();
+        try {*/
 
             $id_pekerja = $request->id_pekerja;
             $no_kontrak = $request->no_kontrak;
@@ -221,7 +221,31 @@ class mitraPekerjaController extends Controller
                 ->whereIn('mp_pekerja', $id_pekerja)
                 ->get();
 
+            if (count($cekUpdate) > 0){
+                $mutasi = [];
+                for ($i = 0; $i < count($cekUpdate); $i++){
+                    for ($j = 0; $j < count($id_pekerja); $j++){
+                        if ($cekUpdate[$i]->mp_pekerja == $id_pekerja[$j]){
 
+                            d_mitra_pekerja::where('mp_contract', '=', $id_kontrak)
+                                ->where('mp_pekerja', '=', $id_pekerja[$j])
+                                ->update([
+                                    'mp_status' => 'Aktif',
+                                    'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
+                                    'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                                    'mp_mitra_nik' => $nik_mitra[$j]
+                                ]);
+
+                            d_pekerja::where('p_id', '=', $id_pekerja[$j])
+                                ->update([
+                                    'p_note' => 'Seleksi',
+                                    'p_nip' => $nik[$j]
+                                ]);
+
+                        }
+                    }
+                }
+            }
 
             $data = [];
             $mutasi = [];
@@ -281,7 +305,7 @@ class mitraPekerjaController extends Controller
 
             ]);
 
-            DB::commit();
+            /*DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -291,7 +315,7 @@ class mitraPekerjaController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }
+        }*/
 
     }
 
