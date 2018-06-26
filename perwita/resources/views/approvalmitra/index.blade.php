@@ -154,12 +154,20 @@
 var table;
 
 setTimeout(function () {
+  $.ajaxSetup({
+    headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+    });
     $('#approvalmitra').css('display', '');
     $('.spiner-example').css('display', 'none');
     table = $("#approvalmitra").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('/approvalmitra/table') }}',
+        "ajax": {
+            'url': '{{ url('/approvalmitra/table') }}',
+            'type': 'POST',
+          },
         dataType: 'json',
         columns: [
         {data: 'number', name: 'number'},

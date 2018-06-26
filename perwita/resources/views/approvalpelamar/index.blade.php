@@ -370,12 +370,20 @@
 var table;
 
 setTimeout(function () {
+  $.ajaxSetup({
+    headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+    });
     $('#approvalpelamar').css('display', '');
     $('.spiner-example').css('display', 'none');
     table = $("#approvalpelamar").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('/approvalpelamar/table') }}',
+        "ajax": {
+            'url': '{{ url('/approvalpelamar/table') }}',
+            'type': 'POST',
+          },
         dataType: 'json',
         columns: [
         {data: 'number', name: 'number'},
