@@ -171,9 +171,9 @@ setTimeout(function () {
         processing: true,
         serverSide: true,
         "ajax": {
-                      "url": "{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}",
-                      "type": "POST"
-                  },
+          "url": "{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}",
+          "type": "POST"
+        },
         dataType: 'json',
         columns: [
 

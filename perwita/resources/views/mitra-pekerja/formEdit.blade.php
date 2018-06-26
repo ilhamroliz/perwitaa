@@ -180,8 +180,8 @@
                                     @foreach($pekerja as $pekerja)
                                         <tr class="pekerja-{{ $pekerja->p_id }}">
                                             <td style="width: 20%;">{{ $pekerja->p_name }}<input type="hidden" name="p_id[]" value="{{ $pekerja->p_id }}"></td>
-                                            <td><input class="form-control" type="text" name="nip[]" value="{{ $pekerja->p_nip }}" style="width: 100%;"></td>
-                                            <td><input class="form-control" type="text" name="nip_mitra[]" value="{{ $pekerja->mp_mitra_nik }}" style="width: 100%;"></td>
+                                            <td>{{ $pekerja->p_nip }}</td>
+                                            <td><input class="form-control" type="text" name="nip_mitra[]" value="{{ $pekerja->mp_mitra_nik }}" style="width: 100%; text-transform:uppercase"></td>
                                             <td style="width: 15%;"><input class="form-control seleksi-date" type="text" name="seleksi[]" value="{{ $pekerja->mp_selection_date }}" style="width: 100%;"></td>
                                             <td style="width: 15%;"><input class="form-control kerja-date" type="text" name="kerja[]" value="{{ $pekerja->mp_workin_date }}" style="width: 100%;"></td>
                                             <td class="text-center"><button id="{{ $pekerja->p_id }}" type="button" class="btn btn-danger btn-hapus"><i class="fa fa-minus"></i></button></td>
@@ -223,7 +223,10 @@
         $(document).ready(function(){
             table = $("#table-pekerja").DataTable({
                 responsive: true,
-                "language": dataTableLanguage
+                "language": dataTableLanguage,
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ]
             });
 
             $('.seleksi-date').datepicker({

@@ -329,7 +329,7 @@ class mitraPekerjaController extends Controller
 
     public function update(Request $request)
     {
-        dd($request);
+        //dd($request);
         $hapus = $request->hapus;
         $hapus = json_decode($hapus);
         foreach ($hapus as $key => $var) {
@@ -343,9 +343,8 @@ class mitraPekerjaController extends Controller
         $mitra_nip = $request->nip_mitra;
         $seleksi = $request->seleksi;
         $kerja = $request->kerja;
-
-        DB::beginTransaction();
-        try {
+/*        DB::beginTransaction();
+        try {*/
 
             $sekarang = Carbon::now('Asia/Jakarta');
 //====== update jumlah pekerja
@@ -387,18 +386,19 @@ class mitraPekerjaController extends Controller
                 d_mitra_pekerja::where('mp_contract', '=', $idKontrak)
                     ->where('mp_pekerja', '=', $p_id[$i])
                     ->update([
-                        'mp_mitra_nik' => $mitra_nip,
-                        'mp_selection_date' => $seleksi[$i],
-                        'mp_workin_date' => $kerja[$i]
+                        'mp_mitra_nik' => strtoupper($mitra_nip[$i]),
+                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $seleksi[$i])->format('Y-m-d'),
+                        'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $kerja[$i])->format('Y-m-d')
                     ]);
 
                 d_pekerja::where('p_id', '=', $p_id[$i])
                     ->update([
-                        'p_nip_mitra' => $mitra_nip
+                        'p_nip_mitra' => strtoupper($mitra_nip[$i]),
+                        'p_workdate' => Carbon::createFromFormat('d/m/Y', $kerja[$i])->format('Y-m-d')
                     ]);
             }
 
-            DB::commit();
+/*            DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -408,7 +408,7 @@ class mitraPekerjaController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }
+        }*/
     }
 
     public function perbarui(Request $request, $mitra, $mc_contractid)
