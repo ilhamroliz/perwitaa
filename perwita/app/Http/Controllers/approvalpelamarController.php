@@ -23,13 +23,13 @@ class approvalpelamarController extends Controller
 
     public function data(){
       DB::statement(DB::raw('set @rownum=0'));
-      $pekerja = d_pekerja::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pekerja.*')->where('p_status_approval', '=', null)->get();
+      $pekerja = d_pekerja::select(DB::raw('p_id as DT_RowId'), DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pekerja.*')->where('p_status_approval', '=', null)->get();
       return Datatables::of($pekerja)
                      ->addColumn('action', function ($pekerja) {
                           return'<div class="action">
-                              <button type="button" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                              <button type="button" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                              <button type="button" onclick="tolak('.$pekerja->p_id.')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                              <button type="button" id="'.$pekerja->p_id.'" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                              <button type="button" id="'.$pekerja->p_id.'" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                              <button type="button" id="'.$pekerja->p_id.'" onclick="tolak('.$pekerja->p_id.')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                           </div>';
                       })
                       ->make(true);

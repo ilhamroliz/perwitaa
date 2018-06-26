@@ -51,7 +51,7 @@
 
                 <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
-                        <tr>
+                        <tr id="kliktable" onclick="detail()">
                             <th>No</th>
                             <th>Nama</th>
                             <th>Pendidikan</th>
@@ -393,6 +393,14 @@ setTimeout(function () {
     "language": dataTableLanguage,
 });
 }, 1000);
+
+$('#approvalpelamar').on("click","tr",function(){
+  // console.log(this.id);
+  // return false;
+        var idpelamar = $(this).attr("id");
+        $(".odd").attr('onclick', 'detail('+idpelamar+')');
+        $(".even").attr('onclick', 'detail('+idpelamar+')');
+});
 
 function detail(id){
   $.ajax({
