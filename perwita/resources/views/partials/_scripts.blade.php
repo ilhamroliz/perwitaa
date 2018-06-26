@@ -240,23 +240,26 @@
                                '<li class="divider"></li>';
 
                                if (data.data[0].jumlah > 0) {
-                                  countnotif += 1;
+                                  countnotif += 0;
                                   $("#showpelamar").html(pelamar);
+                                  $("#countnotif").text(countnotif);
                                   $("#menitpelamar").html(data.data[0].p_insert);
                                   $("#catatanapprovalpelamar").text(data.data[0].catatan);
                                   $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[0].jumlah+" Persetujuan");
                                }
                                if (data.data[1].jumlah > 0) {
-                                  countnotif += 1;
+                                  countnotif += 0;
                                   $("#showmitra").html(mitra);
+                                  $("#countnotif").text(countnotif);
                                   $("#menitmitra").html(data.data[1].m_insert);
                                   $("#catatanapprovalmitra").text(data.data[1].catatan);
-                                  $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[1].jumlah+" Persetujuan");
+                                  $("#isiapprovalmitra").html(" Anda Memiliki "+data.data[1].jumlah+" Persetujuan");
                                }
                                if (countnotif == 0) {
+                                 $("#showpelamar").html('');
+                                 $("#showmitra").html('');
                                  $("#showkosong").html('<center> Tidak ada permintaan Approval </center>');
                                }
-                              $("#countnotif").text(countnotif);
                          }
                        });
                         setTimeout(function(){getApproval();}, 5000);
