@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use Redirect;
 use App\d_mitra_contract;
 
+use function Sodium\add;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\mitraContractController;
 use App\Http\Controllers\pdmController;
@@ -329,6 +330,85 @@ class mitraPekerjaController extends Controller
     public function update(Request $request)
     {
         dd($request);
+        $hapus = $request->hapus;
+        $hapus = json_decode($hapus);
+        foreach ($hapus as $key => $var) {
+            $hapus[$key] = (int)$var;
+        }
+        $hapusIn = implode("','",$hapus);
+        $idKontrak = $request->mc_contractid;
+        $kontrak = $request->kontrak;
+        $p_id = $request->p_id;
+        $nip = $request->nip;
+        $mitra_nip = $request->nip_mitra;
+        $seleksi = $request->seleksi;
+        $kerja = $request->kerja;
+
+        DB::beginTransaction();
+        try {
+
+            $sekarang = Carbon::now('Asia/Jakarta');
+//====== update jumlah pekerja
+            d_mitra_contract::where('mc_contractid', '=', $idKontrak)
+                ->update(array(
+                    'mc_no' => $kontrak,
+                    'mc_fulfilled' => count($p_id)
+                ));
+//====== update status pekerja di mitra
+            d_mitra_pekerja::whereIn('mp_pekerja', $hapus)
+                ->update(array(
+                    'mp_status' => 'Tidak'
+                ));
+//====== info kontrak
+            $infoKontrak = DB::table('d_mitra_contract')
+                ->where('mc_contractid', '=', $idKontrak)
+                ->first();
+//====== info pekerja yang dihapus dari list
+            $pekerja = DB::select("select pm.pm_pekerja, pm.pm_detailid from (select * from d_pekerja_mutation where pm_pekerja in ('".$hapusIn."') group by pm_pekerja, pm_detailid desc) as pm group by pm.pm_pekerja");
+
+            $addPekerja = [];
+            for($i = 0; $i < count($pekerja); $i++){
+                $temp = array(
+                    'pm_pekerja' => $pekerja[$i]->pm_pekerja,
+                    'pm_detailid' => $pekerja[$i]->pm_detailid + 1,
+                    'pm_date' => $sekarang,
+                    'pm_mitra' => $infoKontrak->mc_mitra,
+                    'pm_divisi' => $infoKontrak->mc_divisi,
+                    'pm_detail' => 'Edit Status',
+                    'pm_status' => 'Calon',
+                    'pm_note' => 'di hapus dari list',
+                    'pm_insert_by' => Session::get('mem')
+                );
+                array_push($addPekerja, $temp);
+            }
+            d_pekerja_mutation::insert($addPekerja);
+//====== update tanggal kerja pekerja di mitra
+            for($i = 0; $i < count($p_id); $i++){
+                d_mitra_pekerja::where('mp_contract', '=', $idKontrak)
+                    ->where('mp_pekerja', '=', $p_id[$i])
+                    ->update([
+                        'mp_mitra_nik' => $mitra_nip,
+                        'mp_selection_date' => $seleksi[$i],
+                        'mp_workin_date' => $kerja[$i]
+                    ]);
+
+                d_pekerja::where('p_id', '=', $p_id[$i])
+                    ->update([
+                        'p_nip_mitra' => $mitra_nip
+                    ]);
+            }
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
     }
 
     public function perbarui(Request $request, $mitra, $mc_contractid)
