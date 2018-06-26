@@ -240,7 +240,7 @@
                                '<li class="divider"></li>';
 
                                if (data.data[0].jumlah > 0) {
-                                  countnotif += 0;
+                                  countnotif += 1;
                                   $("#showpelamar").html(pelamar);
                                   $("#countnotif").text(countnotif);
                                   $("#menitpelamar").html(data.data[0].p_insert);
@@ -248,7 +248,7 @@
                                   $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[0].jumlah+" Persetujuan");
                                }
                                if (data.data[1].jumlah > 0) {
-                                  countnotif += 0;
+                                  countnotif += 1;
                                   $("#showmitra").html(mitra);
                                   $("#countnotif").text(countnotif);
                                   $("#menitmitra").html(data.data[1].m_insert);
