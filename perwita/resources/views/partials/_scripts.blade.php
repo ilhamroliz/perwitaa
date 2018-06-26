@@ -198,62 +198,18 @@
 
    // setTimeout(function(){ alert("Hello"); }, 3000);
 
-
-       getApprovalpelamar();
-              function getApprovalpelamar(){
-                var html = '';
-                $.ajax({
-                  type : 'get',
-                  url : '{{url("/approvalpelamar/cekapprovalpelamar")}}',
-                  success : function(data){
-                    //console.log(data);
-                    //console.log(notifOBJ);
-                    html += '<li">'+
-                        '<div class="dropdown-messages-box">'+
-                          '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar">'+
-                              '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                           '</a>'+
-                          '<div class="media-body">'+
-                          '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
-                              '<small class="pull-right" id="menitpelamar"></small>'+
-                              '<strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>'+
-                           '</a>'+
-                          '</div>'+
-                      '</div>'+
-                      '</li>'+
-                      '<li class="divider"></li>';
-                     if (data.notif > 0) {
-                       $("#showpelamar").html(html);
-                       $("#countnotif").text(data.notif);
-                       $("#menitpelamar").html(data.insert);
-                       $("#catatanapprovalpelamar").text(data.catatan);
-                       $("#isiapprovalpelamar").html(" Anda Memiliki "+data.jumlah+" Persetujuan");
-                    }
-                    else if (data.notif == 1) {
-                       $("#countnotif").text(data.notif);
-                       $("#isiapprovalmitra").html("<center>Tidak Ada Permintaan Approval Pelamar</center>");
-
-                    }
-                    else {
-                       $("#countnotif").text(data.notif);
-                       $("#showkosong").html("<center>Tidak Ada Permintaan Approval</center>");
-
-                    }
-                  }
-                });
-                 setTimeout(function(){getApprovalpelamar();}, 5000);
-              }
-
-              getApprovalmitra();
-                     function getApprovalmitra(){
-                       var html = '';
+              getApproval();
+                     function getApproval(){
+                       var pelamar = '';
+                       var mitra = '';
+                       var countnotif = 0;
                        $.ajax({
                          type : 'get',
-                         url : '{{url("/approvalmitra/cekapprovalmitra")}}',
+                         url : '{{url("/approval/cekapproval")}}',
                          success : function(data){
                            //console.log(data);
                            //console.log(notifOBJ);
-                           html += '<li">'+
+                           mitra += '<li">'+
                                '<div class="dropdown-messages-box">'+
                                  '<a href="{{url('/approvalmitra')}}" class="pull-left" title="Lihat Daftar Approval Mitra">'+
                                      '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
@@ -267,23 +223,42 @@
                              '</div>'+
                              '</li>'+
                              '<li class="divider"></li>';
-                            if (data.notif > 0) {
-                              $("#showmitra").html(html);
-                              $("#countnotif").text(data.notif);
-                              $("#menitmitra").html(data.insert);
-                              $("#catatanapprovalmitra").text(data.catatan);
-                              $("#isiapprovalmitra").html(" Anda Memiliki "+data.jumlah+" Persetujuan");
-                           }
-                           else if (data.notif == 1) {
-                              $("#countnotif").text(data.notif);
-                              $("#isiapprovalmitra").html("<center>Tidak Ada Permintaan Approval Mitra</center>");
-                           }
-                           else{
-                             $("#countnotif").text(data.notif);
-                             $("#showkosong").html("<center>Tidak Ada Permintaan Approval</center>");
-                           }
+
+                             pelamar += '<li">'+
+                                 '<div class="dropdown-messages-box">'+
+                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Mitra">'+
+                                       '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
+                                    '</a>'+
+                                   '<div class="media-body">'+
+                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
+                                       '<small class="pull-right" id="menitpelamar"></small>'+
+                                       '<strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>'+
+                                    '</a>'+
+                                   '</div>'+
+                               '</div>'+
+                               '</li>'+
+                               '<li class="divider"></li>';
+
+                               if (data.data[0].jumlah > 0) {
+                                  countnotif += 1;
+                                  $("#showpelamar").html(pelamar);
+                                  $("#menitpelamar").html(data.data[0].p_insert);
+                                  $("#catatanapprovalpelamar").text(data.data[0].catatan);
+                                  $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[0].jumlah+" Persetujuan");
+                               }
+                               if (data.data[1].jumlah > 0) {
+                                  countnotif += 1;
+                                  $("#showmitra").html(mitra);
+                                  $("#menitmitra").html(data.data[1].m_insert);
+                                  $("#catatanapprovalmitra").text(data.data[1].catatan);
+                                  $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[1].jumlah+" Persetujuan");
+                               }
+                               if (countnotif == 0) {
+                                 $("#showkosong").html('<center> Tidak ada permintaan Approval </center>');
+                               }
+                              $("#countnotif").text(countnotif);
                          }
                        });
-                        setTimeout(function(){getApprovalmitra();}, 5000);
+                        setTimeout(function(){getApproval();}, 5000);
                      }
     </script>
