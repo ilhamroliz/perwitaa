@@ -262,6 +262,6 @@
                                }
                          }
                        });
-                        setTimeout(function(){getApproval();}, 5000);
+                        setTimeout(function(){getApproval();}, 3000);
                      }
     </script>
