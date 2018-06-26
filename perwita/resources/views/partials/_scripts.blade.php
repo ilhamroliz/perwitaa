@@ -214,7 +214,7 @@
                               '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                            '</a>'+
                           '<div class="media-body">'+
-                          '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar">'+
+                          '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
                               '<small class="pull-right" id="menitpelamar"></small>'+
                               '<strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>'+
                            '</a>'+
@@ -254,7 +254,7 @@
                                      '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                                   '</a>'+
                                  '<div class="media-body">'+
-                                 '<a href="{{url('/approvalmitra')}}" class="pull-left" title="Lihat Daftar Approval Mitra">'+
+                                 '<a href="{{url('/approvalmitra')}}" class="pull-left" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">'+
                                      '<small class="pull-right" id="menitmitra"></small>'+
                                      '<strong id="catatanapprovalmitra"></strong><small id="isiapprovalmitra"></small><br>'+
                                   '</a>'+
