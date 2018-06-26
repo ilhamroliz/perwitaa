@@ -226,7 +226,7 @@
 
                              pelamar += '<li">'+
                                  '<div class="dropdown-messages-box">'+
-                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Mitra">'+
+                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar">'+
                                        '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                                     '</a>'+
                                    '<div class="media-body">'+
