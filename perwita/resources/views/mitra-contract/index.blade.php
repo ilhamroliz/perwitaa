@@ -162,10 +162,18 @@ var table;
 setTimeout(function () {
     $('#mitra').css('display', '');
     $('.spiner-example').css('display', 'none');
+    $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+            });
     table = $("#mitra").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}',
+        "ajax": {
+                      "url": "{{ url('manajemen-kontrak-mitra/data-kontrak-mitra/table') }}",
+                      "type": "POST"
+                  },
         dataType: 'json',
         columns: [
 

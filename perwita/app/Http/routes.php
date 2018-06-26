@@ -49,6 +49,7 @@ Route::get('manajemen-mitra/data-mitra/hapus/{id}','mitraController@hapus');
 //mitra Contract
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra','mitraContractController@index');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/table','mitraContractController@data');
+Route::post('manajemen-kontrak-mitra/data-kontrak-mitra/table','mitraContractController@data');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/tambah','mitraContractController@tambah');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/simpan','mitraContractController@simpan');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/cari','mitraContractController@cari');
