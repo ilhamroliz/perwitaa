@@ -72,13 +72,13 @@ class approvalmitraController extends Controller
                 where m_date_approval is null
                 order by m_insert desc");
 
-        $hitung = 0;
-        if (count($pekerja) > 0) {
-          $hitung += 1;
-        }
-        if (count($mitra) > 0) {
-          $hitung += 1;
-        }
+                $hitung = 0;
+                if ($pekerja[0]->jumlah > 0) {
+                  $hitung += 1;
+                } 
+                if ($mitra[0]->jumlah > 0) {
+                  $hitung += 1;
+                }
 
         Carbon::setLocale('id');
         $ago = Carbon::parse($mitra[0]->m_insert)->diffForHumans();

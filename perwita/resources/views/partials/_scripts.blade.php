@@ -229,7 +229,12 @@
                        $("#catatanapprovalpelamar").text(data.catatan);
                        $("#isiapprovalpelamar").html(" Anda Memiliki "+data.jumlah+" Persetujuan");
                     }
-                    else if (data.notif == 0) {
+                    else if (data.notif == 1) {
+                       $("#countnotif").text(data.notif);
+                       $("#isiapprovalmitra").html("<center>Tidak Ada Permintaan Approval Pelamar</center>");
+
+                    }
+                    else {
                        $("#countnotif").text(data.notif);
                        $("#showkosong").html("<center>Tidak Ada Permintaan Approval</center>");
 
@@ -269,10 +274,13 @@
                               $("#catatanapprovalmitra").text(data.catatan);
                               $("#isiapprovalmitra").html(" Anda Memiliki "+data.jumlah+" Persetujuan");
                            }
-                           else if (data.notif == 0) {
+                           else if (data.notif == 1) {
                               $("#countnotif").text(data.notif);
-                              $("#showkosong").html("<center>Tidak Ada Permintaan Approval</center>");
-
+                              $("#isiapprovalmitra").html("<center>Tidak Ada Permintaan Approval Mitra</center>");
+                           }
+                           else{
+                             $("#countnotif").text(data.notif);
+                             $("#showkosong").html("<center>Tidak Ada Permintaan Approval</center>");
                            }
                          }
                        });

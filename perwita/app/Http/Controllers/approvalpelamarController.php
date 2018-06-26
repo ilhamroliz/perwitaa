@@ -48,12 +48,12 @@ class approvalpelamarController extends Controller
                 order by m_insert desc");
 
         $hitung = 0;
-        if (count($pekerja) > 0) {
+        if ($pekerja[0]->jumlah > 0) {
           $hitung += 1;
         }
-        if (count($mitra) > 0) {
+        if ($mitra[0]->jumlah > 0) {
           $hitung += 1;
-        }
+        } 
 
         Carbon::setLocale('id');
         $ago = Carbon::parse($pekerja[0]->p_insert)->diffForHumans();
