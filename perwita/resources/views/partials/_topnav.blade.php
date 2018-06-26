@@ -22,7 +22,7 @@
                               <li class="dropdown">
                                   <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                                       <input type="hidden" name="operatornotif" value="" id="operatornotif">
-                                      <i class="fa fa-bell"></i>  <span class="label label-primary" id="countnotif">0</span>
+                                      <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif">0</span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-alerts" style="background-color:rgb(238, 236, 236);">
                                     <div class="media-body" id="showpelamar">

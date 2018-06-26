@@ -394,13 +394,6 @@ setTimeout(function () {
 });
 }, 1000);
 
-$('#approvalpelamar').on("click","tr",function(){
-  // console.log(this.id);
-  // return false;
-        var idpelamar = $(this).attr("id");
-        $(".odd").attr('onclick', 'detail('+idpelamar+')');
-        $(".even").attr('onclick', 'detail('+idpelamar+')');
-});
 
 function detail(id){
   $.ajax({

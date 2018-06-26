@@ -540,3 +540,6 @@ Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
 Route::get('approvalmitra/cekapprovalmitra', 'approvalmitraController@cekapprovalmitra');
 Route::get('approvalmitra', 'approvalmitraController@index');
 Route::get('approvalmitra/table', 'approvalmitraController@data');
+Route::get('approvalmitra/detail', 'approvalmitraController@detail');
+Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
+Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
