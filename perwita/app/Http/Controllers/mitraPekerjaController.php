@@ -219,6 +219,13 @@ class mitraPekerjaController extends Controller
                 ->where('mc_contractid', '=', $id_kontrak)
                 ->get();
 
+            $getMaxId = DB::table('d_mitra_pekerja')
+                ->select('mp_id')
+                ->where('mp_contract', '=', $id_kontrak)
+                ->max('mp_id');
+
+            $maxId = $getMaxId + 1;
+
 //====== menyiapkan data untuk penentuan data apakah di update/create
             $addPekerja = [];
             $addMutasi = [];
@@ -232,19 +239,19 @@ class mitraPekerjaController extends Controller
                 if (count($cek) > 0){
 //====== data di update
                     d_mitra_pekerja::where('mp_contract', '=', $id_kontrak)
-                        ->where('mp_pekerja', '=', $id_pekerja)
+                        ->where('mp_pekerja', '=', $id_pekerja[$i])
                         ->where('mp_id', '=', $cek[0]->mp_id)
                         ->update([
                             'mp_status' => 'Aktif',
-                            'mp_mitra_nik' => strtoupper($nik[$i]),
-                            'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
-                            'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')
+                            'mp_mitra_nik' => strtoupper($nik_mitra[$i]),
+                            'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta')->format('Y-m-d'),
+                            'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d')
                         ]);
 
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',
-                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d'),
                             'p_nip' => strtoupper($nik[$i]),
                             'p_nip_mitra' => strtoupper($nik_mitra[$i])
                         ]);
@@ -270,27 +277,20 @@ class mitraPekerjaController extends Controller
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',
-                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d'),
                             'p_nip' => strtoupper($nik[$i]),
                             'p_nip_mitra' => strtoupper($nik_mitra[$i])
                         ]);
 
-                    $getMaxId = DB::table('d_mitra_pekerja')
-                        ->select('mp_id')
-                        ->where('mp_contract', '=', $id_kontrak)
-                        ->max('mp_id');
-
-                    $maxId = $getMaxId + 1;
-
                     $temp = array(
-                        'mp_id' => $maxId,
+                        'mp_id' => $maxId + $i,
                         'mp_comp' => $info[0]->mc_comp,
                         'mp_pekerja' => $id_pekerja[$i],
                         'mp_mitra' => $info[0]->mc_mitra,
                         'mp_divisi' => $info[0]->mc_divisi,
                         'mp_mitra_nik' => strtoupper($nik_mitra[$i]),
-                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi[$i], 'Asia/Jakarta'),
-                        'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja[$i], 'Asia/Jakarta'),
+                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta')->format('Y-m-d'),
+                        'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d'),
                         'mp_contract' => $id_kontrak,
                         'mp_status' => 'Aktif'
                     );
@@ -313,8 +313,10 @@ class mitraPekerjaController extends Controller
                     array_push($addMutasi, $tempMutasi);
                 }
             }
+            d_pekerja_mutation::insert($addMutasi);
+            d_mitra_pekerja::insert($addPekerja);
 
-        /*    DB::commit();
+            /*DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -325,7 +327,6 @@ class mitraPekerjaController extends Controller
                 'data' => $e
             ]);
         }*/
-
     }
 
     public function edit($mitra, $kontrak)
