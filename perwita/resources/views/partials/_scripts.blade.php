@@ -269,7 +269,6 @@
                                if (countnotif == 0) {
                                  $("#showpelamar").html(pelamar);
                                  $("#showmitra").html(mitra);
-                                 $("#showkosong").html('<center> Tidak ada permintaan Approval </center>');
                                }
                          }
                        });
