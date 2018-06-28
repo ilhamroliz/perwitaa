@@ -188,8 +188,8 @@ class mitraPekerjaController extends Controller
     public function simpan(Request $request)
     {
         //dd($request);
-        /*DB::beginTransaction();
-        try {*/
+        DB::beginTransaction();
+        try {
             $sekarang = Carbon::now('Asia/Jakarta');
             $id_pekerja = $request->id_pekerja;
             $no_kontrak = $request->no_kontrak;
@@ -316,7 +316,7 @@ class mitraPekerjaController extends Controller
             d_pekerja_mutation::insert($addMutasi);
             d_mitra_pekerja::insert($addPekerja);
 
-            /*DB::commit();
+            DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -326,7 +326,7 @@ class mitraPekerjaController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }*/
+        }
     }
 
     public function edit($mitra, $kontrak)
