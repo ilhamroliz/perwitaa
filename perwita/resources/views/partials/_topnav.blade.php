@@ -1,3 +1,13 @@
+<style media="screen">
+  #approvaldown{
+    background-color: #f6f6f6;
+  }
+
+  .dropdown-messages-box:hover{
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+</style>
+
 <div class="row border-bottom">
 
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background: #F3F3F4;">
@@ -29,17 +39,34 @@
                                       <input type="hidden" name="operatornotif" value="" id="operatornotif">
                                       <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif"></span>
                                   </a>
-                                  <ul class="dropdown-menu dropdown-alerts" style="background-color:rgb(238, 236, 236);">
+                                  <ul class="dropdown-menu dropdown-alerts approvaldown"  id="approvaldown">
                                     <div class="media-body" id="showpelamar">
+                                      <li>
+                                          <div class="dropdown-messages-box">
 
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalpelamar')}}" class="pull-left a-body" id="#pelamar-body" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitpelamar"></small>
+                                                <strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
                                     <div class="media-body" id="showmitra">
+                                      <li>
+                                          <div class="dropdown-messages-box">
 
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalmitra')}}" class="pull-left a-body" id="#mitra-body" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitmitra"></small>
+                                                <strong id="catatanapprovalmitra"></strong><small id="isiapprovalmitra"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
                                     </div>
-                                    <div class="media-body" id="showkosong">
-
-                                    </div>
-
                                     </li>
                                   </ul>
                                   @endif

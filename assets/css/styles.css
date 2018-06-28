@@ -1,4 +1,4 @@
-/*   
+/*
  * Template Name: Appkit Landing - Responsive Website Template for Developers
  * Version: 1.0
  * Author: Xiaoying Riley
@@ -7,6 +7,11 @@
 * License: Creative Commons Attribution 3.0 License
 */
 /* Theme default */
+#approvaldown {
+  background-color: #f6f6f6;
+}
+
+
 body {
   font-family: 'Open Sans';
   color: #494d55;
@@ -229,7 +234,7 @@ a.btn-cta {
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-  background: #303246; 
+  background: #303246;
   -webkit-transition: none;
   -moz-transition: none;
   -ms-transition: none;
