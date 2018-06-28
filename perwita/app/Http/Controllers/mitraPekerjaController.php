@@ -181,9 +181,13 @@ class mitraPekerjaController extends Controller
         return view('mitra-pekerja.formLanjutan', compact('pekerja', 'info', 'seleksi', 'kerja'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function simpan(Request $request)
     {
-        dd($request);
+        //dd($request);
         /*DB::beginTransaction();
         try {*/
             $sekarang = Carbon::now('Asia/Jakarta');
@@ -215,69 +219,102 @@ class mitraPekerjaController extends Controller
                 ->where('mc_contractid', '=', $id_kontrak)
                 ->get();
 
+//====== menyiapkan data untuk penentuan data apakah di update/create
+            $addPekerja = [];
+            $addMutasi = [];
             for ($i = 0; $i < count($id_pekerja); $i++){
+                $cek = DB::table('d_mitra_pekerja')
+                    ->select('mp_id', 'mp_pekerja')
+                    ->where('mp_contract', '=', $id_kontrak)
+                    ->where('mp_pekerja', '=', $id_pekerja[$i])
+                    ->get();
 
-            }
+                if (count($cek) > 0){
+//====== data di update
+                    d_mitra_pekerja::where('mp_contract', '=', $id_kontrak)
+                        ->where('mp_pekerja', '=', $id_pekerja)
+                        ->where('mp_id', '=', $cek[0]->mp_id)
+                        ->update([
+                            'mp_status' => 'Aktif',
+                            'mp_mitra_nik' => strtoupper($nik[$i]),
+                            'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
+                            'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')
+                        ]);
 
-            $data = [];
-            $mutasi = [];
-            $id_mitra_pekerja = d_mitra_pekerja::max('mp_id');
-            $id_mitra_pekerja = $id_mitra_pekerja + 1;
-            for ($index = 0; $index < count($id_pekerja); $index++) {
-                if ($nik_mitra[$index] != '' || $nik_mitra[$index] != null) {
-                    $temp = array(
-                        'mp_id' => $id_mitra_pekerja + $index,
-                        'mp_comp' => $info[0]->mc_comp,
-                        'mp_pekerja' => $id_pekerja[$index],
-                        'mp_mitra' => $info[0]->mc_mitra,
-                        'mp_divisi' => $info[0]->mc_divisi,
-                        'mp_mitra_nik' => strtoupper($nik_mitra[$index]),
-                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
-                        'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
-                        'mp_contract' => $id_kontrak,
-                        'mp_status' => 'Aktif'
-                    );
+                    d_pekerja::where('p_id', '=', $id_pekerja[$i])
+                        ->update([
+                            'p_note' => 'Seleksi',
+                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                            'p_nip' => strtoupper($nik[$i]),
+                            'p_nip_mitra' => strtoupper($nik_mitra[$i])
+                        ]);
 
                     $pm_detail = DB::table('d_pekerja_mutation')
-                        ->where('pm_pekerja', '=', $id_pekerja[$index])
+                        ->where('pm_pekerja', '=', $id_pekerja[$i])
                         ->max('pm_detailid');
+
                     $tempMutasi = array(
-                        'pm_pekerja' => $id_pekerja[$index],
+                        'pm_pekerja' => $id_pekerja[$i],
                         'pm_detailid' => $pm_detail + 1,
-                        'pm_date' => Carbon::now('Asia/Jakarta'),
+                        'pm_date' => $sekarang,
                         'pm_mitra' => $info[0]->mc_mitra,
                         'pm_divisi' => $info[0]->mc_divisi,
                         'pm_detail' => 'Seleksi',
                         'pm_from' => null,
                         'pm_status' => 'Aktif'
                     );
-                    array_push($mutasi, $tempMutasi);
-                    array_push($data, $temp);
-
-                    d_pekerja::where('p_id', $id_pekerja[$index])
-                        ->update(array(
-                            'p_note' => 'Seleksi',
-                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
-                            'p_nip' => strtoupper($nik[$index]),
-                            'p_nip_mitra' => strtoupper($nik_mitra[$index])
-                        ));
+                    array_push($addMutasi, $tempMutasi);
 
                 } else {
-                    return response()->json([
-                        'status' => 'gagal',
-                        'data' => 'Belum ada detail pekerja yang di masukkan.'
-                    ]);
+//====== data di create
+                    d_pekerja::where('p_id', '=', $id_pekerja[$i])
+                        ->update([
+                            'p_note' => 'Seleksi',
+                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
+                            'p_nip' => strtoupper($nik[$i]),
+                            'p_nip_mitra' => strtoupper($nik_mitra[$i])
+                        ]);
+
+                    $getMaxId = DB::table('d_mitra_pekerja')
+                        ->select('mp_id')
+                        ->where('mp_contract', '=', $id_kontrak)
+                        ->max('mp_id');
+
+                    $maxId = $getMaxId + 1;
+
+                    $temp = array(
+                        'mp_id' => $maxId,
+                        'mp_comp' => $info[0]->mc_comp,
+                        'mp_pekerja' => $id_pekerja[$i],
+                        'mp_mitra' => $info[0]->mc_mitra,
+                        'mp_divisi' => $info[0]->mc_divisi,
+                        'mp_mitra_nik' => strtoupper($nik_mitra[$i]),
+                        'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi[$i], 'Asia/Jakarta'),
+                        'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja[$i], 'Asia/Jakarta'),
+                        'mp_contract' => $id_kontrak,
+                        'mp_status' => 'Aktif'
+                    );
+                    array_push($addPekerja, $temp);
+
+                    $pm_detail = DB::table('d_pekerja_mutation')
+                        ->where('pm_pekerja', '=', $id_pekerja[$i])
+                        ->max('pm_detailid');
+
+                    $tempMutasi = array(
+                        'pm_pekerja' => $id_pekerja[$i],
+                        'pm_detailid' => $pm_detail + 1,
+                        'pm_date' => $sekarang,
+                        'pm_mitra' => $info[0]->mc_mitra,
+                        'pm_divisi' => $info[0]->mc_divisi,
+                        'pm_detail' => 'Seleksi',
+                        'pm_from' => null,
+                        'pm_status' => 'Aktif'
+                    );
+                    array_push($addMutasi, $tempMutasi);
                 }
             }
 
-            d_mitra_pekerja::insert($data);
-            d_pekerja_mutation::insert($mutasi);
-            d_mitra_contract::where('mc_contractid', $id_kontrak)->update([
-                'mc_fulfilled' => DB::raw('mc_fulfilled + '. count($id_pekerja))
-
-            ]);
-
-            /*DB::commit();
+        /*    DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);

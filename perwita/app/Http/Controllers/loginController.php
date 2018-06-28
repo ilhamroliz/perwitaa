@@ -71,6 +71,12 @@ class loginController extends Controller
                     Session::set('mem_comp', $userCompany->c_id);
                     Session::set('mem_year', $userCompany->y_year);
                     Session::set('mem', $userCompany->mc_mem);
+                    $getJabatan = DB::table('d_mem')
+                        ->join('d_jabatan', 'm_jabatan', '=', 'j_id')
+                        ->select('m_jabatan', 'j_name')
+                        ->where('m_id', '=', Session::get('mem'))
+                        ->first();
+                    Session::set('jabatan', $getJabatan->j_id);
                     $response = [
                         'status' => 'sukses',
                         'content' => 'authenticate'
