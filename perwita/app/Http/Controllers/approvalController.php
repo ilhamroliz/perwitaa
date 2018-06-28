@@ -10,7 +10,7 @@ use DB;
 
 use Session;
 
-use Carbon\carbon;
+use Carbon\Carbon;
 
 class approvalController extends Controller
 {
