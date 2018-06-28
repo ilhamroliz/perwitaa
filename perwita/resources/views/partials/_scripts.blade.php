@@ -197,8 +197,9 @@
         });
 
    // setTimeout(function(){ alert("Hello"); }, 3000);
-
+  @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
               getApproval();
+
                      function getApproval(){
                        var pelamar = '';
                        var mitra = '';
@@ -264,4 +265,5 @@
                        });
                         setTimeout(function(){getApproval();}, 3000);
                      }
+      @endif
     </script>

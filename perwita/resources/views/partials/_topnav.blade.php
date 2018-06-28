@@ -18,8 +18,13 @@
                 </li>
             </ul>
             @endif
+
+                    <!-- <strong>{{ Session::get('sukses') }}</strong> -->
+
             <ul class="nav navbar-top-links navbar-right">
                               <li class="dropdown">
+                                @if(Session::has('jabatan'))
+                                  @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
                                   <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                                       <input type="hidden" name="operatornotif" value="" id="operatornotif">
                                       <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif"></span>
@@ -37,6 +42,8 @@
 
                                     </li>
                                   </ul>
+                                  @endif
+                                  @endif
                               </li>
 
 
@@ -47,6 +54,8 @@
                               </li>
 
                           </ul>
+
+
 
 
         </nav>

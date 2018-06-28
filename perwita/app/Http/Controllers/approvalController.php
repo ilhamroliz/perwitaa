@@ -8,11 +8,15 @@ use App\Http\Requests;
 
 use DB;
 
+use Session;
+
 use Carbon\carbon;
 
 class approvalController extends Controller
 {
   public function cekapproval(){
+    if (Session::get('jabatan') == 1 || Session::get('jabatan') == 6) {
+
     $pekerja = DB::select("select p_insert, count(p_id) as jumlah, 'Approval Pelamar' as catatan
               from d_pekerja
               where p_date_approval is null
@@ -41,6 +45,8 @@ class approvalController extends Controller
     return response()->json([
       'data' => $data
     ]);
+
+  }
   //  dd($count);
   }
 }
