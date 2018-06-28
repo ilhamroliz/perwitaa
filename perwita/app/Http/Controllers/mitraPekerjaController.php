@@ -183,10 +183,10 @@ class mitraPekerjaController extends Controller
 
     public function simpan(Request $request)
     {
-        //dd($request);
+        dd($request);
         /*DB::beginTransaction();
         try {*/
-
+            $sekarang = Carbon::now('Asia/Jakarta');
             $id_pekerja = $request->id_pekerja;
             $no_kontrak = $request->no_kontrak;
             $nik_mitra = $request->nik_mitra;
@@ -215,36 +215,8 @@ class mitraPekerjaController extends Controller
                 ->where('mc_contractid', '=', $id_kontrak)
                 ->get();
 
-            $cekUpdate = DB::table('d_mitra_pekerja')
-                ->select('mp_pekerja', 'mp_contract')
-                ->where('mp_contract', '=', $id_kontrak)
-                ->whereIn('mp_pekerja', $id_pekerja)
-                ->get();
+            for ($i = 0; $i < count($id_pekerja); $i++){
 
-            if (count($cekUpdate) > 0){
-                $mutasi = [];
-                for ($i = 0; $i < count($cekUpdate); $i++){
-                    for ($j = 0; $j < count($id_pekerja); $j++){
-                        if ($cekUpdate[$i]->mp_pekerja == $id_pekerja[$j]){
-
-                            d_mitra_pekerja::where('mp_contract', '=', $id_kontrak)
-                                ->where('mp_pekerja', '=', $id_pekerja[$j])
-                                ->update([
-                                    'mp_status' => 'Aktif',
-                                    'mp_selection_date' => Carbon::createFromFormat('d/m/Y', $tgl_seleksi, 'Asia/Jakarta'),
-                                    'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta'),
-                                    'mp_mitra_nik' => $nik_mitra[$j]
-                                ]);
-
-                            d_pekerja::where('p_id', '=', $id_pekerja[$j])
-                                ->update([
-                                    'p_note' => 'Seleksi',
-                                    'p_nip' => $nik[$j]
-                                ]);
-
-                        }
-                    }
-                }
             }
 
             $data = [];
