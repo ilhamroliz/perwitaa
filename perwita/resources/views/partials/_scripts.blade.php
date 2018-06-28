@@ -205,6 +205,8 @@
                      function getApproval(){
                        var pelamar = '';
                        var mitra = '';
+                       var countpelamar = 0;
+                       var countmitra = 0;
                        var countnotif = 0;
                        $.ajax({
                          type : 'get',
@@ -214,36 +216,35 @@
                            //console.log(notifOBJ);
                            mitra += '<li">'+
                                '<div class="dropdown-messages-box">'+
-                                 '<a href="{{url('/approvalmitra')}}" class="pull-left" title="Lihat Daftar Approval Mitra">'+
+                                 '<a href="{{url('/approvalmitra')}}" class="pull-left a-img" title="Lihat Daftar Approval Mitra">'+
                                      '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                                   '</a>'+
                                  '<div class="media-body">'+
-                                 '<a href="{{url('/approvalmitra')}}" class="pull-left" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">'+
+                                 '<a href="{{url('/approvalmitra')}}" class="pull-left a-body" id="#mitra-body" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">'+
                                      '<small class="pull-right" id="menitmitra"></small>'+
                                      '<strong id="catatanapprovalmitra"></strong><small id="isiapprovalmitra"></small><br>'+
                                   '</a>'+
                                  '</div>'+
                              '</div>'+
-                             '</li>'+
-                             '<li class="divider"></li>';
+                             '</li>';
 
                              pelamar += '<li">'+
                                  '<div class="dropdown-messages-box">'+
-                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar">'+
+                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left a-img" title="Lihat Daftar Approval Pelamar">'+
                                        '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                                     '</a>'+
                                    '<div class="media-body">'+
-                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
+                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left a-body" id="#pelamar-body" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
                                        '<small class="pull-right" id="menitpelamar"></small>'+
                                        '<strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>'+
                                     '</a>'+
                                    '</div>'+
                                '</div>'+
-                               '</li>'+
-                               '<li class="divider"></li>';
+                               '</li>';
 
                                if (data.data[0].jumlah > 0) {
                                   countnotif += 1;
+                                  countpelamar += 1;
                                   $("#showpelamar").html(pelamar);
                                   $("#countnotif").text(countnotif);
                                   $("#menitpelamar").html(data.data[0].p_insert);
@@ -252,20 +253,27 @@
                                }
                                if (data.data[1].jumlah > 0) {
                                   countnotif += 1;
+                                  countmitra += 1;
                                   $("#showmitra").html(mitra);
                                   $("#countnotif").text(countnotif);
                                   $("#menitmitra").html(data.data[1].m_insert);
                                   $("#catatanapprovalmitra").text(data.data[1].catatan);
                                   $("#isiapprovalmitra").html(" Anda Memiliki "+data.data[1].jumlah+" Persetujuan");
                                }
+                               if (countpelamar == 0) {
+                                 $("#showpelamar").html('<center> Tidak ada permintaan Approval Pelamar </center>');
+                               }
+                               if (countmitra == 0) {
+                                 $("#showmitra").html('<center> Tidak ada permintaan Approval Mitra </center>');
+                               }
                                if (countnotif == 0) {
-                                 $("#showpelamar").html('');
-                                 $("#showmitra").html('');
+                                 $("#showpelamar").html(pelamar);
+                                 $("#showmitra").html(mitra);
                                  $("#showkosong").html('<center> Tidak ada permintaan Approval </center>');
                                }
                          }
                        });
-                        setTimeout(function(){getApproval();}, 3000);
+                        setTimeout(function(){getApproval();}, 5000);
                      }
       @endif
     </script>
