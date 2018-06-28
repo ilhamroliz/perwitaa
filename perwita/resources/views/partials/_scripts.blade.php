@@ -196,6 +196,8 @@
 
         });
 
+          $.fn.dataTable.ext.errMode = 'throw';
+
    // setTimeout(function(){ alert("Hello"); }, 3000);
   @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
               getApproval();
