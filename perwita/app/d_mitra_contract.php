@@ -13,21 +13,22 @@ class d_mitra_contract extends Model
     const CREATED_AT = 'mc_insert';
     const UPDATED_AT = 'mc_update';
     protected $fillable = [
-"mc_contractid",
-"mc_mitra",
-"mc_divisi",
-"mc_comp",
-"mc_jabatan",
-"mc_no",
-"mc_date",
-"mc_expired",
-"mc_need",
-"mc_fulfilled",
-"mc_jobdesk",
-"mc_note",
-"mc_insert",
-"mc_update"
-];
+        "mc_contractid",
+        "mc_mitra",
+        "mc_divisi",
+        "mc_comp",
+        "mc_jabatan",
+        "mc_no",
+        "mc_date",
+        "mc_expired",
+        "mc_need",
+        "mc_fulfilled",
+        "mc_jobdesk",
+        "mc_note",
+        "mc_status",
+        "mc_insert",
+        "mc_update"
+    ];
 
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());

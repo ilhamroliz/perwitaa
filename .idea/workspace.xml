@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/d_mitra_contract.php" afterPath="$PROJECT_DIR$/perwita/app/d_mitra_contract.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -70,21 +72,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mitraPekerjaController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mitraPekerjaController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="325" column="17" lean-forward="false" selection-start-line="325" selection-start-column="17" selection-end-line="325" selection-end-column="17" />
+            <state relative-caret-position="179">
+              <caret line="318" column="50" lean-forward="false" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
               <folding>
                 <element signature="e#40#67#0#PHP" expanded="true" />
-                <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-                <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-                <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-                <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-                <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-                <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-                <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+                <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+                <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+                <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+                <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+                <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+                <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+                <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="d_mitra_contract.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/perwita/app/d_mitra_contract.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="24" column="23" lean-forward="true" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -121,6 +133,7 @@
       <find>save</find>
       <find>update</find>
       <find>to</find>
+      <find>mc_fulfilled</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,6 +149,7 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" />
+        <option value="$PROJECT_DIR$/perwita/app/d_mitra_contract.php" />
       </list>
     </option>
   </component>
@@ -212,7 +226,122 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="SearchEverywhereHistoryKey" value="login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;mitra&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="d_mitra&#9;null&#9;null&#10;login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;mitra&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/assets/img/attention-sign-outline.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/perwita/app/Http/Controllers/approvalController.php</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/perwita/resources/views/approvalmitra/index.blade.php</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/perwita/resources/views/approvalpelamar/index.blade.php</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/perwita/resources/views/partials/_scripts.blade.php</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/perwita/resources/views/partials/_topnav.blade.php</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -225,6 +354,14 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.mitraPekerjaController.php">
+    <configuration name="mitraPekerjaController.php" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php" />
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.mitraPekerjaController.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -257,7 +394,7 @@
       <workItem from="1529907834263" duration="9439000" />
       <workItem from="1529975405900" duration="599000" />
       <workItem from="1529977766107" duration="11885000" />
-      <workItem from="1530145646554" duration="7265000" />
+      <workItem from="1530145646554" duration="9165000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -273,11 +410,18 @@
       <option name="project" value="LOCAL" />
       <updated>1530159270701</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="roliz">
+      <created>1530159284115</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1530159284115</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59009000" />
+    <option name="totallyTimeSpent" value="60909000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -319,32 +463,19 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2970">
-          <caret line="165" column="39" lean-forward="false" selection-start-line="165" selection-start-column="33" selection-end-line="165" selection-end-column="39" />
-          <folding>
-            <marker date="1528427745763" expanded="true" signature="1864:2537" ph="..." />
-            <marker date="1528427745763" expanded="false" signature="1896:1912" ph="..." />
-            <marker date="1528427745763" expanded="false" signature="2095:2111" ph="..." />
-            <marker date="1528427745763" expanded="false" signature="2326:2342" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7128">
           <caret line="396" column="51" lean-forward="false" selection-start-line="396" selection-start-column="51" selection-end-line="396" selection-end-column="51" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -413,13 +544,13 @@
           <caret line="396" column="51" lean-forward="false" selection-start-line="396" selection-start-column="51" selection-end-line="396" selection-end-column="51" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -496,13 +627,13 @@
           <caret line="358" column="24" lean-forward="false" selection-start-line="358" selection-start-column="24" selection-end-line="358" selection-end-column="24" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -571,13 +702,13 @@
           <caret line="339" column="21" lean-forward="false" selection-start-line="339" selection-start-column="21" selection-end-line="339" selection-end-column="21" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -646,13 +777,13 @@
           <caret line="339" column="21" lean-forward="false" selection-start-line="339" selection-start-column="21" selection-end-line="339" selection-end-column="21" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -700,13 +831,13 @@
           <caret line="330" column="21" lean-forward="false" selection-start-line="330" selection-start-column="21" selection-end-line="330" selection-end-column="21" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -775,13 +906,13 @@
           <caret line="323" column="20" lean-forward="false" selection-start-line="323" selection-start-column="20" selection-end-line="323" selection-end-column="20" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -829,13 +960,13 @@
           <caret line="323" column="20" lean-forward="false" selection-start-line="323" selection-start-column="20" selection-end-line="323" selection-end-column="20" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -883,13 +1014,13 @@
           <caret line="323" column="20" lean-forward="true" selection-start-line="323" selection-start-column="20" selection-end-line="323" selection-end-column="20" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -937,13 +1068,13 @@
           <caret line="317" column="0" lean-forward="false" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -991,13 +1122,13 @@
           <caret line="317" column="0" lean-forward="true" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -1045,13 +1176,13 @@
           <caret line="322" column="20" lean-forward="false" selection-start-line="322" selection-start-column="20" selection-end-line="322" selection-end-column="20" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -1099,13 +1230,13 @@
           <caret line="126" column="8" lean-forward="false" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -1153,13 +1284,13 @@
           <caret line="126" column="8" lean-forward="false" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
         </state>
       </provider>
@@ -1377,18 +1508,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="325" column="17" lean-forward="false" selection-start-line="325" selection-start-column="17" selection-end-line="325" selection-end-column="17" />
+        <state relative-caret-position="179">
+          <caret line="318" column="50" lean-forward="false" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
           <folding>
             <element signature="e#40#67#0#PHP" expanded="true" />
-            <marker date="1530159216425" expanded="true" signature="4772:5326" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="4901:4917" ph="..." />
-            <marker date="1530159216425" expanded="false" signature="5162:5178" ph="..." />
-            <marker date="1530159216425" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
-            <marker date="1530159216425" expanded="true" signature="16685:16865" ph="select * fro... *" />
-            <marker date="1530159216425" expanded="true" signature="16728:16835" ph="select * fro... d_pekerja_mutation" />
+            <marker date="1530169105457" expanded="true" signature="4772:5326" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="4901:4917" ph="..." />
+            <marker date="1530169105457" expanded="false" signature="5162:5178" ph="..." />
+            <marker date="1530169105457" expanded="true" signature="5545:5748" ph="select p_id,... d_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="5683:5747" ph="select mp_pe... d_mitra_pekerja" />
+            <marker date="1530169105457" expanded="true" signature="16889:17069" ph="select * fro... *" />
+            <marker date="1530169105457" expanded="true" signature="16932:17039" ph="select * fro... d_pekerja_mutation" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/d_mitra_contract.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="24" column="23" lean-forward="true" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
