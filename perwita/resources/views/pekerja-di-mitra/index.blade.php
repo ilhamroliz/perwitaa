@@ -159,11 +159,16 @@ function filterColumndivisi(){
 }
 
 function cari(){
+  $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
   var html = "";
   var mitra = $('#cari').attr('mitra');
   var divisi = $('#cari').attr('divisi');
   $.ajax({
-    type: 'get',
+    type: 'post',
     data: 'mitra='+mitra+"&divisi="+divisi,
     url: baseUrl + '/pekerja-di-mitra/getpekerja',
     dataType: 'json',
