@@ -56,10 +56,13 @@
             </li>
 
             <li class="treeview sidebar data-master {{
-                 Request::is('manajemen-mitra/data-mitra') ? 'active' : ''
-              || Request::is('manajemen-mitra/data-mitra/*') ? 'active' : ''
-              || Request::is('manajemen-mitra/mitra-divisi') ? 'active' : ''
-              || Request::is('manajemen-mitra/mitra-divisi/*') ? 'active' : ''}}
+                     Request::is('manajemen-mitra/data-mitra') ? 'active' : ''
+                  || Request::is('manajemen-mitra/data-mitra/*') ? 'active' : ''
+                  || Request::is('manajemen-mitra/mitra-divisi') ? 'active' : ''
+                  || Request::is('manajemen-mitra/mitra-divisi/*') ? 'active' : ''
+                  || Request::is('manajemen-mitra/mitra-mou/*') ? 'active' : ''
+                  || Request::is('manajemen-mitra/mitra-mou') ? 'active' : ''
+              }}
               ">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Mitra</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">

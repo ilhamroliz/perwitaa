@@ -51,7 +51,6 @@
                   <table id="addColumn1" class="table table-bordered table-striped tabel_opname1">
                       <thead>
                            <tr>
-                              <th style="text-align : center;"> No </th>
                               <th style="text-align : center;"> NAMA MITRA </th>
                               <th style="text-align : center;"> ALAMAT MITRA </th>
                               <th style="text-align : center;"> AKSI </th>
