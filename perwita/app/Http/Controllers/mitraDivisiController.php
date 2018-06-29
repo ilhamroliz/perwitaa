@@ -33,10 +33,10 @@ class mitraDivisiController extends Controller
         $i=0;
         foreach ($data as $key) {
             // add new button
-            $data[$i]['button'] = '<div class="btn-group">
-                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Tambah" style="margin-left:5px;" class="btn btn-success btn-sm tambah" ><i class="fa fa-plus"></i></button>
-                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Detail" style="margin-left:5px;" class="btn btn-info btn-sm detail" ><i class="fa fa-folder-open"></i></button>
-                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Edit" style="margin-left:5px;" class="btn btn-warning btn-sm edit" ><i class="fa fa-pencil-square-o"></i></button>
+            $data[$i]['button'] = '<div class="text-center" style="width: 100%">
+                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Tambah" style="margin-left:5px;" class="btn btn-success btn-xs tambah" ><i class="fa fa-plus"></i></button>
+                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Detail" style="margin-left:5px;" class="btn btn-info btn-xs detail" ><i class="fa fa-folder-open"></i></button>
+                                   <button id="'.$data[$i]['m_id'].'" data-toggle="tooltip" title="Edit" style="margin-left:5px;" class="btn btn-warning btn-xs edit" ><i class="fa fa-pencil-square-o"></i></button>
                                    </div> ';
             $i++;
         }

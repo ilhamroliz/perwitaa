@@ -516,20 +516,16 @@ Route::get('/system/hakakses/simpan-user-akses', 'aksesUserController@simpanUser
 //mitra divisi
 Route::get('manajemen-mitra/mitra-divisi','mitraDivisiController@index');
 Route::get('manajemen-mitra/mitra-divisi/tabel','mitraDivisiController@tabel');
+Route::post('manajemen-mitra/mitra-divisi/tabel','mitraDivisiController@tabel');
 Route::get('manajemen-mitra/mitra-divisi/get_mitra','mitraDivisiController@get_mitra');
 Route::get('manajemen-mitra/mitra-divisi/get_data_edit','mitraDivisiController@get_data_edit');
 Route::get('manajemen-mitra/mitra-divisi/tambah','mitraDivisiController@tambah');
 Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail');
 Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
 
-//mitra divisi
-Route::get('manajemen-mitra/mitra-divisi','mitraDivisiController@index');
-Route::get('manajemen-mitra/mitra-divisi/tabel','mitraDivisiController@tabel');
-Route::get('manajemen-mitra/mitra-divisi/get_mitra','mitraDivisiController@get_mitra');
-Route::get('manajemen-mitra/mitra-divisi/get_data_edit','mitraDivisiController@get_data_edit');
-Route::get('manajemen-mitra/mitra-divisi/tambah','mitraDivisiController@tambah');
-Route::get('manajemen-mitra/mitra-divisi/detail','mitraDivisiController@detail');
-Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
+//mou mitra
+Route::get('manajemen-mitra/mitra-mou','MouController@index');
+Route::post('manajemen-mitra/mitra-mou/table','MouController@table');
 
 //Cek Approval
 Route::get('approval/cekapproval', 'approvalController@cekapproval');
