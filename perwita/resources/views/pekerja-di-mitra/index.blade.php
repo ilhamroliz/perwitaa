@@ -62,11 +62,15 @@
                   <option value="all">- Select All -</option>
                 </select>
                 </div>
-                <div class="col-6 col-md-4"></div>
+                <div class="col-3 col-md-4">
                 <button type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
+                <div class="pull-right">
+                  <input type="text" name="carino" value="" class="form-control" placeholder="Nomer Mitra Contact">
+                </div>
                 </div>
             </div>
 
+            <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
                <table id="pekerja" class="table table-bordered table-striped display">
                     <thead>
