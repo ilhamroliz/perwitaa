@@ -413,6 +413,9 @@ Route::get('pekerja-di-mitra/pekerja-mitra/table','pdmController@data');
 Route::get('pekerja-di-mitra/edit/{mp_id}/{p_id}','pdmController@edit');
 Route::get('pekerja-di-mitra/hapus/{mp_pekerja}','pdmController@hapus');
 Route::get('pekerja-di-mitra/update&{mp_id}','pdmController@update');
+Route::get('pekerja-di-mitra/getdivisi', 'pdmController@getdivisi');
+Route::get('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
+Route::post('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
 
 //================= master item ilham ========================
 Route::get('master-item', [

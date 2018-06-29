@@ -14,6 +14,8 @@ use Yajra\Datatables\Datatables;
 
 use App\d_mitra;
 
+use App\d_mitra_mou;
+
 class approvalmitraController extends Controller
 {
     public function index(){
@@ -71,6 +73,12 @@ class approvalmitraController extends Controller
           'm_date_approval' => Carbon::now()
         ]);
 
+        $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->id)->where('mm_status', null);
+        $d_mitra_mou->update([
+          'mm_status' => 'Aktif',
+          'mm_aktif' => Carbon::now()
+        ]);
+
         return response()->json([
           'status' => 'berhasil'
         ]);
@@ -90,6 +98,12 @@ class approvalmitraController extends Controller
         $d_mitra->update([
           'm_status_approval' => 'N',
           'm_date_approval' => Carbon::now()
+        ]);
+
+        $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->id)->where('mm_status', null);
+        $d_mitra_mou->update([
+          'mm_status' => 'Tidak',
+          'mm_aktif' => Carbon::now()
         ]);
 
         return response()->json([
