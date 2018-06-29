@@ -76,6 +76,13 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">Mitra Divisi</span>
                         </a>
                     </li>
+
+                    <li class="{{ Request::is('manajemen-mitra/mitra-mou') ? 'active' : ''
+                                || Request::is('manajemen-mitra/mitra-mou/*') ? 'active' : ''  }} sidebar master-akun">
+                        <a href="{{ url('manajemen-mitra/mitra-mou') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Mitra MOU</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

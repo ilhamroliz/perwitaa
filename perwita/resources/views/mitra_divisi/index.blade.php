@@ -4,9 +4,6 @@
 
 @section('extra_styles')
 
-<style>th.dt-center, td.dt-center { text-align: center; }</style>
-
-
 @endsection
 
 @section('content')
@@ -161,34 +158,41 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+var table;
 $(document).ready(function() {
-
       $('[data-toggle="tooltip"]').tooltip();
 
-      $('#addColumn1').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": false,
-            "responsive": true,
-            "autoWidth": false,
-            "pageLength": 10,
-            "retrieve" : true,
-            "ajax": {
-              "url" :  baseUrl + "/manajemen-mitra/mitra-divisi/tabel",
-              "type": "GET"
-            },
-            "columnDefs": [
-              {"className": "dt-center", "targets": "_all"}
-            ],
-            "columns": [
-            { "data": "m_id" },
-            { "data": "m_name" },
-            { "data": "m_address" },
-            { "data": "button" },
-            ]
-        });
+      setTimeout(function(){
+            $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+            });
+            table = $("#addColumn1").DataTable({
+                processing: true,
+                serverSide: true,
+                "ajax": {
+                      "url": "{{ url('manajemen-mitra/mitra-divisi/tabel') }}",
+                      "type": "POST"
+                  },
+                dataType: 'json',
+                columns: [
+                    { "data": "m_name" },
+                    { "data": "m_address" },
+                    { "data": "button" },
+                ],
+                responsive: true,        
+                "pageLength": 10,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                "language": dataTableLanguage,
+            });
+            /*table
+                .column( '0:visible' )
+                .order( 'desc' )
+                .draw();*/
+        },1500);
+
+      
   });
 
 $(document).on('click','.tambah',function(){
