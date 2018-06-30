@@ -57,7 +57,7 @@ class pdmController extends Controller
             })
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
             ->get();
-      } elseif ($divisi == 'all') {
+      } elseif (!empty($mitra) && $divisi == "all") {
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
@@ -67,8 +67,10 @@ class pdmController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
+            ->where('mc_mitra', '=', $mitra)
             ->get();
-      } else {
+      }
+      else {
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
