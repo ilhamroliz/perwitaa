@@ -94,15 +94,21 @@
 @section('extra_scripts')
 <script type="text/javascript">
 $(document).ready(function(){
-  $('#pekerja').DataTable();
-
+  $('#pekerja').DataTable({
+    responsive: true,
+    "pageLength": 10,
+    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    // "scrollY": '50vh',
+    // "scrollCollapse": true,
+        "language": dataTableLanguage,
+  });
   $("#carino").autocomplete({
     source: baseUrl + '/pekerja-di-mitra/getnomor',
     select: function(event, ui) {
       getdata(ui.item.id);
     }
   });
-})
+});
 // var table;
 // $(document).ready(function() {
 //     $('#select-picker').select2();
@@ -183,7 +189,7 @@ function cari(){
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
-        html += '<tr>'+
+        html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].mp_mitra_nik+'</td>'+
               '<td>'+result[i].m_name+'</td>'+
