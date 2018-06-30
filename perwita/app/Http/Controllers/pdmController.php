@@ -41,6 +41,54 @@ class pdmController extends Controller
       return response()->json($data);
     }
 
+    public function getnomor(Request $request){
+      $keyword = $request->term;
+      // dd($request);
+      $data = DB::table('d_mitra_pekerja')
+            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->leftJoin('d_mitra_divisi', function ($q){
+                $q->on('md_mitra', '=', 'mp_mitra')
+                    ->on('md_id', '=', 'mp_divisi');
+            })
+            ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id', 'mc_no')
+            ->where('mp_mitra_nik', 'LIKE', '%'.$keyword.'%')
+            ->ORwhere('mc_no', 'LIKE', '%'.$keyword.'%')
+            ->LIMIT(50)
+            ->get();
+
+            if ($data == null) {
+                $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+            } else {
+
+                foreach ($data as $query) {
+                    $results[] = ['id' => $query->mp_id, 'label' => $query->mc_no . ' (' . $query->mp_mitra_nik . ' ' . $query->p_name. ' ' . $query->md_name . ')'];
+                }
+            }
+
+            return response()->json($results);
+    }
+
+    public function getdata(Request $request){
+      // dd($request);
+      $id = $request->id;
+      $pekerja = DB::table('d_mitra_pekerja')
+          ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+          ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
+          ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->leftJoin('d_mitra_divisi', function ($q){
+              $q->on('md_mitra', '=', 'mp_mitra')
+                  ->on('md_id', '=', 'mp_divisi');
+          })
+          ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
+          ->where('mp_id', '=', $id)
+          ->get();
+
+          // dd($pekerja);
+          return response()->json($pekerja);
+    }
+
     public function getpekerja(Request $request){
       // dd($request);
       $mitra = $request->mitra;

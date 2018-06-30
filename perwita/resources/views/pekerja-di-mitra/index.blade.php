@@ -40,7 +40,7 @@
             <div class="row m-b-lg">
         <div id="filter">
               <div class="row">
-                <div class="col-6 col-md-4">
+                <div class="col-6 col-md-3">
                   @if(empty($data))
                   <p>Data tidak Ketemu</p>
                     @else
@@ -53,17 +53,17 @@
                     </select>
                     @endif
                 </div>
-                <div class="col-6 col-md-4">
+                <div class="col-6 col-md-3">
                 <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
                   <option value="">- Cari Divisi -</option>
                   <option value="all">- Select All -</option>
                 </select>
                 </div>
-                <div class="col-3 col-md-4">
+                <div class="col-6 col-md-2">
                 <button type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
-                <div class="pull-right">
-                  <input type="text" name="carino" value="" class="form-control" placeholder="Nomer Mitra Contact">
                 </div>
+                <div class="col-6 col-md-3">
+                  <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
                 </div>
             </div>
 
@@ -95,6 +95,13 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $('#pekerja').DataTable();
+
+  $("#carino").autocomplete({
+    source: baseUrl + '/pekerja-di-mitra/getnomor',
+    select: function(event, ui) {
+      getdata(ui.item.id);
+    }
+  });
 })
 // var table;
 // $(document).ready(function() {
@@ -160,6 +167,7 @@ function filterColumndivisi(){
 }
 
 function cari(){
+  waitingDialog.show();
   $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -174,7 +182,6 @@ function cari(){
     url: baseUrl + '/pekerja-di-mitra/getpekerja',
     dataType: 'json',
     success : function(result){
-      waitingDialog.show();
       for (var i = 0; i < result.length; i++) {
         html += '<tr>'+
               '<td>'+result[i].p_name+'</td>'+
@@ -186,8 +193,63 @@ function cari(){
       }
       $('#showdata').html(html);
       waitingDialog.hide();
+    }, error:function(x, e) {
+        waitingDialog.hide();
+        if (x.status == 0) {
+            alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+        } else if (x.status == 404) {
+            alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+        } else if (x.status == 500) {
+            alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+        } else if (e == 'parsererror') {
+            alert('Error.\nParsing JSON Request failed.');
+        } else if (e == 'timeout'){
+            alert('Request Time out. Harap coba lagi nanti');
+        } else {
+            alert('Unknow Error.\n' + x.responseText);
+        }
+        waitingDialog.hide();
     }
   })
 }
+
+  function getdata(id){
+    waitingDialog.show();
+    var html = "";
+    $.ajax({
+      type: 'get',
+      url: baseUrl + '/pekerja-di-mitra/getdata',
+      data: {id:id},
+      dataType: 'json',
+      success : function(result){
+        // console.log(result);
+        html += '<tr>'+
+              '<td>'+result[0].p_name+'</td>'+
+              '<td>'+result[0].mp_mitra_nik+'</td>'+
+              '<td>'+result[0].m_name+'</td>'+
+              '<td>'+result[0].md_name+'</td>'+
+              '<td>'+result[0].mp_workin_date+'</td>'+
+              '</tr>';
+      $('#showdata').html(html);
+      waitingDialog.hide();
+      }, error:function(x, e) {
+          waitingDialog.hide();
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+          waitingDialog.hide();
+      }
+    });
+  }
 </script>
 @endsection
