@@ -413,6 +413,11 @@ Route::get('pekerja-di-mitra/pekerja-mitra/table','pdmController@data');
 Route::get('pekerja-di-mitra/edit/{mp_id}/{p_id}','pdmController@edit');
 Route::get('pekerja-di-mitra/hapus/{mp_pekerja}','pdmController@hapus');
 Route::get('pekerja-di-mitra/update&{mp_id}','pdmController@update');
+Route::get('pekerja-di-mitra/getdivisi', 'pdmController@getdivisi');
+Route::get('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
+Route::post('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
+Route::get('pekerja-di-mitra/getnomor', 'pdmController@getnomor');
+Route::get('pekerja-di-mitra/getdata', 'pdmController@getdata');
 
 //================= master item ilham ========================
 Route::get('master-item', [
@@ -535,6 +540,7 @@ Route::post('approvalpelamar/table', 'approvalpelamarController@data');
 Route::get('approvalpelamar/detail', 'approvalpelamarController@detail');
 Route::get('approvalpelamar/setujui', 'approvalpelamarController@setujui');
 Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
+Route::get('approvalpelamar/print', 'approvalpelamarController@print');
 
 //Approval Mitra
 Route::get('approvalmitra', 'approvalmitraController@index');
@@ -543,3 +549,4 @@ Route::post('approvalmitra/table', 'approvalmitraController@data');
 Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
+Route::get('approvalmitra/print', 'approvalmitraController@print');

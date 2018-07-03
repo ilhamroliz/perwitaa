@@ -136,6 +136,7 @@
                     </table>
               </div>
               <div class="modal-footer">
+                <a class="no-print btn btn-info" id="print" onclick="print()" href=""><i class="fa fa-print">&nbsp;</i>Print</a>
                 <button type="button" name="button" class="btn btn-primary" id="setujui" onclick="setujui()">Setujui</button>
                 <button type="button" name="button" class="btn btn-danger" id="tolak" onclick="tolak()">Tolak</button>
                   <div class="btn-group">
@@ -202,6 +203,11 @@ setTimeout(function () {
           $("#m_fax").text(": "+result.m_fax);
           $("#m_note").text(": "+result.m_note);
           $("#m_phone").text(": "+result.m_phone);
+          //Button
+          $("#print").attr('onclick', 'print('+id+')');
+          $("#print").attr('href', '{{url('approvalmitra/print?id=')}}'+id+'');
+          $("#setujui").attr('onclick', 'setujui('+id+')');
+          $("#tolak").attr('onclick', 'tolak('+id+')');
         }
       })
       $("#modal-detail").modal('show');
@@ -321,6 +327,18 @@ setTimeout(function () {
               }, 2000);
 
           });
+    }
+
+    function print(id){
+      $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/approvalmitra/print',
+        dataType: 'json',
+        success : function(result){
+
+        }
+      });
     }
 </script>
 @endsection

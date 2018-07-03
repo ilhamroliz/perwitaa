@@ -182,7 +182,6 @@ setTimeout(function () {
         {data: 'jp_name', name: 'jp_name'},
         {data: 'm_name', name: 'm_name'},
         {data: 'md_name', name: 'md_name'},
-
         {data: 'mc_need', name: 'mc_need'},
         {data: 'mc_fulfilled', name: 'mc_fulfilled'},
         {data: 'action', name: 'action',orderable:false,searchable:false}
