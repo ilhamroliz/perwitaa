@@ -82,6 +82,19 @@
                 <h4 class="modal-title">Detail Mitra</h4>
             </div>
             <div class="modal-body">
+              <center>
+                <div class="spiner-mitra">
+                    <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
+                        <div class="sk-rect1 tampilkan" ></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Mitra</span>
+                </div>
+            </center>
+            <div id="showdetail">
                 <div class="form-group">
                     <div class="col-lg-3">
                         <h3>Nama Mitra </h3>
@@ -135,6 +148,7 @@
 
                     </table>
               </div>
+            </div>
               <div class="modal-footer">
                 <a class="no-print btn btn-info" id="print" onclick="print()" href=""><i class="fa fa-print">&nbsp;</i>Print</a>
                 <button type="button" name="button" class="btn btn-primary" id="setujui" onclick="setujui()">Setujui</button>
@@ -190,6 +204,8 @@ setTimeout(function () {
 }, 1000);
 
     function detail(id){
+      $("#modal-detail").modal('show');
+      $("#showdetail").hide();
       $.ajax({
         type: 'get',
         data: {id:id},
@@ -208,9 +224,11 @@ setTimeout(function () {
           $("#print").attr('href', '{{url('approvalmitra/print?id=')}}'+id+'');
           $("#setujui").attr('onclick', 'setujui('+id+')');
           $("#tolak").attr('onclick', 'tolak('+id+')');
+
+          $('.spiner-mitra').css('display', 'none');
+          $("#showdetail").show();
         }
-      })
-      $("#modal-detail").modal('show');
+      });
     }
 
     function setujui(id){
