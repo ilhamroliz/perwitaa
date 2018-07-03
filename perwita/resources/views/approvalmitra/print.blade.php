@@ -104,7 +104,7 @@ a#pdf:hover { background: #222; }
 				<div class="yui-u">
 					<div class="contact-info">
             <div class="image" id="showimage">
-                  <img src="{{asset('assets/img/folder.png')}}" class="img-rounded" alt="Cinque Terre" width="150" height="130">
+                  <img src="{{asset('assets/img/folder.png')}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
 						</div>
 					</div><!--// .contact-info -->
 				</div>
