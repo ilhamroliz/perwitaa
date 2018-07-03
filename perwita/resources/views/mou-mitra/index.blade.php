@@ -50,8 +50,9 @@
                                 <th>Nama Mitra</th>
                                 <th>No MOU</th>
                                 <th>Mulai</th>            
-                                <th>Berakhir</th>           
-                                <th style="width: 8%;">Aksi</th>            
+                                <th>Berakhir</th> 
+                                <th>Sisa</th>          
+                                <th>Aksi</th>            
                             </tr>
                         </thead>     
                         <tbody>                       
@@ -64,6 +65,29 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-calendar modal-icon"></i>
+                <h4 class="modal-title">Perpanjang MOU</h4>
+                <small class="font-bold">Memperpanjang MOU mitra perusahaan</small>
+            </div>
+            <div class="modal-body">
+                <div class="input-daterange input-group col-md-12" id="datepicker">
+                    <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
+                    <span class="input-group-addon">sampai</span>
+                    <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
@@ -71,6 +95,12 @@
 @section('extra_scripts')
 <script type="text/javascript">
   var table;
+  $('.input-daterange').datepicker({
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
   $(document).ready(function(){
       setTimeout(function(){
           $.ajaxSetup({
@@ -83,19 +113,15 @@
               serverSide: true,
               "ajax": {
                     "url": "{{ url('manajemen-mitra/mitra-mou/table') }}",
-                    "type": "POST"
+                    "type": "get"
                 },
               dataType: 'json',
               columns: [
-                  {data: 'mc_no', name: 'mc_no', orderable:false},
-                  {data: 'mc_date', name: 'mc_date'},
-                  {data: 'mc_expired', name: 'mc_expired'},
-                  {data: 'c_name', name: 'c_name'},
                   {data: 'm_name', name: 'm_name'},
-                  {data: 'md_name', name: 'md_name'},
-                  //{data: 'm_address', name: 'm_address'},
-                  {data: 'mc_need', name: 'mc_need'},
-                  {data: 'mc_fulfilled', name: 'mc_fulfilled'},            
+                  {data: 'mm_mou', name: 'mm_mou'},
+                  {data: 'mm_mou_start', name: 'mm_mou_start'},
+                  {data: 'mm_mou_end', name: 'mm_mou_end'},
+                  {data: 'sisa', name: 'sisa'},
                   {data: 'action', name: 'action',orderable:false,searchable:false}
               ],
               responsive: true,        
@@ -109,5 +135,9 @@
               .draw();*/
       },1500);
   });
+
+  function perpanjang(id){
+    
+  }
 </script>
 @endsection

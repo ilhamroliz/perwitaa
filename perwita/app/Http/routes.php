@@ -523,6 +523,7 @@ Route::get('manajemen-mitra/mitra-divisi/edit','mitraDivisiController@edit');
 //mou mitra
 Route::get('manajemen-mitra/mitra-mou','MouController@index');
 Route::post('manajemen-mitra/mitra-mou/table','MouController@table');
+Route::get('manajemen-mitra/mitra-mou/table','MouController@table');
 
 //Cek Approval
 Route::get('approval/cekapproval', 'approvalController@cekapproval');
