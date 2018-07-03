@@ -548,3 +548,4 @@ Route::post('approvalmitra/table', 'approvalmitraController@data');
 Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
+Route::get('approvalmitra/print', 'approvalmitraController@print');

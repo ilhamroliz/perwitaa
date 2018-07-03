@@ -117,4 +117,42 @@ class approvalmitraController extends Controller
 
 
     }
+
+    public function print(Request $request){
+      // dd($request);
+      $id = $request->id;
+
+      $data = DB::table('d_mitra')->selectRaw(
+        "*,
+        coalesce(m_name, '-') as m_name,
+        coalesce(m_address, '-') as m_address,
+        coalesce(m_cp, '-') as m_cp,
+        coalesce(m_cp_phone, '-') as m_cp_phone,
+        coalesce(m_phone, '-') as m_phone,
+        coalesce(m_fax, '-') as m_fax,
+        coalesce(m_note, '-') as m_note"
+        )
+      ->where('m_id', $id)->get();
+
+      $lempar = array(
+        'm_name' => $data[0]->m_name,
+        'm_address' => $data[0]->m_address,
+        'm_cp' => $data[0]->m_cp,
+        'm_cp_phone' => $data[0]->m_cp_phone,
+        'm_phone' => $data[0]->m_phone,
+        'm_fax' => $data[0]->m_fax,
+        'm_note' => $data[0]->m_note
+      );
+      // return response()->json([
+      //   'm_name' => $data[0]->m_name,
+      //   'm_address' => $data[0]->m_address,
+      //   'm_cp' => $data[0]->m_cp,
+      //   'm_cp_phone' => $data[0]->m_cp_phone,
+      //   'm_phone' => $data[0]->m_phone,
+      //   'm_fax' => $data[0]->m_fax,
+      //   'm_note' => $data[0]->m_note
+      // ]);
+      // dd($lempar);
+      return view('approvalmitra.print', compact('lempar'));
+    }
 }
