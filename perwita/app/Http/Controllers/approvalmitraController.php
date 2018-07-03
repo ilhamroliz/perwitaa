@@ -122,7 +122,7 @@ class approvalmitraController extends Controller
       // dd($request);
       $id = $request->id;
 
-      $data = DB::table('d_mitra')->selectRaw(
+      $data = DB::table('d_mitra')->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')->selectRaw(
         "*,
         coalesce(m_name, '-') as m_name,
         coalesce(m_address, '-') as m_address,
@@ -134,15 +134,16 @@ class approvalmitraController extends Controller
         )
       ->where('m_id', $id)->get();
 
-      $lempar = array(
-        'm_name' => $data[0]->m_name,
-        'm_address' => $data[0]->m_address,
-        'm_cp' => $data[0]->m_cp,
-        'm_cp_phone' => $data[0]->m_cp_phone,
-        'm_phone' => $data[0]->m_phone,
-        'm_fax' => $data[0]->m_fax,
-        'm_note' => $data[0]->m_note
-      );
+      dd($data);
+      // $lempar = array(
+      //   'm_name' => $data[0]->m_name,
+      //   'm_address' => $data[0]->m_address,
+      //   'm_cp' => $data[0]->m_cp,
+      //   'm_cp_phone' => $data[0]->m_cp_phone,
+      //   'm_phone' => $data[0]->m_phone,
+      //   'm_fax' => $data[0]->m_fax,
+      //   'm_note' => $data[0]->m_note
+      // );
       // return response()->json([
       //   'm_name' => $data[0]->m_name,
       //   'm_address' => $data[0]->m_address,
@@ -153,6 +154,6 @@ class approvalmitraController extends Controller
       //   'm_note' => $data[0]->m_note
       // ]);
       // dd($lempar);
-      return view('approvalmitra.print', compact('lempar'));
+      // return view('approvalmitra.print', compact('lempar'));
     }
 }
