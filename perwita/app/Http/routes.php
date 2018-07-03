@@ -539,6 +539,7 @@ Route::post('approvalpelamar/table', 'approvalpelamarController@data');
 Route::get('approvalpelamar/detail', 'approvalpelamarController@detail');
 Route::get('approvalpelamar/setujui', 'approvalpelamarController@setujui');
 Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
+Route::get('approvalpelamar/print', 'approvalpelamarController@print');
 
 //Approval Mitra
 Route::get('approvalmitra', 'approvalmitraController@index');
