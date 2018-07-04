@@ -458,6 +458,9 @@ Route::get('master-supplier/getSupplier','supplierController@getSupplier');
 //=============== manajemen pembelian =====================
 Route::get('manajemen-seragam/pembelian','PembelianController@index');
 Route::get('manajemen-seragam/tambah','PembelianController@create');
+Route::get('manajemen-seragam/cari','PembelianController@cari');
+Route::get('manajemen-seragam/getnota','PembelianController@getnota');
+Route::get('manajemen-seragam/getdata','PembelianController@getdata');
 Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
 Route::get('manajemen-pembelian/simpan','PembelianController@save');
 Route::post('manajemen-pembelian/simpan','PembelianController@save');
