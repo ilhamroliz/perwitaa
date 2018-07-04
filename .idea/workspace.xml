@@ -15,18 +15,7 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PembelianController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-54">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -194,7 +183,7 @@
       <workItem from="1530234599787" duration="5530000" />
       <workItem from="1530250809944" duration="5692000" />
       <workItem from="1530603607918" duration="3699000" />
-      <workItem from="1530671085497" duration="3150000" />
+      <workItem from="1530671085497" duration="4339000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -277,13 +266,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80265000" />
+    <option name="totallyTimeSpent" value="81454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1215,11 +1203,11 @@
           <caret line="74" column="37" lean-forward="false" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="37" />
           <folding>
             <element signature="e#40#60#0#PHP" expanded="true" />
-            <marker date="1530672177981" expanded="true" signature="1126:1306" ph="..." />
-            <marker date="1530672177981" expanded="true" signature="1126:1824" ph="..." />
-            <marker date="1530672177981" expanded="true" signature="1163:1179" ph="..." />
-            <marker date="1530672177981" expanded="true" signature="1435:1451" ph="..." />
-            <marker date="1530672177981" expanded="true" signature="1633:1649" ph="..." />
+            <marker date="1530686553564" expanded="true" signature="1126:1306" ph="..." />
+            <marker date="1530686553564" expanded="true" signature="1126:1511" ph="..." />
+            <marker date="1530686553564" expanded="true" signature="1163:1179" ph="..." />
+            <marker date="1530686553564" expanded="true" signature="1435:1451" ph="..." />
+            <marker date="1530686553564" expanded="true" signature="1633:1649" ph="..." />
           </folding>
         </state>
       </provider>
