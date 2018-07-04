@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/pembelian/create.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/pembelian/create.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -195,7 +194,7 @@
       <workItem from="1530234599787" duration="5530000" />
       <workItem from="1530250809944" duration="5692000" />
       <workItem from="1530603607918" duration="3699000" />
-      <workItem from="1530671085497" duration="3126000" />
+      <workItem from="1530671085497" duration="3150000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -267,11 +266,18 @@
       <option name="project" value="LOCAL" />
       <updated>1530678926742</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="roliz">
+      <created>1530686529176</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1530686529176</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80241000" />
+    <option name="totallyTimeSpent" value="80265000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
