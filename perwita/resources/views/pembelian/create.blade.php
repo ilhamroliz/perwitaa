@@ -307,21 +307,21 @@
         });
         hitungtotal();
         hitung = hitung + 1;
-        $('.jumlahitem').html(hitung);
-        $('.items').val(hitung);
+        updateItems();
+    }
+
+    function updateItems(){
+        var qty = document.getElementsByClassName( 'qty' ),
+            names  = [].map.call(qty, function( input ) {
+                return input.value;
+        });
+        $('.items').val(names.length);
+        $('.jumlahitem').html(names.length);
     }
 
     function hapus(){
-        var getItem = $('.items').val();
-        getItem = getItem - 1;
-        hitung = getItem;
-        $('.items').val(getItem);
-        $('.jumlahitem').html(getItem);
-        var qty = document.getElementsByClassName( 'qty' ),
-          names  = [].map.call(qty, function( input ) {
-              return input.value;
-        });
-        console.log(names);
+        hitung = hitung - 1;
+        updateItems();
     }
 
     function buttonGen(){
