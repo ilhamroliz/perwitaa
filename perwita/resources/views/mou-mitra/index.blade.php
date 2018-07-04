@@ -75,10 +75,19 @@
                 <small class="font-bold">Memperpanjang MOU mitra perusahaan</small>
             </div>
             <div class="modal-body">
-                <div class="input-daterange input-group col-md-12" id="datepicker">
+                <div class="input-daterange input-group col-md-12 isimodal" id="datepicker" style="display: none">
                     <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
                     <span class="input-group-addon">sampai</span>
                     <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
+                </div>
+                <div class="spiner-example spin">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,12 +104,8 @@
 @section('extra_scripts')
 <script type="text/javascript">
   var table;
-  $('.input-daterange').datepicker({
-      keyboardNavigation: false,
-      forceParse: false,
-      autoclose: true,
-      format: 'dd/mm/yyyy'
-  });
+  var idPublic;
+  var detailPublic;
   $(document).ready(function(){
       setTimeout(function(){
           $.ajaxSetup({
@@ -129,15 +134,86 @@
               "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
               "language": dataTableLanguage,
           });
-          /*table
-              .column( '0:visible' )
-              .order( 'desc' )
-              .draw();*/
       },1500);
   });
 
-  function perpanjang(id){
-    
+  function perpanjang(id, detail){
+    idPublic = id;
+    detailPublic = detail;
+    $.ajax({
+        url: baseUrl + '/manajemen-mitra/mitra-mou/get-tgl-mou',
+        type: 'get',
+        data: { id: id, detail: detail },
+        success: function(response){
+          var awal = response[0].mm_mou_start;
+          var akhir = response[0].mm_mou_end;
+          $('.awal').val(awal);
+          $('.akhir').val(akhir);
+          $('.spin').css('display', 'none');
+          $('.isimodal').show();
+          $('.input-daterange').datepicker({
+              keyboardNavigation: false,
+              forceParse: false,
+              autoclose: true,
+              format: 'dd/mm/yyyy'
+          });
+      }, error:function(x, e) {
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+        }
+    });
+  }
+
+  function update(){
+    var awal = $('.awal').val();
+    var akhir = $('.akhir').val();
+    $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+    });
+    $.ajax({
+        url: baseUrl + '/manajemen-mitra/mitra-mou/update-mou',
+        type: 'get',
+        data: { id: idPublic, detail: detailPublic, awal: awal, akhir: akhir },
+        success: function(response){
+          if (response.status == 'berhasil') {
+            swal({
+              title: "Sukses",
+              text: "Data sudah tersimpan",
+              type: "success"
+            },function () {
+                table.ajax.reload();
+                $('#myModal').modal('hide');
+            });
+          }
+      }, error:function(x, e) {
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+        }
+    });
   }
 </script>
 @endsection

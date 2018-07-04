@@ -76,7 +76,6 @@ class mitraDivisiController extends Controller
                   'md_name'   => strtoupper($request->nama_divisi[$i])
               ]);
        }
-
         return response()->json(['status' => 1]);
   }
 
