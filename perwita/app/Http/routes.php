@@ -466,6 +466,7 @@ Route::post('manajemen-pembelian/simpan','PembelianController@save');
 Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
 Route::get('manajemen-pembelian/carinota','PenerimaanController@cari');
 Route::get('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
+Route::post('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
 
 //============== manajemen penjualan =========
 Route::get('manajemen-seragam/pengeluaran','PenjualanController@index');
