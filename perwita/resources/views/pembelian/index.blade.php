@@ -21,10 +21,10 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pembelian
+                Manajemen Seragam
             </li>
             <li class="active">
-                <strong>Pembelian</strong>
+                <strong>Pembelian Seragam</strong>
             </li>
         </ol>
     </div>
@@ -58,9 +58,9 @@
                                 <td>{{ $row->p_nota }}</td>
                                 <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($row->p_total_net, 0, ',', '.') }}</span></td>
                                 @if($row->pd_receivetime == null)
-                                <td><span class="label label-warning">Belum diterima</span></td>
+                                <td class="text-center"><span class="label label-warning">Belum diterima</span></td>
                                 @else
-                                <td><span class="label label-warning">Sudah diterima</span></td>
+                                <td class="text-center"><span class="label label-warning">Sudah diterima</span></td>
                                 @endif
                             </tr>
                             @endforeach

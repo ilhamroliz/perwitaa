@@ -25,13 +25,13 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pembelian
+                Manajemen Seragam
             </li>
             <li>
-                Pembelian
+                Pembelian Seragam
             </li>
             <li class="active">
-                <strong>Tambah data</strong>
+                <strong>Tambah data pembelian</strong>
             </li>
         </ol>
     </div>
@@ -42,6 +42,7 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <span class="pull-right">(<strong class="jumlahitem">0</strong>) items</span>
+                        <input type="hidden" class="items" value="0">
                         <h5>Barang yang dibeli</h5>
                     </div>
                    
@@ -53,7 +54,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="qty" class="sr-only">Qty</label>
-                                <input type="text" placeholder="Kuantitas" id="qty" class="form-control" style="width: 100%;">
+                                <input type="text" placeholder="Kuantitas" id="qty" class="form-control" style="width: 100%;" onkeypress="saatEnter(this, event)">
                             </div>
                             <button class="btn btn-info" type="button" onclick="tambah()">Tambahkan</button>
                             <div class="table-responsive" style="margin-top: 30px;">
@@ -63,7 +64,7 @@
                                             <th style="width: 40%;">Nama Barang</th>
                                             <th style="width: 10%;">Qty</th>
                                             <th style="width: 15%;">Harga @</th>
-                                            <th style="width: 15%;">Diskon</th>
+                                            <th style="width: 15%;">Diskon (Rp)</th>
                                             <th style="width: 15%;">Total</th>
                                             <th style="width: 5%;">Aksi</th>
                                         </tr>
@@ -159,6 +160,7 @@
             responsive: true,
             paging: false,
             searching: false,
+            "ordering": false,
             "language": dataTableLanguage,
             "columnDefs": [
                 { "orderable": false, "targets": 5 }
@@ -173,10 +175,27 @@
             select: function(event, ui) {
                 $('#namabarang').val(ui.item.label);
                 tanam(ui.item);
+                $('#qty').focus();
             }
         });
 
+        $('#namabarang').focus();
+
     });
+
+    function saatEnter(inField, e) {
+        var charCode;
+        if (e && e.which) {
+            charCode = e.which;
+        } else if (window.event) {
+            e = window.event;
+            charCode = e.keyCode;
+        }
+        if (charCode == 13) {
+            tambah();
+            $('#namabarang').focus();
+        }
+    }
 
     function tanam(data){
         dataitem = data;
@@ -241,17 +260,25 @@
             }
         }
 
+        /*tablepembelian.row.add([
+               data.label+'<input type="hidden" name="id[]" value="'+data.id+'" class="form-control iditem iditem'+hitung+'"><input type="hidden" name="iddt[]" value="'+data.detailid+'" class="form-control iddt iddt'+hitung+'">',
+               '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+qty+'" class="form-control qty qty'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'qty\')" onblur="onBlurQty(this, event)">',
+               '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'harga\')" onblur="hitungtotal(this, event)">',
+               '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event)">',
+               '<input type="text" name="total[]" value="'+total+'" class="form-control total total'+hitung+'" style="width: 100%;" readonly>',
+               buttonGen()
+            ]).draw( false );*/
+
         tablepembelian.row.add([
                data.label+'<input type="hidden" name="id[]" value="'+data.id+'" class="form-control iditem iditem'+hitung+'"><input type="hidden" name="iddt[]" value="'+data.detailid+'" class="form-control iddt iddt'+hitung+'">',
-               '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+qty+'" class="form-control qty qty'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event)" onblur="onBlurQty(this, event)">',
-               '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event)" onblur="hitungtotal(this, event)">',
-               '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event)" onblur="hitungtotal(this, event)">',
+               '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+qty+'" class="form-control qty qty'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'qty\')" onblur="onBlurQty(this, event)">',
+               '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'harga\')" onblur="hitungtotal(this, event, \'harga\')">',
+               '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event, \'diskon\')">',
                '<input type="text" name="total[]" value="'+total+'" class="form-control total total'+hitung+'" style="width: 100%;" readonly>',
                buttonGen()
             ]).draw( false );
         $('#namabarang').val('');
         $('#qty').val('');
-        $('.jumlahitem').html(hitung + 1);
 
         $(".btnhapus").click(function(){
             tablepembelian
@@ -259,8 +286,7 @@
                 .remove()
                 .draw();
 
-            $('.jumlahitem').html(hitung);
-            hitung = hitung - 1;
+            hapus();
             hitungtotal();
         });
 
@@ -281,10 +307,25 @@
         });
         hitungtotal();
         hitung = hitung + 1;
+        $('.jumlahitem').html(hitung);
+        $('.items').val(hitung);
+    }
+
+    function hapus(){
+        var getItem = $('.items').val();
+        getItem = getItem - 1;
+        hitung = getItem;
+        $('.items').val(getItem);
+        $('.jumlahitem').html(getItem);
+        var qty = document.getElementsByClassName( 'qty' ),
+          names  = [].map.call(qty, function( input ) {
+              return input.value;
+        });
+        console.log(names);
     }
 
     function buttonGen(){
-        var buton = '<div class="text-center"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs btnhapus" ><i class="glyphicon glyphicon-trash"></i></button></div>'
+        var buton = '<div class="text-center"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs btnhapus btnhapus" ><i class="glyphicon glyphicon-trash"></i></button></div>'
         return buton;
     }
 
@@ -298,14 +339,22 @@
         hitungtotal();
     }
 
-    function hitungtotal(inField, e){
-        var getIndex = $('input.qty:text').index(inField);
+    function hitungtotal(inField, e, jenis){
+        var getIndex;
+        if (jenis == 'harga') {
+            getIndex = $('input.harga:text').index(inField);
+        } else if (jenis == 'qty') {
+            getIndex = $('input.qty:text').index(inField);
+        } else if(jenis == 'diskon'){
+            getIndex = $('input.disc:text').index(inField);
+        }
         var permintaan = $('input.qty:text:eq('+getIndex+')').val();
         var harga = $('input.harga:text:eq('+getIndex+')').val();
         var disc = $('input.disc:text:eq('+getIndex+')').val();
 
         harga = convertToAngka(harga);
         disc = convertToAngka(disc);
+
         if (isNaN(disc) || disc < 1) {
             disc = 0;
             $('input.disc:text:eq('+getIndex+')').val(0);
