@@ -119,41 +119,61 @@ class approvalmitraController extends Controller
     }
 
     public function print(Request $request){
+      try {
+        $id = $request->id;
+
+        $data = DB::table('d_mitra')->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')->selectRaw(
+          "*,
+          coalesce(m_name, '-') as m_name,
+          coalesce(m_address, '-') as m_address,
+          coalesce(m_cp, '-') as m_cp,
+          coalesce(m_cp_phone, '-') as m_cp_phone,
+          coalesce(m_phone, '-') as m_phone,
+          coalesce(m_fax, '-') as m_fax,
+          coalesce(m_note, '-') as m_note,
+          coalesce(mm_mou, '-') as mm_mou,
+          coalesce(mm_mou_start, '-') as mm_mou_start,
+          coalesce(mm_mou_end, '-') as mm_mou_end"
+          )
+        ->where('m_id', $id)->where('mm_status', 'Aktif')->get();
+
+        if (!empty($data[0]->mm_mou_start)) {
+          $moustart = Carbon::parse($data[0]->mm_mou_start)->format('d/m/Y');
+        }
+
+        if (!empty($data[0]->mm_mou_end)) {
+          $mouend = Carbon::parse($data[0]->mm_mou_end)->format('d/m/Y');
+        }
+
+
+        $lempar = array(
+          'm_name' => $data[0]->m_name,
+          'm_address' => $data[0]->m_address,
+          'm_cp' => $data[0]->m_cp,
+          'm_cp_phone' => $data[0]->m_cp_phone,
+          'm_phone' => $data[0]->m_phone,
+          'm_fax' => $data[0]->m_fax,
+          'm_note' => $data[0]->m_note,
+          'mm_mou' => $data[0]->mm_mou,
+          'mm_mou_start' => $moustart,
+          'mm_mou_end' => $mouend
+        );
+        // return response()->json([
+        //   'm_name' => $data[0]->m_name,
+        //   'm_address' => $data[0]->m_address,
+        //   'm_cp' => $data[0]->m_cp,
+        //   'm_cp_phone' => $data[0]->m_cp_phone,
+        //   'm_phone' => $data[0]->m_phone,
+        //   'm_fax' => $data[0]->m_fax,
+        //   'm_note' => $data[0]->m_note
+        // ]);
+        // dd($lempar);
+        return view('approvalmitra.print', compact('lempar'));
+      } catch (\Exception $e) {
+        echo "Terjadi Kesalahan!";
+      }
+
       // dd($request);
-      $id = $request->id;
 
-      $data = DB::table('d_mitra')->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')->selectRaw(
-        "*,
-        coalesce(m_name, '-') as m_name,
-        coalesce(m_address, '-') as m_address,
-        coalesce(m_cp, '-') as m_cp,
-        coalesce(m_cp_phone, '-') as m_cp_phone,
-        coalesce(m_phone, '-') as m_phone,
-        coalesce(m_fax, '-') as m_fax,
-        coalesce(m_note, '-') as m_note"
-        )
-      ->where('m_id', $id)->get();
-
-      dd($data);
-      // $lempar = array(
-      //   'm_name' => $data[0]->m_name,
-      //   'm_address' => $data[0]->m_address,
-      //   'm_cp' => $data[0]->m_cp,
-      //   'm_cp_phone' => $data[0]->m_cp_phone,
-      //   'm_phone' => $data[0]->m_phone,
-      //   'm_fax' => $data[0]->m_fax,
-      //   'm_note' => $data[0]->m_note
-      // );
-      // return response()->json([
-      //   'm_name' => $data[0]->m_name,
-      //   'm_address' => $data[0]->m_address,
-      //   'm_cp' => $data[0]->m_cp,
-      //   'm_cp_phone' => $data[0]->m_cp_phone,
-      //   'm_phone' => $data[0]->m_phone,
-      //   'm_fax' => $data[0]->m_fax,
-      //   'm_note' => $data[0]->m_note
-      // ]);
-      // dd($lempar);
-      // return view('approvalmitra.print', compact('lempar'));
     }
 }

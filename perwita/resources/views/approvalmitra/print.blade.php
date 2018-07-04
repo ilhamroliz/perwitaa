@@ -130,9 +130,9 @@ a#pdf:hover { background: #222; }
 									<br>
 									&nbsp; Fax &nbsp; : &nbsp; {{$lempar['m_fax']}}<br>
 									<br>
-									&nbsp; No MOU &nbsp; : &nbsp; <br>
+									&nbsp; No MOU &nbsp; : &nbsp; {{$lempar['mm_mou']}}<br>
 									<br>
-									&nbsp; Tanggal MOU &nbsp; : &nbsp; <br>
+									&nbsp; Tanggal MOU &nbsp; : &nbsp; {{$lempar['mm_mou_start']}} &nbsp; Sampai {{$lempar['mm_mou_end']}}<br>
 									<br>
 								</td>
 							</tr>
