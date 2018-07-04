@@ -296,6 +296,12 @@
 
   function edit(id){
     $("#modal-edit").modal('show');
+    $('.input-daterange').datepicker({
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
     $("#dataedit").hide();
 
     $.ajax({
