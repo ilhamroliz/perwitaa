@@ -45,7 +45,7 @@
                         <input type="hidden" class="items" value="0">
                         <h5>Barang yang dibeli</h5>
                     </div>
-                   
+
                     <div class="ibox-content">
                         <form role="form" class="form-inline">
                             <div class="form-group col-md-7">
@@ -107,7 +107,7 @@
                             <div class="m-t-sm">
                                 <div class="btn-group">
                                 <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
-                                <a href="{{ url('manajemen-pembelian') }}" class="btn btn-white btn-sm"> Batal</a>
+                                <a href="{{ url('/manajemen-seragam/pembelian') }}" class="btn btn-white btn-sm"> Batal</a>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                 <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
@@ -235,7 +235,7 @@
         var total = qty * data.harga;
         var harga = accounting.formatMoney(data.harga, "", 0, ".", ",");
         total = accounting.formatMoney(total, "", 0, ".", ",");
-        
+
         var id = document.getElementsByClassName( 'iditem' ),
           idItem  = [].map.call(id, function( input ) {
               return input.value;
@@ -291,17 +291,17 @@
         });
 
         $(".harga"+hitung).maskMoney({
-            allowNegative: false, 
-            thousands:'.', 
-            decimal:',', 
+            allowNegative: false,
+            thousands:'.',
+            decimal:',',
             precision: 0,
             affixesStay: false
         });
 
         $(".disc"+hitung).maskMoney({
-            allowNegative: false, 
-            thousands:'.', 
-            decimal:',', 
+            allowNegative: false,
+            thousands:'.',
+            decimal:',',
             precision: 0,
             affixesStay: false
         });
@@ -363,7 +363,7 @@
             harga = 0;
             $('input.harga:text:eq('+getIndex+')').val(0);
         }
-        
+
         var total = (harga * permintaan) - disc;
         total = accounting.formatMoney(total, "", 0, ".", ",");
         $('input.total:text:eq('+getIndex+')').val(total);
@@ -387,12 +387,12 @@
     }
 
     function convertToRupiah(angka) {
-        var rupiah = '';        
+        var rupiah = '';
         var angkarev = angka.toString().split('').reverse().join('');
         for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
         var hasil = rupiah.split('',rupiah.length-1).reverse().join('');
         return hasil;
-    
+
     }
 
     function convertToAngka(rupiah)
@@ -454,7 +454,7 @@
         }
         waitingDialog.show();
         var ar = $();
-        for (var i = 0; i < tablepembelian.rows()[0].length; i++) { 
+        for (var i = 0; i < tablepembelian.rows()[0].length; i++) {
             ar = ar.add(tablepembelian.row(i).node());
         }
         $.ajaxSetup({
@@ -464,7 +464,7 @@
         });
         $.ajax({
             url: baseUrl + '/manajemen-pembelian/simpan',
-            type: 'post',
+            type: 'get',
             data: ar.find('input').serialize()+'&nota='+nota+'&supplier='+supplier,
             success: function(response){
                 if (response.status == 'sukses') {

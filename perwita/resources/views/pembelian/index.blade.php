@@ -33,6 +33,7 @@
     <div class="ibox-title ibox-info">
         <h5>Pembelian</h5>
         <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a href="{{ url('manajemen-seragam/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -47,6 +48,7 @@
                                 <th>Nota</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,13 +62,18 @@
                                 @if($row->pd_receivetime == null)
                                 <td class="text-center"><span class="label label-warning">Belum diterima</span></td>
                                 @else
-                                <td class="text-center"><span class="label label-warning">Sudah diterima</span></td>
+                                <td class="text-center"><span class="label label-success">Sudah diterima</span></td>
+                                @endif
+                                @if($row->p_isapproved == 'P')
+                                <td class="text-center"><span class="label label-warning">Belum disetujui</span></td>
+                                @elseif($row->p_isapproved == 'Y')
+                                <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
                                 @endif
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>                    
-                </div>                
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -83,7 +90,7 @@
                 <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>

@@ -20,6 +20,8 @@ class PembelianController extends Controller
             ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
             ->join('d_supplier', 's_id', '=', 'p_supplier')
             ->select('*')
+            ->where('pd_receivetime', null)
+            ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
             ->take(20)
             ->groupBy('p_nota')
             ->get();
@@ -68,8 +70,8 @@ class PembelianController extends Controller
 
     public function save(Request $request)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
 
             $id = DB::table('d_purchase')
                 ->max('p_id');
@@ -119,7 +121,7 @@ class PembelianController extends Controller
                     'pd_total_gross' => $request->qty[$i] * str_replace(".", '', $request->harga[$i]),
                     'pd_disc_percent' => 0,
                     'pd_disc_value' => $request->disc[$i],
-                    'pd_total_net' => ($request->qty[$i] * str_replace(".", '', $request->harga[$i])) - str_replace(".", '', $request->disc[$i]),
+                    'pd_total_net' => ((int)$request->qty[$i] * (int)str_replace(".", '', $request->harga[$i])) - (int)str_replace(".", '', $request->disc[$i]),
                     'pd_barang_masuk' => 0,
                     'pd_receivetime' => null
                 );
@@ -127,17 +129,17 @@ class PembelianController extends Controller
             }
             d_purchase_dt::insert($pd);
 
-            DB::commit();
+            // DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => 'gagal',
-                'data' => $e
-            ]);
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     return response()->json([
+        //         'status' => 'gagal',
+        //         'data' => $e
+        //     ]);
+        // }
 
     }
 }
