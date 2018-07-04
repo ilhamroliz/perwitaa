@@ -21,6 +21,7 @@ class PenerimaanController extends Controller
             ->join('d_supplier', 's_id', '=', 'p_supplier')
             ->select('p_nota', 's_company')
             ->where('pd_receivetime', '=', null)
+            ->where('p_isapproved', '=', 'Y')
             ->groupBy('p_nota')
             ->get();
 
@@ -125,7 +126,7 @@ class PenerimaanController extends Controller
                     'sm_hpp' => $info->pd_total_net / $info->pd_qty,
                     'sm_sell' => $hargaJual[0]->id_price,
                     'sm_nota' => $info->p_nota,
-                    'sm_delivery_order' => $info->p_nota,
+                    'sm_delivery_order' => strtoupper($request->nodo),
                     'sm_petugas' => Session::get('mem')
                 );
 
@@ -161,7 +162,7 @@ class PenerimaanController extends Controller
                     'sm_hpp' => $info->pd_total_net / $info->pd_qty,
                     'sm_sell' => $hargaJual[0]->id_price,
                     'sm_nota' => $info->p_nota,
-                    'sm_delivery_order' => $info->p_nota,
+                    'sm_delivery_order' => strtoupper($request->nodo),
                     'sm_petugas' => Session::get('mem')
                 );
 

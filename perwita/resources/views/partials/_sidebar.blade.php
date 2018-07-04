@@ -112,6 +112,14 @@
                     </li>
                 </ul>
                 <ul class="nav nav-second-level collapse">
+                    <li class="{{ Request::is('manajemen-seragam/return') ? 'active' : ''
+                                || Request::is('manajemen-seragam/return/*') ? 'active' : '' }} sidebar master-akun">
+                        <a href="{{ url('manajemen-seragam/return') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Return Seragam</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/pengeluaran') ? 'active' : ''
                                 || Request::is('manajemen-seragam/tambah-pengeluaran') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/pengeluaran') }}">

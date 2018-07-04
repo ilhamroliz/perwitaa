@@ -82,16 +82,20 @@
                 <h3 class="namabarang"></h3>
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-lg-3 control-label" style="text-align: left;">Sisa Barang</label>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control sisabarang" readonly>
-                        </div>
-                        <label class="col-lg-3 control-label" style="text-align: left;">Jumlah Barang</label>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control jumlahterima" onkeyup="cek()" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                        </div>
-                        <input type="hidden" class="id_purchase">
-                        <input type="hidden" class="purchase_dt">
+                      <label class="col-lg-3 control-label" style="text-align: left;">No DO</label>
+                      <div class="col-lg-9" style="margin-bottom: 5px;">
+                          <input type="text" class="form-control nodo" style='text-transform:uppercase'>
+                      </div>
+                      <label class="col-lg-3 control-label" style="text-align: left;">Sisa Barang</label>
+                      <div class="col-lg-3">
+                          <input type="text" class="form-control sisabarang" readonly>
+                      </div>
+                      <label class="col-lg-3 control-label" style="text-align: left;">Jumlah Barang</label>
+                      <div class="col-lg-3">
+                          <input type="text" class="form-control jumlahterima" onkeyup="cek()" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                      </div>
+                      <input type="hidden" class="id_purchase">
+                      <input type="hidden" class="purchase_dt">
                     </div>
                 </form>
             </div>
@@ -234,12 +238,18 @@
         var sisa = $('.jumlahterima').val();
         var id = $('.id_purchase').val();
         var dt = $('.purchase_dt').val();
+        var nodo = $('.nodo').val();
         $('.jumlahterima').val('');
         //waitingDialog.show();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
           url: baseUrl + '/manajemen-pembelian/penerimaan/update',
-          type: 'get',
-          data: {sisa: sisa, id: id, dt: dt},
+          type: 'post',
+          data: {sisa: sisa, id: id, dt: dt, nodo: nodo},
           success: function(response){
             //waitingDialog.hide();
             $('#myModal').modal('hide');
