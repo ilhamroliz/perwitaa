@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/penerimaan-pembelian/index.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/penerimaan-pembelian/index.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -216,7 +212,7 @@
       <workItem from="1530234599787" duration="5530000" />
       <workItem from="1530250809944" duration="5692000" />
       <workItem from="1530603607918" duration="3699000" />
-      <workItem from="1530671085497" duration="6688000" />
+      <workItem from="1530671085497" duration="7334000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -302,15 +298,21 @@
       <option name="project" value="LOCAL" />
       <updated>1530694777050</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="roliz">
+      <created>1530700234300</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1530700234300</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83803000" />
+    <option name="totallyTimeSpent" value="84449000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
