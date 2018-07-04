@@ -98,7 +98,7 @@ a#pdf:hover { background: #222; }
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
-					<h1 id="p_name"><b>{{$lempar['m_name']}}</b></h1>
+					<h1 id="p_name" style="font-size:100px;"><b>{{$lempar['m_name']}}</b></h1>
 				</div>
 			</div><!--// .yui-gc -->
 		</div><!--// hd -->
@@ -132,7 +132,7 @@ a#pdf:hover { background: #222; }
 									<br>
 									&nbsp; No MOU &nbsp; : &nbsp; {{$lempar['mm_mou']}}<br>
 									<br>
-									&nbsp; Tanggal MOU &nbsp; : &nbsp; {{$lempar['mm_mou_start']}} &nbsp; Sampai {{$lempar['mm_mou_end']}}<br>
+									&nbsp; Tanggal MOU &nbsp; : &nbsp; {{$lempar['mm_mou_start']}} Sampai {{$lempar['mm_mou_end']}}<br>
 									<br>
 								</td>
 							</tr>
