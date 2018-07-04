@@ -296,14 +296,7 @@
 
   function edit(id){
     $("#modal-edit").modal('show');
-    $('.input-daterange').datepicker({
-        keyboardNavigation: false,
-        forceParse: false,
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-    });
     $("#dataedit").hide();
-    // $("#update").attr('onclick', 'updateedit('+id+')');
 
     $.ajax({
         type: 'get',
@@ -311,21 +304,21 @@
         url: baseUrl + '/manajemen-mitra/mitra-mou/edit',
         dataType: 'json',
         success : function(result){
-          // console.log(result);
+
+          $('.nomou').val(result.mm_mou);
+          $('.startedit').val(result.mm_mou_start);
+          $('.endedit').val(result.mm_mou_end);
+          $('#update').attr('idmitra', result.mm_mitra);
+          $('#update').attr('detailid', result.mm_detailid);
+
+          $(".spin").css('display', 'none');
+          $("#dataedit").show();
           $('.input-daterange').datepicker({
               keyboardNavigation: false,
               forceParse: false,
               autoclose: true,
               format: 'dd/mm/yyyy'
           });
-          $('.nomou').val(result.mm_mou);
-          $('.startedit').text(result.mm_mou_start);
-          $('#update').attr('idmitra', result.mm_mitra);
-          $('#update').attr('detailid', result.mm_detailid);
-          $('.endedit').text(result.mm_mou_end);
-
-          $(".spin").css('display', 'none');
-          $("#dataedit").show();
         }, error:function(x, e) {
             if (x.status == 0) {
                 alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
