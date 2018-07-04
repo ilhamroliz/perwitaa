@@ -90,23 +90,15 @@ a#pdf:hover { background: #222; }
   </style>
 
 </head>
-<body>
-
+<body style="font-family:Monospace;">
+<div width="900">
 <div id="doc2" class="yui-t7">
 	<div id="inner">
 
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
-					<h1 id="p_name">{{$lempar['m_name']}}</h1>
-				</div>
-
-				<div class="yui-u">
-					<div class="contact-info">
-            <div class="image" id="showimage">
-                  <img src="{{asset('assets/img/folder.png')}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
-						</div>
-					</div><!--// .contact-info -->
+					<h1 id="p_name" style="font-size:100px;"><b>{{$lempar['m_name']}}</b></h1>
 				</div>
 			</div><!--// .yui-gc -->
 		</div><!--// hd -->
@@ -117,69 +109,35 @@ a#pdf:hover { background: #222; }
 
 					<div class="yui-gf">
 						<div class="yui-u first">
-							<h2>Alamat Mitra</h2>
+							<h2>{{$lempar['m_note']}}</h2>
 						</div>
-						<div class="yui-u">
-              <div class="talent">
-                <h2>{{$lempar['m_address']}}</h2>
-              </div>
-						</div>
-					</div><!--// .yui-gf -->
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Nomor Telepon</h2>
-						</div>
-						<div class="yui-u">
-              <div class="talent">
-                <h2>{{$lempar['m_phone']}}</h2>
-              </div>
-						</div>
-					</div><!--// .yui-gf -->
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Nomor Contact Person</h2>
-						</div>
-						<div class="yui-u">
-              <div class="talent">
-                <h2>{{$lempar['m_cp_phone']}}</h2>
-              </div>
-						</div>
-					</div><!--// .yui-gf -->
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Nama Contact Person</h2>
-						</div>
-						<div class="yui-u">
-              <div class="talent">
-                <h2>{{$lempar['m_cp']}}</h2>
-              </div>
-						</div>
-					</div><!--// .yui-gf -->
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Fax</h2>
-						</div>
-						<div class="yui-u">
-							<div class="talent">
-								<h2>{{$lempar['m_fax']}}</h2>
-							</div>
-						</div>
-					</div><!--// .yui-gf -->
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Keterangan</h2>
-						</div>
-						<div class="yui-u">
-              <div class="talent">
-                <h2>{{$lempar['m_note']}}</h2>
-              </div>
-						</div>
-					</div><!--// .yui-gf -->
+					</div>
+					<br>
+					<table width="1000" height="200" border="1" cellspacing="0" style="font-size:25px">
+						<tbody>
+							<tr>
+								<td align="left">
+									<br>
+									&nbsp; Nama Mitra &nbsp; : &nbsp; {{$lempar['m_name']}}<br>
+									<br>
+									 &nbsp; Alamat Mitra &nbsp; : &nbsp; {{$lempar['m_address']}}<br>
+									<br>
+									 &nbsp; Telepon Mitra &nbsp; : &nbsp; {{$lempar['m_phone']}}<br>
+									<br>
+									&nbsp; Nama Contract Person &nbsp; : &nbsp; {{$lempar['m_cp']}}<br>
+									<br>
+									&nbsp; No Contract Person &nbsp; : &nbsp; {{$lempar['m_cp_phone']}}<br>
+									<br>
+									&nbsp; Fax &nbsp; : &nbsp; {{$lempar['m_fax']}}<br>
+									<br>
+									&nbsp; No MOU &nbsp; : &nbsp; {{$lempar['mm_mou']}}<br>
+									<br>
+									&nbsp; Tanggal MOU &nbsp; : &nbsp; {{$lempar['mm_mou_start']}} Sampai {{$lempar['mm_mou_end']}}<br>
+									<br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
 				</div><!--// .yui-h2 -->
 			</div><!--// yui-main -->
@@ -190,11 +148,11 @@ a#pdf:hover { background: #222; }
 
 
 </div><!--// doc -->
-
+</div>
 <script type="text/javascript" src="{{asset('assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
 <script type="text/javascript">
-	window.print();
+	// window.print();
 </script>
 </body>
 </html>

@@ -83,6 +83,19 @@
                 <h4 class="modal-title">Detail Pelamar</h4>
             </div>
             <div class="modal-body">
+              <center>
+                <div class="spiner-modal">
+                    <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
+                        <div class="sk-rect1 tampilkan" ></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Pelamar</span>
+                </div>
+            </center>
+            <div id="showdata">
                 <div class="form-group">
                     <div class="col-lg-3">
                         <h3>Nama Pelamar </h3>
@@ -352,6 +365,7 @@
                         </div>
                       </table>
               </div>
+              </div>
               <div class="modal-footer">
                 <a class="no-print btn btn-info" id="print" onclick="print()" href=""><i class="fa fa-print">&nbsp;</i>Print</a>
                 <button type="button" name="button" class="btn btn-primary" id="setujui" onclick="setujui()">Setujui</button>
@@ -409,6 +423,8 @@ setTimeout(function () {
 
 
 function detail(id){
+  $("#modal-detail").modal('show');
+  $("#showdata").hide();
   $.ajax({
     type: 'get',
     data: {id:id},
@@ -489,9 +505,10 @@ function detail(id){
         $("#showimage").html('<i class="fa fa-user modal-icon"></i>');
       }
 
+      $('.spiner-modal').css('display', 'none');
+      $("#showdata").show();
     }
-  })
-  $("#modal-detail").modal('show');
+  });
 }
 
   function setujui(id){
