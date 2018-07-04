@@ -34,8 +34,9 @@ class loginController extends Controller
 
     public function authenticate(Request $request)
     {
+        $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
+        dd($user->m_passwd);
         return DB::transaction(function () use ($request) {
-
             $request->username = nama($request->username);
             $rules = array(
                 'username' => 'required', // make sure the email is an actual email
@@ -56,7 +57,7 @@ class loginController extends Controller
                 $password = $request->password;
 
                 $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
-
+                dd($user->m_passwd);
                 if ($user && $user->m_passwd == sha1(md5('passwordAllah') . $request->password)) {
                     $userCompany = $user->company($user->m_id);
 
