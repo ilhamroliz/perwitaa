@@ -39,26 +39,26 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
-                        
+
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                    <table id="mou" class="table table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Nama Mitra</th>
                                 <th>No MOU</th>
-                                <th>Mulai</th>            
-                                <th>Berakhir</th> 
-                                <th>Sisa</th>          
-                                <th>Aksi</th>            
+                                <th>Mulai</th>
+                                <th>Berakhir</th>
+                                <th>Sisa</th>
+                                <th>Aksi</th>
                             </tr>
-                        </thead>     
-                        <tbody>                       
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
-                </div>  
+                </div>
             </div>
 
         </div>
@@ -98,6 +98,84 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-calendar modal-icon"></i>
+                <h4 class="modal-title">Perpanjang MOU</h4>
+                <small class="font-bold">Memperpanjang MOU mitra perusahaan</small>
+            </div>
+            <div class="modal-body">
+              <div class="dataedit" id="dataedit">
+                <div class="input-daterange input-group col-md-12 isimodal" id="datepicker" style="display: none">
+                    <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
+                    <span class="input-group-addon">sampai</span>
+                    <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
+                </div>
+                <div class="spiner-example spin">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-folder modal-icon"></i>
+                <h4 class="modal-title">Edit MOU</h4>
+                <small class="font-bold">Mengedit MOU mitra perusahaan</small>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                  <label>No MOU</label>
+                </div>
+                <div class="col">
+                  <input type="text" class="input-sm form-control nomou" name="nomou" value="">
+                </div>
+                <br>
+                <div class="input-daterange input-group col-md-12" id="datepicker">
+                  <input type="text" class="input-sm form-control startedit" name="startedit" value="05/06/2014"/>
+                  <span class="input-group-addon">sampai</span>
+                  <input type="text" class="input-sm form-control endedit" name="endedit" value="05/09/2014" />
+                </div>
+                <div class="spiner-edit spin">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="update" idmitra="" detailid="" onclick="updateedit()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
@@ -129,7 +207,7 @@
                   {data: 'sisa', name: 'sisa'},
                   {data: 'action', name: 'action',orderable:false,searchable:false}
               ],
-              responsive: true,        
+              responsive: true,
               "pageLength": 10,
               "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
               "language": dataTableLanguage,
@@ -215,5 +293,136 @@
         }
     });
   }
+
+  function edit(id){
+    $("#modal-edit").modal('show');
+    $('.input-daterange').datepicker({
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $("#dataedit").hide();
+    // $("#update").attr('onclick', 'updateedit('+id+')');
+
+    $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/manajemen-mitra/mitra-mou/edit',
+        dataType: 'json',
+        success : function(result){
+          // console.log(result);
+          $('.input-daterange').datepicker({
+              keyboardNavigation: false,
+              forceParse: false,
+              autoclose: true,
+              format: 'dd/mm/yyyy'
+          });
+          $('.nomou').val(result.mm_mou);
+          $('.startedit').text(result.mm_mou_start);
+          $('#update').attr('idmitra', result.mm_mitra);
+          $('#update').attr('detailid', result.mm_detailid);
+          $('.endedit').text(result.mm_mou_end);
+
+          $(".spin").css('display', 'none');
+          $("#dataedit").show();
+        }, error:function(x, e) {
+            if (x.status == 0) {
+                alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+            } else if (x.status == 404) {
+                alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+            } else if (x.status == 500) {
+                alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+            } else if (e == 'parsererror') {
+                alert('Error.\nParsing JSON Request failed.');
+            } else if (e == 'timeout'){
+                alert('Request Time out. Harap coba lagi nanti');
+            } else {
+                alert('Unknow Error.\n' + x.responseText);
+            }
+          }
+    });
+  }
+
+    function updateedit(){
+     var mitra = $('#update').attr('idmitra');
+     var detail = $('#update').attr('detailid');
+     var nomou = $('.nomou').val();
+     var startmou = $('.startedit').val();
+     var endmou = $('.endedit').val();
+     $.ajaxSetup({
+         headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 }
+     });
+     $.ajax({
+       type: 'post',
+       data: {mitra:mitra, detail:detail, nomou:nomou, startmou:startmou, endmou:endmou},
+       url: baseUrl + '/manajemen-mitra/mitra-mou/updateedit',
+       dataType: 'json',
+       success : function(result){
+         if (result.status == 'berhasil') {
+           swal({
+             title: "Sukses",
+             text: "Data sudah tersimpan",
+             type: "success"
+           },function () {
+               $('#modal-edit').modal('hide');
+               table.ajax.reload();
+           });
+         }
+       }, error:function(x, e) {
+           if (x.status == 0) {
+               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+           } else if (x.status == 404) {
+               alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+           } else if (x.status == 500) {
+               alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+           } else if (e == 'parsererror') {
+               alert('Error.\nParsing JSON Request failed.');
+           } else if (e == 'timeout'){
+               alert('Request Time out. Harap coba lagi nanti');
+           } else {
+               alert('Unknow Error.\n' + x.responseText);
+           }
+         }
+     });
+    }
+
+    function hapus(id){
+      swal({
+        title: "Konfirmasi",
+        text: "Apakah anda yakin ingin menghapus data MOU?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+    }, function(){
+      $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/manajemen-mitra/mitra-mou/hapus',
+        dataType: 'json',
+        success : function(result){
+          if (result.status == 'berhasil') {
+            swal({
+              title: "Sukses",
+              text: "Data berhasil dihapus",
+              type: "success"
+            },function () {
+                table.ajax.reload();
+            });
+          }
+          else if (resul.status == 'gagal') {
+            swal({
+              title: "Gagal",
+              text: "Data gagal dihapus",
+              type: "success"
+          });
+        }
+      }
+    });
+  });
+}
 </script>
 @endsection
