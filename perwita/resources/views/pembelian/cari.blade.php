@@ -46,7 +46,7 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-4">
-                    <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukan No Nota">
+                    <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukan No Nota" title="Masukkan No Nota">
                 </div>
                 <div class="form-group row">
                       <div class="col-sm-2">
