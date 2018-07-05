@@ -45,9 +45,19 @@
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukan No Nota">
                 </div>
+                <div class="form-group row">
+                      <div class="col-sm-2">
+                        <input type="text" class="form-control startmou date-mou" name="startmou" style="text-transform:uppercase" title="Start"  placeholder="Start">
+                      </div>
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control endmou date-mou" name="endmou" style="text-transform:uppercase" title="End"  placeholder="End">
+                      </div>
+                      <button type="button" class="btn btn-primary btn-sm" name="button" style="font-size:13px; font-family:sans-serif;" onclick="filter()">Filter Cari</button>
+                </div>
+              </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
@@ -59,32 +69,11 @@
                               <th>Total</th>
                               <th>Status</th>
                               <th>Keterangan</th>
+                              <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="datacari">
-                          @if(empty($data))
+                        <tbody id="tbody">
 
-                          @else
-                          @foreach($data as $index=>$row)
-                          <tr>
-                              <td>{{ $index + 1 }}</td>
-                              <td>{{ Carbon\Carbon::parse($row->p_date)->format('d/M/Y H:i:s') }}</td>
-                              <td>{{ $row->s_company }}</td>
-                              <td>{{ $row->p_nota }}</td>
-                              <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($row->p_total_net, 0, ',', '.') }}</span></td>
-                              @if($row->pd_receivetime == null)
-                              <td class="text-center"><span class="label label-warning">Belum diterima</span></td>
-                              @else
-                              <td class="text-center"><span class="label label-success">Sudah diterima</span></td>
-                              @endif
-                              @if($row->p_isapproved == 'P')
-                              <td class="text-center"><span class="label label-warning">Belum disetujui</span></td>
-                              @elseif($row->p_isapproved == 'Y')
-                              <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
-                              @endif
-                          </tr>
-                          @endforeach
-                          @endif
                         </tbody>
                     </table>
                 </div>
@@ -92,7 +81,6 @@
 
         </div>
     </div>
-</div>
 
 @endsection
 
@@ -117,18 +105,67 @@ $(document).ready(function(){
 
     });
 
+    $('.startmou').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('.endmou').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
   });
 
  function getdata(id){
+   var html = '';
+   var status = '';
+   var keterangan = '';
    $.ajax({
      type: 'get',
      dataType: 'json',
-     data: {id:id}
+     data: {id:id},
      url: baseUrl + '/manajemen-seragam/getdata',
      success : function(result){
-       console.log(result);
+       if (result.pd_receivetime == null) {
+         status += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
+       } else {
+         status += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
+       }
+
+       if (result.p_isapproved == 'P') {
+         keterangan += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
+       } else if (result.p_isapproved == 'Y') {
+         keterangan += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
+       }
+         html += '<tr>'+
+                 '<td>'+(1)+'</td>'+
+                 '<td>'+result.p_date+'</td>'+
+                 '<td>'+result.s_company+'</td>'+
+                 '<td>'+result.p_nota+'</td>'+
+                 '<td>'+result.pd_total_net+'</td>'+
+                 status+
+                 keterangan+
+                 '<td>'+
+                 '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result.p_id+')"> <i class="fa fa-folder"></i> </button>'+
+                 '</td>'+
+                 '</tr>';
+
+        $("#tbody").html(html);
      }
-   })
+   });
  }
+
+  function filter(){
+    var moustart = $(".startmou").val();
+    var mouend = $(".endmou").val();
+    $.ajax({
+      type: 'get',
+      data: {moustart:moustart, mouend:mouend},
+      url: baseUrl + '/manajemen-seragam/filter',
+      dataType: 'json',
+      success : function(result){
+        console.log(result);
+      }
+    })
+  }
 </script>
 @endsection

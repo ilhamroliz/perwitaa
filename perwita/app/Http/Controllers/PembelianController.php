@@ -178,7 +178,7 @@ class PembelianController extends Controller
       $data = DB::table('d_purchase')
           ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
           ->join('d_supplier', 's_id', '=', 'p_supplier')
-          ->select('s_company', 'p_nota', 'pd_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+          ->select('p_id','s_company', 'p_nota', 'pd_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
           ->where('p_id', $id)
           ->where('pd_receivetime', null)
           ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
@@ -186,14 +186,22 @@ class PembelianController extends Controller
           ->groupBy('p_nota')
           ->get();
 
-        dd($data);
       return response()->json([
+        'p_id' => $data[0]->p_id,
         'p_date' => $data[0]->p_date,
         's_company' => $data[0]->s_company,
         'p_nota' => $data[0]->p_nota,
-        'pd_total_net' => $data[0]->pd_total_net
+        'pd_total_net' => $data[0]->pd_total_net,
+        'pd_receivetime' => $data[0]->pd_receivetime,
+        'p_isapproved' => $data[0]->p_isapproved
       ]);
+    }
 
-      return view('pembelian.cari', compact('data'));
+    public function filter(Request $request){
+      $data = DB::table('d_purchase')
+            ->whereRaw("p_date BETWEEN '$request->startmou' AND '$request->endmou'")
+            ->get();
+
+      dd($data);
     }
 }
