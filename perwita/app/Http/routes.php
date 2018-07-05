@@ -501,6 +501,10 @@ Route::post('manajemen-seragam/simpan', 'PembayaranController@save');
 Route::get('manajemen-seragam/simpan', 'PembayaranController@save');
 Route::get('manajemen-seragam/getInfoPembayaran', 'PembayaranController@getInfoPembayaran');
 
+//============= return seragam (pembelian)
+Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
+Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
+
 //============ Stock Opname
 Route::get('manajemen-stock/stock-opname/tabel', 'StockOpnameController@tabel');
 Route::get('manajemen-stock/stock-opname', 'StockOpnameController@index');
@@ -562,3 +566,4 @@ Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
 Route::get('approvalmitra/print', 'approvalmitraController@print');
+

@@ -5,8 +5,6 @@
     <script src="{{ asset('assets/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('assets/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors//metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('assets/vendors/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
     <!-- Peity -->
     <script src="{{ asset('assets/vendors/peity/jquery.peity.min.js') }}"></script>
@@ -59,7 +57,8 @@
     <!-- datepicker  -->
     <script src="{{ asset('assets/vendors/datapicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/vendors/waitingfor/waitingfor.js') }}"></script>
-
+    <script src="{{ asset('assets/vendors//metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('assets/vendors/slimscroll/jquery.slimscroll.min.js') }}"></script>
     <!-- cropper -->
     {{-- <script type="text/javascript" src="{{asset('assets/cropper/js/common.js')}}"></script> --}}
     <script type="text/javascript" src="{{asset('assets/cropper/js/cropper.min.js')}}"></script>
