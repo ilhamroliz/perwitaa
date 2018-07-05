@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" />
-    </list>
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,39 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PenerimaanController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PenerimaanController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
+            <state relative-caret-position="0">
               <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MouController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/MouController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="48" column="65" lean-forward="false" selection-start-line="48" selection-start-column="65" selection-end-line="48" selection-end-column="65" />
-              <folding>
-                <element signature="e#40#60#0#PHP" expanded="true" />
-                <marker date="1530686553564" expanded="true" signature="1126:1306" ph="..." />
-                <marker date="1530686553564" expanded="true" signature="1126:1511" ph="..." />
-                <marker date="1530686553564" expanded="true" signature="1126:1840" ph="..." />
-                <marker date="1530686553564" expanded="true" signature="1163:1179" ph="..." />
-                <marker date="1530686553564" expanded="true" signature="1435:1451" ph="..." />
-                <marker date="1530686553564" expanded="false" signature="1649:1665" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loginController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="56" column="96" lean-forward="false" selection-start-line="56" selection-start-column="96" selection-end-line="56" selection-end-column="96" />
               <folding />
             </state>
           </provider>
@@ -225,7 +195,7 @@
       <workItem from="1530250809944" duration="5692000" />
       <workItem from="1530603607918" duration="3699000" />
       <workItem from="1530671085497" duration="7334000" />
-      <workItem from="1530743654851" duration="2880000" />
+      <workItem from="1530743654851" duration="3477000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -322,7 +292,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87329000" />
+    <option name="totallyTimeSpent" value="87926000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -736,10 +706,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
+        <state relative-caret-position="271">
+          <caret line="56" column="96" lean-forward="false" selection-start-line="56" selection-start-column="96" selection-end-line="56" selection-end-column="96" />
           <folding />
         </state>
       </provider>
@@ -760,10 +730,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="56" column="96" lean-forward="false" selection-start-line="56" selection-start-column="96" selection-end-line="56" selection-end-column="96" />
+        <state relative-caret-position="0">
+          <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
           <folding />
         </state>
       </provider>
