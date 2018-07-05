@@ -199,9 +199,9 @@ class PembelianController extends Controller
 
     public function filter(Request $request){
       $data = DB::table('d_purchase')
-            ->whereRaw("p_date BETWEEN '$request->startmou' AND '$request->endmou'")
+            ->whereRaw("date(p_date) >= '". $request->startmou ."' AND date(p_date) <= '".$request->endmou."'")
             ->get();
 
-      dd($data);
+      dd($request);
     }
 }
