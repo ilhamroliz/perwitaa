@@ -115,7 +115,7 @@
                     <li class="{{ Request::is('manajemen-seragam/return') ? 'active' : ''
                                 || Request::is('manajemen-seragam/return/*') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/return') }}">
-                            <i class="" aria-hidden="true"></i><span class="nav-label">Return Seragam</span>
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Return Pembelian</span>
                         </a>
                     </li>
                 </ul>
