@@ -197,6 +197,12 @@
 
           $.fn.dataTable.ext.errMode = 'throw';
 
+          $.fn.digits = function(){
+          return this.each(function(){
+              $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+          })
+      }
+
    // setTimeout(function(){ alert("Hello"); }, 3000);
   @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
               getApproval();
