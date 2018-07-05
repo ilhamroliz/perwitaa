@@ -278,7 +278,7 @@ $(document).ready(function(){
         if (result.count == 1) {
           atas += '<tr>'+
               '<td><div><strong>'+result[0][0].k_nama+'</strong></div>'+
-              '<small>'+result[0][0].i_nama+' warna '+result[0][0].i_warna+ ' ukuran '+result[0][0].s_nama+'</small></td>'+
+              '<small>'+result[0][0].i_nama+' Warna '+result[0][0].i_warna+ ' Ukuran '+result[0][0].s_nama+'</small></td>'+
               '<td>'+result[0][0].pd_qty+'</td>'+
               '<td class="rp">Rp. '+result[0][0].pd_value+'</td>'+
               '<td class="rp">Rp. '+result[0][0].pd_disc_value+'</td>'+
@@ -288,7 +288,7 @@ $(document).ready(function(){
           for (var i = 0; i < result.count; i++) {
             atas += '<tr>'+
                 '<td><div><strong>'+result[0][i].k_nama+'</strong></div>'+
-                '<small>'+result[0][i].i_nama+' warna '+result[0][i].i_warna+ ' ukuran '+result[0][i].s_nama+'</small></td>'+
+                '<small>'+result[0][i].i_nama+' Warna '+result[0][i].i_warna+ ' Ukuran '+result[0][i].s_nama+'</small></td>'+
                 '<td>'+result[0][i].pd_qty+'</td>'+
                 '<td class="rp">Rp. '+result[0][i].pd_value+'</td>'+
                 '<td class="rp">Rp. '+result[0][i].pd_disc_value+'</td>'+
