@@ -158,17 +158,6 @@ class mitraController extends Controller
 
 
         });
-        // $data = array(
-        //     'm_name' => $request->Nama_Mitra,
-        //     'm_address' => $request->Alamat,
-        //     'm_phone' => $request->No_Telp,
-        //     'm_fax' => $request->Fax,
-        //     'm_note' => $request->Keterangan
-        // );
-        // d_mitra::where('m_id', '=', $request->m_id)->update($data);
-        // return response()->json([
-        //     'status' => 'berhasil'
-        // ]);
     }
 
 }
