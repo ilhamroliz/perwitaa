@@ -178,7 +178,7 @@ class PembelianController extends Controller
       $data = DB::table('d_purchase')
           ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
           ->join('d_supplier', 's_id', '=', 'p_supplier')
-          ->select('p_id','s_company', 'p_nota', 'pd_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+          ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
           ->where('p_id', $id)
           ->where('pd_receivetime', null)
           ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
@@ -191,17 +191,32 @@ class PembelianController extends Controller
         'p_date' => $data[0]->p_date,
         's_company' => $data[0]->s_company,
         'p_nota' => $data[0]->p_nota,
-        'pd_total_net' => $data[0]->pd_total_net,
+        'p_total_net' => $data[0]->p_total_net,
         'pd_receivetime' => $data[0]->pd_receivetime,
         'p_isapproved' => $data[0]->p_isapproved
       ]);
     }
 
     public function filter(Request $request){
-      $data = DB::table('d_purchase')
-            ->whereRaw("date(p_date) >= '". $request->startmou ."' AND date(p_date) <= '".$request->endmou."'")
-            ->get();
 
-      dd($request);
+      $data = DB::table('d_purchase')
+          ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+          ->join('d_supplier', 's_id', '=', 'p_supplier')
+          ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+          ->whereRaw("date(p_date) >= '".$request->moustart."' AND date(p_date) <= '".$request->mouend."'")
+          ->where('pd_receivetime', null)
+          ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
+          ->take(20)
+          ->groupBy('p_nota')
+          ->get();
+
+      // $data = DB::table('d_purchase')
+      //       ->join('d_supplier', 's_id', '=', 'p_supplier')
+      //       ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+      //       ->whereRaw("date(p_date) >= '".$request->moustart."' AND date(p_date) <= '".$request->mouend."'")
+      //       ->get();
+      // $data = DB::select("select * from d_purchase where date(p_date) >= '".$request->moustart."' AND date(p_date) <= '".$request->mouend."'");
+
+      return response()->json($data);
     }
 }

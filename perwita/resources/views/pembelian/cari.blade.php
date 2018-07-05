@@ -57,7 +57,6 @@
                       </div>
                       <button type="button" class="btn btn-primary btn-sm" name="button" style="font-size:13px; font-family:sans-serif;" onclick="filter()">Filter Cari</button>
                 </div>
-              </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
@@ -78,7 +77,7 @@
                     </table>
                 </div>
             </div>
-
+          </div>
         </div>
     </div>
 
@@ -107,12 +106,13 @@ $(document).ready(function(){
 
     $('.startmou').datepicker({
         autoclose: true,
-        format: 'dd/mm/yyyy'
+        format: 'yyyy-mm-dd'
     });
     $('.endmou').datepicker({
         autoclose: true,
-        format: 'dd/mm/yyyy'
+        format: 'yyyy-mm-dd'
     });
+
   });
 
  function getdata(id){
@@ -136,12 +136,13 @@ $(document).ready(function(){
        } else if (result.p_isapproved == 'Y') {
          keterangan += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
        }
+
          html += '<tr>'+
                  '<td>'+(1)+'</td>'+
                  '<td>'+result.p_date+'</td>'+
                  '<td>'+result.s_company+'</td>'+
                  '<td>'+result.p_nota+'</td>'+
-                 '<td>'+result.pd_total_net+'</td>'+
+                 '<td><span style="float: left;">Rp. </span><span style="float: right" id="total_net">'+result.p_total_net+'</span></td>'+
                  status+
                  keterangan+
                  '<td>'+
@@ -150,6 +151,7 @@ $(document).ready(function(){
                  '</tr>';
 
         $("#tbody").html(html);
+        $("#total_net").digits();
      }
    });
  }
@@ -157,13 +159,47 @@ $(document).ready(function(){
   function filter(){
     var moustart = $(".startmou").val();
     var mouend = $(".endmou").val();
+    var html = '';
+    var keterangan = [];
+    var status = [];
+
     $.ajax({
       type: 'get',
       data: {moustart:moustart, mouend:mouend},
       url: baseUrl + '/manajemen-seragam/filter',
       dataType: 'json',
       success : function(result){
-        console.log(result);
+
+        for (var i = 0; i < result.length; i++) {
+
+          if (result[i].pd_receivetime == null) {
+            status[i] += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
+          } else {
+            status[i] += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
+          }
+
+          if (result[i].p_isapproved == 'P') {
+            keterangan[i] += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
+          } else if (result[i].p_isapproved == 'Y') {
+            keterangan[i] += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
+          }
+
+            html += '<tr>'+
+                    '<td>'+(i+1)+'</td>'+
+                    '<td>'+result[i].p_date+'</td>'+
+                    '<td>'+result[i].s_company+'</td>'+
+                    '<td>'+result[i].p_nota+'</td>'+
+                    '<td><span style="float: left;">Rp. </span><span style="float: right" class="digits">'+result[i].p_total_net+'</span></td>'+
+                    status[i]+
+                    keterangan[i]+
+                    '<td>'+
+                    '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result[i].p_id+')"> <i class="fa fa-folder"></i> </button>'+
+                    '</td>'+
+                    '</tr>';
+        }
+
+        $("#tbody").html(html);
+        $(".digits").digits();
       }
     })
   }
