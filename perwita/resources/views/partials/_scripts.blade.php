@@ -59,10 +59,14 @@
     <script src="{{ asset('assets/vendors/waitingfor/waitingfor.js') }}"></script>
     <script src="{{ asset('assets/vendors//metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('assets/vendors/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <!-- cropper -->
+
+    <!-- Jquery Print Page -->
+    <script type="text/javascript" src="{{asset('assets/jqueryprintpage/jquery.printPage.js')}}"></script>
+    
     {{-- <script type="text/javascript" src="{{asset('assets/cropper/js/common.js')}}"></script> --}}
     <script type="text/javascript" src="{{asset('assets/cropper/js/cropper.min.js')}}"></script>
  {{--    <script type="text/javascript" src="{{asset('assets/cropper/js/main.js')}}"></script> --}}
+
 
 
     <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
@@ -195,8 +199,10 @@
 
         });
 
+          // Menghilangkan error datatable
           $.fn.dataTable.ext.errMode = 'throw';
 
+          // Plugin Format Number
           $.fn.digits = function(){
           return this.each(function(){
               $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );

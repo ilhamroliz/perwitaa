@@ -463,6 +463,8 @@ Route::get('manajemen-seragam/getnota','PembelianController@getnota');
 Route::get('manajemen-seragam/getdata','PembelianController@getdata');
 Route::get('manajemen-seragam/filter','PembelianController@filter');
 Route::get('manajemen-seragam/detail','PembelianController@detail');
+
+Route::get('manajemen-pembelian/print','PembelianController@print');
 Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
 Route::get('manajemen-pembelian/simpan','PembelianController@save');
 Route::post('manajemen-pembelian/simpan','PembelianController@save');
@@ -567,4 +569,3 @@ Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
 Route::get('approvalmitra/print', 'approvalmitraController@print');
-

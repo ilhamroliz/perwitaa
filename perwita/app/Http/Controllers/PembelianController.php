@@ -120,7 +120,7 @@ class PembelianController extends Controller
                     'pd_item_dt' => $request->iddt[$i],
                     'pd_total_gross' => $request->qty[$i] * str_replace(".", '', $request->harga[$i]),
                     'pd_disc_percent' => 0,
-                    'pd_disc_value' => $request->disc[$i],
+                    'pd_disc_value' => str_replace(".",'',$request->disc[$i]),
                     'pd_total_net' => ((int)$request->qty[$i] * (int)str_replace(".", '', $request->harga[$i])) - (int)str_replace(".", '', $request->disc[$i]),
                     'pd_barang_masuk' => 0,
                     'pd_receivetime' => null
@@ -252,5 +252,49 @@ class PembelianController extends Controller
         $data,
         'count' => $count
       ]);
+    }
+
+    public function print(){
+      $id = DB::table('d_purchase')
+          ->max('p_id');
+
+          $data = DB::table('d_purchase')
+          ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+          ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
+          ->join('d_item', 'i_id', '=', 'pd_item')
+          ->join('d_item_dt', function($e){
+              $e->on('id_detailid', '=', 'pd_item_dt');
+              $e->on('id_item', '=', 'i_id');
+          })
+          ->join('d_size', 'd_size.s_id', '=', 'id_size')
+          ->join('d_kategori', 'k_id', '=', 'i_kategori')
+          ->select(
+            'p_date',
+            'p_total_net',
+            'pd_value',
+            'pd_qty',
+            'i_nama',
+            'pd_total_gross',
+            'pd_disc_value',
+            'pd_disc_percent',
+            'pd_total_net',
+            'i_nama',
+            'p_total_gross',
+            'k_nama',
+            'i_warna',
+            'p_pajak',
+            's_company',
+            's_nama',
+            'p_nota',
+            's_address',
+            's_phone'
+            )
+          ->where('p_id', $id)
+          ->get();
+
+          $count = count($data);
+
+          // dd($data);
+          return view('pembelian.print', compact('data','count'));
     }
 }
