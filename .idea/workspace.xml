@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/return-pembelian/index.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/return-pembelian/index.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,9 +21,11 @@
       <file leaf-file-name="PenerimaanController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="43" column="123" lean-forward="false" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="123" />
-              <folding />
+            <state relative-caret-position="216">
+              <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="13" />
+              <folding>
+                <element signature="e#40#62#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -29,8 +33,8 @@
       <file leaf-file-name="ReturnPembelianController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="26" column="49" lean-forward="false" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+            <state relative-caret-position="418">
+              <caret line="34" column="8" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
               </folding>
@@ -56,6 +60,8 @@
       <find>catc</find>
       <find>respo</find>
       <find>nama</find>
+      <find>response</find>
+      <find>`response</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -108,8 +114,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -211,7 +217,8 @@
       <workItem from="1530250809944" duration="5692000" />
       <workItem from="1530603607918" duration="3699000" />
       <workItem from="1530671085497" duration="7334000" />
-      <workItem from="1530743654851" duration="8760000" />
+      <workItem from="1530743654851" duration="8798000" />
+      <workItem from="1530841857760" duration="1218000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -311,11 +318,18 @@
       <option name="project" value="LOCAL" />
       <updated>1530783109024</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="roliz">
+      <created>1530783182164</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1530783182164</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93209000" />
+    <option name="totallyTimeSpent" value="94465000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -325,12 +339,12 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -388,37 +402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5292">
           <caret line="294" column="53" lean-forward="false" selection-start-line="294" selection-start-column="53" selection-end-line="294" selection-end-column="53" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -453,37 +436,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5292">
           <caret line="294" column="53" lean-forward="false" selection-start-line="294" selection-start-column="53" selection-end-line="294" selection-end-column="53" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -518,37 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5292">
           <caret line="294" column="53" lean-forward="false" selection-start-line="294" selection-start-column="53" selection-end-line="294" selection-end-column="53" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -584,37 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -629,37 +519,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="102" column="349" lean-forward="false" selection-start-line="102" selection-start-column="340" selection-end-line="102" selection-end-column="349" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -674,37 +533,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="102" column="349" lean-forward="false" selection-start-line="102" selection-start-column="340" selection-end-line="102" selection-end-column="349" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -719,37 +547,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="102" column="349" lean-forward="false" selection-start-line="102" selection-start-column="340" selection-end-line="102" selection-end-column="349" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -764,37 +561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="102" column="349" lean-forward="false" selection-start-line="102" selection-start-column="340" selection-end-line="102" selection-end-column="349" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -809,37 +575,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="102" column="349" lean-forward="false" selection-start-line="102" selection-start-column="340" selection-end-line="102" selection-end-column="349" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -854,37 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7560">
           <caret line="420" column="74" lean-forward="false" selection-start-line="420" selection-start-column="74" selection-end-line="420" selection-end-column="74" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -899,37 +603,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7560">
           <caret line="420" column="74" lean-forward="false" selection-start-line="420" selection-start-column="74" selection-end-line="420" selection-end-column="74" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -944,37 +617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -982,37 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1020,37 +631,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1125,14 +705,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1224">
           <caret line="78" column="49" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="49" />
-          <folding>
-            <element signature="e#38#60#0#PHP" expanded="false" />
-            <marker date="1530608587089" expanded="true" signature="857:868" ph="..." />
-            <marker date="1530608587089" expanded="true" signature="869:1543" ph="..." />
-            <marker date="1530608587089" expanded="true" signature="985:1001" ph="..." />
-            <marker date="1530608587089" expanded="true" signature="1192:1208" ph="..." />
-            <marker date="1530608587089" expanded="false" signature="1401:1417" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1140,37 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
           <caret line="980" column="16" lean-forward="true" selection-start-line="978" selection-start-column="13" selection-end-line="980" selection-end-column="16" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-            <marker date="1529979296668" expanded="true" signature="748:1092" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="1842:2476" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="1879:1895" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2082:2098" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="2286:2302" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="2647:2984" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="3734:4368" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3771:3787" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="3974:3990" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="4178:4194" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="4536:4877" ph="select @rown... " />
-            <marker date="1529979296668" expanded="true" signature="5627:6261" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5664:5680" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="5867:5883" ph="..." />
-            <marker date="1529979296668" expanded="false" signature="6071:6087" ph="..." />
-            <marker date="1529979296668" expanded="true" signature="21403:22040" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21423:21529" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21546:21650" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="21665:21770" ph="select pl_la... d_pekerja_language" />
-            <marker date="1529979296668" expanded="true" signature="22323:23106" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22334:22439" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22452:22560" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22576:22681" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="22694:22802" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1529979296668" expanded="true" signature="23140:23619" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23160:23247" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23259:23346" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1529979296668" expanded="true" signature="23358:23445" ph="select ps_si... d_pekerja_sim" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1178,7 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1186,7 +726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1194,7 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="10" column="194" lean-forward="false" selection-start-line="10" selection-start-column="194" selection-end-line="10" selection-end-column="194" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1210,30 +748,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="48" column="65" lean-forward="false" selection-start-line="48" selection-start-column="65" selection-end-line="48" selection-end-column="65" />
-          <folding>
-            <element signature="e#40#60#0#PHP" expanded="true" />
-            <marker date="1530686553564" expanded="true" signature="1126:1306" ph="..." />
-            <marker date="1530686553564" expanded="true" signature="1126:1511" ph="..." />
-            <marker date="1530686553564" expanded="true" signature="1126:1840" ph="..." />
-            <marker date="1530686553564" expanded="true" signature="1163:1179" ph="..." />
-            <marker date="1530686553564" expanded="true" signature="1435:1451" ph="..." />
-            <marker date="1530686553564" expanded="false" signature="1649:1665" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="43" column="123" lean-forward="false" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="123" />
-          <folding />
+        <state relative-caret-position="216">
+          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="e#40#62#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="26" column="49" lean-forward="false" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+        <state relative-caret-position="418">
+          <caret line="34" column="8" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>

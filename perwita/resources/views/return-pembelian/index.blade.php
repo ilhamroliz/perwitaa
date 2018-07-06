@@ -894,8 +894,7 @@
             type: 'get',
             data: {id: id},
             success: function(response){
-                $('.telpsupp').html('<i class="fa fa-phone"></i> '+response.data[0].s_phone);
-                $('.infosupp').html('Info Supplier ('+response.data[0].s_company+')')
+                console.log(response);
             }, error:function(x, e) {
                 if (x.status == 0) {
                     alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
