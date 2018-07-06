@@ -29,10 +29,10 @@ class ReturnPembelianController extends Controller
             })
             ->join('d_size', 'd_size.s_id', '=', 'id_size')
             ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
-            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'pd_qty', DB::raw('cast(pd_value as int) as pd_value'), DB::raw('date_format(p_date, "%d/%m/%Y") as p_date'), 'd_supplier.s_company')
+            ->select(DB::raw('concat(pd_qty, " ", i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'pd_qty', DB::raw('cast(pd_value as int) as pd_value'), DB::raw('date_format(p_date, "%d/%m/%Y") as p_date'), 'd_supplier.s_company', 'p_nota', DB::raw('cast(p_total_net as int) as p_total_net'))
             ->where('p_id', '=', $id)
             ->get();
-        
+
         return Response::json($data);
     }
 }
