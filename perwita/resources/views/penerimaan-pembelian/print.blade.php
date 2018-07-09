@@ -18,7 +18,7 @@
 
 
                             <div class="table-responsive m-t">
-                                <table class="table invoice-table">
+                                <table class="table invoice-table" id="tabelpenerimaan">
                                   <thead>
                                   <tr>
                                       <th>No Nota</th>
@@ -54,7 +54,13 @@
 
 @section('extra_scripts')
     <script type="text/javascript">
-
+    // var tablepenerimaan;
+    // $( document ).ready(function() {
+    //     tablepembelian = $("#tabelpembelian").DataTable({
+    //         responsive: true,
+    //         "language": dataTableLanguage
+    //     });
+    // });
         window.print();
 
     </script>
