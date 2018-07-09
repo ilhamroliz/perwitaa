@@ -78,6 +78,7 @@
                                 <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
                                 @endif
                                 <td>
+                                <button type="button" onclick="detail({{$row->p_id}})" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
                                 <button type="button" onclick="setujui({{$row->p_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
                                 <button type="button" onclick="tolak({{$row->p_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                                </td>
@@ -88,6 +89,67 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="modaldet" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-shopping-cart modal-icon"></i>
+                <h4 class="modal-title">Pembelian Seragam</h4>
+                <small class="font-bold">Detail Pembelian Seragam</small>
+            </div>
+            <div class="modal-body">
+                <div class="spiner-example spin">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+                <div class="bagian">
+                <div class="table-responsive m-t">
+                            <table class="table invoice-table">
+                                <thead>
+                                <tr>
+                                    <th>Item List</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                </thead>
+                                <tbody id="isi">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <table class="table invoice-total">
+                            <tbody id="foo">
+                              <tr>
+                                  <td><strong>Sub Total :</strong></td>
+                                  <td class="rp" id="subtotal"></td>
+                              </tr>
+                              <tr>
+                                  <td><strong>TAX :</strong></td>
+                                  <td class="rp" id="pajak"></td>
+                              </tr>
+                              <tr>
+                                  <td><strong>TOTAL :</strong></td>
+                                  <td class="rp" id="total"></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                  </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+            </div>
         </div>
     </div>
 </div>
@@ -235,6 +297,48 @@
               }, 2000);
 
           });
+    }
+
+    function detail(id){
+      $("#modaldet").modal('show');
+      $(".bagian").hide();
+      var atas = '';
+      $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/approvalpembelian/detail',
+        dataType: 'json',
+        success : function(result){
+          if (result.count == 1) {
+            atas += '<tr>'+
+                '<td><div><strong>'+result[0][0].k_nama+'</strong></div>'+
+                '<small>'+result[0][0].i_nama+' Warna '+result[0][0].i_warna+ ' Ukuran '+result[0][0].s_nama+'</small></td>'+
+                '<td>'+result[0][0].pd_qty+'</td>'+
+                '<td class="rp">Rp. '+result[0][0].pd_value+'</td>'+
+                '<td class="rp">Rp. '+result[0][0].pd_disc_value+'</td>'+
+                '<td class="rp">Rp. '+result[0][0].pd_total_net+'</td>'+
+            '</tr>';
+          } else {
+            for (var i = 0; i < result.count; i++) {
+              atas += '<tr>'+
+                  '<td><div><strong>'+result[0][i].k_nama+'</strong></div>'+
+                  '<small>'+result[0][i].i_nama+' Warna '+result[0][i].i_warna+ ' Ukuran '+result[0][i].s_nama+'</small></td>'+
+                  '<td>'+result[0][i].pd_qty+'</td>'+
+                  '<td class="rp">Rp. '+result[0][i].pd_value+'</td>'+
+                  '<td class="rp">Rp. '+result[0][i].pd_disc_value+'</td>'+
+                  '<td class="rp">Rp. '+result[0][i].pd_total_net+'</td>'+
+              '</tr>';
+            }
+          }
+          $('.spin').css('display', 'none');
+          $(".bagian").show();
+          $('#isi').html(atas);
+          $("#subtotal").text('Rp. '+result[0][0].p_total_gross);
+          $("#pajak").text('Rp. '+result[0][0].p_pajak);
+          $("#total").text('Rp. '+result[0][0].p_total_net);
+          $(".rp").digits();
+        }
+      });
     }
 
 </script>
