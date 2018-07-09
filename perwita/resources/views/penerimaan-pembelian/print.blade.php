@@ -54,14 +54,9 @@
 
 @section('extra_scripts')
     <script type="text/javascript">
-    // var tablepenerimaan;
-    // $( document ).ready(function() {
-    //     tablepembelian = $("#tabelpembelian").DataTable({
-    //         responsive: true,
-    //         "language": dataTableLanguage
-    //     });
-    // });
-        window.print();
-
+    window.document.close();
+    window.focus();
+    window.print();
+    window.close();
     </script>
 @endsection
