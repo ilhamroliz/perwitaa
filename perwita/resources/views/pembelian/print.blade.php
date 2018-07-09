@@ -55,8 +55,10 @@
                                     <tbody id="isi">
                                       @foreach($data as $x)
                                       <tr>
-                                          <td><div><strong>{{$x->k_nama}}</strong></div>
-                                          <small>{{$x->i_nama}} Warna {{$x->i_warna}} Ukuran {{$x->s_nama}}</small></td>
+                                          <td>
+                                          <div><strong>{{$x->k_nama}}</strong></div>
+                                          <small>{{$x->i_nama}} Warna {{$x->i_warna}} Ukuran {{$x->s_nama}}</small>
+                                          </td>
                                           <td>{{$x->pd_qty}}</td>
                                           <td class="rp">Rp. {{number_format($x->pd_value, 0, ',', '.')}}</td>
                                           <td class="rp">Rp. {{number_format($x->pd_disc_value, 0, ',', '.')}}</td>

@@ -474,6 +474,7 @@ Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
 Route::get('manajemen-pembelian/carinota','PenerimaanController@cari');
 Route::get('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
 Route::post('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
+Route::get('manajemen-pembelian/print','PenerimaanController@print');
 
 //============== manajemen penjualan =========
 Route::get('manajemen-seragam/pengeluaran','PenjualanController@index');

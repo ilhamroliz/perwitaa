@@ -44,7 +44,7 @@
                             <option value="{{ $nota->p_nota }}"> {{ $nota->p_nota }} ({{ $nota->s_company }}) </option>
                         @endforeach
                         </select>
-                    </div>  
+                    </div>
                     <div class="col-md-3">
                         <button class="btn btn-primary" type="button" onclick="cari()"><i class="fa fa-search"></i>&nbsp;Cari</button>
                     </div>
@@ -61,10 +61,10 @@
                                 </tr>
                             </thead>
                         </table>
-                    </div>                                
-                </div>                
+                    </div>
+                </div>
+                <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a>
             </div>
-
         </div>
     </div>
 </div>
@@ -287,6 +287,10 @@
             }
         })
     }
+
+    // $(document).ready(function() {
+    //    $("#printbtn").printPage();
+    //  });
 
 </script>
 @endsection

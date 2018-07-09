@@ -182,4 +182,21 @@ class PenerimaanController extends Controller
         }
 
     }
+
+    public function print(){
+      $data = DB::table('d_stock_mutation')
+            ->join('d_stock', 'd_stock.s_id', '=', 'sm_stock')
+            ->join('d_item', 'i_id', '=', 'sm_item')
+            ->join('d_item_dt', function($e){
+              $e->on('id_item', '=', 'i_id');
+              $e->on('id_detailid', '=', 'sm_item_dt');
+            })
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->select('sm_date', 'sm_qty', 'sm_nota', 'sm_delivery_order', 'i_nama', 'i_warna', 'k_nama', 's_nama')
+            ->get();
+
+      // dd($data);
+      return view('penerimaan-pembelian.print', compact('data'));
+    }
 }

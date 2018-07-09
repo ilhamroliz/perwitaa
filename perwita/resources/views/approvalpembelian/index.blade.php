@@ -78,7 +78,7 @@
                                 <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
                                 @endif
                                 <td>
-                                <button type="button" onclick="detail({{$row->p_id}})" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" onclick="detail({{$row->p_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
                                 <button type="button" onclick="setujui({{$row->p_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
                                 <button type="button" onclick="tolak({{$row->p_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                                </td>
