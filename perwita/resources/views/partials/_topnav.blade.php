@@ -67,6 +67,20 @@
                                         </div>
                                         </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
+                                    <div class="media-body" id="showpembelian">
+                                      <li>
+                                          <div class="dropdown-messages-box">
+
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalpembelian')}}" class="pull-left a-body" id="#pembelian-body" title="Lihat Daftar Approval Pembelian Seragam" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitpembelian"></small>
+                                                <strong id="catatanapprovalpembelian"></strong><small id="isiapprovalpembelian"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </div>
                                     </li>
                                   </ul>
                                   @endif

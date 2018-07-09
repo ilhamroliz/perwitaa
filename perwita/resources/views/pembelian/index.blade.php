@@ -55,7 +55,7 @@
                             @foreach($data as $index=>$row)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ Carbon\Carbon::parse($row->p_date)->format('d/M/Y H:i:s') }}</td>
+                                <td>{{ Carbon\Carbon::parse($row->p_date)->format('d/m/Y H:i:s') }}</td>
                                 <td>{{ $row->s_company }}</td>
                                 <td>{{ $row->p_nota }}</td>
                                 <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($row->p_total_net, 0, ',', '.') }}</span></td>
