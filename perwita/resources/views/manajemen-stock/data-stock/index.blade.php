@@ -4,7 +4,10 @@
 
 @section('extra_styles')
 
-
+<style>
+    .popover-navigation [data-role="next"] { display: none; }
+    .popover-navigation [data-role="end"] { display: none; }
+</style>
 
 @endsection
 
@@ -69,8 +72,21 @@
                       </select>
                   </div>
                     <button class="btn btn-primary btn-md btn-flat " type="button" id="filter"> <em class="fa fa-search">&nbsp;</em> Filter Cari</button>
-                    <button class="btn btn-info btn-md btn-flat " type="button" id="pilih" onclick="pilih()"> <em class="fa fa-print">&nbsp;</em> Print</button>
-                 </div>
+                    <div class="dropdown pull-right" style="margin-right:200px;">
+                        <button class="btn btn-info btn-md btn-flat dropdown-toggle tampilkan" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <em class="fa fa-print">&nbsp;</em>  Print
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{url('manajemen-stock/data-stock/printall')}}"><i class="fa fa-print" aria-hidden="true">&nbsp;</i>Print All</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                            <li><a onclick="pilih()"><i class="fa fa-print" aria-hidden="true">&nbsp;</i>Print Sejenis</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -232,24 +248,7 @@ $(document).ready(function() {
 });
 
 function pilih(){
-  swal({
-      title: "Pilihan Print",
-      text: "Print Sejenis / Print All",
-      type: "info",
-      showCancelButton: true,
-      closeOnConfirm: false,
-      showLoaderOnConfirm: true,
-      confirmButtonClass: "btn-info",
-      confirmButtonText: "Print All",
-      cancelButtonText: "Print Sejenis",
-      closeOnConfirm: false,
-      closeOnCancel: false
-},
-function(isConfirm) {
-  if (isConfirm) {
-    window.location.href = baseUrl + '/manajemen-stock/data-stock/printall';
-    // swal("Deleted!", "Your imaginary file has been deleted.", "success");
-  } else {
+    $('#exampleModal').modal('show');
     $('#optionbarang').html('<option value="">- Pilih -</option>');
     $.ajax({
       url: baseUrl + '/manajemen-stock/data-stock/getpilih',
@@ -257,17 +256,10 @@ function(isConfirm) {
       type: 'get',
       success : function(result){
         for (var i = 0; i < result.length; i++) {
-          $('#optionbarang').append('<option value="'+result[i].i_id+'">'+result[i].i_nama+'</option>')
+          $('#optionbarang').append('<option value="'+result[i].i_id+'">'+result[i].i_nama+'</option>');
         }
       }
-    });
-    swal.close();
-    $('#exampleModal').modal('show');
-    // window.location.href = baseUrl + '/manajemen-stock/data-stock/print';
-    // swal("Cancelled", "Your imaginary file is safe :)", "error");
-  }
-});
-
+ });
 }
 
 function getprint(){
@@ -287,7 +279,6 @@ function ngelink(){
   id = $('#optionbarang').val();
   $("#printbtn").attr('href', baseUrl + '/manajemen-stock/data-stock/getprint?id='+id);
 }
-
 
 </script>
 @endsection
