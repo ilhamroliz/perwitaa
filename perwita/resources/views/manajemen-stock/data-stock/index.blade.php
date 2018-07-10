@@ -23,7 +23,6 @@
                         <li class="active">
                             <strong>Data Stock</strong>
                         </li>
-
                     </ol>
                 </div>
                 <div class="col-lg-2">
