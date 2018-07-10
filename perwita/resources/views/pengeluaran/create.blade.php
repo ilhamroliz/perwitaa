@@ -44,7 +44,7 @@
                         <span class="pull-right">(<strong class="jumlahitem">0</strong>) items</span>
                         <h5>Pengeluaran Barang ke Mitra</h5>
                     </div>
-                   
+
                     <div class="ibox-content">
                         <form role="form" class="form-inline">
                             <div class="form-group col-md-5">
@@ -93,7 +93,7 @@
                             <hr>
 
                             <span class="text-muted small">
-                                
+
                             </span>
 
                             <address style="margin-top: 10px;">
@@ -103,7 +103,7 @@
                             <div class="m-t-sm">
                                 <div class="btn-group">
                                 <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
-                                <a href="{{ url('manajemen-penjualan') }}" class="btn btn-white btn-sm"> Batal</a>
+                                <a href="{{ url('manajemen-seragam/pengeluaran') }}" class="btn btn-white btn-sm"> Batal</a>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                 <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
@@ -288,7 +288,7 @@
     function simpan(){
         waitingDialog.show();
         var ar = $();
-        for (var i = 0; i < tabelpekerja.rows()[0].length; i++) { 
+        for (var i = 0; i < tabelpekerja.rows()[0].length; i++) {
             ar = ar.add(tabelpekerja.row(i).node());
         }
         $.ajaxSetup({
