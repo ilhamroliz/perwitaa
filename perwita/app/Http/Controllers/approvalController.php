@@ -33,10 +33,10 @@ class approvalController extends Controller
         ->selectRaw('p_date, count(p_id) as jumlah, "Approval Pembelian" as catatan')
         ->where('pd_receivetime', null)
         ->where('p_isapproved', 'P')
-        ->groupBy('p_nota')
+        ->groupBy('p_id')
         ->get();
 
-
+        $countpembelian = count($pembelian);
 
       $hitung = 0;
       if ($pekerja[0]->jumlah > 0) {
@@ -53,6 +53,9 @@ class approvalController extends Controller
       $pekerja[0]->p_insert = Carbon::parse($pekerja[0]->p_insert)->diffForHumans();
       $mitra[0]->m_insert = Carbon::parse($mitra[0]->m_insert)->diffForHumans();
       $pembelian[0]->p_date = Carbon::parse($pembelian[0]->p_date)->diffForHumans();
+      for ($i=0; $i < count($pembelian) ; $i++) {
+        $pembelian[$i]->jumlah = $countpembelian;
+      }
       $data = [];
       $data[0] = $pekerja[0];
       $data[1] = $mitra[0];

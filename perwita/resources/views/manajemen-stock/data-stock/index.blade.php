@@ -81,7 +81,6 @@
                           <th style="text-align: center;" >NAMA SERAGAM</th>
                           <th style="text-align: center;" >UKURAN</th>
                           <th style="text-align: center;" >POSISI</th>
-                          <th style="text-align: center;" >MITRA</th>
                           <th style="text-align: center;" >QTY</th>
                       </tr>
                     </thead>
@@ -140,7 +139,6 @@ $(document).ready(function() {
               { "data": "i_nama" },
               { "data": "s_nama" },
               { "data": "c_name" },
-              { "data": "m_name" },
               { "data": "s_qty" },
               ]
 
@@ -186,7 +184,6 @@ $(document).ready(function() {
               { "data": "i_nama" },
               { "data": "s_nama" },
               { "data": "c_name" },
-              { "data": "m_name" },
               { "data": "s_qty" },
               ]
 
