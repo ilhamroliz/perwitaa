@@ -510,6 +510,11 @@ Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
 Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
 Route::get('manajemen-seragam/return/add', 'ReturnPembelianController@add');
 
+//============= return seragam (pembelian)
+Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
+Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
+Route::get('manajemen-seragam/return/add', 'ReturnPembelianController@add');
+
 //============ Stock Opname
 Route::get('manajemen-stock/stock-opname/tabel', 'StockOpnameController@tabel');
 Route::get('manajemen-stock/stock-opname', 'StockOpnameController@index');
