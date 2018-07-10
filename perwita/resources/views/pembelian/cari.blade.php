@@ -55,7 +55,7 @@
                       <div class="col-sm-2">
                           <input type="text" class="form-control endmou date-mou" name="endmou" style="text-transform:uppercase" title="End"  placeholder="End">
                       </div>
-                      <button type="button" class="btn btn-primary btn-sm" name="button" style="font-size:13px; font-family:sans-serif;" onclick="filter()">Filter Cari</button>
+                      <button type="button" class="btn btn-primary" name="button" style="font-family:sans-serif;" onclick="filter()"><em class="fa fa-search">&nbsp;</em>Cari</button>
                 </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
@@ -177,6 +177,7 @@ $(document).ready(function(){
   });
 
  function getdata(id){
+   waitingDialog.show();
    var html = '';
    var status = '';
    var keterangan = '';
@@ -213,11 +214,13 @@ $(document).ready(function(){
 
         $("#tbody").html(html);
         $("#total_net").digits();
+        waitingDialog.hide();
      }
    });
  }
 
   function filter(){
+    waitingDialog.show();
     var moustart = $(".startmou").val();
     var mouend = $(".endmou").val();
     var html = '';
@@ -261,6 +264,7 @@ $(document).ready(function(){
 
         $("#tbody").html(html);
         $(".digits").digits();
+        waitingDialog.hide();
       }
     });
   }

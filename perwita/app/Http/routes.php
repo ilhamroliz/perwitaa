@@ -463,6 +463,8 @@ Route::get('manajemen-seragam/getnota','PembelianController@getnota');
 Route::get('manajemen-seragam/getdata','PembelianController@getdata');
 Route::get('manajemen-seragam/filter','PembelianController@filter');
 Route::get('manajemen-seragam/detail','PembelianController@detail');
+
+Route::get('manajemen-pembelian/print','PembelianController@print');
 Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
 Route::get('manajemen-pembelian/simpan','PembelianController@save');
 Route::post('manajemen-pembelian/simpan','PembelianController@save');
@@ -472,6 +474,7 @@ Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
 Route::get('manajemen-pembelian/carinota','PenerimaanController@cari');
 Route::get('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
 Route::post('manajemen-pembelian/penerimaan/update','PenerimaanController@update');
+Route::get('manajemen-pembelian/print','PenerimaanController@print');
 
 //============== manajemen penjualan =========
 Route::get('manajemen-seragam/pengeluaran','PenjualanController@index');
@@ -569,3 +572,8 @@ Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
 Route::get('approvalmitra/print', 'approvalmitraController@print');
 
+//Approval Pembelian
+Route::get('approvalpembelian', 'approvalpembelianController@index');
+Route::get('approvalpembelian/setujui', 'approvalpembelianController@setujui');
+Route::get('approvalpembelian/tolak', 'approvalpembelianController@tolak');
+Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');

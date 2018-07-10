@@ -474,7 +474,7 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                        location.reload();
+                            var myWindow = window.open(''+baseUrl+'/manajemen-pembelian/print','','width=200,height=100');
                     });
                 } else {
                     waitingDialog.hide();
@@ -482,7 +482,8 @@
                         title: "Gagal",
                         text: "Sistem gagal menyimpan data",
                         type: "error",
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        timer: 2000
                     });
                 }
             }, error:function(x, e) {
