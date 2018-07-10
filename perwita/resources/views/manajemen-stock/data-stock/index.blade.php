@@ -69,6 +69,7 @@
                       </select>
                   </div>
                     <button class="btn btn-primary btn-md btn-flat " type="button" id="filter"> <em class="fa fa-search">&nbsp;</em> Filter Cari</button>
+                    <button class="btn btn-info btn-md btn-flat " type="button" id="pilih" onclick="pilih()"> <em class="fa fa-print">&nbsp;</em> Print</button>
                  </div>
                 </div>
 
@@ -80,8 +81,9 @@
                      <tr>
                           <th style="text-align: center;" >NAMA SERAGAM</th>
                           <th style="text-align: center;" >UKURAN</th>
-                          <th style="text-align: center;" >POSISI</th>
-                          <th style="text-align: center;" >QTY</th>
+                          <th style="text-align: center;" >JUMLAH</th>
+                          <th style="text-align: center;" >HARGA</th>
+                          <th style="text-align: center;" >KETERANGAN</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -99,6 +101,33 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pilih Print Sejenis</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Pilih Sejenis :</label>
+            <select class="form-control" name="optionbarang" id="optionbarang" onchange="ngelink()">
+              <option value="">- Pilih -</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-primary" onclick="getprint()" id="printbtn"><em class="fa fa-print">&nbsp;</em>Print</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
@@ -138,8 +167,9 @@ $(document).ready(function() {
            "columns": [
               { "data": "i_nama" },
               { "data": "s_nama" },
-              { "data": "c_name" },
               { "data": "s_qty" },
+              { "data": "id_price" },
+              { "data": "i_note" },
               ]
 
 
@@ -181,10 +211,11 @@ $(document).ready(function() {
 
           },
            "columns": [
-              { "data": "i_nama" },
-              { "data": "s_nama" },
-              { "data": "c_name" },
-              { "data": "s_qty" },
+               { "data": "i_nama" },
+               { "data": "s_nama" },
+               { "data": "s_qty" },
+               { "data": "id_price" },
+               { "data": "i_note" },
               ]
 
 
@@ -199,6 +230,64 @@ $(document).ready(function() {
     $("#barang").chosen();
     $("#gudang").chosen();
 });
+
+function pilih(){
+  swal({
+      title: "Pilihan Print",
+      text: "Print Sejenis / Print All",
+      type: "info",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true,
+      confirmButtonClass: "btn-info",
+      confirmButtonText: "Print All",
+      cancelButtonText: "Print Sejenis",
+      closeOnConfirm: false,
+      closeOnCancel: false
+},
+function(isConfirm) {
+  if (isConfirm) {
+    window.location.href = baseUrl + '/manajemen-stock/data-stock/printall';
+    // swal("Deleted!", "Your imaginary file has been deleted.", "success");
+  } else {
+    $('#optionbarang').html('<option value="">- Pilih -</option>');
+    $.ajax({
+      url: baseUrl + '/manajemen-stock/data-stock/getpilih',
+      dataType: 'json',
+      type: 'get',
+      success : function(result){
+        for (var i = 0; i < result.length; i++) {
+          $('#optionbarang').append('<option value="'+result[i].i_id+'">'+result[i].i_nama+'</option>')
+        }
+      }
+    });
+    swal.close();
+    $('#exampleModal').modal('show');
+    // window.location.href = baseUrl + '/manajemen-stock/data-stock/print';
+    // swal("Cancelled", "Your imaginary file is safe :)", "error");
+  }
+});
+
+}
+
+function getprint(){
+  id = $('#optionbarang').val();
+  $.ajax({
+    type: 'get',
+    data: {id:id},
+    url: baseUrl + '/manajemen-stock/data-stock/getprint',
+    dataType: 'json',
+    success : function(result){
+
+    }
+  });
+}
+
+function ngelink(){
+  id = $('#optionbarang').val();
+  $("#printbtn").attr('href', baseUrl + '/manajemen-stock/data-stock/getprint?id='+id);
+}
+
 
 </script>
 @endsection

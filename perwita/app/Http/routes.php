@@ -494,6 +494,10 @@ Route::get('manajemen-stock/mutasi-stock/get_barang', 'StockMutController@get_ba
 Route::get('manajemen-stock/data-stock/tabel', 'StockDataController@tabel');
 Route::get('manajemen-stock/data-stock/tabel2', 'StockDataController@tabel2');
 Route::get('manajemen-stock/data-stock', 'StockDataController@index');
+Route::get('manajemen-stock/data-stock/printall', 'StockDataController@printall');
+Route::get('manajemen-stock/data-stock/print', 'StockDataController@print');
+Route::get('manajemen-stock/data-stock/getpilih', 'StockDataController@getpilih');
+Route::get('manajemen-stock/data-stock/getprint', 'StockDataController@getprint');
 Route::get('manajemen-stock/data-stock/get_gudang', 'StockDataController@get_gudang');
 Route::get('manajemen-stock/data-stock/get_barang', 'StockDataController@get_barang');
 

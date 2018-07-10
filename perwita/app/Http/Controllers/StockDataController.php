@@ -27,9 +27,14 @@ class StockDataController extends Controller
                 })
           ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
           ->join('d_kategori', 'k_id', '=', 'i_kategori')
-          ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama')
+          ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
           ->orderBy('d_item.i_nama', 'asc')
           ->get();
+
+          for ($i=0; $i < count($pp); $i++) {
+            $pp[$i]->id_price = 'Rp. ' . number_format($pp[$i]->id_price, 0, ',', '.');
+          }
+
                 // ->join('d_comp', 'd_stock.s_comp', '=', 'd_comp.c_id')
                 // ->join('d_item', 'd_stock.s_item', '=', 'd_item.i_id')
                 // ->join('d_item_dt', function ($join) {
@@ -72,7 +77,7 @@ class StockDataController extends Controller
                     })
               ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
               ->join('d_kategori', 'k_id', '=', 'i_kategori')
-              ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama')
+              ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
               ->orderBy('d_item.i_nama', 'asc')
               ->get();
         }
@@ -87,7 +92,7 @@ class StockDataController extends Controller
                      })
                ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
                ->join('d_kategori', 'k_id', '=', 'i_kategori')
-               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama')
+               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
                ->where('d_stock.s_item', '=', $req_barang)
                ->where('d_stock.s_comp', '=', $req_gudang)
                ->orderBy('d_item.i_nama', 'asc')
@@ -121,7 +126,7 @@ class StockDataController extends Controller
                      })
                ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
                ->join('d_kategori', 'k_id', '=', 'i_kategori')
-               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama')
+               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
                ->where('d_stock.s_comp', '=', $req_gudang)
                ->orderBy('d_item.i_nama', 'asc')
                ->get();
@@ -153,7 +158,7 @@ class StockDataController extends Controller
                      })
                ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
                ->join('d_kategori', 'k_id', '=', 'i_kategori')
-               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama')
+               ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
                ->where('d_stock.s_item', '=', $req_barang)
                ->orderBy('d_item.i_nama', 'asc')
                ->get();
@@ -173,6 +178,10 @@ class StockDataController extends Controller
           //       ->where('d_stock.s_item', '=', $req_barang)
           //       ->orderBy('d_item.i_nama', 'asc')
           //       ->get();
+        }
+
+        for ($i=0; $i < count($pp); $i++) {
+          $pp[$i]->id_price = 'Rp. ' . number_format($pp[$i]->id_price, 0, ',', '.');
         }
 
         // dd($req);
@@ -202,6 +211,64 @@ class StockDataController extends Controller
      }
         $datax = array('data' => $data);
         return $datax;
+    }
+
+    public function printall(){
+      $pp = DB::table('d_stock')
+           ->join('d_comp', 'd_stock.s_comp', '=', 'd_comp.c_id')
+           ->join('d_item', 'd_stock.s_item', '=', 'd_item.i_id')
+           ->join('d_item_dt', function ($join) {
+                 $join->on('d_stock.s_item_dt', '=', 'd_item_dt.id_detailid')
+                      ->on('d_item.i_id', '=', 'd_item_dt.id_item');
+                 })
+           ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
+           ->join('d_kategori', 'k_id', '=', 'i_kategori')
+           ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
+           ->orderBy('d_item.i_nama', 'asc')
+           ->get();
+
+           for ($i=0; $i < count($pp); $i++) {
+             $pp[$i]->id_price = 'Rp. ' . number_format($pp[$i]->id_price, 0, ',', '.');
+           }
+
+      // dd($pp);
+      return view('manajemen-stock.data-stock.printall', compact('pp'));
+    }
+
+    public function print(){
+      return view('manajemen-stock.data-stock.print');
+    }
+
+    public function getpilih(){
+      $data = DB::table('d_item')
+            ->select('i_id', 'i_nama')
+            ->get();
+
+      return response()->json($data);
+    }
+
+    public function getprint(Request $request){
+      $id = $request->id;
+
+      $pp = DB::table('d_stock')
+           ->join('d_comp', 'd_stock.s_comp', '=', 'd_comp.c_id')
+           ->join('d_item', 'd_stock.s_item', '=', 'd_item.i_id')
+           ->join('d_item_dt', function ($join) {
+                 $join->on('d_stock.s_item_dt', '=', 'd_item_dt.id_detailid')
+                      ->on('d_item.i_id', '=', 'd_item_dt.id_item');
+                 })
+           ->join('d_size', 'd_size.s_id', '=', 'd_item_dt.id_size')
+           ->join('d_kategori', 'k_id', '=', 'i_kategori')
+           ->select('d_stock.*','d_comp.c_name','d_size.s_nama','d_item.i_nama', 'd_item_dt.id_price', 'd_item.i_note')
+           ->where('s_item',$id)
+           ->orderBy('d_item.i_nama', 'asc')
+           ->get();
+
+           for ($i=0; $i < count($pp); $i++) {
+             $pp[$i]->id_price = 'Rp. ' . number_format($pp[$i]->id_price, 0, ',', '.');
+           }
+
+        return view('manajemen-stock.data-stock.print', compact('pp'));
     }
 
 
