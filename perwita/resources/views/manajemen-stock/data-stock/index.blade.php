@@ -68,7 +68,7 @@
                         @endforeach
                       </select>
                   </div>
-                    <button class="btn btn-info btn-md btn-flat " type="button" id="filter">Filter Cari</button>
+                    <button class="btn btn-primary btn-md btn-flat " type="button" id="filter"> <em class="fa fa-search">&nbsp;</em> Filter Cari</button>
                  </div>
                 </div>
 
