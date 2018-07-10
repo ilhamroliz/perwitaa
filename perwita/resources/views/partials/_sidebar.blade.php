@@ -148,7 +148,7 @@
                     <li class="{{ Request::is('manajemen-stock/data-stock') ? 'active' : ''
                                 || Request::is('manajemen-stock/data-stock/*') ? 'active' : ''  }}">
                         <a href="{{ url('manajemen-stock/data-stock') }}">
-                            <i class=" " aria-hidden="true"></i><span class="nav-label">Data Stock</span>
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Stock Seragam</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-stock/mutasi-stock') ? 'active' : ''

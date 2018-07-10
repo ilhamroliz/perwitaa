@@ -12,7 +12,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2> Data Stock </h2>
+                    <h2> Stock Seragam </h2>
                     <ol class="breadcrumb">
                         <li>
                             <a>Home</a>
@@ -21,7 +21,7 @@
                             <a>Manajemen Stock</a>
                         </li>
                         <li class="active">
-                            <strong>Data Stock</strong>
+                            <strong>Data Stock Seragam</strong>
                         </li>
                     </ol>
                 </div>
@@ -32,7 +32,7 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-                    <h5>Data Seragam</h5>
+                    <h5>Stock Seragam</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
