@@ -7,6 +7,9 @@
 <style>
     .popover-navigation [data-role="next"] { display: none; }
     .popover-navigation [data-role="end"] { display: none; }
+    table.dataTable tbody td {
+            vertical-align: middle;
+        }
 </style>
 
 @endsection
@@ -142,7 +145,7 @@
                     detail = detail + '<li class="list-group-item fist-item"><span class="pull-right">Rp. '+accounting.formatMoney(response[i].pd_value, "", 0, ".", ",")+'</span>'+response[i].nama+'</li>';
                 }
                 $('.detail-pembelian').html(detail);
-                var tombol = '<button type="button" onclick="lakukan('+response[0].p_id+')" class="btn btn-primary btn-sm btn-block"><i class="fa fa-share-square-o"></i> Lakukan Return</button>';
+                var tombol = '<button type="button" onclick="lakukan(\''+response[0].p_nota+'\')" class="btn btn-primary btn-sm btn-block"><i class="fa fa-share-square-o"></i> Lakukan Return</button>';
                 $('.lakukan').html(tombol);
                 waitingDialog.hide();
             }, error:function(x, e) {
@@ -161,11 +164,11 @@
                 }
                 waitingDialog.hide();
             }
-        })
+        });
     }
 
-    function lakukan(id){
-        
+    function lakukan(nota){
+        window.location = baseUrl + '/manajemen-seragam/return/add?nota='+nota;
     }
 
 </script>
