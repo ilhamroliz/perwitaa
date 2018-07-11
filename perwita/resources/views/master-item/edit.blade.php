@@ -19,7 +19,7 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Tambah Barang</h5>
+        <h5>Edit Seragam</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -42,7 +42,7 @@
                         <input value="{{ $data[0]->i_id }}" type="hidden" class="form-control" name="id" id="id" style="text-transform: uppercase" >
                     </div>
                 </div>
-                
+
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="warnabarang">Warna</label>

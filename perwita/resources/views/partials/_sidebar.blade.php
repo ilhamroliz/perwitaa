@@ -209,7 +209,7 @@
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('master-item') ? 'active' : '' || Request::is('master-item/*') ? 'active' : '' }}">
                         <a href="{{ url('master-item') }}">
-                            <i class="fa fa-circle-o" aria-hidden="true"></i><span class="nav-label">Master Barang</span>
+                            <i class="fa fa-circle-o" aria-hidden="true"></i><span class="nav-label">Master Seragam</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('master-supplier') ? 'active' : '' || Request::is('master-supplier/*') ? 'active' : '' }}">

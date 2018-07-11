@@ -16,7 +16,7 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Tambah Barang</h5>
+        <h5>Tambah Seragam</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -47,7 +47,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="warnabarang">Warna</label>
