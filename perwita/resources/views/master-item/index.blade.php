@@ -33,13 +33,13 @@
                 </div>
             @endif
             <div class="row m-b-lg">
-                <div class="col-md-12">                        
+                <div class="col-md-12">
                 </div>
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#item-active">Barang Aktif</a></li>
-                    <li><a data-toggle="tab" href="#item-nonactive">Barang Tidak Aktif</a></li>
-                    <li><a data-toggle="tab" href="#item-all">Semua Barang</a></li>
-                    <li><a data-toggle="tab" href="#search-item"><i class="fa fa-search"></i> &nbsp;Pencarian Barang</a></li>
+                    <li class="active"><a data-toggle="tab" href="#item-active">Seragam Aktif</a></li>
+                    <li><a data-toggle="tab" href="#item-nonactive">Seragam Tidak Aktif</a></li>
+                    <li><a data-toggle="tab" href="#item-all">Semua Seragam</a></li>
+                    <li><a data-toggle="tab" href="#search-item"><i class="fa fa-search"></i> &nbsp;Pencarian Seragam</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -47,7 +47,7 @@
                         <div class="col-md-12 item-active" style="padding-top: 20px;">
                             <table id="itemY" class="table table-bordered table-striped" >
                                 <thead>
-                                    <tr>                                                             
+                                    <tr>
                                         <th class="col-md-5">Nama Seragam</th>
                                         <th class="col-md-1 text-center">Ukuran</th>
                                         <th class="col-md-2 text-center">Warna</th>
@@ -60,12 +60,12 @@
                             </table>
                         </div>
                     </div>
-                    
+
                     <div role="tabpanel" class="tab-pane fade" id="item-nonactive">
                       <div class="col-md-12 item-nonactive" style="padding: 20px;">
                          <table id="itemN" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                             <thead>
-                                <tr>                                                             
+                                <tr>
                                     <th class="col-md-5">Nama Seragam</th>
                                     <th class="col-md-1 text-center">Ukuran</th>
                                     <th class="col-md-2 text-center">Warna</th>
@@ -100,7 +100,7 @@
                     <div role="tabpanel" class="tab-pane fade" id="search-item">
                       <div class="col-md-12 search-item" style="padding: 20px;">
                         <div class="col-md-6" style="margin-bottom: 20px; padding-left: 0px;">
-                            <input type="text" name="cari" value="" id="cari" placeholder="Masukan Nama Barang" class="form-control cari-barang">
+                            <input type="text" name="cari" value="" id="cari" placeholder="Masukan Nama Seragam" class="form-control cari-barang">
                             <input type="hidden" name="id_barang" id="cari-barang" value="">
                         </div>
                         <table id="searchi" class="table table-bordered table-hover text table-striped">
@@ -114,7 +114,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                         </table>
                       </div>
@@ -133,7 +133,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <i class="glyphicon glyphicon-plus modal-icon"></i>
                 <h4 class="modal-title">Tambah Mitra</h4>
-                <small class="font-bold">Penambahan Mitra untuk barang yang dipilih</small>
+                <small class="font-bold">Penambahan Mitra untuk Seragam yang dipilih</small>
             </div>
             <div class="modal-body">
                 <h3 class="namabarang"></h3>
@@ -174,65 +174,65 @@ $( document ).ready(function() {
     tableY = $("#itemY").DataTable({
         processing: true,
         serverSide: false,
-        ajax: '{{ url('master-item/get-data-y') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-item/get-data-y') }}',
+        dataType: 'json',
+        columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
-            {data: 'id_price', name: 'id_price'},       
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 'id_price', name: 'id_price'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ]        
+              ]
     });
     tableN = $("#itemN").DataTable({
         processing: true,
         serverSide: false,
-        ajax: '{{ url('master-item/get-data-n') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-item/get-data-n') }}',
+        dataType: 'json',
+        columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
-            {data: 'id_price', name: 'id_price'},       
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 'id_price', name: 'id_price'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ]        
+              ]
     });
     tableA = $("#itemA").DataTable({
         processing: true,
         serverSide: false,
-        ajax: '{{ url('master-item/get-data-a') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-item/get-data-a') }}',
+        dataType: 'json',
+        columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
-            {data: 'id_price', name: 'id_price'},       
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 'id_price', name: 'id_price'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ]        
+              ]
     });
 
     tableS = $('#searchi').DataTable({
