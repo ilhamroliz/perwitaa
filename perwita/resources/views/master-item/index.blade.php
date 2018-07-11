@@ -45,14 +45,15 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="item-active">
                         <div class="col-md-12 item-active" style="padding-top: 20px;">
-                            <table id="itemY" class="table table-bordered table-striped" >
+                            <table id="itemY" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-5">Nama Seragam</th>
-                                        <th class="col-md-1 text-center">Ukuran</th>
-                                        <th class="col-md-2 text-center">Warna</th>
-                                        <th class="col-md-2 text-center">Harga</th>
-                                        <th class="col-md-2 text-center">Action</th>
+                                      <th>Nama Seragam</th>
+                                      <th>Ukuran</th>
+                                      <th>Warna</th>
+                                      <th>Harga</th>
+                                      <th>Keterangan</th>
+                                      <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,11 +67,12 @@
                          <table id="itemN" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="col-md-5">Nama Seragam</th>
-                                    <th class="col-md-1 text-center">Ukuran</th>
-                                    <th class="col-md-2 text-center">Warna</th>
-                                    <th class="col-md-2 text-center">Harga</th>
-                                    <th class="col-md-2 text-center">Action</th>
+                                  <th style="width: 50%">Nama Seragam</th>
+                                  <th class="text-center" style="width: 10%">Ukuran</th>
+                                  <th class="text-center" style="width: 20%">Warna</th>
+                                  <th class="text-center" style="width: 20%">Harga</th>
+                                  <th class="text-center" style="width: 20%">Keterangan</th>
+                                  <th class="text-center" style="width: 20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,11 +86,12 @@
                          <table id="itemA" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="col-md-5">Nama Seragam</th>
-                                    <th class="col-md-1 text-center">Ukuran</th>
-                                    <th class="col-md-2 text-center">Warna</th>
-                                    <th class="col-md-2 text-center">Harga</th>
-                                    <th class="col-md-2 text-center">Action</th>
+                                  <th style="width: 50%">Nama Seragam</th>
+                                  <th class="text-center" style="width: 10%">Ukuran</th>
+                                  <th class="text-center" style="width: 20%">Warna</th>
+                                  <th class="text-center" style="width: 20%">Harga</th>
+                                  <th class="text-center" style="width: 20%">Keterangan</th>
+                                  <th class="text-center" style="width: 20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,6 +113,7 @@
                                     <th class="text-center" style="width: 10%">Ukuran</th>
                                     <th class="text-center" style="width: 20%">Warna</th>
                                     <th class="text-center" style="width: 20%">Harga</th>
+                                    <th class="text-center" style="width: 20%">Keterangan</th>
                                     <th class="text-center" style="width: 20%">Action</th>
                                 </tr>
                             </thead>
@@ -142,13 +146,13 @@
                         <div class="form-group getkonten0">
                             <label class="col-sm-2 control-label" for="ukuranbarang">Mitra</label>
                             <div class="col-sm-3 selectukuran0">
-                                <select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" >
+                                <select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" id="addmitra">
                                     <option value="">--Pilih Mitra--</option>
                                 </select>
                             </div>
                             <span>
-                                <a type="button" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-                                <a type="button" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                <a type="button" class="btn btn-primary" id="tambahmitra" onclick="tambahmitra()"><i class="fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" id="kurangmitra" onclick="alertmitra()"><i class="fa fa-times"></i></a>
                             </span>
                         </div>
                     </div>
@@ -156,7 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
+                <button class="btn btn-primary" type="button">Simpan</button>
             </div>
         </div>
     </div>
@@ -170,6 +174,7 @@ var tableS;
 var tableY;
 var tableN;
 var tableA;
+var hitung = 0;
 $( document ).ready(function() {
     tableY = $("#itemY").DataTable({
         processing: true,
@@ -181,6 +186,7 @@ $( document ).ready(function() {
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
             {data: 'id_price', name: 'id_price'},
+            {data: 'i_note', name: 'i_note'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
 
@@ -202,6 +208,7 @@ $( document ).ready(function() {
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
             {data: 'id_price', name: 'id_price'},
+            {data: 'i_note', name: 'i_note'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
 
@@ -223,6 +230,7 @@ $( document ).ready(function() {
             {data: 's_nama', name: 's_nama'},
             {data: 'i_warna', name: 'i_warna'},
             {data: 'id_price', name: 'id_price'},
+            {data: 'i_note', name: 'i_note'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
 
@@ -247,18 +255,19 @@ $( document ).ready(function() {
             select: function(event, ui) {
             $('#id_barang').val(ui.item.id);
             $('#cari').val(ui.item.label);
-            tanam(ui.item.id, ui.item.i_nama, ui.item.harga, ui.item.warna, ui.item.ukuran, ui.item.detailid);
+            tanam(ui.item.id, ui.item.i_nama, ui.item.harga, ui.item.warna, ui.item.ukuran, ui.item.detailid, ui.item.note);
         }
     });
 });
 
-function tanam(id, nama, harga, warna, ukuran, detailid){
+function tanam(id, nama, harga, warna, ukuran, detailid, note){
     harga = accounting.formatMoney(harga, "", 0, ".", ","); // €4.999,99
     tableS.row.add([
                nama,
                ukuran,
                warna,
                '<span style="float: left">Rp. </span><span style="float:right" class="hargaitem">'+harga+'</span>',
+               note,
                buttonGen(id, detailid)
             ]).draw( false );
 }
@@ -332,12 +341,17 @@ function hapus(id, id_dt){
 }
 
 function add(id, id_dt){
+  var tanam = '<option value="">--Pilih Mitra--</option>';
     $.ajax({
       url: baseUrl + '/master-item/getInfo',
       type: 'get',
       data: {id: id, dt: id_dt},
       success: function(response){
-        console.log(response);
+        for (var i = 0; i < response.info.length; i++) {
+          tanam += '<option value="'+response.info[i].m_id+'">'+response.info[i].m_name+'</option>';
+        }
+        $('.addmitra').html(tanam);
+        $('#tambahmitra').attr('onclick', 'tambahmitra('+id+', '+id_dt+')');
       }, error:function(x, e) {
           if (x.status == 0) {
               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -355,6 +369,35 @@ function add(id, id_dt){
         }
     })
     $('#myModal').modal('show');
+}
+
+function tambahmitra(id, id_dt){
+ hitung += 1;
+
+  $('.form-dinamis').append('<div class="form-group getkonten'+hitung+'">'+
+      '<label class="col-sm-2 control-label" for="ukuranbarang">Mitra</label>'+
+      '<div class="col-sm-3 selectukuran0">'+
+          '<select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" id="addmitra">'+
+              '<option value="">--Pilih Mitra--</option>'+
+          '</select>'+
+      '</div>'+
+      '<span>'+
+          '<a type="button" class="btn btn-primary" onclick="tambahmitra()"><i class="fa fa-plus"></i></a>'+
+          ' '+
+          '<a type="button" class="btn btn-danger" onclick="kurangmitra('+hitung+')"><i class="fa fa-times"></i></a>'+
+      '</span>'+
+  '</div>');
+
+  add(id, id_dt);
+}
+
+function kurangmitra(hitung){
+    $('.getkonten'+hitung).remove();
+}
+
+function alertmitra(){
+  $('.form-dinamis').append('<span id="alertmitra" style="color:red;">Tidak Boleh Dihapus!</span>');
+  setTimeout(function(){ $('#alertmitra').remove(); }, 3000);
 }
 </script>
 @endsection

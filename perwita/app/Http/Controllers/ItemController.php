@@ -26,7 +26,7 @@ class ItemController extends Controller
         $getData = DB::table('d_item')
             ->join('d_item_dt', 'id_item', '=', 'i_id')
             ->leftJoin('d_size', 'id_size', '=', 's_id')
-            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid')
+            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid', 'i_note')
             ->where('i_isactive', '=', 'y')
             ->orderBy('i_id', 'id_size')
             ->get();
@@ -52,7 +52,7 @@ class ItemController extends Controller
         $getData = DB::table('d_item')
             ->join('d_item_dt', 'id_item', '=', 'i_id')
             ->leftJoin('d_size', 'id_size', '=', 's_id')
-            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid')
+            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid', 'i_note')
             ->where('i_isactive', '=', 'n')
             ->orderBy('i_id', 'id_size')
             ->get();
@@ -78,7 +78,7 @@ class ItemController extends Controller
         $getData = DB::table('d_item')
             ->join('d_item_dt', 'id_item', '=', 'i_id')
             ->leftJoin('d_size', 'id_size', '=', 's_id')
-            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid')
+            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid', 'i_note')
             ->orderBy('i_id', 'id_size')
             ->get();
 
@@ -105,7 +105,7 @@ class ItemController extends Controller
         $data = DB::table('d_item')
             ->join('d_item_dt', 'id_item', '=', 'i_id')
             ->join('d_size', 's_id', '=', 'id_size')
-            ->select('i_id', 'id_detailid', 'i_nama', 's_nama', 'id_price', 'i_warna', DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'))
+            ->select('i_id', 'id_detailid', 'i_nama', 's_nama', 'id_price', 'i_warna', 'i_note', DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'))
             ->whereRaw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") like "%'.$cari.'%"')
             ->take(50)->get();
 
@@ -114,7 +114,7 @@ class ItemController extends Controller
         } else {
 
             foreach ($data as $query) {
-                $results[] = ['id' => $query->i_id, 'label' => $query->nama, 'harga' => $query->id_price, 'warna' => $query->i_warna, 'i_nama' => $query->i_nama, 'ukuran' => $query->s_nama, 'detailid' => $query->id_detailid ];
+                $results[] = ['id' => $query->i_id, 'label' => $query->nama, 'harga' => $query->id_price, 'warna' => $query->i_warna, 'i_nama' => $query->i_nama, 'ukuran' => $query->s_nama, 'detailid' => $query->id_detailid, 'note' => $query->i_note ];
             }
         }
 
