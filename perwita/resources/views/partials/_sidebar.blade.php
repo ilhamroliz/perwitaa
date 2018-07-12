@@ -16,9 +16,9 @@
             </li>
 
             <li class="">
-                <a href="{{url('dashboard')}}"><i class="fa fa-th-large"></i>
-                    <span class="nav-label">Dashboards</span>
-                </a>
+              <a href="{{url('dashboard')}}"><i class="fa fa-th-large"></i>
+                  <i class="" aria-hidden="true"></i><span class="nav-label">Dashboards</span>
+              </a>
             </li>
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
