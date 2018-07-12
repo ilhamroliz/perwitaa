@@ -40,11 +40,17 @@
                     </div>
                     <label class="col-sm-1 control-label" for="mitra">Mitra</label>
                     <div class="col-sm-4">
-                        <select class="form-control mitraselect select2" name="mitra" id="mitra">
-                          @foreach($mitra as $item)
-                            <option value="{{ $item->m_id }}">{{ $item->m_name }}</option>
-                          @endforeach
+                      @if(empty($mitra))
+                        <select class="form-control" name="mitra">
+                          <option value="">Tidak Ada Mitra</option>
                         </select>
+                      @else
+                      <select class="form-control mitraselect select2" name="mitra" id="mitra">
+                        @foreach($mitra as $item)
+                          <option value="{{ $item->m_id }}">{{ $item->m_name }}</option>
+                        @endforeach
+                      </select>
+                      @endif
                     </div>
                 </div>
 

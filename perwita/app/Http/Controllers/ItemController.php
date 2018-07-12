@@ -360,13 +360,14 @@ class ItemController extends Controller
     }
 
     public function addmitra(Request $request){
-      // DB::beginTransaction();
-      // try {
-        $id = DB::table('d_mitra_item')->MAX('mi_id');
+      DB::beginTransaction();
+      try {
 
         $data = $request->data;
 
         for ($i=0; $i < count($data); $i++) {
+          $id = DB::table('d_mitra_item')->MAX('mi_id');
+          
           d_mitra_item::insert([
             'mi_id' => $id += 1,
             'mi_mitra' => $data[$i],
@@ -377,11 +378,11 @@ class ItemController extends Controller
         return response()->json([
           'status' => 'berhasil'
         ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal'
-      //   ]);
-      // }
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
     }
 }
