@@ -440,6 +440,7 @@ Route::get('master-item/update','ItemController@update');
 Route::post('master-item/update','ItemController@update');
 Route::get('master-item/delete','ItemController@delete');
 Route::get('master-item/getInfo','ItemController@getInfo');
+Route::get('master-item/addmitra', 'ItemController@addmitra');
 
 //================= master supplier ilham ========================
 Route::get('master-supplier', [

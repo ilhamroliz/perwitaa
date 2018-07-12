@@ -15,6 +15,8 @@ use Carbon\Carbon;
 class approvalController extends Controller
 {
   public function cekapproval(){
+    Carbon::setLocale('id');
+    $data = [];
     if (Session::get('jabatan') == 1 || Session::get('jabatan') == 6) {
 
     $pekerja = DB::select("select p_insert, count(p_id) as jumlah, 'Approval Pelamar' as catatan
@@ -39,28 +41,42 @@ class approvalController extends Controller
         $countpembelian = count($pembelian);
 
       $hitung = 0;
-      if ($pekerja[0]->jumlah > 0) {
-        $hitung += 1;
-      }
-      if ($mitra[0]->jumlah > 0) {
-        $hitung += 1;
-      }
-      if ($pembelian[0]->jumlah > 0) {
-        $hitung += 1;
+      if (empty($pekerja)) {
+
+      } else {
+        if ($pekerja[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+        $pekerja[0]->p_insert = Carbon::parse($pekerja[0]->p_insert)->diffForHumans();
+        $data[0] = $pekerja[0];
       }
 
-      Carbon::setLocale('id');
-      $pekerja[0]->p_insert = Carbon::parse($pekerja[0]->p_insert)->diffForHumans();
-      $mitra[0]->m_insert = Carbon::parse($mitra[0]->m_insert)->diffForHumans();
-      $pembelian[0]->p_date = Carbon::parse($pembelian[0]->p_date)->diffForHumans();
-      for ($i=0; $i < count($pembelian) ; $i++) {
-        $pembelian[$i]->jumlah = $countpembelian;
+      if (empty($mitra)) {
+
+      } else {
+        if ($mitra[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+        $mitra[0]->m_insert = Carbon::parse($mitra[0]->m_insert)->diffForHumans();
+        $data[1] = $mitra[0];
       }
-      $data = [];
-      $data[0] = $pekerja[0];
-      $data[1] = $mitra[0];
-      $data[2] = $pembelian[0];
-//dd($ago);
+
+      if (empty($pembelian)) {
+        $data[2] = $temp = array(
+          'p_date' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval Pembelian'
+        );
+      } else {
+        if ($pembelian[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+
+        $pembelian[0]->p_date = Carbon::parse($pembelian[0]->p_date)->diffForHumans();
+        $data[2] = $pembelian[0];
+      }
+
+// dd($pembelian);
     return response()->json([
       'data' => $data
     ]);

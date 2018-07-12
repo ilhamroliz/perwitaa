@@ -145,7 +145,7 @@
                     <div class="form-dinamis">
                         <div class="form-group getkonten0">
                             <label class="col-sm-2 control-label" for="ukuranbarang">Mitra</label>
-                            <div class="col-sm-3 selectukuran0">
+                            <div class="col-sm-6 selectukuran0">
                                 <select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" id="addmitra">
                                     <option value="">--Pilih Mitra--</option>
                                 </select>
@@ -160,7 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button class="btn btn-primary" type="button">Simpan</button>
+                <button onclick="simpan()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
             </div>
         </div>
     </div>
@@ -177,8 +177,6 @@ var tableA;
 var hitung = 0;
 $( document ).ready(function() {
     tableY = $("#itemY").DataTable({
-        processing: true,
-        serverSide: false,
         ajax: '{{ url('master-item/get-data-y') }}',
         dataType: 'json',
         columns: [
@@ -199,8 +197,6 @@ $( document ).ready(function() {
               ]
     });
     tableN = $("#itemN").DataTable({
-        processing: true,
-        serverSide: false,
         ajax: '{{ url('master-item/get-data-n') }}',
         dataType: 'json',
         columns: [
@@ -221,8 +217,6 @@ $( document ).ready(function() {
               ]
     });
     tableA = $("#itemA").DataTable({
-        processing: true,
-        serverSide: false,
         ajax: '{{ url('master-item/get-data-a') }}',
         dataType: 'json',
         columns: [
@@ -352,6 +346,7 @@ function add(id, id_dt){
         }
         $('.addmitra').html(tanam);
         $('#tambahmitra').attr('onclick', 'tambahmitra('+id+', '+id_dt+')');
+        $('#simpanbtn').attr('onclick', 'simpan('+id+')');
       }, error:function(x, e) {
           if (x.status == 0) {
               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -376,8 +371,8 @@ function tambahmitra(id, id_dt){
 
   $('.form-dinamis').append('<div class="form-group getkonten'+hitung+'">'+
       '<label class="col-sm-2 control-label" for="ukuranbarang">Mitra</label>'+
-      '<div class="col-sm-3 selectukuran0">'+
-          '<select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" id="addmitra">'+
+      '<div class="col-sm-6 selectukuran0">'+
+          '<select class="form-control mitraselect'+hitung+' select2 addmitra" name="addmitra[]" id="addmitra">'+
               '<option value="">--Pilih Mitra--</option>'+
           '</select>'+
       '</div>'+
@@ -398,6 +393,23 @@ function kurangmitra(hitung){
 function alertmitra(){
   $('.form-dinamis').append('<span id="alertmitra" style="color:red;">Tidak Boleh Dihapus!</span>');
   setTimeout(function(){ $('#alertmitra').remove(); }, 3000);
+}
+
+function simpan(id){
+  var data = [];
+  for (var i = 0; i <= hitung; i++) {
+    data[i] = $(".mitraselect"+i).val();
+  }
+
+  $.ajax({
+    type: 'get',
+    data: {data:data, id:id},
+    url: baseUrl + '/master-item/addmitra',
+    dataType: 'json',
+    success : function(result){
+      console.log(result);
+    }
+  });
 }
 </script>
 @endsection

@@ -64,7 +64,7 @@
                         <div class="form-group row">
                             <label for="nomou" class="col-sm-2 col-form-label">No MOU</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="nomou" id="nomou" placeholder="No MOU" required="" onkeypress="validate(event)">
+                                <input type="text" class="form-control" name="nomou" id="nomou" placeholder="No MOU" required="">
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="no-error">
                                     <small>No Mou harus diisi! ...</small>
                                 </span>

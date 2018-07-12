@@ -307,9 +307,9 @@
                                  $("#showpembelian").html('<center> Tidak ada permintaan Approval Pembelian Seragam </center>');
                                }
                                if (countnotif == 0) {
-                                 $("#showpelamar").html(pelamar);
-                                 $("#showmitra").html(mitra);
-                                 $("#showpembelian").html(pembelian);
+                                 // $("#showpelamar").html(pelamar);
+                                 // $("#showmitra").html(mitra);
+                                 // $("#showpembelian").html(pembelian);
                                }
                          }
                        });
