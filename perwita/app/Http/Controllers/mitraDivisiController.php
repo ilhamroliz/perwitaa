@@ -24,7 +24,7 @@ class mitraDivisiController extends Controller
     $list = DB::table('d_mitra')
                   ->select('d_mitra.*')
                   ->where('m_status', '=', 'Aktif')
-                  ->ORwhere('m_status', '=', null)
+                  ->ORwhere('m_status_approval', '=', 'Y')
                   ->get();
         $data = array();
         foreach ($list as $r) {

@@ -61,39 +61,46 @@ class mitraController extends Controller
         //     'data' => $validator->errors->toArray(),
         //   ]);
         // }
+        DB::beginTransaction();
+        try {
+          $idmitra = d_mitra::max('m_id')+1;
 
-        $idmitra = d_mitra::max('m_id')+1;
+          $idmou = DB::table('d_mitra_mou')->where('mm_mitra' , '=', $idmitra)->max('mm_detailid');
 
-        $idmou = DB::table('d_mitra_mou')->where('mm_mitra' , '=', $idmitra)->max('mm_detailid');
+          if ($idmou < 1 || $idmou == null) {
+            $idmou = 1;
+          } else {
+            $idmou = $idmou + 1;
+          }
 
-        if ($idmou < 1 || $idmou == null) {
-          $idmou = 1;
-        } else {
-          $idmou = $idmou + 1;
-        }
-
-        d_mitra::insert(array(
-          'm_id' => $idmitra,
-          'm_name' => $request->namamitra,
-          'm_address' => $request->alamatmitra,
-          'm_cp' => $request->nama_cp,
-          'm_cp_phone' => $request->no_cp,
-          'm_phone' => $request->notelp,
-          'm_note' => $request->ket,
+          d_mitra::insert(array(
+            'm_id' => $idmitra,
+            'm_name' => $request->namamitra,
+            'm_address' => $request->alamatmitra,
+            'm_cp' => $request->nama_cp,
+            'm_cp_phone' => $request->no_cp,
+            'm_phone' => $request->notelp,
+            'm_note' => $request->ket,
+          ));
+          d_mitra_mou::insert(array(
+            'mm_mitra' => $idmitra,
+            'mm_detailid' => $idmou,
+            'mm_mou' => $request->nomou,
+            'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+            'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
+            'mm_aktif' => null,
+            'mm_status' => null,
         ));
-        d_mitra_mou::insert(array(
-          'mm_mitra' => $idmitra,
-          'mm_detailid' => $idmou,
-          'mm_mou' => $request->nomou,
-          'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
-          'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
-          'mm_aktif' => null,
-          'mm_status' => null,
-      ));
 
-        return response()->json([
-          'status' => 'berhasil',
-        ]);
+          return response()->json([
+            'status' => 'berhasil',
+          ]);
+        } catch (\Exception $e) {
+          DB::rollback();
+          return response()->json([
+            'status' => 'gagal',
+          ]);
+        }
 
     }
     public function edit($id) {
