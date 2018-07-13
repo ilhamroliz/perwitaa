@@ -130,6 +130,9 @@ Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra','PenerimaanPekerja
 Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra/getNomor','PenerimaanPekerjaController@getNomor');
 Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra/simpan','PenerimaanPekerjaController@save');
 
+//======= SP Pekerja
+Route::get('pekerja-di-mitra/pekerja-mitra','PenerimaanPekerjaController@index');
+
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');
 Route::get('manajemen-seragam/data-seragam/data','seragamController@data');

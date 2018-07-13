@@ -23,6 +23,8 @@
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
               || Request::is('manajemen-pekerja/data-pekerja/*') ? 'active' : ''
+              || Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : ''
+              || Request::is('pekerja-di-mitra/pekerja-mitra/*') ? 'active' : ''
               || Request::is('manajemen-pekerja-mitra/data-pekerja-mitra') ? 'active' : ''
               || Request::is('manajemen-pekerja-mitra/data-pekerja-mitra/*') ? 'active' : ''
               || Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : ''
@@ -50,6 +52,11 @@
                     <li class="{{ Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : '' || Request::is('pekerja-di-mitra/pekerja-mitra/*') ? 'active' : '' }}">
                         <a href="{{ url('pekerja-di-mitra/pekerja-mitra') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pekerja di Mitra</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-pekerja/surat-peringatan') ? 'active' : '' || Request::is('manajemen-pekerja/surat-peringatan/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-pekerja/surat-peringatan') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">SP Pekerja</span>
                         </a>
                     </li>
                 </ul>
