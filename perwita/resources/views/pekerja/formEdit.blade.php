@@ -710,7 +710,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Anak 1</label>
-                                @if(!empty($child[0]) || !empty($child[1]) || !empty($child[2]))
+                                @if(!empty($child[0]))
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase" value="{{$child[0]->pc_child_name}}">
                                 </div>
@@ -720,8 +720,20 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[0]->pc_birth_date)->format('d/m/Y')}}">
                                 </div>
+                                @else
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
+                                </div>
+                                @endif
                             </div>
                             <div class="form-group">
+                              @if(!empty($child[1]))
                                 <label class="col-sm-2 control-label">Anak 2</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase" value="{{$child[1]->pc_child_name}}">
@@ -732,8 +744,21 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[1]->pc_birth_date)->format('d/m/Y')}}">
                                 </div>
+                              @else
+                              <label class="col-sm-2 control-label">Anak 2</label>
+                              <div class="col-sm-4">
+                                  <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase">
+                              </div>
+                              <div class="col-sm-4">
+                                  <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase">
+                              </div>
+                              <div class="col-sm-2">
+                                  <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
+                              </div>
+                              @endif
                             </div>
                             <div class="form-group">
+                              @if(!empty($child[2]))
                                 <label class="col-sm-2 control-label">Anak 3</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase" value="{{$child[2]->pc_child_name}}">
@@ -744,61 +769,18 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" value="{{Carbon\Carbon::parse($child[2]->pc_birth_date)->format('d/m/Y')}}">
                                 </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Nama Ayah</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control dadname" id="dadname" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_name}}">
-                                </div>
-                                <label class="col-sm-2 control-label">Pekerjaan</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control dadjob" id="dadjob" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_dad_job}}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Nama Ibu</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control momname" id="momname" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_name}}">
-                                </div>
-                                <label class="col-sm-2 control-label">Pekerjaan</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_job}}">
-                                </div>
                                 @else
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 1" style="text-transform:uppercase">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Anak 2</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 2" style="text-transform:uppercase" >
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Anak 3</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase" >
+                                    <input type="text" class="form-control childname" name="childname[]" placeholder="Nama Anak 3" style="text-transform:uppercase">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase" >
+                                    <input type="text" class="form-control childplace" name="childplace[]" placeholder="Tempat Lahir" style="text-transform:uppercase">
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control childdate" name="childdate[]" placeholder="Tanggal">
                                 </div>
+                                @endif
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
@@ -820,7 +802,6 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase" value="{{$pekerja[0]->p_mom_job}}">
                                 </div>
-                              @endif
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
