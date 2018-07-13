@@ -252,7 +252,7 @@
                             <div class="col-sm-10">
 
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                  @if($pekerja[0]->p_many_kids == "")
+                                  @if($pekerja[0]->p_many_kids == "0")
                                     <input type="radio" id="tidak" value="0" name="jml_anak" checked="">
                                   @else
                                   <input type="radio" id="tidak" value="0" name="jml_anak">
@@ -284,7 +284,7 @@
                                     <label for="tiga"> 3 Anak </label>
                                 </div>
                                 <div class="radio radio-success radio-inline col-sm-2">
-                                  @if($pekerja[0]->p_many_kids != "" && $pekerja[0]->p_many_kids != "1" && $pekerja[0]->p_many_kids != "2" && $pekerja[0]->p_many_kids != "3")
+                                  @if($pekerja[0]->p_many_kids != "0" && $pekerja[0]->p_many_kids != "1" && $pekerja[0]->p_many_kids != "2" && $pekerja[0]->p_many_kids != "3")
                                     <input type="radio" id="lebih" value="Lebih" name="jml_anak" checked="">
                                   @else
                                   <input type="radio" id="lebih" value="Lebih" name="jml_anak">
