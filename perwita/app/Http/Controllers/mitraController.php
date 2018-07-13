@@ -61,8 +61,8 @@ class mitraController extends Controller
         //     'data' => $validator->errors->toArray(),
         //   ]);
         // }
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
           $idmitra = d_mitra::max('m_id')+1;
 
           $idmou = DB::table('d_mitra_mou')->where('mm_mitra' , '=', $idmitra)->max('mm_detailid');
@@ -95,12 +95,12 @@ class mitraController extends Controller
           return response()->json([
             'status' => 'berhasil',
           ]);
-        } catch (\Exception $e) {
-          DB::rollback();
-          return response()->json([
-            'status' => 'gagal',
-          ]);
-        }
+        // } catch (\Exception $e) {
+        //   DB::rollback();
+        //   return response()->json([
+        //     'status' => 'gagal',
+        //   ]);
+        // }
 
     }
     public function edit($id) {
