@@ -23,8 +23,8 @@
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
               || Request::is('manajemen-pekerja/data-pekerja/*') ? 'active' : ''
-              || Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : ''
-              || Request::is('pekerja-di-mitra/pekerja-mitra/*') ? 'active' : ''
+              || Request::is('manajemen-pekerja/surat-peringatan') ? 'active' : ''
+              || Request::is('manajemen-pekerja/surat-peringatan/*') ? 'active' : ''
               || Request::is('manajemen-pekerja-mitra/data-pekerja-mitra') ? 'active' : ''
               || Request::is('manajemen-pekerja-mitra/data-pekerja-mitra/*') ? 'active' : ''
               || Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : ''
