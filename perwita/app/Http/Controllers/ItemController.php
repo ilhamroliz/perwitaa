@@ -26,7 +26,7 @@ class ItemController extends Controller
         $getData = DB::table('d_item')
             ->join('d_item_dt', 'id_item', '=', 'i_id')
             ->leftJoin('d_size', 'id_size', '=', 's_id')
-            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid')
+            ->select('i_id', 'i_nama', 'i_warna', 'id_price', 's_nama', 'id_detailid', 'i_note')
             ->where('i_isactive', '=', 'y')
             ->orderBy('i_id', 'id_size')
             ->get();

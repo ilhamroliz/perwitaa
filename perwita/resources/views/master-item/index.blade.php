@@ -176,9 +176,19 @@ var tableN;
 var tableA;
 var hitung = 0;
 $( document ).ready(function() {
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     tableY = $("#itemY").DataTable({
-        ajax: '{{ url('master-item/get-data-y') }}',
+        "ajax": {
+            "url": "{{ url('master-item/get-data-y') }}",
+            "type": "POST"
+        },
         dataType: 'json',
+        processing: true,
+        serverSide: true,
         columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
@@ -197,8 +207,13 @@ $( document ).ready(function() {
               ]
     });
     tableN = $("#itemN").DataTable({
-        ajax: '{{ url('master-item/get-data-n') }}',
+        "ajax": {
+            "url": "{{ url('master-item/get-data-n') }}",
+            "type": "POST"
+        },
         dataType: 'json',
+        processing: true,
+        serverSide: true,
         columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
@@ -217,8 +232,13 @@ $( document ).ready(function() {
               ]
     });
     tableA = $("#itemA").DataTable({
-        ajax: '{{ url('master-item/get-data-a') }}',
+        "ajax": {
+            "url": "{{ url('master-item/get-data-a') }}",
+            "type": "POST"
+        },
         dataType: 'json',
+        processing: true,
+        serverSide: true,
         columns: [
             {data: 'i_nama', name: 'i_nama'},
             {data: 's_nama', name: 's_nama'},
