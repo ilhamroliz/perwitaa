@@ -630,7 +630,7 @@ group by ps_pekerja");
           $wife_tanggal = null;
           if ($request->wifettl != '' || $request->wifettl != null){
               $wife_tanggal = Carbon::createFromFormat('d/m/Y', $request->wifettl, 'Asia/Jakarta');
-          } 
+          }
           $childname = $request->childname;
           $childplace = $request->childplace;
           $childdate = $request->childdate;

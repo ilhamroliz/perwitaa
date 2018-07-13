@@ -100,7 +100,7 @@ $('.ladda-button').click(function () {
             data: $('#login-form').serialize(),
             dataType: 'json',
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status == 'sukses') {
                     if (response.content == 'authenticate') {
                         window.location = baseUrl + '/dashboard';

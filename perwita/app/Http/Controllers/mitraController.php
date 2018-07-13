@@ -45,7 +45,7 @@ class mitraController extends Controller
     public function simpan(Request $request) {
 
         $rules = [
-          'nomou' => 'required|numeric',
+          'nomou' => 'required',
           'namamitra' => 'required',
           'startmou' => 'required',
           'endmou' => 'required',
