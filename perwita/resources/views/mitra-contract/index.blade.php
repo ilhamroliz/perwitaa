@@ -66,7 +66,7 @@
                             <th>Nama divisi</th>
                             <th>Dibutuhkan</th>
                             <th>Terpenuhi</th>
-                            <th>Aksi</th>
+                            <th style="width:130px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
