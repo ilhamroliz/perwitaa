@@ -44,23 +44,23 @@ class mitraController extends Controller
     }
     public function simpan(Request $request) {
 
-        $rules = [
-          'nomou' => 'required',
-          'namamitra' => 'required',
-          'startmou' => 'required',
-          'endmou' => 'required',
-          'alamatmitra' => 'required',
-          'nama_cp' => 'required',
-          'no_cp' => 'required',
-        ];
-        $validator = Validator::make($request->all(), $rules);
+        // $rules = [
+        //   'nomou' => 'required',
+        //   'namamitra' => 'required',
+        //   'startmou' => 'required',
+        //   'endmou' => 'required',
+        //   'alamatmitra' => 'required',
+        //   'nama_cp' => 'required',
+        //   'no_cp' => 'required',
+        // ];
+        // $validator = Validator::make($request->all(), $rules);
 
-        if($validator->fails()){
-          return response()->json([
-            'status' => 'gagal',
-            'data' => $validator->errors->toArray(),
-          ]);
-        }
+        // if($validator->fails()){
+        //   return response()->json([
+        //     'status' => 'gagal',
+        //     'data' => $validator->errors->toArray(),
+        //   ]);
+        // }
 
         $idmitra = d_mitra::max('m_id')+1;
 
