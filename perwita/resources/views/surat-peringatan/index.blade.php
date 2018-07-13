@@ -38,7 +38,27 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
-                    
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nomor SP</label>
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="Nomor SP" class="form-control" name="nosp" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Pekerja</label>
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="Masukkan Nama/NIK Pekerja" class="form-control" name="nosp" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button class="btn btn-sm btn-white" type="submit">Sign in</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 
