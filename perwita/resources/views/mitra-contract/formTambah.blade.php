@@ -77,7 +77,7 @@
                         <div class="form-group row">
                             <label for="kontrak" class="col-sm-2 col-form-label">No Kontrak</label>
                             <div class="col-sm-10">
-                                <input readonly type="text" class="form-control" name="kontrak" id="kontrak" placeholder="No Kontrak" required="">
+                                <input type="text" class="form-control" name="kontrak" id="kontrak" placeholder="No Kontrak" required="">
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="kontrak-error">
                                     <small>No Kontrak harus diisi...!</small>
                                 </span>
