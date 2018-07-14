@@ -138,7 +138,8 @@
 var table = $(".pilihMitraPekerja").DataTable({
     "language": dataTableLanguage,
     "paging": false,
-    "searching": false
+    "searching": false,
+    "aaSorting": []
 });
 function simpan(){
     waitingDialog.show();
