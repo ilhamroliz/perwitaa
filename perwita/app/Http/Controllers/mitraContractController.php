@@ -85,7 +85,7 @@ class mitraContractController extends Controller
             ->groupBy('md_name')
             ->get();
         $nomou = $this->nomou();
-        
+
         return view('mitra-contract.formTambah', compact('d_mitra_divisi', 'comp', 'mitra','jabatan', 'nomou'));
     }
 

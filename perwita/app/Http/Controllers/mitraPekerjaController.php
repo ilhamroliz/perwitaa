@@ -181,7 +181,7 @@ class mitraPekerjaController extends Controller
         $tahun = Carbon::now('Asia/Jakarta')->year;
 
         $nik = DB::table('d_pekerja')
-            ->select(DB::raw('(max(mid(p_nip, 4, 5)) + 1) as counter'))
+            ->select(DB::raw('coalesce(max(mid(p_nip, 4, 5)) + 1, "00001") as counter'))
             ->where(DB::raw('right(p_nip, 4)'), '=', $tahun)
             ->get();
 
