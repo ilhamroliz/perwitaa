@@ -15,7 +15,7 @@
                 </div>
             </li>
 
-            <li class="">
+            <li class="{{Request::is('dashboard') ? 'active' : ''}}">
               <a href="{{url('dashboard')}}"><i class="fa fa-th-large"></i>
                   <i class="" aria-hidden="true"></i><span class="nav-label">Dashboards</span>
               </a>
