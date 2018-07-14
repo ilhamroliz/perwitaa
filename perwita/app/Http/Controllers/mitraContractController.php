@@ -84,7 +84,9 @@ class mitraContractController extends Controller
         $d_mitra_divisi = DB::table('d_mitra_divisi')
             ->groupBy('md_name')
             ->get();
-        return view('mitra-contract.formTambah', compact('d_mitra_divisi', 'comp', 'mitra','jabatan'));
+        $nomou = $this->nomou();
+        
+        return view('mitra-contract.formTambah', compact('d_mitra_divisi', 'comp', 'mitra','jabatan', 'nomou'));
     }
 
     public function simpan(Request $request)
@@ -322,6 +324,6 @@ class mitraContractController extends Controller
 
       $hasil = $kode . '/FPTK/PN/' . date('m') . '/' . date('Y');
 
-      return response()->json($hasil);
+      return $hasil;
     }
 }

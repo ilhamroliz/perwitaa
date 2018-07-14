@@ -84,9 +84,9 @@
                         <table class="table table-bordered table-striped pilihMitraPekerja table-hover" id="pilihMitraPekerja">
                             <thead>
                                 <th>Nama Pekerja</th>
-                                <th>NIK<sup>*</sup></th>
+                                <th>NIK Rekomendasi<sup>**</sup></th>
+                                <th>NIK Lama<sup>*</sup></th>
                                 <th>NIK Mitra<sup>*</sup></th>
-                                <th>No KTP</th>
                                 <th>JK</th>
                                 <th>No Hp</th>
                             </thead>
@@ -94,14 +94,14 @@
                             @foreach($pekerja as $index => $data)
                                 <tr>
                                     <td>{{$data->p_name}}</td>
+                                    <td>{{ $data->nikbaru }}</td>
                                     <td>
-                                        <input type="text" name="nik[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip }}">
+                                        <input type="text" name="nik[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" @if($data->p_nip != null) value="{{ $data->p_nip }}" @else value="{{ $data->nikbaru }}" @endif>
                                         <input type="hidden" name="id_pekerja[]" value="{{ $data->p_id }}">
                                     </td>
                                     <td>
                                         <input type="text" name="nik_mitra[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip_mitra }}">
                                     </td>
-                                    <td>{{ $data->p_ktp }}</td>
                                     <td>{{$data->p_sex}}</td>
                                     <td>{{$data->p_hp}}</td>
                                 </tr>
@@ -114,7 +114,9 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <div class="m-t" style="float: left">
-                                    <small><sup>*</sup>Jika sudah terisi, mungkin itu data lama dan bisa diganti sekarang</small>
+                                    <small><sup>*</sup> Jika sudah terisi, mungkin itu data lama dan bisa diganti. Data ini akan disimpan</small>
+                                    <br>
+                                    <small><sup>**</sup> Rekomendasi dari sistem, anda bisa mengubah NIK lama dengan yang direkomendasikan oleh sistem. Data ini tidak disimpan</small>
                                 </div>
                                 <button class="btn btn-primary simpan" type="button" onclick="simpan()" style="float: right">
                                     Simpan
@@ -134,7 +136,9 @@
 @section('extra_scripts')
 <script type="text/javascript">
 var table = $(".pilihMitraPekerja").DataTable({
-    "language": dataTableLanguage
+    "language": dataTableLanguage,
+    "paging": false,
+    "searching": false
 });
 function simpan(){
     waitingDialog.show();
