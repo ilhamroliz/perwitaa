@@ -178,6 +178,24 @@ class mitraPekerjaController extends Controller
             ->where('md_id', DB::raw('mc_divisi'))
             ->get();
 
+        $tahun = Carbon::now('Asia/Jakarta')->year;
+
+        $nik = DB::table('d_pekerja')
+            ->select(DB::raw('max(mid(p_nip, 4, 5)) as counter'))
+            ->where(DB::raw('right(p_nip, 4)'), '=', $tahun)
+            ->first();
+
+        $nik = $nik->counter;
+        $kode = "00001";
+        if (count($nik) > 0) {
+            foreach ($nik as $x) {
+                $temp = ((int)$x->kodemax)+1;
+                $kode = sprintf("%05s",$temp);
+            }
+        }
+
+        dd($kode);
+
         return view('mitra-pekerja.formLanjutan', compact('pekerja', 'info', 'seleksi', 'kerja'));
     }
 
