@@ -186,4 +186,10 @@ class mitraContractController extends Controller
         });
 
     }
+
+    public function nomou(){
+      $data = DB::select(DB::raw("SELECT MAX(LEFT(mc_no,5)) as Kodemax From d_mitra_contract WHERE DATE_FORMAT(mc_insert, '%m/%Y') = DATE_FORMAT(CURRENT_DATE(), '%m/%Y')"));
+
+      dd($data);
+    }
 }

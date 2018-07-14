@@ -86,7 +86,7 @@
 @section('extra_scripts')
 <script type="text/javascript">
     function tambah(){
-        window.location = baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/tambah';
+          window.location = baseUrl+'/manajemen-kontrak-mitra/data-kontrak-mitra/tambah';
     }
     function hapus(mitra,id_detail){
         swal({

@@ -307,4 +307,21 @@ class mitraContractController extends Controller
           'data' => $data
         ]);
     }
+
+    public function nomou(){
+      $data = DB::select(DB::raw("SELECT MAX(LEFT(mc_no,5)) as kodemax From d_mitra_contract WHERE DATE_FORMAT(mc_insert, '%m/%Y') = DATE_FORMAT(CURRENT_DATE(), '%m/%Y')"));
+
+      if (count($data) > 0) {
+        foreach ($data as $x) {
+          $temp = ((int)$x->kodemax)+1;
+          $kode = sprintf("%05s",$temp);
+        }
+      } else {
+        $kode = "00001";
+      }
+
+      $hasil = $kode . '/FPTK/PN/' . date('m') . '/' . date('Y');
+
+      return response()->json($hasil);
+    }
 }
