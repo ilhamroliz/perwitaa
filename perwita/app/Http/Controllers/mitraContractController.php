@@ -84,23 +84,22 @@ class mitraContractController extends Controller
         $d_mitra_divisi = DB::table('d_mitra_divisi')
             ->groupBy('md_name')
             ->get();
-        $nomou = $this->nomou();
 
-        return view('mitra-contract.formTambah', compact('d_mitra_divisi', 'comp', 'mitra','jabatan', 'nomou'));
+        return view('mitra-contract.formTambah', compact('d_mitra_divisi', 'comp', 'mitra','jabatan'));
     }
 
     public function simpan(Request $request)
     {
         $request->Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
         $request->Batas_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Batas_Kontrak, 'Asia/Jakarta');
-
+        $kontrak = $this->nomou();
         $mc_contractid = d_mitra_contract::where('mc_mitra', $request->mitra)->max('mc_contractid') + 1;
         d_mitra_contract::create([
             'mc_mitra' => $request->mitra,
             'mc_contractid' => $mc_contractid,
             'mc_divisi' => $request->divisi,
             'mc_comp' => $request->perusahaan,
-            'mc_no' => $request->kontrak,
+            'mc_no' => $kontrak,
             'mc_date' => $request->Tanggal_Kontrak,
             'mc_expired' => $request->Batas_Kontrak,
             'mc_need' => $request->Jumlah_Pekerja,
@@ -108,7 +107,6 @@ class mitraContractController extends Controller
             'mc_jabatan' => $request->jabatan,
             'mc_jobdesk' => $request->jobdesk,
             'mc_note' => $request->note,
-
         ]);
 
         return response()->json([
