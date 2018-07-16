@@ -1075,4 +1075,30 @@ group by ps_pekerja");
         rmdir($dirPath);
     }
 
+    public function resign(Request $request){
+      $id = $request->id;
+      $keterangan = $request->keterangan;
+
+      $cari_max_pm_detailid = DB::table('d_pekerja_mutation')
+                             ->where('pm_pekerja', $id)
+                             ->max('pm_detailid');
+
+      $d_pekerja_mutation = d_pekerja_mutation::where('pm_pekerja', $id);
+      $d_pekerja_mutation->insert([
+        'pm_pekerja' => $id,
+        'pm_detailid' => $cari_max_pm_detailid+1,
+        'pm_date' => Carbon::now('Asia/Jakarta'),
+        'pm_mitra' => null,
+        'pm_divisi' => null,
+        'pm_from' => null,
+        'pm_detail' => 'Resign',
+        'pm_status' => 'Ex',
+        'pm_note' => $keterangan
+      ]);
+
+      return response()->json([
+          'status' => 'berhasil'
+      ]);
+    }
+
 }
