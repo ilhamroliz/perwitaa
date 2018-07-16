@@ -474,7 +474,8 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                            var myWindow = window.open(''+baseUrl+'/manajemen-pembelian/print','','width=200,height=100');
+                            window.location.reload();
+                            var myWindow = window.open(''+baseUrl+'/manajemen-pembelian/print','','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();
