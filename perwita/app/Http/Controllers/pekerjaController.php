@@ -18,6 +18,8 @@ use App\d_pekerja_mutation;
 
 use App\d_mitra;
 
+use App\d_mitra_pekerja;
+
 use Yajra\Datatables\Datatables;
 use Session;
 use Validator;
@@ -1079,26 +1081,38 @@ group by ps_pekerja");
       $id = $request->id;
       $keterangan = $request->keterangan;
 
-      $cari_max_pm_detailid = DB::table('d_pekerja_mutation')
-                             ->where('pm_pekerja', $id)
-                             ->max('pm_detailid');
+      $d_mitra_pekerja = d_mitra_pekerja::where('mp_pekerja',$id)->get();
 
-      $d_pekerja_mutation = d_pekerja_mutation::where('pm_pekerja', $id);
-      $d_pekerja_mutation->insert([
-        'pm_pekerja' => $id,
-        'pm_detailid' => $cari_max_pm_detailid+1,
-        'pm_date' => Carbon::now('Asia/Jakarta'),
-        'pm_mitra' => null,
-        'pm_divisi' => null,
-        'pm_from' => null,
-        'pm_detail' => 'Resign',
-        'pm_status' => 'Ex',
-        'pm_note' => $keterangan
-      ]);
+      if ($d_mitra_pekerja[0]->mp_status == 'Aktif') {
+        d_mitra_pekerja::where('mp_pekerja',$id)->update([
+          'mp_status' => 'Tidak'
+        ]);
 
-      return response()->json([
-          'status' => 'berhasil'
-      ]);
+        d_pekerja::where('p_id',$id)->update([
+          'p_note' => 'Resign'
+        ]);
+
+        $cari_max_pm_detailid = DB::table('d_pekerja_mutation')
+                               ->where('pm_pekerja', $id)
+                               ->max('pm_detailid');
+
+        $d_pekerja_mutation = d_pekerja_mutation::where('pm_pekerja', $id);
+        $d_pekerja_mutation->insert([
+          'pm_pekerja' => $id,
+          'pm_detailid' => $cari_max_pm_detailid+1,
+          'pm_date' => Carbon::now('Asia/Jakarta'),
+          'pm_mitra' => null,
+          'pm_divisi' => null,
+          'pm_from' => null,
+          'pm_detail' => 'Resign',
+          'pm_status' => 'Ex',
+          'pm_note' => $keterangan
+        ]);
+
+        return response()->json([
+            'status' => 'berhasil'
+        ]);
+      }
     }
 
 }
