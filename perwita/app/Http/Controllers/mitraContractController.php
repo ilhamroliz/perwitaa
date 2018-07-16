@@ -248,7 +248,7 @@ class mitraContractController extends Controller
                     , 'mc_no'
                     , 'mc_jobdesk'
                     , 'mc_note')
-                  ->where('mc_mitra', '=', $id)
+                  ->where('mc_mitra', '=', $idmitra)
                   ->where('mc_divisi', '=', $iddivisi)
                   ->get();
 
@@ -258,7 +258,7 @@ class mitraContractController extends Controller
                 , 'p_name'
                 , 'p_nip'
                 , 'p_hp')
-                ->where('mp_mitra', '=', $id)
+                ->where('mp_mitra', '=', $idmitra)
                 ->where('mp_divisi', '=', $iddivisi)
                 ->get();
 

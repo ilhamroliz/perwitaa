@@ -197,10 +197,10 @@ setTimeout(function () {
 
 
 
-   function detail(id){
+   function detail(idmitra, iddetail){
       $.ajax({
         type : 'get',
-        url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+id+"/detail",
+        url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+idmitra+"/"+iddetail+"/detail",
         dataType : 'json',
         success : function(result){
           console.log(result);
