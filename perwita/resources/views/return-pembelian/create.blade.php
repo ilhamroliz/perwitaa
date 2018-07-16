@@ -37,7 +37,7 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="form-parent">
                         <div class="form-group">
                             <label class="col-lg-1 control-label">No Nota</label>
                             <div class="col-lg-3">
@@ -74,7 +74,11 @@
                             <tbody>
                                 @foreach($data as $data)
                                 <tr>
-                                    <td>{{ $data->nama }}</td>
+                                    <td>
+                                        {{ $data->nama }}
+                                        <input type="hidden" name="id_item[]" value="{{ $data->i_id }}">
+                                        <input type="hidden" name="item_detail[]" value="{{ $data->id_detailid }}">
+                                    </td>
                                     <td>{{ $data->pd_qty }}</td>
                                     <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($data->pd_value, 0, ',', '.') }}</span></td>
                                     <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($data->pd_disc_value, 0, ',', '.') }}</span></td>
@@ -91,7 +95,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary pull-right m-t-n-xs" type="button">Lanjutkan</button>
+                        <button class="btn btn-primary pull-right m-t-n-xs" onclick="lanjutkan()" type="button">Lanjutkan</button>
                     </div>
                 </div>
             </div>
@@ -124,6 +128,11 @@
 @section('extra_scripts')
 <script type="text/javascript">
     var table;
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     $(document).ready(function(){
         table = $("#table-return").DataTable({
             responsive: true,
@@ -133,6 +142,27 @@
         });
 
         $('#aksi-return').select2();
+    });
+    
+    $('#form-parent').on('submit', function(e){
+        var form = this;
+
+          // Encode a set of form elements from all pages as an array of names and values
+        var params = table.$('input,select,textarea').serializeArray();
+
+          // Iterate over all form elements
+        $.each(params, function(){
+             // If element doesn't exist in DOM
+             if(!$.contains(document, form[this.name])){
+                // Create a hidden element
+                $(form).append(
+                   $('<input>')
+                      .attr('type', 'hidden')
+                      .attr('name', this.name)
+                      .val(this.value)
+                );
+            }
+        });
     });
 </script>
 @endsection

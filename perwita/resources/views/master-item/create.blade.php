@@ -46,6 +46,7 @@
                         </select>
                       @else
                       <select class="form-control mitraselect select2" name="mitra" id="mitra">
+                        <option value="" disabled selected>-- Pilih Mitra --</option>
                         @foreach($mitra as $item)
                           <option value="{{ $item->m_id }}">{{ $item->m_name }}</option>
                         @endforeach
