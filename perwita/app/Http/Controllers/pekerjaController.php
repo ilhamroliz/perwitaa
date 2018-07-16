@@ -61,7 +61,7 @@ class pekerjaController extends Controller
                 return '<div class="text-center">
                     <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->p_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Resign" onclick="resign(' . $pekerja->p_id . ')"><i class="fa fa-sign-out"></i></button>
                   </div>';
             })
             ->make(true);

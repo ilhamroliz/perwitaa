@@ -287,6 +287,42 @@
     </div>
   </div>
 
+  <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content animated fadeIn">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <i class="glyphicon glyphicon-plus modal-icon"></i>
+                  <h4 class="modal-title">Tambah Mitra</h4>
+                  <small class="font-bold">Penambahan Mitra untuk Seragam yang dipilih</small>
+              </div>
+              <div class="modal-body">
+                  <h3 class="namabarang"></h3>
+                  <form class="form-horizontal">
+                      <div class="form-dinamis">
+                          <div class="form-group getkonten0">
+                              <label class="col-sm-2 control-label" for="ukuranbarang">Mitra</label>
+                              <div class="col-sm-6 selectukuran0">
+                                  <select class="form-control mitraselect0 select2 addmitra" name="addmitra[]" id="addmitra">
+                                      <option value="">--Pilih Mitra--</option>
+                                  </select>
+                              </div>
+                              <span>
+                                  <a type="button" class="btn btn-primary" id="tambahmitra" onclick="tambahmitra()"><i class="fa fa-plus"></i></a>
+                                  <a type="button" class="btn btn-danger" id="kurangmitra" onclick="alertmitra()"><i class="fa fa-times"></i></a>
+                              </span>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                  <button onclick="simpan()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
 
 @endsection
 
@@ -632,6 +668,10 @@
           })
 
           $("#modal-detail").modal("show");
+      }
+
+      function resign(id){
+
       }
 
 
