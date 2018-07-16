@@ -33,6 +33,7 @@ class mitraController extends Controller
         return Datatables::of($mitra)
                        ->addColumn('action', function ($mitra) {
                             return'<div class="text-center">
+                            <button style="margin-left:5px;" type="button" class="btn btn-info btn-xs" title="Hapus" onclick="detail('.$mitra->m_id.')"><i class="fa fa-folder"></i></button>
                             <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-mitra/' . $mitra->m_id .'/edit" ><i class="glyphicon glyphicon-edit"></i></a>
                     <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus('.$mitra->m_id.')"><i class="glyphicon glyphicon-trash"></i></button></div>';
                         })
@@ -158,6 +159,23 @@ class mitraController extends Controller
 
 
         });
+    }
+
+    public function detail(Request $request){
+      $id = $request->id;
+
+      $data = DB::table('d_mitra')
+            ->select('m_name',
+            'm_phone',
+            'm_cp_phone',
+            'm_address',
+            'm_fax',
+            'm_note',
+            'm_cp', DB::Raw("coalesce(m_fax, '-') as m_fax"))
+            ->where('m_id',$id)
+            ->get();
+
+      return response()->json($data);
     }
 
 }

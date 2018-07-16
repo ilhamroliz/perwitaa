@@ -61,7 +61,7 @@
                             <th>Alamat Mitra</th>
                             <th>Nomor Telepon</th>
                             <th>Keterangan</th>
-                            <th style="width: 8%;">Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,6 +72,95 @@
 
     </div>
 </div>
+</div>
+
+<div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width : 1000px">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                            <div class="image" id="showimage">
+                                  <i class="fa fa-folder-open modal-icon"></i>
+                            </div>
+                <h4 class="modal-title">Detail Mitra</h4>
+            </div>
+            <div class="modal-body">
+              <center>
+                <div class="spiner-mitra">
+                    <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
+                        <div class="sk-rect1 tampilkan" ></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Mitra</span>
+                </div>
+            </center>
+            <div id="showdetail">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <h3>Nama Mitra </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_name">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Alamat Mitra </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_address">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Nomor Telepon </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_phone">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Nama Contact Person </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_cp">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>No Contact Person </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_cp_phone">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Fax </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_fax">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Keterangan </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_note">: -</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3> </h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3 style="font-weight:normal;" id="m_note"></h3>
+                    </div>
+                    <table id="tabel_detail" class="table table-bordered table-striped tabel_detail">
+
+                    </table>
+              </div>
+            </div>
+              <div class="modal-footer">
+                  <div class="btn-group">
+                      <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 
 
@@ -181,6 +270,29 @@
 
 
 
+    }
+
+    function detail(id){
+      $("#modal-detail").modal('show');
+      $("#showdetail").hide();
+      $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/manajemen-mitra/data-mitra/detail',
+        dataType: 'json',
+        success : function(result){
+          $("#m_name").text(": "+result[0].m_name);
+          $("#m_address").text(": "+result[0].m_address);
+          $("#m_cp").text(": "+result[0].m_cp);
+          $("#m_cp_phone").text(": "+result[0].m_cp_phone);
+          $("#m_fax").text(": "+result[0].m_fax);
+          $("#m_note").text(": "+result[0].m_note);
+          $("#m_phone").text(": "+result[0].m_phone);
+
+          $('.spiner-mitra').css('display', 'none');
+          $("#showdetail").show();
+        }
+      });
     }
 
 </script>
