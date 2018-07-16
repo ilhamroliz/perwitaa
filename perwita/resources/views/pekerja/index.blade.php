@@ -645,6 +645,16 @@
                       + '<tbody>';
 
                   $.each(data, function (i, n) {
+                    if (n.pm_detail == 'Resign') {
+                      pekerja_mutasi = pekerja_mutasi + '<tr>'
+                          + '<td>' + n.pm_date + '</td>'
+                          + '<td>' + n.m_name + '</td>'
+                          + '<td>' + n.md_name + '</td>'
+                          + '<td>' + n.pm_note + '</td>'
+                          + '<td>' + n.pm_from + '</td>'
+                          + '<td>' + n.pm_detail + '</td>'
+                          + '</tr>';
+                    } else {
                       pekerja_mutasi = pekerja_mutasi + '<tr>'
                           + '<td>' + n.pm_date + '</td>'
                           + '<td>' + n.m_name + '</td>'
@@ -653,7 +663,7 @@
                           + '<td>' + n.pm_from + '</td>'
                           + '<td>' + n.pm_status + '</td>'
                           + '</tr>';
-
+                    }
                   });
                   pekerja_mutasi = pekerja_mutasi + '</tbody';
                   $('#tabel_detail').html(pekerja_mutasi);

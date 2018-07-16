@@ -203,8 +203,8 @@
                           waitingDialog.hide();
                           if (response.status == 'berhasil') {
                               swal({
-                                  title: "Pelamar Disetujui",
-                                  text: "Pelamar Berhasil Disetujui",
+                                  title: "Pembelian Disetujui",
+                                  text: "Pembelian Berhasil Disetujui",
                                   type: "success",
                                   showConfirmButton: false,
                                   timer: 900
@@ -242,7 +242,7 @@
     function tolak(id){
       swal({
               title: "Konfirmasi",
-              text: "Apakah anda yakin ingin menolak Pelamar ini?",
+              text: "Apakah anda yakin ingin menolak Pembelian ini?",
               type: "warning",
               showCancelButton: true,
               closeOnConfirm: false,
@@ -263,8 +263,8 @@
                           waitingDialog.hide();
                           if (response.status == 'berhasil') {
                               swal({
-                                  title: "Pelamar Ditolak",
-                                  text: "Pekerja Berhasil Ditolak",
+                                  title: "Pembelian Ditolak",
+                                  text: "Pembelian Berhasil Ditolak",
                                   type: "success",
                                   showConfirmButton: false,
                                   timer: 900
