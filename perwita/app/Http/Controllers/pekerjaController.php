@@ -61,7 +61,7 @@ class pekerjaController extends Controller
                 return '<div class="text-center">
                     <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->p_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Resign" onclick="resign(' . $pekerja->p_id . ')"><i class="fa fa-sign-out"></i></button>
                   </div>';
             })
             ->make(true);
@@ -1073,6 +1073,32 @@ group by ps_pekerja");
             }
         }
         rmdir($dirPath);
+    }
+
+    public function resign(Request $request){
+      $id = $request->id;
+      $keterangan = $request->keterangan;
+
+      $cari_max_pm_detailid = DB::table('d_pekerja_mutation')
+                             ->where('pm_pekerja', $id)
+                             ->max('pm_detailid');
+
+      $d_pekerja_mutation = d_pekerja_mutation::where('pm_pekerja', $id);
+      $d_pekerja_mutation->insert([
+        'pm_pekerja' => $id,
+        'pm_detailid' => $cari_max_pm_detailid+1,
+        'pm_date' => Carbon::now('Asia/Jakarta'),
+        'pm_mitra' => null,
+        'pm_divisi' => null,
+        'pm_from' => null,
+        'pm_detail' => 'Resign',
+        'pm_status' => 'Ex',
+        'pm_note' => $keterangan
+      ]);
+
+      return response()->json([
+          'status' => 'berhasil'
+      ]);
     }
 
 }

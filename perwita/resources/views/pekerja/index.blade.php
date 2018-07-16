@@ -287,6 +287,36 @@
     </div>
   </div>
 
+  <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content animated fadeIn">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <i class="fa fa-sign-out modal-icon"></i>
+                  <h4 class="modal-title">Keterangan Resign</h4>
+                  <small class="font-bold">Keterangan Resign</small>
+              </div>
+              <div class="modal-body">
+                  <h3 class="namabarang"></h3>
+                  <form class="form-horizontal">
+                      <div class="form-dinamis">
+                          <div class="form-group getkonten0">
+                              <label class="col-sm-2 control-label" for="ukuranbarang">Keterangan</label>
+                              <div class="col-sm-10 selectukuran0">
+                                  <input type="text" name="keterangan" id="keteranganresign" class="form-control" placeholder="Keterangan Resign" title="Keterangan Resign">
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                  <button onclick="simpanresign()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
 
 @endsection
 
@@ -615,6 +645,16 @@
                       + '<tbody>';
 
                   $.each(data, function (i, n) {
+                    if (n.pm_detail == 'Resign') {
+                      pekerja_mutasi = pekerja_mutasi + '<tr>'
+                          + '<td>' + n.pm_date + '</td>'
+                          + '<td>' + n.m_name + '</td>'
+                          + '<td>' + n.md_name + '</td>'
+                          + '<td>' + n.pm_note + '</td>'
+                          + '<td>' + n.pm_from + '</td>'
+                          + '<td>' + n.pm_detail + '</td>'
+                          + '</tr>';
+                    } else {
                       pekerja_mutasi = pekerja_mutasi + '<tr>'
                           + '<td>' + n.pm_date + '</td>'
                           + '<td>' + n.m_name + '</td>'
@@ -623,7 +663,7 @@
                           + '<td>' + n.pm_from + '</td>'
                           + '<td>' + n.pm_status + '</td>'
                           + '</tr>';
-
+                    }
                   });
                   pekerja_mutasi = pekerja_mutasi + '</tbody';
                   $('#tabel_detail').html(pekerja_mutasi);
@@ -632,6 +672,32 @@
           })
 
           $("#modal-detail").modal("show");
+      }
+
+      function resign(id){
+          $('#myModal').modal('show');
+          $('#simpanbtn').attr('onclick', 'simpanresign('+id+')');
+      }
+
+      function simpanresign(id){
+        var keterangan = $('#keteranganresign').val();
+        $.ajax({
+          type: 'get',
+          data: {id:id, keterangan:keterangan},
+          dataType: 'json',
+          url: baseUrl + '/manajemen-pekerja/data-pekerja/resign',
+          success : function(result){
+            if (result.status == 'berhasil') {
+              swal({
+                  title: "Berhasil Disimpan",
+                  text: "Data berhasil Disimpan",
+                  type: "success",
+                  showConfirmButton: false,
+                  timer: 900
+              });
+            }
+          }
+        })
       }
 
 
