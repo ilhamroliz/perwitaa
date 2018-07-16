@@ -68,7 +68,7 @@ class mitraContractController extends Controller
 
             ->addColumn('action', function ($mc) {
                 return '<div class="text-center">
-                    <a style="margin-left:5px;" title="Detail" type="button" onclick="detail('.$mc->mc_mitra.')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>
+                    <a style="margin-left:5px;" title="Detail" type="button" onclick="detail('.$mc->mc_mitra.', '.$mc->mc_divisi.')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-kontrak-mitra/' . $mc->mc_mitra . '/' . $mc->mc_contractid . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
                     <a style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $mc->mc_mitra . ',' . $mc->mc_contractid . ')"><i class="glyphicon glyphicon-trash"></i></a>
                   </div>';
@@ -232,7 +232,7 @@ class mitraContractController extends Controller
         ]);
     }
 
-    public function detail($id){
+    public function detail($idmitra, $iddivisi){
       $data = DB::table('d_mitra_contract')
                   ->join('d_mitra', 'm_id', '=', 'mc_mitra')
                   ->join('d_jabatan_pelamar', 'jp_id', '=', 'mc_jabatan')
@@ -248,7 +248,9 @@ class mitraContractController extends Controller
                     , 'mc_no'
                     , 'mc_jobdesk'
                     , 'mc_note')
-                  ->where('mc_mitra', '=', $id)->get();
+                  ->where('mc_mitra', '=', $id)
+                  ->where('mc_divisi', '=', $iddivisi)
+                  ->get();
 
       $pekerja = DB::table('d_mitra_pekerja')
                 ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
@@ -256,7 +258,9 @@ class mitraContractController extends Controller
                 , 'p_name'
                 , 'p_nip'
                 , 'p_hp')
-                ->where('mp_contract', '=', $id)->get();
+                ->where('mp_mitra', '=', $id)
+                ->where('mp_divisi', '=', $iddivisi)
+                ->get();
 
               return response()->json([
                 'data' => $data,
