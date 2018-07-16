@@ -55,4 +55,9 @@ class ReturnPembelianController extends Controller
 
         return view('return-pembelian.create', compact('data'));
     }
+
+    public function lanjut(Request $request)
+    {
+        dd($request);
+    }
 }

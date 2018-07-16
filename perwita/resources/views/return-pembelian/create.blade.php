@@ -37,7 +37,8 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form class="form-horizontal" id="form-parent">
+                    <form class="form-horizontal" id="form-parent"  action="{{ url('manajemen-seragam/return/lanjut') }}" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
                             <label class="col-lg-1 control-label">No Nota</label>
                             <div class="col-lg-3">
@@ -52,11 +53,7 @@
                                 <input type="text" class="form-control" name="tangal" value="{{ $data[0]->p_date }}" readonly>
                             </div>
                         </div>
-                        <div class="form-group">
-                            
-                        </div>
                     </form>
-
 
                     <div class="table-responsive" style="margin-top: 20px;">
                         <table class="table table-striped table-bordered table-hover" id="table-return">
@@ -95,7 +92,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary pull-right m-t-n-xs" onclick="lanjutkan()" type="button">Lanjutkan</button>
+                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Lanjutkan</button>
                     </div>
                 </div>
             </div>
@@ -149,7 +146,7 @@
 
           // Encode a set of form elements from all pages as an array of names and values
         var params = table.$('input,select,textarea').serializeArray();
-
+        alert('afsdsd');
           // Iterate over all form elements
         $.each(params, function(){
              // If element doesn't exist in DOM
@@ -164,5 +161,9 @@
             }
         });
     });
+
+    function lanjut(){
+        $('#form-parent').submit();
+    }
 </script>
 @endsection
