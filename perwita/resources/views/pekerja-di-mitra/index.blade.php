@@ -46,7 +46,7 @@
                     @else
                     <select id="select-picker" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="filterColumnmitra()">
                     <option value="" selected="true" >- Cari Mitra -</option>
-                    <option value="all">- Select All -</option>
+                    <option value="all">Select All</option>
                     @foreach ($data as $key => $value)
                         <option value="{{ $value ->md_mitra }}" id="optionvalue">{{$value ->m_name}}</option>
                     @endforeach
@@ -56,7 +56,7 @@
                 <div class="col-6 col-md-3">
                 <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
                   <option value="">- Cari Divisi -</option>
-                  <option value="all">- Select All -</option>
+                  <option value="all">Select All</option>
                 </select>
                 </div>
                 <div class="col-6 col-md-2">
@@ -146,7 +146,7 @@ $(document).ready(function(){
 // });
 
 function filterColumnmitra () {
-    $("#selectdivisi").html('<option value="">- Cari Divisi -</option><option value="all">- Select All -</option>');
+    $("#selectdivisi").html('<option value="">- Cari Divisi -</option><option value="all">Select All</option>');
     var nmitra = $('.select-picker').val();
     $('#table').DataTable().column(2).search(nmitra).draw();
     id =  $('#select-picker').val();
