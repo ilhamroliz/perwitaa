@@ -37,7 +37,7 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form class="form-horizontal" id="form-parent"  action="{{ url('manajemen-seragam/return/simpan') }}" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+                    <form class="form-horizontal" id="form-parent"  action="{{ url('manajemen-seragam/return/lanjut') }}" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
                             <label class="col-lg-1 control-label">No Nota</label>
@@ -85,14 +85,15 @@
                                         <select name="aksi[]" class="form-control" id="aksi-return" style="width: 100%;">
                                             <option disabled selected>-- Pilih Aksi --</option>
                                             <option value="uang">Ganti Uang</option>
-                                            <option value="barang">Ganti Barang</option>
+                                            <option value="barang">Ganti Barang Sejenis</option>
+                                            <option value="lain">Ganti Barang Lain</option>
                                         </select>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Simpan</button>
+                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Lanjutkan</button>
                     </div>
                 </div>
             </div>
