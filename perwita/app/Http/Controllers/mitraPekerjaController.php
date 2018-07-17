@@ -237,7 +237,7 @@ class mitraPekerjaController extends Controller
      */
     public function simpan(Request $request)
     {
-        //dd($request);
+
         DB::beginTransaction();
         try {
             $sekarang = Carbon::now('Asia/Jakarta');
@@ -258,7 +258,6 @@ class mitraPekerjaController extends Controller
                     }
                 }
             }
-            dd($nik);
             $cekSelected = count($request->id_pekerja);
             if ($cekSelected == 0) {
                 return response()->json([
@@ -308,6 +307,9 @@ class mitraPekerjaController extends Controller
                             'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d')
                         ]);
 
+                    if ($nik[$i] == ''){
+                        $nik[$i] = $this->getNewNik(1);
+                    }
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',
@@ -334,11 +336,9 @@ class mitraPekerjaController extends Controller
 
                 } else {
 //====== data di create
-                    /*for ($n = 0; $n < count($nikbaru); $n++){
-                        if ($id_pekerja[$i] == $nikbaru[$n]){
-
-                        }
-                    }*/
+                    if ($nik[$i] == ''){
+                        $nik[$i] = $this->getNewNik(1);
+                    }
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',

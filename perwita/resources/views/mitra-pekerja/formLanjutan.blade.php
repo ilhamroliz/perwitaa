@@ -95,7 +95,7 @@
                                 <tr>
                                     <td>{{$data->p_name}}</td>
                                     <td>
-                                        <input type="text" name="nik[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" @if($data->p_nip != null) value="{{ $data->p_nip }}" @else value="{{ $data->nikbaru }}" @endif>
+                                        <input type="text" name="nik[]" class="form-control pekerja-{{ $data->p_id }}" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip }}" readonly>
                                         <input type="hidden" name="id_pekerja[]" value="{{ $data->p_id }}">
                                     </td>
                                     <td>
@@ -105,7 +105,7 @@
                                     <td>{{$data->p_hp}}</td>
                                     <td class="text-center">
                                         <div class="checkbox checkbox-primary checkbox-inline">
-                                            <input type="checkbox" id="nik-{{ $data->p_id }}" value="{{ $data->p_id }}" name="nikbaru[]" checked>
+                                            <input type="checkbox" id="nik-{{ $data->p_id }}" value="{{ $data->p_id }}" name="nikbaru[]" checked onchange="gantiForm('{{ $data->p_id }}')">
                                             <label for="nik-{{ $data->p_id }}">NIK Baru</label>
                                         </div>
                                     </td>
@@ -199,6 +199,16 @@ function simpan(){
             waitingDialog.hide();
         }
     });
+}
+
+function gantiForm(id){
+    if ($('#nik-'+id).is(':checked')) {
+        $('.pekerja-'+id).val('');
+        $('.pekerja-'+id).prop('readonly', true);
+    } else {
+        $('.pekerja-'+id).val('');
+        $('.pekerja-'+id).prop('readonly', false);
+    }
 }
 </script>
 @endsection
