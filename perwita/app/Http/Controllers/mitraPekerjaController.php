@@ -148,11 +148,11 @@ class mitraPekerjaController extends Controller
 
     public function tambah()
     {
-
         $mitra_contract = DB::table('d_mitra_contract')
                       ->join('d_mitra', 'm_id', '=', 'mc_mitra')
                       ->join('d_mitra_divisi', 'md_id', '=', 'mc_divisi')
                       ->where('mc_fulfilled', '<', DB::raw('mc_need'))
+                      ->groupBy('mc_no')
                       ->get();
         // d_mitra_contract::where('mc_fulfilled', '<', DB::raw('mc_need'))->get();
         $pekerja = DB::select('select p_id, p_name, p_sex, p_address, p_hp, p_education from d_pekerja left join d_mitra_pekerja on mp_pekerja = p_id where p_id not in (select mp_pekerja from d_mitra_pekerja where mp_status = "Aktif")');
