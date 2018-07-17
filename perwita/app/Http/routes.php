@@ -57,7 +57,7 @@ Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/cari','mitraContractContr
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/nomou','mitraContractController@nomou');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/searchresult','mitraContractController@searchresult');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/searchresult/getdata', 'mitraContractController@getdata');
-Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/{id}/detail','mitraContractController@detail');
+Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/{idmitra}/{iddetail}/detail','mitraContractController@detail');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/{mitra}/{mc_contractid}/edit','mitraContractController@edit');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/perbarui/{mitra}/{mc_contractid}','mitraContractController@perbarui');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/update/{mitra}/{mc_contractid}','mitraContractController@update');
