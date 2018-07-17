@@ -107,4 +107,48 @@ class approvalpembelianController extends Controller
       ]);
     }
 
+    public function setujuilist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          d_purchase::where('p_id',$request->pilih[$i])
+                    ->update([
+                      'p_isapproved' => 'Y'
+                    ]);
+        }
+
+        DB::commit();
+        return response()->json([
+            'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+            'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function tolaklist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          d_purchase::where('p_id',$request->pilih[$i])
+                    ->update([
+                      'p_isapproved' => 'N'
+                    ]);
+        }
+
+        DB::commit();
+        return response()->json([
+            'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+            'status' => 'gagal'
+        ]);
+      }
+    }
+
 }

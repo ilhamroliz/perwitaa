@@ -593,4 +593,6 @@ Route::get('approvalmitra/print', 'approvalmitraController@print');
 Route::get('approvalpembelian', 'approvalpembelianController@index');
 Route::get('approvalpembelian/setujui', 'approvalpembelianController@setujui');
 Route::get('approvalpembelian/tolak', 'approvalpembelianController@tolak');
+Route::get('approvalpembelian/setujuilist', 'approvalpembelianController@setujuilist');
+Route::get('approvalpembelian/tolaklist', 'approvalpembelianController@tolaklist');
 Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');
