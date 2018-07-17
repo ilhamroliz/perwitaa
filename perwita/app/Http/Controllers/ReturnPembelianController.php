@@ -56,17 +56,33 @@ class ReturnPembelianController extends Controller
         return view('return-pembelian.create', compact('data'));
     }
 
-    public function save(Request $request)
+    public function lanjut(Request $request)
     {
-        dd($request);
         $aksi = $request->aksi;
-        DB::beginTransaction();
-        try{
-            for ($i = 0; $i < count($aksi); $i++){
+        $nota = $request->nota;
+        $id_item = $request->id_item;
+        $item_detail = $request->item_detail;
+        $jumlah = $request->return;
+        $data = DB::table('d_purchase')
+            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+            ->join('d_item', 'i_id', '=', 'pd_item')
+            ->join('d_item_dt', function ($q){
+                $q
+                    ->on('pd_item_dt', '=', 'id_detailid')
+                    ->on('i_id', '=', 'id_item');
+            })
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
+            ->select('i_id', 'id_detailid' ,DB::raw('concat(pd_qty, " ", i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'pd_qty', DB::raw('cast(pd_value as int) as pd_value'), DB::raw('date_format(p_date, "%d/%m/%Y") as p_date'), DB::raw('d_supplier.s_company as supplier'), 'p_nota', DB::raw('cast(p_total_net as int) as p_total_net'), 'p_id', 'pd_disc_value')
+            ->where('p_nota', '=', $nota)
+            ->get();
 
+        for ($i = 0; $i < count($data); $i++){
+            if ($id_item[$i] == $data[$i]->i_id && $data[$i]->id_detailid == $item_detail[$i]){
+                $data[$i]->aksi = $aksi[$i];
+                $data[$i]->jumlah = $jumlah[$i];
             }
-        } catch (\Exception $e){
-
         }
+        dd($data);
     }
 }
