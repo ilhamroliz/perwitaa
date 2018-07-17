@@ -206,6 +206,31 @@ class mitraPekerjaController extends Controller
         return view('mitra-pekerja.formLanjutan', compact('pekerja', 'info', 'seleksi', 'kerja'));
     }
 
+    public function getNewNik($jumlah)
+    {
+        $tahun = Carbon::now('Asia/Jakarta')->year;
+
+        $nik = DB::table('d_pekerja')
+            ->select(DB::raw('coalesce(max(mid(p_nip, 4, 5)) + 1, "00001") as counter'))
+            ->where(DB::raw('right(p_nip, 4)'), '=', $tahun)
+            ->get();
+
+        $kode = "00001";
+        $tempKode = [];
+        for ($i = 0; $i < $jumlah; $i++){
+            if (count($nik) > 0) {
+                foreach ($nik as $x) {
+                    $temp = ((int)$x->counter)+$i;
+                    $kode = sprintf("%05s",$temp);
+                }
+                $tempKode[$i] = 'PN-' . $kode . '.' . $tahun;
+
+            }
+        }
+
+        return $tempKode;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -223,7 +248,17 @@ class mitraPekerjaController extends Controller
             $tgl_kerja = $request->tgl_kerja;
             $tgl_seleksi = $request->tgl_seleksi;
             $nik = $request->nik;
-
+            $nikbaru = $request->nikbaru;
+            $newNik = $this->getNewNik(count($nikbaru));
+            for ($n = 0; $n < count($nikbaru); $n++){
+                for ($i = 0; $i < count($id_pekerja); $i++){
+                    if ($id_pekerja[$i] == $nikbaru[$n]){
+                        $nik[$i] == $newNik[$n];
+                        $i = count($id_pekerja);
+                    }
+                }
+            }
+            dd($nik);
             $cekSelected = count($request->id_pekerja);
             if ($cekSelected == 0) {
                 return response()->json([
@@ -299,6 +334,11 @@ class mitraPekerjaController extends Controller
 
                 } else {
 //====== data di create
+                    /*for ($n = 0; $n < count($nikbaru); $n++){
+                        if ($id_pekerja[$i] == $nikbaru[$n]){
+
+                        }
+                    }*/
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',

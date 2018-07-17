@@ -84,17 +84,16 @@
                         <table class="table table-bordered table-striped pilihMitraPekerja table-hover" id="pilihMitraPekerja">
                             <thead>
                                 <th>Nama Pekerja</th>
-                                <th>NIK Rekomendasi<sup>**</sup></th>
                                 <th>NIK Lama<sup>*</sup></th>
                                 <th>NIK Mitra<sup>*</sup></th>
                                 <th>JK</th>
                                 <th>No Hp</th>
+                                <th>NIK Baru</th>
                             </thead>
                             <tbody>
                             @foreach($pekerja as $index => $data)
                                 <tr>
                                     <td>{{$data->p_name}}</td>
-                                    <td>{{ $data->nikbaru }}</td>
                                     <td>
                                         <input type="text" name="nik[]" class="form-control" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" @if($data->p_nip != null) value="{{ $data->p_nip }}" @else value="{{ $data->nikbaru }}" @endif>
                                         <input type="hidden" name="id_pekerja[]" value="{{ $data->p_id }}">
@@ -104,6 +103,12 @@
                                     </td>
                                     <td>{{$data->p_sex}}</td>
                                     <td>{{$data->p_hp}}</td>
+                                    <td class="text-center">
+                                        <div class="checkbox checkbox-primary checkbox-inline">
+                                            <input type="checkbox" id="nik-{{ $data->p_id }}" value="{{ $data->p_id }}" name="nikbaru[]" checked>
+                                            <label for="nik-{{ $data->p_id }}">NIK Baru</label>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -113,10 +118,10 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <div class="m-t" style="float: left">
+                                <div class="m-t" style="float: left; margin-top: -10px;">
                                     <small><sup>*</sup> Jika sudah terisi, mungkin itu data lama dan bisa diganti. Data ini akan disimpan</small>
                                     <br>
-                                    <small><sup>**</sup> Rekomendasi dari sistem, anda bisa mengubah NIK lama dengan yang direkomendasikan oleh sistem. Data ini tidak disimpan</small>
+                                    <small><strong>NB:</strong> Jika pekerja tidak memiliki NIK lama, maka sistem akan otomatis menggunakan NIK baru</small>
                                 </div>
                                 <button class="btn btn-primary simpan" type="button" onclick="simpan()" style="float: right">
                                     Simpan
