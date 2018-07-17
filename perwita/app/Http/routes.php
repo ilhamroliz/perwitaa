@@ -582,8 +582,6 @@ Route::get('approvalpelamar/print', 'approvalpelamarController@print');
 
 //Approval Mitra
 Route::get('approvalmitra', 'approvalmitraController@index');
-Route::get('approvalmitra/table', 'approvalmitraController@data');
-Route::post('approvalmitra/table', 'approvalmitraController@data');
 Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
 Route::get('approvalmitra/setujuilist', 'approvalmitraController@setujuilist');
