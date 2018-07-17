@@ -37,7 +37,7 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form class="form-horizontal" id="form-parent"  action="{{ url('manajemen-seragam/return/lanjut') }}" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+                    <form class="form-horizontal" id="form-parent"  action="{{ url('manajemen-seragam/return/simpan') }}" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
                             <label class="col-lg-1 control-label">No Nota</label>
@@ -73,8 +73,6 @@
                                 <tr>
                                     <td>
                                         {{ $data->nama }}
-                                        <input type="hidden" name="id_item[]" value="{{ $data->i_id }}">
-                                        <input type="hidden" name="item_detail[]" value="{{ $data->id_detailid }}">
                                     </td>
                                     <td>{{ $data->pd_qty }}</td>
                                     <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($data->pd_value, 0, ',', '.') }}</span></td>
@@ -82,6 +80,8 @@
                                     <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format(($data->pd_value * $data->pd_qty) - $data->pd_disc_value, 0, ',', '.') }}</span></td>
                                     <td><input type="text" name="return[]" value="0" class="form-control" style="width: 100%"></td>
                                     <td>
+                                        <input type="hidden" name="id_item[]" value="{{ $data->i_id }}">
+                                        <input type="hidden" name="item_detail[]" value="{{ $data->id_detailid }}">
                                         <select name="aksi[]" class="form-control" id="aksi-return" style="width: 100%;">
                                             <option disabled selected>-- Pilih Aksi --</option>
                                             <option value="uang">Ganti Uang</option>
@@ -92,29 +92,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Lanjutkan</button>
+                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Simpan</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-truck modal-icon"></i>
-                <h4 class="modal-title">Tambah Data Supplier</h4>
-                <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
             </div>
         </div>
     </div>
@@ -143,22 +123,17 @@
     
     $('#form-parent').on('submit', function(e){
         var form = this;
-
           // Encode a set of form elements from all pages as an array of names and values
         var params = table.$('input,select,textarea').serializeArray();
-        alert('afsdsd');
           // Iterate over all form elements
         $.each(params, function(){
              // If element doesn't exist in DOM
-             if(!$.contains(document, form[this.name])){
-                // Create a hidden element
-                $(form).append(
+             $(form).append(
                    $('<input>')
                       .attr('type', 'hidden')
                       .attr('name', this.name)
                       .val(this.value)
                 );
-            }
         });
     });
 

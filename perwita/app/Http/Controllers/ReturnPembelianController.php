@@ -56,8 +56,17 @@ class ReturnPembelianController extends Controller
         return view('return-pembelian.create', compact('data'));
     }
 
-    public function lanjut(Request $request)
+    public function save(Request $request)
     {
         dd($request);
+        $aksi = $request->aksi;
+        DB::beginTransaction();
+        try{
+            for ($i = 0; $i < count($aksi); $i++){
+
+            }
+        } catch (\Exception $e){
+
+        }
     }
 }
