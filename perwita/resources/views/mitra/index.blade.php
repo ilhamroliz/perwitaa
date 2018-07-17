@@ -61,7 +61,7 @@
                             <th>Alamat Mitra</th>
                             <th>Nomor Telepon</th>
                             <th>Keterangan</th>
-                            <th>Action</th>
+                            <th style="width:120px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
