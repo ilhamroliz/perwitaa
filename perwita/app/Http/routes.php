@@ -424,6 +424,8 @@ Route::get('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
 Route::post('pekerja-di-mitra/getpekerja', 'pdmController@getpekerja');
 Route::get('pekerja-di-mitra/getnomor', 'pdmController@getnomor');
 Route::get('pekerja-di-mitra/getdata', 'pdmController@getdata');
+Route::get('pekerja-di-mitra/getnik', 'pdmController@getnik');
+Route::get('pekerja-di-mitra/simpannik', 'pdmController@simpannik');
 
 //================= master item ilham ========================
 Route::get('master-item', [

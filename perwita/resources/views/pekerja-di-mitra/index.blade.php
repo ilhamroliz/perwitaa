@@ -44,7 +44,7 @@
                   @if(empty($data))
                   <p>Data tidak Ketemu</p>
                     @else
-                    <select id="select-picker" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="filterColumnmitra()">
+                    <select id="selectmitra" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="filterColumnmitra()">
                     <option value="" selected="true" >- Cari Mitra -</option>
                     <option value="all">Select All</option>
                     @foreach ($data as $key => $value)
@@ -55,7 +55,6 @@
                 </div>
                 <div class="col-6 col-md-3">
                 <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
-                  <option value="">- Cari Divisi -</option>
                   <option value="all">Select All</option>
                 </select>
                 </div>
@@ -77,6 +76,7 @@
                             <th>Mitra</th>
                             <th>Divisi</th>
                             <th>Mulai Bekerja</th>
+                            <th style="width:5px;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -87,6 +87,36 @@
     </div>
 </div>
 </div>
+</div>
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-newspaper-o modal-icon"></i>
+                <h4 class="modal-title">Edit Mitra NIK</h4>
+                <small class="font-bold">Edit Mitra NIK</small>
+            </div>
+            <div class="modal-body">
+                <h3 class="namabarang"></h3>
+                <form class="form-horizontal">
+                    <div class="form-dinamis">
+                        <div class="form-group getkonten0">
+                            <label class="col-sm-2 control-label" for="ukuranbarang">Mitra NIK</label>
+                            <div class="col-sm-9 selectukuran0">
+                                <input type="text" name="nik" id="nik" class="form-control" placeholder="Mitra NIK" title="Mitra NIK">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                <button onclick="simpannik()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -146,10 +176,10 @@ $(document).ready(function(){
 // });
 
 function filterColumnmitra () {
-    $("#selectdivisi").html('<option value="">- Cari Divisi -</option><option value="all">Select All</option>');
-    var nmitra = $('.select-picker').val();
+    $("#selectdivisi").html('<option value="all">Select All</option>');
+    var nmitra = $('#selectmitra').val();
     $('#table').DataTable().column(2).search(nmitra).draw();
-    id =  $('#select-picker').val();
+    id =  $('#selectmitra').val();
     var html = "";
     $.ajax({
       type: 'get',
@@ -180,8 +210,8 @@ function cari(){
               }
           });
   var html = "";
-  var mitra = $('#cari').attr('mitra');
-  var divisi = $('#cari').attr('divisi');
+  var mitra = $('#selectmitra').val();
+  var divisi = $('#selectdivisi').val();
   $.ajax({
     type: 'post',
     data: 'mitra='+mitra+"&divisi="+divisi,
@@ -195,6 +225,9 @@ function cari(){
               '<td>'+result[i].m_name+'</td>'+
               '<td>'+result[i].md_name+'</td>'+
               '<td>'+result[i].mp_workin_date+'</td>'+
+              '<td align="center">'+
+                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[i].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+              '</td>'+
               '</tr>';
       }
       $('#showdata').html(html);
@@ -228,13 +261,15 @@ function cari(){
       data: {id:id},
       dataType: 'json',
       success : function(result){
-        // console.log(result);
         html += '<tr>'+
               '<td>'+result[0].p_name+'</td>'+
               '<td>'+result[0].mp_mitra_nik+'</td>'+
               '<td>'+result[0].m_name+'</td>'+
               '<td>'+result[0].md_name+'</td>'+
               '<td>'+result[0].mp_workin_date+'</td>'+
+              '<td align="center">'+
+                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[0].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+              '</td>'+
               '</tr>';
       $('#showdata').html(html);
       waitingDialog.hide();
@@ -254,6 +289,43 @@ function cari(){
               alert('Unknow Error.\n' + x.responseText);
           }
           waitingDialog.hide();
+      }
+    });
+  }
+
+  function editnik(id){
+    $.ajax({
+      type: 'get',
+      data: {id:id},
+      url: baseUrl + '/pekerja-di-mitra/getnik',
+      dataType: 'json',
+      success : function(result){
+        $('#nik').val(result[0].mp_mitra_nik);
+        $('#simpanbtn').attr('onclick', 'simpannik('+id+')');
+        $('#myModal').modal('show');
+      }
+    });
+  }
+
+  function simpannik(id){
+    $.ajax({
+      type: 'get',
+      data: {id:id, nik:$('#nik').val()},
+      url: baseUrl + '/pekerja-di-mitra/simpannik',
+      dataType: 'json',
+      success : function(result){
+        if (result.status == 'berhasil') {
+          swal({
+              title: "Data NIK Disimpan",
+              text: "Data NIK berhasil Disimpan",
+              type: "success",
+              showConfirmButton: false,
+              timer: 900
+          });
+          setTimeout(function(){
+                window.location.reload();
+        }, 850);
+        }
       }
     });
   }

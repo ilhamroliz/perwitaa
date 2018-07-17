@@ -11,6 +11,7 @@ use DB;
 use Validator;
 use App\Http\Controllers\Controller;
 use App\d_pekerja;
+use App\d_mitra_pekerja;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
@@ -206,6 +207,7 @@ class pdmController extends Controller
        return redirect('/pekerja-di-mitra/pekerja-mitra');
 
     }
+
      public function hapus($mp_pekerja){
 
      DB::table('d_mitra_pekerja')->where('mp_pekerja','=',$mp_pekerja)->delete();
@@ -213,6 +215,32 @@ class pdmController extends Controller
 
     }
 
+    public function getnik(Request $request){
+      $data = DB::table('d_mitra_pekerja')
+          ->select('mp_mitra_nik')
+          ->where('mp_id',$request->id)
+          ->get();
 
+      return response()->json($data);
+    }
 
+    public function simpannik(Request $request){
+      DB::beginTransaction();
+      try {
+        $d_mitra_pekerja = d_mitra_pekerja::where('mp_id',$request->id);
+        $d_mitra_pekerja->update([
+          'mp_mitra_nik' => $request->nik
+        ]);
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
 }

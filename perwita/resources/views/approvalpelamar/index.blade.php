@@ -72,7 +72,7 @@
                         <td>{{$x->p_education}}</td>
                         <td>{{$x->p_address}}</td>
                         <td>{{$x->p_hp}}</td>
-                      <td>
+                      <td align="center">
                         <div class="action">
                             <button type="button" id="'.$pekerja->p_id.'" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
                             <button type="button" id="'.$pekerja->p_id.'" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
