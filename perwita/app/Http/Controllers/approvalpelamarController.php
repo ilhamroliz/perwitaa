@@ -17,26 +17,12 @@ use App\d_pekerja;
 class approvalpelamarController extends Controller
 {
     public function index(){
+      $data = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->get();
 
-      return view("approvalpelamar.index");
+      return view("approvalpelamar.index", compact('data'));
     }
-
-    public function data(){
-      DB::statement(DB::raw('set @rownum=0'));
-      $pekerja = d_pekerja::select(DB::raw('p_id as DT_RowId'), DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pekerja.*')->where('p_status_approval', '=', null)->get();
-      return Datatables::of($pekerja)
-                     ->addColumn('action', function ($pekerja) {
-                          return'<div class="action">
-                              <button type="button" id="'.$pekerja->p_id.'" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                              <button type="button" id="'.$pekerja->p_id.'" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                              <button type="button" id="'.$pekerja->p_id.'" onclick="tolak('.$pekerja->p_id.')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
-                          </div>';
-                      })
-                      ->make(true);
-                      //dd($pekerja);
-    }
-
-
 
     public function detail(Request $request){
       $id = $request->id;
@@ -357,5 +343,51 @@ class approvalpelamarController extends Controller
            'p_note' => $data[0]->p_note
          );
          return view('approvalpelamar.print', compact('lempar'));
+    }
+
+    public function setujuilist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          $d_pekerja = d_pekerja::where('p_id',$request->pilih[$i])->where('p_status_approval', null);
+          $d_pekerja->update([
+            'p_status_approval' => 'Y',
+            'p_date_approval' => Carbon::now()
+          ]);
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function tolaklist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          $d_pekerja = d_pekerja::where('p_id',$request->pilih[$i])->where('p_status_approval', null);
+          $d_pekerja->update([
+            'p_status_approval' => 'N',
+            'p_date_approval' => Carbon::now()
+          ]);
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
     }
 }

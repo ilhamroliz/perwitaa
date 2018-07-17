@@ -48,7 +48,7 @@
                     </div>
                 </center>
 
-                <form class="formapprovalmitra" id="formapprovalmitra" action="index.html" method="post">
+                <form class="formapprovalmitra" id="formapprovalmitra">
                 <table id="approvalmitra" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
@@ -214,6 +214,7 @@ setTimeout(function(){
   }
 
 });
+
     function detail(id){
       $("#modal-detail").modal('show');
       $("#showdetail").hide();

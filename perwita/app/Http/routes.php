@@ -573,11 +573,11 @@ Route::get('approval/cekapproval', 'approvalController@cekapproval');
 
 //Approval pelamar
 Route::get('approvalpelamar', 'approvalpelamarController@index');
-Route::get('approvalpelamar/table', 'approvalpelamarController@data');
-Route::post('approvalpelamar/table', 'approvalpelamarController@data');
 Route::get('approvalpelamar/detail', 'approvalpelamarController@detail');
 Route::get('approvalpelamar/setujui', 'approvalpelamarController@setujui');
+Route::get('approvalpelamar/setujuilist', 'approvalpelamarController@setujuilist');
 Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
+Route::get('approvalpelamar/tolaklist', 'approvalpelamarController@tolaklist');
 Route::get('approvalpelamar/print', 'approvalpelamarController@print');
 
 //Approval Mitra

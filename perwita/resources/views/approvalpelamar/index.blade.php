@@ -48,11 +48,13 @@
                     </div>
                 </center>
 
-
+                <form class="formapprovalpelamar" id="formapprovalpelamar">
                 <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>
+                              <input type="checkbox" class="setCek" onclick="selectall()">
+                            </th>
                             <th>Nama</th>
                             <th>Pendidikan</th>
                             <th>Alamat</th>
@@ -61,8 +63,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                      @foreach($data as $index => $x)
+                      <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
+                          <td>
+                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->p_id}}">
+                          </td>
+                        <td>{{$x->p_name}}</td>
+                        <td>{{$x->p_education}}</td>
+                        <td>{{$x->p_address}}</td>
+                        <td>{{$x->p_hp}}</td>
+                      <td>
+                        <div class="action">
+                            <button type="button" id="'.$pekerja->p_id.'" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" id="'.$pekerja->p_id.'" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" id="'.$pekerja->p_id.'" onclick="tolak('.$pekerja->p_id.')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                        </div>
+                      </td>
+                      @endforeach
                     </tbody>
                 </table>
+                </form>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-danger" name="button" onclick="tolaklist()"> <i class="glyphicon glyphicon-remove"></i> Tolak Checklist</button>
+                  <button type="button" class="btn btn-primary" name="button" onclick="setujuilist()"> <i class="glyphicon glyphicon-ok"></i> Setujui Checklist</button>
+                </div>
             </div>
         </div>
     </div>
@@ -387,39 +411,28 @@
 @section('extra_scripts')
 <script type="text/javascript">
 var table;
+var countmitra = 0;
+var totalmitra = 0;
+$( document ).ready(function() {
 
-setTimeout(function () {
-  $.ajaxSetup({
-    headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-    });
-    $('#approvalpelamar').css('display', '');
-    $('.spiner-example').css('display', 'none');
-    table = $("#approvalpelamar").DataTable({
-        processing: true,
-        serverSide: true,
-        "ajax": {
-            'url': '{{ url('/approvalpelamar/table') }}',
-            'type': 'POST',
-          },
-        dataType: 'json',
-        columns: [
-        {data: 'number', name: 'number'},
-        {data: 'p_name', name: 'p_name'},
-        {data: 'p_education', name: 'p_education'},
-        {data: 'p_address', name: 'p_address'},
-        {data: 'p_hp', name: 'p_hp'},
-        {data: 'action', name: 'action',orderable:false,searchable:false}
-        ],
-        responsive: true,
-        "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-    //"scrollY": '50vh',
-    //"scrollCollapse": true,
-    "language": dataTableLanguage,
+$('#approvalpelamar').hide();
+myFunction();
+
+function myFunction() {
+setTimeout(function(){
+  $(".spiner-example").css('display', 'none');
+  table = $("#approvalpelamar").DataTable({
+    "processing": true,
+    "searchable": true,
+    "deferLoading": 57,
+    responsive: true,
+    "language": dataTableLanguage
+  });
+  $('#approvalpelamar').show();
+},1500);
+  }
+
 });
-}, 1000);
 
 
 function detail(id){
@@ -637,6 +650,153 @@ function detail(id){
 
       }
     });
+  }
+
+  function selectall() {
+
+      if ($('.setCek').is(":checked")) {
+          table.$('input[name="pilih[]"]').prop("checked", true);
+          //table.$('input[name="pilih[]"]').css('background','red');
+          table.$('.chek-all').val('1');
+      } else {
+          table.$('input[name="pilih[]"]').prop("checked", false);
+          table.$('.chek-all').val('');
+      }
+      hitung();
+      //hitungSelect();
+  }
+
+  function selectBox(id) {
+      if (table.$('.pilih-' + id).is(":checked")) {
+          table.$('.pilih-' + id).prop("checked", false);
+          table.$('.chek-' + id).val('1');
+      } else {
+          table.$('.pilih-' + id).prop("checked", true);
+          table.$('.chek-' + id).val('');
+      }
+      //hitungSelect();
+      hitung();
+  }
+
+  function hitung() {
+      countmitra = table.$("input[name='pilih[]']:checked").length;
+      $('#totalPekerja').val(countmitra + totalmitra);
+  }
+
+  function hitungSelect() {
+      for (i = 0; i <= table.$('tr').length; i++)
+          if (table.$('.pilih-' + i).is(":checked")) {
+              table.$('.select-' + i).css('background', '#bbc4d6')
+              //table.$('.select-'+i).css('color','white')
+          } else {
+              table.$('.select-' + i).css('background', '')
+          }
+  }
+
+  function select(id) {
+      if (table.$('.pilih-' + id).is(":checked")) {
+          table.$('.pilih-' + id).prop("checked", false);
+          table.$('.chek-' + id).val('');
+      } else {
+          table.$('.pilih-' + id).prop("checked", true);
+          table.$('.chek-' + id).val('1');
+      }
+      //hitungSelect();
+      hitung();
+  }
+
+  function setujuilist(){
+    waitingDialog.show();
+    setTimeout(function () {
+    $.ajax({
+      type: 'get',
+      data: $('#formapprovalpelamar').serialize(),
+      url: baseUrl + '/approvalpelamar/setujuilist',
+      dataType: 'json',
+      timeout: 10000,
+      success : function(result){
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Pelamar Disetujui",
+                text: "Pelamar Berhasil Disetujui",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      }, error: function (x, e) {
+          waitingDialog.hide();
+          var message;
+          if (x.status == 0) {
+              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+          } else if (x.status == 404) {
+              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+          } else if (x.status == 500) {
+              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+          } else if (e == 'parsererror') {
+              message = 'Error.\nParsing JSON Request failed.';
+          } else if (e == 'timeout') {
+              message = 'Request Time out. Harap coba lagi nanti';
+          } else {
+              message = 'Unknow Error.\n' + x.responseText;
+          }
+          waitingDialog.hide();
+          throwLoadError(message);
+          //formReset("store");
+      }
+    });
+  }, 2000);
+  }
+
+  function tolaklist(){
+    waitingDialog.show();
+    setTimeout(function () {
+    $.ajax({
+      type: 'get',
+      data: $('#formapprovalpelamar').serialize(),
+      url: baseUrl + '/approvalpelamar/tolaklist',
+      dataType: 'json',
+      timeout: 10000,
+      success : function(result){
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+          swal({
+              title: "Pelamar Ditolak",
+              text: "Pelamar Berhasil Ditolak",
+              type: "success",
+              showConfirmButton: false,
+              timer: 900
+          });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      }, error: function (x, e) {
+          waitingDialog.hide();
+          var message;
+          if (x.status == 0) {
+              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+          } else if (x.status == 404) {
+              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+          } else if (x.status == 500) {
+              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+          } else if (e == 'parsererror') {
+              message = 'Error.\nParsing JSON Request failed.';
+          } else if (e == 'timeout') {
+              message = 'Request Time out. Harap coba lagi nanti';
+          } else {
+              message = 'Unknow Error.\n' + x.responseText;
+          }
+          waitingDialog.hide();
+          throwLoadError(message);
+          //formReset("store");
+      }
+    });
+  }, 2000);
   }
 
   // function printContent(el){
