@@ -48,11 +48,13 @@
                     </div>
                 </center>
 
-
+                <form class="formapprovalmitra" id="formapprovalmitra" action="index.html" method="post">
                 <table id="approvalmitra" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
-                          <th>No</th>
+                          <th>
+                              <input type="checkbox" class="setCek" onclick="selectall()">
+                          </th>
                           <th>Nama Mitra</th>
                           <th>Alamat Mitra</th>
                           <th>Nomor Telepon</th>
@@ -61,8 +63,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                      @foreach($data as $index => $x)
+                      <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
+                          <td>
+                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->m_id}}">
+                          </td>
+                        <td>{{$x->m_name}}</td>
+                        <td>{{$x->m_address}}</td>
+                        <td>{{$x->m_phone}}</td>
+                        <td>{{$x->m_note}}</td>
+                        <td><div class="action">
+                            <button type="button" onclick="detail('.$mitra->m_id.')" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" onclick="setujui('.$mitra->m_id.')" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" onclick="tolak('.$mitra->m_id.')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                        </div></td>
+                      </tr>
+                      @endforeach
                     </tbody>
                 </table>
+                </form>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-danger" name="button" onclick="tolaklist()"> <i class="glyphicon glyphicon-remove"></i> Tolak Checklist</button>
+                  <button type="button" class="btn btn-primary" name="button" onclick="setujuilist()"> <i class="glyphicon glyphicon-ok"></i> Setujui Checklist</button>
+                </div>
             </div>
         </div>
 
@@ -169,40 +192,28 @@
 @section('extra_scripts')
 <script type="text/javascript">
 var table;
+var countmitra = 0;
+var totalmitra = 0;
+$( document ).ready(function() {
 
-setTimeout(function () {
-  $.ajaxSetup({
-    headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-    });
-    $('#approvalmitra').css('display', '');
-    $('.spiner-example').css('display', 'none');
-    table = $("#approvalmitra").DataTable({
-        processing: true,
-        serverSide: true,
-        "ajax": {
-            'url': '{{ url('/approvalmitra/table') }}',
-            'type': 'POST',
-          },
-        dataType: 'json',
-        columns: [
-        {data: 'number', name: 'number'},
-        {data: 'm_name', name: 'm_name'},
-        {data: 'm_address', name: 'm_address'},
-        {data: 'm_phone', name: 'm_phone'},
-        {data: 'm_note', name: 'm_note'},
-        {data: 'action', name: 'action',orderable:false,searchable:false}
-        ],
-        responsive: true,
-        "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-    //"scrollY": '50vh',
-    //"scrollCollapse": true,
-    "language": dataTableLanguage,
+$('#approvalmitra').hide();
+myFunction();
+
+function myFunction() {
+setTimeout(function(){
+  $(".spiner-example").css('display', 'none');
+  table = $("#approvalmitra").DataTable({
+    "processing": true,
+    "searchable": true,
+    "deferLoading": 57,
+    responsive: true,
+    "language": dataTableLanguage
+  });
+  $('#approvalmitra').show();
+},1500);
+  }
+
 });
-}, 1000);
-
     function detail(id){
       $("#modal-detail").modal('show');
       $("#showdetail").hide();
@@ -261,7 +272,9 @@ setTimeout(function () {
                                   showConfirmButton: false,
                                   timer: 900
                               });
-                              table.draw();
+                              setTimeout(function(){
+                                    window.location.reload();
+                            }, 850);
                           }
                       }, error: function (x, e) {
                           waitingDialog.hide();
@@ -319,7 +332,9 @@ setTimeout(function () {
                                   showConfirmButton: false,
                                   timer: 900
                               });
-                              table.draw();
+                              setTimeout(function(){
+                                    window.location.reload();
+                            }, 850);
                           }
                       }, error: function (x, e) {
                           waitingDialog.hide();
@@ -357,6 +372,153 @@ setTimeout(function () {
 
         }
       });
+    }
+
+    function selectall() {
+
+        if ($('.setCek').is(":checked")) {
+            table.$('input[name="pilih[]"]').prop("checked", true);
+            //table.$('input[name="pilih[]"]').css('background','red');
+            table.$('.chek-all').val('1');
+        } else {
+            table.$('input[name="pilih[]"]').prop("checked", false);
+            table.$('.chek-all').val('');
+        }
+        hitung();
+        //hitungSelect();
+    }
+
+    function selectBox(id) {
+        if (table.$('.pilih-' + id).is(":checked")) {
+            table.$('.pilih-' + id).prop("checked", false);
+            table.$('.chek-' + id).val('1');
+        } else {
+            table.$('.pilih-' + id).prop("checked", true);
+            table.$('.chek-' + id).val('');
+        }
+        //hitungSelect();
+        hitung();
+    }
+
+    function hitung() {
+        countmitra = table.$("input[name='pilih[]']:checked").length;
+        $('#totalPekerja').val(countmitra + totalmitra);
+    }
+
+    function hitungSelect() {
+        for (i = 0; i <= table.$('tr').length; i++)
+            if (table.$('.pilih-' + i).is(":checked")) {
+                table.$('.select-' + i).css('background', '#bbc4d6')
+                //table.$('.select-'+i).css('color','white')
+            } else {
+                table.$('.select-' + i).css('background', '')
+            }
+    }
+
+    function select(id) {
+        if (table.$('.pilih-' + id).is(":checked")) {
+            table.$('.pilih-' + id).prop("checked", false);
+            table.$('.chek-' + id).val('');
+        } else {
+            table.$('.pilih-' + id).prop("checked", true);
+            table.$('.chek-' + id).val('1');
+        }
+        //hitungSelect();
+        hitung();
+    }
+
+    function setujuilist(){
+      waitingDialog.show();
+      setTimeout(function () {
+      $.ajax({
+        type: 'get',
+        data: $('#formapprovalmitra').serialize(),
+        url: baseUrl + '/approvalmitra/setujuilist',
+        dataType: 'json',
+        timeout: 10000,
+        success : function(result){
+          waitingDialog.hide();
+          if (result.status == 'berhasil') {
+              swal({
+                  title: "Mitra Disetujui",
+                  text: "Mitra Berhasil Disetujui",
+                  type: "success",
+                  showConfirmButton: false,
+                  timer: 900
+              });
+              setTimeout(function(){
+                    window.location.reload();
+            }, 850);
+          }
+        }, error: function (x, e) {
+            waitingDialog.hide();
+            var message;
+            if (x.status == 0) {
+                message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+            } else if (x.status == 404) {
+                message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+            } else if (x.status == 500) {
+                message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+            } else if (e == 'parsererror') {
+                message = 'Error.\nParsing JSON Request failed.';
+            } else if (e == 'timeout') {
+                message = 'Request Time out. Harap coba lagi nanti';
+            } else {
+                message = 'Unknow Error.\n' + x.responseText;
+            }
+            waitingDialog.hide();
+            throwLoadError(message);
+            //formReset("store");
+        }
+      });
+    }, 2000);
+    }
+
+    function tolaklist(){
+      waitingDialog.show();
+      setTimeout(function () {
+      $.ajax({
+        type: 'get',
+        data: $('#formapprovalmitra').serialize(),
+        url: baseUrl + '/approvalmitra/tolaklist',
+        dataType: 'json',
+        timeout: 10000,
+        success : function(result){
+          waitingDialog.hide();
+          if (result.status == 'berhasil') {
+            swal({
+                title: "Mitra Ditolak",
+                text: "Mitra Berhasil Ditolak",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+              setTimeout(function(){
+                    window.location.reload();
+            }, 850);
+          }
+        }, error: function (x, e) {
+            waitingDialog.hide();
+            var message;
+            if (x.status == 0) {
+                message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+            } else if (x.status == 404) {
+                message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+            } else if (x.status == 500) {
+                message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+            } else if (e == 'parsererror') {
+                message = 'Error.\nParsing JSON Request failed.';
+            } else if (e == 'timeout') {
+                message = 'Request Time out. Harap coba lagi nanti';
+            } else {
+                message = 'Unknow Error.\n' + x.responseText;
+            }
+            waitingDialog.hide();
+            throwLoadError(message);
+            //formReset("store");
+        }
+      });
+    }, 2000);
     }
 </script>
 @endsection

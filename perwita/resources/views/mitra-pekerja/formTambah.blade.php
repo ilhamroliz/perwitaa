@@ -71,8 +71,7 @@
                                         @foreach($mitra_contract as $data)
                                             <option data-mitra="{{$data->mc_mitra}}"
                                                     data-contractid="{{$data->mc_contractid}}"
-                                                    value="{{$data->mc_no}}">{{$data->mc_no}}
-
+                                                    value="{{$data->mc_no}}">{{$data->mc_no}} ({{$data->m_name}} - {{$data->md_name}})
                                             </option>
                                         @endforeach
                                     </select>
@@ -207,8 +206,7 @@
                                     @foreach($pekerja as $index => $data)
                                         <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                                             <td>
-                                                <input class="pilih-{{$index}}" type="checkbox" name="pilih[]"
-                                                       onclick="selectBox({{$index}})" value="{{$data->p_id}}">
+                                                <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$data->p_id}}">
                                             </td>
                                             <td>{{$data->p_name}}</td>
                                             <td>{{$data->p_sex}}</td>
@@ -405,7 +403,7 @@
             var buttonLadda = $('.simpan').ladda();
             buttonLadda.ladda('start');
             var ar = $();
-            for (var i = 0; i < table.rows()[0].length; i++) { 
+            for (var i = 0; i < table.rows()[0].length; i++) {
                 ar = ar.add(table.row(i).node());
             }
             $.ajaxSetup({
@@ -415,7 +413,7 @@
             });
             $.ajax({
                 url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/lanjut',
-                // type        : 'post',            
+                // type        : 'post',
                 type: 'post',
                 data: ar.find('input').serialize()
                 + '&kontrak=' + kontrak
@@ -423,7 +421,7 @@
                 + '&' + $('#form-mitra-contract').serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     waitingDialog.hide();
                     if (response.status == 'berhasil') {
                         window.location = baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra';

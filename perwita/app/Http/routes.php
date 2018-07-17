@@ -585,7 +585,9 @@ Route::get('approvalmitra/table', 'approvalmitraController@data');
 Route::post('approvalmitra/table', 'approvalmitraController@data');
 Route::get('approvalmitra/detail', 'approvalmitraController@detail');
 Route::get('approvalmitra/setujui', 'approvalmitraController@setujui');
+Route::get('approvalmitra/setujuilist', 'approvalmitraController@setujuilist');
 Route::get('approvalmitra/tolak', 'approvalmitraController@tolak');
+Route::get('approvalmitra/tolaklist', 'approvalmitraController@tolaklist');
 Route::get('approvalmitra/print', 'approvalmitraController@print');
 
 //Approval Pembelian

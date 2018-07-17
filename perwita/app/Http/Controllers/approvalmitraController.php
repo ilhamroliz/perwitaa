@@ -19,22 +19,10 @@ use App\d_mitra_mou;
 class approvalmitraController extends Controller
 {
     public function index(){
-      return view('approvalmitra.index');
-    }
+      $data = DB::table('d_mitra')
+            ->where('m_status_approval', '=', null)->get();
 
-    public function data(){
-      DB::statement(DB::raw('set @rownum=0'));
-      $mitra = d_mitra::select(DB::raw('m_id as DT_RowId'),DB::raw('@rownum  := @rownum  + 1 AS number'),'d_mitra.*')->where('m_status_approval', '=', null)->get();
-      return Datatables::of($mitra)
-                     ->addColumn('action', function ($mitra) {
-                          return'<div class="action">
-                              <button type="button" onclick="detail('.$mitra->m_id.')" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                              <button type="button" onclick="setujui('.$mitra->m_id.')" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                              <button type="button" onclick="tolak('.$mitra->m_id.')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
-                          </div>';
-                      })
-                      ->make(true);
-                      //dd($pekerja);
+      return view('approvalmitra.index', compact('data'));
     }
 
     public function detail(Request $request){
@@ -174,6 +162,66 @@ class approvalmitraController extends Controller
       }
 
       // dd($request);
+
+    }
+
+    public function setujuilist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          $d_mitra = d_mitra::where('m_id',$request->pilih[$i])->where('m_status_approval', null);
+          $d_mitra->update([
+            'm_status_approval' => 'Y',
+            'm_date_approval' => Carbon::now()
+          ]);
+
+          $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->pilih[$i])->where('mm_status', null);
+          $d_mitra_mou->update([
+            'mm_status' => 'Aktif',
+            'mm_aktif' => Carbon::now()
+          ]);
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function tolaklist(Request $request){
+      DB::beginTransaction();
+      try {
+        for ($i=0; $i < count($request->pilih); $i++) {
+          $d_mitra = d_mitra::where('m_id',$request->pilih[$i])->where('m_status_approval', null);
+          $d_mitra->update([
+            'm_status_approval' => 'N',
+            'm_date_approval' => Carbon::now()
+          ]);
+
+          $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->pilih[$i])->where('mm_status', null);
+          $d_mitra_mou->update([
+            'mm_status' => 'Tidak',
+            'mm_aktif' => Carbon::now()
+          ]);
+        }
+
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+        DB::commit();
+      } catch (\Exception $e) {
+        DB::rollback();
+
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
 
     }
 }
