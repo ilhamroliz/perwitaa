@@ -211,13 +211,12 @@ class approvalmitraController extends Controller
           ]);
         }
 
+        DB::commit();
         return response()->json([
           'status' => 'berhasil'
         ]);
-        DB::commit();
       } catch (\Exception $e) {
         DB::rollback();
-
         return response()->json([
           'status' => 'gagal'
         ]);
