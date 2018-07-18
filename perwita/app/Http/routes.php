@@ -140,6 +140,7 @@ Route::post('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanCon
 Route::get('manajemen-pekerja/surat-peringatan/getsp','SuratPeringatanController@getsp');
 Route::get('manajemen-pekerja/surat-peringatan/getdata','SuratPeringatanController@getdata');
 Route::get('manajemen-pekerja/surat-peringatan/cari','SuratPeringatanController@cari');
+Route::get('manajemen-pekerja/surat-peringatan/hapus','SuratPeringatanController@hapus');
 Route::get('manajemen-pekerja/surat-peringatan/getcari','SuratPeringatanController@getcari');
 Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanController@detail');
 

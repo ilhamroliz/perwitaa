@@ -266,10 +266,6 @@
         }, 2000);
 
       });
-
-
-
-
     }
 
     function detail(id){

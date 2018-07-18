@@ -172,4 +172,23 @@ class SuratPeringatanController extends Controller
       return response()->json($data);
 
     }
+
+    public function hapus(Request $request){
+      DB::beginTransaction();
+      try {
+        DB::table('d_surat_pringatan')
+            ->where('sp_id', $request->id)
+            ->DELETE();
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
 }
