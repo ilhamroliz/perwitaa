@@ -135,6 +135,13 @@ Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra/simpan','Penerimaan
 
 //======= SP Pekerja
 Route::get('manajemen-pekerja/surat-peringatan','SuratPeringatanController@index');
+Route::get('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
+Route::post('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
+Route::get('manajemen-pekerja/surat-peringatan/getsp','SuratPeringatanController@getsp');
+Route::get('manajemen-pekerja/surat-peringatan/getdata','SuratPeringatanController@getdata');
+Route::get('manajemen-pekerja/surat-peringatan/cari','SuratPeringatanController@cari');
+Route::get('manajemen-pekerja/surat-peringatan/getcari','SuratPeringatanController@getcari');
+Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanController@detail');
 
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');

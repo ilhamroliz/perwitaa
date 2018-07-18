@@ -1,0 +1,220 @@
+@extends('main')
+
+@section('title', 'Dashboard')
+
+@section('extra_styles')
+
+<style>
+    .popover-navigation [data-role="next"] { display: none; }
+    .popover-navigation [data-role="end"] { display: none; }
+
+    ul .list-unstyled{
+      background-color: rgb(255, 255, 255);
+    }
+
+    li .daftar{
+      padding: 4px;
+      cursor: pointer;
+    }
+</style>
+
+@endsection
+
+@section('content')
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Surat Peringatan</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url('/') }}">Home</a>
+            </li>
+            <li>
+                Manajemen Pekerja
+            </li>
+            <li class="active">
+                <strong>Surat Peringatan</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-title">
+        <h5>Surat Peringatan</h5>
+      <a href="{{url('/manajemen-pekerja/surat-peringatan')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+    </div>
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row m-b-lg">
+                <div class="col-md-12">
+                    <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra">
+                </div>
+                <div class="col-md-12" style="margin-top: 30px;">
+                    <table class="table table-hover table-bordered table-striped" id="tabelcari">
+                        <thead>
+                            <tr>
+                              <th>No. Sp</th>
+                              <th>Nama Tenaga Kerja</th>
+                              <th>Jabatan</th>
+                              <th>Divisi</th>
+                              <th>Tanggal Mulai - Tanggal Berakhir</th>
+                              <th>Keterangan</th>
+                              <th width="120px">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="showdata">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog">
+                  <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <i class="fa fa-folder modal-icon"></i>
+                      <h4 class="modal-title">Detail SP</h4>
+                  <small>Detail SP</small>
+              </div>
+            <div class="modal-body">
+              <!-- <center>
+                <div class="spiner-sp">
+                    <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
+                        <div class="sk-rect1 tampilkan" ></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data SP</span>
+                </div>
+            </center> -->
+            <div id="showdetail">
+              <div class="row">
+                <div class="col-lg-12">
+                    <h3>No SP : <span style="font-weight:normal;" id="sp_no">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Nama Tenaga Kerja : <span style="font-weight:normal;" id="namapekerja">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Jabatan : <span style="font-weight:normal;" id="jabatanpekerja">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Divisi : <span style="font-weight:normal;" id="divisipekerja">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Keterangan : <span style="font-weight:normal;" id="keteranganpekerja">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Status Approval : <span style="font-weight:normal;" id="approve">-</span></h3>
+                </div>
+                <div class="col-lg-12">
+                    <h3>Tanggal Mulai - Tanggal Berakhir : <span style="font-weight:normal;" id="tanggalmulaiberakhir">-</span></h3>
+                </div>
+              </div>
+            </div>
+            </div>
+              <div class="modal-footer">
+                  <div class="btn-group">
+                      <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+@include('mitra-contract.detail')
+
+@endsection
+
+@section('extra_scripts')
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    $('#pencarian').autocomplete({
+        source: baseUrl + '/manajemen-pekerja/surat-peringatan/getsp',
+        select: function(event, ui) {
+            getdata(ui.item.id);
+            //console.log(ui);
+        }
+    });
+
+    table = $("#tabelcari").DataTable({
+        "language": dataTableLanguage,
+        "columnDefs": [{
+            "targets": 0,
+            "orderable": false
+        }]
+
+    });
+
+});
+
+  function getdata(id){
+    var html = '';
+    $('#showdata').html('');
+    $.ajax({
+      type: 'get',
+      data: {id:id},
+      url: baseUrl + '/manajemen-pekerja/surat-peringatan/getcari',
+      dataType: 'json',
+      success : function(result){
+        for (var i = 0; i < result.length; i++) {
+          html += '<tr>'+
+                  '<td>'+result[i].sp_no+'</td>'+
+                  '<td>'+result[i].p_name+'</td>'+
+                  '<td>'+result[i].p_jabatan+'</td>'+
+                  '<td>'+result[i].md_name+'</td>'+
+                  '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
+                  '<td>'+result[i].sp_note+'</td>'+
+                  '<td>'+
+                  '<div class="text-center">'+
+                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '</div>'+
+                  '</tr>';
+        }
+
+      $('#showdata').html(html);
+      }
+    });
+  }
+
+  function detail(id){
+    $('#modal-detail').modal('show');
+    $.ajax({
+      type: 'get',
+      data: {id:id},
+      url: baseUrl + '/manajemen-pekerja/surat-peringatan/detail',
+      dataType: 'json',
+      success : function(result){
+        $('#sp_no').text(result[0].sp_no);
+        $('#namapekerja').text(result[0].p_name);
+        $('#jabatanpekerja').text(result[0].p_jabatan);
+        $('#divisipekerja').text(result[0].md_name);
+        $('#keteranganpekerja').text(result[0].sp_note);
+        $('#tanggalmulaiberakhir').text(result[0].sp_date_start + ' - ' + result[0].sp_date_end);
+
+        if (result[0].sp_isapproved == 'P') {
+          $('#approve').html('<span class="label label-warning">Pending</span>');
+        } else if (result[0].sp_isapproved == 'Y') {
+          $('#approve').html('<span class="label label-success">Disetujui</span>');
+        } else if (result[0].sp_isapproved == 'N') {
+          $('#approve').text('<span class="label label-danger">Ditolak</span>');
+        }
+
+      }
+    });
+  }
+</script>
+@endsection
