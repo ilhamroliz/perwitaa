@@ -169,7 +169,6 @@ class SuratPeringatanController extends Controller
       $data[0]->sp_date_start = Carbon::parse($data[0]->sp_date_start)->format('d/m/Y');
       $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
 
-
       return response()->json($data);
 
     }
