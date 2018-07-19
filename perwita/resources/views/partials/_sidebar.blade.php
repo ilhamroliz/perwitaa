@@ -59,6 +59,16 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">SP Pekerja</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-pekerja/promosi-demosi') ? 'active' : '' || Request::is('manajemen-pekerja/manajemen-pekerja/promosi-demosi/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-pekerja/promosi-demosi') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Promosi & Demosi</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-pekerja/remunerasi') ? 'active' : '' || Request::is('manajemen-pekerja/remunerasi/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-pekerja/remunerasi') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Remunerasi</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

@@ -144,6 +144,9 @@ Route::get('manajemen-pekerja/surat-peringatan/hapus','SuratPeringatanController
 Route::get('manajemen-pekerja/surat-peringatan/getcari','SuratPeringatanController@getcari');
 Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanController@detail');
 
+//======= Promosi & Demosi
+Route::get('manajemen-pekerja/promosi-demosi','promosiController@index');
+
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');
 Route::get('manajemen-seragam/data-seragam/data','seragamController@data');

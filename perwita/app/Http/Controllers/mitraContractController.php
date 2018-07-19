@@ -93,7 +93,8 @@ class mitraContractController extends Controller
         $request->Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
         $request->Batas_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Batas_Kontrak, 'Asia/Jakarta');
         $kontrak = $this->nomou();
-        $mc_contractid = d_mitra_contract::where('mc_mitra', $request->mitra)->max('mc_contractid') + 1;
+        $mc_contractid = d_mitra_contract::max('mc_contractid');
+        $mc_contractid = $mc_contractid + 1;
         d_mitra_contract::create([
             'mc_mitra' => $request->mitra,
             'mc_contractid' => $mc_contractid,
