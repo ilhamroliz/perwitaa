@@ -38,6 +38,11 @@ class approvalController extends Controller
         ->groupBy('p_id')
         ->get();
 
+    $sp = DB::table('d_surat_pringatan')
+        ->selectRaw('sp_insert, count(sp_id) as jumlah, "Approval SP" as catatan')
+        ->where('sp_isapproved','P')
+        ->get();
+
         $countpembelian = count($pembelian);
 
       $hitung = 0;
@@ -74,6 +79,21 @@ class approvalController extends Controller
 
         $pembelian[0]->p_date = Carbon::parse($pembelian[0]->p_date)->diffForHumans();
         $data[2] = $pembelian[0];
+      }
+
+      if (empty($sp)) {
+        $data[3] = $temp = array(
+          'sp_insert' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval SP'
+        );
+      } else {
+        if ($sp[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+
+        $sp[0]->sp_insert = Carbon::parse($sp[0]->sp_insert)->diffForHumans();
+        $data[3] = $sp[0];
       }
 
 // dd($pembelian);
