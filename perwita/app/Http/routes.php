@@ -53,6 +53,7 @@ Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/table','mitraContractCont
 Route::post('manajemen-kontrak-mitra/data-kontrak-mitra/table','mitraContractController@data');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/tambah','mitraContractController@tambah');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/simpan','mitraContractController@simpan');
+Route::post('manajemen-kontrak-mitra/data-kontrak-mitra/simpan','mitraContractController@simpan');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/cari','mitraContractController@cari');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/nomou','mitraContractController@nomou');
 Route::get('manajemen-kontrak-mitra/data-kontrak-mitra/searchresult','mitraContractController@searchresult');
@@ -146,6 +147,9 @@ Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanControlle
 Route::get('manajemen-pekerja/surat-peringatan/edit','SuratPeringatanController@edit');
 Route::get('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
 Route::post('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
+
+//======= Promosi & Demosi
+Route::get('manajemen-pekerja/promosi-demosi','promosiController@index');
 
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');
