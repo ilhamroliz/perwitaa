@@ -293,17 +293,23 @@
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                   <i class="fa fa-sign-out modal-icon"></i>
-                  <h4 class="modal-title">Keterangan Resign</h4>
-                  <small class="font-bold">Keterangan Resign</small>
+                  <h4 class="modal-title">Resign</h4>
+                  <small class="font-bold">Pekerja mengajukan untuk resign</small>
               </div>
               <div class="modal-body">
                   <h3 class="namabarang"></h3>
                   <form class="form-horizontal">
                       <div class="form-dinamis">
                           <div class="form-group getkonten0">
-                              <label class="col-sm-2 control-label" for="ukuranbarang">Keterangan</label>
+                              <label class="col-sm-2 control-label" for="keteranganresign">Keterangan</label>
                               <div class="col-sm-10 selectukuran0">
                                   <input type="text" name="keterangan" id="keteranganresign" class="form-control" placeholder="Keterangan Resign" title="Keterangan Resign">
+                              </div>
+                          </div>
+                          <div class="form-group getkonten1">
+                              <label class="col-sm-2 control-label" for="tgl-resign">Tanggal</label>
+                              <div class="col-sm-5">
+                                  <input type="text" name="tanggal" id="tgl-resign" class="form-control" style="text-align: center;">
                               </div>
                           </div>
                       </div>
@@ -325,6 +331,12 @@
       var table;
       var tablenon;
       var tablecalon;
+
+      $('#tgl-resign').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+      }).datepicker("setDate", "0");
+
       $(document).ready(function () {
           setTimeout(function () {
               $.ajaxSetup({
@@ -681,9 +693,10 @@
 
       function simpanresign(id){
         var keterangan = $('#keteranganresign').val();
+        var tanggal = $('#tgl-resign').val();
         $.ajax({
           type: 'get',
-          data: {id:id, keterangan:keterangan},
+          data: {id:id, keterangan:keterangan, tanggal: tanggal},
           dataType: 'json',
           url: baseUrl + '/manajemen-pekerja/data-pekerja/resign',
           success : function(result){
@@ -695,7 +708,18 @@
                   showConfirmButton: false,
                   timer: 900
               });
+              $('#myModal').modal('hide');
+            } else {
+                swal({
+                  title: "Gagal",
+                  text: "Data gagal disimpan",
+                  type: "danger",
+                  showConfirmButton: false,
+                  timer: 900
+              });
+              $('#myModal').modal('hide');
             }
+            location.reload();
           }
         })
       }
