@@ -209,16 +209,21 @@ $('#jabatan').chosen({search_contains:true});
     function simpan() {
         var buttonLadda = $('.simpan').ladda();
         buttonLadda.ladda('start');
+        waitingDialog.show();
+        $.ajaxSetup({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
         if (validateForm()) {
             $.ajax({
                 url: baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra/simpan',
-                // type        : 'post',
-                type: 'get',
-                timeout: 10000,
+                type: 'post',
                 data: $('#form-mitra-contract').serialize(),
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == 'berhasil') {
+                        waitingDialog.hide();
                         window.location = baseUrl + '/manajemen-kontrak-mitra/data-kontrak-mitra';
                         //alert('berhasil')
                     } else if (response.status == 'gagal') {
@@ -228,9 +233,7 @@ $('#jabatan').chosen({search_contains:true});
                         });
                         buttonLadda.ladda('stop');
                     }
-
-
-
+                    waitingDialog.hide();
                 },
                 error: function (xhr, status) {
                     if (status == 'timeout') {
@@ -247,6 +250,7 @@ $('#jabatan').chosen({search_contains:true});
                     }
 
                     buttonLadda.ladda('stop');
+                    waitingDialog.hide();
                 }
             });
         } else {

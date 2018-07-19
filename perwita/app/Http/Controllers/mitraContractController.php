@@ -90,30 +90,39 @@ class mitraContractController extends Controller
 
     public function simpan(Request $request)
     {
-        $request->Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
-        $request->Batas_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Batas_Kontrak, 'Asia/Jakarta');
-        $kontrak = $this->nomou();
-        $mc_contractid = d_mitra_contract::max('mc_contractid');
-        $mc_contractid = $mc_contractid + 1;
-        d_mitra_contract::create([
-            'mc_mitra' => $request->mitra,
-            'mc_contractid' => $mc_contractid,
-            'mc_divisi' => $request->divisi,
-            'mc_comp' => $request->perusahaan,
-            'mc_no' => $kontrak,
-            'mc_date' => $request->Tanggal_Kontrak,
-            'mc_expired' => $request->Batas_Kontrak,
-            'mc_need' => $request->Jumlah_Pekerja,
-            'mc_fulfilled' => $request->totalPekerja,
-            'mc_jabatan' => $request->jabatan,
-            'mc_jobdesk' => $request->jobdesk,
-            'mc_note' => $request->note,
-        ]);
+        DB::beginTransaction();
+        try{
+            $request->Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
+            $request->Batas_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Batas_Kontrak, 'Asia/Jakarta');
+            $kontrak = $this->nomou();
+            $mc_contractid = d_mitra_contract::max('mc_contractid');
+            $mc_contractid = $mc_contractid + 1;
+            d_mitra_contract::create([
+                'mc_mitra' => $request->mitra,
+                'mc_contractid' => $mc_contractid,
+                'mc_divisi' => $request->divisi,
+                'mc_comp' => $request->perusahaan,
+                'mc_no' => $kontrak,
+                'mc_date' => $request->Tanggal_Kontrak,
+                'mc_expired' => $request->Batas_Kontrak,
+                'mc_need' => $request->Jumlah_Pekerja,
+                'mc_fulfilled' => $request->totalPekerja,
+                'mc_jabatan' => $request->jabatan,
+                'mc_jobdesk' => $request->jobdesk,
+                'mc_note' => $request->note,
+            ]);
 
-        return response()->json([
-            'status' => 'berhasil',
-        ]);
-
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
     }
 
     public function edit($mitra, $mc_contractid)

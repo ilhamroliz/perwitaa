@@ -5,7 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/mitra-contract/formTambah.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/mitra-contract/formTambah.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,8 +50,8 @@
       <file leaf-file-name="PenerimaanController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="14" column="2" lean-forward="false" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+            <state relative-caret-position="215">
+              <caret line="176" column="22" lean-forward="false" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -60,14 +60,14 @@
       <file leaf-file-name="mitraContractController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="96" column="44" lean-forward="false" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+            <state relative-caret-position="418">
+              <caret line="116" column="38" lean-forward="true" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
               <folding>
-                <marker date="1531981904885" expanded="true" signature="1864:2552" ph="..." />
-                <marker date="1531981904885" expanded="false" signature="1896:1912" ph="..." />
-                <marker date="1531981904885" expanded="false" signature="2110:2126" ph="..." />
-                <marker date="1531981904885" expanded="false" signature="2341:2357" ph="..." />
-                <marker date="1531981904885" expanded="true" signature="11266:11401" ph="SELECT MAX(L... d_mitra_contract" />
+                <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
+                <marker date="1531982143288" expanded="false" signature="1896:1912" ph="..." />
+                <marker date="1531982143288" expanded="false" signature="2110:2126" ph="..." />
+                <marker date="1531982143288" expanded="false" signature="2341:2357" ph="..." />
+                <marker date="1531982143288" expanded="true" signature="11614:11749" ph="SELECT MAX(L... d_mitra_contract" />
               </folding>
             </state>
           </provider>
@@ -107,6 +107,7 @@
       <find>try</find>
       <find>simpan</find>
       <find>tambah</find>
+      <find>rollba</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -273,7 +274,7 @@
       <workItem from="1531531553707" duration="6623000" />
       <workItem from="1531715123584" duration="6828000" />
       <workItem from="1531795810884" duration="12918000" />
-      <workItem from="1531969469398" duration="1661000" />
+      <workItem from="1531969469398" duration="2146000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -422,11 +423,18 @@
       <option name="project" value="LOCAL" />
       <updated>1531833361272</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="roliz">
+      <created>1531981979208</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1531981979208</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136411000" />
+    <option name="totallyTimeSpent" value="136896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -473,11 +481,11 @@
         <state relative-caret-position="2970">
           <caret line="165" column="39" lean-forward="false" selection-start-line="165" selection-start-column="33" selection-end-line="165" selection-end-column="39" />
           <folding>
-            <marker date="1531981904885" expanded="true" signature="1864:2552" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="1896:1912" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2110:2126" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2341:2357" ph="..." />
-            <marker date="1531981904885" expanded="true" signature="11266:11401" ph="SELECT MAX(L... d_mitra_contract" />
+            <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="1896:1912" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2110:2126" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2341:2357" ph="..." />
+            <marker date="1531982143288" expanded="true" signature="11614:11749" ph="SELECT MAX(L... d_mitra_contract" />
           </folding>
         </state>
       </provider>
@@ -508,11 +516,11 @@
         <state relative-caret-position="2970">
           <caret line="165" column="39" lean-forward="false" selection-start-line="165" selection-start-column="33" selection-end-line="165" selection-end-column="39" />
           <folding>
-            <marker date="1531981904885" expanded="true" signature="1864:2552" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="1896:1912" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2110:2126" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2341:2357" ph="..." />
-            <marker date="1531981904885" expanded="true" signature="11266:11401" ph="SELECT MAX(L... d_mitra_contract" />
+            <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="1896:1912" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2110:2126" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2341:2357" ph="..." />
+            <marker date="1531982143288" expanded="true" signature="11614:11749" ph="SELECT MAX(L... d_mitra_contract" />
           </folding>
         </state>
       </provider>
@@ -558,11 +566,11 @@
         <state relative-caret-position="540">
           <caret line="30" column="6" lean-forward="false" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
           <folding>
-            <marker date="1531981904885" expanded="true" signature="1864:2552" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="1896:1912" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2110:2126" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2341:2357" ph="..." />
-            <marker date="1531981904885" expanded="true" signature="11266:11401" ph="SELECT MAX(L... d_mitra_contract" />
+            <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="1896:1912" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2110:2126" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2341:2357" ph="..." />
+            <marker date="1531982143288" expanded="true" signature="11614:11749" ph="SELECT MAX(L... d_mitra_contract" />
           </folding>
         </state>
       </provider>
@@ -873,22 +881,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="14" column="2" lean-forward="false" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+        <state relative-caret-position="215">
+          <caret line="176" column="22" lean-forward="false" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="96" column="44" lean-forward="false" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+        <state relative-caret-position="418">
+          <caret line="116" column="38" lean-forward="true" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
           <folding>
-            <marker date="1531981904885" expanded="true" signature="1864:2552" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="1896:1912" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2110:2126" ph="..." />
-            <marker date="1531981904885" expanded="false" signature="2341:2357" ph="..." />
-            <marker date="1531981904885" expanded="true" signature="11266:11401" ph="SELECT MAX(L... d_mitra_contract" />
+            <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="1896:1912" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2110:2126" ph="..." />
+            <marker date="1531982143288" expanded="false" signature="2341:2357" ph="..." />
+            <marker date="1531982143288" expanded="true" signature="11614:11749" ph="SELECT MAX(L... d_mitra_contract" />
           </folding>
         </state>
       </provider>
