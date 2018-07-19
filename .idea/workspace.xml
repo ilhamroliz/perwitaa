@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/mitra-pekerja/formLanjutan.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/mitra-pekerja/formLanjutan.blade.php" />
-    </list>
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,7 +273,7 @@
       <workItem from="1531372626159" duration="3267000" />
       <workItem from="1531531553707" duration="6623000" />
       <workItem from="1531715123584" duration="6828000" />
-      <workItem from="1531795810884" duration="12321000" />
+      <workItem from="1531795810884" duration="12918000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -428,11 +426,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134153000" />
+    <option name="totallyTimeSpent" value="134750000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
