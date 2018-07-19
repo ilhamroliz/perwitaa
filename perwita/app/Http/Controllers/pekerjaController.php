@@ -1098,7 +1098,7 @@ group by ps_pekerja");
             $id = $request->id;
             $keterangan = $request->keterangan;
             $tanggal = Carbon::createFromFormat('d/m/Y', $request->tanggal);
-            $d_mitra_pekerja = d_mitra_pekerja::where('mp_pekerja', $id)->get();
+            $d_mitra_pekerja = d_mitra_pekerja::where('mp_pekerja', $id)->where('mp_status', '=', 'Aktif')->get();
 
             if ($d_mitra_pekerja[0]->mp_status == 'Aktif') {
                 d_mitra_pekerja::where('mp_pekerja', $id)->update([
