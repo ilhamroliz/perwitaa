@@ -143,6 +143,9 @@ Route::get('manajemen-pekerja/surat-peringatan/cari','SuratPeringatanController@
 Route::get('manajemen-pekerja/surat-peringatan/hapus','SuratPeringatanController@hapus');
 Route::get('manajemen-pekerja/surat-peringatan/getcari','SuratPeringatanController@getcari');
 Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanController@detail');
+Route::get('manajemen-pekerja/surat-peringatan/edit','SuratPeringatanController@edit');
+Route::get('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
+Route::post('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
 
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');

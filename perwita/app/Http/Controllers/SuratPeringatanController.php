@@ -191,4 +191,48 @@ class SuratPeringatanController extends Controller
         ]);
       }
     }
+
+    public function edit(Request $request){
+      $id = $request->id;
+
+      $data = DB::table('d_mitra_pekerja')
+          ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+          ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
+          ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->join('d_mitra_divisi', function($e){
+                $e->on('m_id', '=', 'md_mitra');
+                $e->on('mp_divisi', '=', 'md_id');
+          })
+          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->where('sp_id',$id)
+          ->get();
+
+      $data[0]->sp_date_start = Carbon::parse($data[0]->sp_date_start)->format('d/m/Y');
+      $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
+
+      return response()->json($data);
+    }
+
+    public function update(Request $request, $id){
+      DB::beginTransaction();
+      try {
+        $d_surat_pringatan = DB::table('d_surat_pringatan')
+                           ->where('sp_id',$id)
+                           ->update([
+                             'sp_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                             'sp_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                             'sp_note' => $request->keterangan
+                           ]);
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
 }

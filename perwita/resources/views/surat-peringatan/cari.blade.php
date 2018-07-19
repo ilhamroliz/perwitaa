@@ -83,7 +83,7 @@
                   <small>Detail SP</small>
               </div>
             <div class="modal-body">
-              <!-- <center>
+              <center>
                 <div class="spiner-sp">
                     <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
                         <div class="sk-rect1 tampilkan" ></div>
@@ -94,7 +94,7 @@
                     </div>
                     <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data SP</span>
                 </div>
-            </center> -->
+            </center>
             <div id="showdetail">
               <div class="row">
                 <div class="col-lg-12">
@@ -130,6 +130,45 @@
       </div>
   </div>
 
+  <div class="modal inmodal" id="modal-edit" tabindex="-1" role="dialog"  aria-hidden="true">
+              <div class="modal-dialog">
+                    <div class="modal-content animated fadeIn">
+                  <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <i class="fa fa-folder modal-icon"></i>
+                        <h4 class="modal-title">Edit SP</h4>
+                    <small>Edit SP</small>
+                </div>
+              <div class="modal-body">
+              <form class="form-edit">
+                <div id="showdetail">
+                  <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Keterangan : <input type="text" class="form-control" name="keterangan" id="editketerangan" placeholder="Keterangan"></h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <h3>Tanggal Mulai - Tanggal Berakhir : </h3>
+                    </div>
+                    <div class="col-lg-4">
+                        <h3> <input type="text" class="form-control date" id="datestart" name="start" placeholder="Start"> </h3>
+                    </div>
+                    <div class="col-lg-4">
+                        <h3> <input type="text" class="form-control date" id="dateend" name="end" placeholder="End"> </h3>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="updatebtn" onclick="update()" name="button">Simpan</button>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @include('mitra-contract.detail')
 
@@ -155,6 +194,11 @@ $(document).ready(function(){
             "orderable": false
         }]
 
+    });
+
+    $('.date').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
     });
 
 });
@@ -192,6 +236,7 @@ $(document).ready(function(){
 
   function detail(id){
     $('#modal-detail').modal('show');
+    $('#showdetail').hide();
     $.ajax({
       type: 'get',
       data: {id:id},
@@ -212,6 +257,9 @@ $(document).ready(function(){
         } else if (result[0].sp_isapproved == 'N') {
           $('#approve').text('<span class="label label-danger">Ditolak</span>');
         }
+
+        $('.spiner-sp').hide();
+        $('#showdetail').show();
 
       }
     });
@@ -279,6 +327,77 @@ $(document).ready(function(){
       }, 2000);
 
     });
+  }
+
+  function edit(id){
+    $('#modal-edit').modal('show');
+    $.ajax({
+      type: 'get',
+      data: {id:id},
+      url: baseUrl + '/manajemen-pekerja/surat-peringatan/edit',
+      dataType: 'json',
+      success : function(result){
+        $('#editpekerja').val(result[0].p_name);
+        $('#editjabatan').val(result[0].p_jabatan);
+        $('#editdivisi').val(result[0].md_name);
+        $('#editketerangan').val(result[0].sp_note);
+        $('#datestart').val(result[0].sp_date_start);
+        $('#dateend').val(result[0].sp_date_end);
+        //button
+        $('#updatebtn').attr('onclick','update('+id+')');
+      }
+    });
+  }
+
+  function update(id){
+    waitingDialog.show();
+    setTimeout(function(){
+      $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+      $.ajax({
+        type: 'post',
+        data: $('.form-edit').serialize(),
+        url: baseUrl + '/manajemen-pekerja/surat-peringatan/update/'+id,
+        dataType: 'json',
+        timeout: 10000,
+        success : function(result){
+          if (result.status == 'berhasil') {
+               swal({
+                 title:"Berhasil",
+                 text: "Data berhasil dihapus",
+                 type: "success",
+                 showConfirmButton: false,
+                 timer: 900
+             });
+             waitingDialog.hide();
+             setTimeout(function(){
+                   window.location.reload();
+           }, 850);
+          }
+        } ,error:function(x,e) {
+          //alert(e);
+          var message;
+          if (x.status==0) {
+              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+          } else if(x.status==404) {
+              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+          } else if(x.status==500) {
+              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+          } else if(e =='parsererror') {
+              message = 'Error.\nParsing JSON Request failed.';
+          } else if(e =='timeout'){
+              message = 'Request Time out. Harap coba lagi nanti';
+          } else {
+              message = 'Unknow Error.\n'+x.responseText;
+          }
+          throwLoadError(message);
+          waitingDialog.hide();
+      }
+      });
+    }, 800);
   }
 
 </script>
