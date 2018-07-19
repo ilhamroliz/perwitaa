@@ -163,6 +163,12 @@
                                         <h3 style="font-weight:normal;" id="p_nik">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
+                                        <h3>No NIK Mitra </h3>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h3 style="font-weight:normal;" id="p_nik_mitra">: -</h3>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <h3>No KPJ </h3>
                                     </div>
                                     <div class="col-lg-3">
@@ -518,12 +524,14 @@
               dataType: 'json',
               success: function (data) {
 
-                  var p_nik, p_name, p_sex, p_birthplace, p_birthdate, p_address, p_hp;
+                  var p_nik, p_nip, p_nip_mitra, p_name, p_sex, p_birthplace, p_birthdate, p_address, p_hp;
                   var p_ktp, b_ktp, p_education, p_momname, p_kpj_no, m_name, md_name, mp_selection_date;
                   var mp_workin_date, mc_date, mc_expired, sisa_kontrak;
 
                   $.each(data, function (i, n) {
 
+                      p_nip = n.p_nip;
+                      p_nip_mitra = n.p_nip_mitra;
                       p_nik = n.p_nik;
                       p_name = n.p_name;
                       p_sex = n.p_sex;
@@ -554,6 +562,12 @@
 
                   if (typeof sisa_kontrak == 'undefined' || sisa_kontrak == undefined || sisa_kontrak == '' || sisa_kontrak == null) {
                       sisa_kontrak = "-";
+                  }
+                  if (p_nip == undefined) {
+                      p_nip = "-";
+                  }
+                  if (p_nip_mitra == undefined) {
+                      p_nip_mitra = "-";
                   }
                   if (p_nik == undefined) {
                       p_nik = "-";
@@ -615,7 +629,8 @@
 
                   // console.log(sisa_kontrak);
                   // console.log(mc_date);
-                  $('#p_nik').html(": " + p_nik);
+                  $('#p_nik_mitra').html(": " + p_nip_mitra);
+                  $('#p_nik').html(": " + p_nip);
                   $('#p_name').html(": " + p_name);
                   $('#p_sex').html(": " + p_sex);
                   $('#p_birthplace').html(": " + p_birthplace);

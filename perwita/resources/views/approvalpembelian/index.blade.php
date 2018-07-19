@@ -168,7 +168,7 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-    var tablepembelian;
+    var table;
     $( document ).ready(function() {
 
     $('#tabel-pembelian').hide();
@@ -177,7 +177,7 @@
     function myFunction() {
     setTimeout(function(){
       $(".spiner-example").css('display', 'none');
-      tablepembelian = $("#tabel-pembelian").DataTable({
+      table = $("#tabel-pembelian").DataTable({
         "processing": true,
         "searchable": true,
         "deferLoading": 57,

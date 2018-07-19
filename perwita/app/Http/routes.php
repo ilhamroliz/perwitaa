@@ -613,3 +613,11 @@ Route::get('approvalpembelian/tolak', 'approvalpembelianController@tolak');
 Route::get('approvalpembelian/setujuilist', 'approvalpembelianController@setujuilist');
 Route::get('approvalpembelian/tolaklist', 'approvalpembelianController@tolaklist');
 Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');
+
+//Approval SP
+Route::get('approvalsp', 'approvalspController@index');
+Route::get('approvalsp/setujui', 'approvalspController@setujui');
+Route::get('approvalsp/tolak', 'approvalspController@tolak');
+Route::get('approvalsp/setujuilist', 'approvalspController@setujuilist');
+Route::get('approvalsp/tolaklist', 'approvalspController@tolaklist');
+Route::get('approvalsp/detail', 'approvalspController@detail');
