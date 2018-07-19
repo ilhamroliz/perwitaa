@@ -554,7 +554,9 @@ function detail(id){
                                 showConfirmButton: false,
                                 timer: 900
                             });
-                            table.draw();
+                            setTimeout(function(){
+                                  window.location.reload();
+                          }, 850);
                         }
                     }, error: function (x, e) {
                         waitingDialog.hide();
@@ -612,7 +614,9 @@ function detail(id){
                                 showConfirmButton: false,
                                 timer: 900
                             });
-                            table.draw();
+                            setTimeout(function(){
+                                  window.location.reload();
+                          }, 850);
                         }
                     }, error: function (x, e) {
                         waitingDialog.hide();

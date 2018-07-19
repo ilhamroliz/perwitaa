@@ -608,4 +608,55 @@ class mitraPekerjaController extends Controller
 
 
     }
+
+
+        public function selesai(Request $request){
+          DB::beginTransaction();
+          try {
+
+            $pekerja = DB::table('d_mitra_pekerja')
+                    ->select('mp_pekerja')->where('mp_contract',$request->kontrak)->where('mp_mitra', $request->mitra)->get();
+
+            $d_mitra_pekerja = d_mitra_pekerja::where('mp_contract',$request->kontrak)->where('mp_mitra', $request->mitra);
+            $d_mitra_pekerja->update([
+                              'mp_status' => 'Tidak'
+                            ]);
+
+            $d_mitra_contract = d_mitra_contract::where('mc_contractid',$request->kontrak)->where('mc_mitra', $request->mitra);
+            $d_mitra_contract->update([
+              'mc_status' => 'Selesai'
+            ]);
+
+            for ($i=0; $i < count($pekerja); $i++) {
+              $d_pekerja = d_pekerja::where('p_id',$pekerja[$i]->mp_pekerja);
+              $d_pekerja->update([
+                            'p_note' => 'Calon'
+              ]);
+
+              $pm_detailid[$i] = DB::table('d_pekerja_mutation')
+                          ->select('pm_detailid')
+                          ->where('pm_pekerja',$pekerja[$i]->mp_pekerja)
+                          ->MAX('pm_detailid');
+
+              DB::table('d_pekerja_mutation')
+                  ->insert([
+                    'pm_pekerja' => $pekerja[$i]->mp_pekerja,
+                    'pm_detailid' => $pm_detailid[$i] + 1,
+                    'pm_detail' => 'Matang',
+                    'pm_status' => 'Calon',
+                    'pm_note' => 'Selesai'
+                  ]);
+            }
+
+            DB::commit();
+            return response()->json([
+              'status' => 'berhasil'
+            ]);
+          } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+              'status' => 'gagal'
+            ]);
+          }
+        }
 }
