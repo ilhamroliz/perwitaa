@@ -81,6 +81,20 @@
                                         </div>
                                         </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
+                                    <div class="media-body" id="showsp">
+                                      <li>
+                                          <div class="dropdown-messages-box">
+
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalsp')}}" class="pull-left a-body" id="#sp-body" title="Lihat Daftar Approval SP" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitsp"></small>
+                                                <strong id="catatanapprovalsp"></strong><small id="isiapprovalsp"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </div>
                                     </li>
                                   </ul>
                                   @endif

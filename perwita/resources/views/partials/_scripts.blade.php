@@ -218,9 +218,11 @@
                        var pelamar = '';
                        var mitra = '';
                        var pembelian = '';
+                       var sp = '';
                        var countpelamar = 0;
                        var countmitra = 0;
                        var countpembelian = 0;
+                       var countsp = 0;
                        var countnotif = 0;
                        $.ajax({
                          type : 'get',
@@ -270,6 +272,20 @@
                                  '</div>'+
                                  '</li>';
 
+                                 sp += '<li">'+
+                                     '<div class="dropdown-messages-box">'+
+                                       '<a href="{{url('/approvalsp')}}" class="pull-left a-img" title="Lihat Daftar Approval SP">'+
+                                           '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
+                                        '</a>'+
+                                       '<div class="media-body">'+
+                                       '<a href="{{url('/approvalsp')}}" class="pull-left a-body" id="#sp-body" title="Lihat Daftar Approval SP" style="text-decoration:none; color:black;">'+
+                                           '<small class="pull-right" id="menitsp"></small>'+
+                                           '<strong id="catatanapprovalsp"></strong><small id="isiapprovalsp"></small><br>'+
+                                        '</a>'+
+                                       '</div>'+
+                                   '</div>'+
+                                   '</li>';
+
                                if (data.data[0].jumlah > 0) {
                                   countnotif += 1;
                                   countpelamar += 1;
@@ -297,6 +313,15 @@
                                   $("#catatanapprovalpembelian").text(data.data[2].catatan);
                                   $("#isiapprovalpembelian").html(" Anda Memiliki "+data.data[2].jumlah+" Persetujuan");
                                }
+                               if (data.data[3].jumlah > 0) {
+                                  countnotif += 1;
+                                  countsp += 1;
+                                  $("#showsp").html(sp);
+                                  $("#countnotif").text(countnotif);
+                                  $("#menitsp").html(data.data[3].sp_insert);
+                                  $("#catatanapprovalsp").text(data.data[3].catatan);
+                                  $("#isiapprovalsp").html(" Anda Memiliki "+data.data[3].jumlah+" Persetujuan");
+                               }
                                if (countpelamar == 0) {
                                  $("#showpelamar").html('<center> Tidak ada permintaan Approval Pelamar </center>');
                                }
@@ -305,6 +330,9 @@
                                }
                                if (countpembelian == 0) {
                                  $("#showpembelian").html('<center> Tidak ada permintaan Approval Pembelian Seragam </center>');
+                               }
+                               if (countsp == 0) {
+                                 $("#showsp").html('<center> Tidak ada permintaan Approval SP </center>');
                                }
                                if (countnotif == 0) {
                                  // $("#showpelamar").html(pelamar);
