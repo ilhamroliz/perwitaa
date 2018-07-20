@@ -84,7 +84,7 @@
                             </div>
                             <div class="sembunyikan" style="display: none">
                                     <input type="hidden" name="mc_contractid" id="mc_contractid"
-                                           value="{{$data->mc_contractid}}">
+                                           value="{{$mitra_contract[0]->mc_contractid}}">
 
                                 <div class="form-group row">
                                     <label for="Nama" class="col-sm-2 col-form-label">Tanggal Kontrak</label>
