@@ -25,7 +25,7 @@ class SuratPeringatanController extends Controller
         $queryid = DB::table('d_surat_pringatan')
             ->MAX('sp_id');
 
-        $querykode = DB::select(DB::raw("SELECT MAX(RIGHT(sp_no,5)) as counter, MAX(MID(sp_no,8,2)) as bulan, MAX(MID(sp_no,11,4)) as tahun FROM d_surat_pringatan"));
+        $querykode = DB::select(DB::raw("SELECT MAX(MID(sp_no,4,5)) as counter, MAX(MID(sp_no,13,2)) as bulan, MAX(RIGHT(sp_no,4)) as tahun FROM d_surat_pringatan"));
 
         if (count($querykode) > 0) {
           if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
@@ -41,17 +41,40 @@ class SuratPeringatanController extends Controller
           $kode = "00001";
         }
 
-        $finalkode = 'SP/MJI/' . date('m') . '/' . date('Y') . '/' . $kode;
+        $finalkode = 'SP.' . $kode . '/PN' . '/' . date('m') . '/' . date('Y');
 
         DB::table('d_surat_pringatan')
             ->insert([
               'sp_id' => $queryid + 1,
               'sp_no' => $finalkode,
               'sp_pekerja' => $id,
-              'sp_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-              'sp_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-              'sp_note' => $request->keterangan
+              'sp_date_start' => Carbon::createFromFormat('d/m/Y',$request->start,'Asia/Jakarta'),
+              'sp_date_end' => Carbon::createFromFormat('d/m/Y',$request->end,'Asia/Jakarta'),
+              'sp_note' => $request->keterangan,
+              'sp_insert' => Carbon::now('Asia/Jakarta')
             ]);
+
+
+        $pelanggaran = [];
+
+        array_push($pelanggaran,$request->pelanggaran);
+
+        for ($i=0; $i < count($pelanggaran[0]); $i++) {
+          $spd_detailid = DB::table('d_surat_pringatan_dt')
+            ->where('spd_surat_peringatan',$id)
+            ->MAX('spd_detailid');
+
+          if ($spd_detailid == null) {
+            $spd_detailid = 0;
+          }
+
+          DB::table('d_surat_pringatan_dt')
+              ->insert([
+                'spd_surat_peringatan' => $queryid + 1,
+                'spd_detailid' => $spd_detailid + 1,
+                'spd_pelanggaran' => $pelanggaran[0][$i]
+              ]);
+        }
 
         DB::commit();
         return response()->json([
@@ -106,7 +129,21 @@ class SuratPeringatanController extends Controller
             ->where('mp_id', $request->id)
             ->get();
 
-      return response()->json($data);
+      $sp = DB::table('d_surat_pringatan')
+          ->where('sp_pekerja',$request->id)
+          ->get();
+
+      if (empty($sp)) {
+
+      } else {
+        $sp[0]->sp_date_end = Carbon::Parse($sp[0]->sp_date_end)->format('d/m/Y');
+      }
+
+
+      return response()->json([
+        'data' => $data,
+        'sp' => $sp
+      ]);
     }
 
     public function cari(){
@@ -120,8 +157,14 @@ class SuratPeringatanController extends Controller
           ->where('sp_pekerja',$id)
           ->get();
 
-      $surat[0]->sp_date_start = Carbon::Parse($surat[0]->sp_date_start)->format('d/m/Y');
-      $surat[0]->sp_date_end = Carbon::Parse($surat[0]->sp_date_end)->format('d/m/Y');
+      if(!empty($surat[0]->sp_date_start)){
+        $surat[0]->sp_date_start = Carbon::Parse($surat[0]->sp_date_start)->format('d/m/Y');
+      }
+
+      if (!empty($surat[0]->sp_date_end)) {
+        $surat[0]->sp_date_end = Carbon::Parse($surat[0]->sp_date_end)->format('d/m/Y');
+      }
+
 
       $pekerja = DB::table('d_mitra_pekerja')
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
@@ -158,16 +201,27 @@ class SuratPeringatanController extends Controller
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->join('d_surat_pringatan_dt', 'spd_surat_peringatan', '=', 'sp_id')
           ->join('d_mitra_divisi', function($e){
                 $e->on('m_id', '=', 'md_mitra');
                 $e->on('mp_divisi', '=', 'md_id');
           })
-          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved','sp_jenis', 'spd_pelanggaran', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
           ->where('sp_id',$id)
           ->get();
 
-      $data[0]->sp_date_start = Carbon::parse($data[0]->sp_date_start)->format('d/m/Y');
-      $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
+      if (empty($data[0]->sp_date_start)) {
+
+      } else {
+        $data[0]->sp_date_start = Carbon::parse($data[0]->sp_date_start)->format('d/m/Y');
+      }
+
+      if (empty($data[0]->sp_date_end)) {
+
+      } else {
+        $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
+      }
+
 
       return response()->json($data);
 

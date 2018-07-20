@@ -98,6 +98,9 @@
             <div id="showdetail">
               <div class="row">
                 <div class="col-lg-12">
+                    <h3>Jenis SP : <span style="font-weight:normal;" id="sp_jenis">-</span></h3>
+                </div>
+                <div class="col-lg-12">
                     <h3>No SP : <span style="font-weight:normal;" id="sp_no">-</span></h3>
                 </div>
                 <div class="col-lg-12">
@@ -117,6 +120,10 @@
                 </div>
                 <div class="col-lg-12">
                     <h3>Tanggal Mulai - Tanggal Berakhir : <span style="font-weight:normal;" id="tanggalmulaiberakhir">-</span></h3>
+                </div>
+                <div class="col-lg-12" id="daftarpelanggaran">
+                  <br>
+                    <h3>Pelanggaran : </h3>
                 </div>
               </div>
             </div>
@@ -235,6 +242,7 @@ $(document).ready(function(){
   }
 
   function detail(id){
+    $('#daftarpelanggaran').html('<br><h3>Pelanggaran : </h3>');
     $('#modal-detail').modal('show');
     $('#showdetail').hide();
     $.ajax({
@@ -243,6 +251,7 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-pekerja/surat-peringatan/detail',
       dataType: 'json',
       success : function(result){
+        $('#sp_jenis').text(result[0].sp_jenis);
         $('#sp_no').text(result[0].sp_no);
         $('#namapekerja').text(result[0].p_name);
         $('#jabatanpekerja').text(result[0].p_jabatan);
@@ -256,6 +265,10 @@ $(document).ready(function(){
           $('#approve').html('<span class="label label-success">Disetujui</span>');
         } else if (result[0].sp_isapproved == 'N') {
           $('#approve').text('<span class="label label-danger">Ditolak</span>');
+        }
+
+        for (var i = 0; i < result.length; i++) {
+          $('#daftarpelanggaran').append('<h3><span style="font-weight:normal;" >- '+result[i].spd_pelanggaran+'</span</h3><br>');
         }
 
         $('.spiner-sp').hide();
@@ -343,7 +356,7 @@ $(document).ready(function(){
         $('#editketerangan').val(result[0].sp_note);
         $('#datestart').val(result[0].sp_date_start);
         $('#dateend').val(result[0].sp_date_end);
-        //button
+        // button
         $('#updatebtn').attr('onclick','update('+id+')');
       }
     });

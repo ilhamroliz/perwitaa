@@ -45,6 +45,10 @@
                                 <input type="text" placeholder="Nomor SP" class="form-control" name="nosp" value="">
                             </div>
                         </div> -->
+                        <div class="alert alert-info alert-dismissable" style="display:none;" id="pemberitahuan">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <a class="alert-link">Pemberitahuan</a><span id="isipemberitahuan">Pekerja ini dalam masa ... sampai ... </span>.
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Pekerja</label>
                             <div class="col-lg-9">
@@ -70,13 +74,35 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Tanggal Mulai - Tanggal Berakhir</label>
+                            <label class="col-lg-2 control-label">Tanggal Mulai</label>
                             <div class="col-lg-2">
                                 <input type="text" class="form-control start-date date" name="start" style="text-transform:uppercase" title="Start" placeholder="Start">
                             </div>
+                            <label class="col-lg-2 control-label">Tanggal Berakhir</label>
                             <div class="col-lg-2">
                                 <input type="text" class="form-control end-date date" name="end" style="text-transform:uppercase" title="End" placeholder="End">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="sp">Jenis SP</label>
+                            <div class="col-lg-9">
+                                <select class="form-control sp" name="sp" id="sp">
+                                  <option value="SP1">SP1</option>
+                                  <option value="SP2">SP2</option>
+                                  <option value="SP3">SP3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Pelanggaran</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" name="pelanggaran[]" placeholder="Pelanggaran">
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="button" class="btn btn-primary dinamis" name="button" onclick="plus()"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="dinamis div" id="showdinamis">
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Keterangan</label>
@@ -120,7 +146,9 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+var num = 1;
     $(document).ready(function(){
+
       $('.date').datepicker({
           autoclose: true,
           format: 'dd/mm/yyyy'
@@ -141,7 +169,7 @@
                   }
               });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-pekerja/surat-peringatan/simpan/'+id,
         dataType: 'json',
@@ -188,12 +216,43 @@
         url: baseUrl + '/manajemen-pekerja/surat-peringatan/getdata',
         dataType: 'json',
         success : function(result){
-          $('#namapekerja').val(result[0].p_name);
-          $('#jabatanpekerja').val(result[0].p_jabatan);
-          $('#divisipekerja').val(result[0].md_name);
+          $('#namapekerja').val(result.data[0].p_name);
+          $('#jabatanpekerja').val(result.data[0].p_jabatan);
+          $('#divisipekerja').val(result.data[0].md_name);
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
+
+          if (result.sp[0] == null) {
+
+          } else {
+            $('#isipemberitahuan').text(' Pekerja ini dalam masa '+result.sp[0].sp_jenis+' sampai '+result.sp[0].sp_date_end+'');
+            $('#pemberitahuan').css('display','');
+          }
+
         }
       });
+    }
+
+    function plus(){
+
+      $('#showdinamis').append('<div class="form-group dinamis'+num+'">'+
+          '<label class="col-lg-2 control-label"></label>'+
+          '<div class="dinamis div">'+
+          '<div class="col-lg-5">'+
+              '<input type="text" class="form-control" name="pelanggaran[]" placeholder="Pelanggaran">'+
+          '</div>'+
+          '<div class="col-lg-2">'+
+              '<button type="button" class="btn btn-primary dinamis" name="button" onclick="plus()"><i class="fa fa-plus"></i></button>'+
+              ' '+
+              '<button type="button" class="btn btn-danger dinamis" name="button" onclick="minus('+num+')"><i class="fa fa-minus"></i></button>'+
+          '</div>'+
+          '</div>'+
+      '</div>');
+
+      num += 1;
+    }
+
+    function minus(num){
+      $('.dinamis'+num).remove();
     }
 </script>
 @endsection
