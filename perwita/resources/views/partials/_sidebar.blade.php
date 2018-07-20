@@ -29,6 +29,10 @@
               || Request::is('manajemen-pekerja-mitra/data-pekerja-mitra/*') ? 'active' : ''
               || Request::is('pekerja-di-mitra/pekerja-mitra') ? 'active' : ''
               || Request::is('pekerja-di-mitra/pekerja-mitra/*') ? 'active' : ''
+              || Request::is('manajemen-pekerja/promosi-demosi') ? 'active' : ''
+              || Request::is('manajemen-pekerja/promosi-demosi/*') ? 'active' : ''
+              || Request::is('manajemen-pekerja/remunerasi') ? 'active' : ''
+              || Request::is('manajemen-pekerja/remunerasi/*') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra/*') ? 'active' : '' }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pekerja</span><span class="fa arrow"></span></a>
