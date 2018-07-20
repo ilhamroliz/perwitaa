@@ -74,9 +74,9 @@
                         <td>{{$x->m_note}}</td>
                         <td align="center">
                           <div class="action">
-                            <button type="button" onclick="detail('.$mitra->m_id.')" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" onclick="setujui('.$mitra->m_id.')" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" onclick="tolak('.$mitra->m_id.')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button type="button" onclick="detail({{$x->m_id}})" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" onclick="setujui({{$x->m_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" onclick="tolak({{$x->m_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                           </div>
                       </td>
                       </tr>

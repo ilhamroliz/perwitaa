@@ -284,6 +284,7 @@
                                 <div class="btn-group">
                                     <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                                 </div>
+                                <button type="button" id="printbtn" class="btn btn-primary" onclick="print()" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                             </div>
                         </div>
                     </div>
@@ -516,7 +517,7 @@
 
       function detail(id) {
           var id = id;
-
+          $('#printbtn').attr('onclick','print('+id+')')
           $.ajax({
               data: {id: id},
               type: "GET",
@@ -737,6 +738,10 @@
             location.reload();
           }
         })
+      }
+
+      function print(id){
+            window.location.href = baseUrl + '/approvalpelamar/print?id='+id;
       }
 
 

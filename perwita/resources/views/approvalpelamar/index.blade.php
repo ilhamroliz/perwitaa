@@ -74,9 +74,9 @@
                         <td>{{$x->p_hp}}</td>
                       <td align="center">
                         <div class="action">
-                            <button type="button" id="'.$pekerja->p_id.'" onclick="detail('.$pekerja->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" id="'.$pekerja->p_id.'" onclick="setujui('.$pekerja->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" id="'.$pekerja->p_id.'" onclick="tolak('.$pekerja->p_id.')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button type="button" id="{{$x->p_id}}" onclick="detail({{$x->p_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" id="{{$x->p_id}}" onclick="setujui({{$x->p_id}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" id="{{$x->p_id}}" onclick="tolak({{$x->p_id}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                         </div>
                       </td>
                       @endforeach
