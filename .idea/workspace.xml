@@ -19,7 +19,7 @@
       <file leaf-file-name="mitraPekerjaController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
+            <state relative-caret-position="5544">
               <caret line="329" column="59" lean-forward="false" selection-start-line="329" selection-start-column="59" selection-end-line="329" selection-end-column="59" />
               <folding>
                 <marker date="1531832898030" expanded="true" signature="4764:5318" ph="..." />
@@ -47,7 +47,7 @@
       <file leaf-file-name="PenerimaanController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
+            <state relative-caret-position="3024">
               <caret line="176" column="22" lean-forward="false" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="22" />
               <folding />
             </state>
@@ -57,7 +57,7 @@
       <file leaf-file-name="mitraContractController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
+            <state relative-caret-position="1656">
               <caret line="116" column="38" lean-forward="false" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
               <folding>
                 <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
@@ -200,6 +200,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -238,7 +239,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -310,7 +310,8 @@
       <workItem from="1531531553707" duration="6623000" />
       <workItem from="1531715123584" duration="6828000" />
       <workItem from="1531795810884" duration="12918000" />
-      <workItem from="1531969469398" duration="4457000" />
+      <workItem from="1531969469398" duration="5003000" />
+      <workItem from="1532006913259" duration="596000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -484,22 +485,21 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139207000" />
+    <option name="totallyTimeSpent" value="140349000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -607,7 +607,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
           <caret line="60" column="63" lean-forward="false" selection-start-line="60" selection-start-column="63" selection-end-line="60" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -783,11 +782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="61" column="15" lean-forward="false" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="15" />
-          <folding>
-            <marker date="1531812566802" expanded="true" signature="713:1410" ph="..." />
-            <marker date="1531812566802" expanded="true" signature="1591:1776" ph="select p_ins... d_pekerja" />
-            <marker date="1531812566802" expanded="true" signature="1808:1989" ph="select m_ins... d_mitra" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -837,7 +831,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="56" column="96" lean-forward="false" selection-start-line="56" selection-start-column="96" selection-end-line="56" selection-end-column="96" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -852,27 +845,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="28" column="94" lean-forward="false" selection-start-line="28" selection-start-column="94" selection-end-line="28" selection-end-column="94" />
-          <folding>
-            <element signature="e#40#58#0#PHP" expanded="false" />
-            <marker date="1531455023490" expanded="true" signature="987:999" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="1025:1037" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="1254:1907" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="1270:1286" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="1486:1502" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="1699:1715" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="2567:2579" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="2605:2617" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="2834:3507" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="2850:2866" ph="..." />
-            <marker date="1531455023490" expanded="false" signature="3071:3087" ph="..." />
-            <marker date="1531455023490" expanded="false" signature="3294:3310" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="4123:4135" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="4161:4173" ph="..." />
-            <marker date="1531455023490" expanded="true" signature="4390:5084" ph="..." />
-            <marker date="1531455023490" expanded="false" signature="4427:4443" ph="..." />
-            <marker date="1531455023490" expanded="false" signature="4648:4664" ph="..." />
-            <marker date="1531455023490" expanded="false" signature="4871:4887" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -900,7 +872,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
+        <state relative-caret-position="5544">
           <caret line="329" column="59" lean-forward="false" selection-start-line="329" selection-start-column="59" selection-end-line="329" selection-end-column="59" />
           <folding>
             <marker date="1531832898030" expanded="true" signature="4764:5318" ph="..." />
@@ -924,7 +896,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
+        <state relative-caret-position="3024">
           <caret line="176" column="22" lean-forward="false" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="22" />
           <folding />
         </state>
@@ -932,7 +904,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraContractController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
+        <state relative-caret-position="1656">
           <caret line="116" column="38" lean-forward="false" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
           <folding>
             <marker date="1531982143288" expanded="true" signature="1864:2552" ph="..." />
