@@ -336,9 +336,12 @@ class mitraPekerjaController extends Controller
 
                 } else {
 //====== data di create
+
                     if ($nik[$i] == ''){
-                        $nik[$i] = $this->getNewNik(1);
+                        $temp = $this->getNewNik(1);
+                        $nik[$i] = $temp[0];
                     }
+
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
                             'p_note' => 'Seleksi',
