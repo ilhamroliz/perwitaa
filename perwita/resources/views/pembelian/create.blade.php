@@ -475,7 +475,7 @@
                         type: "success"
                     }, function () {
                             window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-pembelian/print','','width=700,height=500');
+                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print','','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();

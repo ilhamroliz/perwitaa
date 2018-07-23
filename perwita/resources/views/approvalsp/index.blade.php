@@ -144,6 +144,7 @@
             </div>
             </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
@@ -470,11 +471,18 @@ function detail(id){
         $('#approve').text('<span class="label label-danger">Ditolak</span>');
       }
 
+      //Button
+      $('#printbtn').attr('onclick','print('+id+')');
+
       $('.spiner-sp').hide();
       $('#showdetail').show();
 
     }
   });
+}
+
+function print(id){
+  window.location.href = baseUrl + '/approvalsp/print?id='+id;
 }
 
 </script>

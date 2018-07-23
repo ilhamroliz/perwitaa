@@ -158,6 +158,7 @@
                   </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
                 <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
             </div>
         </div>
@@ -347,6 +348,10 @@
           $("#pajak").text('Rp. '+result[0][0].p_pajak);
           $("#total").text('Rp. '+result[0][0].p_total_net);
           $(".rp").digits();
+
+          //Button
+          $('#printbtn').attr('onclick','print('+id+')');
+
         }
       });
     }
@@ -496,6 +501,10 @@
         }
       });
     }, 2000);
+    }
+
+    function print(id){
+      window.location.href = baseUrl + '/approvalpembelian/print?id='+id;
     }
 
 </script>

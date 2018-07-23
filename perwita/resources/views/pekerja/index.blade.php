@@ -281,6 +281,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
+                                <a href="#" class="btn btn-danger" style="float:left;">Lihat SP Pekerja</a>
                                 <div class="btn-group">
                                     <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                                 </div>

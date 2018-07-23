@@ -137,6 +137,8 @@ Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra/simpan','Penerimaan
 
 //======= SP Pekerja
 Route::get('manajemen-pekerja/surat-peringatan','SuratPeringatanController@index');
+Route::get('manajemen-pekerja/surat-peringatan/data','SuratPeringatanController@data');
+Route::get('manajemen-pekerja/surat-peringatan/filter','SuratPeringatanController@filter');
 Route::get('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
 Route::post('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
 Route::get('manajemen-pekerja/surat-peringatan/getsp','SuratPeringatanController@getsp');
@@ -617,6 +619,7 @@ Route::get('approvalpembelian/tolak', 'approvalpembelianController@tolak');
 Route::get('approvalpembelian/setujuilist', 'approvalpembelianController@setujuilist');
 Route::get('approvalpembelian/tolaklist', 'approvalpembelianController@tolaklist');
 Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');
+Route::get('approvalpembelian/print', 'approvalpembelianController@print');
 
 //Approval SP
 Route::get('approvalsp', 'approvalspController@index');
@@ -625,3 +628,4 @@ Route::get('approvalsp/tolak', 'approvalspController@tolak');
 Route::get('approvalsp/setujuilist', 'approvalspController@setujuilist');
 Route::get('approvalsp/tolaklist', 'approvalspController@tolaklist');
 Route::get('approvalsp/detail', 'approvalspController@detail');
+Route::get('approvalsp/print', 'approvalspController@print');
