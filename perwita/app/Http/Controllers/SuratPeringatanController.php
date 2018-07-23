@@ -98,7 +98,7 @@ class SuratPeringatanController extends Controller
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
             })
-            ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
             ->where('p_name', 'LIKE', '%'.$keyword.'%')
             ->ORwhere('p_nip_mitra', 'LIKE', '%'.$keyword.'%')
             ->ORwhere('p_nip', 'LIKE', '%'.$keyword.'%')
@@ -110,7 +110,7 @@ class SuratPeringatanController extends Controller
             } else {
 
                 foreach ($data as $query) {
-                    $results[] = ['id' => $query->mp_id, 'label' => $query->p_name . ' (' . $query->p_nip_mitra . ' ' . $query->p_nip. ')'];
+                    $results[] = ['id' => $query->p_id, 'label' => $query->p_name . ' (' . $query->p_nip_mitra . ' ' . $query->p_nip. ')'];
                 }
             }
 
@@ -126,7 +126,7 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->where('mp_id', $request->id)
+            ->where('p_id', $request->id)
             ->get();
 
       $sp = DB::table('d_surat_pringatan')
