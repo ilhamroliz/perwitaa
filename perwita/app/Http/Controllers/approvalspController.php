@@ -145,13 +145,26 @@ class approvalspController extends Controller
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->join('d_surat_pringatan_dt', 'spd_surat_peringatan', '=', 'sp_id')
           ->join('d_mitra_divisi', function($e){
                 $e->on('m_id', '=', 'md_mitra');
                 $e->on('mp_divisi', '=', 'md_id');
           })
-          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved','sp_jenis', 'spd_pelanggaran', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
           ->where('sp_id',$request->id)
           ->get();
+
+      if (empty($data[0]->sp_date_start)) {
+
+      } else {
+        $data[0]->sp_date_start = Carbon::parse($data[0]->sp_date_start)->format('d/m/Y');
+      }
+
+      if (empty($data[0]->sp_date_end)) {
+
+      } else {
+        $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
+      }
 
       return view('approvalsp.print', compact('data'));
     }

@@ -482,15 +482,7 @@ function detail(id){
 }
 
 function print(id){
-  $.ajax({
-    type: 'get',
-    data: {id:id},
-    url: baseUrl + '/approvalsp/print',
-    dataType: 'json',
-    success : function(result){
-      console.log(result);
-    }
-  });
+  window.location.href = baseUrl + '/approvalsp/print?id='+id;
 }
 
 </script>

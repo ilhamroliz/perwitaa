@@ -130,6 +130,12 @@ a#pdf:hover { background: #222; }
 									<br>
 									&nbsp; Keterangan &nbsp; : &nbsp; {{$data[0]->sp_note}}<br>
 									<br>
+									&nbsp; Pelanggaran &nbsp; : &nbsp; <br>
+									<br>
+									@foreach($data as $x)
+									&nbsp; - {{$x->spd_pelanggaran}} <br>
+									<br>							
+									@endforeach
 								</td>
 							</tr>
 						</tbody>
