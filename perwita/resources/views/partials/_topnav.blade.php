@@ -8,7 +8,7 @@
     background-color: rgba(0, 0, 0, 0.06);
   }
 
-  .navbar #approvaldown{height:250px; width:350px;}
+  .navbar #approvaldown{height:200px; width:350px;}
   .navbar #approvaldown{overflow:hidden; overflow-y:scroll;}
 
   /*
