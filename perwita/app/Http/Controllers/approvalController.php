@@ -44,6 +44,7 @@ class approvalController extends Controller
         ->get();
 
         $countpembelian = count($pembelian);
+        $pembelian[0]->jumlah = $countpembelian;
 
       $hitung = 0;
       if (empty($pekerja)) {

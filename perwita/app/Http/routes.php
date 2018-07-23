@@ -624,3 +624,4 @@ Route::get('approvalsp/tolak', 'approvalspController@tolak');
 Route::get('approvalsp/setujuilist', 'approvalspController@setujuilist');
 Route::get('approvalsp/tolaklist', 'approvalspController@tolaklist');
 Route::get('approvalsp/detail', 'approvalspController@detail');
+Route::get('approvalsp/print', 'approvalspController@print');
