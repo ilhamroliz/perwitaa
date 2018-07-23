@@ -257,6 +257,11 @@ $(document).ready(function(){
         format: 'dd/mm/yyyy'
     });
 
+    $('.date').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+
 });
 
   function getdata(id){
@@ -408,6 +413,7 @@ $(document).ready(function(){
         $('#dateend').val(result[0].sp_date_end);
         // button
         $('#updatebtn').attr('onclick','update('+id+')');
+
       }
     });
   }
