@@ -168,4 +168,5 @@ class approvalspController extends Controller
 
       return view('approvalsp.print', compact('data'));
     }
+    
 }

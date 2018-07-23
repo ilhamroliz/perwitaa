@@ -616,6 +616,7 @@ Route::get('approvalpembelian/tolak', 'approvalpembelianController@tolak');
 Route::get('approvalpembelian/setujuilist', 'approvalpembelianController@setujuilist');
 Route::get('approvalpembelian/tolaklist', 'approvalpembelianController@tolaklist');
 Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');
+Route::get('approvalpembelian/print', 'approvalpembelianController@print');
 
 //Approval SP
 Route::get('approvalsp', 'approvalspController@index');
