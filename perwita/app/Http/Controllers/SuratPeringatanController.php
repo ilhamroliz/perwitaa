@@ -17,6 +17,25 @@ class SuratPeringatanController extends Controller
         return view('surat-peringatan.index');
     }
 
+    public function data(){
+
+      $data = DB::table('d_mitra_pekerja')
+            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
+            ->join('d_mitra_divisi', function($e){
+              $e->on('m_id', '=', 'md_mitra');
+              $e->on('mp_divisi', '=', 'md_id');
+            })
+            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->where('sp_isapproved','Y')
+            ->get();
+
+
+      return response()->json($data);
+
+    }
+
     public function simpan(Request $request, $id){
       DB::beginTransaction();
       try {
@@ -102,9 +121,7 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->where('p_name', 'LIKE', '%'.$keyword.'%')
-            ->ORwhere('p_nip_mitra', 'LIKE', '%'.$keyword.'%')
-            ->ORwhere('p_nip', 'LIKE', '%'.$keyword.'%')
+            ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' AND p_name LIKE '%".$keyword."%' OR p_nip_mitra LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
             ->LIMIT(20)
             ->get();
 
@@ -158,6 +175,7 @@ class SuratPeringatanController extends Controller
 
       $surat = DB::table('d_surat_pringatan')
           ->where('sp_pekerja',$id)
+          ->where('sp_isapproved','Y')
           ->get();
 
       if(!empty($surat[0]->sp_date_start)){

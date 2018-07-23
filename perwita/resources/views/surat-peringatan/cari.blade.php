@@ -5,6 +5,7 @@
 @section('extra_styles')
 
 <style>
+
     .popover-navigation [data-role="next"] { display: none; }
     .popover-navigation [data-role="end"] { display: none; }
 
@@ -16,6 +17,16 @@
       padding: 4px;
       cursor: pointer;
     }
+
+    .headerDivider {
+     border-left:1px solid #38546d;
+     border-right:1px solid #16222c;
+     height:80px;
+     position:absolute;
+     right:249px;
+     top:10px;
+}
+
 </style>
 
 @endsection
@@ -46,9 +57,9 @@
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
-                <div class="col-md-12">
-                    <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra">
-                </div>
+              <div class="col-md-12">
+                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra">
+              </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
@@ -186,11 +197,38 @@
 
 $(document).ready(function(){
 
+  var html = '';
+  $('#showdata').html('');
+  $.ajax({
+    type: 'get',
+    url: baseUrl + '/manajemen-pekerja/surat-peringatan/data',
+    dataType: 'json',
+    success : function(result){
+      for (var i = 0; i < result.length; i++) {
+        html += '<tr>'+
+                '<td>'+result[i].sp_no+'</td>'+
+                '<td>'+result[i].p_name+'</td>'+
+                '<td>'+result[i].p_jabatan+'</td>'+
+                '<td>'+result[i].md_name+'</td>'+
+                '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
+                '<td>'+result[i].sp_note+'</td>'+
+                '<td>'+
+                '<div class="text-center">'+
+                  '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                  '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                '</div>'+
+                '</tr>';
+      }
+
+    $('#showdata').html(html);
+    }
+  });
+
     $('#pencarian').autocomplete({
         source: baseUrl + '/manajemen-pekerja/surat-peringatan/getsp',
         select: function(event, ui) {
             getdata(ui.item.id);
-            //console.log(ui);
         }
     });
 
@@ -203,7 +241,7 @@ $(document).ready(function(){
 
     });
 
-    $('.date').datepicker({
+    $('.date-sp').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
     });
@@ -292,6 +330,7 @@ $(document).ready(function(){
       waitingDialog.show();
         setTimeout(function(){
           $.ajax({
+            data: {id:id},
             url: baseUrl + '/manajemen-pekerja/surat-peringatan/hapus',
             type: 'get',
             timeout: 10000,
