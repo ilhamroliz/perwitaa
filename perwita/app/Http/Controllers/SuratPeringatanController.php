@@ -20,10 +20,15 @@ class SuratPeringatanController extends Controller
     public function simpan(Request $request, $id){
       DB::beginTransaction();
       try {
+
         $kode = "";
 
         $queryid = DB::table('d_surat_pringatan')
             ->MAX('sp_id');
+
+            if ($queryid == null) {
+              $queryid = 0;
+            }
 
         $querykode = DB::select(DB::raw("SELECT MAX(MID(sp_no,4,5)) as counter, MAX(MID(sp_no,13,2)) as bulan, MAX(RIGHT(sp_no,4)) as tahun FROM d_surat_pringatan"));
 
@@ -54,19 +59,17 @@ class SuratPeringatanController extends Controller
               'sp_insert' => Carbon::now('Asia/Jakarta')
             ]);
 
-
         $pelanggaran = [];
-
         array_push($pelanggaran,$request->pelanggaran);
 
         for ($i=0; $i < count($pelanggaran[0]); $i++) {
           $spd_detailid = DB::table('d_surat_pringatan_dt')
-            ->where('spd_surat_peringatan',$id)
+            ->where('spd_surat_peringatan',$queryid + 1)
             ->MAX('spd_detailid');
 
-          if ($spd_detailid == null) {
-            $spd_detailid = 0;
-          }
+            if ($spd_detailid == null) {
+              $spd_detailid = 0;
+            }
 
           DB::table('d_surat_pringatan_dt')
               ->insert([
