@@ -1,4 +1,5 @@
 <style media="screen">
+
   #approvaldown{
     background-color: #f6f6f6;
   }
@@ -6,6 +7,34 @@
   .dropdown-messages-box:hover{
     background-color: rgba(0, 0, 0, 0.06);
   }
+
+  .navbar #approvaldown{height:250px; width:350px;}
+  .navbar #approvaldown{overflow:hidden; overflow-y:scroll;}
+
+  /*
+ *  STYLE 1
+ */
+
+.navbar #approvaldown::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.navbar #approvaldown::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.navbar #approvaldown::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 </style>
 
 <div class="row border-bottom">
@@ -95,12 +124,10 @@
                                         </div>
                                         </li>
                                     </div>
-                                    </li>
                                   </ul>
                                   @endif
                                   @endif
-                              </li>
-
+                                  </li>
 
                               <li>
                                   <a href="{{url('logout')}}">
