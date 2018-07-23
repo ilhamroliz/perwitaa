@@ -36,7 +36,7 @@ class loginController extends Controller
     {
         return DB::transaction(function () use ($request) {
             $request->username = nama($request->username);
-            
+
             $rules = array(
                 'username' => 'required', // make sure the email is an actual email
                 'password' => 'required' // password can only be alphanumeric and has to be greater than 3 characters
