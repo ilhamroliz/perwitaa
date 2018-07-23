@@ -310,4 +310,27 @@ class SuratPeringatanController extends Controller
         ]);
       }
     }
+
+    public function filter(Request $request){
+      $start = Carbon::createFromFormat('d/m/Y', $request->start);
+      $end = Carbon::createFromFormat('d/m/Y', $request->end);
+
+      $data = DB::table('d_mitra_pekerja')
+            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
+            ->join('d_mitra_divisi', function($e){
+              $e->on('m_id', '=', 'md_mitra');
+              $e->on('mp_divisi', '=', 'md_id');
+            })
+            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->where('sp_isapproved','Y')
+            ->where(function($q) use ($start, $end){
+              $q->orWhere('sp_date_start', '<=', $start);
+              $q->orWhere('sp_date_end', '<=', $end);
+            })
+            ->get();
+
+      return response()->json($data);
+    }
 }
