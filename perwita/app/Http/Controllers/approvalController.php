@@ -44,7 +44,6 @@ class approvalController extends Controller
         ->get();
 
         $countpembelian = count($pembelian);
-        $pembelian[0]->jumlah = $countpembelian;
 
       $hitung = 0;
       if (empty($pekerja)) {
@@ -79,6 +78,7 @@ class approvalController extends Controller
         }
 
         $pembelian[0]->p_date = Carbon::parse($pembelian[0]->p_date)->diffForHumans();
+        $pembelian[0]->jumlah = $countpembelian;
         $data[2] = $pembelian[0];
       }
 
