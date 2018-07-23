@@ -57,14 +57,14 @@
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
-              <div class="col-md-5">
+              <div class="col-md-5" style="float:left;">
                 <label for="pencarian">Cari Berdasarkan Nama/NIK Pekerja/NIK Mitra</label>
                 <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra">
               </div>
-              <label for="startsp">Cari Berdasarkan Tanggal</label>
+              <label for="startsp">&nbsp;&nbsp;&nbsp;&nbsp;Cari Berdasarkan Tanggal</label>
               <div class="form-group row">
                     <div class="col-sm-2">
-                      <input type="text" id="startsp" class="form-control startsp date-sp" name="startsp" style="text-transform:uppercase" title="Start"  placeholder="Start">
+                      <input type="text" id="startsp" style="float:right;" class="form-control startsp date-sp" name="startsp" style="text-transform:uppercase" title="Start"  placeholder="Start">
                     </div>
                     <div class="col-sm-2">
                         <input type="text" class="form-control endsp date-sp" name="endsp" style="text-transform:uppercase" title="End"  placeholder="End">
