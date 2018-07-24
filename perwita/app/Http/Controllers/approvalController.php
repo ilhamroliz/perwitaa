@@ -43,6 +43,11 @@ class approvalController extends Controller
         ->where('sp_isapproved','P')
         ->get();
 
+    $mitrapekerja = DB::table('d_mitra_pekerja')
+        ->selectRaw('mp_insert, count(mp_id) as jumlah, "Approval Mitra Pekerja" as catatan')
+        ->where('mp_isapproved','P')
+        ->get();
+
         $countpembelian = count($pembelian);
 
       $hitung = 0;
@@ -95,6 +100,21 @@ class approvalController extends Controller
 
         $sp[0]->sp_insert = Carbon::parse($sp[0]->sp_insert)->diffForHumans();
         $data[3] = $sp[0];
+      }
+
+      if (empty($mitrapekerja)) {
+        $data[4] = $temp = array(
+          'sp_insert' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval Mitra Pekerja'
+        );
+      } else {
+        if ($mitrapekerja[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+
+        $mitrapekerja[0]->mp_insert = Carbon::parse($mitrapekerja[0]->mp_insert)->diffForHumans();
+        $data[4] = $mitrapekerja[0];
       }
 
 // dd($pembelian);

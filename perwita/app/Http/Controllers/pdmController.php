@@ -105,6 +105,7 @@ class pdmController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
+            ->where('mp_isapproved', 'Y')
             ->get();
       } elseif (!empty($mitra) && $divisi == "all") {
         $pekerja = DB::table('d_mitra_pekerja')
@@ -117,6 +118,7 @@ class pdmController extends Controller
             })
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
             ->where('mp_mitra', '=', $mitra)
+            ->where('mp_isapproved', 'Y')
             ->get();
       }
       else {
@@ -131,6 +133,7 @@ class pdmController extends Controller
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
+            ->where('mp_isapproved', 'Y')
             ->get();
       }
 

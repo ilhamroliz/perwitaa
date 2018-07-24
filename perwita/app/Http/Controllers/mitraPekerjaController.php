@@ -385,10 +385,10 @@ class mitraPekerjaController extends Controller
             d_pekerja_mutation::insert($addMutasi);
             d_mitra_pekerja::insert($addPekerja);
 
-            d_mitra_contract::where('mc_contractid', '=', $id_kontrak)
-                ->update([
-                    'mc_fulfilled' => DB::raw('mc_fulfilled + '. count($id_pekerja))
-                ]);
+            // d_mitra_contract::where('mc_contractid', '=', $id_kontrak)
+            //     ->update([
+            //         'mc_fulfilled' => DB::raw('mc_fulfilled + '. count($id_pekerja))
+            //     ]);
 
             DB::commit();
             return response()->json([
