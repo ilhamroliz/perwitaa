@@ -76,4 +76,31 @@ class promosiController extends Controller
             'data' => $pekerja
         ]);
     }
+
+    public function save(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $note = $request->note;
+            $jabatan = $request->jabatan;
+            $jenis = $request->jenis;
+
+            //00001/PMS/PN/bulan/2018
+            $id = DB::table('d_promosi_demosi')
+                ->max('pd_id');
+
+            if ($jenis == 'Promosi'){
+                $cek = DB::table('d_promosi_demosi')
+                    ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
+                    ->where(DB::raw('mid(pd_no, 4)'), '=', $tahun)
+
+            } elseif ($jenis == 'Demosi'){
+
+            }
+
+        } catch (\Exception $e){
+
+        }
+    }
+
 }

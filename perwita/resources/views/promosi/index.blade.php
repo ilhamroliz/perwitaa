@@ -84,16 +84,23 @@
                     <h3 class="m-b-xs"><strong class="modal-nama">John Smith</strong></h3>
                     <div class="font-bold modal-jabatan">Graphics designer</div>                    
                 </div>
-                <form class="form-horizontal" style="margin-top: 10px;">
+                <form class="form-horizontal form-modal" style="margin-top: 10px;">
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jabatan Sekarang</label>
                         <div class="col-lg-8">
-                            <select class="form-control" name="jabatanBaru">
+                            <select class="form-control jabatan" name="jabatanBaru">
                                 <option selected disabled>-- Pilih Jabatan --</option>
                                 @foreach($jabatan as $jabatan)
                                 <option value="{{ $jabatan->jp_id }}">{{ $jabatan->jp_name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="jenis" class="jenis" value="">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Keterangan</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control keterangan" name="note"></textarea>
                         </div>
                     </div>
                 </form>
@@ -153,6 +160,7 @@
         $('.modal-title').html('Promosi');
         $('.sub-tittle').html('Promosi jabatan adalah hal yang di impikan oleh pekerja :)');
         $('.simbol-modal').html('<i class="fa fa-arrow-circle-up modal-icon"></i>');
+        $('.jenis').val('promosi');
         $.ajax({
             type: 'get',
             data: {id:id},
@@ -171,7 +179,81 @@
         $('.modal-title').html('Demosi');
         $('.sub-tittle').html('Demosi jabatan akan menurunkan semangat pekerja :(');
         $('.simbol-modal').html('<i class="fa fa-arrow-circle-down modal-icon"></i>');
+        $('.jenis').val('demosi');
+        $.ajax({
+            type: 'get',
+            data: {id:id},
+            url: baseUrl + '/manajemen-pekerja/promosi-demosi/getdetail',
+            dataType: 'json',
+            success : function(result){
+                var data = result.data[0];
+                $('.modal-nama').html(data.p_name);
+                $('.modal-jabatan').html(data.jp_name);
+            }
+        });
         $('#myModal').modal('show');
+    }
+
+    function simpan(){
+        var note = $('textarea.keterangan').val();
+        var jabatan = $('.jabatan').val();
+        var jenis = $('.jenis').val();
+        if (jabatan == '' || jabatan == null) {
+            Command: toastr["warning"]("Jabatan tidak boleh kosong", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            return false;
+        }
+        waitingDialog.show();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: baseUrl + '/manajemen-pekerja/promosi-demosi/simpan',
+            type: 'post',
+            data: {note: note, jabatan: jabatan},
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'sukses') {
+                    
+                        
+                }
+                waitingDialog.hide();
+            },
+            error: function (xhr, status) {
+                if (status == 'timeout') {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 0) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 500) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                }
+                waitingDialog.hide();
+            }
+        });
     }
 </script>
 @endsection
