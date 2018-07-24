@@ -155,6 +155,9 @@ Route::post('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanCon
 Route::get('manajemen-pekerja/promosi-demosi','promosiController@index');
 Route::get('manajemen-pekerja/promosi-demosi/getData','promosiController@getData');
 Route::post('manajemen-pekerja/promosi-demosi/getData','promosiController@getData');
+Route::get('manajemen-pekerja/promosi-demosi/getdetail','promosiController@getdetail');
+Route::get('manajemen-pekerja/promosi-demosi/simpan','promosiController@save');
+Route::post('manajemen-pekerja/promosi-demosi/simpan','promosiController@save');
 
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');

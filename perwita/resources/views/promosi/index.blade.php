@@ -66,12 +66,44 @@
         <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-truck modal-icon"></i>
-                <h4 class="modal-title">Tambah Data Supplier</h4>
-                <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
+                <div class="simbol-modal"><i class="fa fa-arrow-circle-down modal-icon"></i></div>
+                <h4 class="modal-title">Resign</h4>
+                <small class="font-bold sub-tittle"></small>
             </div>
             <div class="modal-body">
-
+                <div class="spiner-example" style="display: none;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+                <div class="text-center konten-nama" style="">
+                    <h3 class="m-b-xs"><strong class="modal-nama">John Smith</strong></h3>
+                    <div class="font-bold modal-jabatan">Graphics designer</div>                    
+                </div>
+                <form class="form-horizontal form-modal" style="margin-top: 10px;">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Jabatan Sekarang</label>
+                        <div class="col-lg-8">
+                            <select class="form-control jabatan" name="jabatanBaru">
+                                <option selected disabled>-- Pilih Jabatan --</option>
+                                @foreach($jabatan as $jabatan)
+                                <option value="{{ $jabatan->jp_id }}">{{ $jabatan->jp_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="jenis" class="jenis" value="">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Keterangan</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control keterangan" name="note"></textarea>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
@@ -105,11 +137,11 @@
                 },
                 columns: [
                     {data: 'p_name', name: 'p_name'},
+                    {data: 'jp_name', name: 'jp_name'},
                     {data: 'p_nip', name: 'p_nip'},
-                    {data: 'p_sex', name: 'p_sex'},
-                    {data: 'p_hp', name: 'p_hp'},
-                    {data: 'p_address', name: 'p_address'},
-                    {data: 'pm_status', name: 'pm_status'},
+                    {data: 'p_nip_mitra', name: 'p_nip_mitra'},
+                    {data: 'm_name', name: 'm_name'},
+                    {data: 'md_name', name: 'md_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive: true,
@@ -119,9 +151,109 @@
                 //"scrollCollapse": true,
                 "language": dataTableLanguage,
             });
-            $('#pekerja').css('width', '100%').dataTable().fnAdjustColumnSizing();
         }, 1500);
+
+        
     });
+
+    function promosi(id){
+        $('.modal-title').html('Promosi');
+        $('.sub-tittle').html('Promosi jabatan adalah hal yang di impikan oleh pekerja :)');
+        $('.simbol-modal').html('<i class="fa fa-arrow-circle-up modal-icon"></i>');
+        $('.jenis').val('promosi');
+        $.ajax({
+            type: 'get',
+            data: {id:id},
+            url: baseUrl + '/manajemen-pekerja/promosi-demosi/getdetail',
+            dataType: 'json',
+            success : function(result){
+                var data = result.data[0];
+                $('.modal-nama').html(data.p_name);
+                $('.modal-jabatan').html(data.jp_name);
+            }
+        });
+        $('#myModal').modal('show');
+    }
+
+    function demosi(id){
+        $('.modal-title').html('Demosi');
+        $('.sub-tittle').html('Demosi jabatan akan menurunkan semangat pekerja :(');
+        $('.simbol-modal').html('<i class="fa fa-arrow-circle-down modal-icon"></i>');
+        $('.jenis').val('demosi');
+        $.ajax({
+            type: 'get',
+            data: {id:id},
+            url: baseUrl + '/manajemen-pekerja/promosi-demosi/getdetail',
+            dataType: 'json',
+            success : function(result){
+                var data = result.data[0];
+                $('.modal-nama').html(data.p_name);
+                $('.modal-jabatan').html(data.jp_name);
+            }
+        });
+        $('#myModal').modal('show');
+    }
+
+    function simpan(){
+        var note = $('textarea.keterangan').val();
+        var jabatan = $('.jabatan').val();
+        var jenis = $('.jenis').val();
+        if (jabatan == '' || jabatan == null) {
+            Command: toastr["warning"]("Jabatan tidak boleh kosong", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            return false;
+        }
+        waitingDialog.show();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: baseUrl + '/manajemen-pekerja/promosi-demosi/simpan',
+            type: 'post',
+            data: {note: note, jabatan: jabatan},
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'sukses') {
+                    
+                        
+                }
+                waitingDialog.hide();
+            },
+            error: function (xhr, status) {
+                if (status == 'timeout') {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 0) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 500) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                }
+                waitingDialog.hide();
+            }
+        });
+    }
 </script>
 @endsection
-
