@@ -237,8 +237,7 @@
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'sukses') {
-                    
-                        
+                    alert('abc');
                 }
                 waitingDialog.hide();
             },

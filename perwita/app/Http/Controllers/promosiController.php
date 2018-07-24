@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\d_pekerja;
 use App\d_pekerja_mutation;
 use App\d_promosi_demosi;
 use Carbon\Carbon;
@@ -93,12 +94,12 @@ class promosiController extends Controller
 
             //00001/PMS/PN/bulan/2018
             $jabatanAwal = DB::table('d_pekerja')
-                ->select('p_jabatan', 'p_jabatan_pelamar')
+                ->select('p_jabatan', 'p_jabatan_lamaran')
                 ->where('p_id', '=', $pekerja)
                 ->get();
 
             if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal->p_jabatan == ''){
-                $jabatanAwal = $jabatanAwal[0]->p_jabatan_pelamar;
+                $jabatanAwal = $jabatanAwal[0]->p_jabatan_lamaran;
             } else {
                 $jabatanAwal = $jabatanAwal[0]->p_jabatan;
             }
@@ -147,29 +148,6 @@ class promosiController extends Controller
                 'pd_insert' => $sekarang
             ));
 
-            $detailid = DB::table('d_pekerja_mutation')
-                ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
-                ->where('pm_pekerja', '=', $pekerja)
-                ->get();
-
-            $info = DB::table('d_mitra_pekerja')
-                ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
-                ->where('mp_status', '=', 'Aktif')
-                ->where('mp_pekerja', '=', $pekerja)
-                ->get();
-
-            d_pekerja_mutation::insert(array(
-                'pm_pekerja' => $pekerja,
-                'pm_detailid' => $detailid[0]->detailid + 1,
-                'pm_date' => $sekarang,
-                'pm_mitra' => $info[0]->mitra,
-                'pm_divisi' => $info[0]->divisi,
-                'pm_detail' => 'Promosi',
-                'pm_status' => $detailid[0]->pm_status,
-                'pm_note' => $note,
-                'pm_insert_by' => Session::get('mem')
-            ));
-
             DB::commit();
             return response()->json([
                 'status' => 'sukses'
@@ -182,6 +160,45 @@ class promosiController extends Controller
                 'data' => $e
             ]);
         }
+    }
+
+    public function approvePromosi($nomor)
+    {
+
+        $data = DB::table('d_promosi_demosi')
+            ->where('pd_no', '=', $nomor)
+            ->get();
+
+        $pekerja = $data[0]->pd_pekerja;
+
+        $detailid = DB::table('d_pekerja_mutation')
+            ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
+            ->where('pm_pekerja', '=', $pekerja)
+            ->get();
+
+        $info = DB::table('d_mitra_pekerja')
+            ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
+            ->where('mp_status', '=', 'Aktif')
+            ->where('mp_pekerja', '=', $pekerja)
+            ->get();
+
+        d_pekerja_mutation::insert(array(
+            'pm_pekerja' => $pekerja,
+            'pm_detailid' => $detailid[0]->detailid + 1,
+            'pm_date' => $data[0]->pd_insert,
+            'pm_mitra' => $info[0]->mitra,
+            'pm_divisi' => $info[0]->divisi,
+            'pm_detail' => 'Promosi',
+            'pm_status' => $detailid[0]->pm_status,
+            'pm_note' => $data->pd_note,
+            'pm_insert_by' => Session::get('mem')
+        ));
+
+        d_pekerja::where('p_id', '=', $pekerja)
+            ->update([
+                'p_jabatan' => $jabatan
+            ]);
+        return 'sukses';
     }
 
 }

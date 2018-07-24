@@ -4,8 +4,6 @@
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/partials/_head.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/partials/_head.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/promosi/index.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/promosi/index.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,13 +21,13 @@
       <file leaf-file-name="promosiController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="93" column="91" lean-forward="true" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="91" />
+            <state relative-caret-position="742">
+              <caret line="171" column="40" lean-forward="false" selection-start-line="171" selection-start-column="40" selection-end-line="171" selection-end-column="40" />
               <folding>
-                <element signature="e#40#62#0#PHP" expanded="true" />
-                <marker date="1532392708442" expanded="true" signature="1423:1882" ph="..." />
-                <marker date="1532392708442" expanded="false" signature="1460:1476" ph="..." />
-                <marker date="1532392708442" expanded="false" signature="1677:1693" ph="..." />
+                <element signature="e#40#58#0#PHP" expanded="true" />
+                <marker date="1532416666520" expanded="true" signature="1555:2014" ph="..." />
+                <marker date="1532416666520" expanded="false" signature="1592:1608" ph="..." />
+                <marker date="1532416666520" expanded="false" signature="1809:1825" ph="..." />
               </folding>
             </state>
           </provider>
@@ -38,8 +36,8 @@
       <file leaf-file-name="mitraPekerjaController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="191" column="60" lean-forward="true" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="60" />
+            <state relative-caret-position="521">
+              <caret line="209" column="29" lean-forward="false" selection-start-line="209" selection-start-column="20" selection-end-line="209" selection-end-column="29" />
               <folding>
                 <marker date="1532080575736" expanded="true" signature="4764:5318" ph="..." />
                 <marker date="1532080575736" expanded="true" signature="4893:4909" ph="..." />
@@ -56,39 +54,83 @@
       <file leaf-file-name="pekerjaController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="1095" column="17" lean-forward="false" selection-start-line="1095" selection-start-column="12" selection-end-line="1095" selection-end-column="17" />
+            <state relative-caret-position="256">
+              <caret line="1131" column="19" lean-forward="true" selection-start-line="1129" selection-start-column="16" selection-end-line="1131" selection-end-column="19" />
               <folding>
                 <element signature="e#40#64#0#PHP" expanded="true" />
-                <marker date="1531991971561" expanded="true" signature="796:1140" ph="select @rown... " />
-                <marker date="1531991971561" expanded="true" signature="1889:2514" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="1926:1942" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="2129:2145" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="2333:2349" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="2685:3022" ph="select @rown... " />
-                <marker date="1531991971561" expanded="true" signature="3771:4405" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="3808:3824" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="4011:4027" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="4215:4231" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="4573:4914" ph="select @rown... " />
-                <marker date="1531991971561" expanded="true" signature="5663:6297" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="5700:5716" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="5903:5919" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="6107:6123" ph="..." />
-                <marker date="1531991971561" expanded="true" signature="21400:22037" ph="select pl_pe... d_pekerja_language" />
-                <marker date="1531991971561" expanded="true" signature="21420:21526" ph="select pl_la... d_pekerja_language" />
-                <marker date="1531991971561" expanded="true" signature="21543:21647" ph="select pl_la... d_pekerja_language" />
-                <marker date="1531991971561" expanded="true" signature="21662:21767" ph="select pl_la... d_pekerja_language" />
-                <marker date="1531991971561" expanded="true" signature="22294:23077" ph="select *, (s... d_pekerja_referensi" />
-                <marker date="1531991971561" expanded="true" signature="22305:22410" ph="select pr_re... d_pekerja_referensi" />
-                <marker date="1531991971561" expanded="true" signature="22423:22531" ph="select pr_re... d_pekerja_referensi" />
-                <marker date="1531991971561" expanded="true" signature="22547:22652" ph="select pr_re... d_pekerja_referensi" />
-                <marker date="1531991971561" expanded="true" signature="22665:22773" ph="select pr_re... d_pekerja_referensi" />
-                <marker date="1531991971561" expanded="true" signature="23109:23588" ph="select ps_pe... d_pekerja_sim" />
-                <marker date="1531991971561" expanded="true" signature="23129:23216" ph="select ps_si... d_pekerja_sim" />
-                <marker date="1531991971561" expanded="true" signature="23228:23315" ph="select ps_si... d_pekerja_sim" />
-                <marker date="1531991971561" expanded="true" signature="23327:23414" ph="select ps_si... d_pekerja_sim" />
+                <marker date="1532414645988" expanded="true" signature="518:47337" ph="{...}" />
+                <marker date="1532414645988" expanded="true" signature="796:1140" ph="select @rown... " />
+                <marker date="1532414645988" expanded="true" signature="1889:2514" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="1926:1942" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="2129:2145" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="2333:2349" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="2685:3022" ph="select @rown... " />
+                <marker date="1532414645988" expanded="true" signature="3771:4405" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="3808:3824" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="4011:4027" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="4215:4231" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="4573:4914" ph="select @rown... " />
+                <marker date="1532414645988" expanded="true" signature="5663:6297" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="5700:5716" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="5903:5919" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="6107:6123" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="21400:22037" ph="select pl_pe... d_pekerja_language" />
+                <marker date="1532414645988" expanded="true" signature="21420:21526" ph="select pl_la... d_pekerja_language" />
+                <marker date="1532414645988" expanded="true" signature="21543:21647" ph="select pl_la... d_pekerja_language" />
+                <marker date="1532414645988" expanded="true" signature="21662:21767" ph="select pl_la... d_pekerja_language" />
+                <marker date="1532414645988" expanded="true" signature="22294:23077" ph="select *, (s... d_pekerja_referensi" />
+                <marker date="1532414645988" expanded="true" signature="22305:22410" ph="select pr_re... d_pekerja_referensi" />
+                <marker date="1532414645988" expanded="true" signature="22423:22531" ph="select pr_re... d_pekerja_referensi" />
+                <marker date="1532414645988" expanded="true" signature="22547:22652" ph="select pr_re... d_pekerja_referensi" />
+                <marker date="1532414645988" expanded="true" signature="22665:22773" ph="select pr_re... d_pekerja_referensi" />
+                <marker date="1532414645988" expanded="true" signature="23109:23588" ph="select ps_pe... d_pekerja_sim" />
+                <marker date="1532414645988" expanded="true" signature="23129:23216" ph="select ps_si... d_pekerja_sim" />
+                <marker date="1532414645988" expanded="true" signature="23228:23315" ph="select ps_si... d_pekerja_sim" />
+                <marker date="1532414645988" expanded="true" signature="23327:23414" ph="select ps_si... d_pekerja_sim" />
+                <marker date="1532414645988" expanded="true" signature="44035:45138" ph="{...}" />
+                <marker date="1532414645988" expanded="true" signature="45179:45623" ph="{...}" />
+                <marker date="1532414645988" expanded="true" signature="45218:45253" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="45318:45356" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="45443:45591" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="45476:45529" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="45537:45581" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="45669:47334" ph="{...}" />
+                <marker date="1532414645988" expanded="true" signature="45721:47176" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46055:47165" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46122:46184" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46123:46183" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46242:46302" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46243:46301" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46406:46423" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46451:46464" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46596:47014" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="46597:47013" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="47088:47150" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="47089:47149" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="47200:47327" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="47265:47316" ph="..." />
+                <marker date="1532414645988" expanded="true" signature="47266:47315" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="d_pekerja_mutation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/perwita/app/d_pekerja_mutation.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" column="156" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="14" selection-end-column="156" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="d_promosi_demosi.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/perwita/app/d_promosi_demosi.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" column="139" lean-forward="false" selection-start-line="14" selection-start-column="139" selection-end-line="14" selection-end-column="139" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -105,7 +147,6 @@
       <find>update</find>
       <find>to</find>
       <find>mc_fulfilled</find>
-      <find>respon</find>
       <find>trans</find>
       <find>catc</find>
       <find>nama</find>
@@ -123,6 +164,7 @@
       <find>respo</find>
       <find>begin</find>
       <find>$kode</find>
+      <find>respon</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -148,6 +190,7 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php" />
         <option value="$PROJECT_DIR$/perwita/resources/views/promosi/index.blade.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" />
+        <option value="$PROJECT_DIR$/perwita/app/d_promosi_demosi.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php" />
       </list>
     </option>
@@ -246,7 +289,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="SearchEverywhereHistoryKey" value="mitra&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;promosi&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/promosiController.php&#10;pener&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;pdm&#9;null&#9;null&#10;peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;Retur&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;mitrapek&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;penerimaan&#9;null&#9;null&#10;surat&#9;null&#9;null&#10;itemCon&#9;null&#9;null&#10;returnpemb&#9;null&#9;null&#10;log&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;d_stoc&#9;null&#9;null&#10;d_purch&#9;null&#9;null&#10;penerima&#9;null&#9;null&#10;mou&#9;null&#9;null&#10;mitrad&#9;null&#9;null&#10;d_mitra&#9;null&#9;null&#10;login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;d_promo&#9;null&#9;null&#10;d_peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_pekerja_mutation.php&#10;mitra&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;promosi&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/promosiController.php&#10;pener&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;pdm&#9;null&#9;null&#10;peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;Retur&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;mitrapek&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;penerimaan&#9;null&#9;null&#10;surat&#9;null&#9;null&#10;itemCon&#9;null&#9;null&#10;returnpemb&#9;null&#9;null&#10;log&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;d_stoc&#9;null&#9;null&#10;d_purch&#9;null&#9;null&#10;penerima&#9;null&#9;null&#10;mou&#9;null&#9;null&#10;mitrad&#9;null&#9;null&#10;d_mitra&#9;null&#9;null&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -316,7 +359,7 @@
       <workItem from="1532053539797" duration="9407000" />
       <workItem from="1532320520458" duration="338000" />
       <workItem from="1532329492408" duration="4300000" />
-      <workItem from="1532389787077" duration="2515000" />
+      <workItem from="1532389787077" duration="7860000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -493,11 +536,18 @@
       <option name="project" value="LOCAL" />
       <updated>1532080614427</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="roliz">
+      <created>1532414598908</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1532414598908</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156909000" />
+    <option name="totallyTimeSpent" value="162254000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -539,13 +589,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6102">
-          <caret line="339" column="21" lean-forward="false" selection-start-line="339" selection-start-column="21" selection-end-line="339" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5292">
@@ -763,13 +806,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/d_pekerja_mutation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="154" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="154" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -816,13 +852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="10" column="194" lean-forward="false" selection-start-line="10" selection-start-column="194" selection-end-line="10" selection-end-column="194" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="56" column="96" lean-forward="false" selection-start-line="56" selection-start-column="96" selection-end-line="56" selection-end-column="96" />
         </state>
       </provider>
     </entry>
@@ -897,48 +926,96 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/d_pekerja_mutation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="156" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="14" selection-end-column="156" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/d_promosi_demosi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="139" lean-forward="false" selection-start-line="14" selection-start-column="139" selection-end-line="14" selection-end-column="139" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-53">
+          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="1095" column="17" lean-forward="false" selection-start-line="1095" selection-start-column="12" selection-end-line="1095" selection-end-column="17" />
+        <state relative-caret-position="256">
+          <caret line="1131" column="19" lean-forward="true" selection-start-line="1129" selection-start-column="16" selection-end-line="1131" selection-end-column="19" />
           <folding>
             <element signature="e#40#64#0#PHP" expanded="true" />
-            <marker date="1531991971561" expanded="true" signature="796:1140" ph="select @rown... " />
-            <marker date="1531991971561" expanded="true" signature="1889:2514" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="1926:1942" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="2129:2145" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="2333:2349" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="2685:3022" ph="select @rown... " />
-            <marker date="1531991971561" expanded="true" signature="3771:4405" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="3808:3824" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="4011:4027" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="4215:4231" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="4573:4914" ph="select @rown... " />
-            <marker date="1531991971561" expanded="true" signature="5663:6297" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="5700:5716" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="5903:5919" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="6107:6123" ph="..." />
-            <marker date="1531991971561" expanded="true" signature="21400:22037" ph="select pl_pe... d_pekerja_language" />
-            <marker date="1531991971561" expanded="true" signature="21420:21526" ph="select pl_la... d_pekerja_language" />
-            <marker date="1531991971561" expanded="true" signature="21543:21647" ph="select pl_la... d_pekerja_language" />
-            <marker date="1531991971561" expanded="true" signature="21662:21767" ph="select pl_la... d_pekerja_language" />
-            <marker date="1531991971561" expanded="true" signature="22294:23077" ph="select *, (s... d_pekerja_referensi" />
-            <marker date="1531991971561" expanded="true" signature="22305:22410" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1531991971561" expanded="true" signature="22423:22531" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1531991971561" expanded="true" signature="22547:22652" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1531991971561" expanded="true" signature="22665:22773" ph="select pr_re... d_pekerja_referensi" />
-            <marker date="1531991971561" expanded="true" signature="23109:23588" ph="select ps_pe... d_pekerja_sim" />
-            <marker date="1531991971561" expanded="true" signature="23129:23216" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1531991971561" expanded="true" signature="23228:23315" ph="select ps_si... d_pekerja_sim" />
-            <marker date="1531991971561" expanded="true" signature="23327:23414" ph="select ps_si... d_pekerja_sim" />
+            <marker date="1532414645988" expanded="true" signature="518:47337" ph="{...}" />
+            <marker date="1532414645988" expanded="true" signature="796:1140" ph="select @rown... " />
+            <marker date="1532414645988" expanded="true" signature="1889:2514" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="1926:1942" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="2129:2145" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="2333:2349" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="2685:3022" ph="select @rown... " />
+            <marker date="1532414645988" expanded="true" signature="3771:4405" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="3808:3824" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="4011:4027" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="4215:4231" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="4573:4914" ph="select @rown... " />
+            <marker date="1532414645988" expanded="true" signature="5663:6297" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="5700:5716" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="5903:5919" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="6107:6123" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="21400:22037" ph="select pl_pe... d_pekerja_language" />
+            <marker date="1532414645988" expanded="true" signature="21420:21526" ph="select pl_la... d_pekerja_language" />
+            <marker date="1532414645988" expanded="true" signature="21543:21647" ph="select pl_la... d_pekerja_language" />
+            <marker date="1532414645988" expanded="true" signature="21662:21767" ph="select pl_la... d_pekerja_language" />
+            <marker date="1532414645988" expanded="true" signature="22294:23077" ph="select *, (s... d_pekerja_referensi" />
+            <marker date="1532414645988" expanded="true" signature="22305:22410" ph="select pr_re... d_pekerja_referensi" />
+            <marker date="1532414645988" expanded="true" signature="22423:22531" ph="select pr_re... d_pekerja_referensi" />
+            <marker date="1532414645988" expanded="true" signature="22547:22652" ph="select pr_re... d_pekerja_referensi" />
+            <marker date="1532414645988" expanded="true" signature="22665:22773" ph="select pr_re... d_pekerja_referensi" />
+            <marker date="1532414645988" expanded="true" signature="23109:23588" ph="select ps_pe... d_pekerja_sim" />
+            <marker date="1532414645988" expanded="true" signature="23129:23216" ph="select ps_si... d_pekerja_sim" />
+            <marker date="1532414645988" expanded="true" signature="23228:23315" ph="select ps_si... d_pekerja_sim" />
+            <marker date="1532414645988" expanded="true" signature="23327:23414" ph="select ps_si... d_pekerja_sim" />
+            <marker date="1532414645988" expanded="true" signature="44035:45138" ph="{...}" />
+            <marker date="1532414645988" expanded="true" signature="45179:45623" ph="{...}" />
+            <marker date="1532414645988" expanded="true" signature="45218:45253" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="45318:45356" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="45443:45591" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="45476:45529" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="45537:45581" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="45669:47334" ph="{...}" />
+            <marker date="1532414645988" expanded="true" signature="45721:47176" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46055:47165" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46122:46184" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46123:46183" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46242:46302" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46243:46301" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46406:46423" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46451:46464" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46596:47014" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="46597:47013" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="47088:47150" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="47089:47149" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="47200:47327" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="47265:47316" ph="..." />
+            <marker date="1532414645988" expanded="true" signature="47266:47315" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="191" column="60" lean-forward="true" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="60" />
+        <state relative-caret-position="521">
+          <caret line="209" column="29" lean-forward="false" selection-start-line="209" selection-start-column="20" selection-end-line="209" selection-end-column="29" />
           <folding>
             <marker date="1532080575736" expanded="true" signature="4764:5318" ph="..." />
             <marker date="1532080575736" expanded="true" signature="4893:4909" ph="..." />
@@ -953,13 +1030,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="93" column="91" lean-forward="true" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="91" />
+        <state relative-caret-position="742">
+          <caret line="171" column="40" lean-forward="false" selection-start-line="171" selection-start-column="40" selection-end-line="171" selection-end-column="40" />
           <folding>
-            <element signature="e#40#62#0#PHP" expanded="true" />
-            <marker date="1532392708442" expanded="true" signature="1423:1882" ph="..." />
-            <marker date="1532392708442" expanded="false" signature="1460:1476" ph="..." />
-            <marker date="1532392708442" expanded="false" signature="1677:1693" ph="..." />
+            <element signature="e#40#58#0#PHP" expanded="true" />
+            <marker date="1532416666520" expanded="true" signature="1555:2014" ph="..." />
+            <marker date="1532416666520" expanded="false" signature="1592:1608" ph="..." />
+            <marker date="1532416666520" expanded="false" signature="1809:1825" ph="..." />
           </folding>
         </state>
       </provider>
