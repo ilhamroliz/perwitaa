@@ -1067,7 +1067,7 @@ group by ps_pekerja");
             $i++;
         }
 
-        // dd($data);
+
         echo json_encode($data);
 
     }

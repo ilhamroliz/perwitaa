@@ -8,7 +8,11 @@ use App\Http\Requests;
 
 use DB;
 
+use App\d_pekerja_mutation;
+
 use Carbon\Carbon;
+
+use Session;
 
 class SuratPeringatanController extends Controller
 {
@@ -72,11 +76,38 @@ class SuratPeringatanController extends Controller
               'sp_id' => $queryid + 1,
               'sp_no' => $finalkode,
               'sp_pekerja' => $id,
+              'sp_jenis' => $request->sp,
               'sp_date_start' => Carbon::createFromFormat('d/m/Y',$request->start,'Asia/Jakarta'),
               'sp_date_end' => Carbon::createFromFormat('d/m/Y',$request->end,'Asia/Jakarta'),
               'sp_note' => $request->keterangan,
               'sp_insert' => Carbon::now('Asia/Jakarta')
             ]);
+
+        $iddivisi = DB::table('d_mitra_pekerja')
+                  ->select('mp_divisi')
+                  ->where('mp_pekerja',$id)
+                  ->get();
+
+        $idmitra = DB::table('d_mitra_pekerja')
+                  ->select('mp_mitra')
+                  ->where('mp_pekerja',$id)
+                  ->get();
+
+        $pm_detailid = DB::table('d_pekerja_mutation')
+                  ->select('pm_detailid')
+                  ->where('pm_pekerja',$id)
+                  ->MAX('pm_detailid');
+
+        d_pekerja_mutation::insert([
+          'pm_pekerja' => $id,
+          'pm_detailid' => $pm_detailid + 1,
+          'pm_mitra' => $idmitra[0]->mp_mitra,
+          'pm_divisi' => $iddivisi[0]->mp_divisi,
+          'pm_detail' => $request->sp,
+          'pm_status' => 'Aktif',
+          'pm_note' => $request->keterangan,
+          'pm_insert_by' => Session::get('mem')
+        ]);
 
         $pelanggaran = [];
         array_push($pelanggaran,$request->pelanggaran);
@@ -121,7 +152,7 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' AND p_name LIKE '%".$keyword."%' OR p_nip_mitra LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
+            ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' OR p_name LIKE '%".$keyword."%' OR p_nip_mitra LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
             ->LIMIT(20)
             ->get();
 

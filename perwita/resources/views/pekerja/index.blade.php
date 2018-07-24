@@ -83,7 +83,7 @@
                                         <th style="width: 15%;">No Telp.</th>
                                         <th style="width: 25%;">Alamat</th>
                                         <th style="width: 5%;">Status</th>
-                                        <th style="width: 13%;">Aksi</th>
+                                        <th style="width: 15%;">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -122,7 +122,7 @@
                                         <th style="width: 15%;">No Telp.</th>
                                         <th style="width: 25%;">Alamat</th>
                                         <th style="width: 5%;">Status</th>
-                                        <th style="width: 13%;">Aksi</th>
+                                        <th style="width: 15%;">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -281,7 +281,6 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <a href="#" class="btn btn-danger" style="float:left;">Lihat SP Pekerja</a>
                                 <div class="btn-group">
                                     <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                                 </div>
