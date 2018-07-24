@@ -232,12 +232,20 @@
         });
         $.ajax({
             url: baseUrl + '/manajemen-pekerja/promosi-demosi/simpan',
-            type: 'post',
+            type: 'get',
             data: {note: note, jabatan: jabatan, jenis: jenis, pekerja: pekerja},
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'sukses') {
-                    alert('abc');
+                    swal({
+                      title: "Berhasil Disimpan",
+                      text: "Data berhasil Disimpan",
+                      type: "success",
+                      showConfirmButton: false,
+                      timer: 900
+                    });
+                    $('#myModal').modal('hide');
+                    location.reload();
                 }
                 waitingDialog.hide();
             },

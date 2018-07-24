@@ -112,7 +112,7 @@ class promosiController extends Controller
                 $cek = DB::table('d_promosi_demosi')
                     ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
                     ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'PMS')
-                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->month)
+                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->format("m"))
                     ->where(DB::raw('right(pd_no, 4)'), '=', $sekarang->year)
                     ->get();
 
@@ -120,13 +120,13 @@ class promosiController extends Controller
                     $temp = ((int)$x->counter);
                     $kode = sprintf("%05s",$temp);
                 }
-                $tempKode = $kode . '/' . 'PMS/PN/' . $sekarang->month . '/' . $sekarang->year;
+                $tempKode = $kode . '/' . 'PMS/PN/' . $sekarang->format("m") . '/' . $sekarang->year;
 
             } elseif ($jenis == 'Demosi'){
                 $cek = DB::table('d_promosi_demosi')
                     ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
                     ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'DMS')
-                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->month)
+                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->format("m"))
                     ->where(DB::raw('right(pd_no, 4)'), '=', $sekarang->year)
                     ->get();
 
@@ -134,7 +134,7 @@ class promosiController extends Controller
                     $temp = ((int)$x->counter);
                     $kode = sprintf("%05s",$temp);
                 }
-                $tempKode = $kode . '/' . 'DMS/PN/' . $sekarang->month . '/' . $sekarang->year;
+                $tempKode = $kode . '/' . 'DMS/PN/' . $sekarang->format("m") . '/' . $sekarang->year;
             }
 
             d_promosi_demosi::insert(array(
