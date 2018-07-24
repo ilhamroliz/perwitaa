@@ -48,6 +48,11 @@ class approvalController extends Controller
         ->where('mp_isapproved','P')
         ->get();
 
+    $promosi = DB::table('d_promosi_demosi')
+        ->selectRaw('pd_insert, count(pd_id) as jumlah, "Approval Promosi" as catatan')
+        ->where('pd_isapproved','P')
+        ->get();
+
         $countpembelian = count($pembelian);
 
       $hitung = 0;
@@ -115,6 +120,21 @@ class approvalController extends Controller
 
         $mitrapekerja[0]->mp_insert = Carbon::parse($mitrapekerja[0]->mp_insert)->diffForHumans();
         $data[4] = $mitrapekerja[0];
+      }
+
+      if (empty($promosi)) {
+        $data[5] = $temp = array(
+          'pd_insert' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval Promosi'
+        );
+      } else {
+        if ($promosi[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+
+        $promosi[0]->pd_insert = Carbon::parse($promosi[0]->pd_insert)->diffForHumans();
+        $data[5] = $promosi[0];
       }
 
 // dd($pembelian);

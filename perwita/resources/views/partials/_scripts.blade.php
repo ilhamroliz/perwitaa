@@ -220,12 +220,14 @@
                        var pembelian = '';
                        var sp = '';
                        var mitrapekerja = '';
+                       var promosi = '';
                        var countpelamar = 0;
                        var countmitra = 0;
                        var countpembelian = 0;
                        var countsp = 0;
                        var countnotif = 0;
                        var countmitrapekerja = 0;
+                       var countpromosi = 0;
                        $.ajax({
                          type : 'get',
                          url : '{{url("/approval/cekapproval")}}',
@@ -302,6 +304,20 @@
                                      '</div>'+
                                      '</li>';
 
+                                     promosi += '<li">'+
+                                         '<div class="dropdown-messages-box">'+
+                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-img" title="Lihat Daftar Approval Promosi">'+
+                                               '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
+                                            '</a>'+
+                                           '<div class="media-body">'+
+                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi" style="text-decoration:none; color:black;">'+
+                                               '<small class="pull-right" id="menitpromosi"></small>'+
+                                               '<strong id="catatanapprovalpromosi"></strong><small id="isiapprovalpromosi"></small><br>'+
+                                            '</a>'+
+                                           '</div>'+
+                                       '</div>'+
+                                       '</li>';
+
                                if (data.data[0].jumlah > 0) {
                                   countnotif += 1;
                                   countpelamar += 1;
@@ -347,6 +363,15 @@
                                   $("#catatanapprovalmitrapekerja").text(data.data[4].catatan);
                                   $("#isiapprovalmitrapekerja").html(" Anda Memiliki "+data.data[4].jumlah+" Persetujuan");
                                }
+                               if (data.data[5].jumlah > 0) {
+                                  countnotif += 1;
+                                  countpromosi += 1;
+                                  $("#showpromosi").html(promosi);
+                                  $("#countnotif").text(countnotif);
+                                  $("#menitpromosi").html(data.data[5].pd_insert);
+                                  $("#catatanapprovalpromosi").text(data.data[5].catatan);
+                                  $("#isiapprovalpromosi").html(" Anda Memiliki "+data.data[5].jumlah+" Persetujuan");
+                               }
                                if (countpelamar == 0) {
                                  $("#showpelamar").html('<center> Tidak ada permintaan Approval Pelamar </center>');
                                }
@@ -360,6 +385,9 @@
                                  $("#showsp").html('<center> Tidak ada permintaan Approval SP </center>');
                                }
                                if (countmitrapekerja == 0) {
+                                 $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Mitra Pekerja </center>');
+                               }
+                               if (countpromosi == 0) {
                                  $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Mitra Pekerja </center>');
                                }
                                if (countnotif == 0) {

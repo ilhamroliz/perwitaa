@@ -138,6 +138,20 @@
                                         </div>
                                         </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
+                                    <div class="media-body" id="showpromosi">
+                                      <li>
+                                          <div class="dropdown-messages-box">
+
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitpromosi"></small>
+                                                <strong id="catatanapprovalpromosi"></strong><small id="isiapprovalpromosi"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </div>
                                   </ul>
                                   @endif
                                   @endif

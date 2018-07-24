@@ -164,8 +164,7 @@ class promosiController extends Controller
 
     public function approvePromosi($nomor)
     {
-        DB::beginTransaction();
-        try{
+
             $data = DB::table('d_promosi_demosi')
                 ->where('pd_no', '=', $nomor)
                 ->get();
@@ -193,7 +192,7 @@ class promosiController extends Controller
                 'pm_divisi' => $info[0]->divisi,
                 'pm_detail' => 'Promosi',
                 'pm_status' => $detailid[0]->pm_status,
-                'pm_note' => $data->pd_note,
+                'pm_note' => $data[0]->pd_note,
                 'pm_insert_by' => Session::get('mem')
             ));
 
@@ -201,12 +200,7 @@ class promosiController extends Controller
                 ->update([
                     'p_jabatan' => $jabatan
                 ]);
-            DB::commit();
-            return 'sukses';
-        } catch (\Exception $e){
-            DB::rollback();
-            return 'gagal';
-        }
+
     }
 
 }
