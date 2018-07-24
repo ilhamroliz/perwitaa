@@ -97,6 +97,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="jenis" class="jenis" value="">
+                    <input type="hidden" name="pekerja" class="id_pekerja" value="">
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Keterangan</label>
                         <div class="col-lg-8">
@@ -160,7 +161,8 @@
         $('.modal-title').html('Promosi');
         $('.sub-tittle').html('Promosi jabatan adalah hal yang di impikan oleh pekerja :)');
         $('.simbol-modal').html('<i class="fa fa-arrow-circle-up modal-icon"></i>');
-        $('.jenis').val('promosi');
+        $('.jenis').val('Promosi');
+        $('.id_pekerja').val(id);
         $.ajax({
             type: 'get',
             data: {id:id},
@@ -179,7 +181,8 @@
         $('.modal-title').html('Demosi');
         $('.sub-tittle').html('Demosi jabatan akan menurunkan semangat pekerja :(');
         $('.simbol-modal').html('<i class="fa fa-arrow-circle-down modal-icon"></i>');
-        $('.jenis').val('demosi');
+        $('.jenis').val('Demosi');
+        $('.id_pekerja').val(id);
         $.ajax({
             type: 'get',
             data: {id:id},
@@ -198,6 +201,7 @@
         var note = $('textarea.keterangan').val();
         var jabatan = $('.jabatan').val();
         var jenis = $('.jenis').val();
+        var pekerja = $('.id_pekerja').val();
         if (jabatan == '' || jabatan == null) {
             Command: toastr["warning"]("Jabatan tidak boleh kosong", "Peringatan !")
 
@@ -229,7 +233,7 @@
         $.ajax({
             url: baseUrl + '/manajemen-pekerja/promosi-demosi/simpan',
             type: 'post',
-            data: {note: note, jabatan: jabatan},
+            data: {note: note, jabatan: jabatan, jenis: jenis, pekerja: pekerja},
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'sukses') {

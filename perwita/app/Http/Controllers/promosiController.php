@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\d_pekerja_mutation;
+use App\d_promosi_demosi;
+use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
 
 class promosiController extends Controller
@@ -84,22 +88,99 @@ class promosiController extends Controller
             $note = $request->note;
             $jabatan = $request->jabatan;
             $jenis = $request->jenis;
+            $sekarang = Carbon::now('Asia/Jakarta');
+            $pekerja = $request->pekerja;
 
             //00001/PMS/PN/bulan/2018
+            $jabatanAwal = DB::table('d_pekerja')
+                ->select('p_jabatan', 'p_jabatan_pelamar')
+                ->where('p_id', '=', $pekerja)
+                ->get();
+
+            if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal->p_jabatan == ''){
+                $jabatanAwal = $jabatanAwal[0]->p_jabatan_pelamar;
+            } else {
+                $jabatanAwal = $jabatanAwal[0]->p_jabatan;
+            }
+
             $id = DB::table('d_promosi_demosi')
                 ->max('pd_id');
 
+            $tempKode = '';
             if ($jenis == 'Promosi'){
                 $cek = DB::table('d_promosi_demosi')
                     ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
-                    ->where(DB::raw('mid(pd_no, 4)'), '=', $tahun)
+                    ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'PMS')
+                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->month)
+                    ->where(DB::raw('right(pd_no, 4)'), '=', $sekarang->year)
+                    ->get();
+
+                foreach ($cek as $x) {
+                    $temp = ((int)$x->counter);
+                    $kode = sprintf("%05s",$temp);
+                }
+                $tempKode = $kode . '/' . 'PMS/PN/' . $sekarang->month . '/' . $sekarang->year;
 
             } elseif ($jenis == 'Demosi'){
+                $cek = DB::table('d_promosi_demosi')
+                    ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
+                    ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'DMS')
+                    ->where(DB::raw('mid(pd_no, 14,2)'), '=', $sekarang->month)
+                    ->where(DB::raw('right(pd_no, 4)'), '=', $sekarang->year)
+                    ->get();
 
+                foreach ($cek as $x) {
+                    $temp = ((int)$x->counter);
+                    $kode = sprintf("%05s",$temp);
+                }
+                $tempKode = $kode . '/' . 'DMS/PN/' . $sekarang->month . '/' . $sekarang->year;
             }
 
-        } catch (\Exception $e){
+            d_promosi_demosi::insert(array(
+                'pd_id' => $id + 1,
+                'pd_no' => $tempKode,
+                'pd_pekerja' => $pekerja,
+                'pd_jabatan_awal' => $jabatanAwal,
+                'pd_jabatan_sekarang' => $jabatan,
+                'pd_note' => $note,
+                'pd_isapproved' => 'P',
+                'pd_insert' => $sekarang
+            ));
 
+            $detailid = DB::table('d_pekerja_mutation')
+                ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
+                ->where('pm_pekerja', '=', $pekerja)
+                ->get();
+
+            $info = DB::table('d_mitra_pekerja')
+                ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
+                ->where('mp_status', '=', 'Aktif')
+                ->where('mp_pekerja', '=', $pekerja)
+                ->get();
+
+            d_pekerja_mutation::insert(array(
+                'pm_pekerja' => $pekerja,
+                'pm_detailid' => $detailid[0]->detailid + 1,
+                'pm_date' => $sekarang,
+                'pm_mitra' => $info[0]->mitra,
+                'pm_divisi' => $info[0]->divisi,
+                'pm_detail' => 'Promosi',
+                'pm_status' => $detailid[0]->pm_status,
+                'pm_note' => $note,
+                'pm_insert_by' => Session::get('mem')
+            ));
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
         }
     }
 
