@@ -164,41 +164,48 @@ class promosiController extends Controller
 
     public function approvePromosi($nomor)
     {
+        DB::beginTransaction();
+        try{
+            $data = DB::table('d_promosi_demosi')
+                ->where('pd_no', '=', $nomor)
+                ->get();
 
-        $data = DB::table('d_promosi_demosi')
-            ->where('pd_no', '=', $nomor)
-            ->get();
+            $pekerja = $data[0]->pd_pekerja;
+            $sekarang = Carbon::now('Asia/Jakarta');
 
-        $pekerja = $data[0]->pd_pekerja;
+            $detailid = DB::table('d_pekerja_mutation')
+                ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
+                ->where('pm_pekerja', '=', $pekerja)
+                ->get();
 
-        $detailid = DB::table('d_pekerja_mutation')
-            ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
-            ->where('pm_pekerja', '=', $pekerja)
-            ->get();
+            $info = DB::table('d_mitra_pekerja')
+                ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
+                ->where('mp_status', '=', 'Aktif')
+                ->where('mp_pekerja', '=', $pekerja)
+                ->get();
 
-        $info = DB::table('d_mitra_pekerja')
-            ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
-            ->where('mp_status', '=', 'Aktif')
-            ->where('mp_pekerja', '=', $pekerja)
-            ->get();
+            d_pekerja_mutation::insert(array(
+                'pm_pekerja' => $pekerja,
+                'pm_detailid' => $detailid[0]->detailid + 1,
+                'pm_date' => $sekarang,
+                'pm_mitra' => $info[0]->mitra,
+                'pm_divisi' => $info[0]->divisi,
+                'pm_detail' => 'Promosi',
+                'pm_status' => $detailid[0]->pm_status,
+                'pm_note' => $data->pd_note,
+                'pm_insert_by' => Session::get('mem')
+            ));
 
-        d_pekerja_mutation::insert(array(
-            'pm_pekerja' => $pekerja,
-            'pm_detailid' => $detailid[0]->detailid + 1,
-            'pm_date' => $data[0]->pd_insert,
-            'pm_mitra' => $info[0]->mitra,
-            'pm_divisi' => $info[0]->divisi,
-            'pm_detail' => 'Promosi',
-            'pm_status' => $detailid[0]->pm_status,
-            'pm_note' => $data->pd_note,
-            'pm_insert_by' => Session::get('mem')
-        ));
-
-        d_pekerja::where('p_id', '=', $pekerja)
-            ->update([
-                'p_jabatan' => $jabatan
-            ]);
-        return 'sukses';
+            d_pekerja::where('p_id', '=', $pekerja)
+                ->update([
+                    'p_jabatan' => $jabatan
+                ]);
+            DB::commit();
+            return 'sukses';
+        } catch (\Exception $e){
+            DB::rollback();
+            return 'gagal';
+        }
     }
 
 }
