@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,13 +19,13 @@
       <file leaf-file-name="promosiController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="164" column="34" lean-forward="false" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="34" />
+            <state relative-caret-position="-230">
+              <caret line="173" column="53" lean-forward="false" selection-start-line="173" selection-start-column="53" selection-end-line="173" selection-end-column="53" />
               <folding>
                 <element signature="e#40#58#0#PHP" expanded="true" />
-                <marker date="1532418308816" expanded="true" signature="1555:2014" ph="..." />
-                <marker date="1532418308816" expanded="false" signature="1592:1608" ph="..." />
-                <marker date="1532418308816" expanded="false" signature="1809:1825" ph="..." />
+                <marker date="1532418423269" expanded="true" signature="1555:2014" ph="..." />
+                <marker date="1532418423269" expanded="false" signature="1592:1608" ph="..." />
+                <marker date="1532418423269" expanded="false" signature="1809:1825" ph="..." />
               </folding>
             </state>
           </provider>
@@ -358,7 +357,7 @@
       <workItem from="1532053539797" duration="9407000" />
       <workItem from="1532320520458" duration="338000" />
       <workItem from="1532329492408" duration="4300000" />
-      <workItem from="1532389787077" duration="9518000" />
+      <workItem from="1532389787077" duration="9621000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -567,7 +566,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163912000" />
+    <option name="totallyTimeSpent" value="164015000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1050,13 +1049,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/promosiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="164" column="34" lean-forward="false" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="34" />
+        <state relative-caret-position="-230">
+          <caret line="173" column="53" lean-forward="false" selection-start-line="173" selection-start-column="53" selection-end-line="173" selection-end-column="53" />
           <folding>
             <element signature="e#40#58#0#PHP" expanded="true" />
-            <marker date="1532418308816" expanded="true" signature="1555:2014" ph="..." />
-            <marker date="1532418308816" expanded="false" signature="1592:1608" ph="..." />
-            <marker date="1532418308816" expanded="false" signature="1809:1825" ph="..." />
+            <marker date="1532418423269" expanded="true" signature="1555:2014" ph="..." />
+            <marker date="1532418423269" expanded="false" signature="1592:1608" ph="..." />
+            <marker date="1532418423269" expanded="false" signature="1809:1825" ph="..." />
           </folding>
         </state>
       </provider>

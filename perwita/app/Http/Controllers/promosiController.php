@@ -171,6 +171,7 @@ class promosiController extends Controller
                 ->get();
 
             $pekerja = $data[0]->pd_pekerja;
+            $jabatan = $data[0]->pd_jabatan_sekarang;
             $sekarang = Carbon::now('Asia/Jakarta');
 
             $detailid = DB::table('d_pekerja_mutation')
