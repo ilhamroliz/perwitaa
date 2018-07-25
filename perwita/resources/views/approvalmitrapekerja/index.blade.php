@@ -63,7 +63,7 @@
                   </tbody>
                   </table>
             </div>
-            <p>Note: Klik salah satu mitra untuk lihat daftar mitra pekerja</p>
+            <p>Note: Klik salah satu mitra untuk lihat daftar approval mitra pekerja</p>
         </div>
     </div>
 </div>
