@@ -631,3 +631,18 @@ Route::get('approvalsp/setujuilist', 'approvalspController@setujuilist');
 Route::get('approvalsp/tolaklist', 'approvalspController@tolaklist');
 Route::get('approvalsp/detail', 'approvalspController@detail');
 Route::get('approvalsp/print', 'approvalspController@print');
+
+//Approval Mitra Pekerja
+Route::get('approvalmitrapekerja', 'approvalmitrapekerjaController@index');
+Route::get('approvalmitrapekerja/daftarpekerja/{mitra}/{divisi}', 'approvalmitrapekerjaController@daftarpekerja');
+Route::get('approvalmitrapekerja/setujui', 'approvalmitrapekerjaController@setujui');
+Route::get('approvalmitrapekerja/tolak', 'approvalmitrapekerjaController@tolak');
+Route::get('approvalmitrapekerja/setujuilist', 'approvalmitrapekerjaController@setujuilist');
+Route::get('approvalmitrapekerja/tolaklist', 'approvalmitrapekerjaController@tolaklist');
+
+//Approval Promosi
+Route::get('approvalpromosi', 'approvalpromosiController@index');
+Route::get('approvalpromosi/setujui', 'approvalpromosiController@setujui');
+Route::get('approvalpromosi/tolak', 'approvalpromosiController@tolak');
+Route::get('approvalpromosi/setujuilist', 'approvalpromosiController@setujuilist');
+Route::get('approvalpromosi/tolaklist', 'approvalpromosiController@tolaklist');

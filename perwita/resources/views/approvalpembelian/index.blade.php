@@ -180,7 +180,8 @@
       $(".spiner-example").css('display', 'none');
       table = $("#tabel-pembelian").DataTable({
         "processing": true,
-        "searchable": true,
+        "paging": false,
+        "searching": false,
         "deferLoading": 57,
         responsive: true,
         "language": dataTableLanguage

@@ -15,20 +15,20 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Approval Pelamar</h2>
+        <h2>Approval Mitra Pekerja</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li class="active">
-                <strong>Daftar Approval Pelamar</strong>
+                <strong>Daftar Approval Mitra Pekerja</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Daftar Approval Pelamar</h5>
+        <h5>Daftar Approval Mitra Pekerja</h5>
       </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -48,37 +48,45 @@
                     </div>
                 </center>
 
-                <form class="formapprovalpelamar" id="formapprovalpelamar">
-                <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
+                <form class="formapprovalpekerja" id="formapprovalpekerja">
+                  @foreach($data as $z)
+                  <input type="hidden" name="kontrak" value="{{$z->mp_contract}}">
+                  @endforeach
+                <table id="approvalpekerja" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
                             <th>
                               <input type="checkbox" class="setCek" onclick="selectall()">
                             </th>
                             <th>Nama</th>
+                            <th>Mitra</th>
+                            <th>Divisi</th>
                             <th>Pendidikan</th>
                             <th>Alamat</th>
                             <th>No Hp</th>
-                            <th>Action</th>
+                            <th width="120px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                       @foreach($data as $index => $x)
-                      <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
+                        <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                           <td>
-                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->p_id}}">
+                          <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->mp_id}}">
                           </td>
-                        <td>{{$x->p_name}}</td>
-                        <td>{{$x->p_education}}</td>
-                        <td>{{$x->p_address}}</td>
-                        <td>{{$x->p_hp}}</td>
-                      <td align="center">
-                        <div class="action">
-                            <button type="button" id="{{$x->p_id}}" onclick="detail({{$x->p_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" id="{{$x->p_id}}" onclick="setujui({{$x->p_id}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" id="{{$x->p_id}}" onclick="tolak({{$x->p_id}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
-                        </div>
-                      </td>
+                          <td>{{$x->p_name}}</td>
+                          <td>{{$x->m_name}}</td>
+                          <td>{{$x->md_name}}</td>
+                          <td>{{$x->p_education}}</td>
+                          <td>{{$x->p_address}}</td>
+                          <td>{{$x->p_hp}}</td>
+                          <td align="center">
+                            <div class="action">
+                                <button type="button" id="{{$x->mp_id}}" onclick="detail({{$x->mp_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            </div>
+                          </td>
+                        </tr>
                       @endforeach
                     </tbody>
                 </table>
@@ -104,7 +112,7 @@
                             <div class="image" id="showimage">
                                   <i class="fa fa-user modal-icon"></i>
                             </div>
-                <h4 class="modal-title">Detail Pelamar</h4>
+                <h4 class="modal-title">Detail Pekerja</h4>
             </div>
             <div class="modal-body">
               <center>
@@ -415,13 +423,13 @@ var countmitra = 0;
 var totalmitra = 0;
 $( document ).ready(function() {
 
-$('#approvalpelamar').hide();
+$('#approvalpekerja').hide();
 myFunction();
 
 function myFunction() {
 setTimeout(function(){
   $(".spiner-example").css('display', 'none');
-  table = $("#approvalpelamar").DataTable({
+  table = $("#approvalpekerja").DataTable({
     "processing": true,
     "paging": false,
     "searching": false,
@@ -429,7 +437,7 @@ setTimeout(function(){
     responsive: true,
     "language": dataTableLanguage
   });
-  $('#approvalpelamar').show();
+  $('#approvalpekerja').show();
 },1500);
   }
 
@@ -525,10 +533,10 @@ function detail(id){
   });
 }
 
-  function setujui(id){
+  function setujui(mp_id, mp_contract){
     swal({
             title: "Konfirmasi",
-            text: "Apakah anda yakin ingin menyetujui Pelamar ini?",
+            text: "Apakah anda yakin ingin menyetujui Mitra Pekerja ini?",
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
@@ -541,16 +549,16 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {id:id},
-                  url: baseUrl + '/approvalpelamar/setujui',
+                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  url: baseUrl + '/approvalmitrapekerja/setujui',
                   dataType: 'json',
                   timeout: 10000,
                     success: function (response) {
                         waitingDialog.hide();
                         if (response.status == 'berhasil') {
                             swal({
-                                title: "Pelamar Disetujui",
-                                text: "Pelamar Berhasil Disetujui",
+                                title: "Mitra Pekerja Disetujui",
+                                text: "Mitra Pekerja Berhasil Disetujui",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 900
@@ -585,10 +593,10 @@ function detail(id){
         });
   }
 
-  function tolak(id){
+  function tolak(mp_id, mp_contract){
     swal({
             title: "Konfirmasi",
-            text: "Apakah anda yakin ingin menolak Pelamar ini?",
+            text: "Apakah anda yakin ingin menolak Mitra Pekerja ini?",
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
@@ -601,16 +609,16 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {id:id},
-                  url: baseUrl + '/approvalpelamar/tolak',
+                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  url: baseUrl + '/approvalmitrapekerja/tolak',
                   dataType: 'json',
                   timeout: 10000,
                     success: function (response) {
                         waitingDialog.hide();
                         if (response.status == 'berhasil') {
                             swal({
-                                title: "Pelamar Ditolak",
-                                text: "Pekerja Berhasil Ditolak",
+                                title: "Mitra Pekerja Ditolak",
+                                text: "Mitra Pekerja Berhasil Ditolak",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 900
@@ -649,7 +657,7 @@ function detail(id){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/approvalpelamar/print',
+      url: baseUrl + '/approvalmitrapekerja/print',
       dataType: 'json',
       success : function(result){
 
@@ -715,16 +723,16 @@ function detail(id){
     setTimeout(function () {
     $.ajax({
       type: 'get',
-      data: $('#formapprovalpelamar').serialize(),
-      url: baseUrl + '/approvalpelamar/setujuilist',
+      data: $('#formapprovalpekerja').serialize(),
+      url: baseUrl + '/approvalmitrapekerja/setujuilist',
       dataType: 'json',
       timeout: 10000,
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
             swal({
-                title: "Pelamar Disetujui",
-                text: "Pelamar Berhasil Disetujui",
+                title: "Mitra Pekerja Disetujui",
+                text: "Mitra Pekerja Berhasil Disetujui",
                 type: "success",
                 showConfirmButton: false,
                 timer: 900
@@ -762,16 +770,16 @@ function detail(id){
     setTimeout(function () {
     $.ajax({
       type: 'get',
-      data: $('#formapprovalpelamar').serialize(),
-      url: baseUrl + '/approvalpelamar/tolaklist',
+      data: $('#formapprovalpekerja').serialize(),
+      url: baseUrl + '/approvalmitrapekerja/tolaklist',
       dataType: 'json',
       timeout: 10000,
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
           swal({
-              title: "Pelamar Ditolak",
-              text: "Pelamar Berhasil Ditolak",
+              title: "Mitra Pekerja Ditolak",
+              text: "Mitra Pekerja Berhasil Ditolak",
               type: "success",
               showConfirmButton: false,
               timer: 900
@@ -803,23 +811,6 @@ function detail(id){
     });
   }, 2000);
   }
-
-  // function printContent(el){
-  // 		var restorepage = document.body.innerHTML;
-  // 		var printcontent = document.getElementById(el).innerHTML;
-  // 		document.body.innerHTML = printcontent;
-  // 		window.print();
-  // 		document.body.innerHTML = restorepage;
-  // 	}
-
-// function printDiv(elementId) {
-//     var a = document.getElementById('printing-css').value;
-//     var b = document.getElementById(elementId).innerHTML;
-//     window.frames["print_frame"].document.title = document.title;
-//     // window.frames["print_frame"].document.body.innerHTML = '<style>' + a + '</style>' + b;
-//     window.frames["print_frame"].window.focus();
-//     window.frames["print_frame"].window.print();
-// }
 
 </script>
 @endsection
