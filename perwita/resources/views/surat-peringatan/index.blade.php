@@ -191,6 +191,7 @@ var table;
     });
 
     function simpan(id){
+      waitingDialog.show();
       $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -201,7 +202,9 @@ var table;
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-pekerja/surat-peringatan/simpan/'+id,
         dataType: 'json',
+        timeout: 10000,
         success : function(result){
+          waitingDialog.hide();
           if (result.status == 'berhasil') {
             swal({
                 title: "SP Disimpan",
@@ -238,6 +241,7 @@ var table;
     }
 
     function getdata(id){
+      waitingDialog.show();
       $.ajax({
         type: 'get',
         data: {id:id},
@@ -258,7 +262,7 @@ var table;
               $('#pemberitahuan').css('display','none');
             }, 10000)
           }
-
+          waitingDialog.hide();
         }
       });
     }
@@ -297,6 +301,7 @@ var table;
     }
 
     function pilihpelanggaran(id){
+      waitingDialog.show();
       var num = $('.num').attr('num');
         $.ajax({
           type: 'get',
@@ -311,6 +316,7 @@ var table;
               $('#pelanggarantext'+num+'').val(result[0].ms_keterangan);
               $('#myModal5').modal('hide');
             }
+            waitingDialog.hide();
           }
         });
     }
