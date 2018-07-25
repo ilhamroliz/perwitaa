@@ -64,7 +64,7 @@
                             <th>Pendidikan</th>
                             <th>Alamat</th>
                             <th>No Hp</th>
-                            <th>Action</th>
+                            <th width="120px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
