@@ -211,4 +211,27 @@ class approvalmitrapekerjaController extends Controller
         ]);
       }
     }
+
+    public function print(Request $request){
+      $data = DB::table('d_mitra_pekerja')
+            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
+            ->join('d_mitra_divisi', 'md_id', '=', 'mp_divisi')
+            ->select('p_name','mp_selection_date','mp_workin_date', 'mc_no', 'm_name', 'md_name', 'p_nip', 'p_nip_mitra', 'm_address', 'm_phone', 'mc_date', 'mc_expired')
+            ->where('mp_contract',$request->mp_contract)
+            ->where('mp_isapproved','Y')
+            ->get();
+
+      for ($i=0; $i < count($data); $i++) {
+        if (!empty($data)) {
+          $data[$i]->mp_selection_date = Carbon::parse($data[$i]->mp_selection_date)->format('d/m/Y');
+          $data[$i]->mp_workin_date = Carbon::parse($data[$i]->mp_workin_date)->format('d/m/Y');
+          $data[$i]->mc_expired = Carbon::parse($data[$i]->mc_expired)->format('d/m/Y');
+          $data[$i]->mc_date = Carbon::parse($data[$i]->mc_date)->format('d/m/Y');
+        }
+      }
+
+      return view('approvalmitrapekerja.print', compact('data'));
+    }
 }

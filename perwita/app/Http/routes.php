@@ -640,6 +640,7 @@ Route::get('approvalmitrapekerja/setujui', 'approvalmitrapekerjaController@setuj
 Route::get('approvalmitrapekerja/tolak', 'approvalmitrapekerjaController@tolak');
 Route::get('approvalmitrapekerja/setujuilist', 'approvalmitrapekerjaController@setujuilist');
 Route::get('approvalmitrapekerja/tolaklist', 'approvalmitrapekerjaController@tolaklist');
+Route::get('approvalmitrapekerja/print', 'approvalmitrapekerjaController@print');
 
 //Approval Promosi
 Route::get('approvalpromosi', 'approvalpromosiController@index');
