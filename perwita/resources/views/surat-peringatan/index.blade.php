@@ -254,6 +254,9 @@ var table;
           } else {
             $('#isipemberitahuan').text(' Pekerja ini dalam masa '+result.sp[0].sp_jenis+' sampai '+result.sp[0].sp_date_end+'');
             $('#pemberitahuan').css('display','');
+            setTimeout(function(){
+              $('#pemberitahuan').css('display','none');
+            }, 10000)
           }
 
         }
