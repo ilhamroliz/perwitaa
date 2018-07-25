@@ -647,3 +647,4 @@ Route::get('approvalpromosi/setujui', 'approvalpromosiController@setujui');
 Route::get('approvalpromosi/tolak', 'approvalpromosiController@tolak');
 Route::get('approvalpromosi/setujuilist', 'approvalpromosiController@setujuilist');
 Route::get('approvalpromosi/tolaklist', 'approvalpromosiController@tolaklist');
+Route::get('approvalpromosi/detail', 'approvalpromosiController@detail');
