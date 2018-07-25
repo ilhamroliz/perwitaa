@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Pekerja</label>
                             <div class="col-lg-9">
-                                <input type="text" id="spno" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra" class="form-control" name="spno" value="">
+                                <input type="text" id="spno" style="text-transform:uppercase;" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra" class="form-control" name="spno" value="">
                             </div>
                         </div>
                         <div class="form-group">
