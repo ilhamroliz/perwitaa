@@ -166,4 +166,28 @@ class approvalpromosiController extends Controller
       }
     }
 
+    public function tolaklist(Request $request){
+      DB::beginTransaction();
+      try {
+
+        for ($i=0; $i < count($request->pilih); $i++) {
+          DB::table('d_promosi_demosi')
+              ->where('pd_id',$request->pilih[$i])
+              ->update([
+                'pd_isapproved' => 'N'
+              ]);
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
 }

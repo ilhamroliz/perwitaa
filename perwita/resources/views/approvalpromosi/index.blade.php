@@ -405,53 +405,53 @@ function setujuilist(){
 }, 2000);
 }
 
-// function tolaklist(){
-//   waitingDialog.show();
-//   setTimeout(function () {
-//   $.ajax({
-//     type: 'get',
-//     data: $('#formapprovalsp').serialize(),
-//     url: baseUrl + '/approvalsp/tolaklist',
-//     dataType: 'json',
-//     timeout: 10000,
-//     success : function(result){
-//       waitingDialog.hide();
-//       if (result.status == 'berhasil') {
-//         swal({
-//             title: "SP Ditolak",
-//             text: "SP Berhasil Ditolak",
-//             type: "success",
-//             showConfirmButton: false,
-//             timer: 900
-//         });
-//           setTimeout(function(){
-//                 window.location.reload();
-//         }, 850);
-//       }
-//     }, error: function (x, e) {
-//         waitingDialog.hide();
-//         var message;
-//         if (x.status == 0) {
-//             message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
-//         } else if (x.status == 404) {
-//             message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
-//         } else if (x.status == 500) {
-//             message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
-//         } else if (e == 'parsererror') {
-//             message = 'Error.\nParsing JSON Request failed.';
-//         } else if (e == 'timeout') {
-//             message = 'Request Time out. Harap coba lagi nanti';
-//         } else {
-//             message = 'Unknow Error.\n' + x.responseText;
-//         }
-//         waitingDialog.hide();
-//         throwLoadError(message);
-//         //formReset("store");
-//     }
-//   });
-// }, 2000);
-// }
-//
+function tolaklist(){
+  waitingDialog.show();
+  setTimeout(function () {
+  $.ajax({
+    type: 'get',
+    data: $('#formapprovalpromosi').serialize(),
+    url: baseUrl + '/approvalpromosi/tolaklist',
+    dataType: 'json',
+    timeout: 10000,
+    success : function(result){
+      waitingDialog.hide();
+      if (result.status == 'berhasil') {
+        swal({
+            title: "Promosi Ditolak",
+            text: "Promosi Berhasil Ditolak",
+            type: "success",
+            showConfirmButton: false,
+            timer: 900
+        });
+          setTimeout(function(){
+                window.location.reload();
+        }, 850);
+      }
+    }, error: function (x, e) {
+        waitingDialog.hide();
+        var message;
+        if (x.status == 0) {
+            message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+        } else if (x.status == 404) {
+            message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+        } else if (x.status == 500) {
+            message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+        } else if (e == 'parsererror') {
+            message = 'Error.\nParsing JSON Request failed.';
+        } else if (e == 'timeout') {
+            message = 'Request Time out. Harap coba lagi nanti';
+        } else {
+            message = 'Unknow Error.\n' + x.responseText;
+        }
+        waitingDialog.hide();
+        throwLoadError(message);
+        //formReset("store");
+    }
+  });
+}, 2000);
+}
+
 // function detail(id){
 //   $('#modal-detail').modal('show');
 //   $('#showdetail').hide();
