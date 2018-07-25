@@ -153,6 +153,7 @@
                                         </div>
                                         <div class="modal-footer">
                                           <p style="float:left;">Note: Untuk memilih pelanggaran, klik salah satu daftar pelanggaran </p>
+                                          <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +290,7 @@ var table;
         } else {
           $('.num').attr('num', ''+num+'');
         }
-        $("input[type=search]").css('width', '350px')
+        $("input[type=search]").css('width', '350px');
     }
 
     function pilihpelanggaran(id){
