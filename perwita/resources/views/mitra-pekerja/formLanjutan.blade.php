@@ -95,7 +95,12 @@
                                 <tr>
                                     <td>{{$data->p_name}}</td>
                                     <td>
+                                        @if($data->p_nip == null || $data->p_nip == '')
                                         <input type="text" name="nik[]" class="form-control pekerja-{{ $data->p_id }}" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip }}" readonly>
+                                        @else
+                                        <input type="text" name="nik[]" class="form-control pekerja-{{ $data->p_id }}" placeholder="Masukan NIK" style="text-transform: uppercase; width: 100%" value="{{ $data->p_nip }}">
+                                        @endif
+                                        <input type="hidden" class="niklama-{{ $data->p_id }}" value="{{ $data->p_nip }}">
                                         <input type="hidden" name="id_pekerja[]" value="{{ $data->p_id }}">
                                     </td>
                                     <td>
@@ -105,7 +110,11 @@
                                     <td>{{$data->p_hp}}</td>
                                     <td class="text-center">
                                         <div class="checkbox checkbox-primary checkbox-inline">
+                                            @if($data->p_nip == null || $data->p_nip == '')
                                             <input type="checkbox" id="nik-{{ $data->p_id }}" value="{{ $data->p_id }}" name="nikbaru[]" checked onchange="gantiForm('{{ $data->p_id }}')">
+                                            @else
+                                            <input type="checkbox" id="nik-{{ $data->p_id }}" value="{{ $data->p_id }}" name="nikbaru[]" onchange="gantiForm('{{ $data->p_id }}')">
+                                            @endif
                                             <label for="nik-{{ $data->p_id }}">NIK Baru</label>
                                         </div>
                                     </td>
@@ -206,7 +215,8 @@ function gantiForm(id){
         $('.pekerja-'+id).val('');
         $('.pekerja-'+id).prop('readonly', true);
     } else {
-        $('.pekerja-'+id).val('');
+        var nik = $('.niklama-'+id).val();
+        $('.pekerja-'+id).val(nik);
         $('.pekerja-'+id).prop('readonly', false);
     }
 }

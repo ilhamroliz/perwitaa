@@ -47,7 +47,7 @@ class mitraPekerjaController extends Controller
         $data = DB::table('d_mitra_contract')
             ->leftJoin('d_mitra', 'mc_mitra', '=', 'm_id')
             ->select('mc_no', 'm_name', DB::raw('(mc_need - mc_fulfilled) as sisa'), 'mc_date', 'mc_expired', 'mc_contractid')
-            ->where(function ($q) use ($kondisi){
+            ->where(function ($q) use ($kondisi) {
                 $q->orWhere('m_name', 'like', '%' . $kondisi . '%')
                     ->orWhere('mc_no', 'like', '%' . $kondisi . '%');
             })
@@ -59,7 +59,7 @@ class mitraPekerjaController extends Controller
         } else {
 
             foreach ($data as $query) {
-                $results[] = ['id' => $query->mc_contractid, 'label' => $query->mc_no . ' (' . $query->m_name . ' Sisa ' . $query->sisa. ')'];
+                $results[] = ['id' => $query->mc_contractid, 'label' => $query->mc_no . ' (' . $query->m_name . ' Sisa ' . $query->sisa . ')'];
             }
         }
 
@@ -149,11 +149,11 @@ class mitraPekerjaController extends Controller
     public function tambah()
     {
         $mitra_contract = DB::table('d_mitra_contract')
-                      ->join('d_mitra', 'm_id', '=', 'mc_mitra')
-                      ->join('d_mitra_divisi', 'md_id', '=', 'mc_divisi')
-                      ->where('mc_fulfilled', '<', DB::raw('mc_need'))
-                      ->groupBy('mc_no')
-                      ->get();
+            ->join('d_mitra', 'm_id', '=', 'mc_mitra')
+            ->join('d_mitra_divisi', 'md_id', '=', 'mc_divisi')
+            ->where('mc_fulfilled', '<', DB::raw('mc_need'))
+            ->groupBy('mc_no')
+            ->get();
 
         // d_mitra_contract::where('mc_fulfilled', '<', DB::raw('mc_need'))->get();
         $pekerja = DB::select('select p_id, p_name, p_sex, p_address, p_hp, p_education from d_pekerja left join d_mitra_pekerja on mp_pekerja = p_id where p_id not in (select mp_pekerja from d_mitra_pekerja where mp_status = "Aktif")');
@@ -192,12 +192,12 @@ class mitraPekerjaController extends Controller
             ->where(DB::raw('right(p_nip, 4)'), '=', $tahun)
             ->get();
 
-        for ($i = 0; $i < count($pekerja); $i++){
+        for ($i = 0; $i < count($pekerja); $i++) {
             $kode = "00001";
             if (count($nik) > 0) {
                 foreach ($nik as $x) {
-                    $temp = ((int)$x->counter)+$i;
-                    $kode = sprintf("%05s",$temp);
+                    $temp = ((int)$x->counter) + $i;
+                    $kode = sprintf("%05s", $temp);
                 }
             }
             $tempKode = 'PN-' . $kode . '.' . $tahun;
@@ -218,11 +218,11 @@ class mitraPekerjaController extends Controller
 
         $kode = "00001";
         $tempKode = [];
-        for ($i = 0; $i < $jumlah; $i++){
+        for ($i = 0; $i < $jumlah; $i++) {
             if (count($nik) > 0) {
                 foreach ($nik as $x) {
-                    $temp = ((int)$x->counter)+$i;
-                    $kode = sprintf("%05s",$temp);
+                    $temp = ((int)$x->counter) + $i;
+                    $kode = sprintf("%05s", $temp);
                 }
                 $tempKode[$i] = 'PN-' . $kode . '.' . $tahun;
 
@@ -251,9 +251,9 @@ class mitraPekerjaController extends Controller
             $nik = $request->nik;
             $nikbaru = $request->nikbaru;
             $newNik = $this->getNewNik(count($nikbaru));
-            for ($n = 0; $n < count($nikbaru); $n++){
-                for ($i = 0; $i < count($id_pekerja); $i++){
-                    if ($id_pekerja[$i] == $nikbaru[$n]){
+            for ($n = 0; $n < count($nikbaru); $n++) {
+                for ($i = 0; $i < count($id_pekerja); $i++) {
+                    if ($id_pekerja[$i] == $nikbaru[$n]) {
                         $nik[$i] == $newNik[$n];
                         $i = count($id_pekerja);
                     }
@@ -288,15 +288,14 @@ class mitraPekerjaController extends Controller
 
 //====== menyiapkan data untuk penentuan data apakah di update/create
             $addPekerja = [];
-            $addMutasi = [];
-            for ($i = 0; $i < count($id_pekerja); $i++){
+            for ($i = 0; $i < count($id_pekerja); $i++) {
                 $cek = DB::table('d_mitra_pekerja')
                     ->select('mp_id', 'mp_pekerja')
                     ->where('mp_contract', '=', $id_kontrak)
                     ->where('mp_pekerja', '=', $id_pekerja[$i])
                     ->get();
 
-                if (count($cek) > 0){
+                if (count($cek) > 0) {
 //====== data di update
                     d_mitra_pekerja::where('mp_contract', '=', $id_kontrak)
                         ->where('mp_pekerja', '=', $id_pekerja[$i])
@@ -308,49 +307,15 @@ class mitraPekerjaController extends Controller
                             'mp_workin_date' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d')
                         ]);
 
-                    if ($nik[$i] == ''){
-                        $nik[$i] = $this->getNewNik(1);
-                    }
+                    //=== jika nik baru
+
                     d_pekerja::where('p_id', '=', $id_pekerja[$i])
                         ->update([
-                            'p_note' => 'Seleksi',
-                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d'),
-                            'p_nip' => strtoupper($nik[$i]),
-                            'p_nip_mitra' => strtoupper($nik_mitra[$i])
+                            'p_nip' => strtoupper($nik[$i])
                         ]);
-
-                    $pm_detail = DB::table('d_pekerja_mutation')
-                        ->where('pm_pekerja', '=', $id_pekerja[$i])
-                        ->max('pm_detailid');
-
-                    $tempMutasi = array(
-                        'pm_pekerja' => $id_pekerja[$i],
-                        'pm_detailid' => $pm_detail + 1,
-                        'pm_date' => $sekarang,
-                        'pm_mitra' => $info[0]->mc_mitra,
-                        'pm_divisi' => $info[0]->mc_divisi,
-                        'pm_detail' => 'Seleksi',
-                        'pm_from' => null,
-                        'pm_status' => 'Aktif'
-                    );
-                    array_push($addMutasi, $tempMutasi);
 
                 } else {
 //====== data di create
-
-                    if ($nik[$i] == ''){
-                        $temp = $this->getNewNik(1);
-                        $nik[$i] = $temp[0];
-                    }
-
-                    d_pekerja::where('p_id', '=', $id_pekerja[$i])
-                        ->update([
-                            'p_note' => 'Seleksi',
-                            'p_workdate' => Carbon::createFromFormat('d/m/Y', $tgl_kerja, 'Asia/Jakarta')->format('Y-m-d'),
-                            'p_nip' => strtoupper($nik[$i]),
-                            'p_nip_mitra' => strtoupper($nik_mitra[$i])
-                        ]);
-
                     $temp = array(
                         'mp_id' => $maxId + $i,
                         'mp_comp' => $info[0]->mc_comp,
@@ -364,31 +329,9 @@ class mitraPekerjaController extends Controller
                         'mp_status' => 'Aktif'
                     );
                     array_push($addPekerja, $temp);
-
-                    $pm_detail = DB::table('d_pekerja_mutation')
-                        ->where('pm_pekerja', '=', $id_pekerja[$i])
-                        ->max('pm_detailid');
-
-                    $tempMutasi = array(
-                        'pm_pekerja' => $id_pekerja[$i],
-                        'pm_detailid' => $pm_detail + 1,
-                        'pm_date' => $sekarang,
-                        'pm_mitra' => $info[0]->mc_mitra,
-                        'pm_divisi' => $info[0]->mc_divisi,
-                        'pm_detail' => 'Seleksi',
-                        'pm_from' => null,
-                        'pm_status' => 'Aktif'
-                    );
-                    array_push($addMutasi, $tempMutasi);
                 }
             }
-            d_pekerja_mutation::insert($addMutasi);
             d_mitra_pekerja::insert($addPekerja);
-
-            d_mitra_contract::where('mc_contractid', '=', $id_kontrak)
-                ->update([
-                    'mc_fulfilled' => DB::raw('mc_fulfilled + '. count($id_pekerja))
-                ]);
 
             DB::commit();
             return response()->json([
@@ -451,7 +394,7 @@ class mitraPekerjaController extends Controller
         foreach ($hapus as $key => $var) {
             $hapus[$key] = (int)$var;
         }
-        $hapusIn = implode("','",$hapus);
+        $hapusIn = implode("','", $hapus);
         $idKontrak = $request->mc_contractid;
         $kontrak = $request->kontrak;
         $p_id = $request->p_id;
@@ -479,10 +422,10 @@ class mitraPekerjaController extends Controller
                 ->where('mc_contractid', '=', $idKontrak)
                 ->first();
 //====== info pekerja yang dihapus dari list
-            $pekerja = DB::select("select pm.pm_pekerja, pm.pm_detailid from (select * from d_pekerja_mutation where pm_pekerja in ('".$hapusIn."') group by pm_pekerja, pm_detailid desc) as pm group by pm.pm_pekerja");
+            $pekerja = DB::select("select pm.pm_pekerja, pm.pm_detailid from (select * from d_pekerja_mutation where pm_pekerja in ('" . $hapusIn . "') group by pm_pekerja, pm_detailid desc) as pm group by pm.pm_pekerja");
 
             $addPekerja = [];
-            for($i = 0; $i < count($pekerja); $i++){
+            for ($i = 0; $i < count($pekerja); $i++) {
                 $temp = array(
                     'pm_pekerja' => $pekerja[$i]->pm_pekerja,
                     'pm_detailid' => $pekerja[$i]->pm_detailid + 1,
@@ -504,7 +447,7 @@ class mitraPekerjaController extends Controller
                 ]);
 
 //====== update tanggal kerja pekerja di mitra
-            for($i = 0; $i < count($p_id); $i++){
+            for ($i = 0; $i < count($p_id); $i++) {
                 d_mitra_pekerja::where('mp_contract', '=', $idKontrak)
                     ->where('mp_pekerja', '=', $p_id[$i])
                     ->update([
@@ -614,53 +557,96 @@ class mitraPekerjaController extends Controller
     }
 
 
-        public function selesai(Request $request){
-          DB::beginTransaction();
-          try {
+    public function selesai(Request $request)
+    {
+        DB::beginTransaction();
+        try {
 
             $pekerja = DB::table('d_mitra_pekerja')
-                    ->select('mp_pekerja')->where('mp_contract',$request->kontrak)->where('mp_mitra', $request->mitra)->get();
+                ->select('mp_pekerja')->where('mp_contract', $request->kontrak)->where('mp_mitra', $request->mitra)->get();
 
-            $d_mitra_pekerja = d_mitra_pekerja::where('mp_contract',$request->kontrak)->where('mp_mitra', $request->mitra);
+            $d_mitra_pekerja = d_mitra_pekerja::where('mp_contract', $request->kontrak)->where('mp_mitra', $request->mitra);
             $d_mitra_pekerja->update([
-                              'mp_status' => 'Tidak'
-                            ]);
-
-            $d_mitra_contract = d_mitra_contract::where('mc_contractid',$request->kontrak)->where('mc_mitra', $request->mitra);
-            $d_mitra_contract->update([
-              'mc_status' => 'Selesai'
+                'mp_status' => 'Tidak'
             ]);
 
-            for ($i=0; $i < count($pekerja); $i++) {
-              $d_pekerja = d_pekerja::where('p_id',$pekerja[$i]->mp_pekerja);
-              $d_pekerja->update([
-                            'p_note' => 'Calon'
-              ]);
+            $d_mitra_contract = d_mitra_contract::where('mc_contractid', $request->kontrak)->where('mc_mitra', $request->mitra);
+            $d_mitra_contract->update([
+                'mc_status' => 'Selesai'
+            ]);
 
-              $pm_detailid[$i] = DB::table('d_pekerja_mutation')
-                          ->select('pm_detailid')
-                          ->where('pm_pekerja',$pekerja[$i]->mp_pekerja)
-                          ->MAX('pm_detailid');
+            for ($i = 0; $i < count($pekerja); $i++) {
+                $d_pekerja = d_pekerja::where('p_id', $pekerja[$i]->mp_pekerja);
+                $d_pekerja->update([
+                    'p_note' => 'Calon'
+                ]);
 
-              DB::table('d_pekerja_mutation')
-                  ->insert([
-                    'pm_pekerja' => $pekerja[$i]->mp_pekerja,
-                    'pm_detailid' => $pm_detailid[$i] + 1,
-                    'pm_detail' => 'Matang',
-                    'pm_status' => 'Calon',
-                    'pm_note' => 'Selesai'
-                  ]);
+                $pm_detailid[$i] = DB::table('d_pekerja_mutation')
+                    ->select('pm_detailid')
+                    ->where('pm_pekerja', $pekerja[$i]->mp_pekerja)
+                    ->MAX('pm_detailid');
+
+                DB::table('d_pekerja_mutation')
+                    ->insert([
+                        'pm_pekerja' => $pekerja[$i]->mp_pekerja,
+                        'pm_detailid' => $pm_detailid[$i] + 1,
+                        'pm_detail' => 'Matang',
+                        'pm_status' => 'Calon',
+                        'pm_note' => 'Selesai'
+                    ]);
             }
 
             DB::commit();
             return response()->json([
-              'status' => 'berhasil'
+                'status' => 'berhasil'
             ]);
-          } catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
-              'status' => 'gagal'
+                'status' => 'gagal'
             ]);
-          }
         }
+    }
+
+    public function approvePekerja($pekerja, $mp_contract)
+    {
+        $sekarang = Carbon::now('Asia/Jakarta');
+        $data = DB::table('d_mitra_pekerja')
+            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+            ->where('mp_contract', '=', $mp_contract)
+            ->where('mp_pekerja', '=', $pekerja)
+            ->where('mp_isapproved', '=', 'P')
+            ->get();
+
+        if ($data[0]->p_nip == '') {
+            $temp = $this->getNewNik(1);
+            $data[0]->p_nip = $temp[0];
+        }
+        d_pekerja::where('p_id', '=', $pekerja)
+            ->update([
+                'p_note' => 'Seleksi',
+                'p_workdate' => Carbon::createFromFormat('d/m/Y', $data[0]->mp_workin_date, 'Asia/Jakarta')->format('Y-m-d'),
+                'p_nip' => strtoupper($data[0]->p_nip),
+                'p_nip_mitra' => strtoupper($data[0]->mp_mitra_nik)
+            ]);
+
+        $pm_detail = DB::table('d_pekerja_mutation')
+            ->where('pm_pekerja', '=', $pekerja)
+            ->max('pm_detailid');
+
+        $tempMutasi = array(
+            'pm_pekerja' => $pekerja,
+            'pm_detailid' => $pm_detail + 1,
+            'pm_date' => $sekarang,
+            'pm_mitra' => $data[0]->mp_mitra,
+            'pm_divisi' => $data[0]->mp_divisi,
+            'pm_detail' => 'Seleksi',
+            'pm_from' => null,
+            'pm_status' => 'Aktif'
+        );
+        d_pekerja_mutation::insert($tempMutasi);
+        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $mp_contract . " and mp_status = 'Aktif' and mp_isapproved = 'Y')");
+        return 'sukses';
+    }
+
 }
