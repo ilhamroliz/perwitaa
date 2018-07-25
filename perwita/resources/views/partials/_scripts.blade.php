@@ -388,7 +388,7 @@
                                  $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Mitra Pekerja </center>');
                                }
                                if (countpromosi == 0) {
-                                 $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Promosi </center>');
+                                 $("#showpromosi").html('<center> Tidak ada permintaan Approval Promosi </center>');
                                }
                                if (countnotif == 0) {
                                  // $("#showpelamar").html(pelamar);
