@@ -50,7 +50,7 @@
 
                 <form class="formapprovalpekerja" id="formapprovalpekerja">
                   @foreach($data as $z)
-                  <input type="hidden" name="kontrak" value="{{$z->mp_contract}}">
+                  <input type="hidden" name="kontrak" id="mp_contract" value="{{$z->mp_contract}}">
                   @endforeach
                 <table id="approvalpekerja" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
@@ -727,6 +727,7 @@ function detail(id, mp_contract, mp_pekerja){
   }
 
   function setujuilist(){
+    var mp_contract = $('#mp_contract').val();
     waitingDialog.show();
     setTimeout(function () {
     $.ajax({
@@ -738,16 +739,27 @@ function detail(id, mp_contract, mp_pekerja){
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
-            swal({
-                title: "Mitra Pekerja Disetujui",
-                text: "Mitra Pekerja Berhasil Disetujui",
-                type: "success",
-                showConfirmButton: false,
-                timer: 900
+          swal({
+              title: "Mitra Pekerja Disetujui",
+              text: "Ingin Print Mitra Pekerja Sekarang?",
+              type: "info",
+              showCancelButton: true,
+              confirmButtonClass: "btn-info",
+              confirmButtonText: "Iya",
+              cancelButtonText: "Tidak!",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                window.location.href = baseUrl + '/approvalmitrapekerja/print?mp_contract='+mp_contract;        
+              } else {
+                swal.close();
+                setTimeout(function(){
+                      window.location.reload();
+              }, 850);
+              }
             });
-            setTimeout(function(){
-                  window.location.reload();
-          }, 850);
         }
       }, error: function (x, e) {
           waitingDialog.hide();
