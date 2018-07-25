@@ -98,7 +98,7 @@ class promosiController extends Controller
                 ->where('p_id', '=', $pekerja)
                 ->get();
 
-            if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal->p_jabatan == ''){
+            if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal[0]->p_jabatan == ''){
                 $jabatanAwal = $jabatanAwal[0]->p_jabatan_lamaran;
             } else {
                 $jabatanAwal = $jabatanAwal[0]->p_jabatan;
