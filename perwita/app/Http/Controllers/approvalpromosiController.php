@@ -33,9 +33,6 @@ class approvalpromosiController extends Controller
           $q->on('md_mitra', '=', 'm_id');
       })
       ->select('pd_id', 'p_id', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no')
-      ->where('p_note', '!=', 'Calon')
-      ->where('p_note', '!=', 'Ex')
-      ->where('mp_status', '=', 'Aktif')
       ->where('pd_isapproved', 'P')
       ->groupBy('p_id')
       ->get();

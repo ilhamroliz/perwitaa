@@ -53,7 +53,7 @@ class approvalController extends Controller
         ->where('pd_isapproved','P')
         ->get();
 
-        $countpembelian = count($pembelian);
+      $countpembelian = count($pembelian);
 
       $hitung = 0;
       if (empty($pekerja)) {
