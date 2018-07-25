@@ -42,8 +42,7 @@
                       </div>
                   </form>
               </div>
-                  <div class="mail-box">
-
+                  <div class="mail-box">                  
                   <table class="table table-hover table-mail">
                   <tbody>
                     @if(!empty($data))

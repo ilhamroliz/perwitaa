@@ -82,8 +82,8 @@
                           <td align="center">
                             <div class="action">
                                 <button type="button" id="{{$x->mp_id}}" onclick="detail({{$x->mp_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                             </div>
                           </td>
                         </tr>
@@ -533,7 +533,7 @@ function detail(id){
   });
 }
 
-  function setujui(mp_id, mp_contract){
+  function setujui(mp_id, mp_contract, mp_pekerja){
     swal({
             title: "Konfirmasi",
             text: "Apakah anda yakin ingin menyetujui Mitra Pekerja ini?",
@@ -549,7 +549,7 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  data: {mp_id:mp_id, mp_contract:mp_contract, mp_pekerja:mp_pekerja},
                   url: baseUrl + '/approvalmitrapekerja/setujui',
                   dataType: 'json',
                   timeout: 10000,
@@ -593,7 +593,7 @@ function detail(id){
         });
   }
 
-  function tolak(mp_id, mp_contract){
+  function tolak(mp_id, mp_contract, mp_pekerja){
     swal({
             title: "Konfirmasi",
             text: "Apakah anda yakin ingin menolak Mitra Pekerja ini?",
@@ -609,7 +609,7 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  data: {mp_id:mp_id, mp_contract:mp_contract, mp_pekerja},
                   url: baseUrl + '/approvalmitrapekerja/tolak',
                   dataType: 'json',
                   timeout: 10000,
