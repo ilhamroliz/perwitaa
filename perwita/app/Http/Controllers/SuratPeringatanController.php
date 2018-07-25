@@ -18,7 +18,10 @@ class SuratPeringatanController extends Controller
 {
     public function index()
     {
-        return view('surat-peringatan.index');
+        $data = DB::table('d_master_sp')
+              ->get();
+
+        return view('surat-peringatan.index', compact('data'));
     }
 
     public function data(){
@@ -364,4 +367,13 @@ class SuratPeringatanController extends Controller
 
       return response()->json($data);
     }
+
+    public function getpelanggaran(Request $request){
+        $data = DB::table('d_master_sp')
+              ->where('ms_id', $request->id)
+              ->get();
+
+        return response()->json($data);
+    }
+
 }
