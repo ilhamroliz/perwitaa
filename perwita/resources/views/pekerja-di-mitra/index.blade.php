@@ -41,6 +41,7 @@
         <div id="filter">
               <div class="row">
                 <div class="col-6 col-md-3">
+                  <label for="selectmitra">Cari Berdasarkan Mitra Dan Divisi</label>
                   @if(empty($data))
                   <p>Data tidak Ketemu</p>
                     @else
@@ -54,18 +55,22 @@
                     @endif
                 </div>
                 <div class="col-6 col-md-3">
-                <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
-                  <option value="all">Select All</option>
-                </select>
+                  <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
+                    <option value="all">Select All</option>
+                  </select>
                 </div>
-                <div class="col-6 col-md-2">
-                <button type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
+                <div class="col-6 col-sm-2">
+                <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
                 </div>
-                <div class="col-6 col-md-3">
-                  <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
+                <div class="col-6 col-sm-2 pull-right">
+                      <button type="button" style="float:right;" class="btn btn-info" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                 </div>
             </div>
-
+            <br>
+            <div class="col-md-8" style="margin-left: -15px;">
+              <label for="carino">Cari Berdasarkan No Mitra / No Mitra Contract</label>
+              <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
+            </div>
             <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
                <table id="pekerja" class="table table-bordered table-striped display">
