@@ -216,6 +216,7 @@
   });
 
   function perpanjang(id, detail){
+    waitingDialog.show();
     idPublic = id;
     detailPublic = detail;
     $.ajax({
@@ -235,6 +236,7 @@
               autoclose: true,
               format: 'dd/mm/yyyy'
           });
+          waitingDialog.hide();
       }, error:function(x, e) {
           if (x.status == 0) {
               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -254,6 +256,7 @@
   }
 
   function update(){
+    waitingDialog.show();
     var awal = $('.awal').val();
     var akhir = $('.akhir').val();
     $.ajaxSetup({
@@ -266,6 +269,7 @@
         type: 'get',
         data: { id: idPublic, detail: detailPublic, awal: awal, akhir: akhir },
         success: function(response){
+          waitingDialog.hide();
           if (response.status == 'berhasil') {
             swal({
               title: "Sukses",
@@ -276,6 +280,7 @@
                 $('#myModal').modal('hide');
             });
           }
+          waitingDialog.hide();
       }, error:function(x, e) {
           if (x.status == 0) {
               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -344,6 +349,7 @@
   }
 
     function updateedit(){
+     waitingDialog.show();
      var mitra = $('#update').attr('idmitra');
      var detail = $('#update').attr('detailid');
      var nomou = $('.nomou').val();
@@ -360,6 +366,7 @@
        url: baseUrl + '/manajemen-mitra/mitra-mou/updateedit',
        dataType: 'json',
        success : function(result){
+         waitingDialog.hide();
          if (result.status == 'berhasil') {
            swal({
              title: "Sukses",
@@ -397,12 +404,15 @@
         closeOnConfirm: false,
         showLoaderOnConfirm: true,
     }, function(){
+      swal.close();
+      waitingDialog.show();
       $.ajax({
         type: 'get',
         data: {id:id},
         url: baseUrl + '/manajemen-mitra/mitra-mou/hapus',
         dataType: 'json',
         success : function(result){
+          waitingDialog.hide();
           if (result.status == 'berhasil') {
             swal({
               title: "Sukses",
@@ -423,5 +433,6 @@
     });
   });
 }
+
 </script>
 @endsection
