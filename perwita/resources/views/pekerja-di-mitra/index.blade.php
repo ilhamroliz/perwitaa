@@ -31,17 +31,15 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-                    <h5>Daftar Pekerja di Mitra</h5>
+                    <h5>Daftar Pekerja di Mitra</h5><br>
                     <div class="ibox-tools">
-                    </div>
-
+    </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
         <div id="filter">
               <div class="row">
                 <div class="col-6 col-md-3">
-                  <label for="selectmitra">Cari Berdasarkan Mitra Dan Divisi</label>
                   @if(empty($data))
                   <p>Data tidak Ketemu</p>
                     @else
