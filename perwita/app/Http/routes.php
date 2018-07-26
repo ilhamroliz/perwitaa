@@ -139,6 +139,7 @@ Route::get('manajemen-pekerja-mitra/penerimaan-pekerja-mitra/simpan','Penerimaan
 Route::get('manajemen-pekerja/surat-peringatan','SuratPeringatanController@index');
 Route::get('manajemen-pekerja/surat-peringatan/data','SuratPeringatanController@data');
 Route::get('manajemen-pekerja/surat-peringatan/filter','SuratPeringatanController@filter');
+Route::get('manajemen-pekerja/surat-peringatan/getpelanggaran','SuratPeringatanController@getpelanggaran');
 Route::get('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
 Route::post('manajemen-pekerja/surat-peringatan/simpan/{id}','SuratPeringatanController@simpan');
 Route::get('manajemen-pekerja/surat-peringatan/getsp','SuratPeringatanController@getsp');
@@ -639,6 +640,7 @@ Route::get('approvalmitrapekerja/setujui', 'approvalmitrapekerjaController@setuj
 Route::get('approvalmitrapekerja/tolak', 'approvalmitrapekerjaController@tolak');
 Route::get('approvalmitrapekerja/setujuilist', 'approvalmitrapekerjaController@setujuilist');
 Route::get('approvalmitrapekerja/tolaklist', 'approvalmitrapekerjaController@tolaklist');
+Route::get('approvalmitrapekerja/print', 'approvalmitrapekerjaController@print');
 
 //Approval Promosi
 Route::get('approvalpromosi', 'approvalpromosiController@index');
@@ -646,3 +648,4 @@ Route::get('approvalpromosi/setujui', 'approvalpromosiController@setujui');
 Route::get('approvalpromosi/tolak', 'approvalpromosiController@tolak');
 Route::get('approvalpromosi/setujuilist', 'approvalpromosiController@setujuilist');
 Route::get('approvalpromosi/tolaklist', 'approvalpromosiController@tolaklist');
+Route::get('approvalpromosi/detail', 'approvalpromosiController@detail');

@@ -166,4 +166,54 @@ class approvalpromosiController extends Controller
       }
     }
 
+    public function tolaklist(Request $request){
+      DB::beginTransaction();
+      try {
+
+        for ($i=0; $i < count($request->pilih); $i++) {
+          DB::table('d_promosi_demosi')
+              ->where('pd_id',$request->pilih[$i])
+              ->update([
+                'pd_isapproved' => 'N'
+              ]);
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function detail(Request $request){
+        $data = DB::table('d_promosi_demosi')
+              ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
+              ->select('p_name', 'pd_no', 'pd_note', 'pd_jabatan_sekarang', 'pd_jabatan_awal')
+              ->where('pd_id',$request->id)
+              ->get();
+
+        $awal = DB::table('d_jabatan_pelamar')
+                ->select('jp_name')
+                ->where('jp_id', $data[0]->pd_jabatan_awal)
+                ->get();
+
+        $sekarang = DB::table('d_jabatan_pelamar')
+                ->select('jp_name')
+                ->where('jp_id', $data[0]->pd_jabatan_sekarang)
+                ->get();
+
+        return response()->json([
+          'pd_no' => $data[0]->pd_no,
+          'pd_pekerja' => $data[0]->p_name,
+          'pd_jabatan_awal' => $awal[0]->jp_name,
+          'pd_jabatan_sekarang' => $sekarang[0]->jp_name,
+          'pd_note' => $data[0]->pd_note
+        ]);
+    }
+
 }

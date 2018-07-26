@@ -50,7 +50,7 @@
 
                 <form class="formapprovalpekerja" id="formapprovalpekerja">
                   @foreach($data as $z)
-                  <input type="hidden" name="kontrak" value="{{$z->mp_contract}}">
+                  <input type="hidden" name="kontrak" id="mp_contract" value="{{$z->mp_contract}}">
                   @endforeach
                 <table id="approvalpekerja" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
                     <thead>
@@ -81,9 +81,9 @@
                           <td>{{$x->p_hp}}</td>
                           <td align="center">
                             <div class="action">
-                                <button type="button" id="{{$x->mp_id}}" onclick="detail({{$x->mp_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="detail({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                             </div>
                           </td>
                         </tr>
@@ -399,7 +399,6 @@
               </div>
               </div>
               <div class="modal-footer">
-                <a class="no-print btn btn-info" id="print" onclick="print()" href=""><i class="fa fa-print">&nbsp;</i>Print</a>
                 <button type="button" name="button" class="btn btn-primary" id="setujui" onclick="setujui()">Setujui</button>
                 <button type="button" name="button" class="btn btn-danger" id="tolak" onclick="tolak()">Tolak</button>
                   <div class="btn-group">
@@ -444,7 +443,7 @@ setTimeout(function(){
 });
 
 
-function detail(id){
+function detail(id, mp_contract, mp_pekerja){
   $("#modal-detail").modal('show');
   $("#showdata").hide();
   $.ajax({
@@ -510,10 +509,8 @@ function detail(id){
       $("#p_address_family").text(": "+result.p_address_family);
       $("#p_hp_family").text(": "+result.p_hp_family);
       //Button
-      $("#print").attr('onclick', 'print('+id+')');
-      $("#print").attr('href', '{{url('approvalpelamar/print?id=')}}'+id+'');
-      $("#setujui").attr('onclick', 'setujui('+id+')');
-      $("#tolak").attr('onclick', 'tolak('+id+')');
+      $("#setujui").attr('onclick', 'setujui('+id+','+mp_contract+','+mp_pekerja+')');
+      $("#tolak").attr('onclick', 'tolak('+id+','+mp_contract+','+mp_pekerja+')');
       if (result.p_many_kids == 'LEBIH') {
         $("#p_many_kids").text(": 3 Anak Lebih");
       }
@@ -533,7 +530,7 @@ function detail(id){
   });
 }
 
-  function setujui(mp_id, mp_contract){
+  function setujui(mp_id, mp_contract, mp_pekerja){
     swal({
             title: "Konfirmasi",
             text: "Apakah anda yakin ingin menyetujui Mitra Pekerja ini?",
@@ -549,7 +546,7 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  data: {mp_id:mp_id, mp_contract:mp_contract, mp_pekerja:mp_pekerja},
                   url: baseUrl + '/approvalmitrapekerja/setujui',
                   dataType: 'json',
                   timeout: 10000,
@@ -558,14 +555,25 @@ function detail(id){
                         if (response.status == 'berhasil') {
                             swal({
                                 title: "Mitra Pekerja Disetujui",
-                                text: "Mitra Pekerja Berhasil Disetujui",
-                                type: "success",
-                                showConfirmButton: false,
-                                timer: 900
-                            });
-                            setTimeout(function(){
-                                  window.location.reload();
-                          }, 850);
+                                text: "Ingin Print Mitra Pekerja Sekarang?",
+                                type: "info",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-info",
+                                confirmButtonText: "Iya",
+                                cancelButtonText: "Tidak!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                              },
+                              function(isConfirm) {
+                                if (isConfirm) {
+                                  window.location.href = baseUrl + '/approvalmitrapekerja/print?mp_id='+mp_id+'&mp_contract='+mp_contract+'&mp_pekerja='+mp_pekerja;
+                                } else {
+                                  swal.close();
+                                  setTimeout(function(){
+                                        window.location.reload();
+                                }, 850);
+                                }
+                              });
                         }
                     }, error: function (x, e) {
                         waitingDialog.hide();
@@ -593,7 +601,7 @@ function detail(id){
         });
   }
 
-  function tolak(mp_id, mp_contract){
+  function tolak(mp_id, mp_contract, mp_pekerja){
     swal({
             title: "Konfirmasi",
             text: "Apakah anda yakin ingin menolak Mitra Pekerja ini?",
@@ -609,7 +617,7 @@ function detail(id){
             setTimeout(function () {
                 $.ajax({
                   type: 'get',
-                  data: {mp_id:mp_id, mp_contract:mp_contract},
+                  data: {mp_id:mp_id, mp_contract:mp_contract, mp_pekerja},
                   url: baseUrl + '/approvalmitrapekerja/tolak',
                   dataType: 'json',
                   timeout: 10000,
@@ -719,6 +727,7 @@ function detail(id){
   }
 
   function setujuilist(){
+    var mp_contract = $('#mp_contract').val();
     waitingDialog.show();
     setTimeout(function () {
     $.ajax({
@@ -730,16 +739,27 @@ function detail(id){
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
-            swal({
-                title: "Mitra Pekerja Disetujui",
-                text: "Mitra Pekerja Berhasil Disetujui",
-                type: "success",
-                showConfirmButton: false,
-                timer: 900
+          swal({
+              title: "Mitra Pekerja Disetujui",
+              text: "Ingin Print Mitra Pekerja Sekarang?",
+              type: "info",
+              showCancelButton: true,
+              confirmButtonClass: "btn-info",
+              confirmButtonText: "Iya",
+              cancelButtonText: "Tidak!",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                window.location.href = baseUrl + '/approvalmitrapekerja/print?mp_contract='+mp_contract;        
+              } else {
+                swal.close();
+                setTimeout(function(){
+                      window.location.reload();
+              }, 850);
+              }
             });
-            setTimeout(function(){
-                  window.location.reload();
-          }, 850);
         }
       }, error: function (x, e) {
           waitingDialog.hide();

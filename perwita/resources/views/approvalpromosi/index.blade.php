@@ -98,14 +98,14 @@
     </div>
 </div>
 
-<!-- <div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog">
                   <div class="modal-content animated fadeIn">
                 <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                               <i class="fa fa-folder modal-icon"></i>
-                      <h4 class="modal-title">Detail SP</h4>
-                  <small>Detail SP</small>
+                      <h4 class="modal-title">Detail Promosi</h4>
+                  <small>Detail Promosi</small>
               </div>
             <div class="modal-body">
               <center>
@@ -123,44 +123,39 @@
             <div id="showdetail">
               <div class="row">
                 <div class="col-lg-12">
-                    <h3>No SP : <span style="font-weight:normal;" id="sp_no">-</span></h3>
+                    <h3>No Promosi : <span style="font-weight:normal;" id="pdno">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Nama Tenaga Kerja : <span style="font-weight:normal;" id="namapekerja">-</span></h3>
+                    <h3>Nama Pekerja : <span style="font-weight:normal;" id="namapekerja">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Jabatan : <span style="font-weight:normal;" id="jabatanpekerja">-</span></h3>
+                    <h3>Jabatan Awal : <span style="font-weight:normal;" id="jabatanawal">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Divisi : <span style="font-weight:normal;" id="divisipekerja">-</span></h3>
+                    <h3>Jabatan Sekarang : <span style="font-weight:normal;" id="jabatansekarang">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Keterangan : <span style="font-weight:normal;" id="keteranganpekerja">-</span></h3>
-                </div>
-                <div class="col-lg-12">
-                    <h3>Status Approval : <span style="font-weight:normal;" id="approve">-</span></h3>
-                </div>
-                <div class="col-lg-12">
-                    <h3>Tanggal Mulai - Tanggal Berakhir : <span style="font-weight:normal;" id="tanggalmulaiberakhir">-</span></h3>
+                    <h3>Keterangan : <span style="font-weight:normal;" id="keterangan">-</span></h3>
                 </div>
               </div>
             </div>
             </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
               </div>
           </div>
       </div>
-  </div> -->
+  </div>
 
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
 var table;
+var countmitra;
+var totalmitra;
 $( document ).ready(function() {
 
 $('#promositabel').hide();
@@ -405,90 +400,75 @@ function setujuilist(){
 }, 2000);
 }
 
-// function tolaklist(){
-//   waitingDialog.show();
-//   setTimeout(function () {
-//   $.ajax({
-//     type: 'get',
-//     data: $('#formapprovalsp').serialize(),
-//     url: baseUrl + '/approvalsp/tolaklist',
-//     dataType: 'json',
-//     timeout: 10000,
-//     success : function(result){
-//       waitingDialog.hide();
-//       if (result.status == 'berhasil') {
-//         swal({
-//             title: "SP Ditolak",
-//             text: "SP Berhasil Ditolak",
-//             type: "success",
-//             showConfirmButton: false,
-//             timer: 900
-//         });
-//           setTimeout(function(){
-//                 window.location.reload();
-//         }, 850);
-//       }
-//     }, error: function (x, e) {
-//         waitingDialog.hide();
-//         var message;
-//         if (x.status == 0) {
-//             message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
-//         } else if (x.status == 404) {
-//             message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
-//         } else if (x.status == 500) {
-//             message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
-//         } else if (e == 'parsererror') {
-//             message = 'Error.\nParsing JSON Request failed.';
-//         } else if (e == 'timeout') {
-//             message = 'Request Time out. Harap coba lagi nanti';
-//         } else {
-//             message = 'Unknow Error.\n' + x.responseText;
-//         }
-//         waitingDialog.hide();
-//         throwLoadError(message);
-//         //formReset("store");
-//     }
-//   });
-// }, 2000);
-// }
-//
-// function detail(id){
-//   $('#modal-detail').modal('show');
-//   $('#showdetail').hide();
-//   $.ajax({
-//     type: 'get',
-//     data: {id:id},
-//     url: baseUrl + '/approvalsp/detail',
-//     dataType: 'json',
-//     success : function(result){
-//       $('#sp_no').text(result[0].sp_no);
-//       $('#namapekerja').text(result[0].p_name);
-//       $('#jabatanpekerja').text(result[0].p_jabatan);
-//       $('#divisipekerja').text(result[0].md_name);
-//       $('#keteranganpekerja').text(result[0].sp_note);
-//       $('#tanggalmulaiberakhir').text(result[0].sp_date_start + ' - ' + result[0].sp_date_end);
-//
-//       if (result[0].sp_isapproved == 'P') {
-//         $('#approve').html('<span class="label label-warning">Pending</span>');
-//       } else if (result[0].sp_isapproved == 'Y') {
-//         $('#approve').html('<span class="label label-success">Disetujui</span>');
-//       } else if (result[0].sp_isapproved == 'N') {
-//         $('#approve').text('<span class="label label-danger">Ditolak</span>');
-//       }
-//
-//       //Button
-//       $('#printbtn').attr('onclick','print('+id+')');
-//
-//       $('.spiner-sp').hide();
-//       $('#showdetail').show();
-//
-//     }
-//   });
-// }
-//
-// function print(id){
-//   window.location.href = baseUrl + '/approvalsp/print?id='+id;
-// }
+function tolaklist(){
+  waitingDialog.show();
+  setTimeout(function () {
+  $.ajax({
+    type: 'get',
+    data: $('#formapprovalpromosi').serialize(),
+    url: baseUrl + '/approvalpromosi/tolaklist',
+    dataType: 'json',
+    timeout: 10000,
+    success : function(result){
+      waitingDialog.hide();
+      if (result.status == 'berhasil') {
+        swal({
+            title: "Promosi Ditolak",
+            text: "Promosi Berhasil Ditolak",
+            type: "success",
+            showConfirmButton: false,
+            timer: 900
+        });
+          setTimeout(function(){
+                window.location.reload();
+        }, 850);
+      }
+    }, error: function (x, e) {
+        waitingDialog.hide();
+        var message;
+        if (x.status == 0) {
+            message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+        } else if (x.status == 404) {
+            message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+        } else if (x.status == 500) {
+            message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+        } else if (e == 'parsererror') {
+            message = 'Error.\nParsing JSON Request failed.';
+        } else if (e == 'timeout') {
+            message = 'Request Time out. Harap coba lagi nanti';
+        } else {
+            message = 'Unknow Error.\n' + x.responseText;
+        }
+        waitingDialog.hide();
+        throwLoadError(message);
+        //formReset("store");
+    }
+  });
+}, 2000);
+}
+
+function detail(id){
+  $('#modal-detail').modal('show');
+  $('#showdetail').hide();
+  $.ajax({
+    type: 'get',
+    data: {id:id},
+    url: baseUrl + '/approvalpromosi/detail',
+    dataType: 'json',
+    success : function(result){
+
+      $('#jabatanawal').text(result.pd_jabatan_awal);
+      $('#jabatansekarang').text(result.pd_jabatan_sekarang);
+      $('#pdno').text(result.pd_no);
+      $('#namapekerja').text(result.pd_pekerja);
+      $('#keterangan').text(result.pd_note);
+
+      $('.spiner-sp').hide();
+      $('#showdetail').show();
+
+    }
+  });
+}
 
 </script>
 @endsection

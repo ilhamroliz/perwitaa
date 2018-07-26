@@ -618,14 +618,16 @@ class mitraPekerjaController extends Controller
             ->where('mp_isapproved', '=', 'P')
             ->get();
 
-        if ($data[0]->p_nip == '') {
+        if (empty($data[0]->p_nip)) {
             $temp = $this->getNewNik(1);
             $data[0]->p_nip = $temp[0];
         }
+
+
         d_pekerja::where('p_id', '=', $pekerja)
             ->update([
                 'p_note' => 'Seleksi',
-                'p_workdate' => Carbon::createFromFormat('d/m/Y', $data[0]->mp_workin_date, 'Asia/Jakarta')->format('Y-m-d'),
+                'p_workdate' => $data[0]->mp_workin_date,
                 'p_nip' => strtoupper($data[0]->p_nip),
                 'p_nip_mitra' => strtoupper($data[0]->mp_mitra_nik)
             ]);
@@ -645,8 +647,8 @@ class mitraPekerjaController extends Controller
             'pm_status' => 'Aktif'
         );
         d_pekerja_mutation::insert($tempMutasi);
-        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $mp_contract . " and mp_status = 'Aktif' and mp_isapproved = 'Y')");
-        return 'sukses';
+        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $mp_contract . " and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$mp_contract."'");
+
     }
 
 }

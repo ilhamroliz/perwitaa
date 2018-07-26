@@ -18,7 +18,10 @@ class SuratPeringatanController extends Controller
 {
     public function index()
     {
-        return view('surat-peringatan.index');
+        $data = DB::table('d_master_sp')
+              ->get();
+
+        return view('surat-peringatan.index', compact('data'));
     }
 
     public function data(){
@@ -152,7 +155,7 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' OR p_name LIKE '%".$keyword."%' OR p_nip_mitra LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
+            ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' AND p_name LIKE '%".$keyword."%' OR p_nip_mitra LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
             ->LIMIT(20)
             ->get();
 
@@ -364,4 +367,13 @@ class SuratPeringatanController extends Controller
 
       return response()->json($data);
     }
+
+    public function getpelanggaran(Request $request){
+        $data = DB::table('d_master_sp')
+              ->where('ms_id', $request->id)
+              ->get();
+
+        return response()->json($data);
+    }
+
 }

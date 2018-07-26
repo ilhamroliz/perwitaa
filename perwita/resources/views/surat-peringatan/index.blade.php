@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Pekerja</label>
                             <div class="col-lg-9">
-                                <input type="text" id="spno" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra" class="form-control" name="spno" value="">
+                                <input type="text" id="spno" style="text-transform:uppercase;" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra" class="form-control" name="spno" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,6 +87,7 @@
                             <label class="col-lg-2 control-label" for="sp">Jenis SP</label>
                             <div class="col-lg-9">
                                 <select class="form-control sp" name="sp" id="sp">
+                                  <option value="Surat Teguran">Surat Teguran</option>
                                   <option value="SP1">SP1</option>
                                   <option value="SP2">SP2</option>
                                   <option value="SP3">SP3</option>
@@ -95,8 +96,8 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Pelanggaran</label>
-                            <div class="col-lg-5">
-                                <input type="text" class="form-control" name="pelanggaran[]" placeholder="Pelanggaran">
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="pelanggaran[]" id="pelanggarantext" onclick="daftarpelanggaran()" placeholder="Pelanggaran">
                             </div>
                             <div class="col-lg-2">
                                 <button type="button" class="btn btn-primary dinamis" name="button" onclick="plus()"><i class="fa fa-plus"></i></button>
@@ -122,32 +123,59 @@
     </div>
 </div>
 
-<!-- <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-truck modal-icon"></i>
-                <h4 class="modal-title">Tambah Data Supplier</h4>
-                <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
-            </div>
-            <div class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+                            <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-user-times modal-icon"></i>
+                                        <h4 class="modal-title">Daftar Pelanggaran</h4>
+                                        <small>Daftar Pelanggaran</small>
+                                        </div>
+                                        <div class="modal-body">
+                                          <table class="table table-hover table-bordered table-stripped" id="tabelpelanggaran">
+                                              <thead>
+                                                  <tr>
+                                                    <th>Kategori</th>
+                                                    <th>Nama Pelanggaran</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                @foreach($data as $x)
+                                                <tr onclick="pilihpelanggaran({{$x->ms_id}})" class="num" num="0" style="cursor:pointer;">
+                                                  <td>{{$x->ms_kategori}}</td>
+                                                  <td>{{$x->ms_keterangan}}</td>
+                                                </tr>
+                                                @endforeach
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <p style="float:left;">Note: Untuk memilih pelanggaran, klik salah satu daftar pelanggaran </p>
+                                          <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
 var num = 1;
+var table;
     $(document).ready(function(){
+
+        table = $("#tabelpelanggaran").DataTable({
+          "processing": true,
+          "searching": true,
+          "paging": false,
+          "deferLoading": 57,
+          responsive: true,
+          "language": dataTableLanguage
+        });
 
       $('.date').datepicker({
           autoclose: true,
@@ -163,6 +191,7 @@ var num = 1;
     });
 
     function simpan(id){
+      waitingDialog.show();
       $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -173,7 +202,9 @@ var num = 1;
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-pekerja/surat-peringatan/simpan/'+id,
         dataType: 'json',
+        timeout: 10000,
         success : function(result){
+          waitingDialog.hide();
           if (result.status == 'berhasil') {
             swal({
                 title: "SP Disimpan",
@@ -210,6 +241,7 @@ var num = 1;
     }
 
     function getdata(id){
+      waitingDialog.show();
       $.ajax({
         type: 'get',
         data: {id:id},
@@ -226,8 +258,11 @@ var num = 1;
           } else {
             $('#isipemberitahuan').text(' Pekerja ini dalam masa '+result.sp[0].sp_jenis+' sampai '+result.sp[0].sp_date_end+'');
             $('#pemberitahuan').css('display','');
+            setTimeout(function(){
+              $('#pemberitahuan').css('display','none');
+            }, 10000)
           }
-
+          waitingDialog.hide();
         }
       });
     }
@@ -237,8 +272,8 @@ var num = 1;
       $('#showdinamis').append('<div class="form-group dinamis'+num+'">'+
           '<label class="col-lg-2 control-label"></label>'+
           '<div class="dinamis div">'+
-          '<div class="col-lg-5">'+
-              '<input type="text" class="form-control" name="pelanggaran[]" placeholder="Pelanggaran">'+
+          '<div class="col-lg-8">'+
+              '<input type="text" class="form-control" onclick="daftarpelanggaran('+num+')" id="pelanggarantext'+num+'" name="pelanggaran[]" placeholder="Pelanggaran">'+
           '</div>'+
           '<div class="col-lg-2">'+
               '<button type="button" class="btn btn-primary dinamis" name="button" onclick="plus()"><i class="fa fa-plus"></i></button>'+
@@ -254,5 +289,38 @@ var num = 1;
     function minus(num){
       $('.dinamis'+num).remove();
     }
+
+    function daftarpelanggaran(num){
+        $('#myModal5').modal('show');
+        if(num == undefined){
+
+        } else {
+          $('.num').attr('num', ''+num+'');
+        }
+        $("input[type=search]").css('width', '350px');
+    }
+
+    function pilihpelanggaran(id){
+      waitingDialog.show();
+      var num = $('.num').attr('num');
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          url: baseUrl + '/manajemen-pekerja/surat-peringatan/getpelanggaran',
+          dataType: 'json',
+          success : function(result){
+            if (num == 0) {
+              $('#pelanggarantext').val(result[0].ms_keterangan);
+              $('#myModal5').modal('hide');
+            } else {
+              $('#pelanggarantext'+num+'').val(result[0].ms_keterangan);
+              $('#myModal5').modal('hide');
+            }
+            waitingDialog.hide();
+          }
+        });
+    }
+
+
 </script>
 @endsection

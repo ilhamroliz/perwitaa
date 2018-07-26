@@ -265,6 +265,7 @@ $(document).ready(function(){
 });
 
   function getdata(id){
+    waitingDialog.show();
     var html = '';
     $('#showdata').html('');
     $.ajax({
@@ -291,6 +292,7 @@ $(document).ready(function(){
         }
 
       $('#showdata').html(html);
+      waitingDialog.hide()
       }
     });
   }
@@ -470,6 +472,7 @@ $(document).ready(function(){
   }
 
   function filter(){
+    waitingDialog.show();
     var html = '';
     var start = $('.startsp').val();
     var end = $('.endsp').val();
@@ -497,6 +500,7 @@ $(document).ready(function(){
         }
 
       $('#showdata').html(html);
+      waitingDialog.hide();
       }
     });
   }
