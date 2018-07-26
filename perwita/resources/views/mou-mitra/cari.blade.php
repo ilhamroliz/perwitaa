@@ -253,7 +253,6 @@
     }
 
     function perpanjang(id, detail){
-      waitingDialog.show();
       idPublic = id;
       detailPublic = detail;
       $.ajax({
@@ -273,7 +272,6 @@
                 autoclose: true,
                 format: 'dd/mm/yyyy'
             });
-            waitingDialog.hide();
         }, error:function(x, e) {
             if (x.status == 0) {
                 alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
