@@ -84,7 +84,6 @@ class MouController extends Controller
     }
 
     public function edit(Request $request){
-      // dd($request);
       $id = $request->id;
 
       $data = DB::table('d_mitra_mou')->where('mm_mitra', $id)->get();
@@ -101,8 +100,8 @@ class MouController extends Controller
         'mm_mitra' => $data[0]->mm_mitra,
         'mm_detailid' => $data[0]->mm_detailid,
         'mm_mou' => $data[0]->mm_mou,
-        'mm_mou_start' => $data[0]->mm_mou_start,
-        'mm_mou_end' => $data[0]->mm_mou_end
+        'mm_mou_start' => $moustart,
+        'mm_mou_end' => $mouend
       ]);
     }
 
@@ -112,16 +111,17 @@ class MouController extends Controller
       $idmitra = $request->mitra;
       $detailid = $request->detail;
       $nomou = $request->nomou;
-      $startmou = Carbon::createFromFormat('d/m/Y', $request->startmou);
-      $endmou = Carbon::createFromFormat('d/m/Y', $request->endmou);
+      $awal = Carbon::createFromFormat('d/m/Y', $request->startmou);
+      $akhir = Carbon::createFromFormat('d/m/Y', $request->endmou);
 
       d_mitra_mou::where('mm_mitra',$idmitra)
                   ->where('mm_detailid',$detailid)
                   ->update([
                     'mm_mou' => $nomou,
-                    'mm_mou_start' => $startmou,
-                    'mm_mou_end' => $endmou
+                    'mm_mou_start' => $awal,
+                    'mm_mou_end' => $akhir
                   ]);
+
       DB::commit();
       return response()->json([
         'status' => 'berhasil'
@@ -156,4 +156,87 @@ class MouController extends Controller
         ]);
       }
     }
+
+    public function cari(){
+      return view('mou-mitra.cari');
+    }
+
+    public function pencarian(Request $request){
+      $keyword = $request->term;
+
+      $data = DB::table('d_mitra_mou')
+            ->join('d_mitra', 'm_id', '=', 'mm_mitra')
+            ->select('m_name', 'mm_mou', 'mm_mou_start', 'mm_mou_end', 'mm_mitra', 'mm_detailid')
+            ->where('mm_mou', 'LIKE', '%'.$keyword.'%')
+            ->ORwhere('mm_mitra', 'LIKE', '%'.$keyword.'%')
+            ->LIMIT(20)
+            ->get();
+
+            if ($data == null) {
+                $results[] = ['mitraid' => null, 'detailid' => null, 'label' => 'Tidak ditemukan data terkait'];
+            } else {
+
+                foreach ($data as $query) {
+                    $results[] = ['mitraid' => $query->mm_mitra, 'detailid' => $query->mm_detailid, 'label' => $query->mm_mou . ' (' . $query->m_name . ')'];
+                }
+            }
+
+        return response()->json($results);
+
+    }
+
+    public function getdata(Request $request){
+        Carbon::setLocale('id');
+        $data = DB::table('d_mitra_mou')
+              ->join('d_mitra', 'm_id', '=', 'mm_mitra')
+              ->select('m_name', 'mm_mou', 'mm_mou_start', 'mm_mou_end', 'mm_mitra', 'mm_detailid', 'mm_mou_end as sisa', 'mm_status')
+              ->where('mm_mitra', $request->mitraid)
+              ->where('mm_detailid', $request->detailid)
+              ->get();
+
+        if (!empty($data)) {
+          $data[0]->mm_mou_start = Carbon::parse($data[0]->mm_mou_start)->format('d/m/Y');
+          $data[0]->mm_mou_end = Carbon::parse($data[0]->mm_mou_end)->format('d/m/Y');
+          $data[0]->sisa = Carbon::createFromFormat('d/m/Y', $data[0]->mm_mou_end, 'Asia/Jakarta')->diffForHumans(null, true);
+        }
+
+        return response()->json($data);
+
+    }
+
+    public function aktif(Request $request){
+      DB::beginTransaction();
+      try {
+
+        $cek = DB::table('d_mitra_mou')
+              ->where('mm_status', 'Aktif')
+              ->where('mm_mitra', $request->id)
+              ->get();
+
+        if (count($cek) > 0) {
+          return response()->json([
+            'status' => 'gagal',
+            'content' => 'Mitra MOU ini sudah ada yang aktif!'
+          ]);
+        } else {
+          $idmitra = $request->id;
+          d_mitra_mou::where('mm_mitra',$idmitra)
+                      ->update([
+                        'mm_aktif' => Carbon::now(),
+                        'mm_status' => 'Aktif'
+                      ]);
+          DB::commit();
+          return response()->json([
+                      'status' => 'berhasil'
+          ]);
+        }
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal',
+          'data' => $e
+        ]);
+      }
+    }
+
 }
