@@ -26,6 +26,16 @@ class d_mem extends Model implements AuthenticatableContract, CanResetPasswordCo
 
     protected $fillable = ['m_id','m_username', 'm_passwd', 'm_paket', 'm_name', 'm_intro'];
 
+    public function company($id){
+
+        $data = DB::table('d_comp')
+                ->join('d_mem_comp','d_mem_comp.mc_comp','=','d_comp.c_id')
+                ->join('d_comp_year','d_comp_year.y_comp','=','d_comp.c_id')
+                ->where('d_mem_comp.mc_mem', '=', $id)->first();
+
+        return $data;
+    }
+
     public function getCompany($id){
         $data = DB::table('d_comp')->where('c_id', '=', $id)->first();
 
