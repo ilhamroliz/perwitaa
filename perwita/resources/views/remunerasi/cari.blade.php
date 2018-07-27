@@ -187,14 +187,31 @@ $(document).ready(function(){
     url: baseUrl + '/manajemen-pekerja/remunerasi/data',
     dataType: 'json',
     success : function(result){
+      var jabatan;
+
       if (result.status == 'kosong') {
         html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
       } else {
         for (var i = 0; i < result.length; i++) {
+          if (result[i].p_jabatan == 1) {
+            jabatan = 'Manager';
+          }
+          else if (result[i].p_jabatan == 2) {
+            jabatan = 'Supervisor';
+          }
+          else if (result[i].p_jabatan == 3) {
+            jabatan = 'Staff';
+          }
+          else if (result[i].p_jabatan == 4) {
+            jabatan = 'Operator';
+          } else {
+            jabatan = '-';
+          }
+
           html += '<tr>'+
                   '<td>'+result[i].r_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+result[i].jp_name+'</td>'+
+                  '<td>'+jabatan+'</td>'+
                   '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
                   '<td>'+result[i].r_note+'</td>'+
                   '<td>'+
@@ -244,14 +261,14 @@ $(document).ready(function(){
             html += '<tr>'+
                     '<td>'+result[i].r_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].jp_name+'</td>'+
+                    '<td>'+result[i].p_jabatan+'</td>'+
                     '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
                     '<td>'+result[i].r_note+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].r_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                     '</div>'+
                     '</tr>';
           }

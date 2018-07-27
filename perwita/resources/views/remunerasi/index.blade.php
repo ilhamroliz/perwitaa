@@ -150,7 +150,7 @@ var table;
             waitingDialog.hide();
           }
           $('#namapekerja').val(result[0].p_name);
-          $('#jabatanpekerja').val(result[0].jp_name);
+          $('#jabatanpekerja').val(result[0].p_jabatan);
 
           //Button
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');

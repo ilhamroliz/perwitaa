@@ -219,7 +219,7 @@ $(document).ready(function(){
         html += '<tr>'+
                 '<td>'+result[i].sp_no+'</td>'+
                 '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].jp_name+'</td>'+
+                '<td>'+result[i].p_jabatan+'</td>'+
                 '<td>'+result[i].md_name+'</td>'+
                 '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
                 '<td>'+result[i].sp_note+'</td>'+
@@ -281,7 +281,7 @@ $(document).ready(function(){
             html += '<tr>'+
                     '<td>'+result[i].sp_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].jp_name+'</td>'+
+                    '<td>'+result[i].p_jabatan+'</td>'+
                     '<td>'+result[i].md_name+'</td>'+
                     '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
                     '<td>'+result[i].sp_note+'</td>'+
@@ -491,7 +491,7 @@ $(document).ready(function(){
             html += '<tr>'+
                     '<td>'+result[i].sp_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].jp_name+'</td>'+
+                    '<td>'+result[i].p_jabatan+'</td>'+
                     '<td>'+result[i].md_name+'</td>'+
                     '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
                     '<td>'+result[i].sp_note+'</td>'+

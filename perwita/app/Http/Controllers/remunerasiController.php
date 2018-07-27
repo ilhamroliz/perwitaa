@@ -83,22 +83,27 @@ class remunerasiController extends Controller
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
             })
-            ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', 'jp_name', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->select('p_id','mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
             ->whereRaw("mp_status = 'Aktif' AND mp_isapproved = 'Y' AND p_nip LIKE '%".$keyword."%'")
             ->LIMIT(20)
             ->get();
+
+            for ($i=0; $i < count($data); $i++) {
+              $jabatan[] = DB::table('d_jabatan_pelamar')
+                      ->where('jp_id', $data[$i]->p_jabatan)
+                      ->get();
+            }
 
             if ($data == null) {
                 $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
             } else {
 
                 foreach ($data as $query) {
-                    $results[] = ['id' => $query->p_id, 'label' => $query->p_name . ' (' . $query->jp_name . ')'];
+                    $results[] = ['id' => $query->p_id, 'label' => $query->p_name . ' (' . $query->p_nip . ')'];
                 }
             }
 
@@ -108,9 +113,19 @@ class remunerasiController extends Controller
     public function getcari(Request $request){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'jp_name')
+            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'p_jabatan')
             ->where('r_pekerja', $request->id)
             ->get();
+
+            $jabatan = DB::table('d_jabatan_pelamar')
+                    ->where('jp_id', $data[0]->p_jabatan)
+                    ->get();
+
+            if (count($jabatan) > 0) {
+              $data[0]->p_jabatan = $jabatan[0]->jp_name;
+            } else {
+              $data[0]->p_jabatan = '-';
+            }
 
       if (count($data)) {
        return response()->json($data);
@@ -123,10 +138,19 @@ class remunerasiController extends Controller
 
     public function getdata(Request $request){
       $data = DB::table('d_pekerja')
-             ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
-             ->select('p_name', 'jp_name')
+             ->select('p_name', 'p_jabatan')
              ->where('p_id',$request->id)
              ->get();
+
+             $jabatan = DB::table('d_jabatan_pelamar')
+                     ->where('jp_id', $data[0]->p_jabatan)
+                     ->get();
+
+             if (count($jabatan) > 0) {
+               $data[0]->p_jabatan = $jabatan[0]->jp_name;
+             } else {
+               $data[0]->p_jabatan = '-';
+             }
 
       if (count($data) > 0) {
        return response()->json($data);
@@ -144,9 +168,9 @@ class remunerasiController extends Controller
     public function data(){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'jp_name')
+            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'p_jabatan')
             ->get();
+
 
       if (count($data) > 0) {
           return response()->json($data);
@@ -161,8 +185,7 @@ class remunerasiController extends Controller
     public function detail(Request $request){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'jp_name', 'r_isapproved')
+            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'r_isapproved')
             ->where('r_id', $request->id)
             ->get();
 
