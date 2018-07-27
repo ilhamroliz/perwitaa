@@ -29,17 +29,19 @@ class SuratPeringatanController extends Controller
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
             })
-            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'jp_name', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
             ->where('sp_isapproved','Y')
             ->get();
 
-
-      return response()->json($data);
+      if (count($data) > 0) {
+        return response()->json($data);
+      }
 
     }
 
@@ -150,6 +152,7 @@ class SuratPeringatanController extends Controller
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
@@ -175,11 +178,12 @@ class SuratPeringatanController extends Controller
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
             })
-            ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'jp_name', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
             ->where('p_id', $request->id)
             ->get();
 
@@ -224,11 +228,12 @@ class SuratPeringatanController extends Controller
       $pekerja = DB::table('d_mitra_pekerja')
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
           ->join('d_mitra_divisi', function($e){
                 $e->on('m_id', '=', 'md_mitra');
                 $e->on('mp_divisi', '=', 'md_id');
           })
-          ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->select('mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', 'jp_name', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
           ->where('mp_id', $id)
           ->get();
 
@@ -237,7 +242,7 @@ class SuratPeringatanController extends Controller
         'sp_id' => $surat[$i]->sp_id,
         'sp_no' => $surat[$i]->sp_no,
         'p_name' => $pekerja[0]->p_name,
-        'p_jabatan' => $pekerja[0]->p_jabatan,
+        'p_jabatan' => $pekerja[0]->jp_name,
         'md_name' => $pekerja[0]->md_name,
         'sp_date_start' => $surat[$i]->sp_date_start,
         'sp_date_end' => $surat[$i]->sp_date_end,
@@ -263,12 +268,13 @@ class SuratPeringatanController extends Controller
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+          ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
           ->join('d_surat_pringatan_dt', 'spd_surat_peringatan', '=', 'sp_id')
           ->join('d_mitra_divisi', function($e){
                 $e->on('m_id', '=', 'md_mitra');
                 $e->on('mp_divisi', '=', 'md_id');
           })
-          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved','sp_jenis', 'spd_pelanggaran', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->select('sp_no','p_name','md_name','sp_date_start','jp_name','sp_date_end','sp_note','sp_isapproved','sp_jenis', 'spd_pelanggaran', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
           ->where('sp_id',$id)
           ->get();
 
@@ -314,12 +320,13 @@ class SuratPeringatanController extends Controller
       $data = DB::table('d_mitra_pekerja')
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
+          ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
           ->join('d_mitra_divisi', function($e){
                 $e->on('m_id', '=', 'md_mitra');
                 $e->on('mp_divisi', '=', 'md_id');
           })
-          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','sp_note','sp_isapproved', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+          ->select('sp_no','p_name','md_name','sp_date_start','sp_date_end','jp_name','sp_note','sp_isapproved', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
           ->where('sp_id',$id)
           ->get();
 
@@ -367,11 +374,12 @@ class SuratPeringatanController extends Controller
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
             })
-            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
+            ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'jp_name', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
             ->where('sp_isapproved','Y')
             ->where(function($q) use ($start, $end){
               $q->orWhere('sp_date_start', '<=', $start);

@@ -656,3 +656,14 @@ Route::get('approvalpromosi/detail', 'approvalpromosiController@detail');
 
 //Remunerasi
 Route::get('manajemen-pekerja/remunerasi', 'remunerasiController@index');
+Route::get('manajemen-pekerja/remunerasi/simpan/{idpekerja}', 'remunerasiController@simpan');
+Route::post('manajemen-pekerja/remunerasi/simpan/{idpekerja}', 'remunerasiController@simpan');
+Route::get('manajemen-pekerja/remunerasi/carino', 'remunerasiController@carino');
+Route::get('manajemen-pekerja/remunerasi/getdata', 'remunerasiController@getdata');
+Route::get('manajemen-pekerja/remunerasi/cari', 'remunerasiController@cari');
+Route::get('manajemen-pekerja/remunerasi/data', 'remunerasiController@data');
+Route::get('manajemen-pekerja/remunerasi/getcari', 'remunerasiController@getcari');
+Route::get('manajemen-pekerja/remunerasi/detail', 'remunerasiController@detail');
+Route::get('manajemen-pekerja/remunerasi/hapus', 'remunerasiController@hapus');
+Route::get('manajemen-pekerja/remunerasi/update/{id}', 'remunerasiController@update');
+Route::post('manajemen-pekerja/remunerasi/update/{id}', 'remunerasiController@update');

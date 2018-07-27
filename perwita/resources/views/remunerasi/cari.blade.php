@@ -35,7 +35,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Surat Peringatan</h2>
+        <h2>Cari Remunerasi</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -44,42 +44,31 @@
                 Manajemen Pekerja
             </li>
             <li class="active">
-                <strong>Surat Peringatan</strong>
+                <strong>Cari Remunerasi</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Surat Peringatan</h5>
-      <a href="{{url('/manajemen-pekerja/surat-peringatan')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+        <h5>Cari Remunerasi</h5>
+      <a href="{{url('manajemen-pekerja/remunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
-              <div class="col-md-5" style="float:left;">
-                <label for="pencarian">Cari Berdasarkan Nama/NIK Pekerja/NIK Mitra</label>
-                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan Nama/NIK Pekerja/NIK Mitra">
-              </div>
-              <label for="startsp">&nbsp;&nbsp;&nbsp;&nbsp;Cari Berdasarkan Tanggal</label>
-              <div class="form-group row">
-                    <div class="col-sm-2">
-                      <input type="text" id="startsp" style="float:right;" class="form-control startsp date-sp" name="startsp" style="text-transform:uppercase" title="Start"  placeholder="Start">
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control endsp date-sp" name="endsp" style="text-transform:uppercase" title="End"  placeholder="End">
-                    </div>
-                    <button type="button" class="btn btn-primary" name="button" style="font-family:sans-serif;" onclick="filter()"><em class="fa fa-search">&nbsp;</em>Filter</button>
+              <div class="col-md-12">
+                <label for="pencarian">Cari Berdasarkan NIK Pekerja</label>
+                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan NIK Pekerja">
               </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
                             <tr>
-                              <th>No. Sp</th>
+                              <th>No. Remunerasi</th>
                               <th>Nama Tenaga Kerja</th>
                               <th>Jabatan</th>
-                              <th>Divisi</th>
-                              <th>Tanggal Mulai - Tanggal Berakhir</th>
+                              <th>Nilai Remunerasi</th>
                               <th>Keterangan</th>
                               <th width="120px">Aksi</th>
                             </tr>
@@ -101,8 +90,8 @@
                 <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                               <i class="fa fa-folder modal-icon"></i>
-                      <h4 class="modal-title">Detail SP</h4>
-                  <small>Detail SP</small>
+                      <h4 class="modal-title">Detail Remunerasi</h4>
+                  <small>Detail Remunerasi</small>
               </div>
             <div class="modal-body">
               <center>
@@ -114,16 +103,13 @@
                         <div class="sk-rect4"></div>
                         <div class="sk-rect5"></div>
                     </div>
-                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data SP</span>
+                    <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data Remunerasi</span>
                 </div>
             </center>
             <div id="showdetail">
               <div class="row">
                 <div class="col-lg-12">
-                    <h3>Jenis SP : <span style="font-weight:normal;" id="sp_jenis">-</span></h3>
-                </div>
-                <div class="col-lg-12">
-                    <h3>No SP : <span style="font-weight:normal;" id="sp_no">-</span></h3>
+                    <h3>No Remunerasi : <span style="font-weight:normal;" id="r_no">-</span></h3>
                 </div>
                 <div class="col-lg-12">
                     <h3>Nama Tenaga Kerja : <span style="font-weight:normal;" id="namapekerja">-</span></h3>
@@ -132,20 +118,13 @@
                     <h3>Jabatan : <span style="font-weight:normal;" id="jabatanpekerja">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Divisi : <span style="font-weight:normal;" id="divisipekerja">-</span></h3>
-                </div>
-                <div class="col-lg-12">
                     <h3>Keterangan : <span style="font-weight:normal;" id="keteranganpekerja">-</span></h3>
                 </div>
                 <div class="col-lg-12">
                     <h3>Status Approval : <span style="font-weight:normal;" id="approve">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Tanggal Mulai - Tanggal Berakhir : <span style="font-weight:normal;" id="tanggalmulaiberakhir">-</span></h3>
-                </div>
-                <div class="col-lg-12" id="daftarpelanggaran">
-                  <br>
-                    <h3>Pelanggaran : </h3>
+                    <h3>Nilai Remunerasi : <span style="font-weight:normal;" id="nilairemunerasi">-</span></h3>
                 </div>
               </div>
             </div>
@@ -165,8 +144,8 @@
                   <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                 <i class="fa fa-folder modal-icon"></i>
-                        <h4 class="modal-title">Edit SP</h4>
-                    <small>Edit SP</small>
+                        <h4 class="modal-title">Edit Remunerasi</h4>
+                    <small>Edit Remunerasi</small>
                 </div>
               <div class="modal-body">
               <form class="form-edit">
@@ -176,13 +155,7 @@
                         <h3>Keterangan : <input type="text" class="form-control" name="keterangan" id="editketerangan" placeholder="Keterangan"></h3>
                     </div>
                     <div class="col-lg-12">
-                        <h3>Tanggal Mulai - Tanggal Berakhir : </h3>
-                    </div>
-                    <div class="col-lg-4">
-                        <h3> <input type="text" class="form-control date" id="datestart" name="start" placeholder="Start"> </h3>
-                    </div>
-                    <div class="col-lg-4">
-                        <h3> <input type="text" class="form-control date" id="dateend" name="end" placeholder="End"> </h3>
+                        <h3>Nilai Remunerasi : <input type="text" class="form-control" name="remunerasi" id="editremunerasi" placeholder="Nilai Remunerasi"></h3>
                     </div>
                   </div>
                 </div>
@@ -207,37 +180,38 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
   var html = '';
   $('#showdata').html('');
   $.ajax({
     type: 'get',
-    url: baseUrl + '/manajemen-pekerja/surat-peringatan/data',
+    url: baseUrl + '/manajemen-pekerja/remunerasi/data',
     dataType: 'json',
     success : function(result){
-      for (var i = 0; i < result.length; i++) {
-        html += '<tr>'+
-                '<td>'+result[i].sp_no+'</td>'+
-                '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].jp_name+'</td>'+
-                '<td>'+result[i].md_name+'</td>'+
-                '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
-                '<td>'+result[i].sp_note+'</td>'+
-                '<td>'+
-                '<div class="text-center">'+
-                  '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                  '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
-                '</div>'+
-                '</tr>';
+      if (result.status == 'kosong') {
+        html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+      } else {
+        for (var i = 0; i < result.length; i++) {
+          html += '<tr>'+
+                  '<td>'+result[i].r_no+'</td>'+
+                  '<td>'+result[i].p_name+'</td>'+
+                  '<td>'+result[i].jp_name+'</td>'+
+                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
+                  '<td>'+result[i].r_note+'</td>'+
+                  '<td>'+
+                  '<div class="text-center">'+
+                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].r_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '</div>'+
+                  '</tr>';
+        }
       }
-
     $('#showdata').html(html);
     }
   });
 
     $('#pencarian').autocomplete({
-        source: baseUrl + '/manajemen-pekerja/surat-peringatan/getsp',
+        source: baseUrl + '/manajemen-pekerja/remunerasi/carino',
         select: function(event, ui) {
             getdata(ui.item.id);
         }
@@ -249,17 +223,6 @@ $(document).ready(function(){
             "targets": 0,
             "orderable": false
         }]
-
-    });
-
-    $('.date-sp').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-    });
-
-    $('.date').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
     });
 
 });
@@ -271,7 +234,7 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/surat-peringatan/getcari',
+      url: baseUrl + '/manajemen-pekerja/remunerasi/getcari',
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
@@ -279,12 +242,11 @@ $(document).ready(function(){
         } else {
           for (var i = 0; i < result.length; i++) {
             html += '<tr>'+
-                    '<td>'+result[i].sp_no+'</td>'+
+                    '<td>'+result[i].r_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
                     '<td>'+result[i].jp_name+'</td>'+
-                    '<td>'+result[i].md_name+'</td>'+
-                    '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
-                    '<td>'+result[i].sp_note+'</td>'+
+                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
+                    '<td>'+result[i].r_note+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
                       '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
@@ -302,33 +264,26 @@ $(document).ready(function(){
   }
 
   function detail(id){
-    $('#daftarpelanggaran').html('<br><h3>Pelanggaran : </h3>');
     $('#modal-detail').modal('show');
     $('#showdetail').hide();
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/surat-peringatan/detail',
+      url: baseUrl + '/manajemen-pekerja/remunerasi/detail',
       dataType: 'json',
       success : function(result){
-        $('#sp_jenis').text(result[0].sp_jenis);
-        $('#sp_no').text(result[0].sp_no);
+        $('#r_no').text(result[0].r_no);
         $('#namapekerja').text(result[0].p_name);
         $('#jabatanpekerja').text(result[0].jp_name);
-        $('#divisipekerja').text(result[0].md_name);
-        $('#keteranganpekerja').text(result[0].sp_note);
-        $('#tanggalmulaiberakhir').text(result[0].sp_date_start + ' - ' + result[0].sp_date_end);
-
-        if (result[0].sp_isapproved == 'P') {
+        $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].r_nilai, "", 0, ".", ","));
+        $('#keteranganpekerja').text(result[0].r_note);
+        //
+        if (result[0].r_isapproved == 'P') {
           $('#approve').html('<span class="label label-warning">Pending</span>');
-        } else if (result[0].sp_isapproved == 'Y') {
+        } else if (result[0].r_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
-        } else if (result[0].sp_isapproved == 'N') {
+        } else if (result[0].r_isapproved == 'N') {
           $('#approve').text('<span class="label label-danger">Ditolak</span>');
-        }
-
-        for (var i = 0; i < result.length; i++) {
-          $('#daftarpelanggaran').append('<h3><span style="font-weight:normal;" >- '+result[i].spd_pelanggaran+'</span</h3><br>');
         }
 
         $('.spiner-sp').hide();
@@ -341,7 +296,7 @@ $(document).ready(function(){
   function hapus(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data SP?",
+        text: "Apakah anda yakin ingin menghapus data Remunerasi?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -353,7 +308,7 @@ $(document).ready(function(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-pekerja/surat-peringatan/hapus',
+            url: baseUrl + '/manajemen-pekerja/remunerasi/hapus',
             type: 'get',
             timeout: 10000,
             success: function(response){
@@ -408,18 +363,16 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/surat-peringatan/edit',
+      url: baseUrl + '/manajemen-pekerja/remunerasi/detail',
       dataType: 'json',
       success : function(result){
-        $('#editpekerja').val(result[0].p_name);
-        $('#editjabatan').val(result[0].jp_name);
-        $('#editdivisi').val(result[0].md_name);
-        $('#editketerangan').val(result[0].sp_note);
-        $('#datestart').val(result[0].sp_date_start);
-        $('#dateend').val(result[0].sp_date_end);
+        $('#editketerangan').val(result[0].r_note);
+        $('#editremunerasi').val('Rp. '+accounting.formatMoney(result[0].r_nilai, "", 0, ".", ","));
+
+        $('#editremunerasi').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+
         // button
         $('#updatebtn').attr('onclick','update('+id+')');
-
       }
     });
   }
@@ -432,9 +385,9 @@ $(document).ready(function(){
                   }
               });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('.form-edit').serialize(),
-        url: baseUrl + '/manajemen-pekerja/surat-peringatan/update/'+id,
+        url: baseUrl + '/manajemen-pekerja/remunerasi/update/'+id,
         dataType: 'json',
         timeout: 10000,
         success : function(result){
@@ -473,43 +426,6 @@ $(document).ready(function(){
     }, 800);
   }
 
-  function filter(){
-    waitingDialog.show();
-    var html = '';
-    var start = $('.startsp').val();
-    var end = $('.endsp').val();
-    $.ajax({
-      type: 'get',
-      data: {start:start, end:end},
-      dataType: 'json',
-      url: baseUrl + '/manajemen-pekerja/surat-peringatan/filter',
-      success : function(result){
-        if (result.status == 'kosong') {
-          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
-        } else {
-          for (var i = 0; i < result.length; i++) {
-            html += '<tr>'+
-                    '<td>'+result[i].sp_no+'</td>'+
-                    '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].jp_name+'</td>'+
-                    '<td>'+result[i].md_name+'</td>'+
-                    '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
-                    '<td>'+result[i].sp_note+'</td>'+
-                    '<td>'+
-                    '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
-                    '</div>'+
-                    '</tr>';
-          }
-        }
-
-      $('#showdata').html(html);
-      waitingDialog.hide();
-      }
-    });
-  }
 
 </script>
 @endsection

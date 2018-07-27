@@ -249,7 +249,7 @@ var table;
         dataType: 'json',
         success : function(result){
           $('#namapekerja').val(result.data[0].p_name);
-          $('#jabatanpekerja').val(result.data[0].p_jabatan);
+          $('#jabatanpekerja').val(result.data[0].jp_name);
           $('#divisipekerja').val(result.data[0].md_name);
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
 
