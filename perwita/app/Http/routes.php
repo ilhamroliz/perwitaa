@@ -11,11 +11,13 @@
   |
  */
 
-Route::get('/', 'loginController@index');
-Route::post('login', 'loginController@authenticate');
-Route::get('login', 'loginController@authenticate');
-Route::get('logout', 'loginController@logout');
-Route::get('dashboard', 'dashboardController@index');
+ Route::group(['middleware' => 'web'], function () {
+   Route::get('/', 'loginController@index');
+   Route::post('login', 'loginController@authenticate');
+   Route::get('login', 'loginController@authenticate');
+   Route::get('logout', 'loginController@logout');
+   Route::get('dashboard', 'dashboardController@index');
+ });
 
 Route::get('profil', 'profilController@index');
 Route::get('profil/ubah-profil/{id}', 'profilController@ubahProfil');

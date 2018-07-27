@@ -248,8 +248,10 @@ var table;
         dataType: 'json',
         success : function(result){
           $('#namapekerja').val(result.data[0].p_name);
-          $('#jabatanpekerja').val(result.jabatan[0].p_jabatan);
+          $('#jabatanpekerja').val(result.data[0].p_jabatan);
           $('#divisipekerja').val(result.data[0].md_name);
+
+          //Button
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
 
           if (result.sp[0] == null) {
