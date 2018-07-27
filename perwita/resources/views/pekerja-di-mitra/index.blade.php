@@ -6,7 +6,10 @@
 
     @section ('extra_styles')
 
-
+    <style>
+    .popover-navigation [data-role="next"] { display: none; }
+    .popover-navigation [data-role="end"] { display: none; }
+    </style>
 
     @endsection
 
@@ -61,7 +64,7 @@
                 <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
                 </div>
                 <div class="col-6 col-sm-2 pull-right">
-                      <button type="button" style="float:right;" class="btn btn-info" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
+                      <button type="button" style="float:right;" onclick="printDiv()" class="btn btn-info" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                 </div>
             </div>
             <br>
@@ -71,7 +74,7 @@
             </div>
             <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
-               <table id="pekerja" class="table table-bordered table-striped display">
+               <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -142,6 +145,23 @@ $(document).ready(function(){
     }
   });
 });
+
+function printDiv() {
+    var divToPrint = document.getElementById('pekerja');
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        '}' +
+        '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+
 // var table;
 // $(document).ready(function() {
 //     $('#select-picker').select2();
