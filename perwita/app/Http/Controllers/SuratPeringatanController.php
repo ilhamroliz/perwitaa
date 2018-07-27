@@ -246,7 +246,14 @@ class SuratPeringatanController extends Controller
       );
     }
 
+    if (empty($data)) {
+      return response()->json([
+        'status' => 'kosong'
+      ]);
+    } else {
       return response()->json($data);
+    }
+
     }
 
     public function detail(Request $request){
@@ -346,8 +353,15 @@ class SuratPeringatanController extends Controller
     }
 
     public function filter(Request $request){
-      $start = Carbon::createFromFormat('d/m/Y', $request->start);
-      $end = Carbon::createFromFormat('d/m/Y', $request->end);
+
+      if (empty($request->start) || empty($request->end)) {
+        return response()->json([
+          'status' => 'kosong'
+        ]);
+      } else {
+        $start = Carbon::createFromFormat('d/m/Y', $request->start);
+        $end = Carbon::createFromFormat('d/m/Y', $request->end);
+      }
 
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')

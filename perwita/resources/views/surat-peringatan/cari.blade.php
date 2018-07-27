@@ -208,7 +208,7 @@
 
 $(document).ready(function(){
 
-  var html = '';
+  var html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
   $('#showdata').html('');
   $.ajax({
     type: 'get',
@@ -266,7 +266,7 @@ $(document).ready(function(){
 
   function getdata(id){
     waitingDialog.show();
-    var html = '';
+    var html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
     $('#showdata').html('');
     $.ajax({
       type: 'get',
@@ -274,21 +274,25 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-pekerja/surat-peringatan/getcari',
       dataType: 'json',
       success : function(result){
-        for (var i = 0; i < result.length; i++) {
-          html += '<tr>'+
-                  '<td>'+result[i].sp_no+'</td>'+
-                  '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+result[i].p_jabatan+'</td>'+
-                  '<td>'+result[i].md_name+'</td>'+
-                  '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
-                  '<td>'+result[i].sp_note+'</td>'+
-                  '<td>'+
-                  '<div class="text-center">'+
-                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
-                  '</div>'+
-                  '</tr>';
+        if (result.status == 'kosong') {
+          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+        } else {
+          for (var i = 0; i < result.length; i++) {
+            html += '<tr>'+
+                    '<td>'+result[i].sp_no+'</td>'+
+                    '<td>'+result[i].p_name+'</td>'+
+                    '<td>'+result[i].p_jabatan+'</td>'+
+                    '<td>'+result[i].md_name+'</td>'+
+                    '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
+                    '<td>'+result[i].sp_note+'</td>'+
+                    '<td>'+
+                    '<div class="text-center">'+
+                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                    '</div>'+
+                    '</tr>';
+          }
         }
 
       $('#showdata').html(html);
@@ -473,7 +477,7 @@ $(document).ready(function(){
 
   function filter(){
     waitingDialog.show();
-    var html = '';
+    var html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
     var start = $('.startsp').val();
     var end = $('.endsp').val();
     $.ajax({
@@ -482,21 +486,25 @@ $(document).ready(function(){
       dataType: 'json',
       url: baseUrl + '/manajemen-pekerja/surat-peringatan/filter',
       success : function(result){
-        for (var i = 0; i < result.length; i++) {
-          html += '<tr>'+
-                  '<td>'+result[i].sp_no+'</td>'+
-                  '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+result[i].p_jabatan+'</td>'+
-                  '<td>'+result[i].md_name+'</td>'+
-                  '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
-                  '<td>'+result[i].sp_note+'</td>'+
-                  '<td>'+
-                  '<div class="text-center">'+
-                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
-                  '</div>'+
-                  '</tr>';
+        if (result.status == 'kosong') {
+          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+        } else {
+          for (var i = 0; i < result.length; i++) {
+            html += '<tr>'+
+                    '<td>'+result[i].sp_no+'</td>'+
+                    '<td>'+result[i].p_name+'</td>'+
+                    '<td>'+result[i].p_jabatan+'</td>'+
+                    '<td>'+result[i].md_name+'</td>'+
+                    '<td>'+result[i].sp_date_start+ ' - ' +result[i].sp_date_end+'</td>'+
+                    '<td>'+result[i].sp_note+'</td>'+
+                    '<td>'+
+                    '<div class="text-center">'+
+                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].sp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].sp_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].sp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                    '</div>'+
+                    '</tr>';
+          }
         }
 
       $('#showdata').html(html);
