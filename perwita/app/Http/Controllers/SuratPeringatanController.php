@@ -152,7 +152,6 @@ class SuratPeringatanController extends Controller
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->join('d_mitra_divisi', function($e){
               $e->on('m_id', '=', 'md_mitra');
               $e->on('mp_divisi', '=', 'md_id');
@@ -198,10 +197,11 @@ class SuratPeringatanController extends Controller
       }
 
 
-      return response()->json([
-        'data' => $data,
-        'sp' => $sp
-      ]);
+        return response()->json([
+          'data' => $data,
+          'sp' => $sp
+        ]);
+    
     }
 
     public function cari(){

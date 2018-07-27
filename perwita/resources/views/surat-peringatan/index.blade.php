@@ -241,7 +241,6 @@ var table;
     }
 
     function getdata(id){
-      waitingDialog.show();
       $.ajax({
         type: 'get',
         data: {id:id},
@@ -262,7 +261,6 @@ var table;
               $('#pemberitahuan').css('display','none');
             }, 10000)
           }
-          waitingDialog.hide();
         }
       });
     }

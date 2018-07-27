@@ -146,6 +146,9 @@ var table;
         data: {id:id},
         dataType: 'json',
         success : function(result){
+          if (result.status == 'kosong') {
+            waitingDialog.hide();
+          }
           $('#namapekerja').val(result[0].p_name);
           $('#jabatanpekerja').val(result[0].jp_name);
 

@@ -108,7 +108,6 @@ class remunerasiController extends Controller
     public function getcari(Request $request){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->join('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'jp_name')
             ->where('r_pekerja', $request->id)
             ->get();
