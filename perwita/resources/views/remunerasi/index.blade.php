@@ -68,18 +68,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Jabatan Awal</label>
-                            <div class="col-lg-2">
-                                <input type="text" class="form-control" name="jabatanawal" style="text-transform:uppercase" title="Jabatan Awal" placeholder="Jabatan Awal">
-                            </div>
-                            <label class="col-lg-2 control-label">Jabatan Akhir</label>
-                            <div class="col-lg-2">
-                                <input type="text" class="form-control" name="jabatanakhir" style="text-transform:uppercase" title="Jabatan Akhir" placeholder="Jabatan Akhir">
+                            <label class="col-lg-2 control-label">Jabatan</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="jabatanawal" style="text-transform:uppercase" title="Jabatan" placeholder="Jabatan">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Nilai Remunerasi</label>
-                            <div class="col-lg-8">
+                            <div class="col-lg-9">
                                 <input type="text" class="form-control" name="nilairemunerasi" style="text-transform:uppercase" id="nilairemunerasi" placeholder="Nilai Remunerasi">
                             </div>
                         </div>
