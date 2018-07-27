@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Nama Pekerja</label>
                             <div class="col-lg-9">
-                                <input type="text" id="jabatanpekerja" placeholder="Jabatan" style="text-transform:uppercase" class="form-control" name="jabatanpekerja" value="">
+                                <input type="text" id="namapekerja" placeholder="Nama Pekerja" style="text-transform:uppercase" class="form-control" name="namapekerja" value="">
                             </div>
                         </div>
                         <div class="form-group">
