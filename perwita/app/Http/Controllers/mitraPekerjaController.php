@@ -144,8 +144,6 @@ class mitraPekerjaController extends Controller
             })
             ->make(true);
 
-            DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $mp_contract . " and mp_isapproved = 'Y') where mc_contractid = '".$mp_contract."'");
-
     }
 
     public function tambah()

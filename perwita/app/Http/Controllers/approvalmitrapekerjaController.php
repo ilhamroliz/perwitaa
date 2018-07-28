@@ -117,10 +117,11 @@ class approvalmitrapekerjaController extends Controller
       try {
 
         $sekarang = Carbon::now('Asia/Jakarta');
+
         $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->where('mp_contract', '=', $request->kontrak)
-            ->whereIn('mp_pekerja', $request->pilih)
+            ->whereIn('mp_id', $request->pilih)
             ->where('mp_isapproved', '=', 'P')
             ->get();
 
