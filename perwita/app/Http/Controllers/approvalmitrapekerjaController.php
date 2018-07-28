@@ -113,8 +113,8 @@ class approvalmitrapekerjaController extends Controller
     }
 
     public function setujuilist(Request $request){
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
 
         $sekarang = Carbon::now('Asia/Jakarta');
         $data = DB::table('d_mitra_pekerja')
@@ -178,16 +178,16 @@ class approvalmitrapekerjaController extends Controller
 
       DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+      //   DB::commit();
+      //   return response()->json([
+      //     'status' => 'berhasil'
+      //   ]);
+      // } catch (\Exception $e) {
+      //   DB::rollback();
+      //   return response()->json([
+      //     'status' => 'gagal'
+      //   ]);
+      // }
     }
 
     public function tolaklist(Request $request){

@@ -259,6 +259,7 @@ $('#jabatan').chosen({search_contains:true});
     }
 
     function validateForm() {
+       waitingDialog.hide();
         $('.reset').css('display', 'none');
 
         var tglKontrak = document.getElementById('tglKontrak');
