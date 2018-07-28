@@ -73,7 +73,7 @@ class approvalmitrapekerjaController extends Controller
 
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
 
         DB::commit();
         return response()->json([
@@ -98,7 +98,7 @@ class approvalmitrapekerjaController extends Controller
 
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
 
         DB::commit();
         return response()->json([
@@ -169,14 +169,14 @@ class approvalmitrapekerjaController extends Controller
           d_pekerja_mutation::insert($tempMutasi[$i]);
         }
 
-        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->kontrak."'");
+        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_isapproved = 'Y') where mc_contractid = '".$request->kontrak."'");
 
       d_mitra_pekerja::whereIn('mp_id', $request->pilih)
             ->update([
               'mp_isapproved' => 'Y'
             ]);
 
-      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
+      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
         DB::commit();
         return response()->json([
@@ -198,7 +198,7 @@ class approvalmitrapekerjaController extends Controller
               'mp_isapproved' => 'N'
             ]);
 
-      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
+      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
         DB::commit();
         return response()->json([
