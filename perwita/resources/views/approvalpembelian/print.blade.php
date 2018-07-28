@@ -40,7 +40,7 @@
                                 </div>
                             </div>
 
-                            <div class="table-responsive m-t">
+                            <div>
                                 <table class="table invoice-table">
                                   <thead>
                                   <tr>
