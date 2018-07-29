@@ -35,7 +35,6 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->where('sp_isapproved','Y')
             ->get();
 
       $jabatan = DB::table('d_jabatan_pelamar')

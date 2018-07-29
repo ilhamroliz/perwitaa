@@ -161,6 +161,15 @@ Route::post('manajemen-pekerja/promosi-demosi/getData','promosiController@getDat
 Route::get('manajemen-pekerja/promosi-demosi/getdetail','promosiController@getdetail');
 Route::get('manajemen-pekerja/promosi-demosi/simpan','promosiController@save');
 Route::post('manajemen-pekerja/promosi-demosi/simpan','promosiController@save');
+Route::get('manajemen-pekerja/promosi-demosi/cari','promosiController@cari');
+Route::get('manajemen-pekerja/promosi-demosi/data','promosiController@data');
+Route::get('manajemen-pekerja/promosi-demosi/getno','promosiController@getno');
+Route::get('manajemen-pekerja/promosi-demosi/getcari','promosiController@getcari');
+Route::get('manajemen-pekerja/promosi-demosi/detail','promosiController@detail');
+Route::get('manajemen-pekerja/promosi-demosi/hapus','promosiController@hapus');
+Route::get('manajemen-pekerja/promosi-demosi/edit','promosiController@edit');
+Route::get('manajemen-pekerja/promosi-demosi/update/{id}','promosiController@update');
+Route::post('manajemen-pekerja/promosi-demosi/update/{id}','promosiController@update');
 
 //seragam
 Route::get('manajemen-seragam/data-seragam','seragamController@index');
