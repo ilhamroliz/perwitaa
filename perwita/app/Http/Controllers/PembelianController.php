@@ -68,11 +68,27 @@ class PembelianController extends Controller
         return Response::json($results);
     }
 
+    public function getNewNota()
+    {
+        //PO-001/14/12/2018
+        $sekarang = Carbon::now('Asia/Jakarta');
+        $tanggal = $sekarang->day;
+        $bulan = $sekarang->month;
+        $tahun = $sekarang->year;
+        $counter = DB::select("select COALESCE(max(mid(p_nota,4,3)), '000') as counter from d_purchase where (mid(p_nota,8,2)) = '".$tanggal."' and (mid(p_nota,11,2)) = '".$bulan."' and (right(p_nota,4)) = '".$tahun."'");
+
+        $tmp = ((int)$counter)+1;
+        $kode = sprintf("%05s", $tmp);
+        $finalkode = 'PO-'.$kode.'/'.$tanggal.'/'.$bulan.'/'.$tahun;
+        return $finalkode;
+    }
+
     public function save(Request $request)
     {
         DB::beginTransaction();
         try {
 
+            $nota = $this->getNewNota();
             $id = DB::table('d_purchase')
                 ->max('p_id');
 
@@ -95,7 +111,7 @@ class PembelianController extends Controller
                 'p_comp' => $comp,
                 'p_date' => Carbon::now('Asia/Jakarta'),
                 'p_supplier' => $request->supplier,
-                'p_nota' => $request->nota,
+                'p_nota' => $nota,
                 'p_total_gross' => $gross,
                 'p_disc_percent' => 0,
                 'p_disc_value' => 0,
@@ -151,7 +167,7 @@ class PembelianController extends Controller
       return view('pembelian.cari');
     }
 
-    public function getnota(Request $request){
+    public function getNota(Request $request){
       $keyword = $request->term;
 
       $data = DB::table('d_purchase')

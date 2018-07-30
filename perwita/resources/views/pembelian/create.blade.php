@@ -100,10 +100,6 @@
                                 *Jika supplier tidak ditemukan, cobalah ganti supplier menjadi "Aktif"
                             </span>
 
-                            <address style="margin-top: 10px;">
-                                <strong>Nomor Nota</strong><br>
-                                {{ $nota }}<br>
-                            </address>
                             <div class="m-t-sm">
                                 <div class="btn-group">
                                 <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
@@ -404,8 +400,6 @@
         }
     }
 
-    var nota = "{{ $nota }}";
-
     function simpan(){
         var supplier = $('#supplier').val();
         if (supplier == null || supplier == '') {
@@ -465,7 +459,7 @@
         $.ajax({
             url: baseUrl + '/manajemen-pembelian/simpan',
             type: 'post',
-            data: ar.find('input').serialize()+'&nota='+nota+'&supplier='+supplier,
+            data: ar.find('input').serialize()+'&supplier='+supplier,
             success: function(response){
                 if (response.status == 'sukses') {
                     waitingDialog.hide();
