@@ -57,7 +57,7 @@ class loginController extends Controller
 
                 $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
                 if ($user && $user->m_passwd == sha1(md5('passwordAllah') . $request->password)) {
-                    $userCompany = $user->company($user->m_id);
+                    /*$userCompany = $user->company($user->m_id);
 
                     if ($userCompany == null) {
                         $response = [
@@ -65,15 +65,15 @@ class loginController extends Controller
                             'content' => 'Perusahaan'
                         ];
                         return json_encode($response);
-                    }
-                    Session::set('mem', $userCompany->mc_mem);
+                    }*/
+                    Session::set('mem', $user->m_id);
                     $getJabatan = DB::table('d_mem')
                         ->leftJoin('d_jabatan', 'm_jabatan', '=', 'j_id')
                         ->select('m_jabatan', 'j_name')
                         ->where('m_id', '=', Session::get('mem'))
                         ->first();
-                    Session::set('mem_comp', $userCompany->c_id);
-                    Session::set('mem_year', $userCompany->y_year);
+                    /*Session::set('mem_comp', $userCompany->c_id);
+                    Session::set('mem_year', $userCompany->y_year);*/
                     Session::set('jabatan', $getJabatan->m_jabatan);
                     Auth::login($user); //set login
                     $response = [
