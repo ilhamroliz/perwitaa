@@ -84,7 +84,11 @@ class PembelianController extends Controller
                 $harga = str_replace(".", '', $request->harga[$i]);
                 $gross = ($qty * $harga) + $gross;
             }
-            $comp = Session::get('mem_comp');
+            $comp = DB::table('d_mem_comp')
+                ->where('mc_mem', '=', Session::get('mem'))
+                ->get();
+
+            $comp = $comp[0]->mc_comp;
 
             $data = array(
                 'p_id' => $id,
