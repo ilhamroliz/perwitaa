@@ -283,7 +283,7 @@ class PembelianController extends Controller
       ]);
     }
 
-    public function print(){
+    public function cetak(){
       $id = DB::table('d_purchase')
           ->max('p_id');
 

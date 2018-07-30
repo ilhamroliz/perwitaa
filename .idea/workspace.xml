@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perwita/resources/views/pembelian/create.blade.php" afterPath="$PROJECT_DIR$/perwita/resources/views/pembelian/create.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,13 +53,13 @@
       <file leaf-file-name="PembelianController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="99" column="42" lean-forward="false" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
+            <state relative-caret-position="144">
+              <caret line="285" column="25" lean-forward="false" selection-start-line="285" selection-start-column="25" selection-end-line="285" selection-end-column="25" />
               <folding>
-                <marker date="1532943427572" expanded="true" signature="2426:2525" ph="select max(m... d_purchase" />
-                <marker date="1532943427572" expanded="true" signature="2426:2565" ph="select max(m... d_purchase" />
-                <marker date="1532943427572" expanded="true" signature="2426:2602" ph="select max(m... d_purchase" />
-                <marker date="1532943427572" expanded="true" signature="2426:2613" ph="select max(m... d_purchase" />
+                <marker date="1532943544560" expanded="true" signature="2426:2525" ph="select max(m... d_purchase" />
+                <marker date="1532943544560" expanded="true" signature="2426:2565" ph="select max(m... d_purchase" />
+                <marker date="1532943544560" expanded="true" signature="2426:2602" ph="select max(m... d_purchase" />
+                <marker date="1532943544560" expanded="true" signature="2426:2613" ph="select max(m... d_purchase" />
               </folding>
             </state>
           </provider>
@@ -310,7 +309,7 @@
       <workItem from="1532532216739" duration="96000" />
       <workItem from="1532572158010" duration="4730000" />
       <workItem from="1532661612486" duration="2035000" />
-      <workItem from="1532923110882" duration="5565000" />
+      <workItem from="1532923110882" duration="5681000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -536,11 +535,18 @@
       <option name="project" value="LOCAL" />
       <updated>1532934920012</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="roliz">
+      <created>1532943448591</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1532943448591</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183328000" />
+    <option name="totallyTimeSpent" value="183444000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -992,13 +998,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="99" column="42" lean-forward="false" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
+        <state relative-caret-position="144">
+          <caret line="285" column="25" lean-forward="false" selection-start-line="285" selection-start-column="25" selection-end-line="285" selection-end-column="25" />
           <folding>
-            <marker date="1532943427572" expanded="true" signature="2426:2525" ph="select max(m... d_purchase" />
-            <marker date="1532943427572" expanded="true" signature="2426:2565" ph="select max(m... d_purchase" />
-            <marker date="1532943427572" expanded="true" signature="2426:2602" ph="select max(m... d_purchase" />
-            <marker date="1532943427572" expanded="true" signature="2426:2613" ph="select max(m... d_purchase" />
+            <marker date="1532943544560" expanded="true" signature="2426:2525" ph="select max(m... d_purchase" />
+            <marker date="1532943544560" expanded="true" signature="2426:2565" ph="select max(m... d_purchase" />
+            <marker date="1532943544560" expanded="true" signature="2426:2602" ph="select max(m... d_purchase" />
+            <marker date="1532943544560" expanded="true" signature="2426:2613" ph="select max(m... d_purchase" />
           </folding>
         </state>
       </provider>
