@@ -85,7 +85,9 @@ a#pdf:hover { background: #222; }
 .yui-gf .yui-u{width:80.2%;}
 .yui-gf div.first{width:12.3%;}
 
-
+.footer {
+      display: none;
+    }
 
   </style>
 
