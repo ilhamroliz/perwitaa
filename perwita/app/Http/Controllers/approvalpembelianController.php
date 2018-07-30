@@ -151,7 +151,7 @@ class approvalpembelianController extends Controller
       }
     }
 
-    public function print(Request $request){
+    public function cetak(Request $request){
       $id = $request->id;
 
           $data = DB::table('d_purchase')
