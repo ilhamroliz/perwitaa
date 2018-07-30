@@ -638,7 +638,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpembelian/setujuilist', 'approvalpembelianController@setujuilist');
     Route::get('approvalpembelian/tolaklist', 'approvalpembelianController@tolaklist');
     Route::get('approvalpembelian/detail', 'approvalpembelianController@detail');
-    Route::get('approvalpembelian/print', 'approvalpembelianController@print');
+    Route::get('approvalpembelian/print', 'approvalpembelianController@cetak');
 
     //Approval SP
     Route::get('approvalsp', 'approvalspController@index');
