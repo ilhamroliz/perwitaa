@@ -58,18 +58,13 @@
                                 </th>
                                 <th>Nama</th>
                                 <th>Jabatan Awal</th>
-                                @foreach($data as $dinamis)
-                                @if(stristr($dinamis->pd_no, 'PMS'))
-                                <th>Jabatan Promosi</th>
-                                @elseif(stristr($dinamis->pd_no, 'DMS'))
-                                <th>Jabatan Demosi</th>
-                                @endif
-                                @endforeach
+                                <th>Jabatan Sekarang</th>
                                 <th>NIK</th>
                                 <th>NIK Mitra</th>
                                 <th>Mitra</th>
                                 <th>Divisi</th>
-                                <th>Aksi</th>
+                                <th>Status</th>
+                                <th width="120px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,6 +80,11 @@
                                 <td>{{$x->p_nip_mitra}}</td>
                                 <td>{{$x->m_name}}</td>
                                 <td>{{$x->md_name}}</td>
+                                @if(stristr($x->pd_no, 'PMS'))
+                                <td>Promosi</td>
+                                @elseif(stristr($x->pd_no, 'DMS'))
+                                <td>Demosi</td>
+                                @endif
                                 <td align="center">
                                 <button type="button" onclick="detail({{$x->pd_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
                                 <button type="button" onclick="setujui({{$x->pd_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
