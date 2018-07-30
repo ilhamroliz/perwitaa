@@ -35,11 +35,21 @@ class SuratPeringatanController extends Controller
               $e->on('mp_divisi', '=', 'md_id');
             })
             ->select('sp_no', 'sp_date_start', 'sp_date_end', 'sp_note', 'sp_id', 'mp_id','p_name','md_name', 'mp_mitra_nik', 'p_nip', 'p_nip_mitra', DB::Raw("coalesce(p_jabatan, '-') as p_jabatan"))
-            ->where('sp_isapproved','Y')
             ->get();
 
+      $jabatan = DB::table('d_jabatan_pelamar')
+              ->where('jp_id', $data[0]->p_jabatan)
+              ->get();
 
-      return response()->json($data);
+      if (count($jabatan) > 0) {
+        $data[0]->p_jabatan = $jabatan[0]->jp_name;
+      } else {
+        $data[0]->p_jabatan = '-';
+      }
+
+      if (count($data) > 0) {
+        return response()->json($data);
+      }
 
     }
 
@@ -187,6 +197,16 @@ class SuratPeringatanController extends Controller
           ->where('sp_pekerja',$request->id)
           ->get();
 
+          $jabatan = DB::table('d_jabatan_pelamar')
+                  ->where('jp_id', $data[0]->p_jabatan)
+                  ->get();
+
+          if (count($jabatan) > 0) {
+            $data[0]->p_jabatan = $jabatan[0]->jp_name;
+          } else {
+            $data[0]->p_jabatan = '-';
+          }
+
       if (empty($sp)) {
 
       } else {
@@ -194,10 +214,11 @@ class SuratPeringatanController extends Controller
       }
 
 
-      return response()->json([
-        'data' => $data,
-        'sp' => $sp
-      ]);
+        return response()->json([
+          'data' => $data,
+          'sp' => $sp
+        ]);
+
     }
 
     public function cari(){
@@ -232,6 +253,16 @@ class SuratPeringatanController extends Controller
           ->where('mp_id', $id)
           ->get();
 
+          $jabatan = DB::table('d_jabatan_pelamar')
+                  ->where('jp_id', $pekerja[0]->p_jabatan)
+                  ->get();
+
+          if (count($jabatan) > 0) {
+            $pekerja[0]->p_jabatan = $jabatan[0]->jp_name;
+          } else {
+            $pekerja[0]->p_jabatan = '-';
+          }
+
     for ($i=0; $i < count($surat); $i++) {
       $data[$i] = array(
         'sp_id' => $surat[$i]->sp_id,
@@ -246,7 +277,14 @@ class SuratPeringatanController extends Controller
       );
     }
 
+    if (empty($data)) {
+      return response()->json([
+        'status' => 'kosong'
+      ]);
+    } else {
       return response()->json($data);
+    }
+
     }
 
     public function detail(Request $request){
@@ -277,6 +315,15 @@ class SuratPeringatanController extends Controller
         $data[0]->sp_date_end = Carbon::parse($data[0]->sp_date_end)->format('d/m/Y');
       }
 
+      $jabatan = DB::table('d_jabatan_pelamar')
+              ->where('jp_id', $data[0]->p_jabatan)
+              ->get();
+
+      if (count($jabatan) > 0) {
+        $data[0]->p_jabatan = $jabatan[0]->jp_name;
+      } else {
+        $data[0]->p_jabatan = '-';
+      }
 
       return response()->json($data);
 
@@ -346,8 +393,15 @@ class SuratPeringatanController extends Controller
     }
 
     public function filter(Request $request){
-      $start = Carbon::createFromFormat('d/m/Y', $request->start);
-      $end = Carbon::createFromFormat('d/m/Y', $request->end);
+
+      if (empty($request->start) || empty($request->end)) {
+        return response()->json([
+          'status' => 'kosong'
+        ]);
+      } else {
+        $start = Carbon::createFromFormat('d/m/Y', $request->start);
+        $end = Carbon::createFromFormat('d/m/Y', $request->end);
+      }
 
       $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
@@ -364,6 +418,16 @@ class SuratPeringatanController extends Controller
               $q->orWhere('sp_date_end', '<=', $end);
             })
             ->get();
+
+            $jabatan = DB::table('d_jabatan_pelamar')
+                    ->where('jp_id', $data[0]->p_jabatan)
+                    ->get();
+
+            if (count($jabatan) > 0) {
+              $data[0]->p_jabatan = $jabatan[0]->jp_name;
+            } else {
+              $data[0]->p_jabatan = '-';
+            }
 
       return response()->json($data);
     }

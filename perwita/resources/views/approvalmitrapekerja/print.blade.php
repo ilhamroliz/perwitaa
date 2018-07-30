@@ -26,11 +26,14 @@
                                         {{$data[0]->mc_date}} - {{$data[0]->mc_expired}}
                                     </address>
                                 </div>
-                              <br>
-                              <br>
-                            <div class="table-responsive m-t">
+
+                                <div class="col-sm-6 text-right">
+                                </div>
+                            </div>
+
+                            <div>
                                 <table class="table invoice-table">
-                                  <thead align='left'>
+                                  <thead>
                                   <tr>
                                     <th>Nama Pekerja</th>
                                     <th>NIK</th>
@@ -39,10 +42,11 @@
                                     <th>Nama Divisi</th>
                                     <th>Tanggal Seleksi</th>
                                     <th>Tanggal Mulai Bekerja</th>
+                                    <th>Status</th>
                                   </tr>
                                   </thead>
                                     </thead>
-                                    <tbody align='left' >
+                                    <tbody>
                                       @foreach($data as $x)
                                         <tr>
                                           <td>{{$x->p_name}}</td>
@@ -52,6 +56,7 @@
                                           <td>{{$x->md_name}}</td>
                                           <td>{{$x->mp_selection_date}}</td>
                                           <td>{{$x->mp_workin_date}}</td>
+                                          <td>{{$x->mp_status}}</td>
                                         </tr>
                                       @endforeach
                                     </tbody>

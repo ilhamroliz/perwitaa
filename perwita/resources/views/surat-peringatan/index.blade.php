@@ -241,7 +241,6 @@ var table;
     }
 
     function getdata(id){
-      waitingDialog.show();
       $.ajax({
         type: 'get',
         data: {id:id},
@@ -251,6 +250,8 @@ var table;
           $('#namapekerja').val(result.data[0].p_name);
           $('#jabatanpekerja').val(result.data[0].p_jabatan);
           $('#divisipekerja').val(result.data[0].md_name);
+
+          //Button
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
 
           if (result.sp[0] == null) {
@@ -262,7 +263,6 @@ var table;
               $('#pemberitahuan').css('display','none');
             }, 10000)
           }
-          waitingDialog.hide();
         }
       });
     }

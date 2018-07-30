@@ -6,7 +6,10 @@
 
     @section ('extra_styles')
 
-
+    <style>
+    .popover-navigation [data-role="next"] { display: none; }
+    .popover-navigation [data-role="end"] { display: none; }
+    </style>
 
     @endsection
 
@@ -31,10 +34,9 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-                    <h5>Daftar Pekerja di Mitra</h5>
+                    <h5>Daftar Pekerja di Mitra</h5><br>
                     <div class="ibox-tools">
-                    </div>
-
+    </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
@@ -54,21 +56,25 @@
                     @endif
                 </div>
                 <div class="col-6 col-md-3">
-                <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
-                  <option value="all">Select All</option>
-                </select>
+                  <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
+                    <option value="all">Select All</option>
+                  </select>
                 </div>
-                <div class="col-6 col-md-2">
-                <button type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
+                <div class="col-6 col-sm-2">
+                <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
                 </div>
-                <div class="col-6 col-md-3">
-                  <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
+                <div class="col-6 col-sm-2 pull-right">
+                      <button type="button" style="float:right;" onclick="printDiv()" class="btn btn-info" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                 </div>
             </div>
-
+            <br>
+            <div class="col-md-8" style="margin-left: -15px;">
+              <label for="carino">Cari Berdasarkan No Mitra / No Mitra Contract</label>
+              <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
+            </div>
             <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
-               <table id="pekerja" class="table table-bordered table-striped display">
+               <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -139,6 +145,23 @@ $(document).ready(function(){
     }
   });
 });
+
+function printDiv() {
+    var divToPrint = document.getElementById('pekerja');
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        '}' +
+        '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+
 // var table;
 // $(document).ready(function() {
 //     $('#select-picker').select2();

@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Promosi & Demosi</h5>
-        <a href="{{ url('manajemen-seragam/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-pekerja/promosi-demosi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -51,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="text-center konten-nama" style="">
                     <h3 class="m-b-xs"><strong class="modal-nama">John Smith</strong></h3>
-                    <div class="font-bold modal-jabatan">Graphics designer</div>                    
+                    <div class="font-bold modal-jabatan">Graphics designer</div>
                 </div>
                 <form class="form-horizontal form-modal" style="margin-top: 10px;">
                     <div class="form-group">
@@ -154,7 +154,7 @@
             });
         }, 1500);
 
-        
+
     });
 
     function promosi(id){

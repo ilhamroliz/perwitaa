@@ -173,40 +173,51 @@ class PembelianController extends Controller
     }
 
     public function getdata(Request $request){
-      $id = $request->id;
+      if (empty($request->id)) {
+        return response()->json([
+          'status' => 'kosong'
+        ]);
+      } else {
+        $id = $request->id;
 
-      $data = DB::table('d_purchase')
-          ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
-          ->join('d_supplier', 's_id', '=', 'p_supplier')
-          ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
-          ->where('p_id', $id)
-          ->groupBy('p_nota')
-          ->get();
+        $data = DB::table('d_purchase')
+            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+            ->join('d_supplier', 's_id', '=', 'p_supplier')
+            ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+            ->where('p_id', $id)
+            ->groupBy('p_nota')
+            ->get();
 
-      return response()->json([
-        'p_id' => $data[0]->p_id,
-        'p_date' => $data[0]->p_date,
-        's_company' => $data[0]->s_company,
-        'p_nota' => $data[0]->p_nota,
-        'p_total_net' => $data[0]->p_total_net,
-        'pd_receivetime' => $data[0]->pd_receivetime,
-        'p_isapproved' => $data[0]->p_isapproved
-      ]);
+        return response()->json([
+          'p_id' => $data[0]->p_id,
+          'p_date' => $data[0]->p_date,
+          's_company' => $data[0]->s_company,
+          'p_nota' => $data[0]->p_nota,
+          'p_total_net' => $data[0]->p_total_net,
+          'pd_receivetime' => $data[0]->pd_receivetime,
+          'p_isapproved' => $data[0]->p_isapproved
+        ]);
+      }
     }
 
     public function filter(Request $request){
+      if (empty($request->moustart) || empty($request->mouend)) {
+        return response()->json([
+          'status' => 'kosong'
+        ]);
+      } else {
+        $data = DB::table('d_purchase')
+            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+            ->join('d_supplier', 's_id', '=', 'p_supplier')
+            ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
+            ->whereRaw("date(p_date) >= '".$request->moustart."' AND date(p_date) <= '".$request->mouend."'")
+            ->where('pd_receivetime', null)
+            ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
+            ->groupBy('p_nota')
+            ->get();
 
-      $data = DB::table('d_purchase')
-          ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
-          ->join('d_supplier', 's_id', '=', 'p_supplier')
-          ->select('p_id','s_company', 'p_nota', 'p_total_net', 'pd_receivetime', 'p_isapproved', DB::raw("DATE_FORMAT(p_date, '%d/%m/%Y %H:%i:%s') as p_date"))
-          ->whereRaw("date(p_date) >= '".$request->moustart."' AND date(p_date) <= '".$request->mouend."'")
-          ->where('pd_receivetime', null)
-          ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
-          ->groupBy('p_nota')
-          ->get();
-
-      return response()->json($data);
+        return response()->json($data);
+      }
     }
 
     public function detail(Request $request){

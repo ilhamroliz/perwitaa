@@ -73,7 +73,7 @@ class approvalmitrapekerjaController extends Controller
 
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
 
         DB::commit();
         return response()->json([
@@ -98,7 +98,7 @@ class approvalmitrapekerjaController extends Controller
 
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
 
         DB::commit();
         return response()->json([
@@ -117,10 +117,11 @@ class approvalmitrapekerjaController extends Controller
       try {
 
         $sekarang = Carbon::now('Asia/Jakarta');
+
         $data = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->where('mp_contract', '=', $request->kontrak)
-            ->whereIn('mp_pekerja', $request->pilih)
+            ->whereIn('mp_id', $request->pilih)
             ->where('mp_isapproved', '=', 'P')
             ->get();
 
@@ -169,14 +170,14 @@ class approvalmitrapekerjaController extends Controller
           d_pekerja_mutation::insert($tempMutasi[$i]);
         }
 
-        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = '".$request->kontrak."'");
+        DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_isapproved = 'Y') where mc_contractid = '".$request->kontrak."'");
 
       d_mitra_pekerja::whereIn('mp_id', $request->pilih)
             ->update([
               'mp_isapproved' => 'Y'
             ]);
 
-      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
+      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
         DB::commit();
         return response()->json([
@@ -198,7 +199,7 @@ class approvalmitrapekerjaController extends Controller
               'mp_isapproved' => 'N'
             ]);
 
-      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_status = 'Aktif' and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
+      DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
         DB::commit();
         return response()->json([
@@ -218,7 +219,7 @@ class approvalmitrapekerjaController extends Controller
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra_divisi', 'md_id', '=', 'mp_divisi')
-            ->select('p_name','mp_selection_date','mp_workin_date', 'mc_no', 'm_name', 'md_name', 'p_nip', 'p_nip_mitra', 'm_address', 'm_phone', 'mc_date', 'mc_expired')
+            ->select('p_name','mp_selection_date','mp_workin_date', 'mc_no', 'mp_status', 'm_name', 'md_name', 'p_nip', 'p_nip_mitra', 'm_address', 'm_phone', 'mc_date', 'mc_expired')
             ->where('mp_contract',$request->mp_contract)
             ->where('mp_isapproved','Y')
             ->get();

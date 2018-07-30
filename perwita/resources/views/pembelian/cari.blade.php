@@ -178,7 +178,7 @@ $(document).ready(function(){
 
  function getdata(id){
    waitingDialog.show();
-   var html = '';
+   var html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
    var status = '';
    var keterangan = '';
    $.ajax({
@@ -187,30 +187,34 @@ $(document).ready(function(){
      data: {id:id},
      url: baseUrl + '/manajemen-seragam/getdata',
      success : function(result){
-       if (result.pd_receivetime == null) {
-         status += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
+       if (result.status == 'kosong') {
+         html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
        } else {
-         status += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
-       }
+         if (result.pd_receivetime == null) {
+           status += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
+         } else {
+           status += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
+         }
 
-       if (result.p_isapproved == 'P') {
-         keterangan += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
-       } else if (result.p_isapproved == 'Y') {
-         keterangan += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
-       }
+         if (result.p_isapproved == 'P') {
+           keterangan += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
+         } else if (result.p_isapproved == 'Y') {
+           keterangan += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
+         }
 
-         html += '<tr>'+
-                 '<td>'+(1)+'</td>'+
-                 '<td>'+result.p_date+'</td>'+
-                 '<td>'+result.s_company+'</td>'+
-                 '<td>'+result.p_nota+'</td>'+
-                 '<td><span style="float: left;">Rp. </span><span style="float: right" id="total_net">'+result.p_total_net+'</span></td>'+
-                 status+
-                 keterangan+
-                 '<td>'+
-                 '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result.p_id+')"> <i class="fa fa-folder"></i> </button>'+
-                 '</td>'+
-                 '</tr>';
+           html += '<tr>'+
+                   '<td>'+(1)+'</td>'+
+                   '<td>'+result.p_date+'</td>'+
+                   '<td>'+result.s_company+'</td>'+
+                   '<td>'+result.p_nota+'</td>'+
+                   '<td><span style="float: left;">Rp. </span><span style="float: right" id="total_net">'+result.p_total_net+'</span></td>'+
+                   status+
+                   keterangan+
+                   '<td>'+
+                   '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result.p_id+')"> <i class="fa fa-folder"></i> </button>'+
+                   '</td>'+
+                   '</tr>';
+       }
 
         $("#tbody").html(html);
         $("#total_net").digits();
@@ -223,7 +227,7 @@ $(document).ready(function(){
     waitingDialog.show();
     var moustart = $(".startmou").val();
     var mouend = $(".endmou").val();
-    var html = '';
+    var html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
     var keterangan = [];
     var status = [];
 
@@ -233,35 +237,38 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-seragam/filter',
       dataType: 'json',
       success : function(result){
+        if (result.status == 'kosong') {
+          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+        } else {
+          for (var i = 0; i < result.length; i++) {
 
-        for (var i = 0; i < result.length; i++) {
+            if (result[i].pd_receivetime == null) {
+              status[i] += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
+            } else {
+              status[i] += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
+            }
 
-          if (result[i].pd_receivetime == null) {
-            status[i] += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
-          } else {
-            status[i] += '<td class="text-center"><span class="label label-success">Sudah diterima</span></td>';
+            if (result[i].p_isapproved == 'P') {
+              keterangan[i] += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
+            } else if (result[i].p_isapproved == 'Y') {
+              keterangan[i] += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
+            }
+
+              html += '<tr>'+
+                      '<td>'+(i+1)+'</td>'+
+                      '<td>'+result[i].p_date+'</td>'+
+                      '<td>'+result[i].s_company+'</td>'+
+                      '<td>'+result[i].p_nota+'</td>'+
+                      '<td><span style="float: left;">Rp. </span><span style="float: right" class="digits">'+result[i].p_total_net+'</span></td>'+
+                      status[i]+
+                      keterangan[i]+
+                      '<td>'+
+                      '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result[i].p_id+')"> <i class="fa fa-folder"></i> </button>'+
+                      '</td>'+
+                      '</tr>';
           }
-
-          if (result[i].p_isapproved == 'P') {
-            keterangan[i] += '<td class="text-center"><span class="label label-warning">Belum disetujui</span></td>';
-          } else if (result[i].p_isapproved == 'Y') {
-            keterangan[i] += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
-          }
-
-            html += '<tr>'+
-                    '<td>'+(i+1)+'</td>'+
-                    '<td>'+result[i].p_date+'</td>'+
-                    '<td>'+result[i].s_company+'</td>'+
-                    '<td>'+result[i].p_nota+'</td>'+
-                    '<td><span style="float: left;">Rp. </span><span style="float: right" class="digits">'+result[i].p_total_net+'</span></td>'+
-                    status[i]+
-                    keterangan[i]+
-                    '<td>'+
-                    '<button type="button" class="btn btn-info btn-sm" name="button" onclick="detail('+result[i].p_id+')"> <i class="fa fa-folder"></i> </button>'+
-                    '</td>'+
-                    '</tr>';
         }
-
+        
         $("#tbody").html(html);
         $(".digits").digits();
         waitingDialog.hide();
