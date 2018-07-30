@@ -655,6 +655,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalmitrapekerja/setujui', 'approvalmitrapekerjaController@setujui');
     Route::get('approvalmitrapekerja/tolak', 'approvalmitrapekerjaController@tolak');
     Route::get('approvalmitrapekerja/setujuilist', 'approvalmitrapekerjaController@setujuilist');
+    Route::post('approvalmitrapekerja/setujuilist', 'approvalmitrapekerjaController@setujuilist');
     Route::get('approvalmitrapekerja/tolaklist', 'approvalmitrapekerjaController@tolaklist');
     Route::get('approvalmitrapekerja/print', 'approvalmitrapekerjaController@print');
 

@@ -119,6 +119,7 @@ class approvalmitrapekerjaController extends Controller
         $sekarang = Carbon::now('Asia/Jakarta');
 
         $data = DB::table('d_mitra_pekerja')
+            ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->where('mp_contract', '=', $request->kontrak)
             ->whereIn('mp_id', $request->pilih)
@@ -140,7 +141,7 @@ class approvalmitrapekerjaController extends Controller
                   'p_note' => 'Seleksi',
                   'p_workdate' => $data[$i]->mp_workin_date,
                   'p_nip' => strtoupper($data[$i]->p_nip),
-                  'p_nip_mitra' => strtoupper($data[$i]->mp_mitra_nik)
+                  'p_nip_mitra' => strtoupper($data[$i]->mp_mitra_nik),
               ]);
         }
 
@@ -162,7 +163,8 @@ class approvalmitrapekerjaController extends Controller
               'pm_divisi' => $data[$i]->mp_divisi,
               'pm_detail' => 'Seleksi',
               'pm_from' => null,
-              'pm_status' => 'Aktif'
+              'pm_status' => 'Aktif',
+              'pm_reff' => $data[$i]->mc_no
           );
         }
 

@@ -735,7 +735,6 @@ function detail(id, mp_contract, mp_pekerja){
       data: $('#formapprovalpekerja').serialize(),
       url: baseUrl + '/approvalmitrapekerja/setujuilist',
       dataType: 'json',
-      timeout: 10000,
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
