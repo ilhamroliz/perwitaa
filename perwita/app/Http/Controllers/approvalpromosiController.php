@@ -21,7 +21,7 @@ class approvalpromosiController extends Controller
     public function index(){
 
       $data = DB::table('d_pekerja')
-      ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
+      ->leftjoin('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
       ->leftJoin('d_mitra_pekerja', function ($e){
           $e->on('mp_pekerja', '=', 'p_id');
       })
@@ -36,6 +36,7 @@ class approvalpromosiController extends Controller
       ->groupBy('p_id')
       ->get();
 
+      dd($data);
       $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
 join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
 join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
@@ -45,7 +46,7 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
         $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
       }
 
-      return view('approvalpromosi.index', compact('data'));
+      // return view('approvalpromosi.index', compact('data'));
 
     }
 

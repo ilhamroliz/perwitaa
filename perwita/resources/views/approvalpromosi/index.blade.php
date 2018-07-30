@@ -59,12 +59,11 @@
                                 <th>Nama</th>
                                 <th>Jabatan Awal</th>
                                 @foreach($data as $dinamis)
-                                <?php if (stritr($dinamis->pd_no, 'PMS')) {  ?>
+                                @if(stristr($dinamis->pd_no, 'PMS'))
                                 <th>Jabatan Promosi</th>
-                                <?php } ?>
-                                <?php else if (stritr($dinamis->pd_no, 'DMS')) {  ?>
+                                @elseif(stristr($dinamis->pd_no, 'DMS'))
                                 <th>Jabatan Demosi</th>
-                                <?php } ?>
+                                @endif
                                 @endforeach
                                 <th>NIK</th>
                                 <th>NIK Mitra</th>
