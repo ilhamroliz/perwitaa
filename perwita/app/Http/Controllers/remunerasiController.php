@@ -195,9 +195,21 @@ class remunerasiController extends Controller
     public function hapus(Request $request){
       DB::beginTransaction();
       try {
+
+        $no = DB::table('d_remunerasi')
+            ->where('r_id', $request->id)
+            ->get();
+
         DB::table('d_remunerasi')
             ->where('r_id', $request->id)
             ->delete();
+
+        DB::table('d_pekerja_mutation')
+            ->where('pm_reff', $no[0]->r_no)
+            ->where('pm_pekerja', $no[0]->r_pekerja)
+            ->update([
+              'pm_note' => 'Dihapus'
+            ]);
 
         DB::commit();
         return response()->json([
@@ -224,6 +236,17 @@ class remunerasiController extends Controller
              'r_nilai' => $request->remunerasi,
              'r_note' => $request->keterangan
            ]);
+
+           $no = DB::table('d_remunerasi')
+               ->where('r_id', $request->id)
+               ->get();
+
+               DB::table('d_pekerja_mutation')
+                   ->where('pm_reff', $no[0]->r_no)
+                   ->where('pm_pekerja', $no[0]->r_pekerja)
+                   ->update([
+                     'pm_note' => $request->keterangan
+                   ]);
 
         DB::commit();
         return response()->json([

@@ -306,9 +306,21 @@ class SuratPeringatanController extends Controller
     public function hapus(Request $request){
       DB::beginTransaction();
       try {
+
+        $no = DB::table('d_surat_pringatan')
+            ->where('sp_id', $request->id)
+            ->get();
+
         DB::table('d_surat_pringatan')
             ->where('sp_id', $request->id)
             ->DELETE();
+
+        DB::table('d_pekerja_mutation')
+            ->where('pm_reff', $no[0]->sp_no)
+            ->where('pm_pekerja', $no[0]->sp_pekerja)
+            ->update([
+              'pm_note' => 'Dihapus'
+            ]);
 
         DB::commit();
         return response()->json([
@@ -353,6 +365,18 @@ class SuratPeringatanController extends Controller
                              'sp_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
                              'sp_note' => $request->keterangan
                            ]);
+
+
+        $no = DB::table('d_surat_pringatan')
+            ->where('sp_id', $id)
+            ->get();
+
+        DB::table('d_pekerja_mutation')
+            ->where('pm_reff', $no[0]->sp_no)
+            ->where('pm_pekerja', $no[0]->sp_pekerja)
+            ->update([
+              'pm_note' => $request->keterangan
+            ]);
 
         DB::commit();
         return response()->json([

@@ -666,21 +666,34 @@
                       + '<th style="text-align : center;"> MITRA</th>'
                       + '<th style="text-align : center;"> DIVISI</th>'
                       + '<th style="text-align : center;"> KET</th>'
-                      + '<th style="text-align : center;"> DARI MITRA</th>'
+                      + '<th style="text-align : center;"> NO REFF</th>'
                       + '<th style="text-align : center;"> STATUS</th>'
                       + '</tr>'
                       + '</thead>'
                       + '<tbody>';
 
                   $.each(data, function (i, n) {
+
+                    if (n.pm_reff == null) {
+                      var pm_reff = '-';
+                    } else {
+                      pm_reff = n.pm_reff;
+                    }
+
+                    if (n.pm_note == null) {
+                      var pm_note = '-';
+                    } else {
+                      pm_note = n.pm_note;
+                    }
+
                     if (n.pm_detail == 'Resign') {
                       pekerja_mutasi = pekerja_mutasi + '<tr>'
                           + '<td>' + n.pm_date + '</td>'
                           + '<td>' + n.m_name + '</td>'
                           + '<td>' + n.md_name + '</td>'
                           + '<td>' + n.pm_note + '</td>'
-                          + '<td>' + n.pm_from + '</td>'
-                          + '<td>' + n.pm_detail + '</td>'
+                          + '<td>' + pm_reff + '</td>'
+                          + '<td>' + pm_note + '</td>'
                           + '</tr>';
                     } else {
                       pekerja_mutasi = pekerja_mutasi + '<tr>'
@@ -688,8 +701,8 @@
                           + '<td>' + n.m_name + '</td>'
                           + '<td>' + n.md_name + '</td>'
                           + '<td>' + n.pm_detail + '</td>'
-                          + '<td>' + n.pm_from + '</td>'
-                          + '<td>' + n.pm_status + '</td>'
+                          + '<td>' + pm_reff + '</td>'
+                          + '<td>' + pm_note + '</td>'
                           + '</tr>';
                     }
                   });
