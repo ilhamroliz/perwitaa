@@ -21,7 +21,6 @@ class approvalpromosiController extends Controller
     public function index(){
 
       $data = DB::table('d_pekerja')
-      ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan_lamaran')
       ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
       ->leftJoin('d_mitra_pekerja', function ($e){
           $e->on('mp_pekerja', '=', 'p_id');
@@ -32,10 +31,19 @@ class approvalpromosiController extends Controller
           $q->on('md_id', '=', 'mp_divisi');
           $q->on('md_mitra', '=', 'm_id');
       })
-      ->select('pd_id', 'p_id', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no')
+      ->select('pd_id', 'p_id', 'p_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no')
       ->where('pd_isapproved', 'P')
       ->groupBy('p_id')
       ->get();
+
+      $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
+join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
+        $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
+      }
 
       return view('approvalpromosi.index', compact('data'));
 
@@ -140,7 +148,7 @@ class approvalpromosiController extends Controller
                   'pm_mitra' => $info[$i]->mitra,
                   'pm_divisi' => $info[$i]->divisi,
                   'pm_detail' => 'Promosi',
-                  'pm_status' => $status[$i][0]->pm_status,
+                  'pm_status' => 'Aktif',
                   'pm_note' => $data[$i]->pd_note,
                   'pm_insert_by' => Session::get('mem')
               ));

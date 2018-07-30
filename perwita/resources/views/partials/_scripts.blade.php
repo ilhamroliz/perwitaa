@@ -221,6 +221,7 @@
                        var sp = '';
                        var mitrapekerja = '';
                        var promosi = '';
+                       var remunerasi = '';
                        var countpelamar = 0;
                        var countmitra = 0;
                        var countpembelian = 0;
@@ -228,6 +229,7 @@
                        var countnotif = 0;
                        var countmitrapekerja = 0;
                        var countpromosi = 0;
+                       var countremunerasi = 0;
                        $.ajax({
                          type : 'get',
                          url : '{{url("/approval/cekapproval")}}',
@@ -318,6 +320,20 @@
                                        '</div>'+
                                        '</li>';
 
+                                       remunerasi += '<li">'+
+                                           '<div class="dropdown-messages-box">'+
+                                             '<a href="{{url('/approvalremunerasi')}}" class="pull-left a-img" title="Lihat Daftar Approval Remunerasi">'+
+                                                 '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
+                                              '</a>'+
+                                             '<div class="media-body">'+
+                                             '<a href="{{url('/approvalremunerasi')}}" class="pull-left a-body" id="#remunerasi-body" title="Lihat Daftar Approval Remunerasi" style="text-decoration:none; color:black;">'+
+                                                 '<small class="pull-right" id="menitremunerasi"></small>'+
+                                                 '<strong id="catatanapprovalremunerasi"></strong><small id="isiapprovalremunerasi"></small><br>'+
+                                              '</a>'+
+                                             '</div>'+
+                                         '</div>'+
+                                         '</li>';
+
                                if (data.data[0].jumlah > 0) {
                                   countnotif += 1;
                                   countpelamar += 1;
@@ -372,6 +388,15 @@
                                   $("#catatanapprovalpromosi").text(data.data[5].catatan);
                                   $("#isiapprovalpromosi").html(" Anda Memiliki "+data.data[5].jumlah+" Persetujuan");
                                }
+                               if (data.data[6].jumlah > 0) {
+                                  countnotif += 1;
+                                  countremunerasi += 1;
+                                  $("#showremunerasi").html(remunerasi);
+                                  $("#countnotif").text(countnotif);
+                                  $("#menitremunerasi").html(data.data[6].r_insert);
+                                  $("#catatanapprovalremunerasi").text(data.data[6].catatan);
+                                  $("#isiapprovalremunerasi").html(" Anda Memiliki "+data.data[6].jumlah+" Persetujuan");
+                               }
                                if (countpelamar == 0) {
                                  $("#showpelamar").html('<center> Tidak ada permintaan Approval Pelamar </center>');
                                }
@@ -389,6 +414,9 @@
                                }
                                if (countpromosi == 0) {
                                  $("#showpromosi").html('<center> Tidak ada permintaan Approval Promosi </center>');
+                               }
+                               if (countremunerasi == 0) {
+                                 $("#showremunerasi").html('<center> Tidak ada permintaan Approval Remunerasi </center>');
                                }
                                if (countnotif == 0) {
                                  // $("#showpelamar").html(pelamar);

@@ -678,3 +678,10 @@ Route::get('manajemen-pekerja/remunerasi/detail', 'remunerasiController@detail')
 Route::get('manajemen-pekerja/remunerasi/hapus', 'remunerasiController@hapus');
 Route::get('manajemen-pekerja/remunerasi/update/{id}', 'remunerasiController@update');
 Route::post('manajemen-pekerja/remunerasi/update/{id}', 'remunerasiController@update');
+
+//Approval Remunerasi
+Route::get('approvalremunerasi', 'approvalremunerasiController@index');
+Route::get('approvalremunerasi/setujui', 'approvalremunerasiController@setujui');
+Route::get('approvalremunerasi/tolak', 'approvalremunerasiController@tolak');
+Route::get('approvalremunerasi/setujuilist', 'approvalremunerasiController@setujuilist');
+Route::get('approvalremunerasi/tolaklist', 'approvalremunerasiController@tolaklist');

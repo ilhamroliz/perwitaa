@@ -53,6 +53,11 @@ class approvalController extends Controller
         ->where('pd_isapproved','P')
         ->get();
 
+    $remunerasi = DB::table('d_remunerasi')
+        ->selectRaw('r_insert, count(r_id) as jumlah, "Approval Remunerasi" as catatan')
+        ->where('r_isapproved','P')
+        ->get();
+
       $countpembelian = count($pembelian);
 
       $hitung = 0;
@@ -136,6 +141,23 @@ class approvalController extends Controller
         $promosi[0]->pd_insert = Carbon::parse($promosi[0]->pd_insert)->diffForHumans();
         $data[5] = $promosi[0];
       }
+
+      if (empty($remunerasi)) {
+        $data[6] = $temp = array(
+          'pd_insert' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval Remunerasi'
+        );
+      } else {
+        if ($remunerasi[0]->jumlah > 0) {
+          $hitung += 1;
+        }
+
+        $remunerasi[0]->r_insert = Carbon::parse($remunerasi[0]->r_insert)->diffForHumans();
+        $data[6] = $remunerasi[0];
+      }
+
+
 
 // dd($pembelian);
     return response()->json([

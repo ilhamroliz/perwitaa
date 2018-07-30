@@ -191,7 +191,7 @@ class promosiController extends Controller
                 'pm_mitra' => $info[0]->mitra,
                 'pm_divisi' => $info[0]->divisi,
                 'pm_detail' => 'Promosi',
-                'pm_status' => $detailid[0]->pm_status,
+                'pm_status' => 'Aktif',
                 'pm_note' => $data[0]->pd_note,
                 'pm_insert_by' => Session::get('mem')
             ));

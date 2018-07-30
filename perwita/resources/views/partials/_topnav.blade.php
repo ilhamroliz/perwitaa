@@ -152,6 +152,20 @@
                                         </div>
                                         </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
+                                    <div class="media-body" id="showremunerasi">
+                                      <li>
+                                          <div class="dropdown-messages-box">
+
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalremunerasi')}}" class="pull-left a-body" id="#remunerasi-body" title="Lihat Daftar Approval Remunerasi" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitremunerasi"></small>
+                                                <strong id="catatanapprovalremunerasi"></strong><small id="isiapprovalremunerasi"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </div>
                                   </ul>
                                   @endif
                                   @endif
