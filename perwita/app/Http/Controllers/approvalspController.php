@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 use DB;
 
+use App\d_pekerja_mutation;
+
+use Session;
+
 use Carbon\Carbon;
 
 class approvalspController extends Controller
@@ -41,6 +45,44 @@ class approvalspController extends Controller
             ->update([
               'sp_isapproved' => 'Y'
             ]);
+
+          $id = DB::table('d_surat_pringatan')
+              ->where('sp_id',$request->id)
+              ->select('sp_pekerja', 'sp_jenis')
+              ->get();
+
+            $iddivisi = DB::table('d_mitra_pekerja')
+                      ->select('mp_divisi')
+                      ->where('mp_pekerja',$id[0]->sp_pekerja)
+                      ->get();
+
+            $idmitra = DB::table('d_mitra_pekerja')
+                      ->select('mp_mitra')
+                      ->where('mp_pekerja',$id[0]->sp_pekerja)
+                      ->get();
+
+            $pm_detailid = DB::table('d_pekerja_mutation')
+                      ->select('pm_detailid')
+                      ->where('pm_pekerja',$id[0]->sp_pekerja)
+                      ->MAX('pm_detailid');
+
+            $nosp = DB::table('d_surat_pringatan')
+                  ->where('sp_id', $request->id)
+                  ->select('sp_no', 'sp_note')
+                  ->get();
+
+            d_pekerja_mutation::insert([
+              'pm_pekerja' => $id[0]->sp_pekerja,
+              'pm_detailid' => $pm_detailid + 1,
+              'pm_mitra' => $idmitra[0]->mp_mitra,
+              'pm_divisi' => $iddivisi[0]->mp_divisi,
+              'pm_detail' => $id[0]->sp_jenis,
+              'pm_status' => 'Aktif',
+              'pm_note' => $nosp[0]->sp_note,
+              'pm_insert_by' => Session::get('mem'),
+              'pm_reff' => $nosp[0]->sp_no
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -82,6 +124,48 @@ class approvalspController extends Controller
               ->update([
                 'sp_isapproved' => 'Y'
               ]);
+        }
+
+        $id = DB::table('d_surat_pringatan')
+            ->whereIn('sp_id',$request->pilih)
+            ->select('sp_pekerja', 'sp_jenis')
+            ->get();
+
+        for ($i=0; $i < count($id); $i++) {
+
+          $iddivisi = DB::table('d_mitra_pekerja')
+                    ->select('mp_divisi')
+                    ->where('mp_pekerja',$id[$i]->sp_pekerja)
+                    ->get();
+
+          $idmitra = DB::table('d_mitra_pekerja')
+                    ->select('mp_mitra')
+                    ->where('mp_pekerja',$id[$i]->sp_pekerja)
+                    ->get();
+
+          $pm_detailid = DB::table('d_pekerja_mutation')
+                    ->select('pm_detailid')
+                    ->where('pm_pekerja',$id[$i]->sp_pekerja)
+                    ->MAX('pm_detailid');
+
+          $nosp = DB::table('d_surat_pringatan')
+                ->whereIn('sp_id', $request->pilih)
+                ->select('sp_no', 'sp_note')
+                ->get();
+
+
+          d_pekerja_mutation::insert([
+            'pm_pekerja' => $id[$i]->sp_pekerja,
+            'pm_detailid' => $pm_detailid + 1,
+            'pm_mitra' => $idmitra[0]->mp_mitra,
+            'pm_divisi' => $iddivisi[0]->mp_divisi,
+            'pm_detail' => $id[$i]->sp_jenis,
+            'pm_status' => 'Aktif',
+            'pm_note' => $nosp[$i]->sp_note,
+            'pm_insert_by' => Session::get('mem'),
+            'pm_reff' => $nosp[$i]->sp_no
+          ]);
+
         }
 
         DB::commit();
@@ -168,5 +252,5 @@ class approvalspController extends Controller
 
       return view('approvalsp.print', compact('data'));
     }
-    
+
 }

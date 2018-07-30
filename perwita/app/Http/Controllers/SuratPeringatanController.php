@@ -96,32 +96,6 @@ class SuratPeringatanController extends Controller
               'sp_insert' => Carbon::now('Asia/Jakarta')
             ]);
 
-        $iddivisi = DB::table('d_mitra_pekerja')
-                  ->select('mp_divisi')
-                  ->where('mp_pekerja',$id)
-                  ->get();
-
-        $idmitra = DB::table('d_mitra_pekerja')
-                  ->select('mp_mitra')
-                  ->where('mp_pekerja',$id)
-                  ->get();
-
-        $pm_detailid = DB::table('d_pekerja_mutation')
-                  ->select('pm_detailid')
-                  ->where('pm_pekerja',$id)
-                  ->MAX('pm_detailid');
-
-        d_pekerja_mutation::insert([
-          'pm_pekerja' => $id,
-          'pm_detailid' => $pm_detailid + 1,
-          'pm_mitra' => $idmitra[0]->mp_mitra,
-          'pm_divisi' => $iddivisi[0]->mp_divisi,
-          'pm_detail' => $request->sp,
-          'pm_status' => 'Aktif',
-          'pm_note' => $request->keterangan,
-          'pm_insert_by' => Session::get('mem')
-        ]);
-
         $pelanggaran = [];
         array_push($pelanggaran,$request->pelanggaran);
 
