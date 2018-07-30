@@ -7,6 +7,9 @@
 <style>
     .popover-navigation [data-role="next"] { display: none; }
     .popover-navigation [data-role="end"] { display: none; }
+    .footer {
+      display: none;
+    }
 </style>
 
 @endsection
