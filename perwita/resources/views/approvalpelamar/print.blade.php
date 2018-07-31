@@ -109,7 +109,7 @@ a#pdf:hover { background: #222; }
 							@if(empty($lempar['p_img']))
                   <img src="{{asset('assets/img/user.jpg')}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
 							@else
-									<center><img src="{{url('/')}}/{{$lempar['p_img']}}" width='150' class='thumb-image img-responsive' style="float:right;"></center>
+									<img src="{{url('/')}}/{{$lempar['p_img']}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
 							@endif
 						</div>
 					</div><!--// .contact-info -->
