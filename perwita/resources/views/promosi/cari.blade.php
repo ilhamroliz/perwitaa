@@ -111,7 +111,7 @@
             <div id="showdetail">
               <div class="row">
                 <div class="col-lg-12">
-                    <h3>No SP : <span style="font-weight:normal;" id="pd_no">-</span></h3>
+                    <h3>No Promosi & Demosi : <span style="font-weight:normal;" id="pd_no">-</span></h3>
                 </div>
                 <div class="col-lg-12">
                     <h3>Nama Tenaga Kerja : <span style="font-weight:normal;" id="namapekerja">-</span></h3>
@@ -129,6 +129,7 @@
             </div>
             </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
