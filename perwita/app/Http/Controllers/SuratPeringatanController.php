@@ -449,4 +449,8 @@ class SuratPeringatanController extends Controller
         return response()->json($data);
     }
 
+    public function print(){
+      return view('surat-peringatan.print');
+    }
+
 }

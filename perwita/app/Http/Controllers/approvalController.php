@@ -49,7 +49,7 @@ class approvalController extends Controller
         ->get();
 
     $promosi = DB::table('d_promosi_demosi')
-        ->selectRaw('pd_insert, count(pd_id) as jumlah, "Approval Promosi" as catatan')
+        ->selectRaw('pd_insert, count(pd_id) as jumlah, "Approval Promosi & Demosi" as catatan')
         ->where('pd_isapproved','P')
         ->get();
 
@@ -131,7 +131,7 @@ class approvalController extends Controller
         $data[5] = $temp = array(
           'pd_insert' => '1 detik yang lalu',
           'jumlah' => 0,
-          'catatan' => 'Approval Promosi'
+          'catatan' => 'Approval Approval Promosi & Demosi'
         );
       } else {
         if ($promosi[0]->jumlah > 0) {

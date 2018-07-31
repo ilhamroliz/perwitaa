@@ -152,6 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja/surat-peringatan/getcari','SuratPeringatanController@getcari');
     Route::get('manajemen-pekerja/surat-peringatan/detail','SuratPeringatanController@detail');
     Route::get('manajemen-pekerja/surat-peringatan/edit','SuratPeringatanController@edit');
+    Route::get('manajemen-pekerja/surat-peringatan/print','SuratPeringatanController@print');
     Route::get('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
     Route::post('manajemen-pekerja/surat-peringatan/update/{id}','SuratPeringatanController@update');
 

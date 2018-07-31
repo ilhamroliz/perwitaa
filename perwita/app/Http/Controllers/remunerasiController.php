@@ -20,9 +20,13 @@ class remunerasiController extends Controller
 
         $id = DB::table('d_remunerasi')
             ->max('r_id');
-        $temp = str_replace('Rp. ', '', $request->nilairemunerasi);
+        $temp = str_replace('Rp. ', '', $request->gajiawal);
         $temp1 = str_replace('.', '', $temp);
-        $nilairemunerasi = (int)$temp1;
+        $gajiawal = (int)$temp1;
+
+        $tmp = str_replace('Rp. ', '', $request->gajiterbaru);
+        $tmp1 = str_replace('.', '', $tmp);
+        $gajiterbaru = (int)$tmp1;
 
         if ($id == null) {
           $id = 0;
@@ -61,7 +65,8 @@ class remunerasiController extends Controller
               'r_id' => $id + 1,
               'r_no' => $finalkode,
               'r_pekerja' => $idpekerja,
-              'r_nilai' => $nilairemunerasi,
+              'r_awal' => $gajiawal,
+              'r_terbaru' => $gajiterbaru,
               'r_note' => $request->keterangan
             ]);
 
@@ -113,7 +118,7 @@ class remunerasiController extends Controller
     public function getcari(Request $request){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'p_jabatan')
+            ->select('p_name', 'r_id', 'r_no', 'r_awal', 'r_terbaru', 'r_note', 'p_jabatan')
             ->where('r_pekerja', $request->id)
             ->get();
 
@@ -168,7 +173,7 @@ class remunerasiController extends Controller
     public function data(){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'p_jabatan')
+            ->select('p_name', 'r_id', 'r_no', 'r_awal', 'r_terbaru', 'r_note', 'p_jabatan')
             ->get();
 
 
@@ -185,7 +190,7 @@ class remunerasiController extends Controller
     public function detail(Request $request){
       $data = DB::table('d_remunerasi')
             ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
-            ->select('p_name', 'r_id', 'r_no', 'r_nilai', 'r_note', 'r_isapproved')
+            ->select('p_name', 'r_id', 'r_no', 'r_awal', 'r_terbaru', 'r_note', 'r_isapproved')
             ->where('r_id', $request->id)
             ->get();
 
@@ -226,14 +231,19 @@ class remunerasiController extends Controller
     public function update(Request $request, $id){
       DB::beginTransaction();
       try {
-        $request->remunerasi = str_replace('Rp. ', '', $request->remunerasi);
-        $request->remunerasi = str_replace('.', '', $request->remunerasi);
-        $request->remunerasi = (int)$request->remunerasi;
+        $request->gajiawal = str_replace('Rp. ', '', $request->gajiawal);
+        $request->gajiawal = str_replace('.', '', $request->gajiawal);
+        $request->gajiawal = (int)$request->gajiawal;
+
+        $request->gajiterbaru = str_replace('Rp. ', '', $request->gajiterbaru);
+        $request->gajiterbaru = str_replace('.', '', $request->gajiterbaru);
+        $request->gajiterbaru = (int)$request->gajiterbaru;
 
         DB::table('d_remunerasi')
            ->where('r_id', $request->id)
            ->update([
-             'r_nilai' => $request->remunerasi,
+             'r_awal' => $request->gajiawal,
+             'r_terbaru' => $request->gajiterbaru,
              'r_note' => $request->keterangan
            ]);
 

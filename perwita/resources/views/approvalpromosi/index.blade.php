@@ -81,9 +81,9 @@
                                 <td>{{$x->m_name}}</td>
                                 <td>{{$x->md_name}}</td>
                                 @if(stristr($x->pd_no, 'PMS'))
-                                <td>Promosi</td>
+                                <td class="sweetdinamis{{$x->pd_id}}">Promosi</td>
                                 @elseif(stristr($x->pd_no, 'DMS'))
-                                <td>Demosi</td>
+                                <td class="sweetdinamis{{$x->pd_id}}">Demosi</td>
                                 @endif
                                 <td align="center">
                                 <button type="button" onclick="detail({{$x->pd_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
@@ -243,9 +243,10 @@ function select(id) {
 
 function setujui(id){
   var pd_no = $('#pd_no').val();
+  var dinamis = $('.sweetdinamis'+id).text();
   swal({
           title: "Konfirmasi",
-          text: "Apakah anda yakin ingin menyetujui Promosi ini?",
+          text: "Apakah anda yakin ingin menyetujui "+dinamis+" ini?",
           type: "warning",
           showCancelButton: true,
           closeOnConfirm: false,
@@ -265,8 +266,8 @@ function setujui(id){
                       waitingDialog.hide();
                       if (response.status == 'berhasil') {
                           swal({
-                              title: "Promosi Disetujui",
-                              text: "Promosi Berhasil Disetujui",
+                              title: ""+dinamis+" Disetujui",
+                              text: ""+dinamis+" Berhasil Disetujui",
                               type: "success",
                               showConfirmButton: false,
                               timer: 900
@@ -302,9 +303,10 @@ function setujui(id){
 }
 
 function tolak(id){
+  var dinamis = $('.sweetdinamis'+id).text();
   swal({
           title: "Konfirmasi",
-          text: "Apakah anda yakin ingin menolak Promosi ini?",
+          text: "Apakah anda yakin ingin menolak "+dinamis+" ini?",
           type: "warning",
           showCancelButton: true,
           closeOnConfirm: false,
@@ -325,8 +327,8 @@ function tolak(id){
                       waitingDialog.hide();
                       if (response.status == 'berhasil') {
                           swal({
-                              title: "Promosi Ditolak",
-                              text: "Promosi Berhasil Ditolak",
+                              title: ""+dinamis+" Ditolak",
+                              text: ""+dinamis+" Berhasil Ditolak",
                               type: "success",
                               showConfirmButton: false,
                               timer: 900
@@ -374,8 +376,8 @@ function setujuilist(){
       waitingDialog.hide();
       if (result.status == 'berhasil') {
           swal({
-              title: "Promosi Disetujui",
-              text: "Promosi Berhasil Disetujui",
+              title: "Disetujui",
+              text: "Berhasil Disetujui",
               type: "success",
               showConfirmButton: false,
               timer: 900
@@ -421,8 +423,8 @@ function tolaklist(){
       waitingDialog.hide();
       if (result.status == 'berhasil') {
         swal({
-            title: "Promosi Ditolak",
-            text: "Promosi Berhasil Ditolak",
+            title: "Ditolak",
+            text: "Berhasil Ditolak",
             type: "success",
             showConfirmButton: false,
             timer: 900

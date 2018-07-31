@@ -68,7 +68,8 @@
                               <th>No. Remunerasi</th>
                               <th>Nama Tenaga Kerja</th>
                               <th>Jabatan</th>
-                              <th>Nilai Remunerasi</th>
+                              <th>Gaji Awal</th>
+                              <th>Gaji Terbaru</th>
                               <th>Keterangan</th>
                               <th width="120px">Aksi</th>
                             </tr>
@@ -124,7 +125,7 @@
                     <h3>Status Approval : <span style="font-weight:normal;" id="approve">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Nilai Remunerasi : <span style="font-weight:normal;" id="nilairemunerasi">-</span></h3>
+                    <h3>Gaji Awal - Gaji Terbaru : <span style="font-weight:normal;" id="nilairemunerasi">-</span></h3>
                 </div>
               </div>
             </div>
@@ -154,8 +155,11 @@
                     <div class="col-lg-12">
                         <h3>Keterangan : <input type="text" class="form-control" name="keterangan" id="editketerangan" placeholder="Keterangan"></h3>
                     </div>
-                    <div class="col-lg-12">
-                        <h3>Nilai Remunerasi : <input type="text" class="form-control" name="remunerasi" id="editremunerasi" placeholder="Nilai Remunerasi"></h3>
+                    <div class="col-lg-5">
+                        <h3>Gaji Awal : <input type="text" class="form-control" name="gajiawal" id="gajiawal" placeholder="Gaji Awal"></h3>
+                    </div>
+                    <div class="col-lg-5">
+                        <h3>Gaji Terbaru : <input type="text" class="form-control" name="gajiterbaru" id="gajiterbaru" placeholder="Gaji Terbaru"></h3>
                     </div>
                   </div>
                 </div>
@@ -212,7 +216,8 @@ $(document).ready(function(){
                   '<td>'+result[i].r_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
                   '<td>'+jabatan+'</td>'+
-                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
+                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_awal, "", 0, ".", ",")+'</span></td>'+
+                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_terbaru, "", 0, ".", ",")+'</span></td>'+
                   '<td>'+result[i].r_note+'</td>'+
                   '<td>'+
                   '<div class="text-center">'+
@@ -262,8 +267,8 @@ $(document).ready(function(){
                     '<td>'+result[i].r_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
                     '<td>'+result[i].p_jabatan+'</td>'+
-                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_nilai, "", 0, ".", ",")+'</span></td>'+
-                    '<td>'+result[i].r_note+'</td>'+
+                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_awal, "", 0, ".", ",")+'</span></td>'+
+                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_terbaru, "", 0, ".", ",")+'</span></td>'+
                     '<td>'+
                     '<div class="text-center">'+
                       '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
@@ -292,7 +297,7 @@ $(document).ready(function(){
         $('#r_no').text(result[0].r_no);
         $('#namapekerja').text(result[0].p_name);
         $('#jabatanpekerja').text(result[0].jp_name);
-        $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].r_nilai, "", 0, ".", ","));
+        $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].r_awal, "", 0, ".", ",")+ ' -> ' + 'Rp. '+accounting.formatMoney(result[0].r_terbaru, "", 0, ".", ","));
         $('#keteranganpekerja').text(result[0].r_note);
         //
         if (result[0].r_isapproved == 'P') {
@@ -384,7 +389,8 @@ $(document).ready(function(){
       dataType: 'json',
       success : function(result){
         $('#editketerangan').val(result[0].r_note);
-        $('#editremunerasi').val('Rp. '+accounting.formatMoney(result[0].r_nilai, "", 0, ".", ","));
+        $('#gajiawal').val('Rp. '+accounting.formatMoney(result[0].r_awal, "", 0, ".", ","));
+        $('#gajiterbaru').val('Rp. '+accounting.formatMoney(result[0].r_terbaru, "", 0, ".", ","));
 
         $('#editremunerasi').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
@@ -402,7 +408,7 @@ $(document).ready(function(){
                   }
               });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('.form-edit').serialize(),
         url: baseUrl + '/manajemen-pekerja/remunerasi/update/'+id,
         dataType: 'json',
@@ -442,6 +448,9 @@ $(document).ready(function(){
       });
     }, 800);
   }
+
+  $('#gajiawal').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+  $('#gajiterbaru').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
 
 </script>

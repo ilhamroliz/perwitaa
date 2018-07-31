@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\d_notifikasi;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,59 +21,37 @@ use Carbon\carbon;
 
 class mitraController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
-    public function index() {
+
+    public function index()
+    {
         return view('mitra.index');
     }
-    public function data() {
+
+    public function data()
+    {
         DB::statement(DB::raw('set @rownum=0'));
-        $mitra = d_mitra::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'m_id','m_name','m_address','m_phone'
-                            ,'m_note')->where('m_status', '=', 'Aktif')->ORwhere('m_status', '=', null)->orderBy('m_name')->get();
+        $mitra = d_mitra::select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'm_id', 'm_name', 'm_address', 'm_phone'
+            , 'm_note')->where('m_status', '=', 'Aktif')->ORwhere('m_status', '=', null)->orderBy('m_name')->get();
         return Datatables::of($mitra)
-                       ->addColumn('action', function ($mitra) {
-                            return'<div class="text-center">
-                            <button style="margin-left:5px;" type="button" class="btn btn-info btn-xs" title="Detail" onclick="detail('.$mitra->m_id.')"><i class="fa fa-folder"></i></button>
-                            <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-mitra/' . $mitra->m_id .'/edit" ><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus('.$mitra->m_id.')"><i class="glyphicon glyphicon-trash"></i></button></div>';
-                        })
-                        ->make(true);
+            ->addColumn('action', function ($mitra) {
+                return '<div class="text-center">
+                            <button style="margin-left:5px;" type="button" class="btn btn-info btn-xs" title="Detail" onclick="detail(' . $mitra->m_id . ')"><i class="fa fa-folder"></i></button>
+                            <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-mitra/' . $mitra->m_id . '/edit" ><i class="glyphicon glyphicon-edit"></i></a>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $mitra->m_id . ')"><i class="glyphicon glyphicon-trash"></i></button></div>';
+            })
+            ->make(true);
     }
 
-    public function tambah() {
+    public function tambah()
+    {
         return view('mitra.formTambah');
     }
-    public function simpan(Request $request) {
 
-        // $rules = [
-        //   'nomou' => 'required',
-        //   'namamitra' => 'required',
-        //   'startmou' => 'required',
-        //   'endmou' => 'required',
-        //   'alamatmitra' => 'required',
-        //   'nama_cp' => 'required',
-        //   'no_cp' => 'required',
-        // ];
-        // $validator = Validator::make($request->all(), $rules);
-
-        // if($validator->fails()){
-        //   return response()->json([
-        //     'status' => 'gagal',
-        //     'data' => $validator->errors->toArray(),
-        //   ]);
-        // }
-
-        $idmitra = d_mitra::max('m_id')+1;
-
-        $idmou = DB::table('d_mitra_mou')->where('mm_mitra' , '=', $idmitra)->max('mm_detailid');
-
-        if ($idmou < 1 || $idmou == null) {
-          $idmou = 1;
-        } else {
-          $idmou = $idmou + 1;
-        }
-
+<<<<<<< HEAD
         d_mitra::insert(array(
           'm_id' => $idmitra,
           'm_name' => $request->namamitra,
@@ -106,31 +85,90 @@ class mitraController extends Controller
         return response()->json([
           'status' => 'berhasil',
         ]);
+=======
+    public function simpan(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $idmitra = d_mitra::max('m_id') + 1;
 
+            $idmou = DB::table('d_mitra_mou')->where('mm_mitra', '=', $idmitra)->max('mm_detailid');
+>>>>>>> 8e6e22464a10a83e838c808dfb1430f249708a5f
+
+            if ($idmou < 1 || $idmou == null) {
+                $idmou = 1;
+            } else {
+                $idmou = $idmou + 1;
+            }
+
+            d_mitra::insert(array(
+                'm_id' => $idmitra,
+                'm_name' => $request->namamitra,
+                'm_address' => $request->alamatmitra,
+                'm_cp' => $request->nama_cp,
+                'm_cp_phone' => $request->no_cp,
+                'm_phone' => $request->notelp,
+                'm_note' => $request->ket,
+                'm_status' => 'Aktif',
+                'm_insert' => Carbon::now('Asia/Jakarta')
+            ));
+            d_mitra_mou::insert(array(
+                'mm_mitra' => $idmitra,
+                'mm_detailid' => $idmou,
+                'mm_mou' => $request->nomou,
+                'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+                'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
+                'mm_aktif' => null,
+                'mm_status' => 'null',
+            ));
+
+            $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P' and m_status != 'Tidak'");
+            $jumlah = $jumlah[0]->jumlah;
+
+            d_notifikasi::where('n_fitur', '=', 'Mitra')
+                ->where('n_detail', '=', 'Create')
+                ->update([
+                    'n_qty' => $jumlah
+                ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil',
+            ]);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'eror' => $e
+            ]);
+        }
     }
-    public function edit($id) {
-        $mitra=d_mitra::where('m_id',$id)->first();
+
+    public function edit($id)
+    {
+        $mitra = d_mitra::where('m_id', $id)->first();
 
         $mou = DB::table('d_mitra_mou')
-        ->where('mm_mitra', '=', $id)
-        ->get();
-      // dd($mitra);
-      // dd($mou);
-        return view('mitra.formEdit',compact('mitra', 'mou'));
+            ->where('mm_mitra', '=', $id)
+            ->get();
+        // dd($mitra);
+        // dd($mou);
+        return view('mitra.formEdit', compact('mitra', 'mou'));
     }
 
-    public function hapus($id) {
-        return DB::transaction(function() use ($id) {
+    public function hapus($id)
+    {
+        return DB::transaction(function () use ($id) {
             try {
-              DB::table('d_mitra')->where('m_id', '=', $id)->update(['m_status' => 'Tidak']);
-              DB::table('d_mitra_mou')->where('mm_mitra', '=', $id)->update(['mm_status' => 'Tidak']);
-              return response()->json([
-                   'status' => 'berhasil',
-               ]);
+                DB::table('d_mitra')->where('m_id', '=', $id)->update(['m_status' => 'Tidak']);
+                DB::table('d_mitra_mou')->where('mm_mitra', '=', $id)->update(['mm_status' => 'Tidak']);
+                return response()->json([
+                    'status' => 'berhasil',
+                ]);
             } catch (\Exception $e) {
-              return response()->json([
-                   'status' => 'gagal',
-               ]);
+                return response()->json([
+                    'status' => 'gagal',
+                ]);
             }
 
         });
@@ -138,55 +176,56 @@ class mitraController extends Controller
 
     public function perbarui(Request $request, $id)
     {
-      //return $request->all();
-        return DB::transaction(function() use ($request, $id) {
-          try {
-            $datamitra = array(
-              'm_name' => $request->namamitra,
-              'm_address' => $request->alamatmitra,
-              'm_cp' => $request->nama_cp,
-              'm_cp_phone' => $request->no_cp,
-              'm_phone' => $request->notelp,
-              'm_note' => $request->ket
-            );
+        //return $request->all();
+        return DB::transaction(function () use ($request, $id) {
+            try {
+                $datamitra = array(
+                    'm_name' => $request->namamitra,
+                    'm_address' => $request->alamatmitra,
+                    'm_cp' => $request->nama_cp,
+                    'm_cp_phone' => $request->no_cp,
+                    'm_phone' => $request->notelp,
+                    'm_note' => $request->ket
+                );
 
-            $datamou = array(
-              'mm_mou' => $request->nomou,
-              'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
-              'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta')
-            );
+                $datamou = array(
+                    'mm_mou' => $request->nomou,
+                    'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+                    'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta')
+                );
 
-            d_mitra::where('m_id', '=', $id)->update($datamitra);
-            d_mitra_mou::where('mm_mitra', '=', $id)->update($datamou);
+                d_mitra::where('m_id', '=', $id)->update($datamitra);
+                d_mitra_mou::where('mm_mitra', '=', $id)->update($datamou);
 
-            return response()->json([
-                'status' => 'berhasil',
-            ]);
-          } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'gagal',
-            ]);
-          }
+                return response()->json([
+                    'status' => 'berhasil',
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'gagal',
+                ]);
+            }
 
 
         });
     }
 
-    public function detail(Request $request){
-      $id = $request->id;
+    public function detail(Request $request)
+    {
+        $id = $request->id;
 
-      $data = DB::table('d_mitra')
+        $data = DB::table('d_mitra')
             ->select('m_name',
-            'm_phone',
-            'm_cp_phone',
-            'm_address',
-            'm_fax',
-            'm_note',
-            'm_cp', DB::Raw("coalesce(m_fax, '-') as m_fax"))
-            ->where('m_id',$id)
+                'm_phone',
+                'm_cp_phone',
+                'm_address',
+                'm_fax',
+                'm_note',
+                'm_cp', DB::Raw("coalesce(m_fax, '-') as m_fax"))
+            ->where('m_id', $id)
             ->get();
 
-      return response()->json($data);
+        return response()->json($data);
     }
 
 }

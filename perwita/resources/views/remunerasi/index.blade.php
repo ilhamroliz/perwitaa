@@ -68,10 +68,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Nilai Remunerasi</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="nilairemunerasi" style="text-transform:uppercase" id="nilairemunerasi" placeholder="Nilai Remunerasi">
-                            </div>
+                          <label class="col-lg-2 control-label">Gaji Awal</label>
+                          <div class="col-lg-9">
+                              <input type="text" class="form-control" name="gajiawal" style="text-transform:uppercase" id="gajiawal" placeholder="Gaji Awal">
+                          </div>
+                          <label class="col-lg-2 control-label">Gaji Terbaru</label>
+                          <div class="col-lg-9">
+                              <input type="text" class="form-control" name="gajiterbaru" style="text-transform:uppercase" id="gajiterbaru" placeholder="Gaji Terbaru">
+                          </div>
                         </div>
                         <div class="dinamis div" id="showdinamis">
                         </div>
@@ -161,7 +165,8 @@ var table;
       });
     }
 
-    $('#nilairemunerasi').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+    $('#gajiawal').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+    $('#gajiterbaru').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
 </script>
 @endsection

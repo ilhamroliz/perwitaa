@@ -308,11 +308,11 @@
 
                                      promosi += '<li">'+
                                          '<div class="dropdown-messages-box">'+
-                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-img" title="Lihat Daftar Approval Promosi">'+
+                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-img" title="Lihat Daftar Approval Promosi & Demosi">'+
                                                '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
                                             '</a>'+
                                            '<div class="media-body">'+
-                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi" style="text-decoration:none; color:black;">'+
+                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi & Demosi" style="text-decoration:none; color:black;">'+
                                                '<small class="pull-right" id="menitpromosi"></small>'+
                                                '<strong id="catatanapprovalpromosi"></strong><small id="isiapprovalpromosi"></small><br>'+
                                             '</a>'+
@@ -413,7 +413,7 @@
                                  $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Mitra Pekerja </center>');
                                }
                                if (countpromosi == 0) {
-                                 $("#showpromosi").html('<center> Tidak ada permintaan Approval Promosi </center>');
+                                 $("#showpromosi").html('<center> Tidak ada permintaan Approval Promosi & Demosi </center>');
                                }
                                if (countremunerasi == 0) {
                                  $("#showremunerasi").html('<center> Tidak ada permintaan Approval Remunerasi </center>');

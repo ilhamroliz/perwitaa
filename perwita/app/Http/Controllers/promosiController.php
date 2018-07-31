@@ -193,7 +193,8 @@ class promosiController extends Controller
                 'pm_detail' => 'Promosi',
                 'pm_status' => 'Aktif',
                 'pm_note' => $data[0]->pd_note,
-                'pm_insert_by' => Session::get('mem')
+                'pm_insert_by' => Session::get('mem'),
+                'pm_reff' => $nomor
             ));
 
             d_pekerja::where('p_id', '=', $pekerja)
@@ -300,6 +301,19 @@ class promosiController extends Controller
     public function hapus(Request $request){
       DB::beginTransaction();
       try {
+
+        $pekerja = DB::table('d_promosi_demosi')
+                ->select('pd_no')
+                ->where('pd_id',$request->id)
+                ->get();
+
+        d_pekerja_mutation::where('pm_reff',$pekerja[0]->pd_no)
+                ->where('pm_detail', 'Promosi')
+                ->update([
+                  'pm_note' => 'dihapus'
+                ]);
+
+
         DB::table('d_promosi_demosi')
           ->where('pd_id', $request->id)
           ->delete();
@@ -336,11 +350,11 @@ class promosiController extends Controller
             ]);
 
         $pekerja = DB::table('d_promosi_demosi')
-                ->select('pd_pekerja')
+                ->select('pd_no')
                 ->where('pd_id',$id)
                 ->get();
 
-        d_pekerja_mutation::where('pm_pekerja',$pekerja[0]->pd_pekerja)
+        d_pekerja_mutation::where('pm_reff',$pekerja[0]->pd_no)
                 ->where('pm_detail', 'Promosi')
                 ->update([
                   'pm_note' => $request->note
@@ -350,8 +364,6 @@ class promosiController extends Controller
                 ->update([
                   'p_jabatan' => $request->jabatanBaru
                 ]);
-
-
 
         DB::commit();
         return response()->json([

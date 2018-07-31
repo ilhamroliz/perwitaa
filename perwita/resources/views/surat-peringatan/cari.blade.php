@@ -151,6 +151,7 @@
             </div>
             </div>
               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="printbtn" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
@@ -331,6 +332,9 @@ $(document).ready(function(){
           $('#daftarpelanggaran').append('<h3><span style="font-weight:normal;" >- '+result[i].spd_pelanggaran+'</span</h3><br>');
         }
 
+        //Button
+        $('#printbtn').attr('onclick', 'print('+id+')');
+
         $('.spiner-sp').hide();
         $('#showdetail').show();
 
@@ -509,6 +513,10 @@ $(document).ready(function(){
       waitingDialog.hide();
       }
     });
+  }
+
+  function print(id){
+    alert(id);
   }
 
 </script>
