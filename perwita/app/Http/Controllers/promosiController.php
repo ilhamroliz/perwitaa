@@ -68,6 +68,7 @@ class promosiController extends Controller
                } elseif ($pekerja[$i]->pd_jabatan_sekarang == 4) {
                  $pekerja[$i]->pd_jabatan_sekarang = 'Operator';
                }
+             }
 
         $pekerja = collect($pekerja);
 
