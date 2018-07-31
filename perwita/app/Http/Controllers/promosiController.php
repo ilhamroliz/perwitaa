@@ -254,7 +254,7 @@ class promosiController extends Controller
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
-            ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
+            ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id', 'pd_jabatan_awal', 'pd_jabatan_sekarang')
             ->get();
 
             $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
@@ -309,7 +309,7 @@ class promosiController extends Controller
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
-            ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
+            ->select('pd_no', 'p_name', 'jp_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
             ->where('pd_id', $request->id)
             ->get();
 
