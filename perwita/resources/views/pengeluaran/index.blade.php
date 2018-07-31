@@ -15,7 +15,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Pengeluaran ke Mitra</h2>
+        <h2>Pengeluaran Seragam ke Pekerja Mitra</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -24,7 +24,7 @@
                 Pengeluaran
             </li>
             <li class="active">
-                <strong>Pengeluaran Barang</strong>
+                <strong>Pengeluaran Seragam</strong>
             </li>
         </ol>
     </div>

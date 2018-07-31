@@ -61,8 +61,10 @@ class PenjualanController extends Controller
 
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->select('mp_pekerja', 'p_name', 'p_hp')
+            ->select('mp_pekerja', 'p_name', 'p_hp', 'p_nip', 'mp_mitra_nik')
             ->where('mp_mitra', '=', $mitra)
+            ->where('mp_isapproved', '=', 'Y')
+            ->where('mp_status', '=', 'Aktif')
             ->get();
 
         $seragam = DB::table('d_item_dt')

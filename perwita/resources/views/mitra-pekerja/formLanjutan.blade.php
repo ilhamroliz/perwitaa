@@ -168,7 +168,7 @@ function simpan(){
             }
     });
     $.ajax({
-        url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/simpan',       
+        url: baseUrl + '/manajemen-pekerja-mitra/data-pekerja-mitra/simpan',
         type: 'post',
         data: ar.find('input').serialize() + '&' + $('.form').serialize(),
         dataType: 'json',

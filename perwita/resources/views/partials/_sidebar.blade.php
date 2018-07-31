@@ -128,7 +128,7 @@
                     <li class="{{ Request::is('manajemen-seragam/penerimaan') ? 'active' : ''
                                 || Request::is('manajemen-seragam/penerimaan/*') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/penerimaan') }}">
-                            <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Seragam</span>
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pembelian</span>
                         </a>
                     </li>
                 </ul>

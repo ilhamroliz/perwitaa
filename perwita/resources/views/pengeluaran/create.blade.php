@@ -57,17 +57,17 @@
                             </div>
                             <div class="form-group col-md-5 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
-                                    <option>--Pilih Seragam--</option>
+                                    <option value=" ">--Pilih Seragam--</option>
                             </select>
                             </div>
-                            <button class="btn btn-info" type="button" onclick="getData()"><i class="fa fa-lock"></i></button>
+                            <button class="btn btn-info" type="button" onclick="getData()"><i class="fa fa-search"></i></button>
                             <div class="table-responsive" style="margin-top: 30px;">
                                 <table class="table table-striped table-bordered table-hover" id="tabelitem">
                                     <thead>
                                         <tr>
                                             <th style="width: 60%;">Nama Pekerja</th>
+                                            <th style="width: 20%;">NIK Mitra</th>
                                             <th style="width: 20%;">Ukuran</th>
-                                            <th style="width: 10%;">Masuk</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -120,6 +120,17 @@
                             </span>
                         </div>
                     </div>
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5 class="infosupp">Info Stock Seragam</h5>
+                        </div>
+                        <div class="ibox-content text-center">
+                            <h3 class="stokseragam"></h3>
+                            <span class="small">
+                                Menampilkan info stock seragam
+                            </span>
+                        </div>
+                    </div>
                 </div>
         </div>
 </div>
@@ -155,10 +166,7 @@
         tabelpekerja = $("#tabelitem").DataTable({
             responsive: true,
             paging: false,
-            "language": dataTableLanguage,
-            "columnDefs": [
-                { "orderable": false, "targets": 2 }
-              ]
+            "language": dataTableLanguage
         });
 
         $("#mitra").chosen();
@@ -233,8 +241,8 @@
             for (var i = 0; i < pekerja.length; i++) {
                 tabelpekerja.row.add([
                     pekerja[i].p_name +' ('+pekerja[i].p_hp+')',
-                    selectSize(seragam),
-                    checkMasuk(pekerja[i].mp_pekerja)
+                    pekerja[i].mp_mitra_nik,
+                    selectSize(seragam)
                 ]).draw( false );
             }
             for (var i = 0; i < seragam.length; i++) {

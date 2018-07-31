@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\d_notifikasi;
 use App\d_pekerja_mutation;
 use Illuminate\Http\Request;
 
@@ -332,6 +333,15 @@ class mitraPekerjaController extends Controller
                 }
             }
             d_mitra_pekerja::insert($addPekerja);
+
+            $jumlah = DB::select("select count(mp_contract) as jumlah from d_mitra_pekerja where mp_isapproved = 'P' and mp_status = 'Aktif'");
+            $jumlah = $jumlah[0]->jumlah;
+
+            d_notifikasi::where('n_fitur', '=', 'Penerimaan Pekerja')
+                ->where('n_detail', '=', 'Create')
+                ->update([
+                    'n_qty' => $jumlah
+                ]);
 
             DB::commit();
             return response()->json([
