@@ -116,6 +116,17 @@ class SuratPeringatanController extends Controller
               ]);
         }
 
+        $countsp = DB::table('d_surat_pringatan')
+            ->where('sp_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Surat peringatan')
+            ->update([
+              'n_qty' => count($countsp),
+              'n_insert' => Carbon::now()
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'

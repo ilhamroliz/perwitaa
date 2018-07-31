@@ -415,6 +415,17 @@ class pekerjaController extends Controller
                 'pm_insert_by' => Session::get('mem')
             ));
 
+            $countpelamar = DB::table('d_pekerja')
+                ->where('p_status_approval', null)
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Calon Pekerja')
+                ->update([
+                  'n_qty' => count($countpelamar),
+                  'n_insert' => Carbon::now()        
+                ]);
+
             DB::commit();
             Session::flash('sukses', 'data pekerja baru anda berhasil disimpan');
             return redirect('manajemen-pekerja/data-pekerja');

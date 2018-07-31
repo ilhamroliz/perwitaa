@@ -142,6 +142,18 @@ class mitraPekerjaController extends Controller
                 'mc_status_mp'=>'1',
                 'mc_fulfilled'=>$totalPekerja
         ]);
+
+        $countmp = DB::table('d_mitra_pekerja')
+            ->where('mp_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Penerimaan Pekerja')
+            ->update([
+              'n_qty' => count($countmp),
+              'n_insert' => Carbon::now()
+            ]);
+
         return response()->json([
                             'status' => 'berhasil',
                ]);

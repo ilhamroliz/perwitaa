@@ -92,6 +92,17 @@ class mitraController extends Controller
           'mm_status' => null,
       ));
 
+      $countmitra = DB::table('d_mitra')
+          ->where('m_status_approval', null)
+          ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Mitra')
+          ->update([
+            'n_qty' => count($countmitra),
+            'n_insert' => Carbon::now()
+          ]);
+
         return response()->json([
           'status' => 'berhasil',
         ]);
