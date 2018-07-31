@@ -516,7 +516,7 @@ $(document).ready(function(){
   }
 
   function print(id){
-    alert(id);
+    window.location.href = baseUrl + '/manajemen-pekerja/surat-peringatan/print?id='+id;
   }
 
 </script>

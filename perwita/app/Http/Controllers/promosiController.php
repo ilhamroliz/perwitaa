@@ -148,6 +148,15 @@ class promosiController extends Controller
                 'pd_insert' => $sekarang
             ));
 
+            $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+            $jumlah = $jumlah[0]->jumlah;
+
+            d_notifikasi::where('n_fitur', '=', 'Promosi')
+                ->where('n_detail', '=', 'Create')
+                ->update([
+                    'n_qty' => $jumlah
+                ]);
+
             DB::commit();
             return response()->json([
                 'status' => 'sukses'

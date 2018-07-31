@@ -449,8 +449,30 @@ class SuratPeringatanController extends Controller
         return response()->json($data);
     }
 
-    public function print(){
-      return view('surat-peringatan.print');
+    public function print(Request $request){
+      Carbon::setLocale('id');
+
+      $data = DB::table('d_surat_pringatan')
+            ->join('d_pekerja', 'p_id', '=', 'sp_pekerja')
+            ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'sp_pekerja')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_surat_pringatan_dt', 'spd_surat_peringatan', '=', 'sp_id')
+            ->join('d_mitra_divisi', function($e){
+              $e->on('md_mitra', '=', 'm_id')
+                ->on('md_id', '=', 'mp_divisi');
+            })
+            ->select('sp_no', 'sp_jenis', 'p_name', 'p_hp', 'p_nip', 'p_workdate', 'md_name', 'm_name', 'spd_pelanggaran', 'sp_date_end', DB::raw('(sp_date_end) as diff'))
+            ->where('sp_id', $request->id)
+            ->get();
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->p_workdate = Carbon::parse($data[$i]->p_workdate)->format('d/m/Y');
+        $data[$i]->sp_date_end = Carbon::parse($data[$i]->sp_date_end)->format('d/m/Y');
+        $data[$i]->diff = Carbon::parse($data[$i]->diff)->diffForHumans(null, true);
+      }
+
+      return view('surat-peringatan.print', compact('data'));
+
     }
 
 }

@@ -70,6 +70,15 @@ class remunerasiController extends Controller
               'r_note' => $request->keterangan
             ]);
 
+            $jumlah = DB::select("select count(r_id) as jumlah from d_remunerasi where r_isapproved = 'P'");
+            $jumlah = $jumlah[0]->jumlah;
+
+            d_notifikasi::where('n_fitur', '=', 'Remunerasi')
+                ->where('n_detail', '=', 'Create')
+                ->update([
+                    'n_qty' => $jumlah
+                ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
