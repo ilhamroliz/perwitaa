@@ -266,6 +266,8 @@ class promosiController extends Controller
                $data[$i]->pd_jabatan_awal = 'Staff';
              } elseif ($data[$i]->pd_jabatan_awal == 4) {
                $data[$i]->pd_jabatan_awal = 'Operator';
+             } elseif ($data[$i]->pd_jabatan_awal == 0) {
+               $data[$i]->pd_jabatan_awal = '-';
              }
 
              }
@@ -280,7 +282,12 @@ class promosiController extends Controller
                } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
                  $data[$i]->pd_jabatan_sekarang = 'Operator';
                }
+               elseif ($data[$i]->pd_jabatan_sekarang == 0) {
+                 $data[$i]->pd_jabatan_sekarang = '-';
+               }
              }
+
+
 
       if (count($data) > 0) {
         return response()->json($data);
@@ -338,6 +345,8 @@ class promosiController extends Controller
                $data[$i]->pd_jabatan_awal = 'Staff';
              } elseif ($data[$i]->pd_jabatan_awal == 4) {
                $data[$i]->pd_jabatan_awal = 'Operator';
+             } elseif ($data[$i]->pd_jabatan_awal == 0) {
+               $data[$i]->pd_jabatan_awal = '-';
              }
 
              }
@@ -351,6 +360,9 @@ class promosiController extends Controller
                  $data[$i]->pd_jabatan_sekarang = 'Staff';
                } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
                  $data[$i]->pd_jabatan_sekarang = 'Operator';
+               }
+               elseif ($data[$i]->pd_jabatan_sekarang == 0) {
+                 $data[$i]->pd_jabatan_sekarang = '-';
                }
              }
 
