@@ -73,6 +73,8 @@ class mitraController extends Controller
                 'm_cp_phone' => $request->no_cp,
                 'm_phone' => $request->notelp,
                 'm_note' => $request->ket,
+                'm_status' => 'Aktif',
+                'm_insert' => Carbon::now('Asia/Jakarta')
             ));
             d_mitra_mou::insert(array(
                 'mm_mitra' => $idmitra,
@@ -81,10 +83,10 @@ class mitraController extends Controller
                 'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
                 'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
                 'mm_aktif' => null,
-                'mm_status' => null,
+                'mm_status' => 'null',
             ));
 
-            $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P'");
+            $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P' and m_status != 'Tidak'");
             $jumlah = $jumlah[0]->jumlah;
 
             d_notifikasi::where('n_fitur', '=', 'Mitra')
