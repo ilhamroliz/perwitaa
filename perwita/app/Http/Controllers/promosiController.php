@@ -28,6 +28,7 @@ class promosiController extends Controller
     {
         $pekerja = DB::table('d_pekerja')
             ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
+            ->leftjoin('d_promosi_demosi', 'pd_jabatan_awal', '=', 'jp_id')
             ->leftJoin('d_mitra_pekerja', function ($e){
                 $e->on('mp_pekerja', '=', 'p_id');
             })
@@ -37,12 +38,24 @@ class promosiController extends Controller
                 $q->on('md_id', '=', 'mp_divisi');
                 $q->on('md_mitra', '=', 'm_id');
             })
-            ->select('p_id', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name')
+            ->select('p_id', 'p_name', 'jp_name', 'p_nip', 'p_jabatan', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', DB::raw('pd_jabatan_awal as pd_jabatan_awal, pd_jabatan_sekarang as pd_jabatan_sekarang'))
             ->where('p_note', '!=', 'Calon')
             ->where('p_note', '!=', 'Ex')
             ->where('mp_status', '=', 'Aktif')
             ->groupBy('p_id')
             ->get();
+
+            for ($i=0; $i < count($pekerja); $i++) {
+
+                  $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+            join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
+            join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang where pd_jabatan_sekarang = '".$pekerja[$i]->p_jabatan."' AND pd_pekerja = '".$pekerja[$i]->p_id."'");
+
+
+              $pekerja[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
+              $pekerja[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
+            }
+
 
         $pekerja = collect($pekerja);
 
