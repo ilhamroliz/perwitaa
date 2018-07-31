@@ -45,38 +45,16 @@ class promosiController extends Controller
             ->groupBy('p_id')
             ->get();
 
-        for ($i=0; $i < count($pekerja); $i++) {
-          if ($pekerja[$i]->pd_jabatan_awal == 1) {
-            $pekerja[$i]->pd_jabatan_awal = 'Manager';
-          } elseif ($pekerja[$i]->pd_jabatan_awal == 2) {
-            $pekerja[$i]->pd_jabatan_awal = 'Supervisor';
-          } elseif ($pekerja[$i]->pd_jabatan_awal == 3) {
-            $pekerja[$i]->pd_jabatan_awal = 'Staff';
-          } elseif ($pekerja[$i]->pd_jabatan_awal == 4) {
-            $pekerja[$i]->pd_jabatan_awal = 'Operator';
-          }
-
-          }
-
-          for ($i=0; $i < count($pekerja); $i++) {
-            if ($pekerja[$i]->pd_jabatan_sekarang == 1) {
-              $pekerja[$i]->pd_jabatan_sekarang = 'Manager';
-            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 2) {
-              $pekerja[$i]->pd_jabatan_sekarang = 'Supervisor';
-            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 3) {
-              $pekerja[$i]->pd_jabatan_sekarang = 'Staff';
-            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 4) {
-              $pekerja[$i]->pd_jabatan_sekarang = 'Operator';
-            }
-
-            }
-
             for ($i=0; $i < count($pekerja); $i++) {
-              if (empty($pekerja[$i]->pd_jabatan_sekarang)) {
-                $pekerja[$i]->pd_jabatan_awal = $pekerja[$i]->jp_name;
-              }
-            }
 
+                  $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+            join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
+            join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang where pd_jabatan_sekarang = '".$pekerja[$i]->p_jabatan."' AND pd_pekerja = '".$pekerja[$i]->p_id."'");
+
+
+              $pekerja[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
+              $pekerja[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
+            }
 
 
         $pekerja = collect($pekerja);
