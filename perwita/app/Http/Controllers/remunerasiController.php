@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\d_notifikasi;
+
 use DB;
 
 class remunerasiController extends Controller

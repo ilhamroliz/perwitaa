@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\d_pekerja;
 use App\d_pekerja_mutation;
 use App\d_promosi_demosi;
+use App\d_notifikasi;
 use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;

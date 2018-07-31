@@ -69,11 +69,11 @@
                         </div>
                         <div class="form-group">
                           <label class="col-lg-2 control-label">Gaji Awal</label>
-                          <div class="col-lg-9">
+                          <div class="col-lg-3">
                               <input type="text" class="form-control" name="gajiawal" style="text-transform:uppercase" id="gajiawal" placeholder="Gaji Awal">
                           </div>
                           <label class="col-lg-2 control-label">Gaji Terbaru</label>
-                          <div class="col-lg-9">
+                          <div class="col-lg-3">
                               <input type="text" class="form-control" name="gajiterbaru" style="text-transform:uppercase" id="gajiterbaru" placeholder="Gaji Terbaru">
                           </div>
                         </div>
