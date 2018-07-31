@@ -107,9 +107,9 @@ a#pdf:hover { background: #222; }
 					<div class="contact-info">
             <div class="image" id="showimage">
 							@if(empty($lempar['p_img']))
-                  <img src="{{asset('assets/img/user.jpg')}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
+                  <img src="{{asset('assets/img/user.jpg')}}" class="img-rounded" alt="Cinque Terre" width="160" height="170" style="float:right;">
 							@else
-									<img src="{{url('/')}}/{{$lempar['p_img']}}" class="img-rounded" alt="Cinque Terre" width="180" height="150" style="float:right;">
+									<img src="{{url('/')}}/{{$lempar['p_img']}}" class="img-rounded" alt="Cinque Terre" width="160" height="170" style="float:right;">
 							@endif
 						</div>
 					</div><!--// .contact-info -->
