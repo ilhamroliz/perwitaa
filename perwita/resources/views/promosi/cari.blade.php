@@ -123,7 +123,7 @@
                     <h3>Status Approval : <span style="font-weight:normal;" id="approve">-</span></h3>
                 </div>
                 <div class="col-lg-12">
-                    <h3>Jabatan : <span style="font-weight:normal;" id="jabatan">-</span></h3>
+                    <h3>Jabatan Lama - Jabatan Baru : <span style="font-weight:normal;" id="jabatan">-</span></h3>
                 </div>
               </div>
             </div>
