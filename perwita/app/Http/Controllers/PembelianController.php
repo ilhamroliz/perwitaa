@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\d_notifikasi;
 use App\d_purchase;
 use App\d_purchase_dt;
 use Carbon\Carbon;
@@ -72,23 +73,25 @@ class PembelianController extends Controller
     {
         //PO-001/14/12/2018
         $sekarang = Carbon::now('Asia/Jakarta');
-        $tanggal = $sekarang->day;
-        $bulan = $sekarang->month;
-        $tahun = $sekarang->year;
-        $counter = DB::select("select COALESCE(max(mid(p_nota,4,3)), '000') as counter from d_purchase where (mid(p_nota,8,2)) = '".$tanggal."' and (mid(p_nota,11,2)) = '".$bulan."' and (right(p_nota,4)) = '".$tahun."'");
+        $tanggal = $sekarang->format('d');
+        $bulan = $sekarang->format('m');
+        $tahun = $sekarang->format('Y');
+        $counter = DB::select("select max(mid(p_nota,4,3)) as counter, (mid(p_nota,8,2)) as tanggal, MAX(MID(p_nota,10,2)) as bulan, (right(p_nota,4)) as tahun from d_purchase");
+        $counter = $counter[0]->counter;
 
         $tmp = ((int)$counter)+1;
-        $kode = sprintf("%05s", $tmp);
+        $kode = sprintf("%03s", $tmp);
         $finalkode = 'PO-'.$kode.'/'.$tanggal.'/'.$bulan.'/'.$tahun;
         return $finalkode;
     }
 
     public function save(Request $request)
     {
-        DB::beginTransaction();
-        try {
+       /* DB::beginTransaction();
+        try {*/
 
             $nota = $this->getNewNota();
+
             $id = DB::table('d_purchase')
                 ->max('p_id');
 
@@ -149,7 +152,9 @@ class PembelianController extends Controller
             }
             d_purchase_dt::insert($pd);
 
-            DB::commit();
+            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");
+
+            /*DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -159,7 +164,7 @@ class PembelianController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }
+        }*/
 
     }
 
