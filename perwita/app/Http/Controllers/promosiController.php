@@ -27,7 +27,7 @@ class promosiController extends Controller
     public function getData()
     {
         $pekerja = DB::table('d_pekerja')
-            ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan_lamaran')
+            ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->leftJoin('d_mitra_pekerja', function ($e){
                 $e->on('mp_pekerja', '=', 'p_id');
             })
