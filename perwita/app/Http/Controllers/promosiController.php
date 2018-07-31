@@ -257,15 +257,30 @@ class promosiController extends Controller
             ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id', 'pd_jabatan_awal', 'pd_jabatan_sekarang')
             ->get();
 
-            $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
-      join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
-      join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
-
             for ($i=0; $i < count($data); $i++) {
+             if ($data[$i]->pd_jabatan_awal == 1) {
+               $data[$i]->pd_jabatan_awal = 'Manager';
+             } elseif ($data[$i]->pd_jabatan_awal == 2) {
+               $data[$i]->pd_jabatan_awal = 'Supervisor';
+             } elseif ($data[$i]->pd_jabatan_awal == 3) {
+               $data[$i]->pd_jabatan_awal = 'Staff';
+             } elseif ($data[$i]->pd_jabatan_awal == 4) {
+               $data[$i]->pd_jabatan_awal = 'Operator';
+             }
 
-              $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
-              $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
-            }
+             }
+
+             for ($i=0; $i < count($data); $i++) {
+               if ($data[$i]->pd_jabatan_sekarang == 1) {
+                 $data[$i]->pd_jabatan_sekarang = 'Manager';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
+                 $data[$i]->pd_jabatan_sekarang = 'Supervisor';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
+                 $data[$i]->pd_jabatan_sekarang = 'Staff';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
+                 $data[$i]->pd_jabatan_sekarang = 'Operator';
+               }
+             }
 
       if (count($data) > 0) {
         return response()->json($data);
@@ -314,15 +329,30 @@ class promosiController extends Controller
             ->get();
 
 
-              $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
-        join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
-        join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
-
             for ($i=0; $i < count($data); $i++) {
+             if ($data[$i]->pd_jabatan_awal == 1) {
+               $data[$i]->pd_jabatan_awal = 'Manager';
+             } elseif ($data[$i]->pd_jabatan_awal == 2) {
+               $data[$i]->pd_jabatan_awal = 'Supervisor';
+             } elseif ($data[$i]->pd_jabatan_awal == 3) {
+               $data[$i]->pd_jabatan_awal = 'Staff';
+             } elseif ($data[$i]->pd_jabatan_awal == 4) {
+               $data[$i]->pd_jabatan_awal = 'Operator';
+             }
 
-              $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
-              $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
-            }
+             }
+
+             for ($i=0; $i < count($data); $i++) {
+               if ($data[$i]->pd_jabatan_sekarang == 1) {
+                 $data[$i]->pd_jabatan_sekarang = 'Manager';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
+                 $data[$i]->pd_jabatan_sekarang = 'Supervisor';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
+                 $data[$i]->pd_jabatan_sekarang = 'Staff';
+               } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
+                 $data[$i]->pd_jabatan_sekarang = 'Operator';
+               }
+             }
 
       if (count($data) > 0) {
         return response()->json($data);
