@@ -257,10 +257,11 @@ class promosiController extends Controller
             ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
             ->get();
 
+            $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+      join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
+      join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
+
             for ($i=0; $i < count($data); $i++) {
-              $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
-        join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
-        join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
 
               $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
               $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
@@ -312,10 +313,12 @@ class promosiController extends Controller
             ->where('pd_id', $request->id)
             ->get();
 
-            for ($i=0; $i < count($data); $i++) {
+
               $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
         join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
         join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
+
+            for ($i=0; $i < count($data); $i++) {
 
               $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
               $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
