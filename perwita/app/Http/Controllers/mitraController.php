@@ -50,42 +50,6 @@ class mitraController extends Controller
     {
         return view('mitra.formTambah');
     }
-
-<<<<<<< HEAD
-        d_mitra::insert(array(
-          'm_id' => $idmitra,
-          'm_name' => $request->namamitra,
-          'm_address' => $request->alamatmitra,
-          'm_cp' => $request->nama_cp,
-          'm_cp_phone' => $request->no_cp,
-          'm_phone' => $request->notelp,
-          'm_note' => $request->ket,
-        ));
-        d_mitra_mou::insert(array(
-          'mm_mitra' => $idmitra,
-          'mm_detailid' => $idmou,
-          'mm_mou' => $request->nomou,
-          'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
-          'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
-          'mm_aktif' => null,
-          'mm_status' => null,
-      ));
-
-      $countmitra = DB::table('d_mitra')
-          ->where('m_status_approval', null)
-          ->get();
-
-      DB::table('d_notifikasi')
-          ->where('n_fitur', 'Mitra')
-          ->update([
-            'n_qty' => count($countmitra),
-            'n_insert' => Carbon::now()
-          ]);
-
-        return response()->json([
-          'status' => 'berhasil',
-        ]);
-=======
     public function simpan(Request $request)
     {
         DB::beginTransaction();
@@ -93,7 +57,7 @@ class mitraController extends Controller
             $idmitra = d_mitra::max('m_id') + 1;
 
             $idmou = DB::table('d_mitra_mou')->where('mm_mitra', '=', $idmitra)->max('mm_detailid');
->>>>>>> 8e6e22464a10a83e838c808dfb1430f249708a5f
+
 
             if ($idmou < 1 || $idmou == null) {
                 $idmou = 1;
@@ -102,35 +66,35 @@ class mitraController extends Controller
             }
 
             d_mitra::insert(array(
-                'm_id' => $idmitra,
-                'm_name' => $request->namamitra,
-                'm_address' => $request->alamatmitra,
-                'm_cp' => $request->nama_cp,
-                'm_cp_phone' => $request->no_cp,
-                'm_phone' => $request->notelp,
-                'm_note' => $request->ket,
-                'm_status' => 'Aktif',
-                'm_insert' => Carbon::now('Asia/Jakarta')
-            ));
-            d_mitra_mou::insert(array(
-                'mm_mitra' => $idmitra,
-                'mm_detailid' => $idmou,
-                'mm_mou' => $request->nomou,
-                'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
-                'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
-                'mm_aktif' => null,
-                'mm_status' => 'null',
-            ));
+                      'm_id' => $idmitra,
+                      'm_name' => $request->namamitra,
+                      'm_address' => $request->alamatmitra,
+                      'm_cp' => $request->nama_cp,
+                      'm_cp_phone' => $request->no_cp,
+                      'm_phone' => $request->notelp,
+                      'm_note' => $request->ket,
+                      'm_status' => 'Aktif',
+                      'm_insert' => Carbon::now('Asia/Jakarta')
+                  ));
+                  d_mitra_mou::insert(array(
+                      'mm_mitra' => $idmitra,
+                      'mm_detailid' => $idmou,
+                      'mm_mou' => $request->nomou,
+                      'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
+                      'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
+                      'mm_aktif' => null,
+                      'mm_status' => 'null',
+                  ));
 
-            $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P' and m_status != 'Tidak'");
-            $jumlah = $jumlah[0]->jumlah;
+                  $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P' and m_status != 'Tidak'");
+                  $jumlah = $jumlah[0]->jumlah;
 
-            d_notifikasi::where('n_fitur', '=', 'Mitra')
-                ->where('n_detail', '=', 'Create')
-                ->update([
-                    'n_qty' => $jumlah
-                ]);
-
+                  d_notifikasi::where('n_fitur', '=', 'Mitra')
+                      ->where('n_detail', '=', 'Create')
+                      ->update([
+                          'n_qty' => $jumlah
+                      ]);
+                      
             DB::commit();
             return response()->json([
                 'status' => 'berhasil',
