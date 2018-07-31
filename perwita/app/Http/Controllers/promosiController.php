@@ -309,6 +309,7 @@ class promosiController extends Controller
                 ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
                 ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
                 ->where('pd_no', 'LIKE', '%'.$keyword.'%')
+                ->groupBy('pd_id')
                 ->LIMIT(20)
                 ->get();
 
