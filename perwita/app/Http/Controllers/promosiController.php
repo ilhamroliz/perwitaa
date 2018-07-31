@@ -72,8 +72,9 @@ class promosiController extends Controller
             }
 
             for ($i=0; $i < count($pekerja); $i++) {
-              if ($pekerja[$i]->pd_jabatan_sekarang == null && $pekerja[$i]->pd_jabatan_awal == null) {
+              if (empty($pekerja[$i]->pd_jabatan_sekarang) && empty($pekerja[$i]->pd_jabatan_awal)) {
                 $pekerja[$i]->pd_jabatan_awal = $pekerja[$i]->jp_name;
+                $pekerja[$i]->pd_jabatan_sekarang = $pekerja[$i]->jp_name;
               }
             }
 
