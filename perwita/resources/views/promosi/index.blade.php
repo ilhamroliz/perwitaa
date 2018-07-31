@@ -48,7 +48,7 @@
                                 <th>NIK Mitra</th>
                                 <th>Mitra</th>
                                 <th>Divisi</th>
-                                <th>Aksi</th>
+                                <th width="120px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
