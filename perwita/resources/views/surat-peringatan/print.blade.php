@@ -30,6 +30,12 @@
     <div style="text-align: justify;">
     <br /></div>
     <div style="text-align: justify;">
+      No NIK		:   {{$data[0]->p_nip}}
+    </div>
+    <div style="text-align: justify;">
+      No NIK Mitra		:   {{$data[0]->p_nip_mitra}}
+    </div>
+    <div style="text-align: justify;">
       N a m a	:  {{$data[0]->p_name}}
     </div>
     <div style="text-align: justify;">
@@ -43,9 +49,6 @@
     </div>
     <div style="text-align: justify;">
       No Telp	:   {{$data[0]->p_hp}}
-    </div>
-    <div style="text-align: justify;">
-      No NIK		:   {{$data[0]->p_nip}}
     </div>
     <div style="text-align: justify;">
     <br /></div>
