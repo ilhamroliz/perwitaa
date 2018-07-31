@@ -67,7 +67,8 @@
                             <tr>
                               <th>No. Promosi / Demosi</th>
                               <th>Nama</th>
-                              <th>Jabatan</th>
+                              <th>Jabatan Lama</th>
+                              <th>Jabatan Sekarang</th>
                               <th>NIK</th>
                               <th>NIK Mitra</th>
                               <th>Mitra</th>
@@ -210,7 +211,8 @@ $(document).ready(function(){
           html += '<tr>'+
                   '<td>'+result[i].pd_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+result[i].jp_name+'</td>'+
+                  '<td>'+result[i].pd_jabatan_awal+'</td>'+
+                  '<td>'+result[i].pd_jabatan_sekarang+'</td>'+
                   '<td>'+result[i].p_nip+'</td>'+
                   '<td>'+result[i].p_nip_mitra+'</td>'+
                   '<td>'+result[i].m_name+'</td>'+
@@ -262,7 +264,8 @@ $(document).ready(function(){
             html += '<tr>'+
                     '<td>'+result[i].pd_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].jp_name+'</td>'+
+                    '<td>'+result[i].pd_jabatan_awal+'</td>'+
+                    '<td>'+result[i].pd_jabatan_sekarang+'</td>'+
                     '<td>'+result[i].p_nip+'</td>'+
                     '<td>'+result[i].p_nip_mitra+'</td>'+
                     '<td>'+result[i].m_name+'</td>'+
