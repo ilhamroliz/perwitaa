@@ -42,8 +42,7 @@
                         <thead>
                             <tr>
                                 <th>Nama</th>
-                                <th>Jabatan Lama</th>
-                                <th>Jabatan Baru</th>
+                                <th>Jabatan</th>
                                 <th>NIK</th>
                                 <th>NIK Mitra</th>
                                 <th>Mitra</th>
@@ -139,8 +138,7 @@
                 },
                 columns: [
                     {data: 'p_name', name: 'p_name'},
-                    {data: 'pd_jabatan_awal', name: 'pd_jabatan_awal'},
-                    {data: 'pd_jabatan_sekarang', name: 'pd_jabatan_sekarang'},
+                    {data: 'jp_name', name: 'jp_name'},
                     {data: 'p_nip', name: 'p_nip'},
                     {data: 'p_nip_mitra', name: 'p_nip_mitra'},
                     {data: 'm_name', name: 'm_name'},
