@@ -115,15 +115,15 @@
                             </span>
                         </div>
                     </div>
-                    <div class="ibox">
+                    <div class="ibox info-stock" style="display: block;">
                         <div class="ibox-title">
                             <h5 class="infosupp">Info Stock Seragam</h5>
                         </div>
-                        <div class="ibox-content text-center">
-                            <h3 class="stokseragam"></h3>
-                            <span class="small">
-                                Menampilkan info stock seragam
-                            </span>
+                        <div class="ibox-content">
+                            <ul class="list-group clear-list m-t">
+                                <li class="list-group-item fist-item info-stock" style="margin-top: -25px;">
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -243,6 +243,7 @@
             for (var i = 0; i < seragam.length; i++) {
                 harga[seragam[i].s_id] = seragam[i].id_price;
             }
+            infoStock(seragam);
             waitingDialog.hide();
           }, error:function(x, e) {
             waitingDialog.hide();
@@ -261,6 +262,16 @@
               }
             }
         })
+    }
+
+    function infoStock(seragam){
+      console.log(seragam);
+      var html;
+      for (var i = 0; i < seragam.length; i++) {
+        html = html + '<span class="pull-right ukuran">'+seragam[i].qty+'</span>'+seragam[i].i_nama+' '+seragam[i].s_nama;
+      }
+      $('.info-stock').append(html);
+      $('.info-stock').show();
     }
 
     function hitungTambah(inField, e){
