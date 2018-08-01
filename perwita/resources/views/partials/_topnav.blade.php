@@ -1,6 +1,6 @@
 <style media="screen">
 
-  #approvaldown{
+  .approvaldown{
     background-color: #f6f6f6;
   }
 
@@ -8,27 +8,27 @@
     background-color: rgba(0, 0, 0, 0.06);
   }
 
-  .navbar #approvaldown{height:200px; width:350px;}
-  .navbar #approvaldown{overflow:hidden; overflow-y:scroll;}
+  .navbar .approvaldown{height:200px; width:350px;}
+  .navbar .approvaldown{overflow:hidden; overflow-y:scroll;}
 
   /*
  *  STYLE 1
  */
 
-.navbar #approvaldown::-webkit-scrollbar-track
+.navbar .approvaldown::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
 
-.navbar #approvaldown::-webkit-scrollbar
+.navbar .approvaldown::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-.navbar #approvaldown::-webkit-scrollbar-thumb
+.navbar .approvaldown::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
@@ -68,118 +68,8 @@
                                       <input type="hidden" name="operatornotif" value="" id="operatornotif">
                                       <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif"></span>
                                   </a>
-                                  <ul class="dropdown-menu dropdown-alerts approvaldown"  id="approvaldown">
-                                    <div class="media-body" id="showpelamar">
-                                      <li>
-                                          <div class="dropdown-messages-box">
+                                  <ul class="dropdown-menu dropdown-alerts approvaldown"  id="shownotif">
 
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalpelamar')}}" class="pull-left a-body" id="#pelamar-body" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitpelamar"></small>
-                                                <strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showmitra">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalmitra')}}" class="pull-left a-body" id="#mitra-body" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitmitra"></small>
-                                                <strong id="catatanapprovalmitra"></strong><small id="isiapprovalmitra"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showpembelian">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalpembelian')}}" class="pull-left a-body" id="#pembelian-body" title="Lihat Daftar Approval Pembelian Seragam" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitpembelian"></small>
-                                                <strong id="catatanapprovalpembelian"></strong><small id="isiapprovalpembelian"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showsp">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalsp')}}" class="pull-left a-body" id="#sp-body" title="Lihat Daftar Approval SP" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitsp"></small>
-                                                <strong id="catatanapprovalsp"></strong><small id="isiapprovalsp"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showmitrapekerja">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalmitrapekerja')}}" class="pull-left a-body" id="#mitrapekerja-body" title="Lihat Daftar Approval Mitra Pekerja" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitmitrapekerja"></small>
-                                                <strong id="catatanapprovalmitrapekerja"></strong><small id="isiapprovalmitrapekerja"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showpromosi">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitpromosi"></small>
-                                                <strong id="catatanapprovalpromosi"></strong><small id="isiapprovalpromosi"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showremunerasi">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalremunerasi')}}" class="pull-left a-body" id="#remunerasi-body" title="Lihat Daftar Approval Remunerasi" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitremunerasi"></small>
-                                                <strong id="catatanapprovalremunerasi"></strong><small id="isiapprovalremunerasi"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
-                                    <div class="media-body" id="showpenerimaan">
-                                      <li>
-                                          <div class="dropdown-messages-box">
-
-                                            <div class="media-body">
-                                            <a href="{{url('/approvalpermintaan')}}" class="pull-left a-body" id="#penerimaan-body" title="Lihat Daftar Approval Penerimaan Pekerja" style="text-decoration:none; color:black;">
-                                                <small class="pull-right" id="menitpenerimaan"></small>
-                                                <strong id="catatanapprovalpenerimaan"></strong><small id="isiapprovalpenerimaan"></small><br>
-                                             </a>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </div>
                                   </ul>
                                   @endif
                                   @endif

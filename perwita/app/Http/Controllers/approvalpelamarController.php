@@ -21,6 +21,16 @@ class approvalpelamarController extends Controller
             ->where('p_status_approval', '=', null)
             ->get();
 
+            $countpekerja = DB::table('d_pekerja')
+                ->where('p_status_approval', '=', null)
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Calon Pekerja')
+                ->update([
+                  'n_qty' => count($countpekerja)
+                ]);
+
       return view("approvalpelamar.index", compact('data'));
     }
 
@@ -172,6 +182,16 @@ class approvalpelamarController extends Controller
           'p_date_approval' => Carbon::now()
         ]);
 
+        $countpekerja = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Calon Pekerja')
+            ->update([
+              'n_qty' => count($countpekerja)
+            ]);
+
         return response()->json([
           'status' => 'berhasil'
         ]);
@@ -192,6 +212,16 @@ class approvalpelamarController extends Controller
           'p_status_approval' => 'N',
           'p_date_approval' => Carbon::now()
         ]);
+
+        $countpekerja = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Calon Pekerja')
+            ->update([
+              'n_qty' => count($countpekerja)
+            ]);
 
         return response()->json([
           'status' => 'berhasil'
@@ -356,6 +386,16 @@ class approvalpelamarController extends Controller
           ]);
         }
 
+        $countpekerja = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Calon Pekerja')
+            ->update([
+              'n_qty' => count($countpekerja)
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -378,6 +418,16 @@ class approvalpelamarController extends Controller
             'p_date_approval' => Carbon::now()
           ]);
         }
+
+        $countpekerja = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Calon Pekerja')
+            ->update([
+              'n_qty' => count($countpekerja)
+            ]);
 
         DB::commit();
         return response()->json([

@@ -34,6 +34,17 @@ class approvalspController extends Controller
       $data[$i]->sp_date_start = Carbon::Parse($data[$i]->sp_date_end)->format('d/m/Y');
     }
 
+    $count = DB::table('d_surat_pringatan')
+          ->where('sp_isapproved', 'P')
+          ->get();
+
+    DB::table('d_notifikasi')
+        ->where('n_fitur', 'Surat Peringatan')
+        ->update([
+          'n_qty' => count($count)
+        ]);
+
+
       return view('approvalsp.index', compact('data'));
     }
 
@@ -83,6 +94,16 @@ class approvalspController extends Controller
               'pm_reff' => $nosp[0]->sp_no
             ]);
 
+            $count = DB::table('d_surat_pringatan')
+                  ->where('sp_isapproved', 'P')
+                  ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Surat Peringatan')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -103,6 +124,17 @@ class approvalspController extends Controller
             ->update([
               'sp_isapproved' => 'N'
             ]);
+
+            $count = DB::table('d_surat_pringatan')
+                  ->where('sp_isapproved', 'P')
+                  ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Surat Peringatan')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -168,6 +200,16 @@ class approvalspController extends Controller
 
         }
 
+        $count = DB::table('d_surat_pringatan')
+              ->where('sp_isapproved', 'P')
+              ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Surat Peringatan')
+            ->update([
+              'n_qty' => count($count)
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -190,6 +232,16 @@ class approvalspController extends Controller
                 'sp_isapproved' => 'N'
               ]);
         }
+
+        $count = DB::table('d_surat_pringatan')
+              ->where('sp_isapproved', 'P')
+              ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Surat Peringatan')
+            ->update([
+              'n_qty' => count($count)
+            ]);
 
         DB::commit();
         return response()->json([

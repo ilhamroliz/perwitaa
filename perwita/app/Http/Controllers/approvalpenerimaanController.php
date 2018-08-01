@@ -19,6 +19,16 @@ class approvalpenerimaanController extends Controller
             ->where('mc_isapproved', 'P')
             ->get();
 
+            $count = DB::table('d_mitra_contract')
+                ->where('mc_isapproved', 'P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Permintaan Pekerja')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
+
       return view('approvalpenerimaan.index', compact('data'));
     }
 
@@ -31,6 +41,16 @@ class approvalpenerimaanController extends Controller
               ->update([
                 'mc_isapproved' => 'Y'
               ]);
+
+              $count = DB::table('d_mitra_contract')
+                  ->where('mc_isapproved', 'P')
+                  ->get();
+
+              DB::table('d_notifikasi')
+                  ->where('n_fitur', 'Permintaan Pekerja')
+                  ->update([
+                    'n_qty' => count($count)
+                  ]);
 
         DB::commit();
         return response()->json([
@@ -55,6 +75,16 @@ class approvalpenerimaanController extends Controller
                 'mc_isapproved' => 'N'
               ]);
 
+              $count = DB::table('d_mitra_contract')
+                  ->where('mc_isapproved', 'P')
+                  ->get();
+
+              DB::table('d_notifikasi')
+                  ->where('n_fitur', 'Permintaan Pekerja')
+                  ->update([
+                    'n_qty' => count($count)
+                  ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -77,6 +107,16 @@ class approvalpenerimaanController extends Controller
               'mc_isapproved' => 'Y'
             ]);
 
+            $count = DB::table('d_mitra_contract')
+                ->where('mc_isapproved', 'P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Permintaan Pekerja')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -98,6 +138,16 @@ class approvalpenerimaanController extends Controller
           ->update([
             'mc_isapproved' => 'N'
           ]);
+
+          $count = DB::table('d_mitra_contract')
+              ->where('mc_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Permintaan Pekerja')
+              ->update([
+                'n_qty' => count($count)
+              ]);
 
         DB::commit();
         return response()->json([

@@ -22,6 +22,16 @@ class approvalmitraController extends Controller
       $data = DB::table('d_mitra')
             ->where('m_status_approval', '=', null)->get();
 
+      $countmitra = DB::table('d_mitra')
+          ->where('m_status_approval', null)
+          ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Mitra')
+          ->update([
+            'n_qty' => count($countmitra)
+          ]);
+
       return view('approvalmitra.index', compact('data'));
     }
 
@@ -67,6 +77,16 @@ class approvalmitraController extends Controller
           'mm_aktif' => Carbon::now()
         ]);
 
+        $countmitra = DB::table('d_mitra')
+            ->where('m_status_approval', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Mitra')
+            ->update([
+              'n_qty' => count($countmitra)
+            ]);
+
         return response()->json([
           'status' => 'berhasil'
         ]);
@@ -93,6 +113,16 @@ class approvalmitraController extends Controller
           'mm_status' => 'Tidak',
           'mm_aktif' => Carbon::now()
         ]);
+
+        $countmitra = DB::table('d_mitra')
+            ->where('m_status_approval', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Mitra')
+            ->update([
+              'n_qty' => count($countmitra)
+            ]);
 
         return response()->json([
           'status' => 'berhasil'
@@ -182,6 +212,16 @@ class approvalmitraController extends Controller
           ]);
         }
 
+        $countmitra = DB::table('d_mitra')
+            ->where('m_status_approval', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Mitra')
+            ->update([
+              'n_qty' => count($countmitra)
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -210,6 +250,16 @@ class approvalmitraController extends Controller
             'mm_aktif' => Carbon::now()
           ]);
         }
+
+        $countmitra = DB::table('d_mitra')
+            ->where('m_status_approval', null)
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Mitra')
+            ->update([
+              'n_qty' => count($countmitra)
+            ]);
 
         DB::commit();
         return response()->json([

@@ -210,251 +210,42 @@
           })
       }
 
-   // setTimeout(function(){ alert("Hello"); }, 3000);
-  @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
-              getApproval();
+        @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
+            getApproval();
 
-                     function getApproval(){
-                       var pelamar = '';
-                       var mitra = '';
-                       var pembelian = '';
-                       var sp = '';
-                       var mitrapekerja = '';
-                       var promosi = '';
-                       var remunerasi = '';
-                       var penerimaan = '';
-                       var countpelamar = 0;
-                       var countmitra = 0;
-                       var countpembelian = 0;
-                       var countsp = 0;
-                       var countnotif = 0;
-                       var countmitrapekerja = 0;
-                       var countpromosi = 0;
-                       var countremunerasi = 0;
-                       var countpenerimaan = 0;
-                       $.ajax({
-                         type : 'get',
-                         url : '{{url("/approval/cekapproval")}}',
-                         success : function(data){
-                           //console.log(data);
-                           //console.log(notifOBJ);
-                           mitra += '<li">'+
-                               '<div class="dropdown-messages-box">'+
-                                 '<a href="{{url('/approvalmitra')}}" class="pull-left a-img" title="Lihat Daftar Approval Mitra">'+
-                                     '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                  '</a>'+
-                                 '<div class="media-body">'+
-                                 '<a href="{{url('/approvalmitra')}}" class="pull-left a-body" id="#mitra-body" title="Lihat Daftar Approval Mitra" style="text-decoration:none; color:black;">'+
-                                     '<small class="pull-right" id="menitmitra"></small>'+
-                                     '<strong id="catatanapprovalmitra"></strong><small id="isiapprovalmitra"></small><br>'+
-                                  '</a>'+
-                                 '</div>'+
-                             '</div>'+
-                             '</li>';
+            function getApproval(){
+              var html = '';
+              $.ajax({
+                type: 'get',
+                url : '{{url("/approval/cekapproval")}}',
+                success : function(result){
 
-                             pelamar += '<li">'+
-                                 '<div class="dropdown-messages-box">'+
-                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left a-img" title="Lihat Daftar Approval Pelamar">'+
-                                       '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
+                  $('#countnotif').text(result[0].count);
+
+                  for (var i = 0; i < result.length; i++) {
+                    html += '<div class="media-body">'+
+                              '<li>'+
+                            '<div class="dropdown-messages-box">'+
+                            '<div class="media-body">'+
+                                    '<a href="' + baseUrl + result[i].n_url + '" class="pull-left a-body" title="Lihat Daftar Approval '+result[i].n_fitur+' " style="text-decoration:none; color:black;">'+
+                                          '<small class="pull-right">'+result[i].n_insert+'</small>'+
+                                          ' <strong> '+result[i].n_fitur+' </strong><small> Anda memiliki '+result[i].n_qty+' permintaan approval '+result[i].n_fitur+' </small><br>'+
                                     '</a>'+
-                                   '<div class="media-body">'+
-                                   '<a href="{{url('/approvalpelamar')}}" class="pull-left a-body" id="#pelamar-body" title="Lihat Daftar Approval Pelamar" style="text-decoration:none; color:black;">'+
-                                       '<small class="pull-right" id="menitpelamar"></small>'+
-                                       '<strong id="catatanapprovalpelamar"></strong><small id="isiapprovalpelamar"></small><br>'+
-                                    '</a>'+
-                                   '</div>'+
-                               '</div>'+
-                               '</li>';
+                              '</div>'+
+                            '</div>'+
+                              '</li>'+
+                            '</div>'+
+                            '<li class="divider" style="background-color:rgb(179, 179, 179);"></li>';
+                  }
 
-                               pembelian += '<li">'+
-                                   '<div class="dropdown-messages-box">'+
-                                     '<a href="{{url('/approvalpembelian')}}" class="pull-left a-img" title="Lihat Daftar Approval Pembelian Seragam">'+
-                                         '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                      '</a>'+
-                                     '<div class="media-body">'+
-                                     '<a href="{{url('/approvalpembelian')}}" class="pull-left a-body" id="#pembelian-body" title="Lihat Daftar Approval Pembelian Seragam" style="text-decoration:none; color:black;">'+
-                                         '<small class="pull-right" id="menitpembelian"></small>'+
-                                         '<strong id="catatanapprovalpembelian"></strong><small id="isiapprovalpembelian"></small><br>'+
-                                      '</a>'+
-                                     '</div>'+
-                                 '</div>'+
-                                 '</li>';
+                  $('#shownotif').append(html);
 
-                                 sp += '<li">'+
-                                     '<div class="dropdown-messages-box">'+
-                                       '<a href="{{url('/approvalsp')}}" class="pull-left a-img" title="Lihat Daftar Approval SP">'+
-                                           '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                        '</a>'+
-                                       '<div class="media-body">'+
-                                       '<a href="{{url('/approvalsp')}}" class="pull-left a-body" id="#sp-body" title="Lihat Daftar Approval SP" style="text-decoration:none; color:black;">'+
-                                           '<small class="pull-right" id="menitsp"></small>'+
-                                           '<strong id="catatanapprovalsp"></strong><small id="isiapprovalsp"></small><br>'+
-                                        '</a>'+
-                                       '</div>'+
-                                   '</div>'+
-                                   '</li>';
+                }
+              });
+            }
 
-                                   mitrapekerja += '<li">'+
-                                       '<div class="dropdown-messages-box">'+
-                                         '<a href="{{url('/approvalmitrapekerja')}}" class="pull-left a-img" title="Lihat Daftar Approval Mitra Pekerja">'+
-                                             '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                          '</a>'+
-                                         '<div class="media-body">'+
-                                         '<a href="{{url('/approvalmitrapekerja')}}" class="pull-left a-body" id="#mitrapekerja-body" title="Lihat Daftar Approval Mitra Pekerja" style="text-decoration:none; color:black;">'+
-                                             '<small class="pull-right" id="menitmitrapekerja"></small>'+
-                                             '<strong id="catatanapprovalmitrapekerja"></strong><small id="isiapprovalmitrapekerja"></small><br>'+
-                                          '</a>'+
-                                         '</div>'+
-                                     '</div>'+
-                                     '</li>';
+        @endif
 
-                                     promosi += '<li">'+
-                                         '<div class="dropdown-messages-box">'+
-                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-img" title="Lihat Daftar Approval Promosi & Demosi">'+
-                                               '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                            '</a>'+
-                                           '<div class="media-body">'+
-                                           '<a href="{{url('/approvalpromosi')}}" class="pull-left a-body" id="#promosi-body" title="Lihat Daftar Approval Promosi & Demosi" style="text-decoration:none; color:black;">'+
-                                               '<small class="pull-right" id="menitpromosi"></small>'+
-                                               '<strong id="catatanapprovalpromosi"></strong><small id="isiapprovalpromosi"></small><br>'+
-                                            '</a>'+
-                                           '</div>'+
-                                       '</div>'+
-                                       '</li>';
 
-                                       remunerasi += '<li">'+
-                                           '<div class="dropdown-messages-box">'+
-                                             '<a href="{{url('/approvalremunerasi')}}" class="pull-left a-img" title="Lihat Daftar Approval Remunerasi">'+
-                                                 '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                              '</a>'+
-                                             '<div class="media-body">'+
-                                             '<a href="{{url('/approvalremunerasi')}}" class="pull-left a-body" id="#remunerasi-body" title="Lihat Daftar Approval Remunerasi" style="text-decoration:none; color:black;">'+
-                                                 '<small class="pull-right" id="menitremunerasi"></small>'+
-                                                 '<strong id="catatanapprovalremunerasi"></strong><small id="isiapprovalremunerasi"></small><br>'+
-                                              '</a>'+
-                                             '</div>'+
-                                         '</div>'+
-                                         '</li>';
-
-                                       penerimaan += '<li">'+
-                                           '<div class="dropdown-messages-box">'+
-                                             '<a href="{{url('/approvalpermintaan')}}" class="pull-left a-img" title="Lihat Daftar Approval Penerimaan Pekerja">'+
-                                                 '<img alt="image" class="img-circle" src="{{ asset('assets/img/attention-sign-outline.png') }}" />'+
-                                              '</a>'+
-                                             '<div class="media-body">'+
-                                             '<a href="{{url('/approvalpermintaan')}}" class="pull-left a-body" id="#penerimaan-body" title="Lihat Daftar Approval Penerimaan Pekerja" style="text-decoration:none; color:black;">'+
-                                                 '<small class="pull-right" id="menitpenerimaan"></small>'+
-                                                 '<strong id="catatanapprovalpenerimaan"></strong><small id="isiapprovalpenerimaan"></small><br>'+
-                                              '</a>'+
-                                             '</div>'+
-                                         '</div>'+
-                                         '</li>';
-
-                               if (data.data[0].jumlah > 0) {
-                                  countnotif += 1;
-                                  countpelamar += 1;
-                                  $("#showpelamar").html(pelamar);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitpelamar").html(data.data[0].p_insert);
-                                  $("#catatanapprovalpelamar").text(data.data[0].catatan);
-                                  $("#isiapprovalpelamar").html(" Anda Memiliki "+data.data[0].jumlah+" Persetujuan");
-                               }
-                               if (data.data[1].jumlah > 0) {
-                                  countnotif += 1;
-                                  countmitra += 1;
-                                  $("#showmitra").html(mitra);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitmitra").html(data.data[1].m_insert);
-                                  $("#catatanapprovalmitra").text(data.data[1].catatan);
-                                  $("#isiapprovalmitra").html(" Anda Memiliki "+data.data[1].jumlah+" Persetujuan");
-                               }
-                               if (data.data[2].jumlah > 0) {
-                                  countnotif += 1;
-                                  countpembelian += 1;
-                                  $("#showpembelian").html(pembelian);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitpembelian").html(data.data[2].p_date);
-                                  $("#catatanapprovalpembelian").text(data.data[2].catatan);
-                                  $("#isiapprovalpembelian").html(" Anda Memiliki "+data.data[2].jumlah+" Persetujuan");
-                               }
-                               if (data.data[3].jumlah > 0) {
-                                  countnotif += 1;
-                                  countsp += 1;
-                                  $("#showsp").html(sp);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitsp").html(data.data[3].sp_insert);
-                                  $("#catatanapprovalsp").text(data.data[3].catatan);
-                                  $("#isiapprovalsp").html(" Anda Memiliki "+data.data[3].jumlah+" Persetujuan");
-                               }
-                               if (data.data[4].jumlah > 0) {
-                                  countnotif += 1;
-                                  countmitrapekerja += 1;
-                                  $("#showmitrapekerja").html(mitrapekerja);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitmitrapekerja").html(data.data[4].mp_insert);
-                                  $("#catatanapprovalmitrapekerja").text(data.data[4].catatan);
-                                  $("#isiapprovalmitrapekerja").html(" Anda Memiliki "+data.data[4].jumlah+" Persetujuan");
-                               }
-                               if (data.data[5].jumlah > 0) {
-                                  countnotif += 1;
-                                  countpromosi += 1;
-                                  $("#showpromosi").html(promosi);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitpromosi").html(data.data[5].pd_insert);
-                                  $("#catatanapprovalpromosi").text(data.data[5].catatan);
-                                  $("#isiapprovalpromosi").html(" Anda Memiliki "+data.data[5].jumlah+" Persetujuan");
-                               }
-                               if (data.data[6].jumlah > 0) {
-                                  countnotif += 1;
-                                  countremunerasi += 1;
-                                  $("#showremunerasi").html(remunerasi);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitremunerasi").html(data.data[6].r_insert);
-                                  $("#catatanapprovalremunerasi").text(data.data[6].catatan);
-                                  $("#isiapprovalremunerasi").html(" Anda Memiliki "+data.data[6].jumlah+" Persetujuan");
-                               }
-                               if (data.data[7].jumlah > 0) {
-                                  countnotif += 1;
-                                  countpenerimaan += 1;
-                                  $("#showpenerimaan").html(penerimaan);
-                                  $("#countnotif").text(countnotif);
-                                  $("#menitpenerimaan").html(data.data[7].mc_insert);
-                                  $("#catatanapprovalpenerimaan").text(data.data[7].catatan);
-                                  $("#isiapprovalpenerimaan").html(" Anda Memiliki "+data.data[7].jumlah+" Persetujuan");
-                               }
-                               if (countpelamar == 0) {
-                                 $("#showpelamar").html('<center> Tidak ada permintaan Approval Pelamar </center>');
-                               }
-                               if (countmitra == 0) {
-                                 $("#showmitra").html('<center> Tidak ada permintaan Approval Mitra </center>');
-                               }
-                               if (countpembelian == 0) {
-                                 $("#showpembelian").html('<center> Tidak ada permintaan Approval Pembelian Seragam </center>');
-                               }
-                               if (countsp == 0) {
-                                 $("#showsp").html('<center> Tidak ada permintaan Approval SP </center>');
-                               }
-                               if (countmitrapekerja == 0) {
-                                 $("#showmitrapekerja").html('<center> Tidak ada permintaan Approval Mitra Pekerja </center>');
-                               }
-                               if (countpromosi == 0) {
-                                 $("#showpromosi").html('<center> Tidak ada permintaan Approval Promosi & Demosi </center>');
-                               }
-                               if (countremunerasi == 0) {
-                                 $("#showremunerasi").html('<center> Tidak ada permintaan Approval Remunerasi </center>');
-                               }
-                               if (countpenerimaan == 0) {
-                                 $("#showpenerimaan").html('<center> Tidak ada permintaan Approval Penerimaan Pekerja </center>');
-                               }
-                               if (countnotif == 0) {
-                                 // $("#showpelamar").html(pelamar);
-                                 // $("#showmitra").html(mitra);
-                                 // $("#showpembelian").html(pembelian);
-                               }
-                         }
-                       });
-                        setTimeout(function(){getApproval();}, 5000);
-                     }
-      @endif
 
     </script>

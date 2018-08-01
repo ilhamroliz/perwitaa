@@ -152,7 +152,7 @@ class PembelianController extends Controller
             }
             d_purchase_dt::insert($pd);
 
-            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");
+            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");            
 
             DB::commit();
             return response()->json([

@@ -59,7 +59,8 @@
                                 <th>No. Remunerasi</th>
                                 <th>Nama Tenaga Kerja</th>
                                 <th>Jabatan</th>
-                                <th>Nilai Remunerasi</th>
+                                <th>Gaji Awal</th>
+                                <th>Gaji Terbaru</th>
                                 <th>Keterangan</th>
                                 <th width="120px">Aksi</th>
                             </tr>
@@ -73,7 +74,8 @@
                                 <td>{{$x->r_no}}</td>
                                 <td>{{$x->p_name}}</td>
                                 <td>{{$x->jp_name}}</td>
-                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_nilai,2,',','.')}}</span></td>
+                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_awal,2,',','.')}}</span></td>
+                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_terbaru,2,',','.')}}</span></td>
                                 <td>{{$x->r_note}}</td>
                                 <td align="center">
                                 <button type="button" onclick="detail({{$x->r_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>

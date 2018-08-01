@@ -23,6 +23,19 @@ class approvalpembelianController extends Controller
           ->groupBy('p_nota')
           ->get();
 
+          $count = DB::table('d_purchase')
+              ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+              ->join('d_supplier', 's_id', '=', 'p_supplier')
+              ->where('pd_receivetime', null)
+              ->where('p_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Pembelian')
+              ->update([
+                'n_qty' => count($count)
+              ]);
+
       return view('approvalpembelian.index', compact('data'));
     }
 
@@ -33,6 +46,20 @@ class approvalpembelianController extends Controller
                   ->update([
                     'p_isapproved' => 'Y'
                   ]);
+
+                  $count = DB::table('d_purchase')
+                  ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+                  ->join('d_supplier', 's_id', '=', 'p_supplier')
+                      ->where('pd_receivetime', null)
+                      ->where('p_isapproved', 'P')
+                      ->get();
+
+                  DB::table('d_notifikasi')
+                      ->where('n_fitur', 'Pembelian')
+                      ->update([
+                        'n_qty' => count($count)
+                      ]);
+
         return response()->json([
             'status' => 'berhasil'
         ]);
@@ -52,6 +79,20 @@ class approvalpembelianController extends Controller
                   ->update([
                     'p_isapproved' => 'N'
                   ]);
+
+                  $count = DB::table('d_purchase')
+                  ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+                  ->join('d_supplier', 's_id', '=', 'p_supplier')
+                      ->where('pd_receivetime', null)
+                      ->where('p_isapproved', 'P')
+                      ->get();
+
+                  DB::table('d_notifikasi')
+                      ->where('n_fitur', 'Pembelian')
+                      ->update([
+                        'n_qty' => count($count)
+                      ]);
+
         return response()->json([
             'status' => 'berhasil'
         ]);
@@ -117,6 +158,19 @@ class approvalpembelianController extends Controller
                     ]);
         }
 
+        $count = DB::table('d_purchase')
+        ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+        ->join('d_supplier', 's_id', '=', 'p_supplier')
+            ->where('pd_receivetime', null)
+            ->where('p_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Pembelian')
+            ->update([
+              'n_qty' => count($count)
+            ]);
+
         DB::commit();
         return response()->json([
             'status' => 'berhasil'
@@ -138,6 +192,19 @@ class approvalpembelianController extends Controller
                       'p_isapproved' => 'N'
                     ]);
         }
+
+        $count = DB::table('d_purchase')
+        ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+        ->join('d_supplier', 's_id', '=', 'p_supplier')
+            ->where('pd_receivetime', null)
+            ->where('p_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Pembelian')
+            ->update([
+              'n_qty' => count($count)
+            ]);
 
         DB::commit();
         return response()->json([

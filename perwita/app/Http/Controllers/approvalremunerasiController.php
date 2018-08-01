@@ -18,9 +18,19 @@ class approvalremunerasiController extends Controller
       $data = DB::table('d_remunerasi')
           ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
           ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
-          ->select('r_no', 'p_name', 'jp_name', 'r_nilai', 'r_note', 'r_id')
+          ->select('r_no', 'p_name', 'jp_name', 'r_awal', 'r_terbaru', 'r_note', 'r_id')
           ->where('r_isapproved', 'P')
           ->get();
+
+          $count = DB::table('d_remunerasi')
+                ->where('r_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Remunerasi')
+              ->update([
+                'n_qty' => count($count)
+              ]);
 
       return view('approvalremunerasi.index', compact('data'));
     }
@@ -60,6 +70,17 @@ class approvalremunerasiController extends Controller
           'pm_reff' => $pekerja[0]->r_no
         ]);
 
+        $count = DB::table('d_remunerasi')
+              ->where('r_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Remunerasi')
+            ->update([
+              'n_qty' => count($count)
+            ]);
+
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -81,6 +102,17 @@ class approvalremunerasiController extends Controller
           ->update([
             'r_isapproved' => 'N'
           ]);
+
+          $count = DB::table('d_remunerasi')
+                ->where('r_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Remunerasi')
+              ->update([
+                'n_qty' => count($count)
+              ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -149,6 +181,15 @@ class approvalremunerasiController extends Controller
             ]);
           }
 
+          $count = DB::table('d_remunerasi')
+                ->where('r_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Remunerasi')
+              ->update([
+                'n_qty' => count($count)
+              ]);
 
 
 
@@ -171,6 +212,17 @@ class approvalremunerasiController extends Controller
         DB::table('d_remunerasi')
           ->whereIn('r_id', $request->pilih)
           ->update(['r_isapproved' => 'N']);
+
+          $count = DB::table('d_remunerasi')
+                ->where('r_isapproved', 'P')
+              ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Remunerasi')
+              ->update([
+                'n_qty' => count($count)
+              ]);
+
 
         DB::commit();
         return response()->json([

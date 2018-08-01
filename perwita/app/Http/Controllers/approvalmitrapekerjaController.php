@@ -34,6 +34,16 @@ class approvalmitrapekerjaController extends Controller
             ->groupBy('m_id')
             ->get();
 
+            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                ->where('mp_isapproved','P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Penerimaan Pekerja')
+                ->update([
+                  'n_qty' => count($countmitrapekerja)
+                ]);
+
       for ($i=0; $i < count($data); $i++) {
           $data[$i]->mp_insert = Carbon::parse($data[$i]->mp_insert)->diffForHumans();
       }
@@ -55,6 +65,16 @@ class approvalmitrapekerjaController extends Controller
             ->where('mp_isapproved', 'P')
             ->get();
 
+            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                ->where('mp_isapproved','P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Penerimaan Pekerja')
+                ->update([
+                  'n_qty' => count($countmitrapekerja)
+                ]);
+
       return view('approvalmitrapekerja.pekerja', compact('data'));
     }
 
@@ -74,6 +94,16 @@ class approvalmitrapekerjaController extends Controller
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
                     (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+
+                    $countmitrapekerja = DB::table('d_mitra_pekerja')
+                        ->where('mp_isapproved','P')
+                        ->get();
+
+                    DB::table('d_notifikasi')
+                        ->where('n_fitur', 'Penerimaan Pekerja')
+                        ->update([
+                          'n_qty' => count($countmitrapekerja)
+                        ]);
 
         DB::commit();
         return response()->json([
@@ -99,6 +129,16 @@ class approvalmitrapekerjaController extends Controller
         DB::select("update d_mitra_contract
                     set mc_fulfilled =
                     (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
+
+                    $countmitrapekerja = DB::table('d_mitra_pekerja')
+                        ->where('mp_isapproved','P')
+                        ->get();
+
+                    DB::table('d_notifikasi')
+                        ->where('n_fitur', 'Penerimaan Pekerja')
+                        ->update([
+                          'n_qty' => count($countmitrapekerja)
+                        ]);
 
         DB::commit();
         return response()->json([
@@ -181,6 +221,17 @@ class approvalmitrapekerjaController extends Controller
 
       DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
 
+      $countmitrapekerja = DB::table('d_mitra_pekerja')
+          ->where('mp_isapproved','P')
+          ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Penerimaan Pekerja')
+          ->update([
+            'n_qty' => count($countmitrapekerja)
+          ]);
+
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -202,6 +253,17 @@ class approvalmitrapekerjaController extends Controller
             ]);
 
       DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = ".$request->kontrak." and mp_isapproved = 'Y') where mc_contractid = ".$request->kontrak."");
+
+      $countmitrapekerja = DB::table('d_mitra_pekerja')
+          ->where('mp_isapproved','P')
+          ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Penerimaan Pekerja')
+          ->update([
+            'n_qty' => count($countmitrapekerja)
+          ]);
+
 
         DB::commit();
         return response()->json([
