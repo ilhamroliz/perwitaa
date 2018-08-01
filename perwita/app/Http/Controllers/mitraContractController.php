@@ -60,6 +60,7 @@ class mitraContractController extends Controller
                 DB::raw('@rownum  := @rownum  + 1 AS number')
             )
             ->orderBy('d_mitra_contract.mc_insert', 'DESC')->where('mc_need', '>', DB::raw('mc_fulfilled'))
+            ->where('mc_isapproved', 'Y')
             ->get();
 
         $mc = collect($mc);
@@ -111,6 +112,17 @@ class mitraContractController extends Controller
                 'mc_jobdesk' => $request->jobdesk,
                 'mc_note' => $request->note,
             ]);
+
+            $countpenerimaan = DB::table('d_mitra_contract')
+                ->where('mc_isapproved', 'P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Permintaan Pekerja')
+                ->update([
+                  'n_qty' => count($countpenerimaan),
+                  'n_insert' => Carbon::now()              
+                ]);
 
             DB::commit();
             return response()->json([

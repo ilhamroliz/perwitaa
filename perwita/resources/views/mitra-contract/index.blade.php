@@ -144,20 +144,6 @@
 
     }
 
-                                //+"mc_mitra": 7
-//      +"mc_contractid": 0
-//      +"mc_no": "1"
-//      +"mc_date": "0000-00-00"
-//      +"mc_expired": "0000-00-00"
-//      +"mc_need": 0
-//      +"mc_fulfilled": 0
-//      +"m_name": "PT ALAM JAYA PRIMA NUSA"
-//      +"m_address": "Trosobo n"
-//      +"c_name": "Soto Sedaap Boyolali"
-//      +"number": 1
-
-
-
 var table;
 setTimeout(function () {
     $('#mitra').css('display', '');
@@ -203,7 +189,6 @@ setTimeout(function () {
         url : baseUrl + "/manajemen-kontrak-mitra/data-kontrak-mitra/"+idmitra+"/"+iddetail+"/detail",
         dataType : 'json',
         success : function(result){
-          console.log(result);
           $('#mc_no').html(': '+result.data[0].mc_no);
           $('#mc_mitra').html(': '+result.data[0].m_name);
           $('#mc_divisi').html(': '+result.data[0].md_name);

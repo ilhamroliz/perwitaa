@@ -92,9 +92,10 @@ class mitraController extends Controller
                   d_notifikasi::where('n_fitur', '=', 'Mitra')
                       ->where('n_detail', '=', 'Create')
                       ->update([
-                          'n_qty' => $jumlah
+                          'n_qty' => $jumlah,
+                          'n_insert' => Carbon::now()
                       ]);
-                      
+
             DB::commit();
             return response()->json([
                 'status' => 'berhasil',

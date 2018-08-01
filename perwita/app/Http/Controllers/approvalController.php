@@ -58,6 +58,11 @@ class approvalController extends Controller
         ->where('r_isapproved','P')
         ->get();
 
+    $penerimaan = DB::table('d_mitra_contract')
+        ->selectRaw('mc_insert, count(mc_contractid) as jumlah, "Approval Permintaan Pekerja" as catatan')
+        ->where('mc_isapproved','P')
+        ->get();
+
       $countpembelian = count($pembelian);
 
       $hitung = 0;
@@ -157,7 +162,20 @@ class approvalController extends Controller
         $data[6] = $remunerasi[0];
       }
 
+      if (empty($penerimaan)) {
+        $data[7] = $temp = array(
+          'pd_insert' => '1 detik yang lalu',
+          'jumlah' => 0,
+          'catatan' => 'Approval Permintaan Pekerja'
+        );
+      } else {
+        if ($penerimaan[0]->jumlah > 0) {
+          $hitung += 1;
+        }
 
+        $penerimaan[0]->mc_insert = Carbon::parse($penerimaan[0]->mc_insert)->diffForHumans();
+        $data[7] = $penerimaan[0];
+      }
 
 // dd($pembelian);
     return response()->json([
@@ -167,4 +185,5 @@ class approvalController extends Controller
   }
   //  dd($count);
   }
+
 }

@@ -166,6 +166,20 @@
                                         </div>
                                         </li>
                                     </div>
+                                    <li class="divider" style="background-color:rgb(179, 179, 179);"></li>
+                                    <div class="media-body" id="showpenerimaan">
+                                      <li>
+                                          <div class="dropdown-messages-box">
+
+                                            <div class="media-body">
+                                            <a href="{{url('/approvalpermintaan')}}" class="pull-left a-body" id="#penerimaan-body" title="Lihat Daftar Approval Penerimaan Pekerja" style="text-decoration:none; color:black;">
+                                                <small class="pull-right" id="menitpenerimaan"></small>
+                                                <strong id="catatanapprovalpenerimaan"></strong><small id="isiapprovalpenerimaan"></small><br>
+                                             </a>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </div>
                                   </ul>
                                   @endif
                                   @endif
