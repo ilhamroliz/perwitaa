@@ -47,7 +47,7 @@
 
                     <div class="ibox-content">
                         <form role="form" class="form-inline">
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-3">
                                 <select class="form-control chosen-select-width" name="mitra" style="width:100%" id="mitra" onchange="getItem()">
                                 <option value="" disabled selected>--Pilih Mitra--</option>
                                 @foreach($mitra as $mitra)
@@ -55,7 +55,12 @@
                                 @endforeach
                             </select>
                             </div>
-                            <div class="form-group col-md-5 pilihseragam">
+                            <div class="form-group col-md-3 divisi">
+                                <select class="form-control chosen-select-width" name="divisi" style="width:100%" id="divisi" readonly>
+                                    <option value=" ">--Pilih Divisi--</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
                                     <option value=" ">--Pilih Seragam--</option>
                             </select>
@@ -120,10 +125,9 @@
                             <h5 class="infosupp">Info Stock Seragam</h5>
                         </div>
                         <div class="ibox-content">
-                            <ul class="list-group clear-list m-t">
-                                <li class="list-group-item fist-item info-stock" style="margin-top: -25px;">
-                                </li>
-                            </ul>
+                        <ul class="list-group clear-list m-t" id='showinfo'>
+
+                        </ul>
                         </div>
                     </div>
                 </div>
@@ -164,6 +168,7 @@
             "language": dataTableLanguage
         });
 
+        $("#showinfo").hide();
         $("#mitra").chosen();
 
     });
@@ -179,10 +184,16 @@
             $('.telpmitra').html('<i class="fa fa-phone"></i> '+response.info.m_phone);
             var form ='<select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam">';
             form = form + '<option value=" " selected>--Pilih Seragam--</option>';
+            var divisi ='<select class="form-control chosen-select-width" name="divisi" style="width:100%" id="divisi">';
+            divisi = divisi + '<option value=" " selected>--Pilih Divisi--</option>';
             var data = response.data;
             for (var i = 0; i < data.length; i++) {
                 form = form + '<option value="'+data[i].i_id+'"> '+data[i].i_nama+' </option>';
             }
+            for (var i = 0; i < response.divisi.length; i++) {
+                divisi += '<option value="'+response.divisi[i].md_id+'">'+response.divisi[i].md_name+'</option>';
+            }
+            $('.divisi').html(divisi);
             $('.pilihseragam').html(form);
             waitingDialog.hide();
           }, error:function(x, e) {
@@ -225,10 +236,11 @@
         waitingDialog.show();
         var mitra = $('#mitra').val();
         var item = $('#seragam').val();
+        var divisi = $('#divisi').val();
         $.ajax({
           url: baseUrl + '/manajemen-penjualan/getPekerja',
           type: 'get',
-          data: {mitra: mitra, item: item},
+          data: {mitra: mitra, item: item, divisi:divisi},
           success: function(response){
             var seragam = response.seragam;
             var pekerja = response.pekerja;
@@ -265,13 +277,12 @@
     }
 
     function infoStock(seragam){
-      console.log(seragam);
-      var html;
+      var html = '';
       for (var i = 0; i < seragam.length; i++) {
-        html = html + '<span class="pull-right ukuran">'+seragam[i].qty+'</span>'+seragam[i].i_nama+' '+seragam[i].s_nama;
+        html = html + '<li class="list-group-item fist-item"><span class="pull-right">'+seragam[i].qty+'</span><span></span>'+seragam[i].i_nama+'</li>';
       }
-      $('.info-stock').append(html);
-      $('.info-stock').show();
+      $('#showinfo').html(html);
+      $('#showinfo').show();
     }
 
     function hitungTambah(inField, e){

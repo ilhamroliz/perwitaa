@@ -48,9 +48,15 @@ class PenjualanController extends Controller
             ->where('m_id', '=', $mitra)
             ->first();
 
+        $divisi = DB::table('d_mitra_divisi')
+              ->select('md_id', 'md_name')
+              ->where('md_mitra', $mitra)
+              ->get();
+
         return response()->json([
             'data' => $item,
-            'info' => $info
+            'info' => $info,
+            'divisi' => $divisi
         ]);
     }
 
@@ -58,11 +64,13 @@ class PenjualanController extends Controller
     {
         $mitra = $request->mitra;
         $item = $request->item;
+        $divisi = $request->divisi;
 
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->select('mp_pekerja', 'p_name', 'p_hp', 'p_nip', 'mp_mitra_nik')
             ->where('mp_mitra', '=', $mitra)
+            ->where('mp_divisi', '=', $divisi)
             ->where('mp_isapproved', '=', 'Y')
             ->where('mp_status', '=', 'Aktif')
             ->get();

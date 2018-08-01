@@ -226,28 +226,27 @@
                   } else {
                     $('.approvaldown').css('height', '200px');
                     $('.approvaldown').css('width', '350px');
-                  }
 
-                  $('#countnotif').text(result[0].count);
+                    $('#countnotif').text(result[0].count);
 
-
-                  for (var i = 0; i < result.length; i++) {
-                    html += '<div class="media-body">'+
-                              '<li>'+
-                            '<div class="dropdown-messages-box">'+
-                            '<div class="media-body">'+
-                                    '<a href="' + baseUrl + result[i].n_url + '" class="pull-left a-body" title="Lihat Daftar Approval '+result[i].n_fitur+' " style="text-decoration:none; color:black;">'+
-                                          '<small class="pull-right">'+result[i].n_insert+'</small>'+
-                                          ' <strong> '+result[i].n_fitur+' </strong><small> Anda memiliki '+result[i].n_qty+' permintaan approval '+result[i].n_fitur+' </small><br>'+
-                                    '</a>'+
+                    for (var i = 0; i < result.length; i++) {
+                      html += '<div class="media-body">'+
+                                '<li>'+
+                              '<div class="dropdown-messages-box">'+
+                              '<div class="media-body">'+
+                                      '<a href="' + baseUrl + result[i].n_url + '" class="pull-left a-body" title="Lihat Daftar Approval '+result[i].n_fitur+' " style="text-decoration:none; color:black;">'+
+                                            '<small class="pull-right">'+result[i].n_insert+'</small>'+
+                                            ' <strong> '+result[i].n_fitur+' </strong><small> Anda memiliki '+result[i].n_qty+' permintaan approval '+result[i].n_fitur+' </small><br>'+
+                                      '</a>'+
+                                '</div>'+
                               '</div>'+
-                            '</div>'+
-                              '</li>'+
-                            '</div>'+
-                            '<li class="divider" style="background-color:rgb(179, 179, 179);"></li>';
-                  }
+                                '</li>'+
+                              '</div>'+
+                              '<li class="divider" style="background-color:rgb(179, 179, 179);"></li>';
+                    }
 
-                  $('#shownotif').append(html);
+                    $('#shownotif').append(html);
+                  }
 
                 }
               });
