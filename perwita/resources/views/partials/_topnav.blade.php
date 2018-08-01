@@ -8,7 +8,6 @@
     background-color: rgba(0, 0, 0, 0.06);
   }
 
-  .navbar .approvaldown{height:200px; width:350px;}
   .navbar .approvaldown{overflow:hidden; overflow-y:scroll;}
 
   /*
@@ -68,7 +67,7 @@
                                       <input type="hidden" name="operatornotif" value="" id="operatornotif">
                                       <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif"></span>
                                   </a>
-                                  <ul class="dropdown-menu dropdown-alerts approvaldown"  id="shownotif">
+                                  <ul class="dropdown-menu dropdown-alerts approvaldown" id="shownotif">
 
                                   </ul>
                                   @endif

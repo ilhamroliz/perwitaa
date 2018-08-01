@@ -220,7 +220,16 @@
                 url : '{{url("/approval/cekapproval")}}',
                 success : function(result){
 
+                  if (result.status == 'kosong') {
+                    $('.approvaldown').css('height', '40px');
+                    $('#shownotif').html('<center>Tidak ada data approval</center>');
+                  } else {
+                    $('.approvaldown').css('height', '200px');
+                    $('.approvaldown').css('width', '350px');
+                  }
+
                   $('#countnotif').text(result[0].count);
+
 
                   for (var i = 0; i < result.length; i++) {
                     html += '<div class="media-body">'+

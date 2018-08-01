@@ -28,9 +28,14 @@ class approvalController extends Controller
       $data[$i]->count = count($data);
     }
 
+    if (empty($data)) {
+      return response()->json([
+        'status' => 'kosong'
+      ]);
+    } else {
+      return response()->json($data);
+    }
 
-    return response()->json($data);
-    
    // return response()->json($data);
 
   //   Carbon::setLocale('id');
