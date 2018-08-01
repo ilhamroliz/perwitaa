@@ -75,6 +75,11 @@ class loginController extends Controller
                     /*Session::set('mem_comp', $userCompany->c_id);
                     Session::set('mem_year', $userCompany->y_year);*/
                     Session::set('jabatan', $getJabatan->m_jabatan);
+                    $comp = DB::table('d_mem_comp')
+                        ->where('mc_mem', '=', $user->m_id)
+                        ->first();
+
+                    Session::set('mem_comp', $comp->mc_comp);
                     Auth::login($user); //set login
                     $response = [
                         'status' => 'sukses',

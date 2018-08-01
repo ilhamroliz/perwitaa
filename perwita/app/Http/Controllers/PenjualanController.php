@@ -69,10 +69,14 @@ class PenjualanController extends Controller
 
         $seragam = DB::table('d_item_dt')
             ->join('d_size', 'id_size', '=', 's_id')
-            ->select('s_nama', 's_id', 'id_price')
+            ->join('d_stock', function ($q){
+                $q->on('d_stock.s_item', '=', 'id_item');
+                $q->on('d_stock.s_item_dt', '=', 'id_detailid');
+            })
+            ->select('s_nama', 'd_size.s_id', 'id_price', DB::raw('d_stock.s_qty as qty'))
             ->where('id_item', '=', $item)
             ->get();
-
+        dd($seragam);
         return response()->json([
             'pekerja' => $pekerja,
             'seragam' => $seragam
