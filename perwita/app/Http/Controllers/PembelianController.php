@@ -87,8 +87,8 @@ class PembelianController extends Controller
 
     public function save(Request $request)
     {
-       /* DB::beginTransaction();
-        try {*/
+        DB::beginTransaction();
+        try {
 
             $nota = $this->getNewNota();
 
@@ -154,7 +154,7 @@ class PembelianController extends Controller
 
             DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");
 
-            /*DB::commit();
+            DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -164,7 +164,7 @@ class PembelianController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }*/
+        }
 
     }
 

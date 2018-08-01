@@ -95,11 +95,6 @@
                             <span class="text-muted small">
 
                             </span>
-
-                            <address style="margin-top: 10px;">
-                                <strong>Nomor Nota</strong><br>
-                                {{ $nota }}<br>
-                            </address>
                             <div class="m-t-sm">
                                 <div class="btn-group">
                                 <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
@@ -183,7 +178,7 @@
           success: function(response){
             $('.telpmitra').html('<i class="fa fa-phone"></i> '+response.info.m_phone);
             var form ='<select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam">';
-            form = form + '<option value="" disabled selected>--Pilih Seragam--</option>';
+            form = form + '<option value=" " selected>--Pilih Seragam--</option>';
             var data = response.data;
             for (var i = 0; i < data.length; i++) {
                 form = form + '<option value="'+data[i].i_id+'"> '+data[i].i_nama+' </option>';
@@ -212,7 +207,7 @@
 
     function selectSize(seragam){
         var form ='<select class="form-control pilihukuran chosen-select-width" name="ukuran[]" style="width:100%" id="ukuran">';
-        form = form + '<option value="" disabled selected>--Pilih Ukuran--</option>';
+        form = form + '<option value="tidak" selected>-- Tidak --</option>';
         for (var i = 0; i < seragam.length; i++) {
                 form = form + '<option value="'+seragam[i].s_id+'"> '+seragam[i].s_nama+' </option>';
             }

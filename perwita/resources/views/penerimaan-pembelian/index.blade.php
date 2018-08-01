@@ -267,7 +267,7 @@
                     title: "Gagal",
                     text: "Sistem gagal menyimpan data",
                     type: "error",
-                    showConfirmButton: false
+                    showConfirmButton: true
                 });
             }
           }, error:function(x, e) {
