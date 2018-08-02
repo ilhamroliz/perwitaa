@@ -192,7 +192,7 @@
             divisi = divisi + '<option value=" " selected>--Pilih Divisi--</option>';
             var data = response.data;
             for (var i = 0; i < data.length; i++) {
-                form = form + '<option value="'+data[i].i_id+'"> '+data[i].i_nama+' </option>';
+                form = form + '<option value="'+data[i].i_id+'"> '+data[i].i_nama+ ' (' +data[i].i_warna+ ')'+ ' </option>';
             }
             for (var i = 0; i < response.divisi.length; i++) {
                 divisi += '<option value="'+response.divisi[i].md_id+'">'+response.divisi[i].md_name+'</option>';
@@ -286,7 +286,7 @@
     function infoStock(seragam){
       var html = '';
       for (var i = 0; i < seragam.length; i++) {
-        html = html + '<li class="list-group-item fist-item"><span class="pull-right">'+seragam[i].qty+'</span><span></span>'+seragam[i].i_nama+ ' ' + seragam[i].s_nama + '</li>';
+        html = html + '<li class="list-group-item fist-item"><span class="pull-right">'+seragam[i].qty+'</span><span></span>'+seragam[i].i_nama+ ' ' + seragam[i].i_warna + ' ' + seragam[i].s_nama +'</li>';
       }
       $('#showinfo').html(html);
       $('#showinfo').show();

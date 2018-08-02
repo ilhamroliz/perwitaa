@@ -41,18 +41,18 @@
                     <table id="tabel-pembelian" class="table table-bordered table-striped" >
                         <thead>
                             <tr>
-                                <td>No</td>
-                                <td>Tanggal</td>
-                                <td>Mitra</td>
-                                <td>Nota</td>
-                                <td>Total</td>
-                                <td>Status</td>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Mitra</th>
+                                <th>Nota</th>
+                                <th>Total</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
-                    </table>                    
-                </div>                
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -69,7 +69,7 @@
                 <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
@@ -91,6 +91,6 @@
         });
     });
 
-    
+
 </script>
 @endsection

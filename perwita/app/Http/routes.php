@@ -698,4 +698,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpermintaan/setujui', 'approvalpenerimaanController@setujui');
     Route::get('approvalpermintaan/tolaklist', 'approvalpenerimaanController@tolaklist');
     Route::get('approvalpermintaan/setujuilist', 'approvalpenerimaanController@setujuilist');
+
+    //Approval Penjualan
+    Route::get('approvalpenjualan', 'approvalpenjualanController@index');
 });

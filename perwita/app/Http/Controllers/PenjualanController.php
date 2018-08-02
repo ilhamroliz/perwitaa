@@ -39,7 +39,7 @@ class PenjualanController extends Controller
         $mitra = $request->mitra;
         $item = DB::table('d_mitra_item')
             ->join('d_item', 'i_id', '=', 'mi_item')
-            ->select('i_nama', 'i_id')
+            ->select('i_nama', 'i_id', 'i_warna')
             ->where('mi_mitra', '=', $mitra)
             ->get();
 
@@ -82,7 +82,7 @@ class PenjualanController extends Controller
                 $q->on('d_stock.s_item', '=', 'id_item');
                 $q->on('d_stock.s_item_dt', '=', 'id_detailid');
             })
-            ->select('i_nama', 's_nama', 'd_size.s_id', 'id_price', DB::raw('d_stock.s_qty as qty'))
+            ->select('i_nama', 's_nama', 'd_size.s_id', 'id_price', 'i_warna', DB::raw('d_stock.s_qty as qty'))
             ->where('id_item', '=', $item)
             ->orderBy('d_size.s_id')
             ->get();
