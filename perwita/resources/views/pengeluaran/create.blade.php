@@ -65,6 +65,7 @@
                                     <option value=" ">--Pilih Seragam--</option>
                             </select>
                             </div>
+                            <input type="hidden" name="total" id="total">
                             <button class="btn btn-info" type="button" onclick="getData()"><i class="fa fa-search"></i></button>
                             <div class="table-responsive" style="margin-top: 30px;">
                                 <table class="table table-striped table-bordered table-hover" id="tabelitem">
@@ -91,7 +92,7 @@
                             <span>
                                 Total
                             </span>
-                            <h2 class="font-bold totalpembelian">
+                            <h2 class="font-bold totalpembelian" align="center">
                                 Rp. 0
                             </h2>
 
@@ -158,8 +159,11 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+    var stock = [];
     var tabelpekerja;
     var jumlahceklist = 0;
+    var counter = 0;
+    var total = 0;
     var nota = '{{ $nota }}';
     $( document ).ready(function() {
         tabelpekerja = $("#tabelitem").DataTable({
@@ -217,8 +221,9 @@
     }
 
     function selectSize(seragam){
-        var form ='<select class="form-control pilihukuran chosen-select-width" name="ukuran[]" style="width:100%" id="ukuran">';
-        form = form + '<option value="tidak" selected>-- Tidak --</option>';
+      ++counter;
+        var form ='<select class="form-control pilihukuran chosen-select-width index'+counter+'" name="ukuran[]" style="width:100%" id="ukuran" onchange="ambil('+counter+')">';
+        form = form + '<option value="Tidak" selected>-- Tidak --</option>';
         for (var i = 0; i < seragam.length; i++) {
                 form = form + '<option value="'+seragam[i].s_id+'"> '+seragam[i].s_nama+' </option>';
             }
@@ -245,6 +250,8 @@
             var seragam = response.seragam;
             var pekerja = response.pekerja;
             tabelpekerja.clear();
+            stock = seragam;
+            counter = 0;
             for (var i = 0; i < pekerja.length; i++) {
                 tabelpekerja.row.add([
                     pekerja[i].p_name +' ('+pekerja[i].p_hp+')',
@@ -326,7 +333,7 @@
         $.ajax({
           url: baseUrl + '/manajemen-penjualan/save',
           type: 'get',
-          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota,
+          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total,
           success: function(response){
             waitingDialog.hide();
             if (response.status == 'sukses') {
@@ -334,6 +341,7 @@
                         title: "Sukses",
                         text: "Data sudah tersimpan",
                         type: "success"
+
                     }, function () {
                       //cari();
                       location.reload();
@@ -343,7 +351,7 @@
                     title: "Gagal",
                     text: "Sistem gagal menyimpan data",
                     type: "error",
-                    showConfirmButton: false
+                    showConfirmButton: true
                 });
             }
           }, error:function(x, e) {
@@ -365,6 +373,63 @@
             }
         })
     }
+
+    function ambil(id){
+      var values = [];
+      $(".pilihukuran").each(function(i, sel){
+          var selectedVal = $(sel).val();
+          values.push(selectedVal);
+      });
+      var pilih = compressArray(values);
+      for (var i = 0; i < pilih.length; i++) {
+        for (var j = 0; j < stock.length; j++) {
+            if (stock[j].s_id == pilih[i].value) {
+              if (stock[j].qty < pilih[i].count) {
+                $('select.index'+id).val('Tidak');
+                swal({
+                  title: "Stock Kurang!",
+                  type: "warning",
+                  showConfirmButton: true
+                })
+              } else {
+                total = stock[j].id_price * pilih[i].count;
+                $('.totalpembelian').text('Rp. '+accounting.formatMoney(total, "", 0, ".", ","));
+              }
+            }
+        }
+      }
+    }
+
+    function compressArray(original) {
+
+	var compressed = [];
+	// make a copy of the input array
+	var copy = original.slice(0);
+
+	// first loop goes over every element
+	for (var i = 0; i < original.length; i++) {
+
+		var myCount = 0;
+		// loop over every element in the copy and see if it's the same
+		for (var w = 0; w < copy.length; w++) {
+			if (original[i] == copy[w]) {
+				// increase amount of times duplicate is found
+				myCount++;
+				// sets item to undefined
+				delete copy[w];
+			}
+		}
+
+		if (myCount > 0) {
+			var a = new Object();
+			a.value = original[i];
+			a.count = myCount;
+			compressed.push(a);
+		}
+	}
+
+	return compressed;
+};
 
 </script>
 @endsection

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Session;
 class PenjualanController extends Controller
 {
     public function index()
-    {    
+    {
         return view('pengeluaran.index');
     }
 
@@ -93,7 +93,7 @@ class PenjualanController extends Controller
         ]);
     }
 
-    public function save(Request $request)
+    public function savelama(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -396,5 +396,77 @@ class PenjualanController extends Controller
                 'data' => $e
             ]);
         }
+    }
+
+    public function save(Request $request){
+      $seragam = $request->seragam;
+      $mitra = $request->mitra;
+      $ukuran = $request->ukuran;
+      $total = $request->total;
+      $comp = Session::get('mem_comp');
+      $sekarang = Carbon::now('Asia/Jakarta');
+      $nota = $this->getnewnota(1);
+
+      $id = DB::table('d_sales')
+          ->max('s_id');
+
+      DB::beginTransaction();
+      try {
+        DB::table('d_sales')->insert([
+          's_id' => $id + 1,
+          's_comp' => Session::get('mem_comp'),
+          's_member' => $mitra,
+          's_nota' => $nota,
+          's_total_gross' => $total,
+          's_disc_percent' => 0,
+          's_disc_value' => 0,
+          's_total_net' => $total,
+          's_isapproved' => 'P'
+        ]);
+
+        $count = DB::table('d_sales')
+                ->where('s_isapproved', 'P')
+                ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Penjualan')
+            ->update([
+              'n_qty' => count($count),
+              'n_insert' => Carbon::now()
+            ]);
+
+        DB::commit();
+        return response()->json([
+          'status' => 'sukses'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+
+    }
+
+    public function getnewnota(){
+      $querykode = DB::select(DB::raw("SELECT MAX(MID(s_nota,4,3)) as counter, MAX(MID(s_nota,8,2)) as tanggal, MAX(MID(s_nota,11,2)) as bulan, MAX(RIGHT(s_nota,4)) as tahun FROM d_sales"));
+
+      if (count($querykode) > 0) {
+        if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y') || $querykode[0]->tanggal != date('d')) {
+            $kode = "001";
+        } else {
+          foreach($querykode as $k)
+            {
+              $tmp = ((int)$k->counter)+1;
+              $kode = sprintf("%03s", $tmp);
+            }
+        }
+      } else {
+        $kode = "001";
+      }
+
+      $finalkode = 'POS-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+      return $finalkode;
     }
 }
