@@ -218,6 +218,14 @@ class PenerimaanController extends Controller
     {
         $nota = $request->nota;
         $data = DB::table('d_stock_mutation')
+            ->join('d_item', 'sm_item', '=', 'i_id')
+            ->join('d_item_dt', function ($q){
+                $q->on('i_id', '=', 'id_item');
+                $q->on('sm_item_dt', '=', 'id_detailid');
+            })
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->join('d_mem', 'm_id', '=', 'sm_petugas')
+            ->select('d_stock_mutation.*', DB::raw('date_format(sm_date, "%d/%m/%Y %H:%i") as sm_date'), DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'm_name')
             ->where('sm_nota', '=', $nota)
             ->get();
         dd($data);
