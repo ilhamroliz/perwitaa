@@ -85,8 +85,7 @@
                                         <select name="aksi[]" class="form-control" id="aksi-return" style="width: 100%;">
                                             <option disabled selected>-- Pilih Aksi --</option>
                                             <option value="uang">Ganti Uang</option>
-                                            <option value="barang">Ganti Barang Sejenis</option>
-                                            <option value="lain">Ganti Barang Lain</option>
+                                            <option value="sejenis">Ganti Barang Sejenis</option>
                                         </select>
                                     </td>
                                 </tr>

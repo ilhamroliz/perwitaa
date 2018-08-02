@@ -62,11 +62,11 @@ class PenerimaanController extends Controller
             $updateBarang = $getStockLama[0]->pd_barang_masuk + $request->sisa;
             $sekarang = Carbon::now('Asia/Jakarta');
 
-            if ($updateBarang == $getStockLama[0]->pd_qty){
-                $data = array( 'pd_barang_masuk' => $updateBarang, 'pd_receivetime' => $sekarang );
+            if ($updateBarang == $getStockLama[0]->pd_qty) {
+                $data = array('pd_barang_masuk' => $updateBarang, 'pd_receivetime' => $sekarang);
                 d_purchase_dt::where('pd_purchase', '=', $request->id)->where('pd_detailid', '=', $request->dt)->update($data);
             } else {
-                $data = array( 'pd_barang_masuk' => $updateBarang );
+                $data = array('pd_barang_masuk' => $updateBarang);
                 d_purchase_dt::where('pd_purchase', '=', $request->id)->where('pd_detailid', '=', $request->dt)->update($data);
             }
 
@@ -95,7 +95,7 @@ class PenerimaanController extends Controller
                 ->get();
 
 //========== buat data stok baru
-            if (count($idStok) < 1){
+            if (count($idStok) < 1) {
                 $idStok = DB::table('d_stock')
                     ->max('s_id');
                 $idStok = $idStok + 1;
@@ -180,23 +180,64 @@ class PenerimaanController extends Controller
                 'data' => $e
             ]);
         }
-
     }
 
-    public function print(){
-      $data = DB::table('d_stock_mutation')
+    public function history()
+    {
+        return view('penerimaan-pembelian.history');
+    }
+
+    public function cariHistory(Request $request)
+    {
+        $cari = $request->term;
+        $data = DB::table('d_purchase')
+            ->join('d_supplier', 's_id', '=', 'p_supplier')
+            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+            ->select('s_company', 'p_nota')
+            ->where(function ($q) use ($cari) {
+                $q->orWhere('s_company', 'like', '%'.$cari.'%');
+                $q->orWhere('p_nota', 'like', '%'.$cari.'%');
+            })
+            ->whereNotNull('pd_receivetime')
+            ->groupBy('p_id')
+            ->take(20)->get();
+
+        if ($data == null) {
+            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+        } else {
+
+            foreach ($data as $query) {
+                $results[] = ['id' => $query->p_nota, 'label' => $query->p_nota . ' ('.$query->s_company.')' ];
+            }
+        }
+
+        return Response::json($results);
+    }
+
+    public function detailHistory(Request $request)
+    {
+        $nota = $request->nota;
+        $data = DB::table('d_stock_mutation')
+            ->where('sm_nota', '=', $nota)
+            ->get();
+        dd($data);
+    }
+
+    public function print()
+    {
+        $data = DB::table('d_stock_mutation')
             ->join('d_stock', 'd_stock.s_id', '=', 'sm_stock')
             ->join('d_item', 'i_id', '=', 'sm_item')
-            ->join('d_item_dt', function($e){
-              $e->on('id_item', '=', 'i_id');
-              $e->on('id_detailid', '=', 'sm_item_dt');
+            ->join('d_item_dt', function ($e) {
+                $e->on('id_item', '=', 'i_id');
+                $e->on('id_detailid', '=', 'sm_item_dt');
             })
             ->join('d_size', 'd_size.s_id', '=', 'id_size')
             ->join('d_kategori', 'k_id', '=', 'i_kategori')
             ->select('sm_date', 'sm_qty', 'sm_nota', 'sm_delivery_order', 'i_nama', 'i_warna', 'k_nama', 's_nama')
             ->get();
 
-      // dd($data);
-      return view('penerimaan-pembelian.print', compact('data'));
+        // dd($data);
+        return view('penerimaan-pembelian.print', compact('data'));
     }
 }

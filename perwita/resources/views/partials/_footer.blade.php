@@ -4,7 +4,7 @@
         <strong>Perwita Nusaraya</strong>
     </div>
     <div>
-        <strong>Copyright</strong> - Alam Raya Sebar Barokah
+        <strong>Copyright</strong> - Alamraya Sebar Barokah
 
     </div>
 </div>

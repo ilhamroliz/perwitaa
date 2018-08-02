@@ -32,6 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Penerimaan Pembelian</h5>
+        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaan/cari') }}"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -62,8 +63,10 @@
                             </thead>
                         </table>
                     </div>
+                    <div class="col-md-12">
+                      <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a>
+                    </div>
                 </div>
-                <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a>
             </div>
         </div>
     </div>
