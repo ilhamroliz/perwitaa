@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/pengeluaran/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/pengeluaran/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +17,10 @@
     <session id="1291506207">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.12" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.35" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -49,15 +50,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
+            <state relative-caret-position="1640">
+              <caret line="97" selection-start-line="97" selection-end-line="97" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
-                <marker date="1533040129687" expanded="true" signature="896:1501" ph="..." />
-                <marker date="1533040129687" expanded="false" signature="941:957" ph="..." />
-                <marker date="1533040129687" expanded="false" signature="1131:1147" ph="..." />
-                <marker date="1533040129687" expanded="false" signature="1332:1348" ph="..." />
-                <marker date="1533040129687" expanded="true" signature="3515:3644" ph="..." />
+                <marker date="1533109154737" expanded="true" signature="896:1501" ph="..." />
+                <marker date="1533109154737" expanded="false" signature="941:957" ph="..." />
+                <marker date="1533109154737" expanded="false" signature="1131:1147" ph="..." />
+                <marker date="1533109154737" expanded="false" signature="1332:1348" ph="..." />
+                <marker date="1533109154737" expanded="true" signature="3548:3677" ph="..." />
               </folding>
             </state>
           </provider>
@@ -66,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-290">
+            <state relative-caret-position="8060">
               <caret line="425" column="58" selection-start-line="425" selection-start-column="58" selection-end-line="425" selection-end-column="58" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
@@ -88,7 +89,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
+            <state relative-caret-position="291">
               <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
             </state>
           </provider>
@@ -97,7 +98,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
+            <state relative-caret-position="1360">
               <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
             </state>
           </provider>
@@ -106,7 +107,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1280">
+            <state relative-caret-position="2960">
               <caret line="156" column="25" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
             </state>
           </provider>
@@ -359,7 +360,8 @@
       <workItem from="1532955777180" duration="598000" />
       <workItem from="1533005471851" duration="5135000" />
       <workItem from="1533045521652" duration="394000" />
-      <workItem from="1533094126178" duration="4691000" />
+      <workItem from="1533094126178" duration="5463000" />
+      <workItem from="1533180496076" duration="425000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -603,17 +605,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197135000" />
+    <option name="totallyTimeSpent" value="198332000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14145234" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14372164" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -624,6 +623,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -833,16 +834,16 @@
         <state relative-caret-position="2736">
           <caret line="166" column="43" selection-start-line="166" selection-start-column="43" selection-end-line="166" selection-end-column="43" />
           <folding>
-            <marker date="1532934663350" expanded="true" signature="2094:2346" ph="update d_mit... " />
-            <marker date="1532934663350" expanded="true" signature="2178:2295" ph="select count... d_mitra_pekerja" />
-            <marker date="1532934663350" expanded="true" signature="2852:3104" ph="update d_mit... " />
-            <marker date="1532934663350" expanded="true" signature="2936:3053" ph="select count... d_mitra_pekerja" />
-            <marker date="1532934663350" expanded="true" signature="5417:5623" ph="update d_mit... " />
-            <marker date="1532934663350" expanded="true" signature="5461:5576" ph="select count... d_mitra_pekerja" />
-            <marker date="1532934663350" expanded="true" signature="5780:5981" ph="update d_mit... " />
-            <marker date="1532934663350" expanded="true" signature="5824:5935" ph="select count... d_mitra_pekerja" />
-            <marker date="1532934663350" expanded="true" signature="6476:6677" ph="update d_mit... " />
-            <marker date="1532934663350" expanded="true" signature="6520:6631" ph="select count... d_mitra_pekerja" />
+            <marker date="1533109154727" expanded="true" signature="2094:2346" ph="update d_mit... " />
+            <marker date="1533109154727" expanded="true" signature="2178:2295" ph="select count... d_mitra_pekerja" />
+            <marker date="1533109154727" expanded="true" signature="2852:3104" ph="update d_mit... " />
+            <marker date="1533109154727" expanded="true" signature="2936:3053" ph="select count... d_mitra_pekerja" />
+            <marker date="1533109154727" expanded="true" signature="5417:5623" ph="update d_mit... " />
+            <marker date="1533109154727" expanded="true" signature="5461:5576" ph="select count... d_mitra_pekerja" />
+            <marker date="1533109154727" expanded="true" signature="5780:5981" ph="update d_mit... " />
+            <marker date="1533109154727" expanded="true" signature="5824:5935" ph="select count... d_mitra_pekerja" />
+            <marker date="1533109154727" expanded="true" signature="6476:6677" ph="update d_mit... " />
+            <marker date="1533109154727" expanded="true" signature="6520:6631" ph="select count... d_mitra_pekerja" />
           </folding>
         </state>
       </provider>
@@ -889,24 +890,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
+        <state relative-caret-position="1640">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
           <folding>
             <element signature="e#40#61#0#PHP" expanded="true" />
-            <marker date="1533040129687" expanded="true" signature="896:1501" ph="..." />
-            <marker date="1533040129687" expanded="false" signature="941:957" ph="..." />
-            <marker date="1533040129687" expanded="false" signature="1131:1147" ph="..." />
-            <marker date="1533040129687" expanded="false" signature="1332:1348" ph="..." />
-            <marker date="1533040129687" expanded="true" signature="3515:3644" ph="..." />
+            <marker date="1533109154737" expanded="true" signature="896:1501" ph="..." />
+            <marker date="1533109154737" expanded="false" signature="941:957" ph="..." />
+            <marker date="1533109154737" expanded="false" signature="1131:1147" ph="..." />
+            <marker date="1533109154737" expanded="false" signature="1332:1348" ph="..." />
+            <marker date="1533109154737" expanded="true" signature="3548:3677" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-290">
+        <state relative-caret-position="8060">
           <caret line="425" column="58" selection-start-line="425" selection-start-column="58" selection-end-line="425" selection-end-column="58" />
           <folding>
             <element signature="e#40#61#0#PHP" expanded="true" />
@@ -924,30 +932,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
+        <state relative-caret-position="1360">
           <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1280">
+        <state relative-caret-position="2960">
           <caret line="156" column="25" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
+        <state relative-caret-position="291">
           <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
         </state>
       </provider>
