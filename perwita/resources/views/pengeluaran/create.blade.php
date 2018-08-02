@@ -279,7 +279,7 @@
     function infoStock(seragam){
       var html = '';
       for (var i = 0; i < seragam.length; i++) {
-        html = html + '<li class="list-group-item fist-item"><span class="pull-right">'+seragam[i].qty+'</span><span></span>'+seragam[i].i_nama+'</li>';
+        html = html + '<li class="list-group-item fist-item"><span class="pull-right">'+seragam[i].qty+'</span><span></span>'+seragam[i].i_nama+ ' ' + seragam[i].s_nama + '</li>';
       }
       $('#showinfo').html(html);
       $('#showinfo').show();
