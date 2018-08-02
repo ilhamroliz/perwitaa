@@ -78,9 +78,9 @@
                         <td>{{$x->mc_fulfilled}}</td>
                         <td align="center">
                           <div class="action">
-                            <button type="button" onclick="detail({{$x->mc_mitra}},{{$x->mc_divisi}})" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" onclick="setujui({{$x->mc_contractid}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" onclick="tolak({{$x->mc_contractid}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button type="button" title="Detail" onclick="detail({{$x->mc_mitra}},{{$x->mc_divisi}})" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" title="Setujui" onclick="setujui({{$x->mc_contractid}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" title="Tolak" onclick="tolak({{$x->mc_contractid}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                           </div>
                       </td>
                       </tr>

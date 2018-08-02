@@ -81,9 +81,9 @@
                           <td>{{$x->p_hp}}</td>
                           <td align="center">
                             <div class="action">
-                                <button type="button" id="{{$x->mp_id}}" onclick="detail({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" id="{{$x->mp_id}}" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" title="Detail" onclick="detail({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" title="Setujui" onclick="setujui({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" id="{{$x->mp_id}}" title="Tolak" onclick="tolak({{$x->mp_id}},{{$x->mp_contract}},{{$x->mp_pekerja}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                             </div>
                           </td>
                         </tr>
@@ -751,7 +751,7 @@ function detail(id, mp_contract, mp_pekerja){
             },
             function(isConfirm) {
               if (isConfirm) {
-                window.location.href = baseUrl + '/approvalmitrapekerja/print?mp_contract='+mp_contract;        
+                window.location.href = baseUrl + '/approvalmitrapekerja/print?mp_contract='+mp_contract;
               } else {
                 swal.close();
                 setTimeout(function(){

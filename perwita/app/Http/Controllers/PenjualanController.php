@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Session;
 class PenjualanController extends Controller
 {
     public function index()
-    {
+    {    
         return view('pengeluaran.index');
     }
 

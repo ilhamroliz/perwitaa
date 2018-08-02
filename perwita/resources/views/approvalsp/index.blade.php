@@ -75,9 +75,9 @@
                               <td>{{$x->sp_date_start}} - {{$x->sp_date_end}}</td>
                               <td>{{$x->sp_note}}</td>
                                 <td align="center">
-                                <button type="button" onclick="detail({{$x->sp_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" onclick="setujui({{$x->sp_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" onclick="tolak({{$x->sp_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" title="Detail" onclick="detail({{$x->sp_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" title="Setujui" onclick="setujui({{$x->sp_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" title="Tolak" onclick="tolak({{$x->sp_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                                </td>
                             </tr>
                             @endforeach

@@ -78,9 +78,9 @@
                                 <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_terbaru,2,',','.')}}</span></td>
                                 <td>{{$x->r_note}}</td>
                                 <td align="center">
-                                <button type="button" onclick="detail({{$x->r_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" onclick="setujui({{$x->r_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" onclick="tolak({{$x->r_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" title="Detail" onclick="detail({{$x->r_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" title="Setujui" onclick="setujui({{$x->r_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" title="Tolak" onclick="tolak({{$x->r_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                                </td>
                             </tr>
                             @endforeach
