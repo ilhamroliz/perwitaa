@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Penerimaan Pembelian</h5>
-        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaan/cari') }}"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaan/cari') }}"><i class="fa fa-history"></i>&nbsp;History</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

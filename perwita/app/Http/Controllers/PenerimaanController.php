@@ -199,6 +199,7 @@ class PenerimaanController extends Controller
                 $q->orWhere('p_nota', 'like', '%'.$cari.'%');
             })
             ->whereNotNull('pd_receivetime')
+            ->whereNotIn('p_id', DB::select('select pd_purchase from d_purchase_dt where pd_receivetime is null'))
             ->groupBy('p_id')
             ->take(20)->get();
 
