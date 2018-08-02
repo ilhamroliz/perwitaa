@@ -46,6 +46,19 @@
                                 <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Cari</button>
                         </span>
                     </div>
+                    <div class="table-responsive" style="margin-top: 25px;">
+                      <table class="table table-responsive table-striped table-bordered" id="history">
+                        <thead>
+                          <tr>
+                            <td>Tanggal</td>
+                            <td>Seragam</td>
+                            <td>Qty</td>
+                            <td>No DO</td>
+                            <td>Penerima</td>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,6 +71,7 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+  var table;
   $(document).ready(function(){
     $( ".cari" ).autocomplete({
         source: baseUrl+'/manajemen-seragam/penerimaan/cariHistory',
@@ -66,18 +80,33 @@
             getData(data.item);
         }
     });
+    table = $("#history").DataTable({
+            responsive: true,
+            "language": dataTableLanguage
+        });
   });
 
   function getData(data){
+    waitingDialog.show();
     var nota = data.id;
     $.ajax({
       url: "{{ url('manajemen-seragam/penerimaan/detailHistory') }}",
       type: 'get',
       data: {nota: nota},
       success: function(response){
-        console.log(response);
+        table.clear();
+        for (var i = 0; i < response.length; i++) {
+          table.row.add([
+              response[i].sm_date,
+              response[i].nama,
+              response[i].sm_qty,
+              response[i].sm_delivery_order,
+              response[i].m_name
+          ]).draw( false );
+        }
       }
     });
+    waitingDialog.hide();
   }
 </script>
 @endsection

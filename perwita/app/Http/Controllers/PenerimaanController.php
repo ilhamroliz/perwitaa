@@ -228,7 +228,8 @@ class PenerimaanController extends Controller
             ->select('d_stock_mutation.*', DB::raw('date_format(sm_date, "%d/%m/%Y %H:%i") as sm_date'), DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'm_name')
             ->where('sm_nota', '=', $nota)
             ->get();
-        dd($data);
+
+        return Response::json($data);
     }
 
     public function print()
