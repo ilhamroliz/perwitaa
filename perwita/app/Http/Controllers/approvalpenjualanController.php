@@ -59,199 +59,124 @@ class approvalpenjualanController extends Controller
       return response()->json($data);
     }
 
-    public function setujui(Request $request){
-
-        $sales = DB::table('d_sales')
-              ->join('d_sales_dt', 'sd_sales', '=', 's_id')
-              ->where('s_id', $request->id)
-              ->get();
-
-        $stock = DB::table('d_stock')
-                ->where('s_comp', $sales[0]->s_comp)
-                ->where('s_position', $sales[0]->s_comp)
-                ->get();
-
-        $id = DB::table('d_stock_mutation')
-            ->select('sm_stock', 'sm_delivery_order')
-            ->where('sm_stock', $stock[0]->s_id)
-            ->get();
-
-        $idmax = DB::table('d_stock_mutation')
-            ->where('sm_stock', $stock[0]->s_id)
-            ->max('sm_detailid');
-
-        $pembelian = DB::table('d_stock_mutation')
-            ->where('sm_stock', $stock[0]->s_id)
-            ->where('sm_detail', 'Pembelian')
-            ->where('sm_comp', $sales[0]->s_comp)
-            ->get();
-
-          $idSales = DB::table('d_sales')
-              ->max('s_id');
-          $idSales = $idSales + 1;
-          $detailSales = DB::table('d_sales_dt')
-              ->where('sd_sales', '=', $idSales)
-              ->max('sd_sales');
-          $detailSales = $detailSales + 1;
-
-          $temp_sisa['sisa'] = 0;
-
-          if ($stock[0]->s_comp == $sales[0]->s_comp && $stock[0]->s_comp == $sales[0]->sd_comp && $stock[0]->s_position == $sales[0]->s_comp && $stock[0]->s_position == $sales[0]->sd_comp) {
-            DB::table('d_stock')
-                ->where('s_comp', $sales[0]->s_comp)
-                ->where('s_position', $sales[0]->s_comp)
-                ->update([
-                  's_qty' => $stock[0]->s_qty - $sales[0]->sd_qty
-                ]);
-          }
-
-          DB::table('d_sales')
-            ->where('s_id', $request->id)
-            ->update([
-              's_isapproved' => 'Y'
-            ]);
-
-          for ($i=0; $i < count($pembelian); $i++) {
-            $permintaan = $sales[0]->sd_qty;
-            $updateuse = $pembelian[$i]->sm_use + $permintaan;
-            $cekStock = $pembelian[$i]->sm_qty - $pembelian[$i]->sm_use;
-            $sisaSmQty = $cekStock - $permintaan;
-
-          if ($temp_sisa['sisa'] != 0){
-            if ($sisaSmQty < $temp_sisa['sisa']){
-                d_stock_mutation::where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                    ->where('sm_detailid', '=', $pembelian[$i]->sm_detailid)
-                    ->update(array(
-                        'sm_use' => $cekStock
-                    ));
-                $temp_sisa['sisa'] = $sisaSmQty * (-1);
-            } else {
-              d_stock_mutation::where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                  ->where('sm_detailid', '=', $pembelian[$i]->sm_detailid)
-                  ->update(array(
-                      'sm_use' => $updateuse
-                  ));
-
-              $detel = DB::table('d_stock_mutation')
-                  ->where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                  ->max('sm_detailid');
-
-              $sm_detil = $detel + 1;
-
-              $data = array(
-                  'sm_stock' => $pembelian[$i]->sm_stock,
-                  'sm_detailid' => $sm_detil,
-                  'sm_comp' => Session::get('mem_comp'),
-                  'sm_date' => Carbon::now(),
-                  'sm_item' => $sales[0]->sd_item,
-                  'sm_item_dt' => $sales[0]->sd_item_dt,
-                  'sm_detail' => 'Penjualan',
-                  'sm_qty' => $sales[0]->sd_qty,
-                  'sm_use' => '0',
-                  'sm_hpp' => $pembelian[$i]->sm_hpp,
-                  'sm_sell' => $pembelian[$i]->sm_sell,
-                  'sm_nota' => $sales[0]->s_nota,
-                  'sm_delivery_order' => $pembelian[$i]->sm_delivery_order,
-                  'sm_petugas' => Session::get('mem')
-              );
-
-              d_stock_mutation::insert($data);
-
-              $i = count($pembelian) + 1;
-              $temp_sisa['sisa'] = 0;
-          }
-      } else {
-        if ($sisaSmQty < 0){
-            d_stock_mutation::where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                ->where('sm_detailid', '=', $pembelian[$i]->sm_detailid)
-                ->update(array(
-                    'sm_use' => $cekStock
-                ));
-            $temp_sisa['sisa'] = $sisaSmQty * (-1);
-        }
-        else {
-            d_stock_mutation::where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                ->where('sm_detailid', '=', $pembelian[$i]->sm_detailid)
-                ->update(array(
-                    'sm_use' => $updateuse
-                ));
-
-            $detel = DB::table('d_stock_mutation')
-                ->where('sm_stock', '=', $pembelian[$i]->sm_stock)
-                ->max('sm_detailid');
-
-            $sm_detil = $detel + 1;
-
-            $data = array(
-                'sm_stock' => $pembelian[$i]->sm_stock,
-                'sm_detailid' => $sm_detil,
-                'sm_comp' => Session::get('mem_comp'),
-                'sm_date' => Carbon::now(),
-                'sm_item' => $sales[0]->sd_item,
-                'sm_item_dt' => $sales[0]->sd_item_dt,
-                'sm_detail' => 'Penjualan',
-                'sm_qty' => $sales[0]->sd_qty,
-                'sm_use' => '0',
-                'sm_hpp' => $pembelian[$i]->sm_hpp,
-                'sm_sell' => $pembelian[$i]->sm_sell,
-                'sm_nota' => $sales[0]->s_nota,
-                'sm_delivery_order' => $pembelian[$i]->sm_delivery_order,
-                'sm_petugas' => Session::get('mem')
-            );
-
-            d_stock_mutation::insert($data);
-
-            $getQtyStock = DB::table('d_stock')
-                ->select('s_qty')
-                ->where('s_id', '=', $pembelian[$i]->sm_stock)
-                ->max('s_qty');
-
-            $updateQtyStock = $getQtyStock;
-
-            d_stock::where('s_id', '=', $pembelian[$i]->sm_stock)->update(array(
-                's_qty' => $updateQtyStock
-            ));
-
-            $salesdt = array(
-                'sd_sales' => $idSales,
-                'sd_detailid' => $detailSales,
-                'sd_comp' => Session::get('mem_comp'),
-                'sd_item' => $sales[0]->sd_item,
-                'sd_item_dt' => $sales[0]->sd_item_dt,
-                'sd_qty' => $sales[0]->sd_qty,
-                'sd_value' => $sales[0]->sd_value,
-                'sd_total_gross' => $sales[0]->sd_value * $sales[0]->sd_qty,
-                'sd_disc_percent' => 0,
-                'sd_disc_value' => 0,
-                'sd_total_net' => $sales[0]->sd_value * $sales[0]->sd_qty,
-                'sd_sell' => $pembelian[$i]->sm_sell,
-                'sd_hpp' => $pembelian[$i]->sm_hpp
-            );
-
-            $detailSales = $detailSales + 1;
-
-            d_sales_dt::insert($salesdt);
-
-            $i = count($pembelian) + 1;
-            $temp_sisa['sisa'] = 0;
-        }
+    public function approve(Request $request){
+      for ($i=0; $i < count($request->pilih); $i++) {
+        $this->setujui($request->pilih[$i]);
       }
     }
 
-        $count = DB::table('d_sales')
-            ->where('s_isapproved', 'P')
-            ->get();
+    public function setujui(Request $request){
+      DB::beginTransaction();
+      try {
 
-        DB::table('d_notifikasi')
-          ->where('n_fitur', 'Penjualan')
-          ->update([
-            'n_qty' => count($count)
-          ]);
+          $sales = DB::table('d_sales')
+                ->join('d_sales_dt', 'sd_sales', '=', 's_id')
+                ->where('s_id', $request->id)
+                ->get();
 
+          for ($i=0; $i < count($sales); $i++) {
 
+              $stock = DB::table('d_stock')
+                    ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+                    ->select('d_stock.*', 'd_stock_mutation.*', DB::raw('(sm_qty - sm_use) as sm_sisa'))
+                    ->where('s_item', $sales[$i]->sd_item)
+                    ->where('s_item_dt', $sales[$i]->sd_item_dt)
+                    ->where('s_comp', $sales[$i]->s_comp)
+                    ->where(DB::raw('(sm_qty - sm_use)'), '>', 0)
+                    ->get();
+
+                $permintaan = $sales[$i]->sd_qty;
+
+                DB::table('d_stock')
+                ->where('s_id', $stock[$i]->sm_stock)
+                ->where('s_item', $stock[$i]->sm_item)
+                ->where('s_item_dt', $stock[$i]->sm_item_dt)
+                ->update([
+                  's_qty' => $stock[$i]->s_qty - $permintaan
+                ]);
+
+            for ($j=0; $j < count($stock); $j++) {
+              //Terdapat sisa permintaan
+
+              $detailid = DB::table('d_stock_mutation')
+                        ->max('sm_detailid');
+
+               if ($permintaan > $stock[$j]->sm_sisa && $permintaan != 0) {
+
+                 DB::table('d_stock_mutation')
+                    ->where('sm_stock', '=', $stock[$j]->sm_stock)
+                    ->where('sm_detailid', '=', $stock[$j]->sm_detailid)
+                    ->update([
+                      'sm_use' => $stock[$j]->sm_qty
+                    ]);
+
+                $permintaan = $permintaan - $stock[$j]->sm_sisa;
+
+                  DB::table('d_stock_mutation')
+                    ->insert([
+                      'sm_stock' => $stock[$j]->sm_stock,
+                      'sm_detailid' => $detailid + 1,
+                      'sm_comp' => $stock[$j]->sm_comp,
+                      'sm_date' => Carbon::now('Asia/Jakarta'),
+                      'sm_item' => $sales[$i]->sd_item,
+                      'sm_item_dt' => $sales[$i]->sd_item_dt,
+                      'sm_detail' => 'Penjualan',
+                      'sm_qty' => $stock[$j]->sm_sisa,
+                      'sm_use' => 0,
+                      'sm_hpp' => $stock[$j]->sm_hpp,
+                      'sm_sell' => $stock[$j]->sm_sell,
+                      'sm_nota' => $sales[$i]->s_nota,
+                      'sm_delivery_order' => $stock[$j]->sm_delivery_order,
+                      'sm_petugas' => Session::get('mem')
+                    ]);
+
+               } elseif ($permintaan <= $stock[$j]->sm_sisa && $permintaan != 0) {
+                  //Langsung Eksekusi
+
+                  $detailid = DB::table('d_stock_mutation')
+                            ->max('sm_detailid');
+
+                  DB::table('d_stock_mutation')
+                     ->where('sm_stock', '=', $stock[$j]->sm_stock)
+                     ->where('sm_detailid', '=', $stock[$j]->sm_detailid)
+                     ->update([
+                       'sm_use' => $permintaan + $stock[$j]->sm_use
+                     ]);
+
+                   DB::table('d_stock_mutation')
+                     ->insert([
+                       'sm_stock' => $stock[$j]->sm_stock,
+                       'sm_detailid' => $detailid + 1,
+                       'sm_comp' => $stock[$j]->sm_comp,
+                       'sm_date' => Carbon::now('Asia/Jakarta'),
+                       'sm_item' => $sales[$i]->sd_item,
+                       'sm_item_dt' => $sales[$i]->sd_item_dt,
+                       'sm_detail' => 'Penjualan',
+                       'sm_qty' => $permintaan,
+                       'sm_use' => 0,
+                       'sm_hpp' => $stock[$j]->sm_hpp,
+                       'sm_sell' => $stock[$j]->sm_sell,
+                       'sm_nota' => $sales[$i]->s_nota,
+                       'sm_delivery_order' => $stock[$j]->sm_delivery_order,
+                       'sm_petugas' => Session::get('mem')
+                     ]);
+
+                    $permintaan = 0;
+                    $j = count($stock) + 1;
+               }
+            }
+          }
+
+        DB::commit();
         return response()->json([
           'status' => 'berhasil'
         ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
   }
 
   public function tolak(Request $request){
