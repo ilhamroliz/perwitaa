@@ -117,7 +117,9 @@
                 }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Seragam</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li class="{{ Request::is('manajemen-seragam/rencana-pembelian') ? 'active' : '' }} sidebar master-akun">
+                    <li class="{{ 
+                        Request::is('manajemen-seragam/rencana-pembelian') ? 'active' : '' ||
+                        Request::is('manajemen-seragam/rencana-pembelian/*') ? 'active' : ''}} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/rencana-pembelian') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Rencana Pembelian</span>
                         </a>

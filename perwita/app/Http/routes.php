@@ -519,6 +519,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //============== rencana pembelian ==============
     Route::get('manajemen-seragam/rencana-pembelian','RencanaPembelian@index');
+    Route::get('manajemen-seragam/rencana-pembelian/tambah','RencanaPembelian@add');
+    Route::get('manajemen-seragam/rencana-pembelian/simpan','RencanaPembelian@save');
     //============== penerimaan ===============
     Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
     Route::get('manajemen-seragam/penerimaan/cari','PenerimaanController@history');
