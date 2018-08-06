@@ -512,12 +512,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/getdata','PembelianController@getdata');
     Route::get('manajemen-seragam/filter','PembelianController@filter');
     Route::get('manajemen-seragam/detail','PembelianController@detail');
-
     Route::get('manajemen-seragam/print','PembelianController@cetak');
     Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
     Route::get('manajemen-pembelian/simpan','PembelianController@save');
     Route::post('manajemen-pembelian/simpan','PembelianController@save');
 
+    //============== rencana pembelian ==============
+    Route::get('manajemen-seragam/rencana-pembelian','RencanaPembelian@index');
     //============== penerimaan ===============
     Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
     Route::get('manajemen-seragam/penerimaan/cari','PenerimaanController@history');
