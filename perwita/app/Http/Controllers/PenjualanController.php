@@ -411,7 +411,7 @@ class PenjualanController extends Controller
 
       $countukuran = 0;
       for ($i=0; $i < count($ukuran); $i++) {
-          if ($ukuran[$i] == "") {
+          if ($ukuran[$i] != "Tidak") {
             $countukuran++;
           }
       }

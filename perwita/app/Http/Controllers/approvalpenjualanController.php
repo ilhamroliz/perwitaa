@@ -71,7 +71,6 @@ class approvalpenjualanController extends Controller
                 ->where('s_position', $sales[0]->s_comp)
                 ->get();
 
-
         $id = DB::table('d_stock_mutation')
             ->select('sm_stock', 'sm_delivery_order')
             ->where('sm_stock', $stock[0]->s_id)
