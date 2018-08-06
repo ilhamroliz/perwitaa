@@ -220,13 +220,18 @@
         waitingDialog.hide();
     }
 
-    function selectSize(seragam){
+    function selectSize(seragam, pekerja){
       ++counter;
         var form ='<select class="form-control pilihukuran chosen-select-width index'+counter+'" name="ukuran[]" style="width:100%" id="ukuran" onchange="ambil('+counter+')">';
         form = form + '<option value="Tidak" selected>-- Tidak --</option>';
         for (var i = 0; i < seragam.length; i++) {
                 form = form + '<option value="'+seragam[i].s_id+'"> '+seragam[i].s_nama+' </option>';
             }
+
+        for (var j = 0; j < pekerja.length; j++) {
+                form = form + '<input type="hidden" name="pekerja[]" value="'+pekerja[j].p_id+'">';
+        }
+
         return form;
     }
 
@@ -256,7 +261,7 @@
                 tabelpekerja.row.add([
                     pekerja[i].p_name +' ('+pekerja[i].p_hp+')',
                     pekerja[i].mp_mitra_nik,
-                    selectSize(seragam)
+                    selectSize(seragam, pekerja)
                 ]).draw( false );
             }
             for (var i = 0; i < seragam.length; i++) {

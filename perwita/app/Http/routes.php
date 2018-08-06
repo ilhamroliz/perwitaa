@@ -704,6 +704,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpenjualan', 'approvalpenjualanController@index');
     Route::get('approvalpenjualan/detail', 'approvalpenjualanController@detail');
     Route::get('approvalpenjualan/setujui', 'approvalpenjualanController@setujui');
+    Route::get('approvalpenjualan/setujuilist', 'approvalpenjualanController@approve');
     Route::get('approvalpenjualan/tolak', 'approvalpenjualanController@tolak');
     Route::get('approvalpenjualan/tolaklist', 'approvalpenjualanController@tolaklist');
 });

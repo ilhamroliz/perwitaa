@@ -68,7 +68,7 @@ class PenjualanController extends Controller
 
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->select('mp_pekerja', 'p_name', 'p_hp', 'p_nip', 'mp_mitra_nik')
+            ->select('mp_pekerja', 'p_name', 'p_hp', 'p_nip', 'mp_mitra_nik', 'p_id')
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
             ->where('mp_isapproved', '=', 'Y')
@@ -403,6 +403,8 @@ class PenjualanController extends Controller
       $mitra = $request->mitra;
       $ukuran = $request->ukuran;
       $total = $request->total;
+      $pekerja = $request->pekerja;
+      $temp = $request->pekerja;
       $comp = Session::get('mem_comp');
       $sekarang = Carbon::now('Asia/Jakarta');
       $nota = $this->getnewnota(1);
@@ -413,6 +415,14 @@ class PenjualanController extends Controller
       for ($i=0; $i < count($ukuran); $i++) {
           if ($ukuran[$i] != "Tidak") {
             $countukuran++;
+          }
+      }
+
+      for ($i=0; $i < count($ukuran); $i++) {
+          if ($ukuran[$i] != 'Tidak' && $pekerja[$i] != null) {
+            $temp[$i] = 'Iya';
+          } else {
+            $temp[$i] = 'Tidak';
           }
       }
 
@@ -458,6 +468,11 @@ class PenjualanController extends Controller
 
       DB::beginTransaction();
       try {
+
+        for ($i=0; $i < count($pekerja); $i++) {
+          // Insert seragam pekerja //
+        }
+
 
         DB::table('d_sales')->insert([
           's_id' => $id + 1,
