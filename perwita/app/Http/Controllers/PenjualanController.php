@@ -406,12 +406,59 @@ class PenjualanController extends Controller
       $comp = Session::get('mem_comp');
       $sekarang = Carbon::now('Asia/Jakarta');
       $nota = $this->getnewnota(1);
+      $jumlahUkuran = array_count_values($ukuran);
+      $jumlahSimpan = $jumlahUkuran;
+
+      $countukuran = 0;
+      for ($i=0; $i < count($ukuran); $i++) {
+          if ($ukuran[$i] != "Tidak") {
+            $countukuran++;
+          }
+      }
+
+      $getItem_dt = DB::table('d_item_dt')
+          ->select('id_detailid')
+          ->where('id_item', '=', $seragam)
+          ->whereIn('id_size', $ukuran)
+          ->get();
+
+      $item_dt = [];
+      for ($i = 0; $i < count($getItem_dt); $i++){
+          $item_dt[$i] = $getItem_dt[$i]->id_detailid;
+      }
+
+      $getStock = DB::table('d_stock_mutation')
+          ->join('d_stock', 's_id', '=', 'sm_stock')
+          ->join('d_item_dt', function ($q) {
+              $q->on('s_item', '=', 'id_item')
+                  ->on('s_item_dt', '=', 'id_detailid');
+          })
+          ->select('sm_stock', 'sm_detailid', 'sm_qty', 'sm_use', 'sm_item_dt', DB::raw('(sm_qty - sm_use) as sisa'), 'sm_hpp', 'sm_sell', 'id_size', 'id_price')
+          ->where('s_item', '=', $seragam)
+          ->whereIn('s_item_dt', $item_dt)
+          ->where('s_comp', '=', $comp)
+          ->where('s_position', '=', $comp)
+          ->where(DB::raw('(sm_qty - sm_use)'), '!=', 0)
+          ->orderBy('sm_stock', 'asc')
+          ->orderBy('sm_detailid', 'asc')
+          ->orderBy('sm_date', 'asc')
+          ->get();
 
       $id = DB::table('d_sales')
           ->max('s_id');
 
+      $idSales = DB::table('d_sales')
+          ->max('s_id');
+      $idSales = $idSales + 1;
+      $detailSales = DB::table('d_sales_dt')
+          ->where('sd_sales', '=', $idSales)
+          ->max('sd_sales');
+      $detailSales = $detailSales + 1;
+
+
       DB::beginTransaction();
       try {
+
         DB::table('d_sales')->insert([
           's_id' => $id + 1,
           's_comp' => Session::get('mem_comp'),
@@ -424,6 +471,7 @@ class PenjualanController extends Controller
           's_isapproved' => 'P'
         ]);
 
+
         $count = DB::table('d_sales')
                 ->where('s_isapproved', 'P')
                 ->get();
@@ -434,6 +482,29 @@ class PenjualanController extends Controller
               'n_qty' => count($count),
               'n_insert' => Carbon::now()
             ]);
+
+            for ($j=0; $j < count($countukuran); $j++) {
+              $salesdt = array(
+                  'sd_sales' => $idSales,
+                  'sd_detailid' => $detailSales,
+                  'sd_comp' => Session::get('mem_comp'),
+                  'sd_item' => $seragam,
+                  'sd_item_dt' => $getStock[$j]->sm_item_dt,
+                  'sd_qty' => $jumlahSimpan[$getStock[$j]->id_size],
+                  'sd_value' => $getStock[$j]->id_price,
+                  'sd_total_gross' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
+                  'sd_disc_percent' => 0,
+                  'sd_disc_value' => 0,
+                  'sd_total_net' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
+                  'sd_sell' => $getStock[$j]->sm_sell,
+                  'sd_hpp' => $getStock[$j]->sm_hpp
+              );
+
+              $detailSales = $detailSales + 1;
+
+              d_sales_dt::insert($salesdt);
+            }
+
 
         DB::commit();
         return response()->json([

@@ -158,6 +158,8 @@
 @section('extra_scripts')
 <script type="text/javascript">
     var table;
+    var totalmitra;
+    var countmitra;
     $( document ).ready(function() {
 
     $('#tabel-penjualan').hide();
@@ -238,166 +240,166 @@
 
           });
     }
-    //
-    // function tolak(id){
-    //   swal({
-    //           title: "Konfirmasi",
-    //           text: "Apakah anda yakin ingin menolak Pembelian ini?",
-    //           type: "warning",
-    //           showCancelButton: true,
-    //           closeOnConfirm: false,
-    //           showLoaderOnConfirm: true,
-    //       },
-    //       function () {
-    //           swal.close();
-    //           $("#modal-detail").modal('hide');
-    //           waitingDialog.show();
-    //           setTimeout(function () {
-    //               $.ajax({
-    //                 type: 'get',
-    //                 data: {id:id},
-    //                 url: baseUrl + '/approvalpembelian/tolak',
-    //                 dataType: 'json',
-    //                 timeout: 10000,
-    //                   success: function (response) {
-    //                       waitingDialog.hide();
-    //                       if (response.status == 'berhasil') {
-    //                           swal({
-    //                               title: "Pembelian Ditolak",
-    //                               text: "Pembelian Berhasil Ditolak",
-    //                               type: "success",
-    //                               showConfirmButton: false,
-    //                               timer: 900
-    //                           });
-    //                           setTimeout(function(){
-    //                                 window.location.reload();
-    //                         }, 850);
-    //                       }
-    //                   }, error: function (x, e) {
-    //                       waitingDialog.hide();
-    //                       var message;
-    //                       if (x.status == 0) {
-    //                           message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
-    //                       } else if (x.status == 404) {
-    //                           message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
-    //                       } else if (x.status == 500) {
-    //                           message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
-    //                       } else if (e == 'parsererror') {
-    //                           message = 'Error.\nParsing JSON Request failed.';
-    //                       } else if (e == 'timeout') {
-    //                           message = 'Request Time out. Harap coba lagi nanti';
-    //                       } else {
-    //                           message = 'Unknow Error.\n' + x.responseText;
-    //                       }
-    //                       waitingDialog.hide();
-    //                       throwLoadError(message);
-    //                       //formReset("store");
-    //                   }
-    //               })
-    //           }, 2000);
-    //
-    //       });
-    // }
-    //
-    // function detail(id){
-    //   $("#modaldet").modal('show');
-    //   $(".bagian").hide();
-    //   var atas = '';
-    //   $.ajax({
-    //     type: 'get',
-    //     data: {id:id},
-    //     url: baseUrl + '/approvalpembelian/detail',
-    //     dataType: 'json',
-    //     success : function(result){
-    //       if (result.count == 1) {
-    //         atas += '<tr>'+
-    //             '<td><div><strong>'+result[0][0].k_nama+'</strong></div>'+
-    //             '<small>'+result[0][0].i_nama+' Warna '+result[0][0].i_warna+ ' Ukuran '+result[0][0].s_nama+'</small></td>'+
-    //             '<td>'+result[0][0].pd_qty+'</td>'+
-    //             '<td class="rp">Rp. '+result[0][0].pd_value+'</td>'+
-    //             '<td class="rp">Rp. '+result[0][0].pd_disc_value+'</td>'+
-    //             '<td class="rp">Rp. '+result[0][0].pd_total_net+'</td>'+
-    //         '</tr>';
-    //       } else {
-    //         for (var i = 0; i < result.count; i++) {
-    //           atas += '<tr>'+
-    //               '<td><div><strong>'+result[0][i].k_nama+'</strong></div>'+
-    //               '<small>'+result[0][i].i_nama+' Warna '+result[0][i].i_warna+ ' Ukuran '+result[0][i].s_nama+'</small></td>'+
-    //               '<td>'+result[0][i].pd_qty+'</td>'+
-    //               '<td class="rp">Rp. '+result[0][i].pd_value+'</td>'+
-    //               '<td class="rp">Rp. '+result[0][i].pd_disc_value+'</td>'+
-    //               '<td class="rp">Rp. '+result[0][i].pd_total_net+'</td>'+
-    //           '</tr>';
-    //         }
-    //       }
-    //       $('.spin').css('display', 'none');
-    //       $(".bagian").show();
-    //       $('#isi').html(atas);
-    //       $("#subtotal").text('Rp. '+result[0][0].p_total_gross);
-    //       $("#pajak").text('Rp. '+result[0][0].p_pajak);
-    //       $("#total").text('Rp. '+result[0][0].p_total_net);
-    //       $(".rp").digits();
-    //
-    //       //Button
-    //       $('#printbtn').attr('onclick','print('+id+')');
-    //
-    //     }
-    //   });
-    // }
-    //
-    // function selectall() {
-    //
-    //     if ($('.setCek').is(":checked")) {
-    //         table.$('input[name="pilih[]"]').prop("checked", true);
-    //         //table.$('input[name="pilih[]"]').css('background','red');
-    //         table.$('.chek-all').val('1');
-    //     } else {
-    //         table.$('input[name="pilih[]"]').prop("checked", false);
-    //         table.$('.chek-all').val('');
-    //     }
-    //     hitung();
-    //     //hitungSelect();
-    // }
-    //
-    // function selectBox(id) {
-    //     if (table.$('.pilih-' + id).is(":checked")) {
-    //         table.$('.pilih-' + id).prop("checked", false);
-    //         table.$('.chek-' + id).val('1');
-    //     } else {
-    //         table.$('.pilih-' + id).prop("checked", true);
-    //         table.$('.chek-' + id).val('');
-    //     }
-    //     //hitungSelect();
-    //     hitung();
-    // }
-    //
-    // function hitung() {
-    //     countmitra = table.$("input[name='pilih[]']:checked").length;
-    //     $('#totalPekerja').val(countmitra + totalmitra);
-    // }
-    //
-    // function hitungSelect() {
-    //     for (i = 0; i <= table.$('tr').length; i++)
-    //         if (table.$('.pilih-' + i).is(":checked")) {
-    //             table.$('.select-' + i).css('background', '#bbc4d6')
-    //             //table.$('.select-'+i).css('color','white')
-    //         } else {
-    //             table.$('.select-' + i).css('background', '')
-    //         }
-    // }
-    //
-    // function select(id) {
-    //     if (table.$('.pilih-' + id).is(":checked")) {
-    //         table.$('.pilih-' + id).prop("checked", false);
-    //         table.$('.chek-' + id).val('');
-    //     } else {
-    //         table.$('.pilih-' + id).prop("checked", true);
-    //         table.$('.chek-' + id).val('1');
-    //     }
-    //     //hitungSelect();
-    //     hitung();
-    // }
-    //
+
+    function tolak(id){
+      swal({
+              title: "Konfirmasi",
+              text: "Apakah anda yakin ingin menolak Penjualan ini?",
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true,
+          },
+          function () {
+              swal.close();
+              $("#modal-detail").modal('hide');
+              waitingDialog.show();
+              setTimeout(function () {
+                  $.ajax({
+                    type: 'get',
+                    data: {id:id},
+                    url: baseUrl + '/approvalpenjualan/tolak',
+                    dataType: 'json',
+                    timeout: 10000,
+                      success: function (response) {
+                          waitingDialog.hide();
+                          if (response.status == 'berhasil') {
+                              swal({
+                                  title: "Penjualan Ditolak",
+                                  text: "Penjualan Berhasil Ditolak",
+                                  type: "success",
+                                  showConfirmButton: false,
+                                  timer: 900
+                              });
+                              setTimeout(function(){
+                                    window.location.reload();
+                            }, 850);
+                          }
+                      }, error: function (x, e) {
+                          waitingDialog.hide();
+                          var message;
+                          if (x.status == 0) {
+                              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+                          } else if (x.status == 404) {
+                              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+                          } else if (x.status == 500) {
+                              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+                          } else if (e == 'parsererror') {
+                              message = 'Error.\nParsing JSON Request failed.';
+                          } else if (e == 'timeout') {
+                              message = 'Request Time out. Harap coba lagi nanti';
+                          } else {
+                              message = 'Unknow Error.\n' + x.responseText;
+                          }
+                          waitingDialog.hide();
+                          throwLoadError(message);
+                          //formReset("store");
+                      }
+                  })
+              }, 2000);
+
+          });
+    }
+
+    function detail(id){
+      $("#modaldet").modal('show');
+      $(".bagian").hide();
+      var atas = '';
+      $.ajax({
+        type: 'get',
+        data: {id:id},
+        url: baseUrl + '/approvalpenjualan/detail',
+        dataType: 'json',
+        success : function(result){
+          if (result.length == 1) {
+            atas += '<tr>'+
+                '<td><div><strong>'+result[0].k_nama+'</strong></div>'+
+                '<small>'+result[0].i_nama+' Warna '+result[0].i_warna+ ' Ukuran '+result[0].s_nama+'</small></td>'+
+                '<td>'+result[0].sd_qty+'</td>'+
+                '<td class="rp">Rp. '+result[0].sd_value+'</td>'+
+                '<td class="rp">Rp. '+result[0].sd_disc_value+'</td>'+
+                '<td class="rp">Rp. '+result[0].sd_total_net+'</td>'+
+            '</tr>';
+          } else {
+            for (var i = 0; i < result.length; i++) {
+              atas += '<tr>'+
+                  '<td><div><strong>'+result[i].k_nama+'</strong></div>'+
+                  '<small>'+result[i].i_nama+' Warna '+result[i].i_warna+ ' Ukuran '+result[i].s_nama+'</small></td>'+
+                  '<td>'+result[i].sd_qty+'</td>'+
+                  '<td class="rp">Rp. '+result[i].sd_value+'</td>'+
+                  '<td class="rp">Rp. '+result[i].sd_disc_value+'</td>'+
+                  '<td class="rp">Rp. '+result[i].sd_total_net+'</td>'+
+              '</tr>';
+            }
+          }
+          $('.spin').css('display', 'none');
+          $(".bagian").show();
+          $('#isi').html(atas);
+          $("#subtotal").text('Rp. '+result[0].s_total_gross);
+          $("#pajak").text('Rp. '+result[0].s_pajak);
+          $("#total").text('Rp. '+result[0].s_total_net);
+          $(".rp").digits();
+
+          //Button
+          $('#printbtn').attr('onclick','print('+id+')');
+
+        }
+      });
+    }
+
+    function selectall() {
+
+        if ($('.setCek').is(":checked")) {
+            table.$('input[name="pilih[]"]').prop("checked", true);
+            //table.$('input[name="pilih[]"]').css('background','red');
+            table.$('.chek-all').val('1');
+        } else {
+            table.$('input[name="pilih[]"]').prop("checked", false);
+            table.$('.chek-all').val('');
+        }
+        hitung();
+        //hitungSelect();
+    }
+
+    function selectBox(id) {
+        if (table.$('.pilih-' + id).is(":checked")) {
+            table.$('.pilih-' + id).prop("checked", false);
+            table.$('.chek-' + id).val('1');
+        } else {
+            table.$('.pilih-' + id).prop("checked", true);
+            table.$('.chek-' + id).val('');
+        }
+        //hitungSelect();
+        hitung();
+    }
+
+    function hitung() {
+        countmitra = table.$("input[name='pilih[]']:checked").length;
+        $('#totalPekerja').val(countmitra + totalmitra);
+    }
+
+    function hitungSelect() {
+        for (i = 0; i <= table.$('tr').length; i++)
+            if (table.$('.pilih-' + i).is(":checked")) {
+                table.$('.select-' + i).css('background', '#bbc4d6')
+                //table.$('.select-'+i).css('color','white')
+            } else {
+                table.$('.select-' + i).css('background', '')
+            }
+    }
+
+    function select(id) {
+        if (table.$('.pilih-' + id).is(":checked")) {
+            table.$('.pilih-' + id).prop("checked", false);
+            table.$('.chek-' + id).val('');
+        } else {
+            table.$('.pilih-' + id).prop("checked", true);
+            table.$('.chek-' + id).val('1');
+        }
+        //hitungSelect();
+        hitung();
+    }
+
     // function setujuilist(){
     //   waitingDialog.show();
     //   setTimeout(function () {
@@ -445,52 +447,52 @@
     // }, 2000);
     // }
     //
-    // function tolaklist(){
-    //   waitingDialog.show();
-    //   setTimeout(function () {
-    //   $.ajax({
-    //     type: 'get',
-    //     data: $('#formapprovalpembelian').serialize(),
-    //     url: baseUrl + '/approvalpembelian/tolaklist',
-    //     dataType: 'json',
-    //     timeout: 10000,
-    //     success : function(result){
-    //       waitingDialog.hide();
-    //       if (result.status == 'berhasil') {
-    //         swal({
-    //             title: "Pembelian Ditolak",
-    //             text: "Pembelian Berhasil Ditolak",
-    //             type: "success",
-    //             showConfirmButton: false,
-    //             timer: 900
-    //         });
-    //           setTimeout(function(){
-    //                 window.location.reload();
-    //         }, 850);
-    //       }
-    //     }, error: function (x, e) {
-    //         waitingDialog.hide();
-    //         var message;
-    //         if (x.status == 0) {
-    //             message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
-    //         } else if (x.status == 404) {
-    //             message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
-    //         } else if (x.status == 500) {
-    //             message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
-    //         } else if (e == 'parsererror') {
-    //             message = 'Error.\nParsing JSON Request failed.';
-    //         } else if (e == 'timeout') {
-    //             message = 'Request Time out. Harap coba lagi nanti';
-    //         } else {
-    //             message = 'Unknow Error.\n' + x.responseText;
-    //         }
-    //         waitingDialog.hide();
-    //         throwLoadError(message);
-    //         //formReset("store");
-    //     }
-    //   });
-    // }, 2000);
-    // }
+    function tolaklist(){
+      waitingDialog.show();
+      setTimeout(function () {
+      $.ajax({
+        type: 'get',
+        data: $('#formapprovalpenjualan').serialize(),
+        url: baseUrl + '/approvalpenjualan/tolaklist',
+        dataType: 'json',
+        timeout: 10000,
+        success : function(result){
+          waitingDialog.hide();
+          if (result.status == 'berhasil') {
+            swal({
+                title: "Penjualan Ditolak",
+                text: "Penjualan Berhasil Ditolak",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+              setTimeout(function(){
+                    window.location.reload();
+            }, 850);
+          }
+        }, error: function (x, e) {
+            waitingDialog.hide();
+            var message;
+            if (x.status == 0) {
+                message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+            } else if (x.status == 404) {
+                message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+            } else if (x.status == 500) {
+                message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+            } else if (e == 'parsererror') {
+                message = 'Error.\nParsing JSON Request failed.';
+            } else if (e == 'timeout') {
+                message = 'Request Time out. Harap coba lagi nanti';
+            } else {
+                message = 'Unknow Error.\n' + x.responseText;
+            }
+            waitingDialog.hide();
+            throwLoadError(message);
+            //formReset("store");
+        }
+      });
+    }, 2000);
+    }
     //
     // function print(id){
     //   window.location.href = baseUrl + '/approvalpembelian/print?id='+id;
