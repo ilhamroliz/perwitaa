@@ -78,6 +78,8 @@ class ReturnPembelianController extends Controller
             ->get();
 
         for ($i = 0; $i < count($data); $i++){
+            for ($j = 0; $j < count($))
+            dd($request->all(), $data, $item_detail);
             if ($id_item[$i] == $data[$i]->i_id && $data[$i]->id_detailid == $item_detail[$i]){
                 $data[$i]->aksi = $aksi[$i];
                 $data[$i]->jumlah = $jumlah[$i];
