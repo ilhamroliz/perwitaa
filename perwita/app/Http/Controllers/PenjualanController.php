@@ -30,6 +30,10 @@ class PenjualanController extends Controller
                       ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 's_date', 's_nota', 'm_name', 's_total_net', 's_isapproved', 's_id')
                       ->get();
 
+        for ($i=0; $i < count($pengeluaran); $i++) {
+          $pengeluaran[$i]->s_total_net = 'Rp. ' . number_format($pengeluaran[$i]->s_total_net,2,',','.');
+        }
+
         $pengeluaran = collect($pengeluaran);
 
         return Datatables::of($pengeluaran)
