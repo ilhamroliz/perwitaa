@@ -83,14 +83,40 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-    var tablepembelian;
-    $( document ).ready(function() {
-        tablepembelian = $("#tabel-pembelian").DataTable({
-            responsive: true,
-            "language": dataTableLanguage
-        });
-    });
-
-
+$(document).ready(function(){
+  setTimeout(function () {
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      table = $("#tabel-pembelian").DataTable({
+          "search": {
+              "caseInsensitive": true
+          },
+          processing: true,
+          serverSide: true,
+          "ajax": {
+              "url": "{{ url('manajemen-seragam/data') }}",
+              "type": "POST"
+          },
+          columns: [
+              {data: 'number', name: 'number'},
+              {data: 's_date', name: 's_date'},
+              {data: 'm_name', name: 'm_name'},
+              {data: 's_nota', name: 's_nota'},
+              {data: 's_total_net', name: 's_total_net'},
+              {data: 'status', name: 'status', orderable: false, searchable: false}
+          ],
+          responsive: true,
+          "pageLength": 10,
+          "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+          //"scrollY": '50vh',
+          //"scrollCollapse": true,
+          "language": dataTableLanguage,
+      });
+      $('#tabel-pembelian').css('width', '100%').dataTable().fnAdjustColumnSizing();
+  }, 1500);
+})
 </script>
 @endsection

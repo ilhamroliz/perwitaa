@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\d_sales;
 use App\d_sales_dt;
 use App\d_seragam_pekerja;
+use Yajra\Datatables\Datatables;
 use App\d_stock;
 use App\d_stock_mutation;
 use Carbon\Carbon;
@@ -18,6 +19,29 @@ class PenjualanController extends Controller
     public function index()
     {
         return view('pengeluaran.index');
+    }
+
+    public function data()
+    {
+        DB::statement(DB::raw('set @rownum=0'));
+
+        $pengeluaran = DB::table('d_sales')
+                      ->join('d_mitra', 'm_id', '=', 's_member')
+                      ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 's_date', 's_nota', 'm_name', 's_total_net', 's_isapproved', 's_id')
+                      ->get();
+
+        $pengeluaran = collect($pengeluaran);
+
+        return Datatables::of($pengeluaran)
+            ->addColumn('status', function ($pengeluaran) {
+              if ($pengeluaran->s_isapproved == 'P')
+                  return '<div class="text-center"><span class="label label-warning ">Pending</span></div>';
+              if ($pengeluaran->s_isapproved == 'Y')
+                  return '<div class="text-center"><span class="label label-success ">Disetujui</span></div>';
+              if ($pengeluaran->s_isapproved == 'N')
+                  return '<div class="text-center"><span class="label label-danger ">Ditolak</span></div>';
+            })
+            ->make(true);
     }
 
     public function create()
