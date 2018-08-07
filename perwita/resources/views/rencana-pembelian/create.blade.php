@@ -263,9 +263,9 @@
             }
         });
         $.ajax({
-            url: baseUrl + '/manajemen-pembelian/simpan',
+            url: baseUrl + '/manajemen-seragam/rencana-pembelian/simpan',
             type: 'post',
-            data: ar.find('input').serialize()+'&supplier='+supplier,
+            data: ar.find('input').serialize(),
             success: function(response){
                 if (response.status == 'sukses') {
                     waitingDialog.hide();
@@ -275,7 +275,7 @@
                         type: "success"
                     }, function () {
                             window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print','','width=700,height=500');
+                            alert('print');
                     });
                 } else {
                     waitingDialog.hide();
