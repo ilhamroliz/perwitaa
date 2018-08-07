@@ -48,7 +48,7 @@ class RencanaPembelian extends Controller
             ->addColumn('aksi', function ($data){
                 return '<div class="text-center">
                         <button type="button" title="detail" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></button>
-                        <button type="button" title="edit" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button type="button" title="edit" onclick="edit(\''.$data->pp_nota.'\')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
                         <button type="button" title="hapus" onclick="hapus(\''.$data->pp_nota.'\')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>
                         </div>';
             })
@@ -58,6 +58,24 @@ class RencanaPembelian extends Controller
     public function add()
     {
         return view('rencana-pembelian/create');
+    }
+
+    public function edit(Request $request)
+    {
+        $nota = $request->nota;
+        $info = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'pp_id', '=', 'ppd_purchase_planning')
+            ->join('d_item', 'i_id', '=', 'ppd_item')
+            ->join('d_item_dt', function ($q){
+                $q->on('id_item', '=', 'i_id');
+                $q->on('id_detailid', '=', 'ppd_item_dt');
+            })
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->select('ppd_qty', 'i_id', 'id_detailid', 'i_nama', 's_nama', 'id_price', 'i_warna', DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'))
+            ->where('pp_nota', '=', $nota)
+            ->get();
+
+        return view('rencana-pembelian/edit', compact('info', 'nota'));
     }
 
     public function getNewNota()
@@ -74,6 +92,71 @@ class RencanaPembelian extends Controller
         $kode = sprintf("%03s", $tmp);
         $finalkode = 'PP-'.$kode.'/'.$tanggal.'/'.$bulan.'/'.$tahun;
         return $finalkode;
+    }
+
+    public function update(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $nota = $request->nota;
+            $id = DB::table('d_purchase_planning')
+                ->where('pp_nota', '=', $nota)
+                ->get();
+
+            DB::table('d_purchase_planning')
+                ->where('pp_nota', '=', $nota)
+                ->delete();
+
+            DB::table('d_purchase_planning_dt')
+                ->where('ppd_purchase_planning', '=', $id[0]->pp_id)
+                ->delete();
+
+            $idItem = $request->id;
+            $itemDt = $request->iddt;
+            $qty = $request->qty;
+
+            $id = DB::table('d_purchase_planning')
+                ->max('pp_id');
+
+            ++$id;
+
+            DB::table('d_purchase_planning')
+                ->insert([
+                    'pp_id' => $id,
+                    'pp_nota' => $nota,
+                    'pp_date' => Carbon::now('Asia/Jakarta'),
+                    'pp_status' => 'Belum',
+                    'pp_isapproved' => 'P',
+                    'pp_mem' => Session::get('mem'),
+                    'pp_insert' => Carbon::now('Asia/Jakarta')
+                ]);
+            $tempPlan = [];
+            for ($i = 0; $i < count($idItem); $i++){
+                $temp = [
+                    'ppd_purchase_planning' => $id,
+                    'ppd_detailid' => $i + 1,
+                    'ppd_item' => $idItem[$i],
+                    'ppd_item_dt' => $itemDt[$i],
+                    'ppd_qty' => $qty[$i]
+                ];
+                array_push($tempPlan, $temp);
+            }
+
+            DB::table('d_purchase_planning_dt')->insert($tempPlan);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
     }
 
     public function save(Request $request)
