@@ -480,7 +480,31 @@ class promosiController extends Controller
     }
 
     public function print(Request $request){
-      dd($request);
+      $data = DB::table('d_pekerja')
+      ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
+      ->join('d_mitra_pekerja', function ($e){
+          $e->on('mp_pekerja', '=', 'p_id');
+      })
+      ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+      ->join('d_mitra_divisi', function ($q){
+          $q->on('md_mitra', '=', 'mp_mitra');
+          $q->on('md_id', '=', 'mp_divisi');
+          $q->on('md_mitra', '=', 'm_id');
+      })
+      ->select('pd_id', 'p_id', 'p_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no', 'p_address', 'm_name', 'md_name')
+      ->where('pd_id', $request->id)
+      ->get();
+
+      $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+      join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
+      join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
+        $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
+      }
+
+      return view('promosi.print', compact('data'));
     }
 
 }

@@ -325,7 +325,7 @@ $(document).ready(function(){
         } else if (result[0].sp_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
         } else if (result[0].sp_isapproved == 'N') {
-          $('#approve').text('<span class="label label-danger">Ditolak</span>');
+          $('#approve').html('<span class="label label-danger">Ditolak</span>');
         }
 
         for (var i = 0; i < result.length; i++) {
