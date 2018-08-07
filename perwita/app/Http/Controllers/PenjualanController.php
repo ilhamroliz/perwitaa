@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\d_sales;
 use App\d_sales_dt;
 use App\d_seragam_pekerja;
+use Yajra\Datatables\Datatables;
 use App\d_stock;
 use App\d_stock_mutation;
 use Carbon\Carbon;
@@ -18,6 +19,33 @@ class PenjualanController extends Controller
     public function index()
     {
         return view('pengeluaran.index');
+    }
+
+    public function data()
+    {
+        DB::statement(DB::raw('set @rownum=0'));
+
+        $pengeluaran = DB::table('d_sales')
+                      ->join('d_mitra', 'm_id', '=', 's_member')
+                      ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 's_date', 's_nota', 'm_name', 's_total_net', 's_isapproved', 's_id')
+                      ->get();
+
+        for ($i=0; $i < count($pengeluaran); $i++) {
+          $pengeluaran[$i]->s_total_net = 'Rp. ' . number_format($pengeluaran[$i]->s_total_net,2,',','.');
+        }
+
+        $pengeluaran = collect($pengeluaran);
+
+        return Datatables::of($pengeluaran)
+            ->addColumn('status', function ($pengeluaran) {
+              if ($pengeluaran->s_isapproved == 'P')
+                  return '<div class="text-center"><span class="label label-warning ">Pending</span></div>';
+              if ($pengeluaran->s_isapproved == 'Y')
+                  return '<div class="text-center"><span class="label label-success ">Disetujui</span></div>';
+              if ($pengeluaran->s_isapproved == 'N')
+                  return '<div class="text-center"><span class="label label-danger ">Ditolak</span></div>';
+            })
+            ->make(true);
     }
 
     public function create()
@@ -460,17 +488,43 @@ class PenjualanController extends Controller
       $idSales = DB::table('d_sales')
           ->max('s_id');
       $idSales = $idSales + 1;
+
       $detailSales = DB::table('d_sales_dt')
           ->where('sd_sales', '=', $idSales)
           ->max('sd_sales');
       $detailSales = $detailSales + 1;
-
 
       DB::beginTransaction();
       try {
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
+
+          $detailid = DB::table('d_seragam_pekerja')
+                    ->where('sp_sales', $idSales)
+                    ->max('sp_id');
+
+          if ($detailid == null) {
+            $detailid = 0;
+          }
+
+          if ($pekerja[$i] != '' && $temp[$i] == 'Iya' && $ukuran[$i] != 'Tidak') {
+
+              DB::table('d_seragam_pekerja')
+                  ->insert([
+                    'sp_sales' => $idSales,
+                    'sp_id' => $detailid + 1,
+                    'sp_pekerja' => $pekerja[$i],
+                    'sp_item' => $seragam,
+                    'sp_item_size' => $ukuran[$i],
+                    'sp_qty' => 1,
+                    'sp_value' => $getStock[$i]->id_price,
+                    'sp_pay_value' => 0,
+                    'sp_status' => 'Belum',
+                    'sp_date' => Carbon::now('Asia/Jakarta'),
+                    'sp_no' => $this->getpenerimaan($idSales)
+                  ]);
+          }
         }
 
 
@@ -554,5 +608,15 @@ class PenjualanController extends Controller
       $finalkode = 'POS-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
 
       return $finalkode;
+    }
+
+    public function getpenerimaan($kode){
+      //Kode penerimaan
+
+      $kode1 = sprintf('%03s', $kode);
+
+      $notapenerimaan = 'PS-' . $kode1 . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+      return $notapenerimaan;
     }
 }

@@ -541,6 +541,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //============== manajemen penjualan =========
     Route::get('manajemen-seragam/pengeluaran','PenjualanController@index');
+    Route::get('manajemen-seragam/data','PenjualanController@data');
+    Route::post('manajemen-seragam/data','PenjualanController@data');
     Route::get('manajemen-seragam/tambah-pengeluaran','PenjualanController@create');
     Route::get('manajemen-penjualan/getItem','PenjualanController@getItem');
     Route::get('manajemen-penjualan/getPekerja','PenjualanController@getPekerja');
