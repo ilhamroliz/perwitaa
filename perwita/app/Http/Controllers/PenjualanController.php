@@ -460,17 +460,43 @@ class PenjualanController extends Controller
       $idSales = DB::table('d_sales')
           ->max('s_id');
       $idSales = $idSales + 1;
+
       $detailSales = DB::table('d_sales_dt')
           ->where('sd_sales', '=', $idSales)
           ->max('sd_sales');
       $detailSales = $detailSales + 1;
-
 
       DB::beginTransaction();
       try {
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
+
+          $detailid = DB::table('d_seragam_pekerja')
+                    ->where('sp_sales', $idSales)
+                    ->max('sp_id');
+
+          if ($detailid == null) {
+            $detailid = 0;
+          }
+
+          if ($pekerja[$i] != '' && $temp[$i] == 'Iya' && $ukuran[$i] != 'Tidak') {
+
+              DB::table('d_seragam_pekerja')
+                  ->insert([
+                    'sp_sales' => $idSales,
+                    'sp_id' => $detailid + 1,
+                    'sp_pekerja' => $pekerja[$i],
+                    'sp_item' => $seragam,
+                    'sp_item_size' => $ukuran[$i],
+                    'sp_qty' => 1,
+                    'sp_value' => $getStock[$i]->id_price,
+                    'sp_pay_value' => 0,
+                    'sp_status' => 'Belum',
+                    'sp_date' => Carbon::now('Asia/Jakarta'),
+                    'sp_no' => $this->getpenerimaan($idSales)
+                  ]);
+          }
         }
 
 
@@ -554,5 +580,15 @@ class PenjualanController extends Controller
       $finalkode = 'POS-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
 
       return $finalkode;
+    }
+
+    public function getpenerimaan($kode){
+      //Kode penerimaan
+
+      $kode1 = sprintf('%03s', $kode);
+
+      $notapenerimaan = 'PS-' . $kode1 . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+      return $notapenerimaan;
     }
 }

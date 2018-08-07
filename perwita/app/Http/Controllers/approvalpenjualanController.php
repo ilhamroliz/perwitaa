@@ -66,13 +66,47 @@ class approvalpenjualanController extends Controller
     }
 
     public function setujui(Request $request){
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
 
           $sales = DB::table('d_sales')
                 ->join('d_sales_dt', 'sd_sales', '=', 's_id')
                 ->where('s_id', $request->id)
                 ->get();
+
+          //Insert Pekerja Mutasi
+          $pekerja = DB::table('d_seragam_pekerja')
+              ->select('sp_pekerja', 'sp_no')
+              ->where('sp_sales', $request->id)
+              ->get();
+
+          for ($i=0; $i < count($pekerja); $i++) {
+            $detailid = DB::table('d_pekerja_mutation')
+                ->where('pm_pekerja', $pekerja[$i]->sp_pekerja)
+                ->max('pm_detailid');
+
+            $mitrapekerja = DB::table('d_mitra_pekerja')
+                  ->where('mp_pekerja', $pekerja[$i]->sp_pekerja)
+                  ->get();
+
+            DB::table('d_pekerja_mutation')
+                ->insert([
+                  'pm_pekerja' => $pekerja[$i]->sp_pekerja,
+                  'pm_detailid' => $detailid + 1,
+                  'pm_mitra' => $mitrapekerja[0]->mp_mitra,
+                  'pm_divisi' => $mitrapekerja[0]->mp_divisi,
+                  'pm_detail' => 'Pemberian Seragam',
+                  'pm_status' => 'Aktif',
+                  'pm_insert_by' => Session::get('mem'),
+                  'pm_reff' => $pekerja[$i]->sp_no
+                ]);
+          }
+
+          DB::table('d_sales')
+            ->where('s_id', $request->id)
+            ->update([
+              's_isapproved' => 'Y'
+            ]);
 
           for ($i=0; $i < count($sales); $i++) {
 
@@ -167,16 +201,16 @@ class approvalpenjualanController extends Controller
             }
           }
 
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+      //   DB::commit();
+      //   return response()->json([
+      //     'status' => 'berhasil'
+      //   ]);
+      // } catch (\Exception $e) {
+      //   DB::rollback();
+      //   return response()->json([
+      //     'status' => 'gagal'
+      //   ]);
+      // }
   }
 
   public function tolak(Request $request){
