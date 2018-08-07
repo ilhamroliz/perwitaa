@@ -98,7 +98,7 @@ class PembelianController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            $notarencana = $request->nota;
             $nota = $this->getNewNota();
 
             $id = DB::table('d_purchase')
@@ -160,8 +160,14 @@ class PembelianController extends Controller
                 array_push($pd, $data_dt);
             }
             d_purchase_dt::insert($pd);
-
             DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");
+            if ($notarencana != null || $notarencana != ''){
+                DB::table('d_purchase_planning')
+                    ->where('pp_nota', '=', $notarencana)
+                    ->update([
+                        'pp_status' => 'Sudah'
+                    ]);
+            }
 
             DB::commit();
             return response()->json([
@@ -180,6 +186,48 @@ class PembelianController extends Controller
     public function cari()
     {
         return view('pembelian.cari');
+    }
+
+    public function getNotaRencana(Request $request)
+    {
+        $keyword = $request->term;
+        $data = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+            ->select(DB::raw('date_format(pp_date, "%d/%m/%Y") as pp_date'), 'pp_nota')
+            ->where('pp_nota', 'like', '%'.$keyword.'%')
+            ->where('pp_isapproved', '=', 'Y')
+            ->where('pp_status', '=', 'Belum')
+            ->groupBy('pp_id')
+            ->get();
+
+        if ($data == null) {
+            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+        } else {
+
+            foreach ($data as $query) {
+                $results[] = ['id' => $query->pp_nota, 'label' => $query->pp_nota . ' (' . $query->pp_date . ')'];
+            }
+        }
+        return response()->json($results);
+    }
+
+    public function detailRencana(Request $request)
+    {
+        $nota = $request->nota;
+        $data = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+            ->join('d_item', 'i_id', '=', 'ppd_item')
+            ->join('d_item_dt', function ($e) {
+                $e->on('id_detailid', '=', 'ppd_item_dt');
+                $e->on('id_item', '=', 'i_id');
+            })
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'ppd_qty', 'id_price', 'i_id', 'id_detailid', DB::raw('(ppd_qty*id_price) as total'))
+            ->where('pp_nota', '=', $nota)
+            ->get();
+
+        return response()->json($data);
     }
 
     public function getNota(Request $request)
