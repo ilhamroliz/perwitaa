@@ -47,7 +47,11 @@ class PembelianController extends Controller
 
     public function createKhusus()
     {
-        return view('pembelian.createkhusus');
+        $supplier = DB::table('d_supplier')
+            ->select('s_id', 's_company')
+            ->where('s_isactive', '=', 'Y')
+            ->get();
+        return view('pembelian.createkhusus', compact('supplier'));
     }
 
     public function getItem(Request $request)
