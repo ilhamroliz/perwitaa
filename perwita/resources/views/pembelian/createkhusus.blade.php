@@ -47,17 +47,13 @@
                     </div>
 
                     <div class="ibox-content">
-                        <form role="form" class="form-inline">
-                            <div class="form-group col-md-7">
+                        <form role="form" class="form-inline row">
+                            <div class="form-group col-md-12">
                                 <label for="namabarang" class="sr-only">Nama Barang</label>
-                                <input type="text" placeholder="Masukan Nama Barang" id="namabarang" class="form-control" style="width: 100%;">
+                                <input type="text" placeholder="Masukan Nomor Rencana Pembelian" id="namabarang" class="form-control" style="width: 100%;">
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="qty" class="sr-only">Qty</label>
-                                <input type="text" placeholder="Kuantitas" id="qty" class="form-control" style="width: 100%;" onkeypress="saatEnter(this, event)">
-                            </div>
-                            <button class="btn btn-info" type="button" onclick="tambah()">Tambahkan</button>
-                            <div class="table-responsive" style="margin-top: 30px;">
+                            
+                            <div class="table-responsive col-md-12" style="margin-top: 30px;">
                                 <table class="table table-striped table-bordered table-hover" id="tabelitem">
                                     <thead>
                                         <tr>
@@ -65,8 +61,7 @@
                                             <th style="width: 10%;">Qty</th>
                                             <th style="width: 15%;">Harga @</th>
                                             <th style="width: 15%;">Diskon (Rp)</th>
-                                            <th style="width: 15%;">Total</th>
-                                            <th style="width: 5%;">Aksi</th>
+                                            <th style="width: 20%;">Total</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -151,6 +146,7 @@
     var tablepembelian;
     var dataitem;
     var hitung = 0;
+    var notaPublic;
     $( document ).ready(function() {
         tablepembelian = $("#tabelitem").DataTable({
             responsive: true,
@@ -158,20 +154,17 @@
             searching: false,
             "ordering": false,
             "language": dataTableLanguage,
-            "columnDefs": [
-                { "orderable": false, "targets": 5 }
-              ]
         });
 
         $("#supplier").chosen();
 
         $( "#namabarang" ).autocomplete({
-            source: baseUrl+'/manajemen-pembelian/getItem',
+            source: baseUrl+'/manajemen-seragam/getnotarencana',
             minLength: 2,
             select: function(event, ui) {
                 $('#namabarang').val(ui.item.label);
                 tanam(ui.item);
-                $('#qty').focus();
+                $('#namabarang').focus();
             }
         });
 
@@ -194,145 +187,70 @@
     }
 
     function tanam(data){
-        dataitem = data;
-    }
-
-    function getSupplier(){
-        var supplier = $('#supplier').val();
+        waitingDialog.show();
+        var nota = data.id;
+        notaPublic = data.id;
         $.ajax({
-          url: baseUrl + '/master-supplier/getSupplier',
-          type: 'get',
-          data: {id: supplier},
-          success: function(response){
-            $('.telpsupp').html('<i class="fa fa-phone"></i> '+response.data[0].s_phone);
-            $('.infosupp').html('Info Supplier ('+response.data[0].s_company+')')
-          }, error:function(x, e) {
-              if (x.status == 0) {
-                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-              } else if (x.status == 404) {
-                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-              } else if (x.status == 500) {
-                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-              } else if (e == 'parsererror') {
-                  alert('Error.\nParsing JSON Request failed.');
-              } else if (e == 'timeout'){
-                  alert('Request Time out. Harap coba lagi nanti');
-              } else {
-                  alert('Unknow Error.\n' + x.responseText);
-              }
+            url: baseUrl + '/manajemen-seragam/getnotarencana/detail',
+            type: 'get',
+            data: {nota: nota},
+            success: function(response){
+                console.log(response);
+                tablepembelian.clear();
+                var data = response;
+                var akhir = 0;
+                for (var i = 0; i < data.length; i++) {
+                    data[i].total = Number(data[i].total);
+                    akhir += data[i].total;
+                    var harga = accounting.formatMoney(data[i].id_price, "", 0, ".", ",");
+                    var total = accounting.formatMoney(data[i].total, "", 0, ".", ",");
+                    tablepembelian.row.add([
+                        data[i].nama+'<input type="hidden" name="id[]" value="'+data[i].i_id+'" class="form-control iditem"><input type="hidden" name="iddt[]" value="'+data[i].id_detailid+'" class="form-control iddt iddt">',
+                        '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+data[i].ppd_qty+'" class="form-control qty" style="width: 100%;" readonly>',
+                        '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+i+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'harga\')" onblur="hitungtotal(this, event, \'harga\')">',
+                        '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+i+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event, \'diskon\')">',
+                        '<input type="text" name="total[]" value="'+total+'" class="form-control total" style="width: 100%;" readonly>'
+                    ]).draw( false );
+
+                    $(".harga"+i).maskMoney({
+                        allowNegative: false,
+                        thousands:'.',
+                        decimal:',',
+                        precision: 0,
+                        affixesStay: false
+                    });
+
+                    $(".disc"+i).maskMoney({
+                        allowNegative: false,
+                        thousands:'.',
+                        decimal:',',
+                        precision: 0,
+                        affixesStay: false
+                    });
+
+                    hitung = i;
+                    $('.jumlahitem').html(i + 1);
+                }
+                akhir = accounting.formatMoney(akhir, "", 0, ".", ",");
+                $('.totalpembelian').html('Rp. '+akhir);
+                waitingDialog.hide();
+            }, error:function(x, e) {
+                waitingDialog.hide();
+                if (x.status == 0) {
+                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                } else if (x.status == 404) {
+                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                } else if (x.status == 500) {
+                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                } else if (e == 'parsererror') {
+                    alert('Error.\nParsing JSON Request failed.');
+                } else if (e == 'timeout'){
+                    alert('Request Time out. Harap coba lagi nanti');
+                } else {
+                    alert('Unknow Error.\n' + x.responseText);
+                }
             }
         })
-    }
-
-    function tambah(){
-
-        var data = dataitem;
-        var qty = $('#qty').val();
-        var total = qty * data.harga;
-        var harga = accounting.formatMoney(data.harga, "", 0, ".", ",");
-        total = accounting.formatMoney(total, "", 0, ".", ",");
-
-        var id = document.getElementsByClassName( 'iditem' ),
-          idItem  = [].map.call(id, function( input ) {
-              return input.value;
-        });
-
-        var dt = document.getElementsByClassName( 'iddt' ),
-          iddt  = [].map.call(dt, function( input ) {
-              return input.value;
-        });
-
-        for (var i = 0; i < idItem.length; i++) {
-            if (idItem[i] == data.id && iddt[i] == data.detailid) {
-                var kuantitas = $('input.qty:text:eq('+i+')').val();
-                qty = parseInt(qty);
-                kuantitas = parseInt(kuantitas);
-                qty = qty + kuantitas;
-                $('input.qty:text:eq('+i+')').val(qty);
-                $('#namabarang').val('');
-                $('#qty').val('');
-                hitungtotal();
-                return false;
-            }
-        }
-
-        /*tablepembelian.row.add([
-               data.label+'<input type="hidden" name="id[]" value="'+data.id+'" class="form-control iditem iditem'+hitung+'"><input type="hidden" name="iddt[]" value="'+data.detailid+'" class="form-control iddt iddt'+hitung+'">',
-               '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+qty+'" class="form-control qty qty'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'qty\')" onblur="onBlurQty(this, event)">',
-               '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'harga\')" onblur="hitungtotal(this, event)">',
-               '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event)">',
-               '<input type="text" name="total[]" value="'+total+'" class="form-control total total'+hitung+'" style="width: 100%;" readonly>',
-               buttonGen()
-            ]).draw( false );*/
-
-        tablepembelian.row.add([
-               data.label+'<input type="hidden" name="id[]" value="'+data.id+'" class="form-control iditem iditem'+hitung+'"><input type="hidden" name="iddt[]" value="'+data.detailid+'" class="form-control iddt iddt'+hitung+'">',
-               '<input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="'+qty+'" class="form-control qty qty'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'qty\')" onblur="onBlurQty(this, event)">',
-               '<input type="text" name="harga[]" value="'+harga+'" class="form-control harga harga'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'harga\')" onblur="hitungtotal(this, event, \'harga\')">',
-               '<input type="text" name="disc[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc'+hitung+'" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event, \'diskon\')">',
-               '<input type="text" name="total[]" value="'+total+'" class="form-control total total'+hitung+'" style="width: 100%;" readonly>',
-               buttonGen()
-            ]).draw( false );
-        $('#namabarang').val('');
-        $('#qty').val('');
-
-        $(".btnhapus").click(function(){
-            tablepembelian
-                .row( $(this).parents('tr') )
-                .remove()
-                .draw();
-
-            hapus();
-            hitungtotal();
-        });
-
-        $(".harga"+hitung).maskMoney({
-            allowNegative: false,
-            thousands:'.',
-            decimal:',',
-            precision: 0,
-            affixesStay: false
-        });
-
-        $(".disc"+hitung).maskMoney({
-            allowNegative: false,
-            thousands:'.',
-            decimal:',',
-            precision: 0,
-            affixesStay: false
-        });
-        hitungtotal();
-        hitung = hitung + 1;
-        updateItems();
-    }
-
-    function updateItems(){
-        var qty = document.getElementsByClassName( 'qty' ),
-            names  = [].map.call(qty, function( input ) {
-                return input.value;
-        });
-        $('.items').val(names.length);
-        $('.jumlahitem').html(names.length);
-    }
-
-    function hapus(){
-        hitung = hitung - 1;
-        updateItems();
-    }
-
-    function buttonGen(){
-        var buton = '<div class="text-center"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs btnhapus btnhapus" ><i class="glyphicon glyphicon-trash"></i></button></div>'
-        return buton;
-    }
-
-    function onBlurQty(inField, e){
-        var getIndex = $('input.qty:text').index(inField);
-        var permintaan = $('input.qty:text:eq('+getIndex+')').val();
-        if (isNaN(permintaan) || permintaan < 1) {
-            permintaan = 1;
-            $('input.qty:text:eq('+getIndex+')').val(1);
-        }
-        hitungtotal();
     }
 
     function hitungtotal(inField, e, jenis){
@@ -380,6 +298,47 @@
 
         $('.totalpembelian').html('Rp. '+convertToRupiah(temp));
 
+    }
+
+    function getSupplier(){
+        var supplier = $('#supplier').val();
+        $.ajax({
+          url: baseUrl + '/master-supplier/getSupplier',
+          type: 'get',
+          data: {id: supplier},
+          success: function(response){
+            $('.telpsupp').html('<i class="fa fa-phone"></i> '+response.data[0].s_phone);
+            $('.infosupp').html('Info Supplier ('+response.data[0].s_company+')')
+          }, error:function(x, e) {
+              if (x.status == 0) {
+                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+              } else if (x.status == 404) {
+                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+              } else if (x.status == 500) {
+                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+              } else if (e == 'parsererror') {
+                  alert('Error.\nParsing JSON Request failed.');
+              } else if (e == 'timeout'){
+                  alert('Request Time out. Harap coba lagi nanti');
+              } else {
+                  alert('Unknow Error.\n' + x.responseText);
+              }
+            }
+        })
+    }
+
+    function tambah(){
+
+    }
+
+    function onBlurQty(inField, e){
+        var getIndex = $('input.qty:text').index(inField);
+        var permintaan = $('input.qty:text:eq('+getIndex+')').val();
+        if (isNaN(permintaan) || permintaan < 1) {
+            permintaan = 1;
+            $('input.qty:text:eq('+getIndex+')').val(1);
+        }
+        hitungtotal();
     }
 
     function convertToRupiah(angka) {
@@ -459,7 +418,7 @@
         $.ajax({
             url: baseUrl + '/manajemen-pembelian/simpan',
             type: 'post',
-            data: ar.find('input').serialize()+'&supplier='+supplier,
+            data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+notaPublic,
             success: function(response){
                 if (response.status == 'sukses') {
                     waitingDialog.hide();

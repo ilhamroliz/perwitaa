@@ -508,6 +508,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/pembelian','PembelianController@index');
     Route::get('manajemen-seragam/tambah','PembelianController@create');
     Route::get('manajemen-seragam/gunakan-rencana-pembelian','PembelianController@createKhusus');
+    Route::get('manajemen-seragam/getnotarencana','PembelianController@getNotaRencana');
+    Route::get('manajemen-seragam/getnotarencana/detail','PembelianController@detailRencana');
     Route::get('manajemen-seragam/cari','PembelianController@cari');
     Route::get('manajemen-seragam/getnota','PembelianController@getnota');
     Route::get('manajemen-seragam/getdata','PembelianController@getdata');
