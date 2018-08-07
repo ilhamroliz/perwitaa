@@ -468,7 +468,7 @@ function detail(id){
       } else if (result[0].sp_isapproved == 'Y') {
         $('#approve').html('<span class="label label-success">Disetujui</span>');
       } else if (result[0].sp_isapproved == 'N') {
-        $('#approve').text('<span class="label label-danger">Ditolak</span>');
+        $('#approve').html('<span class="label label-danger">Ditolak</span>');
       }
 
       //Button
@@ -482,7 +482,7 @@ function detail(id){
 }
 
 function print(id){
-  window.location.href = baseUrl + '/approvalsp/print?id='+id;
+  window.location.href = baseUrl + '/manajemen-pekerja/surat-peringatan/print?id='+id;
 }
 
 </script>

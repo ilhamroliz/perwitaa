@@ -170,6 +170,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja/promosi-demosi/detail','promosiController@detail');
     Route::get('manajemen-pekerja/promosi-demosi/hapus','promosiController@hapus');
     Route::get('manajemen-pekerja/promosi-demosi/edit','promosiController@edit');
+    Route::get('manajemen-pekerja/promosi-demosi/print','promosiController@print');
     Route::get('manajemen-pekerja/promosi-demosi/update/{id}','promosiController@update');
     Route::post('manajemen-pekerja/promosi-demosi/update/{id}','promosiController@update');
 
@@ -552,6 +553,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-penjualan/getItem','PenjualanController@getItem');
     Route::get('manajemen-penjualan/getPekerja','PenjualanController@getPekerja');
     Route::get('manajemen-penjualan/save','PenjualanController@save');
+    Route::get('manajemen-penjualan/hapus', 'PenjualanController@hapus');
 
     //============= mutasi stock
     Route::get('manajemen-stock/mutasi-stock/tabel', 'StockMutController@tabel');

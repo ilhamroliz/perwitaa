@@ -47,6 +47,7 @@
                                 <th>Nota</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,7 +107,8 @@ $(document).ready(function(){
               {data: 'm_name', name: 'm_name'},
               {data: 's_nota', name: 's_nota'},
               {data: 's_total_net', name: 's_total_net'},
-              {data: 'status', name: 'status', orderable: false, searchable: false}
+              {data: 'status', name: 'status', orderable: false, searchable: false},
+              {data: 'action', name: 'action', orderable: false, searchable: false}
           ],
           responsive: true,
           "pageLength": 10,
@@ -117,6 +119,19 @@ $(document).ready(function(){
       });
       $('#tabel-pembelian').css('width', '100%').dataTable().fnAdjustColumnSizing();
   }, 1500);
-})
+});
+
+function hapus(id){
+  $.ajax({
+    type: 'get',
+    data: {id:id},
+    dataType: 'json',
+    url: baseUrl + '/manajemen-penjualan/hapus',
+    success : function(result){
+      console.log(result);
+    }
+  })
+}
+
 </script>
 @endsection

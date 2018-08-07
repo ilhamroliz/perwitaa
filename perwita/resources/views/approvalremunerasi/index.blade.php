@@ -469,7 +469,7 @@ function detail(id){
       } else if (result[0].r_isapproved == 'Y') {
         $('#approve').html('<span class="label label-success">Disetujui</span>');
       } else if (result[0].r_isapproved == 'N') {
-        $('#approve').text('<span class="label label-danger">Ditolak</span>');
+        $('#approve').html('<span class="label label-danger">Ditolak</span>');
       }
 
       $('.spiner-sp').hide();

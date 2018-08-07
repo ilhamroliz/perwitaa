@@ -28,6 +28,7 @@ class PenjualanController extends Controller
         $pengeluaran = DB::table('d_sales')
                       ->join('d_mitra', 'm_id', '=', 's_member')
                       ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 's_date', 's_nota', 'm_name', 's_total_net', 's_isapproved', 's_id')
+                      ->where('s_isapproved', 'P')
                       ->get();
 
         for ($i=0; $i < count($pengeluaran); $i++) {
@@ -44,6 +45,13 @@ class PenjualanController extends Controller
                   return '<div class="text-center"><span class="label label-success ">Disetujui</span></div>';
               if ($pengeluaran->s_isapproved == 'N')
                   return '<div class="text-center"><span class="label label-danger ">Ditolak</span></div>';
+            })
+            ->addColumn('action', function ($pengeluaran) {
+              return '<div class="text-center">
+                  <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pengeluaran->s_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" onclick="edit(' . $pengeluaran->s_id . '"><i" class="glyphicon glyphicon-edit"></i></a>
+                  <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pengeluaran->s_id . ')"><i class="fa fa-trash"></i></button>
+                </div>';
             })
             ->make(true);
     }
@@ -619,4 +627,8 @@ class PenjualanController extends Controller
 
       return $notapenerimaan;
     }
+
+    public function hapus(Request $request){
+}
+
 }

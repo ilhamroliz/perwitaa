@@ -131,7 +131,7 @@
             </div>
             </div>
               <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
+                                <button type="button" class="btn btn-primary" name="button" id="printbtn" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
@@ -306,8 +306,11 @@ $(document).ready(function(){
         } else if (result[0].r_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
         } else if (result[0].r_isapproved == 'N') {
-          $('#approve').text('<span class="label label-danger">Ditolak</span>');
+          $('#approve').html('<span class="label label-danger">Ditolak</span>');
         }
+
+        //Button print
+        $('#printbtn').attr('onclick', 'print('+id+')');
 
         $('.spiner-sp').hide();
         $('#showdetail').show();
