@@ -130,7 +130,7 @@
             </div>
             </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
+                <button type="button" class="btn btn-primary" name="button" onclick="print()" id="printbtn"><i class="fa fa-print">&nbsp;</i>Print</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>
@@ -295,7 +295,6 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-pekerja/promosi-demosi/detail',
       dataType: 'json',
       success : function(result){
-        console.log(result);
         $('#pd_no').text(result[0][0].pd_no);
         $('#namapekerja').text(result[0][0].p_name);
         $('#keteranganpekerja').text(result[0][0].pd_note);
@@ -306,8 +305,11 @@ $(document).ready(function(){
         } else if (result[0][0].pd_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
         } else if (result[0][0].pd_isapproved == 'N') {
-          $('#approve').text('<span class="label label-danger">Ditolak</span>');
+          $('#approve').html('<span class="label label-danger">Ditolak</span>');
         }
+
+        //Button print
+        $('#printbtn').attr('onclick', 'print('+id+')');
 
         $('.spiner-sp').hide();
         $('#showdetail').show();
@@ -445,6 +447,10 @@ $(document).ready(function(){
       });
     }, 800);
   }
+
+    function print(id){
+      window.location.href = baseUrl + '/manajemen-pekerja/promosi-demosi/print?id='+id;
+    }
 
 
 </script>

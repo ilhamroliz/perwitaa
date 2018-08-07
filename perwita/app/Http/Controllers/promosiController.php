@@ -479,4 +479,8 @@ class promosiController extends Controller
 
     }
 
+    public function print(Request $request){
+      dd($request);
+    }
+
 }
