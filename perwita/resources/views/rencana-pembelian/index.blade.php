@@ -41,12 +41,12 @@
                     <table id="tabel-pembelian" class="table table-bordered table-striped" >
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Mitra</th>
                                 <th>Nota</th>
-                                <th>Total</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah</th>
+                                <th>Pembuat</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,10 +59,115 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content animated fadeIn">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <i class="fa fa-folder-open modal-icon"></i>
+                  <h4 class="modal-title">Detail</h4>
+                  <small class="font-bold">Detail rencana pembelian Perwita Nusaraya</small>
+              </div>
+              <div class="modal-body">
+                  <table class="table table-striped table-bordered" id="tablemodal">
+                    <thead>
+                      <tr>
+                          <th>Nama Barang</th>
+                          <th>Qty</th>
+                      </tr>
+                    </thead>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                  
+              </div>
+          </div>
+      </div>
+  </div>
+
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
+    var table;
+    var tablemodal;
+    $(document).ready(function(){
+        tablemodal = $("#tablemodal").DataTable({
+            responsive: true,
+            paging: false,
+            "language": dataTableLanguage
+        });
+        setTimeout(function () {
+            $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            table = $("#tabel-pembelian").DataTable({
+                "search": {
+                    "caseInsensitive": true
+                },
+                processing: true,
+                serverSide: true,
+                "ajax": {
+                    "url": "{{ url('manajemen-seragam/rencana-pembelian/getData') }}",
+                    "type": "post"
+                },
+                columns: [
+                    {data: 'pp_nota', name: 'pp_nota'},
+                    {data: 'pp_date', name: 'pp_date'},
+                    {data: 'jumlah', name: 'jumlah'},
+                    {data: 'm_name', name: 'm_name'},
+                    {data: 'pp_isapproved', name: 'pp_isapproved'},
+                    {data: 'aksi', name: 'aksi'}
+                ],
+                responsive: true,
+                "pageLength": 10,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                //"scrollY": '50vh',
+                //"scrollCollapse": true,
+                "language": dataTableLanguage,
+            });
+          
+        }, 1500);
+    });
 
+    function detail(id){
+        $.ajax({
+            url: baseUrl + '/manajemen-seragam/rencana-pembelian/getDetail',
+            type: 'get',
+            data: {id: id},
+            success: function (response) {
+                if (response.status == 'berhasil') {
+                   var data = response.data;
+                   tablemodal.clear();
+                   for (var i = 0; i < data.length; i++) {
+                       tablemodal.row.add([
+                            data[i].nama,
+                            data[i].ppd_qty
+                        ]).draw(false);
+                   }
+                }
+            },
+            error: function (xhr, status) {
+                if (status == 'timeout') {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 0) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 500) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                }
+
+                buttonLadda.ladda('stop');
+            }
+        })
+
+        $('#myModal').modal('show');
+    }
 </script>
 @endsection

@@ -2,16 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use function foo\func;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use App\Http\Requests;
+use Session;
+use Yajra\Datatables\Datatables;
 
 class RencanaPembelian extends Controller
 {
     public function index()
     {
         return view('rencana-pembelian/index');
+    }
+
+    public function data(Request $request)
+    {
+/*        $data = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+            ->join('d_item', 'i_id', '=', 'ppd_item')
+            ->join('d_item_dt', function ($q){
+                $q->on('ppd_item', '=', 'id_item');
+                $q->on('ppd_item_dt', '=', 'id_detailid');
+            })
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'd_purchase_planning.*', 'd_purchase_planning_dt.*')
+            ->where('pp_status', '=', 'Belum')
+            ->where('pp_isapproved', '!=', 'N')
+            ->toSql();*/
+
+        $data = DB::select('select m_name, d_purchase_planning.*, sum(ppd_qty) as jumlah from d_purchase_planning inner join d_purchase_planning_dt on ppd_purchase_planning = pp_id inner join d_item on i_id = ppd_item inner join d_item_dt on ppd_item = id_item and ppd_item_dt = id_detailid inner join d_size on s_id = id_size inner join d_mem on pp_mem = m_id where pp_status = "Belum" and pp_isapproved != "N" group by pp_id');
+        $data = collect($data);
+        return Datatables::of($data)
+            ->editColumn('pp_isapproved', function ($data){
+                if ($data->pp_isapproved == 'P') {
+                    return '<div class="text-center"><span class="label label-warning ">Pending</span></div>';
+                } elseif ($data->pp_isapproved == 'Y') {
+                    return '<div class="text-center"><span class="label label-success ">Disetujui</span></div>';
+                }
+            })
+            ->editColumn('pp_date', function ($data){
+                return Carbon::createFromFormat('Y-m-d', $data->pp_date)->format('d/m/Y');
+            })
+            ->addColumn('aksi', function ($data){
+                return '<div class="text-center"><button type="button" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-primary btn-xs"><i class="fa fa-folder-open"></i> Detail</button></div>';
+            })
+            ->make(true);
     }
 
     public function add()
@@ -56,6 +93,7 @@ class RencanaPembelian extends Controller
                     'pp_date' => Carbon::now('Asia/Jakarta'),
                     'pp_status' => 'Belum',
                     'pp_isapproved' => 'P',
+                    'pp_mem' => Session::get('mem'),
                     'pp_insert' => Carbon::now('Asia/Jakarta')
                 ]);
             $tempPlan = [];
@@ -84,6 +122,27 @@ class RencanaPembelian extends Controller
                 'data' => $e
             ]);
         }
+    }
+
+    public function detail(Request $request)
+    {
+        $nota = $request->id;
+        $data = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+            ->join('d_item', 'i_id', '=', 'ppd_item')
+            ->join('d_item_dt', function ($q){
+                $q->on('id_item', '=', 'i_id');
+                $q->on('id_detailid', '=', 'ppd_item_dt');
+            })
+            ->join('d_size', 'id_size', '=', 's_id')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'ppd_qty')
+            ->where('pp_nota', '=', $nota)
+            ->get();
+
+        return response()->json([
+            'status' => 'berhasil',
+            'data' => $data
+        ]);
     }
 
 }
