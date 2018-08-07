@@ -46,7 +46,11 @@ class RencanaPembelian extends Controller
                 return Carbon::createFromFormat('Y-m-d', $data->pp_date)->format('d/m/Y');
             })
             ->addColumn('aksi', function ($data){
-                return '<div class="text-center"><button type="button" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-primary btn-xs"><i class="fa fa-folder-open"></i> Detail</button></div>';
+                return '<div class="text-center">
+                        <button type="button" title="detail" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></button>
+                        <button type="button" title="edit" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button type="button" title="hapus" onclick="hapus(\''.$data->pp_nota.'\')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>
+                        </div>';
             })
             ->make(true);
     }
@@ -142,6 +146,26 @@ class RencanaPembelian extends Controller
         return response()->json([
             'status' => 'berhasil',
             'data' => $data
+        ]);
+    }
+
+    public function hapus(Request $request)
+    {
+        $nota = $request->nota;
+        $id = DB::table('d_purchase_planning')
+            ->where('pp_nota', '=', $nota)
+            ->get();
+
+        DB::table('d_purchase_planning')
+            ->where('pp_nota', '=', $nota)
+            ->delete();
+
+        DB::table('d_purchase_planning_dt')
+            ->where('ppd_purchase_planning', '=', $id[0]->pp_id)
+            ->delete();
+
+        return response()->json([
+            'status' => 'berhasil'
         ]);
     }
 

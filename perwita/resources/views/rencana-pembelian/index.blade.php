@@ -135,7 +135,7 @@
     function detail(id){
         $.ajax({
             url: baseUrl + '/manajemen-seragam/rencana-pembelian/getDetail',
-            type: 'get',
+            type: 'post',
             data: {id: id},
             success: function (response) {
                 if (response.status == 'berhasil') {
@@ -162,12 +162,53 @@
                     $('.error-load').css('visibility', 'visible');
                     $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
                 }
-
-                buttonLadda.ladda('stop');
             }
         })
 
         $('#myModal').modal('show');
     }
+
+    function hapus(nota){
+        swal({
+            title: "Apakah anda yakin?",
+            text: "Data yang dihapus tidak bisa dikembalikan",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, Lanjutkan!",
+            cancelButtonText: "Batalkan",
+            closeOnConfirm: false
+        }, function () {
+            waitingDialog.show();
+            $.ajax({
+                url: baseUrl + '/manajemen-seragam/rencana-pembelian/hapus',
+                type: 'get',
+                data: {nota: nota},
+                success: function (response) {
+                    waitingDialog.hide();
+                    if (response.status == 'berhasil') {
+                       swal("Terhapus!", "Data sudah terhapus.", "success");
+                       table.ajax.reload();
+                    }
+                },
+                error: function (xhr, status) {
+                    waitingDialog.hide();
+                    if (status == 'timeout') {
+                        $('.error-load').css('visibility', 'visible');
+                        $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                    }
+                    else if (xhr.status == 0) {
+                        $('.error-load').css('visibility', 'visible');
+                        $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                    }
+                    else if (xhr.status == 500) {
+                        $('.error-load').css('visibility', 'visible');
+                        $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                    }
+                }
+            });
+        })
+    }
 </script>
 @endsection
+
