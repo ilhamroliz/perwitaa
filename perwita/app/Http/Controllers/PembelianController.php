@@ -436,6 +436,45 @@ class PembelianController extends Controller
 
     public function edit(Request $request)
     {
+        $nota = $request->nota;
 
+        $data = DB::table('d_purchase')
+            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
+            ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
+            ->join('d_item', 'i_id', '=', 'pd_item')
+            ->join('d_item_dt', function ($e) {
+                $e->on('id_detailid', '=', 'pd_item_dt');
+                $e->on('id_item', '=', 'i_id');
+            })
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->select(
+                'p_date',
+                'p_supplier',
+                'p_total_net',
+                'pd_value',
+                'pd_qty',
+                'i_nama',
+                'pd_total_gross',
+                'pd_disc_value',
+                'pd_disc_percent',
+                'pd_total_net',
+                'i_nama',
+                'p_total_gross',
+                'k_nama',
+                'i_warna',
+                'p_pajak',
+                's_company',
+                's_nama',
+                DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama')
+            )
+            ->where('p_nota', $nota)
+            ->get();
+
+        $supplier = DB::table('d_supplier')
+            ->select('s_id', 's_company')
+            ->where('s_isactive', '=', 'Y')
+            ->get();
+        return view('pembelian/edit', compact('supplier', 'data', 'nota'));
     }
 }

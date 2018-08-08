@@ -503,8 +503,8 @@ class PenjualanController extends Controller
           ->max('sd_sales');
       $detailSales = $detailSales + 1;
 
-      DB::beginTransaction();
-      try {
+      /*DB::beginTransaction();
+      try {*/
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
@@ -586,7 +586,7 @@ class PenjualanController extends Controller
             }
 
 
-        DB::commit();
+        /*DB::commit();
         return response()->json([
           'status' => 'sukses'
         ]);
@@ -595,7 +595,7 @@ class PenjualanController extends Controller
         return response()->json([
           'status' => 'gagal'
         ]);
-      }
+      }*/
 
     }
 

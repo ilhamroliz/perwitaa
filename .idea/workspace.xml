@@ -4,7 +4,7 @@
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perwita/resources/views/pembelian/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/pembelian/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,37 +34,46 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="php" value="19" />
+          <entry key="php" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PHP" value="19" />
+          <entry key="PHP" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="6655" />
+          <entry key="php" value="6774" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="17" />
-          <entry key="PHP" value="6638" />
+          <entry key="PHP" value="6757" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
-              <caret line="436" column="41" selection-start-line="436" selection-start-column="41" selection-end-line="436" selection-end-column="41" />
+            <state relative-caret-position="77">
+              <caret line="452" column="29" selection-start-line="452" selection-start-column="29" selection-end-line="452" selection-end-column="29" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="503" lean-forward="true" selection-start-line="503" selection-end-line="503" />
             </state>
           </provider>
         </entry>
@@ -85,9 +94,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>respo</find>
-      <find>begin</find>
-      <find>$kode</find>
       <find>session</find>
       <find>setujuil</find>
       <find>getNota</find>
@@ -112,9 +118,12 @@
       <find>join('d_item</find>
       <find>like</find>
       <find>label</find>
-      <find>save</find>
       <find>div</find>
+      <find>crea</find>
+      <find>item</find>
+      <find>d_purchase</find>
       <find>nama</find>
+      <find>save</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -148,11 +157,11 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" />
-        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" />
+        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" />
       </list>
     </option>
   </component>
@@ -255,7 +264,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;pembel&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;pembelianc&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;CollectionEngine.php&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/vendor/yajra/laravel-datatables-oracle/src/Engines/CollectionEngine.php&#10;pembelia&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;pembelian&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;rencana&#9;null&#9;null&#10;approval penj&#9;null&#9;null&#10;penerimaa&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;return&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;penerima&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;penjualan&#9;null&#9;null&#10;mitrapekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;mitracontroller&#9;null&#9;null&#10;promosi&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/promosiController.php&#10;promo&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_promosi_demosi.php&#10;sp&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/SuratPeringatanController.php&#10;d_purch&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_purchase.php&#10;d_notifi&#9;null&#9;null&#10;approvalpem&#9;null&#9;null&#10;pembeliancont&#9;null&#9;null&#10;d_pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_pekerja_mutation.php&#10;approval&#9;null&#9;null&#10;d_mem_com&#9;null&#9;null&#10;d_mem&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_mem.php&#10;d_promo&#9;null&#9;null&#10;d_peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_pekerja_mutation.php&#10;mitra&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;pener&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;pdm&#9;null&#9;null&#10;peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;Retur&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;mitrapek&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;penerimaan&#9;null&#9;null&#10;surat&#9;null&#9;null&#10;itemCon&#9;null&#9;null&#10;returnpemb&#9;null&#9;null&#10;log&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;d_stoc&#9;null&#9;null&#10;mou&#9;null&#9;null&#10;mitrad&#9;null&#9;null&#10;d_mitra&#9;null&#9;null&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="penjualan&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenjualanController.php&#10;pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;pembel&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;pembelianc&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;login&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;CollectionEngine.php&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/vendor/yajra/laravel-datatables-oracle/src/Engines/CollectionEngine.php&#10;pembelia&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PembelianController.php&#10;pembelian&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;rencana&#9;null&#9;null&#10;approval penj&#9;null&#9;null&#10;penerimaa&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;return&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;penerima&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;mitrapekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;mitracontroller&#9;null&#9;null&#10;promosi&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/promosiController.php&#10;promo&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_promosi_demosi.php&#10;sp&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/SuratPeringatanController.php&#10;d_purch&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_purchase.php&#10;d_notifi&#9;null&#9;null&#10;approvalpem&#9;null&#9;null&#10;pembeliancont&#9;null&#9;null&#10;d_pekerja&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_pekerja_mutation.php&#10;approval&#9;null&#9;null&#10;d_mem_com&#9;null&#9;null&#10;d_mem&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_mem.php&#10;d_promo&#9;null&#9;null&#10;d_peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/d_pekerja_mutation.php&#10;mitra&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;pener&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/PenerimaanController.php&#10;pdm&#9;null&#9;null&#10;peker&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/pekerjaController.php&#10;Retur&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/ReturnPembelianController.php&#10;mitrapek&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;penerimaan&#9;null&#9;null&#10;surat&#9;null&#9;null&#10;itemCon&#9;null&#9;null&#10;returnpemb&#9;null&#9;null&#10;log&#9;FILE&#9;file://C:/xampp/htdocs/perwitaa/perwita/app/Http/Controllers/loginController.php&#10;d_stoc&#9;null&#9;null&#10;mou&#9;null&#9;null&#10;mitrad&#9;null&#9;null&#10;d_mitra&#9;null&#9;null&#10;logi&#9;null&#9;null&#10;appro&#9;null&#9;null&#10;d_pekerja_m&#9;null&#9;null&#10;d_peke&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -344,7 +353,7 @@
       <workItem from="1533536726661" duration="7642000" />
       <workItem from="1533606485312" duration="16157000" />
       <workItem from="1533696932757" duration="3476000" />
-      <workItem from="1533709488944" duration="3710000" />
+      <workItem from="1533709488944" duration="6673000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -595,7 +604,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="244789000" />
+    <option name="totallyTimeSpent" value="247752000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -830,13 +839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -895,8 +897,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="436" column="41" selection-start-line="436" selection-start-column="41" selection-end-line="436" selection-end-column="41" />
+        <state relative-caret-position="77">
+          <caret line="452" column="29" selection-start-line="452" selection-start-column="29" selection-end-line="452" selection-end-column="29" />
           <folding>
             <element signature="e#40#61#0#PHP" expanded="true" />
           </folding>
@@ -910,6 +912,13 @@
           <folding>
             <element signature="e#40#64#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="503" lean-forward="true" selection-start-line="503" selection-end-line="503" />
         </state>
       </provider>
     </entry>

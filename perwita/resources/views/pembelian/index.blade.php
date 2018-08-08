@@ -137,7 +137,10 @@
     $( document ).ready(function() {
         tablepembelian = $("#tabel-pembelian").DataTable({
             responsive: true,
-            "language": dataTableLanguage
+            "language": dataTableLanguage,
+            "columnDefs": [
+                { "orderable": false, "targets": 6 }
+            ]
         });
         tablemodal = $("#table-modal").DataTable({
             responsive: true,
