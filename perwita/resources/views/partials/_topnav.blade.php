@@ -68,7 +68,7 @@
                                       <i class="fa fa-bell"></i>  <span class="label label-warning" id="countnotif"></span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-alerts approvaldown" id="shownotif">
-
+                                    <center>Tidak ada data approval</center>
                                   </ul>
                                   @endif
                                   @endif

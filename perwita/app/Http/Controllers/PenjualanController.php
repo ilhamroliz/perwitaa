@@ -28,7 +28,7 @@ class PenjualanController extends Controller
         $pengeluaran = DB::table('d_sales')
                       ->join('d_mitra', 'm_id', '=', 's_member')
                       ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 's_date', 's_nota', 'm_name', 's_total_net', 's_isapproved', 's_id')
-                      ->where('s_isapproved', 'P')
+                      // ->where('s_isapproved', 'P')
                       ->get();
 
         for ($i=0; $i < count($pengeluaran); $i++) {
@@ -629,6 +629,43 @@ class PenjualanController extends Controller
     }
 
     public function hapus(Request $request){
-}
+
+      $sales = DB::table('d_sales')
+            ->join('d_sales_dt', 'sd_sales', '=', 's_id')
+            ->where('s_id', $request->id)
+            ->get();
+
+      for ($a=0; $a < count($sales); $a++) {
+
+        $stockpembelian = DB::table('d_stock')
+              ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+              ->select('d_stock.*', 'd_stock_mutation.*')
+              ->where('sm_detail', 'Pembelian')
+              ->where('s_item', $sales[$a]->sd_item)
+              ->where('s_item_dt', $sales[$a]->sd_item_dt)
+              ->where('s_comp', $sales[$a]->s_comp)
+              ->get();
+
+        $stockpenjualan = DB::table('d_stock')
+              ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+              ->select('d_stock.*', 'd_stock_mutation.*')
+              ->where('sm_detail', 'Penjualan')
+              ->where('s_item', $sales[$a]->sd_item)
+              ->where('s_item_dt', $sales[$a]->sd_item_dt)
+              ->where('s_comp', $sales[$a]->s_comp)
+              ->get();
+
+        }
+
+    }
+
+    public function detail(Request $request){
+       $data = DB::table('d_sales')
+              ->join('d_sales_dt', 'sd_sales', '=', 's_id')
+              ->where('s_id', $request->id)
+              ->get();
+
+        return response()->json($data);
+    }
 
 }

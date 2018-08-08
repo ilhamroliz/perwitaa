@@ -60,21 +60,63 @@
     </div>
 </div>
 
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal inmodal" id="modaldet" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-truck modal-icon"></i>
-                <h4 class="modal-title">Tambah Data Supplier</h4>
-                <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
+                <i class="fa fa-shopping-cart modal-icon"></i>
+                <h4 class="modal-title">Pembelian Seragam</h4>
+                <small class="font-bold">Detail Pembelian Seragam</small>
             </div>
             <div class="modal-body">
+                <div class="spiner-example spin">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+                <div class="bagian">
+                <div class="table-responsive m-t">
+                            <table class="table invoice-table">
+                                <thead>
+                                <tr>
+                                    <th>Item List</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                </thead>
+                                <tbody id="isi">
 
+                                </tbody>
+                            </table>
+                        </div>
+                        <table class="table invoice-total">
+                            <tbody id="foo">
+                              <tr>
+                                  <td><strong>Sub Total :</strong></td>
+                                  <td class="rp" id="subtotal"></td>
+                              </tr>
+                              <tr>
+                                  <td><strong>TAX :</strong></td>
+                                  <td class="rp" id="pajak"></td>
+                              </tr>
+                              <tr>
+                                  <td><strong>TOTAL :</strong></td>
+                                  <td class="rp" id="total"></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
+                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -130,7 +172,19 @@ function hapus(id){
     success : function(result){
       console.log(result);
     }
-  })
+  });
+}
+
+function detail(id){
+  $.ajax({
+    type: 'get',
+    data: {id:id},
+    dataType: 'json',
+    url: baseUrl + '/manajemen-penjualan/detail',
+    success : function(result){
+      console.log(result);
+    }
+  });
 }
 
 </script>
