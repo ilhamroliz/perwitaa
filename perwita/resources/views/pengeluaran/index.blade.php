@@ -66,8 +66,8 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <i class="fa fa-shopping-cart modal-icon"></i>
-                <h4 class="modal-title">Pembelian Seragam</h4>
-                <small class="font-bold">Detail Pembelian Seragam</small>
+                <h4 class="modal-title">Pengeluaran Seragam</h4>
+                <small class="font-bold">Detail Pengeluaran Seragam</small>
             </div>
             <div class="modal-body">
                 <div class="spiner-example spin">
@@ -176,13 +176,47 @@ function hapus(id){
 }
 
 function detail(id){
+  $("#modaldet").modal('show');
+  $(".bagian").hide();
+  var atas = '';
   $.ajax({
     type: 'get',
     data: {id:id},
-    dataType: 'json',
     url: baseUrl + '/manajemen-penjualan/detail',
+    dataType: 'json',
     success : function(result){
-      console.log(result);
+      if (result.length == 1) {
+        atas += '<tr>'+
+            '<td><div><strong>'+result[0].k_nama+'</strong></div>'+
+            '<small>'+result[0].i_nama+' Warna '+result[0].i_warna+ ' Ukuran '+result[0].s_nama+'</small></td>'+
+            '<td>'+result[0].sd_qty+'</td>'+
+            '<td class="rp">Rp. '+result[0].sd_value+'</td>'+
+            '<td class="rp">Rp. '+result[0].sd_disc_value+'</td>'+
+            '<td class="rp">Rp. '+result[0].sd_total_net+'</td>'+
+        '</tr>';
+      } else {
+        for (var i = 0; i < result.length; i++) {
+          atas += '<tr>'+
+              '<td><div><strong>'+result[i].k_nama+'</strong></div>'+
+              '<small>'+result[i].i_nama+' Warna '+result[i].i_warna+ ' Ukuran '+result[i].s_nama+'</small></td>'+
+              '<td>'+result[i].sd_qty+'</td>'+
+              '<td class="rp">Rp. '+result[i].sd_value+'</td>'+
+              '<td class="rp">Rp. '+result[i].sd_disc_value+'</td>'+
+              '<td class="rp">Rp. '+result[i].sd_total_net+'</td>'+
+          '</tr>';
+        }
+      }
+      $('.spin').css('display', 'none');
+      $(".bagian").show();
+      $('#isi').html(atas);
+      $("#subtotal").text('Rp. '+result[0].s_total_gross);
+      $("#pajak").text('Rp. '+result[0].s_pajak);
+      $("#total").text('Rp. '+result[0].s_total_net);
+      $(".rp").digits();
+
+      //Button
+      $('#printbtn').attr('onclick','print('+id+')');
+
     }
   });
 }

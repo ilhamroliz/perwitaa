@@ -660,12 +660,20 @@ class PenjualanController extends Controller
     }
 
     public function detail(Request $request){
-       $data = DB::table('d_sales')
-              ->join('d_sales_dt', 'sd_sales', '=', 's_id')
-              ->where('s_id', $request->id)
-              ->get();
+      $data = DB::table('d_sales')
+           ->join('d_sales_dt', 'sd_sales', '=', 's_id')
+           ->join('d_item', 'i_id', '=', 'sd_item')
+           ->join('d_item_dt', function($e){
+             $e->on('id_item', '=', 'i_id')
+               ->on('id_detailid', '=', 'sd_item_dt');
+           })
+           ->join('d_kategori', 'k_id', '=', 'i_kategori')
+           ->join('d_size', 'd_size.s_id', '=', 'id_size')
+           ->select('s_nama', 'k_nama', 'i_nama', 'i_warna', 'id_price', 's_total_net', 's_total_gross', 's_pajak', 's_total_gross', 's_nota', 'sd_qty', 'sd_value', 'sd_disc_value', 'sd_total_net')
+           ->where('sd_sales', $request->id)
+           ->get();
 
-        return response()->json($data);
+     return response()->json($data);
     }
 
 }
