@@ -765,15 +765,15 @@ class PenjualanController extends Controller
             ->where('mp_isapproved', 'Y')
             ->get();
 
-      $pekerja = DB::table('d_mitra_pekerja')
-            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->where('mp_divisi', '=', $data[0]->mp_divisi)
-            ->where('mp_divisi', '=', $data[0]->mp_mitra)
-            ->where('mp_status', 'Aktif')
-            ->where('mp_isapproved', 'Y')
+      $pekerja = DB::table('d_pekerja')
+            ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'p_id')
+            ->join('d_seragam_pekerja', function($e){
+              $e->on('sp_pekerja', '=', 'p_id')
+                ->on('sp_pekerja', '=', 'mp_pekerja');
+            })          
             ->get();
 
-      $count = count($data);
+      dd($pekerja);
 
       $stock = DB::table('d_stock')
             ->join('d_stock_mutation', 'sm_stock', '=', 's_id')

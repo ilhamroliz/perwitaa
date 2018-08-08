@@ -122,7 +122,7 @@
                                         </select>
                                       </td>
                                       </tr>
-                                      @else
+                                      @elseif($x->p_id == $z->p_id && $x->p_name == $z->p_name && $x->p_nip == $z->p_nip)
                                       <tr>
                                       <td>{{$z->p_name}} ({{$z->p_hp}})</td>
                                       <td>{{$z->p_nip}}</td>
