@@ -521,6 +521,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pembelian/simpan','PembelianController@save');
     Route::post('manajemen-pembelian/simpan','PembelianController@save');
     Route::get('manajemen-pembelian/getDetail','PembelianController@getDetail');
+    Route::get('manajemen-pembelian/hapus','PembelianController@getDetail');
+    Route::get('manajemen-pembelian/edit','PembelianController@edit');
 
     //============== rencana pembelian ==============
     Route::get('manajemen-seragam/rencana-pembelian','RencanaPembelian@index');

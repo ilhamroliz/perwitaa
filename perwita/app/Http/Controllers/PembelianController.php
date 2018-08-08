@@ -16,23 +16,13 @@ class PembelianController extends Controller
 {
     public function index()
     {
-
-        $data = DB::table('d_purchase')
-            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
-            ->join('d_supplier', 's_id', '=', 'p_supplier')
-            ->select('*')
-            ->where('pd_receivetime', null)
-            ->whereRaw("p_isapproved = 'P' Or p_isapproved = 'Y'")
-            ->take(20)
-            ->groupBy('p_nota')
-            ->get();
+        $data = DB::select("select * from d_purchase inner join d_purchase_dt on pd_purchase = p_id inner join d_supplier on s_id = p_supplier where p_id not in (select pd_purchase from d_purchase_dt where pd_receivetime is not null) and p_isapproved != 'N' group by p_nota limit 20");
 
         return view('pembelian.index', compact('data'));
     }
 
     public function create()
     {
-
         $supplier = DB::table('d_supplier')
             ->select('s_id', 's_company')
             ->where('s_isactive', '=', 'Y')
@@ -393,5 +383,59 @@ class PembelianController extends Controller
 
         // dd($data);
         return view('pembelian.print', compact('data', 'count'));
+    }
+
+    public function getDetail(Request $request)
+    {
+        $nota = $request->nota;
+        $info = DB::table('d_purchase')
+            ->join('d_purchase_dt', 'p_id', '=', 'pd_purchase')
+            ->join('d_item', 'i_id', '=', 'pd_item')
+            ->join('d_item_dt', function ($q){
+                $q->on('id_item', '=', 'i_id');
+                $q->on('id_detailid', '=', 'pd_item_dt');
+                $q->on('id_item', '=', 'pd_item');
+            })
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'd_purchase.*', 'd_purchase_dt.*')
+            ->where('p_nota', '=', $nota)
+            ->get();
+
+        return response()->json([
+            'status' => 'sukses',
+            'data' => $info
+        ]);
+    }
+
+    public function hapus(Request $request)
+    {
+        $nota = $request->nota;
+        $id = DB::table('d_purchase')
+            ->where('p_nota', '=', $nota)
+            ->where('p_isapproved', '!=', 'Y')
+            ->max('p_id');
+
+        if ($id == null || $id == ''){
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
+
+        DB::table('d_purchase')
+            ->where('p_id', '=', $id)
+            ->delete();
+
+        DB::table('d_purchase_dt')
+            ->where('pd_purchase', '=', $id)
+            ->delete();
+
+        return response()->json([
+            'status' => 'sukses'
+        ]);
+    }
+
+    public function edit(Request $request)
+    {
+
     }
 }
