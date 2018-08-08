@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/partials/_head.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/partials/_head.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/rencana-pembelian/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/rencana-pembelian/index.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +15,7 @@
     <session id="1291506207">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.34" value="1" />
@@ -77,7 +72,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
+            <state relative-caret-position="2400">
               <caret line="126" column="38" selection-start-line="126" selection-start-column="38" selection-end-line="126" selection-end-column="38" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
@@ -368,7 +363,7 @@
       <workItem from="1533266630114" duration="2763000" />
       <workItem from="1533536471208" duration="231000" />
       <workItem from="1533536726661" duration="7642000" />
-      <workItem from="1533606485312" duration="15931000" />
+      <workItem from="1533606485312" duration="16157000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -619,11 +614,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237377000" />
+    <option name="totallyTimeSpent" value="237603000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15506808" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -935,7 +929,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
+        <state relative-caret-position="2400">
           <caret line="126" column="38" selection-start-line="126" selection-start-column="38" selection-end-line="126" selection-end-column="38" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
