@@ -52,3 +52,8 @@
      <!-- Image Cropper -->
     <link href="{{ asset('assets/cropper/css/cropper.min.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('assets/cropper/css/main.css') }}" rel="stylesheet"> --}}
+    <style type="text/css">
+        table.dataTable tbody td {
+            vertical-align: middle;
+        }
+    </style>

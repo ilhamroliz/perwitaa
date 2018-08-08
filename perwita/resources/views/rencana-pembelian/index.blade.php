@@ -209,6 +209,10 @@
             });
         })
     }
+
+    function edit(nota){
+        location.href = '{{ url('manajemen-seragam/rencana-pembelian/edit') }}'+'?nota='+nota;
+    }
 </script>
 @endsection
 
