@@ -260,7 +260,7 @@
             for (var i = 0; i < pekerja.length; i++) {
                 tabelpekerja.row.add([
                     pekerja[i].p_name +' ('+pekerja[i].p_hp+')',
-                    pekerja[i].mp_mitra_nik,
+                    pekerja[i].p_nip,
                     selectSize(seragam, pekerja)
                 ]).draw( false );
             }
@@ -335,10 +335,11 @@
         });
         var mitra = $('#mitra').val();
         var seragam = $('#seragam').val();
+        var divisi = $('#divisi').val();
         $.ajax({
           url: baseUrl + '/manajemen-penjualan/save',
           type: 'get',
-          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total,
+          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total+'&divisi='+divisi,
           success: function(response){
             waitingDialog.hide();
             if (response.status == 'sukses') {
