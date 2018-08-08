@@ -60,7 +60,7 @@
                                     <option value=" ">--Pilih Divisi--</option>
                             </select>
                             </div>
-                            <div class="form-group col-md-3 pilihseragam">
+                            <div class="form-group col-md-4 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
                                     <option value=" ">--Pilih Seragam--</option>
                             </select>

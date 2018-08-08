@@ -72,7 +72,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      @if($count == 1)
                                       @foreach($data as $x)
                                       @foreach($pekerja as $z)
                                       @if($x->p_id == $z->p_id && $x->p_name == $z->p_name && $x->p_nip == $z->p_nip)
@@ -103,40 +102,7 @@
                                       </tr>
                                       @endif
                                       @endforeach
-                                      @endforeach
-                                      @else
-                                      @foreach($pekerja as $z)
-                                      @foreach($data as $x)
-                                      @if($x->p_id == $z->p_id && $x->p_name == $z->p_name && $x->p_nip == $z->p_nip)
-                                      <tr>
-                                      <td>{{$x->p_name}} ({{$x->p_hp}})</td>
-                                      <td>{{$x->p_nip}}</td>
-                                      <td>
-                                        <select class="form-control pilihukuran chosen-select-width index" name="ukuran[]" style="width:100%" id="ukuran">
-                                        <option value="Tidak"> -- Tidak -- </option>
-                                            <option value="{{ $x->s_id }}"
-                                            @if($x->s_id == old('ukuran', $x->s_id))
-                                                selected
-                                            @endif
-                                            >{{ $x->s_nama }}</option>
-                                        </select>
-                                      </td>
-                                      </tr>
-                                      @elseif($x->p_id == $z->p_id && $x->p_name == $z->p_name && $x->p_nip == $z->p_nip)
-                                      <tr>
-                                      <td>{{$z->p_name}} ({{$z->p_hp}})</td>
-                                      <td>{{$z->p_nip}}</td>
-                                      <td>
-                                        <select class="form-control pilihukuran chosen-select-width index" name="ukuran[]" style="width:100%" id="ukuran">
-                                        <option value="Tidak"> -- Tidak -- </option>
-                                        <option value="{{$x->s_id}}">{{$x->s_nama}}</option>
-                                        </select>
-                                      </td>
-                                      </tr>
-                                      @endif
-                                      @endforeach
-                                      @endforeach
-                                      @endif
+                                      @endforeach    
                                     </tbody>
                                 </table>
                             </div>
