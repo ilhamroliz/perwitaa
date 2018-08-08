@@ -555,6 +555,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-penjualan/getPekerja','PenjualanController@getPekerja');
     Route::get('manajemen-penjualan/save','PenjualanController@save');
     Route::get('manajemen-penjualan/hapus', 'PenjualanController@hapus');
+    Route::get('manajemen-penjualan/detail', 'PenjualanController@detail');
 
     //============= mutasi stock
     Route::get('manajemen-stock/mutasi-stock/tabel', 'StockMutController@tabel');

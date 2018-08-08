@@ -66,8 +66,8 @@ class approvalpenjualanController extends Controller
     }
 
     public function setujui(Request $request){
-      // DB::beginTransaction();
-      // try {
+      DB::beginTransaction();
+      try {
 
           $sales = DB::table('d_sales')
                 ->join('d_sales_dt', 'sd_sales', '=', 's_id')
@@ -201,16 +201,16 @@ class approvalpenjualanController extends Controller
             }
           }
 
-      //   DB::commit();
-      //   return response()->json([
-      //     'status' => 'berhasil'
-      //   ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal'
-      //   ]);
-      // }
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
   }
 
   public function tolak(Request $request){
