@@ -66,9 +66,13 @@
                                 <td class="text-center"><span class="label label-success">Sudah diterima</span></td>
                                 @endif
                                 @if($row->p_isapproved == 'P')
-                                <td class="text-center"><span class="label label-warning">Belum disetujui</span></td>
+                                <td class="text-center">
+                                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail('{{ $row->p_nota }}')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                                    <button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" onclick="edit('{{ $row->p_nota }}')"><i class="glyphicon glyphicon-edit"></i></button>
+                                    <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" onclick="hapus('{{ $row->p_nota }}')"><i class="glyphicon glyphicon-trash"></i></button>
+                                </td>
                                 @elseif($row->p_isapproved == 'Y')
-                                <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
+                                <td class="text-center"><span class="label label-primary">Sudah disetujui</span></td>
                                 @endif
                             </tr>
                             @endforeach
@@ -87,15 +91,14 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <i class="fa fa-truck modal-icon"></i>
-                <h4 class="modal-title">Tambah Data Supplier</h4>
-                <small class="font-bold">Data supplier ini digunakan untuk pembelian barang di fitur Pembelian</small>
+                <h4 class="modal-title">Detail Pembelian</h4>
+                <small class="font-bold">Detail barang pembelian ke supplier</small>
             </div>
             <div class="modal-body">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
+                
             </div>
         </div>
     </div>
@@ -112,5 +115,9 @@
             "language": dataTableLanguage
         });
     });
+
+    function detail(nota){
+        $('#myModal').modal('show');
+    }
 </script>
 @endsection
