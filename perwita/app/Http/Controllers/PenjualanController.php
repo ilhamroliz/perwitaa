@@ -503,8 +503,8 @@ class PenjualanController extends Controller
           ->max('sd_sales');
       $detailSales = $detailSales + 1;
 
-      /*DB::beginTransaction();
-      try {*/
+      DB::beginTransaction();
+      try {
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
@@ -518,23 +518,22 @@ class PenjualanController extends Controller
           }
 
           if ($pekerja[$i] != '' && $temp[$i] == 'Iya' && $ukuran[$i] != 'Tidak') {
-
-              DB::table('d_seragam_pekerja')
-                  ->insert([
-                    'sp_sales' => $idSales,
-                    'sp_id' => $detailid + 1,
-                    'sp_pekerja' => $pekerja[$i],
-                    'sp_item' => $seragam,
-                    'sp_item_size' => $ukuran[$i],
-                    'sp_qty' => 1,
-                    'sp_value' => $getStock[$i]->id_price,
-                    'sp_pay_value' => 0,
-                    'sp_status' => 'Belum',
-                    'sp_date' => Carbon::now('Asia/Jakarta'),
-                    'sp_mitra' => $mitra,
-                    'sp_divisi' => $divisi,
-                    'sp_no' => $this->getpenerimaan($idSales)
-                  ]);
+            DB::table('d_seragam_pekerja')
+                ->insert([
+                  'sp_sales' => $idSales,
+                  'sp_id' => $detailid + 1,
+                  'sp_pekerja' => $pekerja[$i],
+                  'sp_item' => $seragam,
+                  'sp_item_size' => $ukuran[$i],
+                  'sp_qty' => 1,
+                  'sp_value' => $getStock[0]->id_price,
+                  'sp_pay_value' => 0,
+                  'sp_status' => 'Belum',
+                  'sp_date' => Carbon::now('Asia/Jakarta'),
+                  'sp_mitra' => $mitra,
+                  'sp_divisi' => $divisi,
+                  'sp_no' => $this->getpenerimaan($idSales)
+                ]);
           }
         }
 
@@ -586,7 +585,7 @@ class PenjualanController extends Controller
             }
 
 
-        /*DB::commit();
+        DB::commit();
         return response()->json([
           'status' => 'sukses'
         ]);
@@ -595,7 +594,7 @@ class PenjualanController extends Controller
         return response()->json([
           'status' => 'gagal'
         ]);
-      }*/
+      }
 
     }
 
