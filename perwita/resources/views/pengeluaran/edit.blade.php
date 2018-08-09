@@ -214,6 +214,7 @@ function ambil(){
       values.push(selectedVal);
   });
   var pilih = compressArray(values);
+  var hasil = [];
   for (var i = 0; i < pilih.length; i++) {
     for (var j = 0; j < stock.length; j++) {
       if (pilih[i].value != 'Tidak') {
@@ -226,12 +227,13 @@ function ambil(){
               showConfirmButton: true
             })
           } else {
-            total = stock[j].id_price * pilih[i].count;
-            $('.totalpembelian').text('Rp. '+ accounting.formatMoney(total, "", 0, ".", ","));
+            temp = stock[j].id_price * pilih[i].count;
+            hasil.push(temp);
+
+            $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
           }
         }
     } else {
-      total = stock[j].id_price * pilih[i].count;
       $('.totalpembelian').text('Rp. '+ accounting.formatMoney(0, "", 0, ".", ","));
     }
   }
@@ -297,6 +299,10 @@ function getData(){
           }
         }
     })
+}
+
+function getSum(total, num) {
+    return total + num;
 }
 
 </script>
