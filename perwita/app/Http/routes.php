@@ -520,9 +520,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
     Route::get('manajemen-pembelian/simpan','PembelianController@save');
     Route::post('manajemen-pembelian/simpan','PembelianController@save');
+    Route::post('manajemen-pembelian/update','PembelianController@update');
+    Route::get('manajemen-pembelian/update','PembelianController@update');
     Route::get('manajemen-pembelian/getDetail','PembelianController@getDetail');
     Route::get('manajemen-pembelian/hapus','PembelianController@getDetail');
-    Route::get('manajemen-pembelian/edit','PembelianController@edit');
+    Route::get('manajemen-seragam/edit','PembelianController@edit');
 
     //============== rencana pembelian ==============
     Route::get('manajemen-seragam/rencana-pembelian','RencanaPembelian@index');

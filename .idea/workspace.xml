@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/partials/_sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/resources/views/pembelian/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/pembelian/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/resources/views/pembelian/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/pembelian/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,47 +49,26 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="6831" />
+          <entry key="php" value="7255" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="17" />
-          <entry key="PHP" value="6814" />
+          <entry key="PHP" value="7238" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8880">
-              <caret line="452" column="29" selection-start-line="452" selection-start-column="29" selection-end-line="452" selection-end-column="29" />
+            <state relative-caret-position="251">
+              <caret line="253" column="9" lean-forward="true" selection-start-line="243" selection-start-column="12" selection-end-line="253" selection-end-column="9" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="506" column="11" lean-forward="true" selection-start-line="505" selection-start-column="6" selection-end-line="506" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="64" column="20" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="198" />
-              <folding>
-                <element signature="e#40#64#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,7 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>session</find>
       <find>setujuil</find>
       <find>getNota</find>
       <find>print</find>
@@ -124,6 +106,7 @@
       <find>item</find>
       <find>d_purchase</find>
       <find>nama</find>
+      <find>edit</find>
       <find>save</find>
     </findStrings>
   </component>
@@ -161,8 +144,8 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PenerimaanController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/RencanaPembelian.php" />
-        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php" />
+        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php" />
       </list>
     </option>
   </component>
@@ -207,7 +190,7 @@
       <path value="$PROJECT_DIR$/perwita/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -358,7 +341,7 @@
       <workItem from="1533724884533" duration="599000" />
       <workItem from="1533769279417" duration="233000" />
       <workItem from="1533781396430" duration="354000" />
-      <workItem from="1533781779517" duration="330000" />
+      <workItem from="1533781779517" duration="3986000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -609,7 +592,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="249867000" />
+    <option name="totallyTimeSpent" value="253523000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -900,16 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8880">
-          <caret line="452" column="29" selection-start-line="452" selection-start-column="29" selection-end-line="452" selection-end-column="29" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="780">
@@ -922,8 +895,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="506" column="11" lean-forward="true" selection-start-line="505" selection-start-column="6" selection-end-line="506" selection-end-column="11" />
+        <state relative-caret-position="330">
+          <caret line="484" column="41" selection-start-line="484" selection-start-column="33" selection-end-line="484" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="253" column="9" lean-forward="true" selection-start-line="243" selection-start-column="12" selection-end-line="253" selection-end-column="9" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
