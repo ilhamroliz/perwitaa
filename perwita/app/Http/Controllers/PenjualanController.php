@@ -444,7 +444,7 @@ class PenjualanController extends Controller
       $temp = $request->pekerja;
       $comp = Session::get('mem_comp');
       $sekarang = Carbon::now('Asia/Jakarta');
-      $nota = $this->getnewnota(1);
+      $nota = $this->getnewnota();
       $jumlahUkuran = array_count_values($ukuran);
       $jumlahSimpan = $jumlahUkuran;
 
@@ -599,7 +599,7 @@ class PenjualanController extends Controller
     }
 
     public function getnewnota(){
-      $querykode = DB::select(DB::raw("SELECT MAX(MID(s_nota,4,3)) as counter, MAX(MID(s_nota,8,2)) as tanggal, MAX(MID(s_nota,11,2)) as bulan, MAX(RIGHT(s_nota,4)) as tahun FROM d_sales"));
+      $querykode = DB::select(DB::raw("SELECT MAX(MID(s_nota,5,3)) as counter, MAX(MID(s_nota,9,2)) as tanggal, MAX(MID(s_nota,12,2)) as bulan, MAX(RIGHT(s_nota,4)) as tahun FROM d_sales"));
 
       if (count($querykode) > 0) {
         if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y') || $querykode[0]->tanggal != date('d')) {
@@ -764,13 +764,12 @@ class PenjualanController extends Controller
             ->where('mp_isapproved', 'Y')
             ->get();
 
-      $pekerja = DB::table('d_mitra_pekerja')
-            ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->where('mp_divisi', '=', $data[0]->mp_divisi)
-            ->where('mp_divisi', '=', $data[0]->mp_mitra)
-            ->where('mp_status', 'Aktif')
-            ->where('mp_isapproved', 'Y')
-            ->get();
+      $pekerja = DB::select("select p_name, sp_item, sp_item_size, s_id, p_nip, s_nama, p_hp from d_pekerja
+            join d_mitra_pekerja on p_id = mp_pekerja
+            left join d_seragam_pekerja on mp_pekerja = sp_pekerja AND sp_sales = '".$request->id."'
+            left join d_size on s_id = sp_item_size
+            where mp_status = 'Aktif'
+            AND mp_divisi = ".$data[0]->mp_divisi." AND mp_mitra = ".$data[0]->mp_mitra."");
 
       $stock = DB::table('d_stock')
             ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
@@ -780,6 +779,10 @@ class PenjualanController extends Controller
 
       return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count'));
 
+    }
+
+    public function update(Request $request){
+      dd($request);
     }
 
 }
