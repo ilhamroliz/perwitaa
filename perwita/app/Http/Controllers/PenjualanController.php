@@ -632,6 +632,7 @@ class PenjualanController extends Controller
     }
 
     public function hapus(Request $request){
+      DB::beginTransaction();
       try {
         $sales = DB::table('d_sales')
               ->join('d_sales_dt', 'sd_sales', '=', 's_id')
@@ -650,59 +651,60 @@ class PenjualanController extends Controller
                 ->where('sm_nota', '=', $nota)
                 ->get();
 
-        for ($a=0; $a < count($stockpenjualan); $a++) {
-
-            $stockpembelian = DB::table('d_stock_mutation')
-                  ->where('sm_item', '=', $stockpenjualan[$a]->sm_item)
-                  ->where('sm_item_dt', '=', $stockpenjualan[$a]->sm_item_dt)
-                  ->where('sm_detail', '=', 'Pembelian')
-                  ->where('sm_hpp', '=', $stockpenjualan[$a]->sm_hpp)
-                  ->get();
-
-            for ($i=0; $i < count($stockpembelian); $i++) {
-
-              if ($stockpembelian[$i]->sm_use >= $stockpenjualan[$a]->sm_qty) {
-
-                  DB::table('d_stock_mutation')
-                      ->where('sm_stock', '=', $stockpembelian[$i]->sm_stock)
-                      ->where('sm_detailid', '=', $stockpembelian[$i]->sm_detailid)
-                      ->update([
-                        'sm_use' => DB::raw('(sm_use - '.$stockpenjualan[$a]->sm_qty.')')
-                      ]);
-
-                  $i = count($stockpembelian) + 1;
-
-              } elseif ($stockpembelian[$i]->sm_use < $stockpenjualan[$a]->sm_qty) {
-
-                  DB::table('d_stock_mutation')
-                      ->where('sm_stock', '=', $stockpembelian[$i]->sm_stock)
-                      ->where('sm_detailid', '=', $stockpembelian[$i]->sm_detailid)
-                      ->update([
-                        'sm_use' => 0
-                      ]);
-
-                  $stockpenjualan[$a]->sm_qty = $stockpenjualan[$a]->sm_qty - $stockpembelian[$i]->sm_use;
-
-              }
-            }
-          }
+        //Hapus ke mutasi stock
+        // for ($a=0; $a < count($stockpenjualan); $a++) {
+        //
+        //     $stockpembelian = DB::table('d_stock_mutation')
+        //           ->where('sm_item', '=', $stockpenjualan[$a]->sm_item)
+        //           ->where('sm_item_dt', '=', $stockpenjualan[$a]->sm_item_dt)
+        //           ->where('sm_detail', '=', 'Pembelian')
+        //           ->where('sm_hpp', '=', $stockpenjualan[$a]->sm_hpp)
+        //           ->get();
+        //
+        //     for ($i=0; $i < count($stockpembelian); $i++) {
+        //
+        //       if ($stockpembelian[$i]->sm_use >= $stockpenjualan[$a]->sm_qty) {
+        //
+        //           DB::table('d_stock_mutation')
+        //               ->where('sm_stock', '=', $stockpembelian[$i]->sm_stock)
+        //               ->where('sm_detailid', '=', $stockpembelian[$i]->sm_detailid)
+        //               ->update([
+        //                 'sm_use' => DB::raw('(sm_use - '.$stockpenjualan[$a]->sm_qty.')')
+        //               ]);
+        //
+        //           $i = count($stockpembelian) + 1;
+        //
+        //       } elseif ($stockpembelian[$i]->sm_use < $stockpenjualan[$a]->sm_qty) {
+        //
+        //           DB::table('d_stock_mutation')
+        //               ->where('sm_stock', '=', $stockpembelian[$i]->sm_stock)
+        //               ->where('sm_detailid', '=', $stockpembelian[$i]->sm_detailid)
+        //               ->update([
+        //                 'sm_use' => 0
+        //               ]);
+        //
+        //           $stockpenjualan[$a]->sm_qty = $stockpenjualan[$a]->sm_qty - $stockpembelian[$i]->sm_use;
+        //
+        //       }
+        //     }
+        //   }
 
           DB::table('d_stock_mutation')
                   ->where('sm_nota', '=', $nota)
                   ->delete();
 
-          DB::table('d_stock')
-          ->where('s_id', '=', $stockpenjualan[0]->sm_stock)
-          ->update([
-            's_qty' => DB::raw('(s_qty + '.$sales[0]->total.')')
-          ]);
-
-          DB::table('d_sales')
-              ->where('s_id', $request->id)
-              ->delete();
+          // DB::table('d_stock')
+          // ->where('s_id', '=', $stockpenjualan[0]->sm_stock)
+          // ->update([
+          //   's_qty' => DB::raw('(s_qty + '.$sales[0]->total.')')
+          // ]);
 
           DB::table('d_sales_dt')
               ->where('sd_sales', $request->id)
+              ->delete();
+
+          DB::table('d_sales')
+              ->where('s_id', $request->id)
               ->delete();
 
           for ($x=0; $x < count($seragampekerja); $x++) {
@@ -744,6 +746,8 @@ class PenjualanController extends Controller
 
     public function edit(Request $request){
 
+      $id = $request->id;
+
       $data = DB::table('d_sales')
             ->join('d_sales_dt', 'sd_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
@@ -765,7 +769,7 @@ class PenjualanController extends Controller
             ->where('mp_isapproved', 'Y')
             ->get();
 
-      $pekerja = DB::select("select p_name, sp_item, sp_item_size, s_id, p_nip, s_nama, p_hp from d_pekerja
+      $pekerja = DB::select("select p_name, sp_item, sp_item_size, s_id, p_nip, s_nama, p_hp, sp_item from d_pekerja
             join d_mitra_pekerja on p_id = mp_pekerja
             left join d_seragam_pekerja on mp_pekerja = sp_pekerja AND sp_sales = '".$request->id."'
             left join d_size on s_id = sp_item_size
@@ -778,12 +782,48 @@ class PenjualanController extends Controller
             ->where('sm_item_dt', $data[0]->sd_item_dt)
             ->get();
 
-      return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count'));
+    for ($i=0; $i < count($data); $i++) {
+      $seragam = DB::table('d_item_dt')
+          ->join('d_item', 'i_id', '=', 'id_item')
+          ->join('d_size', 'id_size', '=', 's_id')
+          ->join('d_stock', function ($q){
+              $q->on('d_stock.s_item', '=', 'id_item');
+              $q->on('d_stock.s_item_dt', '=', 'id_detailid');
+          })
+          ->select('i_nama', 's_nama', 'd_size.s_id', 'id_price', 'i_warna', DB::raw('d_stock.s_qty as qty'))
+          ->where('id_item', '=', $data[$i]->i_id)
+          ->orderBy('d_size.s_id')
+          ->get();
+    }
+
+
+      return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count', 'id', 'seragam'));
 
     }
 
     public function update(Request $request){
+
+      $data = DB::table('d_sales')
+            ->where('s_id',$request->id)
+            ->get();
+
       dd($request);
+
+      // DB::beginTransaction();
+      // try {
+      //
+      //
+      //
+      // DB::commit();
+      // return response()->json([
+      //   'status' => 'berhasil'
+      // ]);
+      // } catch (\Exception $e) {
+      // DB::rollback();
+      // return response()->json([
+      //   'status' => 'gagal'
+      // ]);
+      // }
     }
 
 }

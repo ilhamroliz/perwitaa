@@ -60,7 +60,7 @@
                                     <option value=" ">--Pilih Divisi--</option>
                             </select>
                             </div>
-                            <div class="form-group col-md-4 pilihseragam">
+                            <div class="form-group col-md-3 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
                                     <option value=" ">--Pilih Seragam--</option>
                             </select>
@@ -338,7 +338,7 @@
         var divisi = $('#divisi').val();
         $.ajax({
           url: baseUrl + '/manajemen-penjualan/save',
-          type: 'post',
+          type: 'get',
           data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total+'&divisi='+divisi,
           success: function(response){
             waitingDialog.hide();
