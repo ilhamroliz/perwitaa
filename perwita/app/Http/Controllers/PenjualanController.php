@@ -634,6 +634,7 @@ class PenjualanController extends Controller
     public function hapus(Request $request){
       DB::beginTransaction();
       try {
+
         $sales = DB::table('d_sales')
               ->join('d_sales_dt', 'sd_sales', '=', 's_id')
               ->select('d_sales.*', DB::raw('sum(sd_qty) as total'))
@@ -689,15 +690,19 @@ class PenjualanController extends Controller
         //     }
         //   }
 
-          DB::table('d_stock_mutation')
-                  ->where('sm_nota', '=', $nota)
-                  ->delete();
+          // DB::table('d_stock_mutation')
+          //         ->where('sm_nota', '=', $nota)
+          //         ->delete();
 
           // DB::table('d_stock')
           // ->where('s_id', '=', $stockpenjualan[0]->sm_stock)
           // ->update([
           //   's_qty' => DB::raw('(s_qty + '.$sales[0]->total.')')
           // ]);
+
+          DB::table('d_seragam_pekerja')
+              ->where('sp_sales', $request->id)
+              ->delete();
 
           DB::table('d_sales_dt')
               ->where('sd_sales', $request->id)
@@ -707,13 +712,13 @@ class PenjualanController extends Controller
               ->where('s_id', $request->id)
               ->delete();
 
-          for ($x=0; $x < count($seragampekerja); $x++) {
-            DB::table('d_pekerja_mutation')
-                ->where('pm_pekerja', $seragampekerja[$x]->sp_pekerja)
-                ->where('pm_detail', 'Pemberian Seragam')
-                ->where('pm_reff', $seragampekerja[$x]->sp_no)
-                ->delete();
-          }
+          // for ($x=0; $x < count($seragampekerja); $x++) {
+          //   DB::table('d_pekerja_mutation')
+          //       ->where('pm_pekerja', $seragampekerja[$x]->sp_pekerja)
+          //       ->where('pm_detail', 'Pemberian Seragam')
+          //       ->where('pm_reff', $seragampekerja[$x]->sp_no)
+          //       ->delete();
+          // }
 
       DB::commit();
       return response()->json([
@@ -776,6 +781,8 @@ class PenjualanController extends Controller
             where mp_status = 'Aktif'
             AND mp_divisi = ".$data[0]->mp_divisi." AND mp_mitra = ".$data[0]->mp_mitra."");
 
+      $countpekerja = count($pekerja);
+
       $stock = DB::table('d_stock')
             ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
             ->where('sm_item', $data[0]->sd_item)
@@ -797,33 +804,45 @@ class PenjualanController extends Controller
     }
 
 
-      return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count', 'id', 'seragam'));
+      return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count', 'id', 'seragam', 'countpekerja'));
 
     }
 
     public function update(Request $request){
+      DB::beginTransaction();
+      try {
 
-      $data = DB::table('d_sales')
-            ->where('s_id',$request->id)
-            ->get();
+        DB::table('d_sales')
+              ->where('s_id',$request->id)
+              ->update([
+                's_total_gross' => $request->total,
+                's_total_net' => $request->total
+              ]);
 
-      dd($request);
+        DB::table('d_sales_dt')
+            ->where('sd_sales', $request->id)
+            ->delete();
 
-      // DB::beginTransaction();
-      // try {
-      //
-      //
-      //
-      // DB::commit();
-      // return response()->json([
-      //   'status' => 'berhasil'
-      // ]);
-      // } catch (\Exception $e) {
-      // DB::rollback();
-      // return response()->json([
-      //   'status' => 'gagal'
-      // ]);
-      // }
+        DB::table('d_sales')
+            ->where('s_id', $request->id)
+            ->delete();
+
+        DB::table('d_seragam_pekerja')
+            ->where('sp_sales', $request->id)
+            ->delete();
+
+          //Insert
+
+      DB::commit();
+      return response()->json([
+        'status' => 'berhasil'
+      ]);
+      } catch (\Exception $e) {
+      DB::rollback();
+      return response()->json([
+        'status' => 'gagal'
+      ]);
+      }
     }
 
 }

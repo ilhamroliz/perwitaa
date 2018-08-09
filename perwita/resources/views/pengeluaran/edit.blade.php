@@ -41,10 +41,11 @@
             <div class="col-md-9">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <span class="pull-right">(<strong class="jumlahitem">0</strong>) items</span>
+                        <span class="pull-right">{{$data[0]->sp_no}} (<strong class="jumlahitem">{{$countpekerja}}</strong>) items</span>
                         <h5>Pengeluaran Barang ke Mitra</h5>
                     </div>
-
+                    <input type="hidden" name="totalhasil" id="totalhasil" value="{{$data[0]->sd_total_net}}">
+                    <input type="hidden" name="nota" id="nota" value="{{$data[0]->sp_no}}">
                     <div class="ibox-content">
                         <form role="form" class="form-inline row">
                             <div class="form-group col-md-4">
@@ -190,6 +191,8 @@ function simpan(id){
   var mitra = $('#mitra').val();
   var seragam = $('#seragam').val();
   var divisi = $('#divisi').val();
+  var totalhasil = $('#totalhasil').val();
+  var nota = $('#nota').val();
   $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -197,7 +200,7 @@ function simpan(id){
   });
   $.ajax({
     type: 'get',
-    data: $('.form-inline').serialize()+'&id='+id,
+    data: $('.form-inline').serialize()+'&id='+id+'&total='+totalhasil+'&nota='+nota,
     dataType: 'json',
     url: baseUrl + '/manajemen-penjualan/update',
     success : function(result){
@@ -231,10 +234,14 @@ function ambil(){
             hasil.push(temp);
 
             $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
+            $('#totalhasil').val(hasil.reduce(getSum));
           }
         }
     } else {
-      $('.totalpembelian').text('Rp. '+ accounting.formatMoney(0, "", 0, ".", ","));
+      temp = 0;
+      hasil.push(temp);
+      $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
+      $('#totalhasil').val(hasil.reduce(getSum));
     }
   }
   }
@@ -282,23 +289,8 @@ function getData(){
       success: function(response){
         var seragam = response.seragam;
         stock = seragam;
-      }, error:function(x, e) {
-        waitingDialog.hide();
-          if (x.status == 0) {
-              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-          } else if (x.status == 404) {
-              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-          } else if (x.status == 500) {
-              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-          } else if (e == 'parsererror') {
-              alert('Error.\nParsing JSON Request failed.');
-          } else if (e == 'timeout'){
-              alert('Request Time out. Harap coba lagi nanti');
-          } else {
-              alert('Unknow Error.\n' + x.responseText);
-          }
-        }
-    })
+      }
+    });
 }
 
 function getSum(total, num) {
