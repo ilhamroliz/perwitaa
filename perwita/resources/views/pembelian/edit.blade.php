@@ -161,6 +161,8 @@
 
         $('#namabarang').focus();
 
+        
+
     });
 
     function saatEnter(inField, e) {

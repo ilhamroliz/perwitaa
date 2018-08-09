@@ -562,7 +562,7 @@ class PenjualanController extends Controller
               'n_insert' => Carbon::now()
             ]);
 
-            for ($j=0; $j < count($countukuran); $j++) {
+            for ($j=0; $j < count($getStock); $j++) {
               $salesdt = array(
                   'sd_sales' => $idSales,
                   'sd_detailid' => $detailSales,
@@ -592,7 +592,8 @@ class PenjualanController extends Controller
       } catch (\Exception $e) {
         DB::rollback();
         return response()->json([
-          'status' => 'gagal'
+          'status' => 'gagal',
+            'data' => $e
         ]);
       }
 

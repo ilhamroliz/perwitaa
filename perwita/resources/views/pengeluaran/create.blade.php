@@ -338,7 +338,7 @@
         var divisi = $('#divisi').val();
         $.ajax({
           url: baseUrl + '/manajemen-penjualan/save',
-          type: 'get',
+          type: 'post',
           data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total+'&divisi='+divisi,
           success: function(response){
             waitingDialog.hide();
