@@ -72,37 +72,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      @foreach($data as $x)
-                                      @foreach($pekerja as $z)
-                                      @if($x->p_id == $z->p_id && $x->p_name == $z->p_name && $x->p_nip == $z->p_nip)
+                                      @foreach($pekerja as $x)
                                       <tr>
-                                      <td>{{$x->p_name}} ({{$x->p_hp}})</td>
-                                      <td>{{$x->p_nip}}</td>
-                                      <td>
-                                        <select class="form-control pilihukuran chosen-select-width index" name="ukuran[]" style="width:100%" id="ukuran">
-                                        <option value="Tidak"> -- Tidak -- </option>
-                                            <option value="{{ $x->s_id }}"
-                                            @if($x->s_id == old('ukuran', $x->s_id))
-                                                selected
-                                            @endif
-                                            >{{ $x->s_nama }}</option>
-                                        </select>
-                                      </td>
+                                        <td>{{$x->p_name}} ({{$x->p_hp}})</td>
+                                        <td>{{$x->p_nip}}</td>
+                                        <td>
+                                          <select class="form-control pilihukuran chosen-select-width index" name="ukuran[]" style="width:100%" id="ukuran" onchange="ambil()">
+                                          @foreach($data as $z)
+                                          @if($x->s_id == null)
+                                            <option value="Tidak" selected>-- Tidak --</option>
+                                            <option value="{{ $z->s_id }}">{{ $z->s_nama }}</option>
+                                          @elseif($x->s_id != null && $x->s_id == $z->s_id)
+                                            <option value="Tidak">-- Tidak --</option>
+                                            <option value="{{ $z->s_id }}" selected>{{ $z->s_nama }}</option>
+                                          @endif
+
+                                          @endforeach
+                                        </td>
                                       </tr>
-                                      @else
-                                      <tr>
-                                      <td>{{$z->p_name}} ({{$z->p_hp}})</td>
-                                      <td>{{$z->p_nip}}</td>
-                                      <td>
-                                        <select class="form-control pilihukuran chosen-select-width index" name="ukuran[]" style="width:100%" id="ukuran">
-                                        <option value="Tidak"> -- Tidak -- </option>
-                                            <option value="{{$x->s_id}}">{{$x->s_nama}}</option>
-                                        </select>
-                                      </td>
-                                      </tr>
-                                      @endif
                                       @endforeach
-                                      @endforeach    
                                     </tbody>
                                 </table>
                             </div>
@@ -167,6 +155,7 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+
     $( document ).ready(function() {
         tabelpekerja = $("#tabelitem").DataTable({
             responsive: true,
@@ -174,5 +163,21 @@
             "language": dataTableLanguage
         });
     });
+
+function simpan(){
+  var mitra = $('#mitra').val();
+  var seragam = $('#seragam').val();
+  var divisi = $('#divisi').val();
+  $.ajax({
+    type: 'get',
+    data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&seragam='+seragam+'&nota='+nota+'&total='+total+'&divisi='+divisi,
+    dataType: 'json',
+    url: baseUrl + '/manajemen-penjualan/update',
+    success : function(result){
+      console.log(result);
+    }
+  })
+}
+
 </script>
 @endsection

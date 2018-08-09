@@ -245,7 +245,7 @@
                               '<li class="divider" style="background-color:rgb(179, 179, 179);"></li>';
                     }
 
-                    $('#shownotif').append(html);
+                    $('#shownotif').html(html);
                   }
 
                 }
