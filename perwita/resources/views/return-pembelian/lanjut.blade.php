@@ -37,16 +37,16 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="float: left;">Ganti Barang Sejenis</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
+                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
                             @foreach($data as $info)
-                            @if($info->aksi == 'barang')
+                            @if($info->aksi == 'uang')
                             <tr>
-                                <td class="project-title col-sm-4">
+                                <td class="project-title col-sm-3">
                                     {{ $info->nama }}
                                     <br>
                                     <small> Harga: Rp. {{ number_format($info->pd_value, 0, ',', '.') }}</small>
@@ -55,11 +55,19 @@
                                     <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
                                         <label class="col-sm-4 control-label">Jumlah: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control" style="text-align: right;">
+                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control col-sm-12" style="text-align: right; width: 100%;">
                                         </div><sup>*</sup>
                                     </div>
                                 </td>
-                                <td class="col-sm-6"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
+                                <td class="col-sm-3">
+                                    <div class="form-group" style="vertical-align: middle;">
+                                        <label class="col-sm-4 control-label" style="margin-top: 6px;">Harga@: </label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="return[]" value="{{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control maskharga" style="text-align: right;">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="col-sm-4"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
                                 </td>
                             </tr>
                             @endif
@@ -81,14 +89,14 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="float: left;">Ganti Barang Lain</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
+                    <h5 style="float: left;">Ganti Barang</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
                             @foreach($data as $info)
-                            @if($info->aksi == 'lain')
+                            @if($info->aksi == 'barang')
                             <tr>
                                 <td class="project-title col-sm-4">
                                     {{ $info->nama }}
@@ -147,42 +155,6 @@
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="project-list">
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr>
-                                <td class="project-status">
-                                    <span class="label label-primary">Ganti Uang</span>
-                                </td>
-                                <td class="project-title">
-                                    <a href="project_detail.html">Contract with Zender Company</a>
-                                    <br>
-                                    <small>Created 14.08.2014</small>
-                                </td>
-                                <td class="project-completion">
-                                        <small>Completion with: 48%</small>
-                                        <div class="progress progress-mini">
-                                            <div style="width: 48%;" class="progress-bar"></div>
-                                        </div>
-                                </td>
-                                <td class="project-actions">
-                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>                
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -190,14 +162,25 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-var table = $("#barang-ganti").DataTable({
-    "language": dataTableLanguage,
-    "paging": false,
-    "searching": false,
-    "aaSorting": [],
-    "columnDefs": [
-        { "orderable": false, "targets": 4 }
-    ]
-});
+    var table;
+    $(document).ready(function(){
+        $(".maskharga").maskMoney({
+            allowNegative: false,
+            thousands:'.',
+            decimal:',',
+            precision: 0,
+            affixesStay: false
+        });
+
+        table = $("#barang-ganti").DataTable({
+            "language": dataTableLanguage,
+            "paging": false,
+            "searching": false,
+            "aaSorting": [],
+            "columnDefs": [
+                { "orderable": false, "targets": 4 }
+            ]
+        });
+    });
 </script>
 @endsection

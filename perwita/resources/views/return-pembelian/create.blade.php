@@ -83,7 +83,7 @@
                                         <input type="hidden" name="id_item[]" value="{{ $data->i_id }}">
                                         <input type="hidden" name="item_detail[]" value="{{ $data->id_detailid }}">
                                         <select name="aksi[]" class="form-control" id="aksi-return" style="width: 100%;">
-                                            <option disabled selected>-- Pilih Aksi --</option>
+                                            <option value="tidak" selected>-- Pilih Aksi --</option>
                                             <option value="uang">Ganti Uang</option>
                                             <option value="barang">Ganti Barang</option>
                                         </select>
