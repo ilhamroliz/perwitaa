@@ -150,7 +150,7 @@ class PembelianController extends Controller
                 array_push($pd, $data_dt);
             }
             d_purchase_dt::insert($pd);
-            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian Seragam' and n_detail = 'Create')");
+            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian' and n_detail = 'Create')");
             if ($notarencana != null || $notarencana != ''){
                 DB::table('d_purchase_planning')
                     ->where('pp_nota', '=', $notarencana)
@@ -170,7 +170,88 @@ class PembelianController extends Controller
                 'data' => $e
             ]);
         }
+    }
 
+    public function update(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $nota = $request->nota;
+
+            $id = DB::table('d_purchase')
+                ->where('p_nota', '=', $nota)
+                ->max('p_id');
+
+            $gross = 0;
+
+            $comp = DB::table('d_mem_comp')
+                ->where('mc_mem', '=', Session::get('mem'))
+                ->get();
+
+            $comp = $comp[0]->mc_comp;
+
+            for ($i = 0; $i < count($request->qty); $i++) {
+                $qty = $request->qty[$i];
+                $harga = str_replace(".", '', $request->harga[$i]);
+                $gross = ($qty * $harga) + $gross;
+            }
+
+            $data = array(
+                'p_date' => Carbon::now('Asia/Jakarta'),
+                'p_supplier' => $request->supplier,
+                'p_total_gross' => $gross,
+                'p_disc_percent' => 0,
+                'p_disc_value' => 0,
+                'p_pajak' => 0,
+                'p_total_net' => $gross,
+                'p_jurnal' => '1234'
+            );
+
+            d_purchase::where('p_nota', '=', $nota)
+                ->update($data);
+
+            $detailid = DB::table('d_purchase_dt')
+                ->where('pd_purchase', '=', $id)
+                ->max('pd_detailid');
+
+            $detailid = $detailid + 1;
+            $pd = [];
+
+            d_purchase_dt::where('pd_purchase', '=', $id)
+                ->delete();
+
+            for ($i = 0; $i < count($request->qty); $i++) {
+                $data_dt = array(
+                    'pd_purchase' => $id,
+                    'pd_detailid' => $detailid + $i,
+                    'pd_qty' => $request->qty[$i],
+                    'pd_comp' => $comp,
+                    'pd_value' => str_replace(".", '', $request->harga[$i]),
+                    'pd_item' => $request->id[$i],
+                    'pd_item_dt' => $request->iddt[$i],
+                    'pd_total_gross' => $request->qty[$i] * str_replace(".", '', $request->harga[$i]),
+                    'pd_disc_percent' => 0,
+                    'pd_disc_value' => str_replace(".", '', $request->disc[$i]),
+                    'pd_total_net' => ((int)$request->qty[$i] * (int)str_replace(".", '', $request->harga[$i])) - (int)str_replace(".", '', $request->disc[$i]),
+                    'pd_barang_masuk' => 0,
+                    'pd_receivetime' => null
+                );
+                array_push($pd, $data_dt);
+            }
+            d_purchase_dt::insert($pd);
+            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian' and n_detail = 'Create')");
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
     }
 
     public function cari()
@@ -466,6 +547,8 @@ class PembelianController extends Controller
                 'p_pajak',
                 's_company',
                 's_nama',
+                'i_id',
+                'id_detailid',
                 DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama')
             )
             ->where('p_nota', $nota)
@@ -475,6 +558,7 @@ class PembelianController extends Controller
             ->select('s_id', 's_company')
             ->where('s_isactive', '=', 'Y')
             ->get();
+
         return view('pembelian/edit', compact('supplier', 'data', 'nota'));
     }
 }

@@ -69,6 +69,18 @@
                                             <th style="width: 5%;">Aksi</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        @foreach($data as $index=>$row)
+                                        <tr>
+                                            <td>{{ $row->nama }}<input type="hidden" name="id[]" value="{{ $row->i_id }}" class="form-control iditem iditem{{ $index }}"><input type="hidden" name="iddt[]" value="{{ $row->id_detailid }}" class="form-control iddt iddt{{ $index }}"></td>
+                                            <td><input type="text" name="qty[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{ $row->pd_qty }}" class="form-control qty qty{{ $index }}" style="width: 100%;" onkeyup="hitungtotal(this, event, 'qty')" onblur="onBlurQty(this, event)"></td>
+                                            <td><input type="text" name="harga[]" value="{{ number_format($row->pd_value, 0, ',', '.') }}" class="form-control harga harga{{ $index }}" style="width: 100%;" onkeyup="hitungtotal(this, event, 'harga')" onblur="hitungtotal(this, event, 'harga')"></td>
+                                            <td><input type="text" name="disc[]" value="{{ number_format($row->pd_disc_value, 0, ',', '.') }}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control disc disc{{ $index }}" style="width: 100%;" onkeyup="hitungtotal(this, event, \'diskon\')" onblur="hitungtotal(this, event, 'diskon')"></td>
+                                            <td><input type="text" name="total[]" value="{{ number_format($row->pd_value * $row->pd_qty, 0, ',', '.') }}" class="form-control total total{{ $index }}" style="width: 100%;" readonly></td>
+                                            <td><div class="text-center"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs btnhapus btnhapus{{ $index }}" ><i class="glyphicon glyphicon-trash"></i></button></div></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </form>
@@ -86,7 +98,7 @@
                                 Total
                             </span>
                             <h2 class="font-bold totalpembelian">
-                                Rp. 0
+                                Rp. {{ number_format($row->p_total_net, 0, ',', '.') }}
                             </h2>
 
                             <hr>
@@ -135,6 +147,7 @@
     var tablepembelian;
     var dataitem;
     var hitung = 0;
+    var notaPublic = "{{ $nota }}";
     $( document ).ready(function() {
         tablepembelian = $("#tabelitem").DataTable({
             responsive: true,
@@ -159,7 +172,40 @@
             }
         });
 
+        @if (isset($data))
+            @foreach ($data as $i=>$info)
+                $(".btnhapus{{ $i }}").click(function(){
+                    tablepembelian
+                        .row( $(this).parents('tr') )
+                        .remove()
+                        .draw();
+
+                    hapus();
+                });
+
+                $(".harga{{ $i }}").maskMoney({
+                    allowNegative: false,
+                    thousands:'.',
+                    decimal:',',
+                    precision: 0,
+                    affixesStay: false
+                });
+
+                $(".disc{{ $i }}").maskMoney({
+                    allowNegative: false,
+                    thousands:'.',
+                    decimal:',',
+                    precision: 0,
+                    affixesStay: false
+                });
+
+                hitung = {{ $i }};
+            @endforeach
+        @endif
+
         $('#namabarang').focus();
+
+        getSupplier();
 
     });
 
@@ -432,9 +478,9 @@
             }
         });
         $.ajax({
-            url: baseUrl + '/manajemen-pembelian/simpan',
+            url: baseUrl + '/manajemen-pembelian/update',
             type: 'post',
-            data: ar.find('input').serialize()+'&supplier='+supplier,
+            data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+notaPublic,
             success: function(response){
                 if (response.status == 'sukses') {
                     waitingDialog.hide();
@@ -443,8 +489,8 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                            window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print','','width=700,height=500');
+                            alert('print');
+                            location.href = '{{ url('manajemen-seragam/pembelian') }}';
                     });
                 } else {
                     waitingDialog.hide();

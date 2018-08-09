@@ -232,7 +232,7 @@
     }
 
     function edit(nota){
-        location.href = '{{ url('manajemen-pembelian/edit') }}'+'?nota='+nota;
+        location.href = '{{ url('manajemen-seragam/edit') }}'+'?nota='+nota;
     }
 </script>
 @endsection
