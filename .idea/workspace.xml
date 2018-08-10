@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz" />
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +17,8 @@
     <session id="1291506207">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
-          <entry key="project.open.time.12" value="1" />
+          <entry key="project.closed" value="16" />
+          <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.247" value="1" />
           <entry key="project.open.time.32" value="1" />
@@ -28,7 +30,7 @@
           <entry key="project.open.time.44" value="1" />
           <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -72,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="137">
-              <caret line="74" column="59" lean-forward="true" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+              <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -193,7 +195,7 @@
       <path value="$PROJECT_DIR$/perwita/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -204,7 +206,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -248,6 +249,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -346,7 +348,8 @@
       <workItem from="1533781396430" duration="354000" />
       <workItem from="1533781779517" duration="4976000" />
       <workItem from="1533797368677" duration="2274000" />
-      <workItem from="1533866384628" duration="626000" />
+      <workItem from="1533866384628" duration="1223000" />
+      <workItem from="1533869922035" duration="33000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -604,13 +607,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="257413000" />
+    <option name="totallyTimeSpent" value="258043000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="24" y="73" width="211" height="622" id="Project" order="0" visible="true" weight="0.17246597" />
+      <window_info active="true" content_ui="combo" x="24" y="73" width="211" height="622" id="Project" order="0" visible="true" weight="0.17473525" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -915,7 +917,7 @@
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
-          <caret line="74" column="59" lean-forward="true" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+          <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
         </state>
       </provider>
     </entry>

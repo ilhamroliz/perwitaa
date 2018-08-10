@@ -166,6 +166,18 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="nav nav-second-level collapse">
+                    <li class="{{ Request::is('manajemen-seragam/master-seragam') ? 'active' : '' || Request::is('manajemen-seragam/master-seragam/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-seragam/master-seragam') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Master Seragam</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-seragam/master-supplier') ? 'active' : '' || Request::is('manajemen-seragam/master-supplier/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-seragam/master-supplier') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Master Supplier</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="treeview sidebar data-master {{
@@ -231,7 +243,7 @@
                     <span class="nav-label">Master Akun</span>
                 </a>
             </li>
-            <li class="treeview sidebar data-master
+            {{-- <li class="treeview sidebar data-master
             {{  Request::is('master-item') ? 'active' : '' ||
                 Request::is('master-item/*') ? 'active' : '' ||
                 Request::is('master-supplier') ? 'active' : '' ||
@@ -250,7 +262,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li class="">
                 <a href="{{url('data-master/master-transaksi-akun')}}"><i class="fa fa-th-large"></i>
                     <span class="nav-label">Master Transaksi</span>

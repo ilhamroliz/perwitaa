@@ -474,6 +474,7 @@ Route::group(['middleware' => 'auth'], function () {
                     'uses' => 'ItemController@create',
                     'as' => 'master-item.create'
                 ]);
+    Route::get('manajemen-seragam/master-seragam','ItemController@index');
     Route::post('master-item/save','ItemController@save');
     Route::get('master-item/save','ItemController@save');
     Route::get('master-item/edit/{id}','ItemController@edit');
@@ -496,6 +497,7 @@ Route::group(['middleware' => 'auth'], function () {
                     'uses' => 'SupplierController@index',
                     'as' => 'master-supplier'
                 ]);
+    Route::get('manajemen-seragam/master-supplier','supplierController@index');
     Route::get('master-supplier/get-data-y','supplierController@GetDataY');
     Route::get('master-supplier/get-data-n','supplierController@GetDataN');
     Route::get('master-supplier/get-data-a','supplierController@GetDataA');
