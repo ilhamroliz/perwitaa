@@ -60,7 +60,7 @@
                                     <option value=" ">--Pilih Divisi--</option>
                             </select>
                             </div>
-                            <div class="form-group col-md-4 pilihseragam">
+                            <div class="form-group col-md-3 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
                                     <option value=" ">--Pilih Seragam--</option>
                             </select>
@@ -387,8 +387,10 @@
           values.push(selectedVal);
       });
       var pilih = compressArray(values);
+      var hasil = [];
       for (var i = 0; i < pilih.length; i++) {
         for (var j = 0; j < stock.length; j++) {
+          if (pilih[i].value != 'Tidak') {
             if (stock[j].s_id == pilih[i].value) {
               if (stock[j].qty < pilih[i].count) {
                 $('select.index'+id).val('Tidak');
@@ -398,10 +400,17 @@
                   showConfirmButton: true
                 })
               } else {
-                total = stock[j].id_price * pilih[i].count;
-                $('.totalpembelian').text('Rp. '+accounting.formatMoney(total, "", 0, ".", ","));
+                temp = stock[j].id_price * pilih[i].count;
+                hasil.push(temp);
+
+                $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
               }
             }
+          } else {
+            temp = 0;
+            hasil.push(temp);
+            $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
+          }
         }
       }
     }
@@ -436,6 +445,10 @@
 
 	return compressed;
 };
+
+function getSum(total, num) {
+    return total + num;
+}
 
 </script>
 @endsection
