@@ -256,7 +256,7 @@ class PembelianController extends Controller
 
     public function cari()
     {
-        return view('pembelian.cari');re
+        return view('pembelian.cari');
     }
 
     public function getNotaRencana(Request $request)
