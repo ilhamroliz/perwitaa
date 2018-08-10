@@ -848,11 +848,6 @@ class PenjualanController extends Controller
           $item_dt[$i] = $getItem_dt[$i]->id_detailid;
       }
 
-      $detailSales = DB::table('d_sales_dt')
-          ->where('sd_sales', '=', $request->id)
-          ->max('sd_detailid');
-      $detailSales = $detailSales + 1;
-
       $getStock = DB::table('d_stock_mutation')
           ->join('d_stock', 's_id', '=', 'sm_stock')
           ->join('d_item_dt', function ($q) {
@@ -872,6 +867,12 @@ class PenjualanController extends Controller
 
       DB::beginTransaction();
       try {
+
+      for ($c=0; $c < count($countukuran); $c++) {
+        $detailSales = DB::table('d_sales_dt')
+            ->where('sd_sales', '=', $request->id)
+            ->max('sd_detailid');
+      }
 
         DB::table('d_sales')
               ->where('s_id',$request->id)

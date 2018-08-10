@@ -264,7 +264,7 @@
         });
         $.ajax({
             url: baseUrl + '/manajemen-seragam/rencana-pembelian/simpan',
-            type: 'post',
+            type: 'get',
             data: ar.find('input').serialize(),
             success: function(response){
                 if (response.status == 'sukses') {
@@ -275,7 +275,7 @@
                         type: "success"
                     }, function () {
                             window.location.reload();
-                            alert('print');
+                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/rencana-pembelian/print?id='+id,'','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();

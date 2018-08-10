@@ -542,6 +542,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/rencana-pembelian/edit','RencanaPembelian@edit');
     Route::post('manajemen-seragam/rencana-pembelian/update','RencanaPembelian@update');
     Route::get('manajemen-seragam/rencana-pembelian/update','RencanaPembelian@update');
+    Route::get('manajemen-seragam/rencana-pembelian/print','RencanaPembelian@print');
     //============== penerimaan ===============
     Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
     Route::get('manajemen-seragam/penerimaan/cari','PenerimaanController@history');

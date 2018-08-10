@@ -60,7 +60,7 @@
                             </div>
                             <div class="form-group col-md-4 pilihseragam">
                                 <select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam" readonly>
-                                    <option value="{{$data[0]->s_id}}">{{$data[0]->i_nama}} ({{$data[0]->i_warna}})</option>
+                                    <option value="{{$data[0]->i_id}}">{{$data[0]->i_nama}} ({{$data[0]->i_warna}})</option>
                             </select>
                             </div>
                             <div class="table-responsive col-md-12" style="margin-top: 30px;">
@@ -190,32 +190,6 @@ var countpembelian = 0;
         getData();
     });
 
-function simpan(id){
-  var mitra = $('#mitra').val();
-  var seragam = $('#seragam').val();
-  var divisi = $('#divisi').val();
-  var totalhasil = $('#totalhasil').val();
-  var nota = $('#nota').val();
-  var optionVal = new Array();
-    $('.jumlahpekerja').each(function() {
-            optionVal.push($(this).val());
-    });
-  $.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-  });
-  $.ajax({
-    type: 'get',
-    data: $('.form-inline').serialize()+'&id='+id+'&total='+totalhasil+'&nota='+nota,
-    dataType: 'json',
-    url: baseUrl + '/manajemen-penjualan/update',
-    success : function(result){
-      console.log(result);
-    }
-  })
-}
-
 function ambil(){
   var values = [];
   var selectedVal;
@@ -302,6 +276,78 @@ function getData(){
 
 function getSum(total, num) {
     return total + num;
+}
+
+function simpan(id){
+  swal({
+          title: "Konfirmasi",
+          text: "Apakah anda yakin ingin menyimpan perubahan ini?",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+      },
+      function () {
+          swal.close();
+          waitingDialog.show();
+          setTimeout(function () {
+            var mitra = $('#mitra').val();
+            var seragam = $('#seragam').val();
+            var divisi = $('#divisi').val();
+            var totalhasil = $('#totalhasil').val();
+            var nota = $('#nota').val();
+            var optionVal = new Array();
+              $('.jumlahpekerja').each(function() {
+                      optionVal.push($(this).val());
+              });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+              type: 'get',
+              data: $('.form-inline').serialize()+'&id='+id+'&total='+totalhasil+'&nota='+nota,
+              dataType: 'json',
+              url: baseUrl + '/manajemen-penjualan/update',
+              success : function(result){
+                      waitingDialog.hide();
+                      if (result.status == 'berhasil') {
+                          swal({
+                              title: "Perubahan Berhasil Disimpan",
+                              text: "Berhasil Disimpan",
+                              type: "success",
+                              showConfirmButton: false,
+                              timer: 900
+                          });
+                          setTimeout(function(){
+                                window.location.reload();
+                        }, 850);
+                      }
+                  }, error: function (x, e) {
+                      waitingDialog.hide();
+                      var message;
+                      if (x.status == 0) {
+                          message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+                      } else if (x.status == 404) {
+                          message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+                      } else if (x.status == 500) {
+                          message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+                      } else if (e == 'parsererror') {
+                          message = 'Error.\nParsing JSON Request failed.';
+                      } else if (e == 'timeout') {
+                          message = 'Request Time out. Harap coba lagi nanti';
+                      } else {
+                          message = 'Unknow Error.\n' + x.responseText;
+                      }
+                      waitingDialog.hide();
+                      throwLoadError(message);
+                      //formReset("store");
+                  }
+              })
+          }, 2000);
+
+      });
 }
 
 </script>

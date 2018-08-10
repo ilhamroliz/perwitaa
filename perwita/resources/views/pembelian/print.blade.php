@@ -17,17 +17,17 @@
 
 @section('content')
                 <div class="wrapper wrapper-content p-xl">
-                    <div class="ibox-content p-xl">
-                            <div class="row">
-                              <div class="col-sm-6">
-                                    <h5>From:</h5>
-                                    <address>
-                                        <strong>PT. Perwita Nusaraya</strong><br>
-                                        Jalan Raya By Pass KM 31<br>
-                                        Krian, Sidoarjo <br>
-                                        <abbr title="Phone">P:&nbsp;</abbr> (031) 8988308
-                                    </address>
-                                </div>
+                  <div class="ibox-content p-xl row">
+                          <div class="col-md-12">
+                            <div class="col-sm-6" style="float: left;">
+                                  <h5>From:</h5>
+                                  <address>
+                                      <strong>PT. Perwita Nusaraya</strong><br>
+                                      Jalan Raya By Pass KM 31<br>
+                                      Krian, Sidoarjo <br>
+                                      <abbr title="Phone">P:&nbsp;</abbr> (031) 8988308
+                                  </address>
+                              </div>
 
                                 <div class="col-sm-6 text-right">
                                     <h4>Invoice No.</h4>
