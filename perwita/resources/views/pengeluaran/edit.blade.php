@@ -104,6 +104,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @foreach($pekerja as $p)
+                            <input type="hidden" name="pekerja[]" class="jumlahpekerja" id="pekerja" value="{{$p->p_id}}">
+                            @endforeach
                         </form>
                     </div>
                 </div>
@@ -193,6 +196,10 @@ function simpan(id){
   var divisi = $('#divisi').val();
   var totalhasil = $('#totalhasil').val();
   var nota = $('#nota').val();
+  var optionVal = new Array();
+    $('.jumlahpekerja').each(function() {
+            optionVal.push($(this).val());
+    });
   $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
