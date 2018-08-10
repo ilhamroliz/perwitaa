@@ -69,7 +69,7 @@
                                             <td><input type="text" name="harga[]" value="{{ number_format($data->id_price, 0, ',', '.') }}" class="form-control harga harga{{ $index }}" style="width: 100%;" onkeyup="hitungtotal(this, event, 'harga')" onblur="hitungtotal(this, event, 'harga')"></td>
                                             <td><input type="text" name="total[]" value="{{ number_format($data->id_price * $data->ppd_qty, 0, ',', '.') }}" class="form-control total total{{ $index }}" style="width: 100%;" readonly></td>
                                             <td><div class="text-center"><button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs btnhapus btnhapus{{ $index }}" ><i class="glyphicon glyphicon-trash"></i></button></div></td>
-                                        </tr>                                        
+                                        </tr>
                                     @endforeach
                                 @endif
                             </tbody>
@@ -319,8 +319,8 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                            window.location.reload();
-                            alert('print');
+                      window.location.reload();
+                      var myWindow = window.open(''+baseUrl+'/manajemen-seragam/rencana-pembelian/printwithnota?nota='+response.nota,'','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();

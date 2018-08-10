@@ -489,8 +489,8 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                            alert('print');
-                            location.href = '{{ url('manajemen-seragam/pembelian') }}';
+                      window.location.reload();
+                      var myWindow = window.open(''+baseUrl+'/manajemen-seragam/printnota?nota='+response.nota,'','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();

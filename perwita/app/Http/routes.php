@@ -527,6 +527,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pembelian/getDetail','PembelianController@getDetail');
     Route::get('manajemen-pembelian/hapus','PembelianController@getDetail');
     Route::get('manajemen-seragam/edit','PembelianController@edit');
+    Route::get('manajemen-seragam/printnota','PembelianController@printnota');
 
     //============== rencana pembelian ==============
     Route::get('manajemen-seragam/rencana-pembelian','RencanaPembelian@index');
@@ -543,6 +544,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-seragam/rencana-pembelian/update','RencanaPembelian@update');
     Route::get('manajemen-seragam/rencana-pembelian/update','RencanaPembelian@update');
     Route::get('manajemen-seragam/rencana-pembelian/print','RencanaPembelian@print');
+    Route::get('manajemen-seragam/rencana-pembelian/printwithnota','RencanaPembelian@printwithnota');
+
     //============== penerimaan ===============
     Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
     Route::get('manajemen-seragam/penerimaan/cari','PenerimaanController@history');

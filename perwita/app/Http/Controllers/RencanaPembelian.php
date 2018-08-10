@@ -147,7 +147,8 @@ class RencanaPembelian extends Controller
 
             DB::commit();
             return response()->json([
-                'status' => 'sukses'
+                'status' => 'sukses',
+                'nota' => $nota
             ]);
 
         } catch (\Exception $e){
@@ -254,7 +255,7 @@ class RencanaPembelian extends Controller
     }
 
     public function print(Request $request){
-      
+
       $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->join('d_item', 'i_id', '=', 'ppd_item')
@@ -265,6 +266,24 @@ class RencanaPembelian extends Controller
             ->join('d_size', 's_id', '=', 'id_size')
             ->join('d_kategori', 'k_id', '=', 'i_kategori')
             ->where('pp_id', $request->id)
+            ->get();
+
+      return view('rencana-pembelian.print', compact('data'));
+
+    }
+
+    public function printwithnota(Request $request){
+
+      $data = DB::table('d_purchase_planning')
+            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+            ->join('d_item', 'i_id', '=', 'ppd_item')
+            ->join('d_item_dt', function($e){
+              $e->on('id_item', '=', 'i_id')
+                ->on('id_detailid', '=', 'ppd_item_dt');
+            })
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->where('pp_nota', $request->nota)
             ->get();
 
       return view('rencana-pembelian.print', compact('data'));
