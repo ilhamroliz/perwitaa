@@ -87,7 +87,7 @@
                     <div class="form-group">
                       <label class="col-lg-3 control-label" style="text-align: left;">No DO</label>
                       <div class="col-lg-9" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control nodo" style='text-transform:uppercase'>
+                          <input type="text" class="form-control nodo" style='text-transform:uppercase' readonly>
                       </div>
                       <label class="col-lg-3 control-label" style="text-align: left;">Sisa Barang</label>
                       <div class="col-lg-3">

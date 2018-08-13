@@ -144,7 +144,7 @@
                                     <td><select name="ukuran[]" class="form-control .ukuran" id="ukuran" style="width: 100%;">
                                             <option disabled selected>-- Ukuran --</option>
                                         </select></td>
-                                    <td><input type="text" name="harga[]" value="" class="form-control" style="width: 100%"></td>
+                                    <td><input type="text" name="harga[]" value="" class="form-control harga" style="width: 100%"></td>
                                     <td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>
                                     <td>
                                       <button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
@@ -179,6 +179,8 @@
             precision: 0,
             affixesStay: false
         });
+
+        $('.harga').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
         $('#searchbox').autocomplete({
             source: baseUrl + '/manajemen-seragam/return/caribarang',
@@ -227,7 +229,7 @@
                 +'<td><select name="ukuran[]" class="form-control .ukuran" id="ukuran'+dinamis+'" style="width: 100%;">'
                       +'<option disabled selected>-- Ukuran --</option>'
                   +'</select></td>'
-                +'<td><input type="text" name="harga[]" value="" class="form-control" style="width: 100%"></td>'
+                +'<td><input type="text" name="harga[]" value="" class="form-control harga" style="width: 100%"></td>'
                 +'<td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>'
                 +'<td>'
                 +'<button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button> '
@@ -244,6 +246,8 @@
             }
         });
 
+        $('.harga').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+
       } else {
 
           swal({
@@ -253,7 +257,7 @@
             showConfirmButton: true,
             showLoaderOnConfirm: true,
           });
-          
+
       }
 
     }
@@ -264,12 +268,17 @@
 
       $('#dinamis'+dinamis).remove();
 
+      dinamis = dinamis - 1;
+
       $('#searchbox'+tmp).autocomplete({
           source: baseUrl + '/manajemen-seragam/return/caribarang',
           select: function(event, ui) {
               getdatakurang(ui.item.id);
           }
       });
+
+      $('.harga').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+
     }
 
     function getdatadinamis(id){

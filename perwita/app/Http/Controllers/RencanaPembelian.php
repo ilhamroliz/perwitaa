@@ -184,6 +184,7 @@ class RencanaPembelian extends Controller
                     'pp_mem' => Session::get('mem'),
                     'pp_insert' => Carbon::now('Asia/Jakarta')
                 ]);
+
             $tempPlan = [];
             for ($i = 0; $i < count($idItem); $i++){
                 $temp = [
@@ -197,6 +198,16 @@ class RencanaPembelian extends Controller
             }
 
             DB::table('d_purchase_planning_dt')->insert($tempPlan);
+
+            $count = DB::table('d_purchase_planning')
+                    ->where('pp_isapproved', 'P')
+                    ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Rencana Pembelian')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
 
             DB::commit();
             return response()->json([
