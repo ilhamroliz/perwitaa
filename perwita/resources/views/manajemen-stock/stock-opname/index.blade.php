@@ -39,6 +39,17 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-opname">
+                        <thead>
+                            <tr>
+                                <th>Nomor</th>
+                                <th>Tanggal</th>
+                                <th>Nama Barang</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -49,6 +60,16 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-
+    var table;
+    $(document).ready(function(){
+        table = $(".table-opname").DataTable({
+            responsive: true,
+            paging: true,
+            "language": dataTableLanguage,
+            "columnDefs": [
+                { "orderable": false, "targets": 4 }
+            ]
+        });
+    });
 </script>
 @endsection
