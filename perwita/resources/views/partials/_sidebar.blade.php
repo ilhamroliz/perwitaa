@@ -124,8 +124,6 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">Rencana Pembelian</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/pembelian') ? 'active' : ''
                                 || Request::is('manajemen-seragam/gunakan-rencana-pembelian') ? 'active' : '' 
                                 || Request::is('manajemen-seragam/edit') ? 'active' : '' 
@@ -134,39 +132,29 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pembelian Seragam</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/penerimaan') ? 'active' : ''
                                 || Request::is('manajemen-seragam/penerimaan/*') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/penerimaan') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pembelian</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/return') ? 'active' : ''
                                 || Request::is('manajemen-seragam/return/*') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/return') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Return Pembelian</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/pengeluaran') ? 'active' : ''
                                 || Request::is('manajemen-seragam/tambah-pengeluaran') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/pengeluaran') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pengeluaran Seragam</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''  }}">
                         <a href="{{ url('manajemen-seragam/pembayaran-seragam') }}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Pembayaran Seragam</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-seragam/master-seragam') ? 'active' : '' || Request::is('manajemen-seragam/master-seragam/*') ? 'active' : '' }}">
                         <a href="{{ url('manajemen-seragam/master-seragam') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Master Seragam</span>
