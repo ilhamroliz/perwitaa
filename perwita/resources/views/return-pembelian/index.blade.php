@@ -72,7 +72,7 @@
                                 <ul class="list-group clear-list detail-pembelian">
                                 </ul>
                                 <div class="lakukan">
-                                    
+
                                 </div>
                             </div>
                         </div>

@@ -107,7 +107,7 @@
                                     <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
                                         <label class="col-sm-4 control-label">Jumlah: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control" style="text-align: right;">
+                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control" style="text-align: right;">
                                         </div><sup>*</sup>
                                     </div>
                                 </td>
@@ -138,20 +138,22 @@
                                     <th style="width: 10%">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="showdata">
                                 <tr>
-                                    <td><input type="text" placeholder="Masukan Nama Barang" name="ganti[]" value="" class="form-control" style="width: 100%"></td>
-                                    <td><select name="ukuran[]" class="form-control" id="ukuran" style="width: 100%;">
+                                    <td><input type="text" placeholder="Masukan Nama Barang" id="searchbox" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>
+                                    <td><select name="ukuran[]" class="form-control .ukuran" id="ukuran" style="width: 100%;">
                                             <option disabled selected>-- Ukuran --</option>
                                         </select></td>
                                     <td><input type="text" name="harga[]" value="" class="form-control" style="width: 100%"></td>
                                     <td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>
-                                    <td></td>
+                                    <td>
+                                      <button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -162,7 +164,13 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+
     var table;
+    var html;
+    var dinamis = 0;
+    var tmp = 0;
+    var count = 1;
+
     $(document).ready(function(){
         $(".maskharga").maskMoney({
             allowNegative: false,
@@ -170,6 +178,13 @@
             decimal:',',
             precision: 0,
             affixesStay: false
+        });
+
+        $('#searchbox').autocomplete({
+            source: baseUrl + '/manajemen-seragam/return/caribarang',
+            select: function(event, ui) {
+                getdata(ui.item.id);
+            }
         });
 
         table = $("#barang-ganti").DataTable({
@@ -182,5 +197,108 @@
             ]
         });
     });
+
+    function getdata(id){
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          url: baseUrl + '/manajemen-seragam/return/getbarang',
+          dataType: 'json',
+          success : function(result){
+              for (var i = 0; i < result.length; i++) {
+                $('#ukuran').append('<option value="'+result[i].s_id+'">'+result[i].s_nama+'</option>');
+              }
+          }
+        });
+    }
+
+    function tambah(){
+
+      var jumlah = $('#jumlahqty').val();
+
+      count += 1;
+
+      if (count <= jumlah) {
+
+        dinamis += 1;
+
+        html = '<tr id="dinamis'+dinamis+'">'
+                +'<td><input type="text" placeholder="Masukan Nama Barang" id="searchbox'+dinamis+'" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>'
+                +'<td><select name="ukuran[]" class="form-control .ukuran" id="ukuran'+dinamis+'" style="width: 100%;">'
+                      +'<option disabled selected>-- Ukuran --</option>'
+                  +'</select></td>'
+                +'<td><input type="text" name="harga[]" value="" class="form-control" style="width: 100%"></td>'
+                +'<td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>'
+                +'<td>'
+                +'<button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button> '
+                +'<button type="button" name="button" class="btn btn-danger" onclick="kurang()"> <i class="fa fa-minus"></i> </button> '
+                +'</td>'
+                +'</tr>';
+
+        $('#showdata').append(html);
+
+        $('#searchbox'+dinamis).autocomplete({
+            source: baseUrl + '/manajemen-seragam/return/caribarang',
+            select: function(event, ui) {
+                getdatadinamis(ui.item.id);
+            }
+        });
+
+      } else {
+
+          swal({
+            title: "Peringatan!",
+            text: "Tidak boleh melebihi barang yang direturn",
+            type: "warning",
+            showConfirmButton: true,
+            showLoaderOnConfirm: true,
+          });
+          
+      }
+
+    }
+
+    function kurang(){
+
+      tmp = dinamis - 1;
+
+      $('#dinamis'+dinamis).remove();
+
+      $('#searchbox'+tmp).autocomplete({
+          source: baseUrl + '/manajemen-seragam/return/caribarang',
+          select: function(event, ui) {
+              getdatakurang(ui.item.id);
+          }
+      });
+    }
+
+    function getdatadinamis(id){
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          url: baseUrl + '/manajemen-seragam/return/getbarang',
+          dataType: 'json',
+          success : function(result){
+              for (var i = 0; i < result.length; i++) {
+                $('#ukuran'+dinamis).append('<option value="'+result[i].s_id+'">'+result[i].s_nama+'</option>');
+              }
+            }
+        });
+    }
+
+    function getdatakurang(id){
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          url: baseUrl + '/manajemen-seragam/return/getbarang',
+          dataType: 'json',
+          success : function(result){
+              for (var i = 0; i < result.length; i++) {
+                $('#ukuran'+tmp).append('<option value="'+result[i].s_id+'">'+result[i].s_nama+'</option>');
+              }
+            }
+        });
+    }
+
 </script>
 @endsection

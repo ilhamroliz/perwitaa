@@ -600,6 +600,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
     Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
     Route::get('manajemen-seragam/return/add', 'ReturnPembelianController@add');
+    Route::get('manajemen-seragam/return/caribarang', 'ReturnPembelianController@caribarang');
+    Route::get('manajemen-seragam/return/getbarang', 'ReturnPembelianController@getbarang');
     Route::post('manajemen-seragam/return/lanjut', 'ReturnPembelianController@lanjut');
     Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');

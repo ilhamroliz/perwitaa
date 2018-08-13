@@ -89,4 +89,43 @@ class ReturnPembelianController extends Controller
 
         return view('return-pembelian.lanjut', compact('data'));
     }
+
+    public function caribarang(Request $request){
+      $keyword = $request->term;
+
+        $data = DB::table('d_item')
+              ->join('d_item_dt', 'id_item', '=', 'i_id')
+              ->join('d_kategori', 'k_id', '=', 'i_kategori')
+              ->join('d_size', 's_id', '=', 'id_size')
+              ->where('i_nama', 'Like', '%'.$keyword.'%')
+              ->groupBy('i_id')
+              ->get();
+
+            if ($data == null) {
+                $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+            } else {
+
+                foreach ($data as $query) {
+                    $results[] = ['id' => $query->i_id, 'label' => $query->i_nama . ' ' . $query->i_warna];
+                }
+            }
+
+            return response()->json($results);
+
+    }
+
+    public function getbarang(Request $request){
+
+        $data = DB::table('d_item')
+              ->join('d_item_dt', 'id_item', '=', 'i_id')
+              ->join('d_kategori', 'k_id', '=', 'i_kategori')
+              ->join('d_size', 's_id', '=', 'id_size')
+              ->select('s_nama', 's_id')
+              ->where('i_id', $request->id)
+              ->get();
+
+        return response()->json($data);
+
+    }
+
 }
