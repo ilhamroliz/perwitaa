@@ -611,6 +611,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-stock/stock-opname/tambah', 'StockOpnameController@add');
     Route::get('manajemen-stock/stock-opname/getStock', 'StockOpnameController@getStock');
     Route::get('manajemen-stock/stock-opname/history', 'StockOpnameController@history');
+    Route::get('manajemen-stock/stock-opname/simpan', 'StockOpnameController@save');
+    Route::post('manajemen-stock/stock-opname/simpan', 'StockOpnameController@save');
 
     //thoriq
 

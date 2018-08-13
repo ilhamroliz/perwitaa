@@ -41,7 +41,7 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="formopname">
                         <div class="form-group col-lg-12">
                             <div class="col-lg-8">
                                 <input type="text" placeholder="Masukan Nama Barang" class="form-control" id="namabarang">
@@ -51,17 +51,16 @@
                             <table class="table table-striped table-bordered table-opname">
                                 <thead>
                                     <tr>
-                                        <th style="width: 30%">Nama Barang</th>
-                                        <th style="width: 25%">Pemilik</th>
+                                        <th style="width: 25%">Nama Barang</th>
                                         <th style="width: 15%">Qty Sistem</th>
                                         <th style="width: 15%">Qty Real</th>
                                         <th style="width: 15%">Aksi</th>
+                                        <th style="width: 30">Keterangan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="nama"></td>
-                                        <td class="pemilik"></td>
                                         <td><input type="text" name="qtysistem" class="form-control qty-stock" value="0" style="width: 100%; text-align: right;" readonly></td>
                                         <td><input type="text" name="qtyreal" class="form-control qty-real" value="0" style="width: 100%; text-align: right;"></td>
                                         <td>
@@ -71,6 +70,7 @@
                                                 <option value="sistem">Gunakan Qty Sistem</option>
                                             </select>
                                         </td>
+                                        <td class="pemilik"><input type="text" name="keterangan" class="form-control note" value="" style="width: 100%;" placeholder="Keterangan"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -116,7 +116,6 @@
     function tanam(item){
         waitingDialog.show();
         simpanCat = 1;
-        $('.nama').html(item.label);
         $.ajax({
             url: baseUrl + '/manajemen-stock/stock-opname/getStock',
             type: 'get',
@@ -126,7 +125,7 @@
                 table.clear();
                 waitingDialog.hide();
                 var data = response[0];
-                $('.pemilik').html(data.c_name+'<input type="hidden" class="s_id" name="s_id" value="'+data.s_id+'">');
+                $('.nama').html(item.label+'<input type="hidden" class="s_id" name="s_id" value="'+data.s_id+'">');
                 $('.qty-stock').val(data.s_qty);
                 $('.qty-real').focus();
             },
@@ -173,22 +172,26 @@
             return false;
         } else {
             waitingDialog.show();
-            var ar = $();
-            for (var i = 0; i < table.rows()[0].length; i++) {
-                ar = ar.add(table.row(i).node());
-            }
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
             });
+            
             $.ajax({
                 url: baseUrl + '/manajemen-stock/stock-opname/simpan',
                 type: 'post',
-                data: ar.find('input').serialize(),
-                dataType: 'json',
+                data: $('#formopname').serialize(),
                 success: function (response) {
-
+                    waitingDialog.hide();
+                    swal({
+                        title: "Sukses",
+                        text: "Data sudah tersimpan",
+                        type: "success"
+                    }, function () {
+                            window.location.reload();
+                    });
                 },
                 error: function (xhr, status) {
                     if (xhr.status == 'timeout') {
