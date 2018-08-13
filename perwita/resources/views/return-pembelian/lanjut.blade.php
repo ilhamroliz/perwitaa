@@ -55,7 +55,7 @@
                                     <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
                                         <label class="col-sm-4 control-label">Jumlah: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control col-sm-12" style="text-align: right; width: 100%;">
+                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control col-sm-12 number" style="text-align: right; width: 100%;" readonly>
                                         </div><sup>*</sup>
                                     </div>
                                 </td>
@@ -107,7 +107,7 @@
                                     <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
                                         <label class="col-sm-4 control-label">Jumlah: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control" style="text-align: right;">
+                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control number jumlahbarang" style="text-align: right;">
                                         </div><sup>*</sup>
                                     </div>
                                 </td>
@@ -144,8 +144,8 @@
                                     <td><select name="ukuran[]" class="form-control .ukuran" id="ukuran" style="width: 100%;">
                                             <option disabled selected>-- Ukuran --</option>
                                         </select></td>
-                                    <td><input type="text" name="harga[]" value="" class="form-control harga" style="width: 100%"></td>
-                                    <td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>
+                                    <td><input type="text" name="harga[]" value="" class="form-control harga number" style="width: 100%"></td>
+                                    <td><input type="text" name="qty[]" value="" id="qty" class="form-control number tambahbarang" style="text-align: right; width: 100%" onkeyup="cek()"></td>
                                     <td>
                                       <button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                     </td>
@@ -170,8 +170,34 @@
     var dinamis = 0;
     var tmp = 0;
     var count = 1;
+    var values = [];
+    var jumlahbarang = 0;
 
     $(document).ready(function(){
+
+      $(".jumlahbarang").each(function(i, sel){
+          selectedVal = $(sel).val();
+          values.push(selectedVal);
+      });
+
+      jumlahbarang = values.reduce(getSum);
+
+      $(".number").keydown(function (e) {
+  // Allow: backspace, delete, tab, escape, enter and .
+  if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+       // Allow: Ctrl+A, Command+A
+      (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+       // Allow: home, end, left, right, down, up
+      (e.keyCode >= 35 && e.keyCode <= 40)) {
+           // let it happen, don't do anything
+           return;
+  }
+  // Ensure that it is a number and stop the keypress
+  if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+      e.preventDefault();
+  }
+});
+
         $(".maskharga").maskMoney({
             allowNegative: false,
             thousands:'.',
@@ -216,12 +242,6 @@
 
     function tambah(){
 
-      var jumlah = $('#jumlahqty').val();
-
-      count += 1;
-
-      if (count <= jumlah) {
-
         dinamis += 1;
 
         html = '<tr id="dinamis'+dinamis+'">'
@@ -230,7 +250,7 @@
                       +'<option disabled selected>-- Ukuran --</option>'
                   +'</select></td>'
                 +'<td><input type="text" name="harga[]" value="" class="form-control harga" style="width: 100%"></td>'
-                +'<td><input type="text" name="qty[]" value="" class="form-control" style="text-align: right; width: 100%"></td>'
+                +'<td><input type="text" name="qty[]" value="" id="qty'+dinamis+'" class="form-control number tambahbarang" style="text-align: right; width: 100%" onkeyup="cek('+dinamis+')"></td>'
                 +'<td>'
                 +'<button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button> '
                 +'<button type="button" name="button" class="btn btn-danger" onclick="kurang()"> <i class="fa fa-minus"></i> </button> '
@@ -247,18 +267,6 @@
         });
 
         $('.harga').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-
-      } else {
-
-          swal({
-            title: "Peringatan!",
-            text: "Tidak boleh melebihi barang yang direturn",
-            type: "warning",
-            showConfirmButton: true,
-            showLoaderOnConfirm: true,
-          });
-
-      }
 
     }
 
@@ -307,6 +315,49 @@
               }
             }
         });
+    }
+
+    function getSum(total, num) {
+        return parseInt(total) + parseInt(num);
+    }
+
+    function cek(id){
+
+      var tambahbarang = [];
+      var hasil = 0;
+
+      $(".tambahbarang").each(function(i, sel){
+          selectedVal = $(sel).val();
+          tambahbarang.push(selectedVal);
+      });
+
+      hasil = tambahbarang.reduce(getSum);
+
+      if (isNaN(hasil)) {
+      } else {
+        if (hasil <= jumlahbarang) {
+
+        } else {
+          swal({
+            title: "Peringatan!",
+            text: "Tidak boleh melebihi barang yang direturn",
+            type: "warning",
+            showConfirmButton: true,
+            showLoaderOnConfirm: true,
+          });
+          
+          if (dinamis == 0) {
+            $('#qty').val(0);
+          } else {
+            $('#qty'+id).val(0);
+          }
+
+
+
+        }
+      }
+
+
     }
 
 </script>

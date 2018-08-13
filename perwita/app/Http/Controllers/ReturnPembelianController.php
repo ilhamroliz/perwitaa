@@ -85,9 +85,10 @@ class ReturnPembelianController extends Controller
                     $data[$i]->jumlah = $jumlah[$i];
                 }
             }
-        }
+        }        
 
         return view('return-pembelian.lanjut', compact('data'));
+
     }
 
     public function caribarang(Request $request){
