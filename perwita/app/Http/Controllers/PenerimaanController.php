@@ -190,19 +190,8 @@ class PenerimaanController extends Controller
     public function cariHistory(Request $request)
     {
         $cari = $request->term;
-        $data = DB::table('d_purchase')
-            ->join('d_supplier', 's_id', '=', 'p_supplier')
-            ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
-            ->select('s_company', 'p_nota')
-            ->where(function ($q) use ($cari) {
-                $q->orWhere('s_company', 'like', '%'.$cari.'%');
-                $q->orWhere('p_nota', 'like', '%'.$cari.'%');
-            })
-            ->whereNotNull('pd_receivetime')
-            ->whereNotIn('p_id', DB::select('select pd_purchase from d_purchase_dt where pd_receivetime is null'))
-            ->groupBy('p_id')
-            ->take(20)->get();
 
+        $data = DB::select("select s_company, p_nota, pd_receivetime from d_purchase inner join d_supplier on s_id = p_supplier inner join d_purchase_dt on pd_purchase = p_id where (s_company like '%".$cari."%' or p_nota like '%".$cari."%') and pd_receivetime is not null and p_id not in (select pd_purchase from d_purchase_dt where pd_receivetime is null) group by p_id limit 20");
         if ($data == null) {
             $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
         } else {
