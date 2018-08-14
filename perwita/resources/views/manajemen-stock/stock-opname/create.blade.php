@@ -181,17 +181,21 @@
             
             $.ajax({
                 url: baseUrl + '/manajemen-stock/stock-opname/simpan',
-                type: 'post',
+                type: 'get',
                 data: $('#formopname').serialize(),
                 success: function (response) {
                     waitingDialog.hide();
-                    swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
-                    }, function () {
-                            window.location.reload();
-                    });
+                    if (response.status == 'gagal') {
+                        swal({
+                            title: "Sukses",
+                            text: "Data sudah tersimpan",
+                            type: "success"
+                        }, function () {
+                                window.location.reload();
+                        });
+                    } else {
+                        alert('gagal');
+                    }
                 },
                 error: function (xhr, status) {
                     if (xhr.status == 'timeout') {

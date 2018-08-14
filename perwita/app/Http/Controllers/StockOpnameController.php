@@ -27,9 +27,8 @@ class StockOpnameController extends Controller
                 $e->on('id_item', '=', 'i_id');
             })
             ->join('d_size', 'd_size.s_id', '=', 'id_size')
-            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'so_nota', DB::raw('date_format(so_date, "%d/%m/%Y") as so_date'), 'so_isapproved', 'so_status')
-            ->where('so_isapproved', '!=', 'N')
-            ->where('so_status', '=', 'Pending')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'so_nota', DB::raw('date_format(so_date, "%d/%m/%Y") as so_date'), 'so_isapproved')
+            ->where('so_isapproved', '=', 'P')
             ->groupBy('so_id')
             ->get();
 
@@ -120,7 +119,7 @@ class StockOpnameController extends Controller
                     'sod_keterangan' => $keterangan
                 ]);
 
-            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_stock_opname where p_isapproved = 'P' and n_fitur = 'Opname' and n_detail = 'Create')");
+            DB::select("update d_notifikasi set n_qty = (select count('so_id') from d_stock_opname where so_isapproved = 'P') where n_fitur = 'Opname' and n_detail = 'Create'");
 
             DB::commit();
             return response()->json([

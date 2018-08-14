@@ -55,8 +55,12 @@
                                 <td>{{ $row->so_nota }}</td>
                                 <td>{{ $row->so_date }}</td>
                                 <td>{{ $row->nama }}</td>
-                                <td>{{ $row->so_status }}</td>
-                                <td></td>
+                                <td>Belum disetujui</td>
+                                <td class="text-center">
+                                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                                    <button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" onclick="edit('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-edit"></i></button>
+                                    <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" onclick="hapus('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-trash"></i></button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
