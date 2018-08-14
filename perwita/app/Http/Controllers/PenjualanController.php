@@ -585,17 +585,17 @@ class PenjualanController extends Controller
             }
 
 
-      //   DB::commit();
-      //   return response()->json([
-      //     'status' => 'sukses'
-      //   ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal',
-      //       'data' => $e
-      //   ]);
-      // }
+        DB::commit();
+        return response()->json([
+          'status' => 'sukses'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal',
+            'data' => $e
+        ]);
+      }
 
     }
 
