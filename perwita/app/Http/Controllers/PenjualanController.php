@@ -503,8 +503,8 @@ class PenjualanController extends Controller
           ->max('sd_detailid');
       $detailSales = $detailSales + 1;
 
-      // DB::beginTransaction();
-      // try {
+      DB::beginTransaction();
+      try {
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
