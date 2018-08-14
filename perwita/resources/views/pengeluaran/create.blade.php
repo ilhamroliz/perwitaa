@@ -402,13 +402,14 @@
               } else {
                 temp = stock[j].id_price * pilih[i].count;
                 hasil.push(temp);
-
+                total = hasil.reduce(getSum)
                 $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
               }
             }
           } else {
             temp = 0;
             hasil.push(temp);
+            total = hasil.reduce(getSum)
             $('.totalpembelian').text('Rp. '+ accounting.formatMoney(hasil.reduce(getSum), "", 0, ".", ","));
           }
         }
