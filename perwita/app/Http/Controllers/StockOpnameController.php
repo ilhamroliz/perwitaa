@@ -27,7 +27,7 @@ class StockOpnameController extends Controller
                 $e->on('id_item', '=', 'i_id');
             })
             ->join('d_size', 'd_size.s_id', '=', 'id_size')
-            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'so_nota', 'so_date', 'so_isapproved', 'so_status')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'so_nota', DB::raw('date_format(so_date, "%d/%m/%Y") as so_date'), 'so_isapproved', 'so_status')
             ->where('so_isapproved', '!=', 'N')
             ->where('so_status', '=', 'Pending')
             ->groupBy('so_id')
@@ -104,7 +104,6 @@ class StockOpnameController extends Controller
                     'so_comp' => Session::get('mem_comp'),
                     'so_nota' => $nota,
                     'so_date' => Carbon::now('Asia/Jakarta'),
-                    'so_status' => 'Pending',
                     'so_isapproved' => 'P',
                     'so_insert' => Carbon::now('Asia/Jakarta')
                 ]);

@@ -49,6 +49,17 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach($data as $index=>$row)
+                            <tr>
+                                <td>{{ $row->so_nota }}</td>
+                                <td>{{ $row->so_date }}</td>
+                                <td>{{ $row->nama }}</td>
+                                <td>{{ $row->so_status }}</td>
+                                <td></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
