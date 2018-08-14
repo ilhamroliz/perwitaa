@@ -345,7 +345,7 @@
             showConfirmButton: true,
             showLoaderOnConfirm: true,
           });
-          
+
           if (dinamis == 0) {
             $('#qty').val(0);
           } else {

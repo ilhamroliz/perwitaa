@@ -503,8 +503,8 @@ class PenjualanController extends Controller
           ->max('sd_detailid');
       $detailSales = $detailSales + 1;
 
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
 
         for ($i=0; $i < count($pekerja); $i++) {
           // Insert seragam pekerja //
@@ -585,17 +585,17 @@ class PenjualanController extends Controller
             }
 
 
-        DB::commit();
-        return response()->json([
-          'status' => 'sukses'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal',
-            'data' => $e
-        ]);
-      }
+      //   DB::commit();
+      //   return response()->json([
+      //     'status' => 'sukses'
+      //   ]);
+      // } catch (\Exception $e) {
+      //   DB::rollback();
+      //   return response()->json([
+      //     'status' => 'gagal',
+      //       'data' => $e
+      //   ]);
+      // }
 
     }
 
