@@ -603,7 +603,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/caribarang', 'ReturnPembelianController@caribarang');
     Route::get('manajemen-seragam/return/getbarang', 'ReturnPembelianController@getbarang');
     Route::post('manajemen-seragam/return/lanjut', 'ReturnPembelianController@lanjut');
-    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
+    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');\
+    Route::get('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
 
     //============ Stock Opname

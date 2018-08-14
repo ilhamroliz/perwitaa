@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use Response;
+use Carbon\Carbon;
 
 class ReturnPembelianController extends Controller
 {
@@ -58,7 +59,6 @@ class ReturnPembelianController extends Controller
 
     public function lanjut(Request $request)
     {
-
         $aksi = $request->aksi;
         $nota = $request->nota;
         $id_item = $request->id_item;
@@ -85,7 +85,7 @@ class ReturnPembelianController extends Controller
                     $data[$i]->jumlah = $jumlah[$i];
                 }
             }
-        }        
+        }
 
         return view('return-pembelian.lanjut', compact('data'));
 
@@ -126,6 +126,88 @@ class ReturnPembelianController extends Controller
               ->get();
 
         return response()->json($data);
+
+    }
+
+    public function simpanlanjut(Request $request){
+      
+      DB::beginTransaction();
+      try {
+
+        $id = DB::table('d_return_seragam')
+            ->max('rs_id');
+
+        if ($id == null) {
+            $id = 0;
+        }
+
+        $querykode = DB::select(DB::raw("SELECT MAX(MID(rs_nota,8,3)) as counter, MAX(MID(rs_nota,12,2)) as tanggal, MAX(MID(rs_nota,15,2)) as bulan, MAX(MID(rs_nota,18)) as tahun FROM d_return_seragam"));
+
+        if (count($querykode) > 0) {
+          if ($querykode[0]->tanggal != date('d') || $querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+              $kode = "001";
+          } else {
+            foreach($querykode as $k)
+              {
+                $tmp = ((int)$k->counter)+1;
+                $kode = sprintf("%03s", $tmp);
+              }
+          }
+        } else {
+          $kode = "001";
+        }
+
+        $finalkode = 'Return-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+        DB::table('d_return_seragam')
+            ->insert([
+              'rs_id' => $id + 1,
+              'rs_nota' => $finalkode,
+              'rs_purchase' => $request->idpurchase,
+              'rs_date' => Carbon::now('Asia/Jakarta'),
+              'rs_isapproved' => 'P'
+            ]);
+
+        $rsdhpp = DB::table('d_purchase_dt')
+                ->selectRaw("(pd_total_net / pd_qty) as hasil")
+                ->where('pd_purchase', $request->idpurchase)
+                ->whereIn('pd_item', $request->i_id)
+                ->whereIn('pd_item_dt', $request->id_detailid)
+                ->get();
+
+        for ($i=0; $i < count($request->i_id); $i++) {
+
+          $rsddetailid = DB::table('d_return_seragam_dt')
+                      ->where('rsd_return', $id + 1)
+                      ->max('rsd_detailid');
+
+                      if ($rsddetailid == null) {
+                        $rsddetailid = 0;
+                      }
+
+          DB::table('d_return_seragam_dt')
+              ->insert([
+                'rsd_return' => $id + 1,
+                'rsd_detailid' => $rsddetailid + 1,
+                'rsd_item' => $request->i_id[$i],
+                'rsd_itemdt' => $request->id_detailid[$i],
+                'rsd_hpp' => $rsdhpp[$i]->hasil,
+                'rsd_action' => $request->aksi[$i],
+                'rsd_note' => $request->keterangan_sejenis[$i]
+              ]);
+
+        }
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
 
     }
 

@@ -41,6 +41,8 @@
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
+                      <form class="" action="" id="form-data" method="post">
+                        <input type="hidden" name="idpurchase" id="idpurchase" value="{{$data[0]->p_id}}">
                         <table class="table table-hover">
                             <tbody>
                             @foreach($data as $info)
@@ -63,7 +65,7 @@
                                     <div class="form-group" style="vertical-align: middle;">
                                         <label class="col-sm-4 control-label" style="margin-top: 6px;">Harga@: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control maskharga" style="text-align: right;">
+                                            <input type="text" name="harga[]" value="{{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control maskharga" style="text-align: right;">
                                         </div>
                                     </div>
                                 </td>
@@ -71,6 +73,9 @@
                                 </td>
                             </tr>
                             @endif
+                            <input type="hidden" name="aksi[]" id="aksi" value="{{$info->aksi}}">
+                            <input type="hidden" name="i_id[]" id="i_id" value="{{$info->i_id}}">
+                            <input type="hidden" name="id_detailid[]" id="id_detailid" value="{{$info->id_detailid}}">
                             @endforeach
                             </tbody>
                         </table>
@@ -152,7 +157,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <button type="button" class="btn btn-primary pull-right" name="button" onclick="simpan()"> <i class="fa fa-save"></i> Simpan</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -172,6 +179,7 @@
     var count = 1;
     var values = [];
     var jumlahbarang = 0;
+    var info = [];
 
     $(document).ready(function(){
 
@@ -351,14 +359,48 @@
           } else {
             $('#qty'+id).val(0);
           }
-
-
-
         }
       }
-
-
     }
+
+    function simpan(){
+      var id = $('#idpurchase').val();
+      waitingDialog.show();
+      $.ajax({
+         type: 'get',
+         data: $('#form-data').serialize(),
+         url: baseUrl + '/manajemen-seragam/return/simpanlanjut',
+         dataType: 'json',
+         success : function(result){
+           if (result.status == 'berhasil') {
+               swal({
+                 title: "Berhasil Disimpan",
+                 text: "Data berhasil Disimpan",
+                 type: "success",
+                 showConfirmButton: false,
+                 timer: 900
+               });
+               location.reload();
+           }
+           waitingDialog.hide();
+       },
+       error: function (xhr, status) {
+           if (status == 'timeout') {
+               $('.error-load').css('visibility', 'visible');
+               $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+           }
+           else if (xhr.status == 0) {
+               $('.error-load').css('visibility', 'visible');
+               $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+           }
+           else if (xhr.status == 500) {
+               $('.error-load').css('visibility', 'visible');
+               $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+           }
+           waitingDialog.hide();
+       }
+   });
+}
 
 </script>
 @endsection
