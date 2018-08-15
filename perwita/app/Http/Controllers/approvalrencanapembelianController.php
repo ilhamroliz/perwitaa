@@ -14,6 +14,15 @@ class approvalrencanapembelianController extends Controller
 
     $data = DB::select('select m_name, d_purchase_planning.*, sum(ppd_qty) as jumlah from d_purchase_planning inner join d_purchase_planning_dt on ppd_purchase_planning = pp_id inner join d_item on i_id = ppd_item inner join d_item_dt on ppd_item = id_item and ppd_item_dt = id_detailid inner join d_size on s_id = id_size inner join d_mem on pp_mem = m_id and pp_isapproved = "P" group by pp_id');
 
+    $count = DB::table('d_purchase_planning')
+            ->where('pp_isapproved', 'P')
+            ->get();
+
+    DB::table('d_notifikasi')
+        ->where('n_fitur', 'Rencana Pembelian')
+        ->update([
+          'n_qty' => count($count)
+        ]);
 
     return view('approvalrencanapembelian.index', compact('data'));
 
@@ -27,6 +36,16 @@ class approvalrencanapembelianController extends Controller
             ->where('pp_id', $request->id)
             ->update([
               'pp_isapproved' => 'Y'
+            ]);
+
+        $count = DB::table('d_purchase_planning')
+                ->where('pp_isapproved', 'P')
+                ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Rencana Pembelian')
+            ->update([
+              'n_qty' => count($count)
             ]);
 
         DB::commit();
@@ -51,6 +70,16 @@ class approvalrencanapembelianController extends Controller
               'pp_isapproved' => 'N'
             ]);
 
+        $count = DB::table('d_purchase_planning')
+                ->where('pp_isapproved', 'P')
+                ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Rencana Pembelian')
+            ->update([
+              'n_qty' => count($count)
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -73,6 +102,16 @@ class approvalrencanapembelianController extends Controller
               'pp_isapproved' => 'N'
             ]);
 
+      $count = DB::table('d_purchase_planning')
+              ->where('pp_isapproved', 'P')
+              ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Rencana Pembelian')
+          ->update([
+            'n_qty' => count($count)
+          ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -94,6 +133,16 @@ class approvalrencanapembelianController extends Controller
             ->update([
               'pp_isapproved' => 'Y'
             ]);
+
+      $count = DB::table('d_purchase_planning')
+              ->where('pp_isapproved', 'P')
+              ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Rencana Pembelian')
+          ->update([
+            'n_qty' => count($count)
+          ]);
 
         DB::commit();
         return response()->json([
