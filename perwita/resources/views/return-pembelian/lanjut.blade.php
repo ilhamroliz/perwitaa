@@ -64,18 +64,18 @@
                                 <td class="col-sm-3">
                                     <div class="form-group" style="vertical-align: middle;">
                                         <label class="col-sm-4 control-label" style="margin-top: 6px;">Harga@: </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" name="harga[]" value="{{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control maskharga" style="text-align: right;">
+                                        <div class="col-sm-8">
+                                            <input type="text" name="harga[]" value="Rp. {{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control harga" style="text-align: right;">
                                         </div>
                                     </div>
                                 </td>
                                 <td class="col-sm-4"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
                                 </td>
                             </tr>
+                            <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
+                            <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
+                            <input type="hidden" name="aksi[]" class="aksi" value="{{$info->aksi}}">
                             @endif
-                            <input type="hidden" name="aksi[]" id="aksi" value="{{$info->aksi}}">
-                            <input type="hidden" name="i_id[]" id="i_id" value="{{$info->i_id}}">
-                            <input type="hidden" name="id_detailid[]" id="id_detailid" value="{{$info->id_detailid}}">
                             @endforeach
                             </tbody>
                         </table>
@@ -112,13 +112,16 @@
                                     <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
                                         <label class="col-sm-4 control-label">Jumlah: </label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control number jumlahbarang" style="text-align: right;">
+                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control number jumlahbarang" style="text-align: right;" readonly>
                                         </div><sup>*</sup>
                                     </div>
                                 </td>
                                 <td class="col-sm-6"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
                                 </td>
                             </tr>
+                            <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
+                            <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
+                            <input type="hidden" name="aksi[]" class="aksi" value="{{$info->aksi}}">
                             @endif
                             @endforeach
                             </tbody>
@@ -146,7 +149,7 @@
                             <tbody id="showdata">
                                 <tr>
                                     <td><input type="text" placeholder="Masukan Nama Barang" id="searchbox" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>
-                                    <td><select name="ukuran[]" class="form-control .ukuran" id="ukuran" style="width: 100%;">
+                                    <td><select name="ukuran[]" class="form-control ukuran" id="ukuran" style="width: 100%;">
                                             <option disabled selected>-- Ukuran --</option>
                                         </select></td>
                                     <td><input type="text" name="harga[]" value="" class="form-control harga number" style="width: 100%"></td>
@@ -180,6 +183,9 @@
     var values = [];
     var jumlahbarang = 0;
     var info = [];
+    var idtambahitem = [];
+    var idsize = [];
+    var qty = [];
 
     $(document).ready(function(){
 
@@ -235,6 +241,9 @@
     });
 
     function getdata(id){
+
+      idtambahitem.push(id);
+
         $.ajax({
           type: 'get',
           data: {id:id},
@@ -254,7 +263,7 @@
 
         html = '<tr id="dinamis'+dinamis+'">'
                 +'<td><input type="text" placeholder="Masukan Nama Barang" id="searchbox'+dinamis+'" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>'
-                +'<td><select name="ukuran[]" class="form-control .ukuran" id="ukuran'+dinamis+'" style="width: 100%;">'
+                +'<td><select name="ukuran[]" class="form-control ukuran" id="ukuran'+dinamis+'" style="width: 100%;">'
                       +'<option disabled selected>-- Ukuran --</option>'
                   +'</select></td>'
                 +'<td><input type="text" name="harga[]" value="" class="form-control harga" style="width: 100%"></td>'
@@ -298,6 +307,9 @@
     }
 
     function getdatadinamis(id){
+
+      idtambahitem.push(id);
+
         $.ajax({
           type: 'get',
           data: {id:id},
@@ -312,6 +324,9 @@
     }
 
     function getdatakurang(id){
+
+      idtambahitem.push(id);
+
         $.ajax({
           type: 'get',
           data: {id:id},
@@ -355,20 +370,52 @@
           });
 
           if (dinamis == 0) {
-            $('#qty').val(0);
+            $('#qty').val('');
           } else {
-            $('#qty'+id).val(0);
+            $('#qty'+id).val('');
           }
         }
       }
     }
 
     function simpan(){
-      var id = $('#idpurchase').val();
       waitingDialog.show();
+
+      $(".ukuran").each(function(i, sel){
+          selectedVal = $(sel).val();
+          idsize.push(selectedVal);
+      });
+
+      $(".tambahbarang").each(function(i, sel){
+          selectedVal = $(sel).val();
+          qty.push(selectedVal);
+      });
+
+      var aksi = $("input[name='aksi[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var i_id = $("input[name='i_id[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var harga = $("input[name='harga[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var id_detailid = $("input[name='id_detailid[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var returnd = $("input[name='return[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var keterangan_sejenis = $("input[name='keterangan_sejenis[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var idpurchase = $('#idpurchase').val();
+
+      var id = $('#idpurchase').val();
+
       $.ajax({
          type: 'get',
-         data: $('#form-data').serialize(),
+         data: {idtambahitem:idtambahitem, idsize:idsize, qty:qty, aksi:aksi, i_id:i_id, id_detailid:id_detailid, returnd:returnd, keterangan_sejenis:keterangan_sejenis, idpurchase:idpurchase, harga:harga},
          url: baseUrl + '/manajemen-seragam/return/simpanlanjut',
          dataType: 'json',
          success : function(result){
