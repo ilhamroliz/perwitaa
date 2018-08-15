@@ -198,8 +198,8 @@
                             +'<div><strong>'+result.uang[i].k_nama+'</strong></div>'
                             +'<small>'+result.uang[i].i_nama+ ' ' +result.uang[i].i_warna+' ( '+result.uang[i].s_nama+' ) '+'</small>'
                             +'</td>'
-                            +'<td>'+result.uang[i].rsd_hpp+'</td>'
-                            +'<td>'+result.uang[i].rsd_value+'</td>'
+                            +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.uang[i].rsd_hpp+'</span></td>'
+                            +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.uang[i].rsd_value+'</span></td>'
                             +'<td>'+result.uang[i].rsd_note+'</td>'
                             +'</tr>';
               }
@@ -218,8 +218,8 @@
                           +'<div><strong>'+result.barang[i].k_nama+'</strong></div>'
                           +'<small>'+result.barang[i].i_nama+ ' ' +result.barang[i].i_warna+' ( '+result.barang[i].s_nama+' ) '+'</small>'
                           +'</td>'
-                          +'<td>'+result.barang[i].rsd_hpp+'</td>'
-                          +'<td>'+result.barang[i].rsd_value+'</td>'
+                          +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.barang[i].rsd_hpp+'</span></td>'
+                          +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.barang[i].rsd_value+'</span></td>'
                           +'<td>'+result.barang[i].rsd_note+'</td>'
                           +'</tr>';
             }
@@ -246,6 +246,7 @@
             $('#divganti').hide();
           }
 
+            $('.rp').digits();
             $('#myModal5').modal('show');
 
           }
