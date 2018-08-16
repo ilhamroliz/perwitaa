@@ -600,6 +600,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
     Route::get('manajemen-seragam/return/tambah', 'ReturnPembelianController@tambah');
     Route::get('manajemen-seragam/return/detail', 'ReturnPembelianController@detail');
+    Route::get('manajemen-seragam/return/hapus', 'ReturnPembelianController@hapus');
+    Route::get('manajemen-seragam/return/edit', 'ReturnPembelianController@edit');
     Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
     Route::get('manajemen-seragam/return/add', 'ReturnPembelianController@add');
     Route::get('manajemen-seragam/return/caribarang', 'ReturnPembelianController@caribarang');
@@ -607,6 +609,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-seragam/return/lanjut', 'ReturnPembelianController@lanjut');
     Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');\
     Route::get('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
+    Route::post('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
+    Route::get('manajemen-seragam/return/update', 'ReturnPembelianController@update');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
 
     //============ Stock Opname

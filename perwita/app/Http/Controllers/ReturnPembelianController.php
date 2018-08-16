@@ -142,7 +142,6 @@ class ReturnPembelianController extends Controller
     }
 
     public function simpanlanjut(Request $request){
-
       DB::beginTransaction();
       try {
 
@@ -194,7 +193,6 @@ class ReturnPembelianController extends Controller
                 ->get();
 
         for ($i=0; $i < count($request->i_id); $i++) {
-
             $rsddetailid = DB::table('d_return_seragam_dt')
                         ->where('rsd_return', $id + 1)
                         ->max('rsd_detailid');
@@ -212,9 +210,9 @@ class ReturnPembelianController extends Controller
                     'rsd_hpp' => $rsdhpp[$i]->hasil,
                     'rsd_action' => $request->aksi[$i],
                     'rsd_note' => $request->keterangan_sejenis[$i],
-                    'rsd_value' => $harga[$i]
+                    'rsd_value' => $request->valueharga[$i],
+                    'rsd_qty' => $request->returnd[$i]
                   ]);
-
       }
 
         $detailidreturn = DB::table('d_return_seragam_dt')
@@ -265,7 +263,8 @@ class ReturnPembelianController extends Controller
                 'rsg_item' => $request->idtambahitem[$i],
                 'rsg_item_dt' => $rsg_item_dt[0]->id_detailid,
                 'rsg_qty' => $request->qty[$i],
-                'rsg_insert' => Carbon::now('Asia/Jakarta')
+                'rsg_insert' => Carbon::now('Asia/Jakarta'),
+                'rsg_value' => $harga[$i]
               ]);
         }
 
@@ -314,7 +313,7 @@ class ReturnPembelianController extends Controller
             ->join('d_size', 's_id', '=', 'id_size')
             ->where('rs_id', $request->id)
             ->where('rsd_action', 'barang')
-            ->groupBy('rs_id')
+            ->groupBy('rsd_detailid')
             ->get();
 
       $barangbaru = DB::table('d_return_seragam_ganti')
@@ -331,6 +330,154 @@ class ReturnPembelianController extends Controller
         'barang' => $barang,
         'barangbaru' => $barangbaru
       ]);
+
+    }
+
+    public function hapus(Request $request){
+      DB::beginTransaction();
+      try {
+
+        DB::table('d_return_seragam')
+             ->where('rs_id', $request->id)
+             ->delete();
+
+         DB::table('d_return_seragam_dt')
+              ->where('rsd_return', $request->id)
+              ->delete();
+
+        DB::table('d_return_seragam_ganti')
+             ->where('rsg_return_seragam', $request->id)
+             ->delete();
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function edit(Request $request){
+      $uang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_purchase', 'p_id', '=', 'rs_purchase')
+            ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'uang')
+            ->groupBy('rs_id')
+            ->get();
+
+      $barang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_return_seragam_ganti', 'rsg_return_seragam', '=', 'rs_id')
+            ->join('d_purchase', 'p_id', '=', 'rs_purchase')
+            ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'barang')
+            ->groupBy('rsd_detailid')
+            ->get();
+
+      $barangbaru = DB::table('d_return_seragam_ganti')
+                  ->join('d_return_seragam_dt', 'rsd_return', '=', 'rsg_return_seragam')
+                  ->leftjoin('d_item', 'i_id', '=', 'rsg_item')
+                  ->leftjoin('d_item_dt', 'id_detailid', '=', 'rsg_item_dt')
+                  ->leftjoin('d_kategori', 'k_id', '=', 'i_kategori')
+                  ->leftjoin('d_size', 's_id', '=', 'id_size')
+                  ->where('rsg_return_seragam', $request->id)
+                  ->where('rsd_return', $request->id)
+                  ->where('rsd_action', 'barang')
+                  ->groupBy('rsg_detailid')
+                  ->get();
+
+      return view('return-pembelian.edit', compact('uang', 'barang', 'barangbaru'));
+    }
+
+    public function update(Request $request){
+    DB::beginTransaction();
+      try {
+
+      for ($i=0; $i < count($request->harga); $i++) {
+        $temp[$i] = str_replace('Rp. ', '', $request->harga[$i]);
+        $temp1[$i] = str_replace('.', '', $temp[$i]);
+        $harga[$i] = $temp1[$i];
+      }
+
+      for ($i=0; $i < count($request->rsdreturn); $i++) {
+        DB::table('d_return_seragam_dt')
+              ->where('rsd_return', $request->rsdreturn[$i])
+              ->where('rsd_detailid', $request->rsddetailid[$i])
+              ->update([
+                'rsd_note' => $request->keterangan_sejenis[$i]
+              ]);
+            }
+
+
+        $datagantibarang = DB::table('d_return_seragam_ganti')
+                    ->whereIn('rsg_return_seragam', $request->rsdreturn)
+                    ->get();
+
+        $detailidreturn = DB::table('d_return_seragam_dt')
+                      ->whereIn('rsd_return', $request->rsdreturn)
+                      ->where('rsd_action', 'barang')
+                      ->get();
+
+        DB::table('d_return_seragam_ganti')
+            ->whereIn('rsg_return_seragam', $request->rsdreturn)
+            ->delete();
+
+            for ($i=0; $i < count($request->idtambahitem); $i++) {
+
+              $detailidganti = DB::table('d_return_seragam_ganti')
+                            ->where('rsg_return_seragam', $request->rsdreturn[0])
+                            ->max('rsg_detailid');
+
+              if ($detailidganti == null) {
+                $detailidganti = 0;
+              }
+
+              $rsg_item_dt = DB::table('d_item_dt')
+                          ->select('id_detailid')
+                          ->where('id_item', $request->idtambahitem[$i])
+                          ->where('id_size', $request->idsize[$i])
+                          ->get();
+
+              DB::table('d_return_seragam_ganti')
+                  ->insert([
+                    'rsg_return_seragam' => $request->rsdreturn[0],
+                    'rsg_detailid_return' => $detailidreturn[0]->rsd_detailid,
+                    'rsg_detailid' => $detailidganti + 1,
+                    'rsg_no' => $datagantibarang[0]->rsg_no,
+                    'rsg_item' => $request->idtambahitem[$i],
+                    'rsg_item_dt' => $rsg_item_dt[0]->id_detailid,
+                    'rsg_qty' => $request->qty[$i],
+                    'rsg_insert' => Carbon::now('Asia/Jakarta'),
+                    'rsg_value' => $harga[$i]
+                  ]);
+            }
+
+
+          DB::commit();
+          return response()->json([
+            'status' => 'berhasil'
+          ]);
+        } catch (\Exception $e) {
+          DB::rollback();
+          return response()->json([
+            'status' => 'gagal'
+          ]);
+        }
 
     }
 

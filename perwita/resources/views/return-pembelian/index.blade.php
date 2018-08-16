@@ -92,6 +92,7 @@
                             <th>Item Detail</th>
                             <th>Harga Awal</th>
                             <th>Harga Akhir</th>
+                            <th>Qty</th>
                             <th>Keterangan</th>
                           </tr>
                         </thead>
@@ -110,6 +111,7 @@
                               <th>Item Detail</th>
                               <th>Harga Awal</th>
                               <th>Harga Akhir</th>
+                              <th>Qty</th>
                               <th>Keterangan</th>
                             </tr>
                           </thead>
@@ -200,6 +202,7 @@
                             +'</td>'
                             +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.uang[i].rsd_hpp+'</span></td>'
                             +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.uang[i].rsd_value+'</span></td>'
+                            +'<td>'+result.uang[i].rsd_qty+'</td>'
                             +'<td>'+result.uang[i].rsd_note+'</td>'
                             +'</tr>';
               }
@@ -220,6 +223,7 @@
                           +'</td>'
                           +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.barang[i].rsd_hpp+'</span></td>'
                           +'<td class="rp"><span style="float:left;">Rp.</span><span style="float:right;"> '+result.barang[i].rsd_value+'</span></td>'
+                          +'<td>'+result.barang[i].rsd_qty+'</td>'
                           +'<td>'+result.barang[i].rsd_note+'</td>'
                           +'</tr>';
             }
@@ -251,6 +255,68 @@
 
           }
         });
+    }
+
+    function hapus(id){
+      swal({
+              title: "Konfirmasi",
+              text: "Apakah anda yakin ingin menghapus Return Pembelian ini?",
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true,
+          },
+          function () {
+              swal.close();
+              waitingDialog.show();
+              setTimeout(function () {
+                  $.ajax({
+                    type: 'get',
+                    data: {id:id},
+                    url: baseUrl + '/manajemen-seragam/return/hapus',
+                    dataType: 'json',
+                      success: function (response) {
+                          waitingDialog.hide();
+                          if (response.status == 'berhasil') {
+                              swal({
+                                  title: "Return Pembelian Dihapus",
+                                  text: "Return Pembelian Berhasil Dihapus",
+                                  type: "success",
+                                  showConfirmButton: false,
+                                  timer: 900
+                              });
+                              setTimeout(function(){
+                                    window.location.reload();
+                            }, 850);
+                          }
+                      }, error: function (x, e) {
+                          waitingDialog.hide();
+                          var message;
+                          if (x.status == 0) {
+                              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+                          } else if (x.status == 404) {
+                              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+                          } else if (x.status == 500) {
+                              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+                          } else if (e == 'parsererror') {
+                              message = 'Error.\nParsing JSON Request failed.';
+                          } else if (e == 'timeout') {
+                              message = 'Request Time out. Harap coba lagi nanti';
+                          } else {
+                              message = 'Unknow Error.\n' + x.responseText;
+                          }
+                          waitingDialog.hide();
+                          throwLoadError(message);
+                          //formReset("store");
+                      }
+                  })
+              }, 2000);
+
+          });
+    }
+
+    function edit(id){
+      window.location.href = baseUrl + '/manajemen-seragam/return/edit?id='+id;
     }
 
 </script>
