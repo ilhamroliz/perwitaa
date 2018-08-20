@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/StockOpnameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/StockOpnameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/manajemen-stock/stock-opname/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/manajemen-stock/stock-opname/create.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="f2dc3a23-431f-4a58-ad06-208f218eecf6" name="Default" comment="roliz" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,8 +78,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/StockOpnameController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="140" column="13" selection-start-line="139" selection-start-column="8" selection-end-line="140" selection-end-column="13" />
+            <state relative-caret-position="-4003">
+              <caret line="82" column="24" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -101,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="31" column="262" selection-start-line="31" selection-start-column="259" selection-end-line="31" selection-end-column="262" />
+            <state relative-caret-position="791">
+              <caret line="44" column="262" selection-start-line="44" selection-start-column="262" selection-end-line="44" selection-end-column="262" />
             </state>
           </provider>
         </entry>
@@ -406,7 +401,7 @@
       <workItem from="1534209233061" duration="3265000" />
       <workItem from="1534256721673" duration="598000" />
       <workItem from="1534299316430" duration="614000" />
-      <workItem from="1534738376087" duration="7441000" />
+      <workItem from="1534738376087" duration="8249000" />
     </task>
     <task id="LOCAL-00001" summary="roliz">
       <created>1530158845816</created>
@@ -692,7 +687,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="282124000" />
+    <option name="totallyTimeSpent" value="282932000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1009,8 +1004,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ReturnPembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="31" column="262" selection-start-line="31" selection-start-column="259" selection-end-line="31" selection-end-column="262" />
+        <state relative-caret-position="791">
+          <caret line="44" column="262" selection-start-line="44" selection-start-column="262" selection-end-line="44" selection-end-column="262" />
         </state>
       </provider>
     </entry>
@@ -1023,8 +1018,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/StockOpnameController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="140" column="13" selection-start-line="139" selection-start-column="8" selection-end-line="140" selection-end-column="13" />
+        <state relative-caret-position="-4003">
+          <caret line="82" column="24" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="24" />
         </state>
       </provider>
     </entry>
