@@ -537,7 +537,6 @@ class PenjualanController extends Controller
           }
         }
 
-
         DB::table('d_sales')->insert([
           's_id' => $id + 1,
           's_comp' => Session::get('mem_comp'),

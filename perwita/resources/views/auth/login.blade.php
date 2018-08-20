@@ -158,6 +158,13 @@ function validateForm() {
 
     return true;
 }
+
+$("#password").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $(".ladda-button").click();
+    }
+});
+
         </script>
 
     </body>

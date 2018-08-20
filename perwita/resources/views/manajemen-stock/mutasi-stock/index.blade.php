@@ -38,11 +38,6 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
                     <h5>Data Seragam</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                    </div>
   </div>
     <div class="ibox">
         <div class="ibox-content">

@@ -599,12 +599,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     //============= return seragam (pembelian)
     Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
+    Route::get('manajemen-seragam/return/tambah', 'ReturnPembelianController@tambah');
+    Route::get('manajemen-seragam/return/detail', 'ReturnPembelianController@detail');
+    Route::get('manajemen-seragam/return/hapus', 'ReturnPembelianController@hapus');
+    Route::get('manajemen-seragam/return/edit', 'ReturnPembelianController@edit');
     Route::get('manajemen-seragam/return/getdata', 'ReturnPembelianController@getData');
     Route::get('manajemen-seragam/return/add', 'ReturnPembelianController@add');
     Route::get('manajemen-seragam/return/caribarang', 'ReturnPembelianController@caribarang');
     Route::get('manajemen-seragam/return/getbarang', 'ReturnPembelianController@getbarang');
     Route::post('manajemen-seragam/return/lanjut', 'ReturnPembelianController@lanjut');
-    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
+    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');\
+    Route::get('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
+    Route::post('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
+    Route::get('manajemen-seragam/return/update', 'ReturnPembelianController@update');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
 
     //============ Stock Opname
@@ -750,4 +757,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalrencanapembelian/tolak', 'approvalrencanapembelianController@tolak');
     Route::get('approvalrencanapembelian/setujuilist', 'approvalrencanapembelianController@setujuilist');
     Route::get('approvalrencanapembelian/tolaklist', 'approvalrencanapembelianController@tolaklist');
+
+    //Approval Return Pembelian
+    Route::get('approvalreturnpembelian', 'approvalreturnpembelianController@index');
+    Route::get('approvalreturnpembelian/setujui', 'approvalreturnpembelianController@setujui');
+    Route::get('approvalreturnpembelian/tolak', 'approvalreturnpembelianController@tolak');
+    Route::get('approvalreturnpembelian/setujuilist', 'approvalreturnpembelianController@setujuilist');
+    Route::get('approvalreturnpembelian/tolaklist', 'approvalreturnpembelianController@tolaklist');
 });

@@ -18,7 +18,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Return Pembelian</h2>
+        <h2>Edit Return Pembelian</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -27,7 +27,7 @@
                 Manajemen Seragam
             </li>
             <li class="active">
-                <strong>Return Seragam</strong>
+                <strong>Edit Return Seragam</strong>
             </li>
         </ol>
     </div>
@@ -37,48 +37,53 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
+                  @if(!empty($uang))
+                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;">Return Pembelian dari {{$uang[0]->s_company}} ( {{$uang[0]->rs_nota}} )</h5>
+                  @else
+                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;"></h5>
+                  @endif
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
                       <form class="" action="" id="form-data" method="post">
-                        <input type="hidden" name="notapembelian" value="{{$data[0]->p_nota}}">
-                        <input type="hidden" name="idpurchase" id="idpurchase" value="{{$data[0]->p_id}}">
+                        <input type="hidden" name="idpurchase" id="idpurchase" value="{{$uang[0]->p_id}}">
                         <table class="table table-hover">
                             <tbody>
-                            @foreach($data as $info)
-                            @if($info->aksi == 'uang')
-                            <tr>
-                                <td class="project-title col-sm-3">
-                                    {{ $info->nama }}
-                                    <br>
-                                    <small> Harga: Rp. {{ number_format($info->pd_value, 0, ',', '.') }}</small>
-                                    <input type="hidden" name="valueharga[]" value="{{$info->pd_value}}">
-                                </td>
-                                <td class="col-sm-2 form-horizontal" style="vertical-align: middle;">
-                                    <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
-                                        <label class="col-sm-4 control-label">Jumlah: </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" class="form-control col-sm-12 number" style="text-align: right; width: 100%;" readonly>
-                                        </div><sup>*</sup>
-                                    </div>
-                                </td>
-                                <td class="col-sm-3">
-                                    <div class="form-group" style="vertical-align: middle;">
-                                        <label class="col-sm-4 control-label" style="margin-top: 6px;">Harga@: </label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="harga[]" value="Rp. {{ number_format($info->pd_value, 0, ',', '.') }}" class="form-control harga" style="text-align: right;">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="col-sm-4"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
-                                </td>
-                            </tr>
-                            <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
-                            <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
-                            <input type="hidden" name="aksi[]" class="aksi" value="{{$info->aksi}}">
-                            @endif
-                            @endforeach
+                              @foreach($uang as $info)
+                              @if($info->rsd_action == 'uang')
+                              <tr>
+                                  <td class="project-title col-sm-3">
+                                      {{ $info->i_nama }} {{ $info->i_warna }} {{ $info->s_nama }}
+                                      <br>
+                                      <small> Harga: Rp. {{ number_format($info->rsd_value, 0, ',', '.') }}</small>
+                                      <input type="hidden" name="valueharga[]" value="{{$info->rsd_value}}">
+                                  </td>
+                                  <td class="col-sm-2 form-horizontal" style="vertical-align: middle;">
+                                      <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
+                                          <label class="col-sm-4 control-label">Jumlah: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" name="return[]" value="{{$info->rsd_qty}}" class="form-control col-sm-12 number" style="text-align: right; width: 100%;" readonly>
+                                          </div><sup>*</sup>
+                                      </div>
+                                  </td>
+                                  <td class="col-sm-3">
+                                      <div class="form-group" style="vertical-align: middle;">
+                                          <label class="col-sm-4 control-label" style="margin-top: 6px;">Harga@: </label>
+                                          <div class="col-sm-8">
+                                              <input type="text" name="hargo[]" value="Rp. {{ number_format($info->rsd_value, 0, ',', '.') }}" class="form-control harga" style="text-align: right;">
+                                          </div>
+                                      </div>
+                                  </td>
+                                  <td class="col-sm-4"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="{{$info->rsd_note}}" class="form-control">
+                                  </td>
+                              </tr>
+                              <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
+                              <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
+                              <input type="hidden" name="aksi[]" class="aksi" value="{{$info->rsd_action}}">
+                              <input type="hidden" name="rsdreturn[]" class="rsdreturn" value="{{$info->rsd_return}}">
+                              <input type="hidden" name="rsddetailid[]" class="rsddetailid" value="{{$info->rsd_detailid}}">
+                              @endif
+                              @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -96,37 +101,43 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="float: left;">Ganti Barang</h5><h5 style="float: right;">Return Pembelian dari {{ $data[0]->supplier }} ( {{ $data[0]->p_nota }} )</h5>
+                  @if(!empty($barang))
+                    <h5 style="float: left;">Ganti Barang</h5><h5 style="float: right;">Return Pembelian dari {{$barang[0]->s_company}} ( {{$barang[0]->rs_nota}} )</h5>
+                  @else
+                    <h5 style="float: left;">Ganti Uang</h5><h5 style="float: right;"></h5>
+                  @endif
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
-                            @foreach($data as $info)
-                            @if($info->aksi == 'barang')
-                            <tr>
-                                <td class="project-title col-sm-4">
-                                    {{ $info->nama }}
-                                    <br>
-                                    <small> Harga: Rp. {{ number_format($info->pd_value, 0, ',', '.') }}</small>
-                                    <input type="hidden" name="valueharga[]" value="{{$info->pd_value}}">
-                                </td>
-                                <td class="col-sm-2 form-horizontal" style="vertical-align: middle;">
-                                    <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
-                                        <label class="col-sm-4 control-label">Jumlah: </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" name="return[]" value="{{ $info->jumlah }}" id="jumlahqty" class="form-control number jumlahbarang" style="text-align: right;" readonly>
-                                        </div><sup>*</sup>
-                                    </div>
-                                </td>
-                                <td class="col-sm-6"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="" class="form-control">
-                                </td>
-                            </tr>
-                            <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
-                            <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
-                            <input type="hidden" name="aksi[]" class="aksi" value="{{$info->aksi}}">
-                            @endif
-                            @endforeach
+                              @foreach($barang as $info)
+                              @if($info->rsd_action == 'barang')
+                              <tr>
+                                  <td class="project-title col-sm-4">
+                                      {{ $info->i_nama }} {{ $info->i_warna }} {{ $info->s_nama }}
+                                      <br>
+                                      <small> Harga: Rp. {{ number_format($info->rsd_value, 0, ',', '.') }}</small>
+                                      <input type="hidden" name="valueharga[]" value="{{$info->rsd_value}}">
+                                  </td>
+                                  <td class="col-sm-2 form-horizontal" style="vertical-align: middle;">
+                                      <div class="form-group" style="vertical-align: middle; margin-top: 15px;">
+                                          <label class="col-sm-4 control-label">Jumlah: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" name="return[]" value="{{$info->rsd_qty}}" class="form-control col-sm-12 number jumlahbarang" style="text-align: right; width: 100%;" readonly>
+                                          </div><sup>*</sup>
+                                      </div>
+                                  </td>
+                                  <td class="col-sm-4"><input type="text" placeholder="Keterangan" name="keterangan_sejenis[]" value="{{$info->rsd_note}}" class="form-control">
+                                  </td>
+                              </tr>
+                              <input type="hidden" name="i_id[]" class="i_id" value="{{$info->i_id}}">
+                              <input type="hidden" name="id_detailid[]" class="id_detailid" value="{{$info->id_detailid}}">
+                              <input type="hidden" name="aksi[]" class="aksi" value="{{$info->rsd_action}}">
+                              <input type="hidden" name="rsdreturn[]" class="rsdreturn" value="{{$info->rsd_return}}">
+                              <input type="hidden" name="rsddetailid[]" class="rsddetailid" value="{{$info->rsd_detailid}}">
+                              @endif
+                              @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -150,17 +161,50 @@
                                 </tr>
                             </thead>
                             <tbody id="showdata">
+                              @foreach($barangbaru as $index => $x)
+                              @if($index == 0)
                                 <tr>
-                                    <td><input type="text" placeholder="Masukan Nama Barang" id="searchbox" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>
+                                    <td><input type="text" placeholder="Masukan Nama Barang" id="searchbox" name="ganti[]" value="{{ $info->i_nama }} {{ $info->i_warna }}" class="form-control .searchbox" style="width: 100%"></td>
+                                        <input type="hidden" name="gantibarang[]" value="{{$info->i_id}}">
                                     <td><select name="ukuran[]" class="form-control ukuran" id="ukuran" style="width: 100%;">
                                             <option disabled selected>-- Ukuran --</option>
+                                            @foreach ($barangbaru as $value)
+                                            <option value="{{ $value->s_id }}"
+                                            @if ($value->s_id == old('ukuran', $x->rsg_item_dt))
+                                                selected="selected"
+                                            @endif
+                                            >{{ $value->s_nama }}</option>
+                                            @endforeach
                                         </select></td>
-                                    <td><input type="text" name="harga[]" value="" class="form-control harga number" style="width: 100%"></td>
-                                    <td><input type="text" name="qty[]" value="" id="qty" class="form-control number tambahbarang" style="text-align: right; width: 100%" onkeyup="cek()"></td>
+                                    <td><input type="text" name="harga[]" value="Rp. {{ number_format($x->rsd_value, 0, ',', '.') }}" class="form-control harga number" style="width: 100%"></td>
+                                    <td><input type="text" name="qty[]" value="{{$x->rsg_qty}}" id="qty" class="form-control number tambahbarang" style="text-align: right; width: 100%" onkeyup="cek()"></td>
                                     <td>
                                       <button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                     </td>
                                 </tr>
+                                @else
+                                  <tr class="teer" id="dinamis{{$index + 1}}" index="{{$index + 1}}">
+                                      <td><input type="text" placeholder="Masukan Nama Barang" id="searchbox" name="ganti[]" value="{{ $info->i_nama }} {{ $info->i_warna }}" class="form-control .searchbox" style="width: 100%"></td>
+                                          <input type="hidden" name="gantibarang[]" value="{{$info->i_id}}">
+                                      <td><select name="ukuran[]" class="form-control ukuran" id="ukuran" style="width: 100%;">
+                                              <option disabled selected>-- Ukuran --</option>
+                                              @foreach ($barangbaru as $value)
+                                              <option value="{{ $value->s_id }}"
+                                              @if ($value->s_id == old('ukuran', $x->rsg_item_dt))
+                                                  selected="selected"
+                                              @endif
+                                              >{{ $value->s_nama }}</option>
+                                              @endforeach
+                                          </select></td>
+                                      <td><input type="text" name="harga[]" value="Rp. {{ number_format($x->rsd_value, 0, ',', '.') }}" class="form-control harga number" style="width: 100%"></td>
+                                      <td><input type="text" name="qty[]" value="{{$x->rsg_qty}}" id="qty" class="form-control number tambahbarang" style="text-align: right; width: 100%" onkeyup="cek()"></td>
+                                      <td>
+                                        <button type="button" name="button" class="btn btn-primary" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                        <button type="button" name="button" class="btn btn-danger" onclick="kurang()"> <i class="fa fa-minus"></i> </button>
+                                      </td>
+                                  </tr>
+                              @endif
+                              @endforeach
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-primary pull-right" name="button" onclick="simpan()"> <i class="fa fa-save"></i> Simpan</button>
@@ -169,6 +213,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -179,7 +224,7 @@
 
     var table;
     var html;
-    var dinamis = 0;
+    var dinamis = $('.teer').attr('index');
     var tmp = 0;
     var count = 1;
     var values = [];
@@ -191,6 +236,9 @@
     var qty = [];
 
     $(document).ready(function(){
+
+      idtambahitem = $("input[name='gantibarang[]']")
+              .map(function(){return $(this).val();}).get();
 
       $(".jumlahbarang").each(function(i, sel){
           selectedVal = $(sel).val();
@@ -264,7 +312,7 @@
 
     function tambah(){
 
-        dinamis += 1;
+        dinamis = parseInt(dinamis) + 1;
 
         html = '<tr id="dinamis'+dinamis+'">'
                 +'<td><input type="text" placeholder="Masukan Nama Barang" id="searchbox'+dinamis+'" name="ganti[]" value="" class="form-control .searchbox" style="width: 100%"></td>'
@@ -299,9 +347,9 @@
       $('#dinamis'+dinamis).remove();
 
       dinamis = dinamis - 1;
-
+      console.log(idtambahitem);
       removeA(idtambahitem, idtmp);
-
+      console.log(idtambahitem);
       $('#searchbox'+tmp).autocomplete({
           source: baseUrl + '/manajemen-seragam/return/caribarang',
           select: function(event, ui) {
@@ -411,10 +459,16 @@
       var harga = $("input[name='harga[]']")
               .map(function(){return $(this).val();}).get();
 
-      var id_detailid = $("input[name='id_detailid[]']")
+      var valueharga = $("input[name='valueharga[]']")
               .map(function(){return $(this).val();}).get();
 
-      var valueharga = $("input[name='valueharga[]']")
+      var rsdreturn = $("input[name='rsdreturn[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var rsddetailid = $("input[name='rsddetailid[]']")
+              .map(function(){return $(this).val();}).get();
+
+      var id_detailid = $("input[name='id_detailid[]']")
               .map(function(){return $(this).val();}).get();
 
       var returnd = $("input[name='return[]']")
@@ -427,18 +481,10 @@
 
       var id = $('#idpurchase').val();
 
-      var nota = $("input[name='notapembelian']").val();
-
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-
       $.ajax({
          type: 'get',
-         data: {idtambahitem:idtambahitem, idsize:idsize, qty:qty, valueharga:valueharga, aksi:aksi, i_id:i_id, id_detailid:id_detailid, returnd:returnd, keterangan_sejenis:keterangan_sejenis, idpurchase:idpurchase, harga:harga, nota:nota},
-         url: baseUrl + '/manajemen-seragam/return/simpanlanjut',
+         data: {idtambahitem:idtambahitem, idsize:idsize, qty:qty, rsdreturn:rsdreturn, rsddetailid:rsddetailid, valueharga:valueharga, aksi:aksi, i_id:i_id, id_detailid:id_detailid, returnd:returnd, keterangan_sejenis:keterangan_sejenis, idpurchase:idpurchase, harga:harga},
+         url: baseUrl + '/manajemen-seragam/return/update',
          dataType: 'json',
          success : function(result){
            if (result.status == 'berhasil') {
@@ -450,15 +496,6 @@
                  timer: 900
                });
                location.reload();
-           } else if (result.status == 'tidaksedia') {
-             swal({
-               title: 'Gagal Disimpan',
-               text: 'Data stock kurang',
-               type: 'danger',
-               showConfirmButton: false,
-               timer: 900
-             });
-             location.reload();
            }
            waitingDialog.hide();
        },
