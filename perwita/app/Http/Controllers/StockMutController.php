@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -22,7 +22,7 @@ class StockMutController extends Controller
 
      $start = Carbon::parse($tanggal1)->startOfDay();  //2016-09-29 00:00:00.000000
      $end = Carbon::parse($tanggal2)->endOfDay(); //2016-09-29 23:59:59.000000
-     
+
      $pp = DB::table('d_stock_mutation')
                 ->join('d_comp', 'd_stock_mutation.sm_comp', '=', 'd_comp.c_id')
                 ->join('d_item', 'd_stock_mutation.sm_item', '=', 'd_item.i_id')
@@ -40,18 +40,16 @@ class StockMutController extends Controller
                   'd_stock_mutation.sm_nota')
                 ->orderBy('d_stock_mutation.sm_date', 'asc')
                 ->get();
-        
+
     $datax = $this->setData($pp);
     //dd(($datax));
-    
+
     echo json_encode($datax);
 
-
-    
   }
 
   // untuk filter
-  public function tabel2(Request $request){ 
+  public function tabel2(Request $request){
 
        $req_gudang = $request->gudang;
        $tanggal1 = $request->tanggal1;
@@ -70,7 +68,7 @@ class StockMutController extends Controller
        $end = Carbon::parse($tanggal2)->endOfDay(); //2016-09-29 23:59:59.000000
        $pp;
 
-       
+
        if($req_gudang == "null" && $req_barang =="null"){
           $pp = DB::table('d_stock_mutation')
                 ->join('d_comp', 'd_stock_mutation.sm_comp', '=', 'd_comp.c_id')
@@ -109,7 +107,7 @@ class StockMutController extends Controller
                 ->groupBy('d_stock_mutation.sm_stock','d_stock_mutation.sm_qty','d_stock_mutation.sm_date',
                   'd_stock_mutation.sm_nota')
                 ->orderBy('d_stock_mutation.sm_date', 'asc')
-                ->get();    
+                ->get();
        }
 
        else if($req_gudang == "null" && $req_barang !="null"){
@@ -130,7 +128,7 @@ class StockMutController extends Controller
                 ->groupBy('d_stock_mutation.sm_stock','d_stock_mutation.sm_qty','d_stock_mutation.sm_date',
                   'd_stock_mutation.sm_nota')
                 ->orderBy('d_stock_mutation.sm_date', 'asc')
-                ->get();    
+                ->get();
        }
 
        else if($req_gudang != "null" && $req_barang !="null"){
@@ -152,15 +150,15 @@ class StockMutController extends Controller
                 ->groupBy('d_stock_mutation.sm_stock','d_stock_mutation.sm_qty','d_stock_mutation.sm_date',
                   'd_stock_mutation.sm_nota')
                 ->orderBy('d_stock_mutation.sm_date', 'asc')
-                ->get();    
+                ->get();
        }
-    
+
       $datax = $this->setData($pp);
-   
+
       echo json_encode($datax);
 
 
-    
+
   }
 
 
@@ -181,15 +179,15 @@ class StockMutController extends Controller
      }
      $j=0;
      $sisaakhir[] = array();
-     for ($i=0; $i <count($data) ; $i++) { 
+     for ($i=0; $i <count($data) ; $i++) {
          $sisastok = 0;
        for ($x=$i; $x>=0 ; $x--) {
 
-          if($data[$x]['c_name'] == $data[$i]['c_name'] && 
+          if($data[$x]['c_name'] == $data[$i]['c_name'] &&
              $data[$x]['s_nama'] == $data[$i]['s_nama']&&
              $data[$x]['i_nama'] == $data[$i]['i_nama'] ){
                 $sisastok = $sisastok + $data[$x]['sisa_stok_gudang'];
-            }  
+            }
                 if ($x == 0){
                 $sisaakhir[$j] = $sisastok;
                 //echo $sisaakhir[$j]." ";
@@ -198,7 +196,7 @@ class StockMutController extends Controller
         }
         $data[$i]['sm_date']=Date('d-m-Y H:i:s', strtotime($data[$i]['sm_date']));
     }
-        for ($k=0; $k <count($data) ; $k++) { 
+        for ($k=0; $k <count($data) ; $k++) {
            $data[$k]['sisa_stok_gudang'] = $sisaakhir[$k];
         }
         $datax = array('data' => $data);
@@ -207,6 +205,3 @@ class StockMutController extends Controller
 
 
 }
-
-
-
