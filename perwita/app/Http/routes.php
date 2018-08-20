@@ -18,6 +18,7 @@
  });
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('coba', 'StockOpnameController@ApproveOpname');
     Route::get('logout', 'loginController@logout');
     Route::get('dashboard', 'dashboardController@index');
     Route::get('profil', 'profilController@index');

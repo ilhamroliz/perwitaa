@@ -185,7 +185,7 @@
                 data: $('#formopname').serialize(),
                 success: function (response) {
                     waitingDialog.hide();
-                    if (response.status == 'gagal') {
+                    if (response.status == 'sukses') {
                         swal({
                             title: "Sukses",
                             text: "Data sudah tersimpan",
