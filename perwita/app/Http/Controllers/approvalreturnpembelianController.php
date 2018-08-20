@@ -22,6 +22,16 @@ class approvalreturnpembelianController extends Controller
               ->where('rs_isapproved', 'P')
               ->get();
 
+      $count =  DB::table('d_return_seragam')
+            ->where('rs_isapproved', 'P')
+            ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Return Pembelian')
+          ->update([
+            'n_qty' => count($count)
+          ]);
+
       return view('approvalreturnpembelian.index', compact('data'));
     }
 
@@ -149,6 +159,16 @@ class approvalreturnpembelianController extends Controller
           }
         }
       }
+
+      $count =  DB::table('d_return_seragam')
+            ->where('rs_isapproved', 'P')
+            ->get();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Return Pembelian')
+          ->update([
+            'n_qty' => count($count)
+          ]);
 
         DB::commit();
         return response()->json([
@@ -337,6 +357,16 @@ class approvalreturnpembelianController extends Controller
                 }
               }
             }
+
+            $count =  DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'P')
+                  ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Return Pembelian')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
 
         DB::commit();
         return response()->json([
