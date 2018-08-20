@@ -62,7 +62,7 @@ class ReturnPembelianController extends Controller
             })
             ->join('d_size', 'd_size.s_id', '=', 'id_size')
             ->join('d_supplier', 'd_supplier.s_id', '=', 'p_supplier')
-            ->select('i_id', 'id_detailid' ,DB::raw('concat(pd_qty, " ", i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'pd_qty', DB::raw('cast(pd_value as int) as pd_value'), DB::raw('date_format(p_date, "%d/%m/%Y") as p_date'), DB::raw('d_supplier.s_company as supplier'), 'p_nota', DB::raw('cast(p_total_net as int) as p_total_net'), 'p_id', 'pd_disc_value')
+            ->select('i_id', 'id_detailid' ,DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'pd_qty', DB::raw('cast(pd_value as int) as pd_value'), DB::raw('date_format(p_date, "%d/%m/%Y") as p_date'), DB::raw('d_supplier.s_company as supplier'), 'p_nota', DB::raw('cast(p_total_net as int) as p_total_net'), 'p_id', 'pd_disc_value')
             ->where('p_nota', '=', $nota)
             ->get();
 
@@ -145,138 +145,155 @@ class ReturnPembelianController extends Controller
       DB::beginTransaction();
       try {
 
-        for ($i=0; $i < count($request->harga); $i++) {
-          $temp[$i] = str_replace('Rp. ', '', $request->harga[$i]);
-          $temp1[$i] = str_replace('.', '', $temp[$i]);
-          $harga[$i] = $temp1[$i];
-        }
-
-        $id = DB::table('d_return_seragam')
-            ->max('rs_id');
-
-        if ($id == null) {
-            $id = 0;
-        }
-
-        $querykode = DB::select(DB::raw("SELECT MAX(MID(rs_nota,8,3)) as counter, MAX(MID(rs_nota,12,2)) as tanggal, MAX(MID(rs_nota,15,2)) as bulan, MAX(MID(rs_nota,18)) as tahun FROM d_return_seragam"));
-
-        if (count($querykode) > 0) {
-          if ($querykode[0]->tanggal != date('d') || $querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
-              $kode = "001";
-          } else {
-            foreach($querykode as $k)
-              {
-                $tmp = ((int)$k->counter)+1;
-                $kode = sprintf("%03s", $tmp);
-              }
-          }
-        } else {
-          $kode = "001";
-        }
-
-        $finalkode = 'RETURN-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
-
-        DB::table('d_return_seragam')
-            ->insert([
-              'rs_id' => $id + 1,
-              'rs_nota' => $finalkode,
-              'rs_purchase' => $request->idpurchase,
-              'rs_date' => Carbon::now('Asia/Jakarta'),
-              'rs_isapproved' => 'P'
-            ]);
-
-        $rsdhpp = DB::table('d_purchase_dt')
-                ->selectRaw("(pd_total_net / pd_qty) as hasil")
-                ->where('pd_purchase', $request->idpurchase)
-                ->whereIn('pd_item', $request->i_id)
-                ->whereIn('pd_item_dt', $request->id_detailid)
-                ->get();
-
-        for ($i=0; $i < count($request->i_id); $i++) {
-            $rsddetailid = DB::table('d_return_seragam_dt')
-                        ->where('rsd_return', $id + 1)
-                        ->max('rsd_detailid');
-
-                        if ($rsddetailid == null) {
-                          $rsddetailid = 0;
-                        }
-
-              DB::table('d_return_seragam_dt')
-                  ->insert([
-                    'rsd_return' => $id + 1,
-                    'rsd_detailid' => $rsddetailid + 1,
-                    'rsd_item' => $request->i_id[$i],
-                    'rsd_itemdt' => $request->id_detailid[$i],
-                    'rsd_hpp' => $rsdhpp[$i]->hasil,
-                    'rsd_action' => $request->aksi[$i],
-                    'rsd_note' => $request->keterangan_sejenis[$i],
-                    'rsd_value' => $request->valueharga[$i],
-                    'rsd_qty' => $request->returnd[$i]
-                  ]);
-      }
-
-        $detailidreturn = DB::table('d_return_seragam_dt')
-                      ->where('rsd_return', $id + 1)
-                      ->where('rsd_action', 'barang')
+        for ($z=0; $z < count($request->i_id); $z++) {
+          $ketersediaan = DB::table('d_stock_mutation')
+                      ->where('sm_nota', $request->nota)
+                      ->where('sm_item', $request->i_id[$z])
+                      ->where('sm_item_dt', $request->id_detailid[$z])
+                      ->select(DB::raw('SUM(sm_qty - sm_use) as sum'))
                       ->get();
-
-        $querykode = DB::select(DB::raw("SELECT MAX(MID(rsg_no,4,3)) as counter, MAX(MID(rsg_no,8,2)) as tanggal, MAX(MID(rsg_no,11,2)) as bulan, MAX(MID(rsg_no,14)) as tahun FROM d_return_seragam_ganti"));
-
-        if (count($querykode) > 0) {
-          if ($querykode[0]->tanggal != date('d') || $querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
-              $kode = "001";
-          } else {
-            foreach($querykode as $k)
-              {
-                $tmp = ((int)$k->counter)+1;
-                $kode = sprintf("%03s", $tmp);
-              }
-          }
-        } else {
-          $kode = "001";
         }
 
-        $finalkode = 'RG-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+        $qty = array_sum($request->qty);
 
-        for ($i=0; $i < count($request->idtambahitem); $i++) {
-
-          $detailidganti = DB::table('d_return_seragam_ganti')
-                        ->where('rsg_return_seragam', $id + 1)
-                        ->max('rsg_detailid');
-
-          if ($detailidganti == null) {
-            $detailidganti = 0;
+        if ( $qty > $ketersediaan[0]->sum) {
+          return response()->json([
+            'status' => 'tidaksedia'
+          ]);
+        } else {
+          for ($i=0; $i < count($request->harga); $i++) {
+            $temp[$i] = str_replace('Rp. ', '', $request->harga[$i]);
+            $temp1[$i] = str_replace('.', '', $temp[$i]);
+            $harga[$i] = $temp1[$i];
           }
 
-          $rsg_item_dt = DB::table('d_item_dt')
-                      ->select('id_detailid')
-                      ->where('id_item', $request->idtambahitem[$i])
-                      ->where('id_size', $request->idsize[$i])
-                      ->get();
+          $id = DB::table('d_return_seragam')
+              ->max('rs_id');
 
-          DB::table('d_return_seragam_ganti')
+          if ($id == null) {
+              $id = 0;
+          }
+
+          $querykode = DB::select(DB::raw("SELECT MAX(MID(rs_nota,8,3)) as counter, MAX(MID(rs_nota,12,2)) as tanggal, MAX(MID(rs_nota,15,2)) as bulan, MAX(MID(rs_nota,18)) as tahun FROM d_return_seragam"));
+
+          if (count($querykode) > 0) {
+            if ($querykode[0]->tanggal != date('d') || $querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+                $kode = "001";
+            } else {
+              foreach($querykode as $k)
+                {
+                  $tmp = ((int)$k->counter)+1;
+                  $kode = sprintf("%03s", $tmp);
+                }
+            }
+          } else {
+            $kode = "001";
+          }
+
+          $finalkode = 'RETURN-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+          DB::table('d_return_seragam')
               ->insert([
-                'rsg_return_seragam' => $id + 1,
-                'rsg_detailid_return' => $detailidreturn[0]->rsd_detailid,
-                'rsg_detailid' => $detailidganti + 1,
-                'rsg_no' => $finalkode,
-                'rsg_item' => $request->idtambahitem[$i],
-                'rsg_item_dt' => $rsg_item_dt[0]->id_detailid,
-                'rsg_qty' => $request->qty[$i],
-                'rsg_insert' => Carbon::now('Asia/Jakarta'),
-                'rsg_value' => $harga[$i]
+                'rs_id' => $id + 1,
+                'rs_nota' => $finalkode,
+                'rs_purchase' => $request->idpurchase,
+                'rs_date' => Carbon::now('Asia/Jakarta'),
+                'rs_isapproved' => 'P'
+              ]);
+
+          $rsdhpp = DB::table('d_purchase_dt')
+                  ->selectRaw("(pd_total_net / pd_qty) as hasil")
+                  ->where('pd_purchase', $request->idpurchase)
+                  ->whereIn('pd_item', $request->i_id)
+                  ->whereIn('pd_item_dt', $request->id_detailid)
+                  ->get();
+
+          for ($i=0; $i < count($request->i_id); $i++) {
+              $rsddetailid = DB::table('d_return_seragam_dt')
+                          ->where('rsd_return', $id + 1)
+                          ->max('rsd_detailid');
+
+                          if ($rsddetailid == null) {
+                            $rsddetailid = 0;
+                          }
+
+                DB::table('d_return_seragam_dt')
+                    ->insert([
+                      'rsd_return' => $id + 1,
+                      'rsd_detailid' => $rsddetailid + 1,
+                      'rsd_item' => $request->i_id[$i],
+                      'rsd_itemdt' => $request->id_detailid[$i],
+                      'rsd_hpp' => $rsdhpp[$i]->hasil,
+                      'rsd_action' => $request->aksi[$i],
+                      'rsd_note' => $request->keterangan_sejenis[$i],
+                      'rsd_value' => $request->valueharga[$i],
+                      'rsd_qty' => $request->returnd[$i]
+                    ]);
+        }
+
+          $detailidreturn = DB::table('d_return_seragam_dt')
+                        ->where('rsd_return', $id + 1)
+                        ->where('rsd_action', 'barang')
+                        ->get();
+
+          $querykode = DB::select(DB::raw("SELECT MAX(MID(rsg_no,4,3)) as counter, MAX(MID(rsg_no,8,2)) as tanggal, MAX(MID(rsg_no,11,2)) as bulan, MAX(MID(rsg_no,14)) as tahun FROM d_return_seragam_ganti"));
+
+          if (count($querykode) > 0) {
+            if ($querykode[0]->tanggal != date('d') || $querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+                $kode = "001";
+            } else {
+              foreach($querykode as $k)
+                {
+                  $tmp = ((int)$k->counter)+1;
+                  $kode = sprintf("%03s", $tmp);
+                }
+            }
+          } else {
+            $kode = "001";
+          }
+
+          $finalkode = 'RG-' . $kode . '/' . date('d') . '/' . date('m') . '/' . date('Y');
+
+          for ($i=0; $i < count($request->idtambahitem); $i++) {
+
+            $detailidganti = DB::table('d_return_seragam_ganti')
+                          ->where('rsg_return_seragam', $id + 1)
+                          ->max('rsg_detailid');
+
+            if ($detailidganti == null) {
+              $detailidganti = 0;
+            }
+
+            $rsg_item_dt = DB::table('d_item_dt')
+                        ->select('id_detailid')
+                        ->where('id_item', $request->idtambahitem[$i])
+                        ->where('id_size', $request->idsize[$i])
+                        ->get();
+
+            DB::table('d_return_seragam_ganti')
+                ->insert([
+                  'rsg_return_seragam' => $id + 1,
+                  'rsg_detailid_return' => $detailidreturn[0]->rsd_detailid,
+                  'rsg_detailid' => $detailidganti + 1,
+                  'rsg_no' => $finalkode,
+                  'rsg_item' => $request->idtambahitem[$i],
+                  'rsg_item_dt' => $rsg_item_dt[0]->id_detailid,
+                  'rsg_qty' => $request->qty[$i],
+                  'rsg_insert' => Carbon::now('Asia/Jakarta'),
+                  'rsg_value' => $harga[$i]
+                ]);
+          }
+
+          $count = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'P')
+                  ->get();
+
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Return Pembelian')
+              ->update([
+                'n_qty' => count($count)
               ]);
         }
-
-        $count = DB::table('d_return_seragam')
-                ->where('rs_isapproved', 'P')
-                ->get();
-
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Return Pembelian')
-            ->update([
-              'n_qty' => count($count)
-            ]);
 
         DB::commit();
         return response()->json([

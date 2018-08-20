@@ -42,6 +42,7 @@
                 <div class="ibox-content">
                     <div class="project-list">
                       <form class="" action="" id="form-data" method="post">
+                        <input type="hidden" name="notapembelian" value="{{$data[0]->p_nota}}">
                         <input type="hidden" name="idpurchase" id="idpurchase" value="{{$data[0]->p_id}}">
                         <table class="table table-hover">
                             <tbody>
@@ -366,8 +367,6 @@
 
       hasil = tambahbarang.reduce(getSum);
 
-      console.log(hasil);
-
       if (isNaN(hasil)) {
       } else {
         if (parseInt(hasil) <= parseInt(jumlahbarang)) {
@@ -428,6 +427,8 @@
 
       var id = $('#idpurchase').val();
 
+      var nota = $("input[name='notapembelian']").val();
+
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -435,8 +436,8 @@
       });
 
       $.ajax({
-         type: 'post',
-         data: {idtambahitem:idtambahitem, idsize:idsize, qty:qty, valueharga:valueharga, aksi:aksi, i_id:i_id, id_detailid:id_detailid, returnd:returnd, keterangan_sejenis:keterangan_sejenis, idpurchase:idpurchase, harga:harga},
+         type: 'get',
+         data: {idtambahitem:idtambahitem, idsize:idsize, qty:qty, valueharga:valueharga, aksi:aksi, i_id:i_id, id_detailid:id_detailid, returnd:returnd, keterangan_sejenis:keterangan_sejenis, idpurchase:idpurchase, harga:harga, nota:nota},
          url: baseUrl + '/manajemen-seragam/return/simpanlanjut',
          dataType: 'json',
          success : function(result){
@@ -449,6 +450,15 @@
                  timer: 900
                });
                location.reload();
+           } else if (result.status == 'tidaksedia') {
+             swal({
+               title: 'Gagal Disimpan',
+               text: 'Data stock kurang',
+               type: 'danger',
+               showConfirmButton: false,
+               timer: 900
+             });
+             location.reload();
            }
            waitingDialog.hide();
        },

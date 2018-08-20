@@ -239,7 +239,18 @@
                               setTimeout(function(){
                                     window.location.reload();
                             }, 850);
-                          }
+                          } else if (response.status == 'tidaksedia') {
+                            swal({
+                                title: "Return Pembelian Gagal",
+                                text: "Return Pembelian Gagal Disetujui",
+                                type: "danger",
+                                showConfirmButton: false,
+                                timer: 900
+                            });
+                            setTimeout(function(){
+                                  window.location.reload();
+                          }, 850);
+                        }
                       }, error: function (x, e) {
                           waitingDialog.hide();
                           var message;
@@ -477,7 +488,18 @@
               setTimeout(function(){
                     window.location.reload();
             }, 850);
-          }
+          } else if (response.status == 'tidaksedia') {
+            swal({
+                title: "Return Pembelian Gagal",
+                text: "Return Pembelian Gagal Disetujui",
+                type: "danger",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
         }, error: function (x, e) {
             waitingDialog.hide();
             var message;
