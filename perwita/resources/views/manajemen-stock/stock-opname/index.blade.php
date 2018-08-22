@@ -55,11 +55,9 @@
                                 <td>{{ $row->so_nota }}</td>
                                 <td>{{ $row->so_date }}</td>
                                 <td>{{ $row->nama }}</td>
-                                <td>Belum disetujui</td>
+                                <td><span class="label label-warning">Belum disetujui</span></td>
                                 <td class="text-center">
                                     <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-folder-open"></i></button>
-                                    <button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" onclick="edit('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-edit"></i></button>
-                                    <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" onclick="hapus('{{ $row->so_nota }}')"><i class="glyphicon glyphicon-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -70,6 +68,43 @@
         </div>
     </div>
 </div>
+
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Detail Return Pembelian</h4>
+                        <small class="font-bold">Daftar Detail Return Pembelian</small>
+                    </div>
+                    <div class="modal-body">
+
+                      <table id="tableuang" class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Nomor</th>
+                            <th>Tanggal</th>
+                            <th>Nama Barang</th>
+                            <th>QTY Sistem</th>
+                            <th>QTY Real</th>
+                            <th>Aksi</th>
+                            <th>Keterangan</th>
+                          </tr>
+                        </thead>
+                        <tbody id="showuang">
+
+                        </tbody>
+                      </table>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 @endsection
 
@@ -86,5 +121,34 @@
             ]
         });
     });
+
+    function detail(id){
+      var html = '';
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          dataType: 'json',
+          url: baseUrl + '/approvalopname/detail',
+          success : function(result){
+
+            for (var i = 0; i < result.length; i++) {
+              html += '<tr>'
+                      +'<td>'+result[i].so_nota+'</td>'
+                      +'<td>'+result[i].so_date+'</td>'
+                      +'<td>'+result[i].nama+'</td>'
+                      +'<td>'+result[i].sod_qty_sistem+'</td>'
+                      +'<td>'+result[i].sod_qty_real+'</td>'
+                      +'<td>'+result[i].sod_aksi+'</td>'
+                      +'<td>'+result[i].sod_keterangan+'</td>'
+                      '</tr>';
+            }
+
+            $('#showuang').html(html);
+
+            $('#myModal5').modal('show');
+
+          }
+        });
+    }
 </script>
 @endsection

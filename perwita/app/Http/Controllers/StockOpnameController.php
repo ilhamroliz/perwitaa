@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -119,7 +119,15 @@ class StockOpnameController extends Controller
                     'sod_keterangan' => $keterangan
                 ]);
 
-            DB::select("update d_notifikasi set n_qty = (select count('so_id') from d_stock_opname where so_isapproved = 'P') where n_fitur = 'Opname' and n_detail = 'Create'");
+            $count = DB::table('d_stock_opname')
+                  ->where('so_isapproved', 'P')
+                  ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Opname')
+                ->update([
+                  'n_qty' => count($count)
+                ]);
 
             DB::commit();
             return response()->json([
@@ -144,6 +152,12 @@ class StockOpnameController extends Controller
                 ->join('d_stock_opname_dt', 'sod_stock_opname', '=', 'so_id')
                 ->where('so_nota', '=', $nota)
                 ->get();
+
+            DB::table('d_stock_opname')
+                ->where('d_stock_opname', $request->nota)
+                ->update([
+                  'so_isapproved' => 'Y'
+                ]);
 
             $item = $info[0]->sod_item;
             $item_dt = $info[0]->sod_item_dt;
@@ -204,6 +218,7 @@ class StockOpnameController extends Controller
                                 ->update([
                                     's_qty' => DB::raw('s_qty - ' . $sisa)
                                 ]);
+
                             $sisa = 0;
                             $i = count($mutasi);
 
@@ -298,7 +313,5 @@ class StockOpnameController extends Controller
             ]);
         }
     }
-    
+
 }
-
-

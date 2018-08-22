@@ -763,4 +763,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalreturnpembelian/tolak', 'approvalreturnpembelianController@tolak');
     Route::get('approvalreturnpembelian/setujuilist', 'approvalreturnpembelianController@setujuilist');
     Route::get('approvalreturnpembelian/tolaklist', 'approvalreturnpembelianController@tolaklist');
+
+    //Approval Opname
+    Route::get('approvalopname', 'approvalopnameController@index');
+    Route::get('approvalopname/detail', 'approvalopnameController@detail');
+    Route::get('approvalopname/setujui', 'approvalopnameController@setujui');
+    Route::get('approvalopname/setujuilist', 'approvalopnameController@setujuilist');
+    Route::get('approvalopname/tolak', 'approvalopnameController@tolak');
+    Route::get('approvalopname/tolaklist', 'approvalopnameController@tolaklist');
 });
