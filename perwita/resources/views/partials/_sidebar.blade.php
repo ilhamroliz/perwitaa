@@ -73,6 +73,24 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">Remunerasi</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-pekerja/phk') ? 'active' : '' || Request::is('manajemen-pekerja/phk/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-pekerja/phk') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">PHK</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview sidebar data-master {{
+                 Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''}}">
+                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pekerja (PJTKI)</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="{{ Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''
+                                || Request::is('pekerja-pjtki/data-pekerja/*') ? 'active' : ''  }}">
+                        <a href="{{ url('pekerja-pjtki/data-pekerja') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Data Pekerja</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -117,7 +135,7 @@
                 }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Seragam</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li class="{{ 
+                    <li class="{{
                         Request::is('manajemen-seragam/rencana-pembelian') ? 'active' : '' ||
                         Request::is('manajemen-seragam/rencana-pembelian/*') ? 'active' : ''}} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/rencana-pembelian') }}">
@@ -125,9 +143,9 @@
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-seragam/pembelian') ? 'active' : ''
-                                || Request::is('manajemen-seragam/gunakan-rencana-pembelian') ? 'active' : '' 
-                                || Request::is('manajemen-seragam/edit') ? 'active' : '' 
-                                || Request::is('manajemen-seragam/tambah') ? 'active' : '' 
+                                || Request::is('manajemen-seragam/gunakan-rencana-pembelian') ? 'active' : ''
+                                || Request::is('manajemen-seragam/edit') ? 'active' : ''
+                                || Request::is('manajemen-seragam/tambah') ? 'active' : ''
                                 }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/pembelian') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pembelian Seragam</span>

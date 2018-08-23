@@ -29,7 +29,7 @@ use DB;
 
 use Carbon\carbon;
 
-class pekerjaController extends Controller
+class pekerjapjtkiController extends Controller
 {
     public function __construct()
     {
@@ -38,32 +38,32 @@ class pekerjaController extends Controller
 
     public function index()
     {
-        return view('pekerja.index');
+        return view('pekerja-pjtki.index');
     }
 
     public function data()
     {
         DB::statement(DB::raw('set @rownum=0'));
 
-        $pekerja = DB::select("select @rownum := @rownum + 1 as number, p_id, p_name, p_nip, p_sex, p_address, p_hp, pm_detailid, pm_status from d_pekerja p join d_pekerja_mutation pm on p_id = pm_pekerja cross join (select @rownum := 0) r where pm_detailid = (select max(pm_detailid) from d_pekerja_mutation where pm_pekerja = p.p_id) and pm_status = 'Aktif' order by p_name");
+        $pekerja = DB::select("select @rownum := @rownum + 1 as number, pp_id, pp_name, pp_nip, pp_sex, pp_address, pp_hp, ppm_detailid, ppm_status from d_pekerja_pjtki p join d_pekerja_pjtki_mutation pm on pp_id = ppm_pekerja cross join (select @rownum := 0) r where ppm_detailid = (select max(ppm_detailid) from d_pekerja_pjtki_mutation where ppm_pekerja = p.pp_id) and ppm_status = 'Aktif' order by pp_name");
 
         $pekerja = collect($pekerja);
 
         return Datatables::of($pekerja)
-            ->editColumn('pm_status', function ($pekerja) {
+            ->editColumn('ppm_status', function ($pekerja) {
 
-                if ($pekerja->pm_status == 'Calon')
+                if ($pekerja->ppm_status == 'Calon')
                     return '<div class="text-center"><span class="label label-warning ">Calon</span></div>';
-                if ($pekerja->pm_status == 'Aktif')
+                if ($pekerja->ppm_status == 'Aktif')
                     return '<div class="text-center"><span class="label label-success ">Aktif</span></div>';
-                if ($pekerja->pm_status == 'Ex')
+                if ($pekerja->ppm_status == 'Ex')
                     return '<div class="text-center"><span class="label label-danger ">Tidak Aktif</span></div>';
             })
             ->addColumn('action', function ($pekerja) {
                 return '<div class="text-center">
-                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
-                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->p_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Resign" onclick="resign(' . $pekerja->p_id . ')"><i class="fa fa-sign-out"></i></button>
+                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->pp_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Resign" onclick="resign(' . $pekerja->pp_id . ')"><i class="fa fa-sign-out"></i></button>
                   </div>';
             })
             ->make(true);
@@ -73,25 +73,25 @@ class pekerjaController extends Controller
     {
         DB::statement(DB::raw('set @rownum=0'));
 
-        $pekerja = DB::select("select @rownum := @rownum + 1 as number, p_id, p_name, p_sex, p_address, p_hp, pm_detailid, pm_status from d_pekerja p join d_pekerja_mutation pm on p_id = pm_pekerja cross join (select @rownum := 0) r where pm_detailid = (select max(pm_detailid) from d_pekerja_mutation where pm_pekerja = p.p_id) and pm_status = 'Calon' order by p_name");
+        $pekerja = DB::select("select @rownum := @rownum + 1 as number, pp_id, pp_name, pp_sex, pp_address, pp_hp, ppm_detailid, ppm_status from d_pekerja_pjtki p join d_pekerja_pjtki_mutation pm on pp_id = ppm_pekerja cross join (select @rownum := 0) r where ppm_detailid = (select max(ppm_detailid) from d_pekerja_pjtki_mutation where ppm_pekerja = p.pp_id) and ppm_status = 'Calon' order by pp_name");
 
         $pekerja = collect($pekerja);
 
         return Datatables::of($pekerja)
-            ->editColumn('pm_status', function ($pekerja) {
+            ->editColumn('ppm_status', function ($pekerja) {
 
-                if ($pekerja->pm_status == 'Calon')
+                if ($pekerja->ppm_status == 'Calon')
                     return '<div class="text-center"><span class="label label-warning ">Calon</span></div>';
-                if ($pekerja->pm_status == 'Aktif')
+                if ($pekerja->ppm_status == 'Aktif')
                     return '<div class="text-center"><span class="label label-success ">Aktif</span></div>';
-                if ($pekerja->pm_status == 'Ex')
+                if ($pekerja->ppm_status == 'Ex')
                     return '<div class="text-center"><span class="label label-danger ">Tidak Aktif</span></div>';
             })
             ->addColumn('action', function ($pekerja) {
                 return '<div class="text-center">
-                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
-                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->p_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
+                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->pp_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
                   </div>';
             })
             ->make(true);
@@ -101,25 +101,25 @@ class pekerjaController extends Controller
     {
         DB::statement(DB::raw('set @rownum=0'));
 
-        $pekerja = DB::select("select @rownum := @rownum + 1 as number, p_id, p_name, p_nip, p_sex, p_address, p_hp, pm_detailid, pm_status from d_pekerja p join d_pekerja_mutation pm on p_id = pm_pekerja cross join (select @rownum := 0) r where pm_detailid = (select max(pm_detailid) from d_pekerja_mutation where pm_pekerja = p.p_id) and pm_status = 'Ex' order by p_name");
+        $pekerja = DB::select("select @rownum := @rownum + 1 as number, pp_id, pp_name, pp_nip, pp_sex, pp_address, pp_hp, ppm_detailid, ppm_status from d_pekerja_pjtki p join d_pekerja_pjtki_mutation pm on pp_id = ppm_pekerja cross join (select @rownum := 0) r where ppm_detailid = (select max(ppm_detailid) from d_pekerja_pjtki_mutation where ppm_pekerja = p.pp_id) and ppm_status = 'Ex' order by pp_name");
 
         $pekerja = collect($pekerja);
 
         return Datatables::of($pekerja)
-            ->editColumn('pm_status', function ($pekerja) {
+            ->editColumn('ppm_status', function ($pekerja) {
 
-                if ($pekerja->pm_status == 'Calon')
+                if ($pekerja->ppm_status == 'Calon')
                     return '<div class="text-center"><span class="label label-warning ">Calon</span></div>';
-                if ($pekerja->pm_status == 'Aktif')
+                if ($pekerja->ppm_status == 'Aktif')
                     return '<div class="text-center"><span class="label label-success ">Aktif</span></div>';
-                if ($pekerja->pm_status == 'Ex')
+                if ($pekerja->ppm_status == 'Ex')
                     return '<div class="text-center"><span class="label label-danger ">Tidak Aktif</span></div>';
             })
             ->addColumn('action', function ($pekerja) {
                 return '<div class="text-center">
-                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
-                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->p_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->p_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
+                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->pp_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
                   </div>';
             })
             ->make(true);
@@ -133,7 +133,7 @@ class pekerjaController extends Controller
             ->orderBy('jp_name')
             ->get();
 
-        return view('pekerja.formTambah', compact('jabPelamar'));
+        return view('pekerja-pjtki.formTambah', compact('jabPelamar'));
 
     }
 
@@ -206,8 +206,8 @@ class pekerjaController extends Controller
             $ukuransepatu = $request->ukuransepatu;
             $jenkel = $request->jenkel;
 
-            $idPekerja = DB::table('d_pekerja')
-                ->max('p_id');
+            $idPekerja = DB::table('d_pekerja_pjtki')
+                ->max('pp_id');
 
             $idPekerja = $idPekerja + 1;
 
@@ -241,60 +241,60 @@ class pekerjaController extends Controller
                 $saatini = 'Kuliah di ' . $kuliahnow;
             }
 
-            d_pekerja::insert(array(
-                "p_id" => $idPekerja,
-                "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
-                "p_nip" => null,
-                "p_ktp" => $no_ktp,
-                "p_name" => $nama,
-                "p_sex" => $jenkel,
-                "p_birthplace" => $tempat_lahir,
-                "p_birthdate" => $tanggal_lahir,
-                "p_hp" => $no_hp,
-                "p_telp" => $no_tlp,
-                "p_status" => strtoupper($status),
-                "p_many_kids" => strtoupper($jml_anak),
-                "p_religion" => strtoupper($agama),
-                "p_address" => strtoupper($alamat),
-                "p_rt_rw" => strtoupper($rt),
-                "p_kel" => strtoupper($desa),
-                "p_kecamatan" => strtoupper($kecamatan),
-                "p_city" => strtoupper($kota),
-                "p_address_now" => strtoupper($alamat_now),
-                "p_rt_rw_now" => strtoupper($rt_now),
-                "p_kel_now" => strtoupper($desa_now),
-                "p_kecamatan_now" => strtoupper($kecamatan_now),
-                "p_city_now" => strtoupper($kota_now),
-                "p_name_family" => strtoupper($nama_keluarga),
-                "p_address_family" => strtoupper($alamat_keluarga),
-                "p_telp_family" => strtoupper($telp_keluarga),
-                "p_hp_family" => strtoupper($hp_keluarga),
-                "p_hubungan_family" => strtoupper($hubungan_keluarga),
-                "p_wife_name" => strtoupper($wife_name),
-                "p_wife_birth" => strtoupper($wife_tanggal),
-                "p_wife_birthplace" => strtoupper($wife_lahir),
-                "p_dad_name" => strtoupper($dadname),
-                "p_dad_job" => strtoupper($dadjob),
-                "p_mom_name" => strtoupper($momname),
-                "p_mom_job" => strtoupper($momjob),
-                "p_job_now" => strtoupper($saatini),
-                "p_weight" => strtoupper($beratbadan),
-                "p_height" => strtoupper($tinggibadan),
-                "p_seragam_size" => strtoupper($ukuranbaju),
-                "p_celana_size" => strtoupper($ukurancelana),
-                "p_sepatu_size" => strtoupper($ukuransepatu),
-                "p_kpk" => null,
-                "p_bu" => null,
-                "p_ktp_expired" => null,
-                "p_ktp_seumurhidup" => null,
-                "p_education" => strtoupper($pendidikan),
-                "p_kpj_no" => null,
-                "p_state" => strtoupper($warga_negara),
-                "p_note" => null,
-                "p_img" => $imgPath,
-                "p_insert_by" => Session::get('mem'),
-                "p_insert" => Carbon::now('Asia/Jakarta'),
-                "p_update" => Carbon::now('Asia/Jakarta')
+            DB::table('d_pekerja_pjtki')->insert(array(
+                "pp_id" => $idPekerja,
+                "pp_jabatan_lamaran" => strtoupper($jabatanpelamar),
+                "pp_nip" => null,
+                "pp_ktp" => $no_ktp,
+                "pp_name" => $nama,
+                "pp_sex" => $jenkel,
+                "pp_birthplace" => $tempat_lahir,
+                "pp_birthdate" => $tanggal_lahir,
+                "pp_hp" => $no_hp,
+                "pp_telp" => $no_tlp,
+                "pp_status" => strtoupper($status),
+                "pp_many_kids" => strtoupper($jml_anak),
+                "pp_religion" => strtoupper($agama),
+                "pp_address" => strtoupper($alamat),
+                "pp_rt_rw" => strtoupper($rt),
+                "pp_kel" => strtoupper($desa),
+                "pp_kecamatan" => strtoupper($kecamatan),
+                "pp_city" => strtoupper($kota),
+                "pp_address_now" => strtoupper($alamat_now),
+                "pp_rt_rw_now" => strtoupper($rt_now),
+                "pp_kel_now" => strtoupper($desa_now),
+                "pp_kecamatan_now" => strtoupper($kecamatan_now),
+                "pp_city_now" => strtoupper($kota_now),
+                "pp_name_family" => strtoupper($nama_keluarga),
+                "pp_address_family" => strtoupper($alamat_keluarga),
+                "pp_telp_family" => strtoupper($telp_keluarga),
+                "pp_hp_family" => strtoupper($hp_keluarga),
+                "pp_hubungan_family" => strtoupper($hubungan_keluarga),
+                "pp_wife_name" => strtoupper($wife_name),
+                "pp_wife_birth" => strtoupper($wife_tanggal),
+                "pp_wife_birthplace" => strtoupper($wife_lahir),
+                "pp_dad_name" => strtoupper($dadname),
+                "pp_dad_job" => strtoupper($dadjob),
+                "pp_mom_name" => strtoupper($momname),
+                "pp_mom_job" => strtoupper($momjob),
+                "pp_job_now" => strtoupper($saatini),
+                "pp_weight" => strtoupper($beratbadan),
+                "pp_height" => strtoupper($tinggibadan),
+                "pp_seragam_size" => strtoupper($ukuranbaju),
+                "pp_celana_size" => strtoupper($ukurancelana),
+                "pp_sepatu_size" => strtoupper($ukuransepatu),
+                "pp_kpk" => null,
+                "pp_bu" => null,
+                "pp_ktp_expired" => null,
+                "pp_ktp_seumurhidup" => null,
+                "pp_education" => strtoupper($pendidikan),
+                "pp_kpj_no" => null,
+                "pp_state" => strtoupper($warga_negara),
+                "pp_note" => null,
+                "pp_img" => $imgPath,
+                "pp_insert_by" => Session::get('mem'),
+                "pp_insert" => Carbon::now('Asia/Jakarta'),
+                "pp_update" => Carbon::now('Asia/Jakarta')
             ));
 
             $addKeterampilan = [];
@@ -302,90 +302,90 @@ class pekerjaController extends Controller
                 $temp = [];
                 if ($keterampilan[$i] != '' || $keterampilan != null) {
                     $temp = array(
-                        'pk_pekerja' => $idPekerja,
-                        'pk_detailid' => $i + 1,
-                        'pk_keterampilan' => strtoupper($keterampilan[$i])
+                        'ppk_pekerja' => $idPekerja,
+                        'ppk_detailid' => $i + 1,
+                        'ppk_keterampilan' => strtoupper($keterampilan[$i])
                     );
                     array_push($addKeterampilan, $temp);
                 }
             }
-            d_pekerja_keterampilan::insert($addKeterampilan);
+            DB::table('d_pekerja_pjtki_keterampilan')->insert($addKeterampilan);
 
             $addBahasa = [];
             for ($i = 0; $i < count($bahasa); $i++) {
                 $temp = [];
                 if ($bahasa[$i] == 'Lain' && $bahasa_lain != '') {
                     $temp = array(
-                        'pl_pekerja' => $idPekerja,
-                        'pl_detailid' => $i + 1,
-                        'pl_language' => strtoupper($bahasa_lain)
+                        'ppl_pekerja' => $idPekerja,
+                        'ppl_detailid' => $i + 1,
+                        'ppl_language' => strtoupper($bahasa_lain)
                     );
                 } else {
                     if ($bahasa[$i] != null || $bahasa[$i] != '') {
                         $temp = array(
-                            'pl_pekerja' => $idPekerja,
-                            'pl_detailid' => $i + 1,
-                            'pl_language' => strtoupper($bahasa[$i])
+                            'ppl_pekerja' => $idPekerja,
+                            'ppl_detailid' => $i + 1,
+                            'ppl_language' => strtoupper($bahasa[$i])
                         );
                     }
                 }
                 array_push($addBahasa, $temp);
             }
-            d_pekerja_language::insert($addBahasa);
+            DB::table('d_pekerja_pjtki_language')->insert($addBahasa);
 
             $addSIM = [];
             for ($i = 0; $i < count($sim); $i++) {
                 $temp = [];
                 if ($sim[$i] != null || $sim[$i] != '') {
                     $temp = array(
-                        'ps_pekerja' => $idPekerja,
-                        'ps_detailid' => $i + 1,
-                        'ps_sim' => $sim[$i],
-                        'ps_note' => strtoupper($simket)
+                        'pps_pekerja' => $idPekerja,
+                        'pps_detailid' => $i + 1,
+                        'pps_sim' => $sim[$i],
+                        'pps_note' => strtoupper($simket)
                     );
                     array_push($addSIM, $temp);
                 }
             }
-            d_pekerja_sim::insert($addSIM);
+            DB::table('d_pekerja_pjtki_sim')->insert($addSIM);
 
             $addPengalaman = [];
             for ($i = 0; $i < count($pengalaman_corp); $i++) {
                 $temp = [];
                 if ($pengalaman_corp[$i] != null || $pengalaman_corp[$i] != '') {
                     $temp = array(
-                        'pp_pekerja' => $idPekerja,
-                        'pp_detailid' => $i + 1,
-                        'pp_perusahaan' => strtoupper($pengalaman_corp[$i]),
-                        'pp_start' => $start_pengalaman[$i],
-                        'pp_end' => $end_pengalaman[$i],
-                        'pp_jabatan' => strtoupper($jabatan_pengalaman[$i])
+                        'ppp_pekerja' => $idPekerja,
+                        'ppp_detailid' => $i + 1,
+                        'ppp_perusahaan' => strtoupper($pengalaman_corp[$i]),
+                        'ppp_start' => $start_pengalaman[$i],
+                        'ppp_end' => $end_pengalaman[$i],
+                        'ppp_jabatan' => strtoupper($jabatan_pengalaman[$i])
                     );
                     array_push($addPengalaman, $temp);
                 }
             }
-            d_pekerja_pengalaman::insert($addPengalaman);
+            DB::table('d_pekerja_pjtki_pengalaman')->insert($addPengalaman);
 
             $addReferensi = [];
             for ($i = 0; $i < count($referensi); $i++) {
                 $temp = [];
                 if ($referensi[$i] == 'Lain') {
                     $temp = array(
-                        'pr_pekerja' => $idPekerja,
-                        'pr_detailid' => $i + 1,
-                        'pr_referensi' => strtoupper($referensi_lain)
+                        'ppr_pekerja' => $idPekerja,
+                        'ppr_detailid' => $i + 1,
+                        'ppr_referensi' => strtoupper($referensi_lain)
                     );
                 } else {
                     if ($referensi[$i] != null || $referensi[$i] != '') {
                         $temp = array(
-                            'pr_pekerja' => $idPekerja,
-                            'pr_detailid' => $i + 1,
-                            'pr_referensi' => strtoupper($referensi[$i])
+                            'ppr_pekerja' => $idPekerja,
+                            'ppr_detailid' => $i + 1,
+                            'ppr_referensi' => strtoupper($referensi[$i])
                         );
                     }
                 }
                 array_push($addReferensi, $temp);
             }
-            d_pekerja_referensi::insert($addReferensi);
+              DB::table('d_pekerja_pjtki_referensi')->insert($addReferensi);
 
             $addChild = [];
             for ($i = 0; $i < count($childname); $i++) {
@@ -394,45 +394,34 @@ class pekerjaController extends Controller
                     if ($childdate[$i] != "") {
                         $childdate[$i] = Carbon::createFromFormat('d/m/Y', $childdate[$i], 'Asia/Jakarta');
                         $temp = array(
-                            'pc_pekerja' => $idPekerja,
-                            'pc_detailid' => $i + 1,
-                            'pc_child_name' => strtoupper($childname[$i]),
-                            'pc_birth_date' => $childdate[$i],
-                            'pc_birth_place' => strtoupper($childplace[$i])
+                            'ppc_pekerja' => $idPekerja,
+                            'ppc_detailid' => $i + 1,
+                            'ppc_child_name' => strtoupper($childname[$i]),
+                            'ppc_birth_date' => $childdate[$i],
+                            'ppc_birth_place' => strtoupper($childplace[$i])
                         );
                         array_push($addChild, $temp);
                     }
                 }
             }
-            d_pekerja_child::insert($addChild);
+            DB::table('d_pekerja_pjtki_child')->insert($addChild);
 
-            d_pekerja_mutation::insert(array(
-                'pm_pekerja' => $idPekerja,
-                'pm_detailid' => 1,
-                'pm_date' => Carbon::now('Asia/Jakarta'),
-                'pm_detail' => 'Masuk',
-                'pm_status' => 'Calon',
-                'pm_insert_by' => Session::get('mem')
+            DB::table('d_pekerja_pjtki_mutation')->insert(array(
+                'ppm_pekerja' => $idPekerja,
+                'ppm_detailid' => 1,
+                'ppm_date' => Carbon::now('Asia/Jakarta'),
+                'ppm_detail' => 'Masuk',
+                'ppm_status' => 'Calon',
+                'ppm_insert_by' => Session::get('mem')
             ));
-
-            $countpelamar = DB::table('d_pekerja')
-                ->where('p_status_approval', null)
-                ->get();
-
-            DB::table('d_notifikasi')
-                ->where('n_fitur', 'Calon Pekerja')
-                ->update([
-                  'n_qty' => count($countpelamar),
-                  'n_insert' => Carbon::now()
-                ]);
 
             DB::commit();
             Session::flash('sukses', 'data pekerja baru anda berhasil disimpan');
-            return redirect('manajemen-pekerja/data-pekerja');
+            return redirect('pekerja-pjtki/data-pekerja');
         } catch (\Exception $e) {
             DB::rollback();
             Session::flash('gagal', 'data pekerja tidak dapat di simpan');
-            return redirect('manajemen-pekerja/data-pekerja');
+            return redirect('pekerja-pjtki/data-pekerja');
         }
     }
 
@@ -441,62 +430,62 @@ class pekerjaController extends Controller
         $jabatan = DB::table('d_jabatan_pelamar')
             ->select('jp_name', 'jp_id')->get();
 
-        $pekerja = DB::table('d_pekerja')
-            ->where('p_id', '=', $id)
-            ->select('p_name'
-                , 'p_address'
-                , 'p_rt_rw'
-                , 'p_kecamatan'
-                , 'p_kel'
-                , 'p_nip'
-                , 'p_city'
-                , 'p_jabatan_lamaran'
-                , 'p_address_now'
-                , 'p_rt_rw_now'
-                , 'p_kecamatan_now'
-                , 'p_kel_now'
-                , 'p_city_now'
-                , 'p_birthplace'
-                , 'p_birthdate'
-                , 'p_ktp'
-                , 'p_telp'
-                , 'p_hp'
-                , 'p_sex'
-                , 'p_state'
-                , 'p_status'
-                , 'p_many_kids'
-                , 'p_religion'
-                , 'p_education'
-                , 'p_name_family'
-                , 'p_address_family'
-                , 'p_telp_family'
-                , 'p_hp_family'
-                , 'p_address_family'
-                , 'p_hubungan_family'
-                , 'p_wife_name'
-                , 'p_wife_birth'
-                , 'p_wife_birthplace'
-                , 'p_dad_name'
-                , 'p_dad_job'
-                , 'p_mom_name'
-                , 'p_mom_job'
-                , 'p_job_now'
-                , 'p_weight'
-                , 'p_height'
-                , 'p_seragam_size'
-                , 'p_celana_size'
-                , 'p_sepatu_size'
-                , 'p_img')
+        $pekerja = DB::table('d_pekerja_pjtki')
+            ->where('pp_id', '=', $id)
+            ->select('pp_name'
+                , 'pp_address'
+                , 'pp_rt_rw'
+                , 'pp_kecamatan'
+                , 'pp_kel'
+                , 'pp_nip'
+                , 'pp_city'
+                , 'pp_jabatan_lamaran'
+                , 'pp_address_now'
+                , 'pp_rt_rw_now'
+                , 'pp_kecamatan_now'
+                , 'pp_kel_now'
+                , 'pp_city_now'
+                , 'pp_birthplace'
+                , 'pp_birthdate'
+                , 'pp_ktp'
+                , 'pp_telp'
+                , 'pp_hp'
+                , 'pp_sex'
+                , 'pp_state'
+                , 'pp_status'
+                , 'pp_many_kids'
+                , 'pp_religion'
+                , 'pp_education'
+                , 'pp_name_family'
+                , 'pp_address_family'
+                , 'pp_telp_family'
+                , 'pp_hp_family'
+                , 'pp_address_family'
+                , 'pp_hubungan_family'
+                , 'pp_wife_name'
+                , 'pp_wife_birth'
+                , 'pp_wife_birthplace'
+                , 'pp_dad_name'
+                , 'pp_dad_job'
+                , 'pp_mom_name'
+                , 'pp_mom_job'
+                , 'pp_job_now'
+                , 'pp_weight'
+                , 'pp_height'
+                , 'pp_seragam_size'
+                , 'pp_celana_size'
+                , 'pp_sepatu_size'
+                , 'pp_img')
             ->get();
 
-        $child = DB::table('d_pekerja_child')
-            ->select('pc_child_name', 'pc_birth_place', 'pc_birth_date')
-            ->where('pc_pekerja', '=', $id)
+        $child = DB::table('d_pekerja_pjtki_child')
+            ->select('ppc_child_name', 'ppc_birth_place', 'ppc_birth_date')
+            ->where('ppc_pekerja', '=', $id)
             ->get();
 
-        $keterampilan = DB::table('d_pekerja_keterampilan')
-            ->select('pk_keterampilan')
-            ->where('pk_pekerja', '=', $id)
+        $keterampilan = DB::table('d_pekerja_pjtki_keterampilan')
+            ->select('ppk_keterampilan')
+            ->where('ppk_pekerja', '=', $id)
             ->get();
 
         // $bahasa = DB::table('d_pekerja_language')
@@ -504,32 +493,32 @@ class pekerjaController extends Controller
         //        ->where('pl_pekerja', '=', $id)
         //        ->get();
 
-        $bahasa = DB::select("select pl_pekerja, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'INDONESIA') as indonesia, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'INGGRIS') as inggris, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language = 'MANDARIN') as mandarin, (select pl_language from d_pekerja_language pl where pl.pl_pekerja = '$id' and pl.pl_language != 'INDONESIA' and pl.pl_language != 'INGGRIS' and pl.pl_language != 'MANDARIN') as lain from d_pekerja_language dpl where pl_pekerja = '$id' group by pl_pekerja");
+        $bahasa = DB::select("select ppl_pekerja, (select ppl_language from d_pekerja_pjtki_language ppl where ppl.ppl_pekerja = '$id' and ppl.ppl_language = 'INDONESIA') as indonesia, (select ppl_language from d_pekerja_pjtki_language ppl where ppl.ppl_pekerja = '$id' and ppl.ppl_language = 'INGGRIS') as inggris, (select ppl_language from d_pekerja_pjtki_language ppl where ppl.ppl_pekerja = '$id' and ppl.ppl_language = 'MANDARIN') as mandarin, (select ppl_language from d_pekerja_pjtki_language ppl where ppl.ppl_pekerja = '$id' and ppl.ppl_language != 'INDONESIA' and ppl.ppl_language != 'INGGRIS' and ppl.ppl_language != 'MANDARIN') as lain from d_pekerja_pjtki_language dpl where ppl_pekerja = '$id' group by ppl_pekerja");
         //dd($bahasa);
 
-        $pengalaman = DB::table('d_pekerja_pengalaman')
-            ->select('pp_perusahaan', 'pp_start', 'pp_end', 'pp_jabatan')
-            ->where('pp_pekerja', '=', $id)
+        $pengalaman = DB::table('d_pekerja_pjtki_pengalaman')
+            ->select('ppp_perusahaan', 'ppp_start', 'ppp_end', 'ppp_jabatan')
+            ->where('ppp_pekerja', '=', $id)
             ->get();
 
         $referensi = DB::select("select *,
-(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'TEMAN') as teman,
-(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'KELUARGA') as keluarga,
-(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'KORAN') as koran,
-(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi = 'INTERNET') as internet,
-(select pr_referensi from d_pekerja_referensi pr where pr.pr_pekerja = '$id' and pr.pr_referensi != 'TEMAN' and pr.pr_referensi != 'KELUARGA' and pr.pr_referensi != 'KORAN' and pr.pr_referensi != 'INTERNET') as lain
-from d_pekerja_referensi dpr
-where pr_pekerja = '$id'
-group by pr_pekerja");
+(select ppr_referensi from d_pekerja_pjtki_referensi pr where pr.ppr_pekerja = '$id' and pr.ppr_referensi = 'TEMAN') as teman,
+(select ppr_referensi from d_pekerja_pjtki_referensi pr where pr.ppr_pekerja = '$id' and pr.ppr_referensi = 'KELUARGA') as keluarga,
+(select ppr_referensi from d_pekerja_pjtki_referensi pr where pr.ppr_pekerja = '$id' and pr.ppr_referensi = 'KORAN') as koran,
+(select ppr_referensi from d_pekerja_pjtki_referensi pr where pr.ppr_pekerja = '$id' and pr.ppr_referensi = 'INTERNET') as internet,
+(select ppr_referensi from d_pekerja_pjtki_referensi pr where pr.ppr_pekerja = '$id' and pr.ppr_referensi != 'TEMAN' and pr.ppr_referensi != 'KELUARGA' and pr.ppr_referensi != 'KORAN' and pr.ppr_referensi != 'INTERNET') as lain
+from d_pekerja_pjtki_referensi dpr
+where ppr_pekerja = '$id'
+group by ppr_pekerja");
 
-        $sim = DB::select("select ps_pekerja,
-(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM C') as simc,
-(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM A') as sima,
-(select ps_sim from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_sim = 'SIM B') as simb,
-(select ps_note from d_pekerja_sim ps where ps.ps_pekerja = '$id' and ps.ps_note != '') as note
-from d_pekerja_sim dps
-where ps_pekerja = '$id'
-group by ps_pekerja");
+        $sim = DB::select("select pps_pekerja,
+(select pps_sim from d_pekerja_pjtki_sim ps where ps.pps_pekerja = '$id' and ps.pps_sim = 'SIM C') as simc,
+(select pps_sim from d_pekerja_pjtki_sim ps where ps.pps_pekerja = '$id' and ps.pps_sim = 'SIM A') as sima,
+(select pps_sim from d_pekerja_pjtki_sim ps where ps.pps_pekerja = '$id' and ps.pps_sim = 'SIM B') as simb,
+(select pps_note from d_pekerja_pjtki_sim ps where ps.pps_pekerja = '$id' and ps.pps_note != '') as note
+from d_pekerja_pjtki_sim dps
+where pps_pekerja = '$id'
+group by pps_pekerja");
         //  dd($sim);
         // $sim = DB::table('d_pekerja_sim')
         //         ->select('ps_sim', 'ps_note')
@@ -561,37 +550,36 @@ group by ps_pekerja");
         // print_r($jabatan);
         // echo "</pre>";
 
-        return view('pekerja.formEdit', compact('id', 'pekerja', 'jabatan', 'child', 'keterampilan', 'bahasa', 'pengalaman', 'referensi', 'sim'));
+        return view('pekerja-pjtki.formEdit', compact('id', 'pekerja', 'jabatan', 'child', 'keterampilan', 'bahasa', 'pengalaman', 'referensi', 'sim'));
 
     }
 
     public function perbarui(Request $request)
     {
-
          DB::beginTransaction();
           try {
         $id = $request->id;
         $imglama = $request->imglama;
 
-        DB::table('d_pekerja')->where('p_id', '=', $id)
+        DB::table('d_pekerja_pjtki')->where('pp_id', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_child')->where('pc_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_child')->where('ppc_pekerja', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_keterampilan')->where('pk_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_keterampilan')->where('ppk_pekerja', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_language')->where('pl_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_language')->where('ppl_pekerja', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_pengalaman')->where('pp_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_pengalaman')->where('ppp_pekerja', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_referensi')->where('pr_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_referensi')->where('ppr_pekerja', '=', $id)
             ->delete();
 
-        DB::table('d_pekerja_sim')->where('ps_pekerja', '=', $id)
+        DB::table('d_pekerja_pjtki_sim')->where('pps_pekerja', '=', $id)
             ->delete();
 
         $nama = strtoupper($request->nama);
@@ -692,59 +680,59 @@ group by ps_pekerja");
             }
 
 
-            d_pekerja::insert(array(
-                "p_id" => $id,
-                "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
-                "p_nip" => null,
-                "p_ktp" => $no_ktp,
-                "p_name" => $nama,
-                "p_sex" => $sex,
-                "p_birthplace" => $tempat_lahir,
-                "p_birthdate" => $tanggal_lahir,
-                "p_hp" => $no_hp,
-                "p_telp" => $no_tlp,
-                "p_status" => strtoupper($status),
-                "p_many_kids" => strtoupper($jml_anak),
-                "p_religion" => strtoupper($agama),
-                "p_address" => strtoupper($alamat),
-                "p_rt_rw" => strtoupper($rt),
-                "p_kel" => strtoupper($desa),
-                "p_kecamatan" => strtoupper($kecamatan),
-                "p_city" => strtoupper($kota),
-                "p_address_now" => strtoupper($alamat_now),
-                "p_rt_rw_now" => strtoupper($rt_now),
-                "p_kel_now" => strtoupper($desa_now),
-                "p_kecamatan_now" => strtoupper($kecamatan_now),
-                "p_city_now" => strtoupper($kota_now),
-                "p_name_family" => strtoupper($nama_keluarga),
-                "p_address_family" => strtoupper($alamat_keluarga),
-                "p_telp_family" => strtoupper($telp_keluarga),
-                "p_hp_family" => strtoupper($hp_keluarga),
-                "p_hubungan_family" => strtoupper($hubungan_keluarga),
-                "p_wife_name" => strtoupper($wife_name),
-                "p_wife_birth" => strtoupper($wife_tanggal),
-                "p_wife_birthplace" => strtoupper($wife_lahir),
-                "p_dad_name" => strtoupper($dadname),
-                "p_dad_job" => strtoupper($dadjob),
-                "p_mom_name" => strtoupper($momname),
-                "p_mom_job" => strtoupper($momjob),
-                "p_job_now" => strtoupper($saatini),
-                "p_weight" => strtoupper($beratbadan),
-                "p_height" => strtoupper($tinggibadan),
-                "p_seragam_size" => strtoupper($ukuranbaju),
-                "p_celana_size" => strtoupper($ukurancelana),
-                "p_sepatu_size" => strtoupper($ukuransepatu),
-                "p_kpk" => null,
-                "p_bu" => null,
-                "p_ktp_expired" => null,
-                "p_ktp_seumurhidup" => null,
-                "p_education" => strtoupper($pendidikan),
-                "p_kpj_no" => null,
-                "p_state" => strtoupper($warga_negara),
-                "p_note" => null,
-                "p_img" => $imgPath,
-                "p_insert" => Carbon::now('Asia/Jakarta'),
-                "p_update" => Carbon::now('Asia/Jakarta')
+            DB::table('d_pekerja_pjtki')->insert(array(
+                "pp_id" => $id,
+                "pp_jabatan_lamaran" => strtoupper($jabatanpelamar),
+                "pp_nip" => null,
+                "pp_ktp" => $no_ktp,
+                "pp_name" => $nama,
+                "pp_sex" => $sex,
+                "pp_birthplace" => $tempat_lahir,
+                "pp_birthdate" => $tanggal_lahir,
+                "pp_hp" => $no_hp,
+                "pp_telp" => $no_tlp,
+                "pp_status" => strtoupper($status),
+                "pp_many_kids" => strtoupper($jml_anak),
+                "pp_religion" => strtoupper($agama),
+                "pp_address" => strtoupper($alamat),
+                "pp_rt_rw" => strtoupper($rt),
+                "pp_kel" => strtoupper($desa),
+                "pp_kecamatan" => strtoupper($kecamatan),
+                "pp_city" => strtoupper($kota),
+                "pp_address_now" => strtoupper($alamat_now),
+                "pp_rt_rw_now" => strtoupper($rt_now),
+                "pp_kel_now" => strtoupper($desa_now),
+                "pp_kecamatan_now" => strtoupper($kecamatan_now),
+                "pp_city_now" => strtoupper($kota_now),
+                "pp_name_family" => strtoupper($nama_keluarga),
+                "pp_address_family" => strtoupper($alamat_keluarga),
+                "pp_telp_family" => strtoupper($telp_keluarga),
+                "pp_hp_family" => strtoupper($hp_keluarga),
+                "pp_hubungan_family" => strtoupper($hubungan_keluarga),
+                "pp_wife_name" => strtoupper($wife_name),
+                "pp_wife_birth" => strtoupper($wife_tanggal),
+                "pp_wife_birthplace" => strtoupper($wife_lahir),
+                "pp_dad_name" => strtoupper($dadname),
+                "pp_dad_job" => strtoupper($dadjob),
+                "pp_mom_name" => strtoupper($momname),
+                "pp_mom_job" => strtoupper($momjob),
+                "pp_job_now" => strtoupper($saatini),
+                "pp_weight" => strtoupper($beratbadan),
+                "pp_height" => strtoupper($tinggibadan),
+                "pp_seragam_size" => strtoupper($ukuranbaju),
+                "pp_celana_size" => strtoupper($ukurancelana),
+                "pp_sepatu_size" => strtoupper($ukuransepatu),
+                "pp_kpk" => null,
+                "pp_bu" => null,
+                "pp_ktp_expired" => null,
+                "pp_ktp_seumurhidup" => null,
+                "pp_education" => strtoupper($pendidikan),
+                "pp_kpj_no" => null,
+                "pp_state" => strtoupper($warga_negara),
+                "pp_note" => null,
+                "pp_img" => $imgPath,
+                "pp_insert" => Carbon::now('Asia/Jakarta'),
+                "pp_update" => Carbon::now('Asia/Jakarta')
             ));
 
         } else {
@@ -780,59 +768,59 @@ group by ps_pekerja");
             }
 
 
-            d_pekerja::insert(array(
-                "p_id" => $id,
-                "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
-                "p_nip" => null,
-                "p_ktp" => $no_ktp,
-                "p_name" => $nama,
-                "p_sex" => $sex,
-                "p_birthplace" => $tempat_lahir,
-                "p_birthdate" => $tanggal_lahir,
-                "p_hp" => $no_hp,
-                "p_telp" => $no_tlp,
-                "p_status" => strtoupper($status),
-                "p_many_kids" => strtoupper($jml_anak),
-                "p_religion" => strtoupper($agama),
-                "p_address" => strtoupper($alamat),
-                "p_rt_rw" => strtoupper($rt),
-                "p_kel" => strtoupper($desa),
-                "p_kecamatan" => strtoupper($kecamatan),
-                "p_city" => strtoupper($kota),
-                "p_address_now" => strtoupper($alamat_now),
-                "p_rt_rw_now" => strtoupper($rt_now),
-                "p_kel_now" => strtoupper($desa_now),
-                "p_kecamatan_now" => strtoupper($kecamatan_now),
-                "p_city_now" => strtoupper($kota_now),
-                "p_name_family" => strtoupper($nama_keluarga),
-                "p_address_family" => strtoupper($alamat_keluarga),
-                "p_telp_family" => strtoupper($telp_keluarga),
-                "p_hp_family" => strtoupper($hp_keluarga),
-                "p_hubungan_family" => strtoupper($hubungan_keluarga),
-                "p_wife_name" => strtoupper($wife_name),
-                "p_wife_birth" => strtoupper($wife_tanggal),
-                "p_wife_birthplace" => strtoupper($wife_lahir),
-                "p_dad_name" => strtoupper($dadname),
-                "p_dad_job" => strtoupper($dadjob),
-                "p_mom_name" => strtoupper($momname),
-                "p_mom_job" => strtoupper($momjob),
-                "p_job_now" => strtoupper($saatini),
-                "p_weight" => strtoupper($beratbadan),
-                "p_height" => strtoupper($tinggibadan),
-                "p_seragam_size" => strtoupper($ukuranbaju),
-                "p_celana_size" => strtoupper($ukurancelana),
-                "p_sepatu_size" => strtoupper($ukuransepatu),
-                "p_kpk" => null,
-                "p_bu" => null,
-                "p_ktp_expired" => null,
-                "p_ktp_seumurhidup" => null,
-                "p_education" => strtoupper($pendidikan),
-                "p_kpj_no" => null,
-                "p_state" => strtoupper($warga_negara),
-                "p_note" => null,
-                "p_img" => $imglama,
-                "p_insert" => Carbon::now('Asia/Jakarta'),
-                "p_update" => Carbon::now('Asia/Jakarta')
+            DB::table('d_pekerja_pjtki')->insert(array(
+                "pp_id" => $id,
+                "pp_jabatan_lamaran" => strtoupper($jabatanpelamar),
+                "pp_nip" => null,
+                "pp_ktp" => $no_ktp,
+                "pp_name" => $nama,
+                "pp_sex" => $sex,
+                "pp_birthplace" => $tempat_lahir,
+                "pp_birthdate" => $tanggal_lahir,
+                "pp_hp" => $no_hp,
+                "pp_telp" => $no_tlp,
+                "pp_status" => strtoupper($status),
+                "pp_many_kids" => strtoupper($jml_anak),
+                "pp_religion" => strtoupper($agama),
+                "pp_address" => strtoupper($alamat),
+                "pp_rt_rw" => strtoupper($rt),
+                "pp_kel" => strtoupper($desa),
+                "pp_kecamatan" => strtoupper($kecamatan),
+                "pp_city" => strtoupper($kota),
+                "pp_address_now" => strtoupper($alamat_now),
+                "pp_rt_rw_now" => strtoupper($rt_now),
+                "pp_kel_now" => strtoupper($desa_now),
+                "pp_kecamatan_now" => strtoupper($kecamatan_now),
+                "pp_city_now" => strtoupper($kota_now),
+                "pp_name_family" => strtoupper($nama_keluarga),
+                "pp_address_family" => strtoupper($alamat_keluarga),
+                "pp_telp_family" => strtoupper($telp_keluarga),
+                "pp_hp_family" => strtoupper($hp_keluarga),
+                "pp_hubungan_family" => strtoupper($hubungan_keluarga),
+                "pp_wife_name" => strtoupper($wife_name),
+                "pp_wife_birth" => strtoupper($wife_tanggal),
+                "pp_wife_birthplace" => strtoupper($wife_lahir),
+                "pp_dad_name" => strtoupper($dadname),
+                "pp_dad_job" => strtoupper($dadjob),
+                "pp_mom_name" => strtoupper($momname),
+                "pp_mom_job" => strtoupper($momjob),
+                "pp_job_now" => strtoupper($saatini),
+                "pp_weight" => strtoupper($beratbadan),
+                "pp_height" => strtoupper($tinggibadan),
+                "pp_seragam_size" => strtoupper($ukuranbaju),
+                "pp_celana_size" => strtoupper($ukurancelana),
+                "pp_sepatu_size" => strtoupper($ukuransepatu),
+                "pp_kpk" => null,
+                "pp_bu" => null,
+                "pp_ktp_expired" => null,
+                "pp_ktp_seumurhidup" => null,
+                "pp_education" => strtoupper($pendidikan),
+                "pp_kpj_no" => null,
+                "pp_state" => strtoupper($warga_negara),
+                "pp_note" => null,
+                "pp_img" => $imglama,
+                "pp_insert" => Carbon::now('Asia/Jakarta'),
+                "pp_update" => Carbon::now('Asia/Jakarta')
             ));
 
         }
@@ -842,90 +830,90 @@ group by ps_pekerja");
             $temp = [];
             if ($keterampilan[$i] != '' || $keterampilan != null) {
                 $temp = array(
-                    'pk_pekerja' => $id,
-                    'pk_detailid' => $i + 1,
-                    'pk_keterampilan' => strtoupper($keterampilan[$i])
+                    'ppk_pekerja' => $id,
+                    'ppk_detailid' => $i + 1,
+                    'ppk_keterampilan' => strtoupper($keterampilan[$i])
                 );
                 array_push($addKeterampilan, $temp);
             }
         }
-        d_pekerja_keterampilan::insert($addKeterampilan);
+        DB::table('d_pekerja_pjtki_keterampilan')->insert($addKeterampilan);
 
         $addBahasa = [];
         for ($i = 0; $i < count($bahasa); $i++) {
             $temp = [];
             if ($bahasa[$i] == 'Lain' && $bahasa_lain != '') {
                 $temp = array(
-                    'pl_pekerja' => $id,
-                    'pl_detailid' => $i + 1,
-                    'pl_language' => strtoupper($bahasa_lain)
+                    'ppl_pekerja' => $id,
+                    'ppl_detailid' => $i + 1,
+                    'ppl_language' => strtoupper($bahasa_lain)
                 );
             } else {
                 if ($bahasa[$i] != null || $bahasa[$i] != '') {
                     $temp = array(
-                        'pl_pekerja' => $id,
-                        'pl_detailid' => $i + 1,
-                        'pl_language' => strtoupper($bahasa[$i])
+                        'ppl_pekerja' => $id,
+                        'ppl_detailid' => $i + 1,
+                        'ppl_language' => strtoupper($bahasa[$i])
                     );
                 }
             }
             array_push($addBahasa, $temp);
         }
-        d_pekerja_language::insert($addBahasa);
+        DB::table('d_pekerja_pjtki_language')->insert($addBahasa);
 
         $addSIM = [];
         for ($i = 0; $i < count($sim); $i++) {
             $temp = [];
             if ($sim[$i] != null || $sim[$i] != '') {
                 $temp = array(
-                    'ps_pekerja' => $id,
-                    'ps_detailid' => $i + 1,
-                    'ps_sim' => $sim[$i],
-                    'ps_note' => strtoupper($simket)
+                    'pps_pekerja' => $id,
+                    'pps_detailid' => $i + 1,
+                    'pps_sim' => $sim[$i],
+                    'pps_note' => strtoupper($simket)
                 );
                 array_push($addSIM, $temp);
             }
         }
-        d_pekerja_sim::insert($addSIM);
+        DB::table('d_pekerja_pjtki_sim')->insert($addSIM);
 
         $addPengalaman = [];
         for ($i = 0; $i < count($pengalaman_corp); $i++) {
             $temp = [];
             if ($pengalaman_corp[$i] != null || $pengalaman_corp[$i] != '') {
                 $temp = array(
-                    'pp_pekerja' => $id,
-                    'pp_detailid' => $i + 1,
-                    'pp_perusahaan' => strtoupper($pengalaman_corp[$i]),
-                    'pp_start' => $start_pengalaman[$i],
-                    'pp_end' => $end_pengalaman[$i],
-                    'pp_jabatan' => strtoupper($jabatan_pengalaman[$i])
+                    'ppp_pekerja' => $id,
+                    'ppp_detailid' => $i + 1,
+                    'ppp_perusahaan' => strtoupper($pengalaman_corp[$i]),
+                    'ppp_start' => $start_pengalaman[$i],
+                    'ppp_end' => $end_pengalaman[$i],
+                    'ppp_jabatan' => strtoupper($jabatan_pengalaman[$i])
                 );
                 array_push($addPengalaman, $temp);
             }
         }
-        d_pekerja_pengalaman::insert($addPengalaman);
+        DB::table('d_pekerja_pjtki_pengalaman')->insert($addPengalaman);
 
         $addReferensi = [];
         for ($i = 0; $i < count($referensi); $i++) {
             $temp = [];
             if ($referensi[$i] == 'Lain') {
                 $temp = array(
-                    'pr_pekerja' => $id,
-                    'pr_detailid' => $i + 1,
-                    'pr_referensi' => strtoupper($referensi_lain)
+                    'ppr_pekerja' => $id,
+                    'ppr_detailid' => $i + 1,
+                    'ppr_referensi' => strtoupper($referensi_lain)
                 );
             } else {
                 if ($referensi[$i] != null || $referensi[$i] != '') {
                     $temp = array(
-                        'pr_pekerja' => $id,
-                        'pr_detailid' => $i + 1,
-                        'pr_referensi' => strtoupper($referensi[$i])
+                        'ppr_pekerja' => $id,
+                        'ppr_detailid' => $i + 1,
+                        'ppr_referensi' => strtoupper($referensi[$i])
                     );
                 }
             }
             array_push($addReferensi, $temp);
         }
-        d_pekerja_referensi::insert($addReferensi);
+        DB::table('d_pekerja_pjtki_referensi')->insert($addReferensi);
 
         $addChild = [];
         for ($i = 0; $i < count($childname); $i++) {
@@ -934,27 +922,27 @@ group by ps_pekerja");
                 if ($childdate[$i] != "") {
                     $childdate[$i] = Carbon::createFromFormat('d/m/Y', $childdate[$i], 'Asia/Jakarta');
                     $temp = array(
-                        'pc_pekerja' => $id,
-                        'pc_detailid' => $i + 1,
-                        'pc_child_name' => strtoupper($childname[$i]),
-                        'pc_birth_date' => $childdate[$i],
-                        'pc_birth_place' => strtoupper($childplace[$i])
+                        'ppc_pekerja' => $id,
+                        'ppc_detailid' => $i + 1,
+                        'ppc_child_name' => strtoupper($childname[$i]),
+                        'ppc_birth_date' => $childdate[$i],
+                        'ppc_birth_place' => strtoupper($childplace[$i])
                     );
                     array_push($addChild, $temp);
                 }
             }
         }
-        d_pekerja_child::insert($addChild);
+        DB::table('d_pekerja_pjtki_child')->insert($addChild);
 
 
         DB::commit();
         Session::flash('sukses', 'data pekerja anda berhasil diperbarui');
-        return redirect('manajemen-pekerja/data-pekerja');
+        return redirect('pekerja-pjtki/data-pekerja');
         } catch (\Exception $e) {
             DB::rollback();
             Session::flash('gagal', 'data pekerja anda tidak dapat di perbarui');
 
-            return redirect('manajemen-pekerja/data-pekerja');
+            return redirect('pekerja-pjtki/data-pekerja');
         }
 
     }
@@ -963,27 +951,27 @@ group by ps_pekerja");
     {
 
         return DB::transaction(function () use ($id) {
-            $pekerja = d_pekerja::where('p_id', $id);
-            $pekerja_mutasi = d_pekerja_mutation::where('pm_pekerja', $id);
+            $pekerja = DB::table('d_pekerja_pjtki')->where('pp_id', $id);
+            $pekerja_mutasi = DB::table('d_pekerja_pjtki_mutation')->where('ppm_pekerja', $id);
 
-            $cari_max_pm_detailid = DB::table('d_pekerja_mutation')
-                ->where('pm_pekerja', $id)
-                ->max('pm_detailid');
+            $cari_max_pm_detailid = DB::table('d_pekerja_pjtki_mutation')
+                ->where('ppm_pekerja', $id)
+                ->max('ppm_detailid');
 
             $pekerja->update([
-                'p_state' => 3,
-                'p_note' => 'Ex'
+                'pp_state' => 3,
+                'pp_note' => 'Ex'
             ]);
 
             $pekerja_mutasi->insert([
-                'pm_pekerja' => $id,
-                'pm_detailid' => $cari_max_pm_detailid + 1,
-                'pm_date' => Carbon::now('Asia/Jakarta'),
-                'pm_mitra' => null,
-                'pm_divisi' => null,
-                'pm_detail' => "Ex",
-                'pm_from' => null,
-                'pm_status' => "Ex"
+                'ppm_pekerja' => $id,
+                'ppm_detailid' => $cari_max_pm_detailid + 1,
+                'ppm_date' => Carbon::now('Asia/Jakarta'),
+                'ppm_mitra' => null,
+                'ppm_divisi' => null,
+                'ppm_detail' => "Ex",
+                'ppm_from' => null,
+                'ppm_status' => "Ex"
             ]);
 
             return response()->json([
@@ -997,7 +985,7 @@ group by ps_pekerja");
     public function detail(Request $request)
     {
 
-        $list = DB::table('d_pekerja')
+        $list = DB::table('d_pekerja_pjtki')
             ->leftJoin('d_mitra_pekerja', 'd_pekerja.p_id', '=', 'd_mitra_pekerja.mp_pekerja')
             ->leftjoin('d_mitra', 'd_mitra_pekerja.mp_mitra', '=', 'd_mitra.m_id')
             ->leftjoin('d_mitra_divisi', 'd_mitra_pekerja.mp_divisi', '=', 'd_mitra_divisi.md_id')
@@ -1050,7 +1038,7 @@ group by ps_pekerja");
 
     public function detail_mutasi(Request $request)
     {
-        $list_mutasi = DB::table('d_pekerja_mutation')
+        $list_mutasi = DB::table('d_pekerja_pjtki_mutation')
             ->leftjoin('d_mitra', 'd_pekerja_mutation.pm_mitra', '=', 'd_mitra.m_id')
             ->leftjoin('d_mitra_divisi', 'd_pekerja_mutation.pm_divisi', '=', 'd_mitra_divisi.md_id')
             ->select('d_pekerja_mutation.*', 'd_mitra.*', 'd_mitra_divisi.*')

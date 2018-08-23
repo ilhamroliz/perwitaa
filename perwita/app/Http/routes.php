@@ -771,4 +771,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalopname/setujuilist', 'approvalopnameController@setujuilist');
     Route::get('approvalopname/tolak', 'approvalopnameController@tolak');
     Route::get('approvalopname/tolaklist', 'approvalopnameController@tolaklist');
+
+    //pekerja PJTKI
+    Route::get('pekerja-pjtki/data-pekerja','pekerjapjtkiController@index');
+    Route::POST('pekerja-pjtki/data-pekerja/table','pekerjapjtkiController@data');
+    Route::get('pekerja-pjtki/data-pekerja/table','pekerjapjtkiController@data');
+    Route::POST('pekerja-pjtki/data-pekerja/tablenon','pekerjapjtkiController@dataEx');
+    Route::get('pekerja-pjtki/data-pekerja/tablenon','pekerjapjtkiController@dataEx');
+    Route::POST('pekerja-pjtki/data-pekerja/tablecalon','pekerjapjtkiController@dataCalon');
+    Route::get('pekerja-pjtki/data-pekerja/tablecalon','pekerjapjtkiController@dataCalon');
+    Route::get('pekerja-pjtki/data-pekerja/tambah','pekerjapjtkiController@tambah');
+    Route::get('pekerja-pjtki/data-pekerja/simpan','pekerjapjtkiController@simpan');
+    Route::POST('pekerja-pjtki/data-pekerja/simpan','pekerjapjtkiController@simpan');
+    Route::get('pekerja-pjtki/data-pekerja/{id}/edit','pekerjapjtkiController@edit');
+    Route::get('pekerja-pjtki/data-pekerja/perbarui/','pekerjapjtkiController@perbarui');
+    Route::POST('pekerja-pjtki/data-pekerja/perbarui/','pekerjapjtkiController@perbarui');
+    Route::get('pekerja-pjtki/data-pekerja/hapus/{id}','pekerjapjtkiController@hapus');
+    Route::get('pekerja-pjtki/data-pekerja/detail','pekerjapjtkiController@detail');
+    Route::get('pekerja-pjtki/data-pekerja/resign','pekerjapjtkiController@resign');
+    Route::get('pekerja-pjtki/data-pekerja/detail-mutasi','pekerjapjtkiController@detail_mutasi');
+
+    //PHK
+    Route::get('manajemen-pekerja/phk', 'phkController@index');
+    Route::get('manajemen-pekerja/carino', 'phkController@carino');
 });
