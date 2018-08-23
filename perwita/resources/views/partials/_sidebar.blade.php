@@ -35,7 +35,7 @@
               || Request::is('manajemen-pekerja/remunerasi/*') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra/*') ? 'active' : '' }}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pekerja</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (MJI)</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
                                 || Request::is('manajemen-pekerja/data-pekerja/*') ? 'active' : ''  }}">
@@ -83,7 +83,7 @@
 
             <li class="treeview sidebar data-master {{
                  Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''}}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pekerja (PJTKI)</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (PJTKI)</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''
                                 || Request::is('pekerja-pjtki/data-pekerja/*') ? 'active' : ''  }}">
@@ -222,7 +222,7 @@
                     <span class="nav-label">Manajemen Pegawai</span>
                 </a>
             </li>
-                <li class="treeview sidebar data-master {{
+            {{-- <li class="treeview sidebar data-master {{
                  Request::is('bpjs') ? 'active' : '' }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Bpjs Tk</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -233,14 +233,9 @@
                     </li>
 
                 </ul>
-            </li>
+            </li> --}}
 
-            <li class="">
-                <a href="{{url('manajemen-pekerja/data-pekerja')}}"><i class="fa fa-th-large"></i>
-                    <span class="nav-label">Manajemen pekerja</span>
-                </a>
-            </li>
-            <li class="">
+            {{-- <li class="">
                 <a href="{{url('surat')}}"><i class="fa fa-th-large"></i>
                     <span class="nav-label">Manajemen surat</span>
                 </a>
@@ -249,7 +244,7 @@
                 <a href="{{url('manajemen-akun/data-akun')}}"><i class="fa fa-th-large"></i>
                     <span class="nav-label">Master Akun</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="treeview sidebar data-master
             {{  Request::is('master-item') ? 'active' : '' ||
                 Request::is('master-item/*') ? 'active' : '' ||
@@ -270,7 +265,7 @@
                     </li>
                 </ul>
             </li> --}}
-            <li class="">
+            {{-- <li class="">
                 <a href="{{url('data-master/master-transaksi-akun')}}"><i class="fa fa-th-large"></i>
                     <span class="nav-label">Master Transaksi</span>
                 </a>
@@ -287,7 +282,7 @@
                     <li><a href="{{url('laporan-keuangan/laba-rugi')}}">Laporan Laba Rugi</a></li>
                     <li><a href="{{url('laporan-keuangan/arus-kas')}}">Laporan Arus Kas</a></li>
                 </ul>
-            </li>
+            </li> --}}
             <li style="padding-bottom: 30px;">
                 <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
