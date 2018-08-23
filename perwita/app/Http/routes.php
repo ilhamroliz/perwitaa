@@ -793,5 +793,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //PHK
     Route::get('manajemen-pekerja/phk', 'phkController@index');
-    Route::get('manajemen-pekerja/carino', 'phkController@carino');
+    Route::get('manajemen-pekerja/phk/carino', 'phkController@carino');
+    Route::get('manajemen-pekerja/phk/getdata', 'phkController@getdata');
+    Route::get('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
+    Route::post('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
 });

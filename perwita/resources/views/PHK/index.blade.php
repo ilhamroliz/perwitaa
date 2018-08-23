@@ -111,7 +111,7 @@ var table;
         }
       });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-pekerja/phk/simpan/'+id,
         dataType: 'json',
