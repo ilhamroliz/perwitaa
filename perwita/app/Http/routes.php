@@ -797,4 +797,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja/phk/getdata', 'phkController@getdata');
     Route::get('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
     Route::post('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
+    Route::get('manajemen-pekerja/phk/cari', 'phkController@cari');
 });
