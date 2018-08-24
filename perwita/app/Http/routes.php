@@ -806,4 +806,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Approval phk
     Route::get('approvalphk', 'approvallphkController@index');
+    Route::get('approvalphk/setujui', 'approvallphkController@setujui');
+    Route::get('approvalphk/tolak', 'approvallphkController@tolak');
+    Route::get('approvalphk/setujuilist', 'approvallphkController@setujuilist');
+    Route::get('approvalphk/tolaklist', 'approvallphkController@tolaklist');
 });
