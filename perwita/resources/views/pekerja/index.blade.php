@@ -452,7 +452,7 @@
 
 
       function tambah() {
-          window.location = baseUrl + '/manajemen-pekerja/data-pekerja/tambah';
+          window.location.href = baseUrl + '/manajemen-pekerja/data-pekerja/tambah';
       }
 
 

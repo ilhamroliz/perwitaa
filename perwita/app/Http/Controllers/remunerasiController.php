@@ -227,6 +227,16 @@ class remunerasiController extends Controller
               'pm_note' => 'Dihapus'
             ]);
 
+            $count = DB::table('d_remunerasi')
+                    ->where('r_isapproved', 'P')
+                    ->get();
+
+            DB::table('d_notifikasi')
+              ->where('n_fitur', 'Remunerasi')
+              ->update([
+                'n_qty' => count($count)
+              ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'

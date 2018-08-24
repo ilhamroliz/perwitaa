@@ -419,6 +419,16 @@ class promosiController extends Controller
           ->where('pd_id', $request->id)
           ->delete();
 
+          $count = DB::table('d_promosi_demosi')
+                  ->where('pd_isapproved', 'P')
+                  ->get();
+
+          DB::table('d_notifikasi')
+            ->where('n_fitur', 'Promosi')
+            ->update([
+              'n_qty' => count($count)
+            ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'

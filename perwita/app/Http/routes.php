@@ -798,4 +798,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
     Route::post('manajemen-pekerja/phk/simpan/{id}', 'phkController@simpan');
     Route::get('manajemen-pekerja/phk/cari', 'phkController@cari');
+    Route::get('manajemen-pekerja/phk/data', 'phkController@data');
+    Route::get('manajemen-pekerja/phk/getcari', 'phkController@getcari');
+    Route::get('manajemen-pekerja/phk/detail', 'phkController@detail');
+    Route::get('manajemen-pekerja/phk/hapus', 'phkController@hapus');
+    Route::get('manajemen-pekerja/phk/print', 'phkController@print');
+
+    //Approval phk
+    Route::get('approvalphk', 'approvallphkController@index');
 });

@@ -333,6 +333,16 @@ class SuratPeringatanController extends Controller
               'pm_note' => 'Dihapus'
             ]);
 
+            $count = DB::table('d_surat_pringatan')
+                    ->where('sp_isapproved', 'P')
+                    ->get();
+
+            DB::table('d_notifikasi')
+              ->where('n_fitur', 'Surat Peringatan')
+              ->update([
+                'n_qty' => count($count)
+              ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
