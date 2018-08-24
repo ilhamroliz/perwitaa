@@ -74,7 +74,7 @@
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane active">
                             <div class="panel-body">
-                                <table id="pekerja" class="table table-bordered table-striped">
+                                <table id="pekerjapjtki" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th style="width: 22%;">Nama</th>
@@ -93,7 +93,7 @@
                         </div>
                         <div id="tab-2" class="tab-pane">
                             <div class="panel-body">
-                                <table id="calon-pekerja" class="table table-bordered table-striped"
+                                <table id="calon-pekerjapjtki" class="table table-bordered table-striped"
                                        style="width: 100%;">
                                     <thead>
                                     <tr>
@@ -112,7 +112,7 @@
                         </div>
                         <div id="tab-3" class="tab-pane">
                             <div class="panel-body">
-                                <table id="pekerja-non" class="table table-bordered table-striped"
+                                <table id="pekerja-nonpjtki" class="table table-bordered table-striped"
                                        style="width: 100%;">
                                     <thead>
                                     <tr>
@@ -351,7 +351,7 @@
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
               });
-              table = $("#pekerja").DataTable({
+              table = $("#pekerjapjtki").DataTable({
                   "search": {
                       "caseInsensitive": true
                   },
@@ -386,7 +386,7 @@
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
               });
-              tablenon = $("#pekerja-non").DataTable({
+              tablenon = $("#pekerja-nonpjtki").DataTable({
                   "search": {
                       "caseInsensitive": true
                   },
@@ -421,7 +421,7 @@
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
               });
-              tablecalon = $("#calon-pekerja").DataTable({
+              tablecalon = $("#calon-pekerjapjtki").DataTable({
                   "search": {
                       "caseInsensitive": true
                   },
