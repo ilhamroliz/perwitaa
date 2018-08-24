@@ -10,7 +10,7 @@
     .spacing-top{
         margin-top:15px;
     }
-    #upload-file-selector {
+    #upload-file-selectorpjtki {
         display:none;
     }
     .margin-correction {
@@ -697,7 +697,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="wifelahirpjtki" name="wifelahir" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$pekerja[0]->pp_wife_birthplace}}">
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2">                              
                                 <input type="text" class="form-control" id="wifettlpjtki" name="wifettl" placeholder="Tanggal" value="{{Carbon\Carbon::parse($pekerja[0]->pp_wife_birth)->format('d/m/Y')}}">
                             </div>
                         </div>
