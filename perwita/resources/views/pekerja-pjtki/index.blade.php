@@ -67,12 +67,12 @@
                 </div>
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1"> Pekerja Aktif</a></li>
-                        <li class=""><a data-toggle="tab" href="#tab-2"> Calon Pekerja</a></li>
-                        <li class=""><a data-toggle="tab" href="#tab-3"> Pekerja non-Aktif</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab-1pjtki"> Pekerja Aktif</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-2pjtki"> Calon Pekerja</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-3pjtki"> Pekerja non-Aktif</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="tab-1" class="tab-pane active">
+                        <div id="tab-1pjtki" class="tab-pane active">
                             <div class="panel-body">
                                 <table id="pekerjapjtki" class="table table-bordered table-striped">
                                     <thead>
@@ -91,7 +91,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="tab-2" class="tab-pane">
+                        <div id="tab-2pjtki" class="tab-pane">
                             <div class="panel-body">
                                 <table id="calon-pekerjapjtki" class="table table-bordered table-striped"
                                        style="width: 100%;">
@@ -110,7 +110,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="tab-3" class="tab-pane">
+                        <div id="tab-3pjtki" class="tab-pane">
                             <div class="panel-body">
                                 <table id="pekerja-nonpjtki" class="table table-bordered table-striped"
                                        style="width: 100%;">
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal inmodal" id="modal-detailpjtki" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" style="width : 1000px">
                         <div class="modal-content animated fadeIn">
                             <div class="modal-header">
@@ -148,121 +148,121 @@
                                         <h3>Nama Pekerja </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_name">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_namepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Nama Ibu </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_momname">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_momnamepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>No NIK </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_nik">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_nikpjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>No NIK Mitra </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_nik_mitra">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_nik_mitrapjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>No KPJ </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_kpj_no">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_kpj_nopjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Jenis Kelamin </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_sex">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_sexpjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Nama Mitra </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="m_name">: -</h3>
+                                        <h3 style="font-weight:normal;" id="m_namepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tempat Lahir </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_birthplace">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_birthplacepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Nama Divisi </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="md_name">: -</h3>
+                                        <h3 style="font-weight:normal;" id="md_namepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tanggal Lahir </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_birthdate">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_birthdatepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tanggal Seleksi </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="mp_selection_date">: -</h3>
+                                        <h3 style="font-weight:normal;" id="mp_selection_datepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Alamat </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_address">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_addresspjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tanggal Masuk Kerja </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="mp_workin_date">: -</h3>
+                                        <h3 style="font-weight:normal;" id="mp_workin_datepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>No Hp </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_hp">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_hppjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tanggal Awal Kontrak </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="mc_date">: -</h3>
+                                        <h3 style="font-weight:normal;" id="mc_datepjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>No KTP </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_ktp">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_ktppjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>tanggal Kontrak Berakhir </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="mc_expired">: -</h3>
+                                        <h3 style="font-weight:normal;" id="mc_expiredpjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Tanggal Berlaku KTP </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="b_ktp">: -</h3>
+                                        <h3 style="font-weight:normal;" id="b_ktppjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Sisa Waktu Kontrak </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="sisa_kontrak">: -</h3>
+                                        <h3 style="font-weight:normal;" id="sisa_kontrakpjtki">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3>Pendidikan </h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3 style="font-weight:normal;" id="p_education">: -</h3>
+                                        <h3 style="font-weight:normal;" id="p_educationpjtki">: -</h3>
                                     </div>
 
 
@@ -274,7 +274,7 @@
                                     <h3 style="font-style: italic; color: blue">History Pekerja</h3>
                                 </div>
                                 <form class="form-horizontal">
-                                    <table id="tabel_detail"
+                                    <table id="tabel_detailpjtki"
                                            class="table table-bordered table-striped tabel_detail">
 
                                     </table>
@@ -284,7 +284,7 @@
                                 <div class="btn-group">
                                     <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                                 </div>
-                                <button type="button" id="printbtn" class="btn btn-primary" onclick="print()" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
+                                <button type="button" id="printbtnpjtki" class="btn btn-primary" onclick="print()" name="button"><i class="fa fa-print">&nbsp;</i>Print</button>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
     </div>
   </div>
 
-  <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal inmodal" id="myModalpjtki" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content animated fadeIn">
               <div class="modal-header">
@@ -310,13 +310,13 @@
                           <div class="form-group getkonten0">
                               <label class="col-sm-2 control-label" for="keteranganresign">Keterangan</label>
                               <div class="col-sm-10 selectukuran0">
-                                  <input type="text" name="keterangan" id="keteranganresign" class="form-control" placeholder="Keterangan Resign" title="Keterangan Resign">
+                                  <input type="text" name="keterangan" id="keteranganresignpjtki" class="form-control" placeholder="Keterangan Resign" title="Keterangan Resign">
                               </div>
                           </div>
                           <div class="form-group getkonten1">
                               <label class="col-sm-2 control-label" for="tgl-resign">Tanggal</label>
                               <div class="col-sm-5">
-                                  <input type="text" name="tanggal" id="tgl-resign" class="form-control" style="text-align: center;">
+                                  <input type="text" name="tanggal" id="tgl-resignpjtki" class="form-control" style="text-align: center;">
                               </div>
                           </div>
                       </div>
@@ -324,7 +324,7 @@
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                  <button onclick="simpanresign()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+                  <button onclick="simpanresign()" id="simpanbtnpjtki" class="btn btn-primary" type="button">Simpan</button>
               </div>
           </div>
       </div>
@@ -339,7 +339,7 @@
       var tablenon;
       var tablecalon;
 
-      $('#tgl-resign').datepicker({
+      $('#tgl-resignpjtki').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
       }).datepicker("setDate", "0");
@@ -377,7 +377,7 @@
                   //"scrollCollapse": true,
                   "language": dataTableLanguage,
               });
-              $('#pekerja').css('width', '100%').dataTable().fnAdjustColumnSizing();
+              $('#pekerjapjtki').css('width', '100%').dataTable().fnAdjustColumnSizing();
           }, 1500);
 
           setTimeout(function () {
@@ -412,7 +412,7 @@
                   //"scrollCollapse": true,
                   "language": dataTableLanguage,
               });
-              $('#pekerja-non').css('width', '100%').dataTable().fnAdjustColumnSizing();
+              $('#pekerja-nonpjtki').css('width', '100%').dataTable().fnAdjustColumnSizing();
           }, 3500);
 
           setTimeout(function () {
@@ -446,7 +446,7 @@
                   //"scrollCollapse": true,
                   "language": dataTableLanguage,
               });
-              $('#calon-pekerja').css('width', '100%').dataTable().fnAdjustColumnSizing();
+              $('#calon-pekerjapjtki').css('width', '100%').dataTable().fnAdjustColumnSizing();
           }, 2500);
       });
 
@@ -517,7 +517,7 @@
 
       function detail(id) {
           var id = id;
-          $('#printbtn').attr('onclick','print('+id+')')
+          $('#printbtnpjtki').attr('onclick','print('+id+')')
           $.ajax({
               data: {id: id},
               type: "GET",
@@ -630,26 +630,26 @@
 
                   // console.log(sisa_kontrak);
                   // console.log(mc_date);
-                  $('#p_nik_mitra').html(": " + p_nip_mitra);
-                  $('#p_nik').html(": " + p_nip);
-                  $('#p_name').html(": " + p_name);
-                  $('#p_sex').html(": " + p_sex);
-                  $('#p_birthplace').html(": " + p_birthplace);
-                  $('#p_birthdate').html(": " + p_birthdate);
-                  $('#p_address').html(": " + p_address);
-                  $('#p_hp').html(": " + p_hp);
-                  $('#p_ktp').html(": " + p_ktp);
-                  $('#b_ktp').html(": " + b_ktp);
-                  $('#p_education').html(": " + p_education);
-                  $('#p_momname').html(": " + p_momname);
-                  $('#p_kpj_no').html(": " + p_kpj_no);
-                  $('#m_name').html(": " + m_name);
-                  $('#md_name').html(": " + md_name);
-                  $('#mp_selection_date').html(": " + mp_selection_date);
-                  $('#mp_workin_date').html(": " + mp_workin_date);
-                  $('#mc_date').html(": " + mc_date);
-                  $('#mc_expired').html(": " + mc_expired);
-                  $('#sisa_kontrak').html(": " + sisa_kontrak);
+                  $('#p_nik_mitrapjtki').html(": " + p_nip_mitra);
+                  $('#p_nikpjtki').html(": " + p_nip);
+                  $('#p_namepjtki').html(": " + p_name);
+                  $('#p_sexpjtki').html(": " + p_sex);
+                  $('#p_birthplacepjtki').html(": " + p_birthplace);
+                  $('#p_birthdatepjtki').html(": " + p_birthdate);
+                  $('#p_addresspjtki').html(": " + p_address);
+                  $('#p_hppjtki').html(": " + p_hp);
+                  $('#p_ktppjtki').html(": " + p_ktp);
+                  $('#b_ktppjtki').html(": " + b_ktp);
+                  $('#p_educationpjtki').html(": " + p_education);
+                  $('#p_momnamepjtki').html(": " + p_momname);
+                  $('#p_kpj_nopjtki').html(": " + p_kpj_no);
+                  $('#m_namepjtki').html(": " + m_name);
+                  $('#md_namepjtki').html(": " + md_name);
+                  $('#mp_selection_datepjtki').html(": " + mp_selection_date);
+                  $('#mp_workin_datepjtki').html(": " + mp_workin_date);
+                  $('#mc_datepjtki').html(": " + mc_date);
+                  $('#mc_expiredpjtki').html(": " + mc_expired);
+                  $('#sisa_kontrakpjtki').html(": " + sisa_kontrak);
 
               }
           })
@@ -707,22 +707,22 @@
                     }
                   });
                   pekerja_mutasi = pekerja_mutasi + '</tbody';
-                  $('#tabel_detail').html(pekerja_mutasi);
+                  $('#tabel_detailpjtki').html(pekerja_mutasi);
               }
 
           })
 
-          $("#modal-detail").modal("show");
+          $("#modal-detailpjtki").modal("show");
       }
 
       function resign(id){
-          $('#myModal').modal('show');
-          $('#simpanbtn').attr('onclick', 'simpanresign('+id+')');
+          $('#myModalpjtki').modal('show');
+          $('#simpanbtnpjtki').attr('onclick', 'simpanresign('+id+')');
       }
 
       function simpanresign(id){
-        var keterangan = $('#keteranganresign').val();
-        var tanggal = $('#tgl-resign').val();
+        var keterangan = $('#keteranganresignpjtki').val();
+        var tanggal = $('#tgl-resignpjtki').val();
         $.ajax({
           type: 'get',
           data: {id:id, keterangan:keterangan, tanggal: tanggal},
@@ -737,7 +737,7 @@
                   showConfirmButton: false,
                   timer: 900
               });
-              $('#myModal').modal('hide');
+              $('#myModalpjtki').modal('hide');
             } else {
                 swal({
                   title: "Gagal",
@@ -746,7 +746,7 @@
                   showConfirmButton: false,
                   timer: 900
               });
-              $('#myModal').modal('hide');
+              $('#myModalpjtki').modal('hide');
             }
             location.reload();
           }
