@@ -65,7 +65,9 @@
 
     {{-- <script type="text/javascript" src="{{asset('assets/cropper/js/common.js')}}"></script> --}}
     <script type="text/javascript" src="{{asset('assets/cropper/js/cropper.min.js')}}"></script>
- {{--    <script type="text/javascript" src="{{asset('assets/cropper/js/main.js')}}"></script> --}}
+    {{--    <script type="text/javascript" src="{{asset('assets/cropper/js/main.js')}}"></script> --}}
+    {{-- dobpicker --}}
+    <script src="{{ asset('assets/vendors/dobpicker/dobPicker.min.js') }}"></script>
 
 
 

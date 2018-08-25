@@ -283,10 +283,12 @@
                     <li><a href="{{url('laporan-keuangan/arus-kas')}}">Laporan Arus Kas</a></li>
                 </ul>
             </li> --}}
-            <li style="padding-bottom: 30px;">
-                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
+            <li style="padding-bottom: 30px;" class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
+                                || Request::is('manajemen-pengguna/*') ? 'active' : ''  }}">
+                <a href="index.html"><i class="fa fa-cog"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="{{url('manajemen-pengguna/pengguna')}}">Manajemen Pengguna</a></li>
+                    <li class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
+                                || Request::is('manajemen-pengguna/*') ? 'active' : ''  }}"><a href="{{url('manajemen-pengguna/pengguna')}}">Manajemen Pengguna</a></li>
                     <li><a href="{{url('manajemen-hak-akses/group')}}">Manajemen Akses Group</a></li>
                     <li><a href="{{url('setting-aplikasi')}}">Group Akses</a></li>
                 </ul>

@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profil/perbarui-password', 'profilController@perbaruiPassword');
 
     Route::get('manajemen-pengguna/pengguna', 'manajemenPenggunaController@index');
+    Route::get('manajemen-pengguna/tambah', 'manajemenPenggunaController@add');
     Route::get('manajemen-pengguna/edit/{id}', 'manajemenPenggunaController@edit');
 
 
