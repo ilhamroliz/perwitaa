@@ -10,7 +10,7 @@
     .spacing-top{
         margin-top:15px;
     }
-    #upload-file-selector {
+    #upload-file-selectorpjtki {
         display:none;
     }
     .margin-correction {
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="nama-pekerja" name="nama" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="nama-pekerjapjtki" name="nama" style="text-transform:uppercase">
                             </div>
                         </div>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Jabatan</label>
                             <div class="col-sm-10">
-                                <select class="form-control m-b" id="jabatan-pelamar" name="jabatan_pelamar">
+                                <select class="form-control m-b" id="jabatan-pelamarpjtki" name="jabatan_pelamar">
                                     <option disabled selected>-- Pilih Jenis Jabatan --</option>
                                     @foreach($jabPelamar as $data)
                                     <option value="{{ $data->jp_id }}"> {{ $data->jp_name }} </option>
@@ -70,87 +70,87 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Alamat KTP</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="alamat-pekerja" name="alamat" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="alamat-pekerjapjtki" name="alamat" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <label class="col-sm-1 control-label" style="text-align: left">RT/RW</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="rt-pekerja" name="rt" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="rt-pekerjapjtki" name="rt" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-1 control-label" style="text-align: left">Kel/Desa</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="desa-pekerja" name="desa" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="desa-pekerjapjtki" name="desa" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <label class="col-sm-1 control-label" style="text-align: left">Kec</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="kec-pekerja" name="kecamatan" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="kec-pekerjapjtki" name="kecamatan" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-1 control-label" style="text-align: left">Kota/Kab</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="kota-pekerja" name="kota" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="kota-pekerjapjtki" name="kota" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Alamat Sekarang</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="alamat-pekerja-now" name="alamat_now" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="alamat-pekerja-nowpjtki" name="alamat_now" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <label class="col-sm-1 control-label" style="text-align: left">RT/RW</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="rt-pekerja-now" name="rt_now" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="rt-pekerja-nowpjtki" name="rt_now" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-1 control-label" style="text-align: left">Kel/Desa</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="desa-pekerja-now" name="desa_now" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="desa-pekerja-nowpjtki" name="desa_now" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <label class="col-sm-1 control-label" style="text-align: left">Kec</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="kec-pekerja-now" name="kecamatan_now" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="kec-pekerja-nowpjtki" name="kecamatan_now" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-1 control-label" style="text-align: left">Kota/Kab</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="kota-pekerja-now" name="kota_now" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="kota-pekerja-nowpjtki" name="kota_now" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Tempat Lahir</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="tempat-lahir-pekerja" name="tempat_lahir" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="tempat-lahir-pekerjapjtki" name="tempat_lahir" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Tanggal Lahir</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="tanggal-lahir-pekerja" name="tanggal_lahir" >
+                                <input type="text" class="form-control" id="tanggal-lahir-pekerjapjtki" name="tanggal_lahir" >
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nomor KTP</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ktp-pekerja" name="no_ktp" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="ktp-pekerjapjtki" name="no_ktp" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">No Tlp Rumah</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="tlp-pekerja" name="no_tlp">
+                                <input type="text" class="form-control" id="tlp-pekerjapjtki" name="no_tlp">
                             </div>
                             <label class="col-sm-2 control-label">No Hp</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="hp-pekerja" name="no_hp">
+                                <input type="text" class="form-control" id="hp-pekerjapjtki" name="no_hp">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -158,11 +158,11 @@
                             <label class="col-sm-2 control-label">Jenis Kelamin</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="laki" class="jenis-kelamin" value="L" name="jenkel" checked="">
+                                    <input type="radio" id="lakipjtki" class="jenis-kelamin" value="L" name="jenkel" checked="">
                                     <label for="laki"> Pria </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                    <input type="radio" id="perempuan" class="jenis-kelamin" value="P" name="jenkel">
+                                    <input type="radio" id="perempuanpjtki" class="jenis-kelamin" value="P" name="jenkel">
                                     <label for="perempuan"> Wanita </label>
                                 </div>
                             </div>
@@ -172,11 +172,11 @@
                             <label class="col-sm-2 control-label">Warga Negara</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="wargawni" class="warga-negara" value="WNI" name="wn" checked="">
+                                    <input type="radio" id="wargawnipjtki" class="warga-negara" value="WNI" name="wn" checked="">
                                     <label for="wargawni"> WNI </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                    <input type="radio" id="wargawna" class="warga-negara" value="WNA" name="wn">
+                                    <input type="radio" id="wargawnapjtki" class="warga-negara" value="WNA" name="wn">
                                     <label for="wargawna"> WNA </label>
                                 </div>
                             </div>
@@ -186,11 +186,11 @@
                             <label class="col-sm-2 control-label">Status</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="single" value="Single" name="status" checked="">
+                                    <input type="radio" id="singlepjtki" value="Single" name="status" checked="">
                                     <label for="single"> Single </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                    <input type="radio" id="kawin" value="Kawin" name="status">
+                                    <input type="radio" id="kawinpjtki" value="Kawin" name="status">
                                     <label for="kawin"> Kawin </label>
                                 </div>
                             </div>
@@ -199,23 +199,23 @@
                             <label class="col-sm-2 control-label">Jumlah Anak</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="tidak" value="0" name="jml_anak" checked="">
+                                    <input type="radio" id="tidakpjtki" value="0" name="jml_anak" checked="">
                                     <label for="tidak"> Belum </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline col-sm-2">
-                                    <input type="radio" id="satu" value="1" name="jml_anak">
+                                    <input type="radio" id="satupjtki" value="1" name="jml_anak">
                                     <label for="satu"> 1 Anak </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                    <input type="radio" id="dua" value="2" name="jml_anak">
+                                    <input type="radio" id="duapjtki" value="2" name="jml_anak">
                                     <label for="dua"> 2 Anak </label>
                                 </div>
                                 <div class="radio radio-info radio-inline col-sm-2">
-                                    <input type="radio" id="tiga" value="3" name="jml_anak">
+                                    <input type="radio" id="tigapjtki" value="3" name="jml_anak">
                                     <label for="tiga"> 3 Anak </label>
                                 </div>
                                 <div class="radio radio-success radio-inline col-sm-2">
-                                    <input type="radio" id="lebih" value="Lebih" name="jml_anak">
+                                    <input type="radio" id="lebihpjtki" value="Lebih" name="jml_anak">
                                     <label for="lebih"> 3 Anak Lebih </label>
                                 </div>
                             </div>
@@ -225,23 +225,23 @@
                             <label class="col-sm-2 control-label">Agama</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-1">
-                                    <input type="radio" id="islam" value="Islam" name="agama" checked="">
+                                    <input type="radio" id="islampjtki" value="Islam" name="agama" checked="">
                                     <label for="islam"> Islam </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline col-sm-1">
-                                    <input type="radio" id="kristen" value="Kristen" name="agama">
+                                    <input type="radio" id="kristenpjtki" value="Kristen" name="agama">
                                     <label for="kristen"> Kristen </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-1">
-                                    <input type="radio" id="hindu" value="Hindu" name="agama">
+                                    <input type="radio" id="hindupjtki" value="Hindu" name="agama">
                                     <label for="hindu"> Hindu </label>
                                 </div>
                                 <div class="radio radio-info radio-inline col-sm-1">
-                                    <input type="radio" id="budha" value="Budha" name="agama">
+                                    <input type="radio" id="budhapjtki" value="Budha" name="agama">
                                     <label for="budha"> Budha </label>
                                 </div>
                                 <div class="radio radio-info radio-inline col-sm-1">
-                                    <input type="radio" id="agamalain" value="Lain" name="agama">
+                                    <input type="radio" id="agamalainpjtki" value="Lain" name="agama">
                                     <label for="agamalain"> Lainnya </label>
                                 </div>
                                 <div class="col-sm-4">
@@ -254,23 +254,23 @@
                             <label class="col-sm-2 control-label">Pendidikan</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="sd" value="SD" name="pendidikan" checked="">
+                                    <input type="radio" id="sdpjtki" value="SD" name="pendidikan" checked="">
                                     <label for="sd"> SD </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline col-sm-2">
-                                    <input type="radio" id="sltp" value="SLTP" name="pendidikan">
+                                    <input type="radio" id="sltppjtki" value="SLTP" name="pendidikan">
                                     <label for="sltp"> SLTP </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-2">
-                                    <input type="radio" id="slta" value="SLTA" name="pendidikan">
+                                    <input type="radio" id="sltapjtki" value="SLTA" name="pendidikan">
                                     <label for="slta"> SLTA </label>
                                 </div>
                                 <div class="radio radio-info radio-inline col-sm-2">
-                                    <input type="radio" id="diploma" value="DIPLOMA" name="pendidikan">
+                                    <input type="radio" id="diplomapjtki" value="DIPLOMA" name="pendidikan">
                                     <label for="diploma"> DIPLOMA </label>
                                 </div>
                                 <div class="radio radio-success radio-inline col-sm-2">
-                                    <input type="radio" id="universitas" value="UNIVERSITAS" name="pendidikan">
+                                    <input type="radio" id="universitaspjtki" value="UNIVERSITAS" name="pendidikan">
                                     <label for="universitas"> UNIVERSITAS </label>
                                 </div>
                             </div>
@@ -280,23 +280,23 @@
                             <label class="col-sm-2 control-label">Bahasa</label>
                             <div class="col-sm-10">
                                 <div class="checkbox checkbox-primary checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="indonesia" value="INDONESIA" name="bahasa[]" checked="">
+                                    <input type="checkbox" id="indonesiapjtki" value="INDONESIA" name="bahasa[]" checked="">
                                     <label for="indonesia"> Indonesia </label>
                                 </div>
                                 <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="inggris" value="Inggris" name="bahasa[]">
+                                    <input type="checkbox" id="inggrispjtki" value="Inggris" name="bahasa[]">
                                     <label for="inggris"> Inggris </label>
                                 </div>
                                 <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="mandarin" value="Mandarin" name="bahasa[]">
+                                    <input type="checkbox" id="mandarinpjtki" value="Mandarin" name="bahasa[]">
                                     <label for="mandarin"> Mandarin </label>
                                 </div>
                                 <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                                    <input type="checkbox" id="bahasalain" value="Lain" name="bahasa[]">
+                                    <input type="checkbox" id="bahasalainpjtki" value="Lain" name="bahasa[]">
                                     <label for="bahasalain"> Lainnya </label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="bahasalain" placeholder="Lainnya">
+                                    <input type="text" class="form-control input-bahasa" id="bahasalainpjtki" value="" name="bahasalain" placeholder="Lainnya">
                                 </div>
                             </div>
                         </div>
@@ -305,19 +305,19 @@
                             <label class="col-sm-2 control-label">SIM Driver</label>
                             <div class="col-sm-10">
                                 <div class="checkbox checkbox-primary checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="simc" value="SIM C" name="sim[]" checked="">
+                                    <input type="checkbox" id="simcpjtki" value="SIM C" name="sim[]" checked="">
                                     <label for="simc"> SIM C </label>
                                 </div>
                                 <div class="checkbox checkbox-danger checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="sima" value="SIM A" name="sim[]">
+                                    <input type="checkbox" id="simapjtki" value="SIM A" name="sim[]">
                                     <label for="sima"> SIM A </label>
                                 </div>
                                 <div class="checkbox checkbox-warning checkbox-inline col-sm-2">
-                                    <input type="checkbox" id="simb" value="SIM B" name="sim[]">
+                                    <input type="checkbox" id="simbpjtki" value="SIM B" name="sim[]">
                                     <label for="simb"> SIM B </label>
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-bahasa" id="bahasalain" value="" name="simket" placeholder="Keterangan">
+                                    <input type="text" class="form-control input-bahasa" id="bahasalainpjtki" value="" name="simket" placeholder="Keterangan">
                                 </div>
                             </div>
                         </div>
@@ -366,27 +366,27 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Referensi dari</label>
                             <div class="checkbox checkbox-primary checkbox-inline col-sm-1" style="margin-left: 15px;">
-                                <input type="checkbox" id="teman" value="Teman" name="ref[]" checked="">
+                                <input type="checkbox" id="temanpjtki" value="Teman" name="ref[]" checked="">
                                 <label for="teman"> Teman </label>
                             </div>
                             <div class="checkbox checkbox-danger checkbox-inline col-sm-1">
-                                <input type="checkbox" id="keluarga" value="Keluarga" name="ref[]">
+                                <input type="checkbox" id="keluargapjtki" value="Keluarga" name="ref[]">
                                 <label for="keluarga"> Keluarga </label>
                             </div>
                             <div class="checkbox checkbox-warning checkbox-inline col-sm-1">
-                                <input type="checkbox" id="koran" value="Koran" name="ref[]">
+                                <input type="checkbox" id="koranpjtki" value="Koran" name="ref[]">
                                 <label for="koran"> Koran </label>
                             </div>
                             <div class="checkbox checkbox-info checkbox-inline col-sm-1">
-                                <input type="checkbox" id="internet" value="Internet" name="ref[]">
+                                <input type="checkbox" id="internetpjtki" value="Internet" name="ref[]">
                                 <label for="internet"> Internet </label>
                             </div>
                             <div class="checkbox checkbox-success checkbox-inline col-sm-1">
-                                <input type="checkbox" id="reflain" value="Lain" name="ref[]">
+                                <input type="checkbox" id="reflainpjtki" value="Lain" name="ref[]">
                                 <label for="reflain"> Lainnya </label>
                             </div>
                             <div class="col-md-4">
-                                <input type="text" class="form-control input-referensi" id="reflain" value="" name="reflain" placeholder="Referensi" style="width: 100%;">
+                                <input type="text" class="form-control input-referensi" id="reflainpjtki" value="" name="reflain" placeholder="Referensi" style="width: 100%;">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -396,27 +396,27 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="namakeluarga" name="namakeluarga" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="namakeluargapjtki" name="namakeluarga" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Hub Keluarga</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="hubkeluarga" name="hubkeluarga" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="hubkeluargapjtki" name="hubkeluarga" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">No Telp Rumah</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="nokeluarga" name="nokeluarga" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="nokeluargapjtki" name="nokeluarga" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Hp</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="hpkeluarga" name="hpkeluarga" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="hpkeluargapjtki" name="hpkeluarga" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Alamat</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="alamatkeluarga" name="alamatkeluarga" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="alamatkeluargapjtki" name="alamatkeluarga" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -426,13 +426,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Suami/Istri</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="wifename" name="wifename" placeholder="Nama Suami/Istri" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="wifenamepjtki" name="wifename" placeholder="Nama Suami/Istri" style="text-transform:uppercase">
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="wifelahir" name="wifelahir" placeholder="Tempat Lahir" style="text-transform:uppercase">
+                                <input type="text" class="form-control" id="wifelahirpjtki" name="wifelahir" placeholder="Tempat Lahir" style="text-transform:uppercase">
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="wifettl" name="wifettl" placeholder="Tanggal" >
+                                <input type="text" class="form-control" id="wifettlpjtki" name="wifettl" placeholder="Tanggal" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -475,21 +475,21 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama Ayah</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control dadname" id="dadname" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase">
+                                <input type="text" class="form-control dadname" id="dadnamepjtki" name="dadname" placeholder="Nama Ayah" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Pekerjaan</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control dadjob" id="dadjob" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase">
+                                <input type="text" class="form-control dadjob" id="dadjobpjtki" name="dadjob" placeholder="Pekerjaan" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama Ibu</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control momname" id="momname" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase">
+                                <input type="text" class="form-control momname" id="momnamepjtki" name="momname" placeholder="Nama Ibu" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Pekerjaan</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control momjob" id="momjob" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase">
+                                <input type="text" class="form-control momjob" id="momjobpjtki" name="momjob" placeholder="Pekerjaan" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -497,19 +497,19 @@
                             <label class="col-sm-2 control-label">Saya saat ini</label>
                             <div class="col-sm-10">
                                 <div class="radio radio-primary radio-inline col-sm-2">
-                                    <input type="radio" id="tidakbekerja" value="Tidak Bekerja" name="saatini" checked="">
+                                    <input type="radio" id="tidakbekerjapjtki" value="Tidak Bekerja" name="saatini" checked="">
                                     <label for="tidakbekerja"> Tidak Bekerja </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline col-sm-2">
-                                    <input type="radio" id="masihbekerja" value="Masih Bekerja" name="saatini">
+                                    <input type="radio" id="masihbekerjapjtki" value="Masih Bekerja" name="saatini">
                                     <label for="masihbekerja"> Masih Bekerja </label>
                                 </div>
                                 <div class="radio radio-warning radio-inline col-sm-1">
-                                    <input type="radio" id="kuliah" value="Kuliah" name="saatini">
+                                    <input type="radio" id="kuliahpjtki" value="Kuliah" name="saatini">
                                     <label for="kuliah"> Kuliah </label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control kuliahnow" id="kuliahnow" name="kuliahnow" placeholder="Kuliah pada" style="text-transform:uppercase">
+                                    <input type="text" class="form-control kuliahnow" id="kuliahnowpjtki" name="kuliahnow" placeholder="Kuliah pada" style="text-transform:uppercase">
                                 </div>
                             </div>
                         </div>
@@ -517,27 +517,27 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Berat Badan</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control beratbadan" id="beratbadan" name="beratbadan" placeholder="Berat" style="text-transform:uppercase">
+                                <input type="text" class="form-control beratbadan" id="beratbadanpjtki" name="beratbadan" placeholder="Berat" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Tinggi Badan</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control tinggibadan" id="tinggibadan" name="tinggibadan" placeholder="Tinggi" style="text-transform:uppercase">
+                                <input type="text" class="form-control tinggibadan" id="tinggibadanpjtki" name="tinggibadan" placeholder="Tinggi" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Ukuran Baju</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control ukuranbaju" id="ukuranbaju" name="ukuranbaju" placeholder="Ukuran Baju" style="text-transform:uppercase">
+                                <input type="text" class="form-control ukuranbaju" id="ukuranbajupjtki" name="ukuranbaju" placeholder="Ukuran Baju" style="text-transform:uppercase">
                             </div>
                             <label class="col-sm-2 control-label">Ukuran Celana</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control ukurancelana" id="ukurancelana" name="ukurancelana" placeholder="Ukuran Celana" style="text-transform:uppercase">
+                                <input type="text" class="form-control ukurancelana" id="ukurancelanapjtki" name="ukurancelana" placeholder="Ukuran Celana" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Ukuran Sepatu</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control ukuransepatu" id="ukuransepatu" name="ukuransepatu" placeholder="Ukuran Sepatu" style="text-transform:uppercase">
+                                <input type="text" class="form-control ukuransepatu" id="ukuransepatupjtki" name="ukuransepatu" placeholder="Ukuran Sepatu" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -566,7 +566,7 @@
                             <label class="col-sm-2 control-label">Foto</label>
                             <div class="col-sm-4">
                                 <label class="btn btn-default" for="upload-file-selector">
-                                    <input id="upload-file-selector" name="imageUpload" class="uploadGambar" type="file" >
+                                    <input id="upload-file-selectorpjtki" name="imageUpload" class="uploadGambar" type="file" >
                                     <i class="fa fa-upload margin-correction"></i>upload gambar
                                 </label>
                             </div>
@@ -599,7 +599,7 @@
     /*var $inputImage = $("#inputImage");
     var $image;*/
     $(document).ready(function(){
-        $('#tanggal-lahir-pekerja').datepicker({
+        $('#tanggal-lahir-pekerjapjtki').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'
         }).datepicker("setDate", "0");
@@ -621,12 +621,12 @@
             format: 'dd/mm/yyyy'
         });
 
-        $('#wifettl').datepicker({
+        $('#wifettlpjtki').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'
         });
 
-        $('#jabatan-pelamar').select2();
+        $('#jabatan-pelamarpjtki').select2();
 
         /*$image = $(".image-crop > img")
             $($image).cropper({
@@ -773,11 +773,11 @@
 
     function simpan(){
         waitingDialog.show();
-        var nama = $('#nama-pekerja');
-        var jabatan = $('#jabatan-pelamar');
-        var alamatpekerja = $('#alamat-pekerja');
-        var alamatpekerjanow = $('#alamat-pekerja-now');
-        var ktppekerja = $('#ktp-pekerja');
+        var nama = $('#nama-pekerjapjtki');
+        var jabatan = $('#jabatan-pelamarpjtki');
+        var alamatpekerja = $('#alamat-pekerjapjtki');
+        var alamatpekerjanow = $('#alamat-pekerja-nowpjtki');
+        var ktppekerja = $('#ktp-pekerjapjtki');
 
         if (nama == '' || nama == null || nama == ' ') {
             waitingDialog.hide();
