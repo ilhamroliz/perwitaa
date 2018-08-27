@@ -156,7 +156,7 @@ class manajemenPenggunaController extends Controller
                     'm_username' => $user,
                     'm_image' => $imgPath,
                     'm_passwd' => $pass,
-                    'm_name' => $nama,
+                    'm_name' => ucwords(strtolower($nama)),
                     'm_jabatan' => $jabatan,
                     'm_birth_tgl' => $birth,
                     'm_addr' => $alamat,
