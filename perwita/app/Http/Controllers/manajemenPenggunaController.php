@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
 use App\d_mem;
-
+use Auth;
 use App\d_access;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Crypt;
 
 class manajemenPenggunaController extends Controller
@@ -47,5 +48,115 @@ class manajemenPenggunaController extends Controller
             ->select('c_id', 'c_name')
             ->get();
         return view('manajemen-pengguna.create', compact('jabatan', 'comp'));
+    }
+
+    public function cekUsername(Request $request)
+    {
+        $user = $request->username;
+        $cek = DB::table('d_mem')
+            ->where('m_username', '=', $user)
+            ->get();
+        if (count($cek) > 0){
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        }
+    }
+
+    public function getId()
+    {
+        $cek = DB::table('d_mem')
+            ->select(DB::raw('max(right(m_id, 7)) as id'))
+            ->get();
+
+        foreach ($cek as $x) {
+            $temp = ((int)$x->id + 1);
+            $kode = sprintf("%07s",$temp);
+        }
+
+        $tempKode = 'MEM' . $kode;
+        return $tempKode;
+    }
+
+    public function deleteDir($dirPath)
+    {
+        if (!is_dir($dirPath)) {
+            return false;
+        }
+        if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+            $dirPath .= '/';
+        }
+        $files = glob($dirPath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                self::deleteDir($file);
+            } else {
+                unlink($file);
+            }
+        }
+        rmdir($dirPath);
+    }
+
+    public function save(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $nama = $request->nama;
+            $comp = $request->perusahaan;
+            $user = $request->username;
+            $pass = sha1(md5('passwordAllah') . $request->password);
+            $passAgain = $request->passwordagain;
+            $jabatan = $request->jabatan;
+            $birth = $request->tanggal . '/' . $request->bulan . '/' . $request->tahun;
+            $alamat = $request->alamat;
+            $m_id = $this->getId();
+
+            $cek = $this->cekUsername($request);
+            $cek = $cek->getData('status')['status'];
+            if ($cek == 'gagal'){
+                return redirect('manajemen-pengguna/pengguna')->with(['gagal' => 'Username tidak tersedia']);
+            }
+            if ($pass != $passAgain){
+                return redirect('manajemen-pengguna/pengguna')->with(['gagal' => 'Password tidak sesuai']);
+            }
+
+            $imgPath = null;
+            $tgl = Carbon::now('Asia/Jakarta');
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'image/uploads/user/' . $m_id;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            $file = $request->file('imageUpload');
+            $name = null;
+            if ($file != null) {
+                $name = $folder . '.' . $file->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $file->move($path, $name);
+                        $imgPath = $childPath . $name;
+                    } else
+                        $imgPath = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
+            DB::table('d_mem')
+                ->insert([
+                    'm_id' => $m_id,
+                    'm_username' => $user,
+                    'm_image' => $imgPath,
+                    'm_password' => $pass,
+                    'm_name' => $nama
+                ]);
+
+        } catch (\Exception $e){
+
+        }
     }
 }
