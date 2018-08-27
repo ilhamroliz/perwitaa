@@ -34,6 +34,21 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="col-md-12">
+        @if(Session::has('sukses'))
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <strong>{{ Session::get('sukses') }}</strong>
+            </div>
+        @elseif(Session::has('gagal'))
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <strong>{{ Session::get('gagal') }}</strong>
+            </div>
+        @endif
+    </div>
     <div class="">
         <table>
             <?php $counter = 1; ?>
@@ -56,8 +71,8 @@
                             <div class="col-sm-4">
                                 <div class="text-center">
                                     <img alt="image" class="img-circle m-t-xs img-responsive" src="
-                                    @if (file_exists('{{ asset("'.$data->m_image.'") }}'))
-                                        {{ asset("'.$data->m_image.'") }}
+                                    @if (file_exists($data->m_image))
+                                        {{ asset("$data->m_image") }}
                                     @else
                                         {{ asset("assets/img/user/default.jpg") }}
                                     @endif

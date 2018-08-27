@@ -345,7 +345,6 @@
       $('#dobyear').focus();
       return false;
     }
-return false;
   });
 
   function cekUsername(){

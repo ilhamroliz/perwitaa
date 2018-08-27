@@ -11,6 +11,9 @@ use Auth;
 use App\d_access;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Crypt;
+use Session;
+use Carbon\Carbon;
+use File;
 
 class manajemenPenggunaController extends Controller
 {
@@ -108,10 +111,10 @@ class manajemenPenggunaController extends Controller
             $nama = $request->nama;
             $comp = $request->perusahaan;
             $user = $request->username;
-            $pass = sha1(md5('passwordAllah') . $request->password);
+            $pass = $request->password;
             $passAgain = $request->passwordagain;
             $jabatan = $request->jabatan;
-            $birth = $request->tanggal . '/' . $request->bulan . '/' . $request->tahun;
+            $birth = $request->tahun . '-' . $request->bulan . '-' . $request->tanggal;
             $alamat = $request->alamat;
             $m_id = $this->getId();
 
@@ -124,10 +127,11 @@ class manajemenPenggunaController extends Controller
                 return redirect('manajemen-pengguna/pengguna')->with(['gagal' => 'Password tidak sesuai']);
             }
 
+            $pass = sha1(md5('passwordAllah') . $request->password);
             $imgPath = null;
             $tgl = Carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/user/' . $m_id;
+            $dir = 'assets/img/user/' . $m_id;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -151,12 +155,30 @@ class manajemenPenggunaController extends Controller
                     'm_id' => $m_id,
                     'm_username' => $user,
                     'm_image' => $imgPath,
-                    'm_password' => $pass,
-                    'm_name' => $nama
+                    'm_passwd' => $pass,
+                    'm_name' => $nama,
+                    'm_jabatan' => $jabatan,
+                    'm_birth_tgl' => $birth,
+                    'm_addr' => $alamat,
+                    'm_insert' => $tgl
                 ]);
 
-        } catch (\Exception $e){
+            DB::table('d_mem_comp')
+                ->insert([
+                    'mc_mem' => $m_id,
+                    'mc_comp' => $comp,
+                    'mc_lvl' => 11,
+                    'mc_active' => 1,
+                    'mc_insert' => $tgl
+                ]);
 
+            DB::commit();
+            Session::flash('sukses', 'Data berhasil disimpan');
+            return redirect('manajemen-pengguna/pengguna');
+        } catch (\Exception $e){
+            DB::rollback();
+            Session::flash('gagal', 'Data gagal disimpan, cobalah sesaat lagi');
+            return redirect('manajemen-pengguna/pengguna');
         }
     }
 }
