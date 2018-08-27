@@ -554,21 +554,41 @@ a#pdf:hover { background: #222; }
 						</div>
 					</div>
 
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_ktp']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
 					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_skck']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
 					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_ijazah']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
 					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_medical']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
+					<br>
+
+					@if ($status == 'Yes')
+						<div class="col-lg-12">
+								<h3 style="font-style: italic; color: blue">History Pekerja</h3>
+						</div>
+						<form class="form-horizontal">
+								<table id="tabel_detail" class="table table-bordered table-striped tabel_detail">
+									<thead>
+										<tr>
+											<th style="text-align : center;"> TANGGAL </th>
+											<th style="text-align : center;"> MITRA</th>
+											<th style="text-align : center;"> DIVISI</th>
+											<th style="text-align : center;"> KET</th>
+											<th style="text-align : center;"> NO REFF</th>
+											<th style="text-align : center;"> STATUS</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach ($history as $value)
+											<tr>
+												<td>{{$value['pm_date']}}</td>
+												<td>{{$value['md_name']}}</td>
+												<td>{{$value['pm_detail']}}</td>
+												<td>{{$value['pm_reff']}}</td>
+												<td>{{$value['pm_note']}}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+						</form>
+					@endif
 
 				</div><!--// .yui-b -->
 			</div><!--// yui-main -->

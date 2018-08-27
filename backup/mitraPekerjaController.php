@@ -30,7 +30,6 @@ class mitraPekerjaController extends Controller
 
     public function data() {
 
-
 //select * from d_mitra_contract join d_mitra_pekerja
 //on d_mitra_pekerja.mp_contract=d_mitra_contract.mc_contractid
 //and d_mitra_pekerja.mp_mitra=d_mitra_contract.mc_mitra
@@ -91,7 +90,7 @@ class mitraPekerjaController extends Controller
 
     public function tambah() {
         $mitra_contract=d_mitra_contract::where('mc_status_mp','0')->get();
-        $pekerja=d_pekerja::get();
+        $pekerja=d_pekerja::where('p_isapproved', 'Y')->get();
         return view('mitra-pekerja.formTambah',compact('pekerja','mitra_contract')) ;
     }
     public function simpan(Request $request) {

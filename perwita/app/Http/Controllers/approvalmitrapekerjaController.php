@@ -285,6 +285,7 @@ class approvalmitrapekerjaController extends Controller
             ->join('d_mitra_divisi', 'md_id', '=', 'mp_divisi')
             ->select('p_name','mp_selection_date','mp_workin_date', 'mc_no', 'mp_status', 'm_name', 'md_name', 'p_nip', 'p_nip_mitra', 'm_address', 'm_phone', 'mc_date', 'mc_expired')
             ->where('mp_contract',$request->mp_contract)
+            ->where('mp_status', 'Aktif')
             ->where('mp_isapproved','Y')
             ->get();
 

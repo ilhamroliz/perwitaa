@@ -369,10 +369,54 @@ class approvalpelamarController extends Controller
            'p_workdate' => $data[0]->p_workdate,
            'p_insert' => $data[0]->p_insert,
            'p_img' => $data[0]->p_img,
+           'p_img_ktp' => $data[0]->p_img_ktp,
+           'p_img_skck' => $data[0]->p_img_skck,
+           'p_img_ijazah' => $data[0]->p_img_ijazah,
+           'p_img_medical' => $data[0]->p_img_medical,
            'p_update' => $data[0]->p_update,
            'p_note' => $data[0]->p_note
          );
-         return view('approvalpelamar.print', compact('lempar'));
+
+          $list_mutasi = DB::table('d_pekerja_mutation')
+                ->leftjoin('d_mitra', 'd_pekerja_mutation.pm_mitra', '=', 'd_mitra.m_id')
+                ->leftjoin('d_mitra_divisi', 'd_pekerja_mutation.pm_divisi', '=', 'd_mitra_divisi.md_id')
+                ->select('d_pekerja_mutation.*', 'd_mitra.*', 'd_mitra_divisi.*')
+                ->where('d_pekerja_mutation.pm_pekerja', '=', $id)
+                ->get();
+
+            $history = array();
+            foreach ($list_mutasi as $r) {
+                $history[] = (array)$r;
+            }
+            $i = 0;
+            foreach ($history as $key) {
+                // add new data
+                Carbon::setLocale('id');
+                $history[$i]['pm_date'] = Date('d-m-Y H:i:s', strtotime($history[$i]['pm_date']));
+                if ($key['m_name'] == null) {
+                    $history[$i]['m_name'] = '-';
+                }
+                if ($key['md_name'] == null) {
+                    $history[$i]['md_name'] = '-';
+                }
+                if ($key['pm_from'] == null) {
+                    $history[$i]['pm_from'] = '-';
+                }
+                $i++;
+            }
+
+            $status = 'No';
+            foreach ($history as $key => $value) {
+              if (stristr($value['pm_status'], 'Ex')) {
+                $status = 'Yes';
+              }
+            }
+
+        if ($status == 'Yes') {
+          return view('approvalpelamar.print1', compact('lempar', 'history', 'status'));
+        } else {
+          return view('approvalpelamar.print', compact('lempar', 'history', 'status'));
+        }
     }
 
     public function setujuilist(Request $request){

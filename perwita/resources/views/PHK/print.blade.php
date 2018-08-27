@@ -26,6 +26,9 @@
       N.I.K		:   {{$data[0]->p_nip}}
     </div>
     <div style="text-align: justify;">
+      N.I.K Mitra		:   {{$data[0]->p_nip_mitra}}
+    </div>
+    <div style="text-align: justify;">
       Alamat	:   {{$data[0]->p_address}}
     </div>
     <div style="text-align: justify;">

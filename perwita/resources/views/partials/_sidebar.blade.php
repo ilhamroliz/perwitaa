@@ -217,11 +217,28 @@
                 </ul>
             </li>
 
-            <li class="">
-                <a href="{{url('manajemen-pegawai/data-pegawai')}}"><i class="fa fa-th-large"></i>
-                    <span class="nav-label">Manajemen Pegawai</span>
-                </a>
+            <li class="treeview sidebar data-master {{
+                 Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
+                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pegawai</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Data Pegawai</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/promosidemosi') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/promosidemosi/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Promosi & Demosi</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/remunerasi') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/remunerasi/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Remunerasi</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             {{-- <li class="treeview sidebar data-master {{
                  Request::is('bpjs') ? 'active' : '' }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Bpjs Tk</span><span class="fa arrow"></span></a>

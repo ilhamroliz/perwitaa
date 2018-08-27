@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">No NIK</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="no-nikpjtki" name="nama" style="text-transform:uppercase" value="{{$pekerja[0]->pp_nip}}">
+                                <input type="text" class="form-control" id="no-nikpjtki" name="nonikpjtki" style="text-transform:uppercase" value="{{$pekerja[0]->pp_nip}}">
                             </div>
                         </div>
                         @endif
@@ -697,7 +697,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="wifelahirpjtki" name="wifelahir" placeholder="Tempat Lahir" style="text-transform:uppercase" value="{{$pekerja[0]->pp_wife_birthplace}}">
                             </div>
-                            <div class="col-sm-2">                              
+                            <div class="col-sm-2">
                                 <input type="text" class="form-control" id="wifettlpjtki" name="wifettl" placeholder="Tanggal" value="{{Carbon\Carbon::parse($pekerja[0]->pp_wife_birth)->format('d/m/Y')}}">
                             </div>
                         </div>

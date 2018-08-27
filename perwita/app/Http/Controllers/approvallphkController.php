@@ -33,6 +33,16 @@ class approvallphkController extends Controller
             }
           }
 
+          $count = DB::table('d_phk')
+                  ->where('p_isapproved', 'P')
+                  ->get();
+
+                  DB::table('d_notifikasi')
+                    ->where('n_fitur', 'PHK')
+                    ->update([
+                        'n_qty' => count($count)
+                    ]);
+
       return view('approvalphk.index', compact('data'));
     }
 
@@ -73,12 +83,22 @@ class approvallphkController extends Controller
               'pm_date' => Carbon::now('Asia/Jakarta'),
               'pm_mitra' => $data[0]->mp_mitra,
               'pm_divisi' => $data[0]->mp_divisi,
-              'pm_detail' => 'Resign',
+              'pm_detail' => $data[0]->p_keterangan,
               'pm_status' => 'Ex',
               'pm_note' => $data[0]->p_keterangan,
               'pm_insert_by' => Session::get('mem'),
               'pm_reff' => $data[0]->p_no
             ]);
+
+            $count = DB::table('d_phk')
+                    ->where('p_isapproved', 'P')
+                    ->get();
+
+                    DB::table('d_notifikasi')
+                      ->where('n_fitur', 'PHK')
+                      ->update([
+                          'n_qty' => count($count)
+                      ]);
 
         DB::commit();
         return response()->json([
@@ -130,13 +150,23 @@ class approvallphkController extends Controller
                 'pm_date' => Carbon::now('Asia/Jakarta'),
                 'pm_mitra' => $data[$i]->mp_mitra,
                 'pm_divisi' => $data[$i]->mp_divisi,
-                'pm_detail' => 'Resign',
+                'pm_detail' => $data[0]->p_keterangan,
                 'pm_status' => 'Ex',
                 'pm_note' => $data[$i]->p_keterangan,
                 'pm_insert_by' => Session::get('mem'),
                 'pm_reff' => $data[$i]->p_no
               ]);
         }
+
+        $count = DB::table('d_phk')
+                ->where('p_isapproved', 'P')
+                ->get();
+
+                DB::table('d_notifikasi')
+                  ->where('n_fitur', 'PHK')
+                  ->update([
+                      'n_qty' => count($count)
+                  ]);
 
         DB::commit();
         return response()->json([
@@ -159,6 +189,16 @@ class approvallphkController extends Controller
             ->update([
               'p_isapproved' => 'N'
             ]);
+
+            $count = DB::table('d_phk')
+                    ->where('p_isapproved', 'P')
+                    ->get();
+
+                    DB::table('d_notifikasi')
+                      ->where('n_fitur', 'PHK')
+                      ->update([
+                          'n_qty' => count($count)
+                      ]);
 
         DB::commit();
         return response()->json([

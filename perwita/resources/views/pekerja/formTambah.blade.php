@@ -564,16 +564,78 @@
                                 </div>
                             </div> --}}
                             <label class="col-sm-2 control-label">Foto</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <label class="btn btn-default" for="upload-file-selector">
-                                    <input id="upload-file-selector" name="imageUpload" class="uploadGambar" type="file" >
-                                    <i class="fa fa-upload margin-correction"></i>upload gambar
+                                    <input id="upload-file-selector" name="imageUpload" class="uploadGambar" type="file">
+                                    <i class="fa fa-upload margin-correction"></i>Upload Foto
                                 </label>
                             </div>
                             <div class="col-sm-6 image-holder" style="padding:0px; ">
 
                             </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto KTP</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadktp">
+                                <input id="uploadktp" name="ktpUpload" class="uploadKtp" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto KTP
+                            </label>
                         </div>
+                        <div class="col-sm-6 ktp-holder" id="ktp-holder" tyle="padding:0px; ">
+
+                        </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto Ijazah</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadijazah">
+                                <input id="uploadijazah" name="ijazahUpload" class="uploadijazah" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto Ijazah
+                            </label>
+                        </div>
+                        <div class="col-sm-6 ijazah-holder" id="ijazah-holder" tyle="padding:0px; ">
+
+                        </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto SKCK</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadskck">
+                                <input id="uploadskck" name="skckUpload" class="uploadskck" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto SKCK
+                            </label>
+                        </div>
+                        <div class="col-sm-6 skck-holder" id="skck-holder" tyle="padding:0px; ">
+
+                        </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto Hasil Medical</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadmedical">
+                                <input id="uploadmedical" name="medicalUpload" class="uploadmedical" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto Hasil Medical
+                            </label>
+                        </div>
+                        <div class="col-sm-6 medical-holder" id="medical-holder" tyle="padding:0px; ">
+
+                        </div>
+                        </div>
+                        <br>
+                        <br>
                         <div class="hr-line-dashed"></div>
                         {{-- <div class="form-group">
                             <input type="file" name="abcd" id="abcd" onchange="ubah()">
@@ -704,7 +766,7 @@
             image_holder.empty();
             var reader = new FileReader();
             reader.onload = function (e) {
-                image_holder.html('<img src="{{ asset('image/loading1.gif') }}" class="img-responsive" width="60px">');
+                image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
                 $('.save').attr('disabled', true);
                 setTimeout(function(){
                     image_holder.empty();
@@ -721,6 +783,110 @@
         } else {
             alert("This browser does not support FileReader.");
         }
+    });
+
+    $("#uploadktp").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#ktp-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+    });
+
+    $("#uploadijazah").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#ijazah-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+    });
+
+    $("#uploadskck").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#skck-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+    });
+
+    $("#uploadmedical").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#medical-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
     });
 
     function setAgamaLain(){
