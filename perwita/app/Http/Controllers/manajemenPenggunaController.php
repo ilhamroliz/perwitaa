@@ -45,7 +45,7 @@ class manajemenPenggunaController extends Controller
             ->select('d_mem.*', 'd_jabatan.*', 'c_id', 'c_name', DB::raw("DATE_FORMAT(m_birth_tgl, '%d') as tanggal"), DB::raw("DATE_FORMAT(m_birth_tgl, '%m') as bulan"), DB::raw("DATE_FORMAT(m_birth_tgl, '%Y') as tahun"))
             ->where('m_id', '=', $id)
             ->first();
-        
+
         $jabatan = DB::table('d_jabatan')
             ->get();
         $comp = DB::table('d_comp')
@@ -177,6 +177,79 @@ class manajemenPenggunaController extends Controller
             DB::table('d_mem_comp')
                 ->insert([
                     'mc_mem' => $m_id,
+                    'mc_comp' => $comp,
+                    'mc_lvl' => 11,
+                    'mc_active' => 1,
+                    'mc_insert' => $tgl
+                ]);
+
+            DB::commit();
+            Session::flash('sukses', 'Data berhasil disimpan');
+            return redirect('manajemen-pengguna/pengguna');
+        } catch (\Exception $e){
+            DB::rollback();
+            Session::flash('gagal', 'Data gagal disimpan, cobalah sesaat lagi');
+            return redirect('manajemen-pengguna/pengguna');
+        }
+    }
+
+    public function update(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $nama = $request->nama;
+            $comp = $request->perusahaan;
+            $user = $request->username;
+            $pass = $request->password;
+            $passAgain = $request->passwordagain;
+            $jabatan = $request->jabatan;
+            $birth = $request->tahun . '-' . $request->bulan . '-' . $request->tanggal;
+            $alamat = $request->alamat;
+            $m_id = $request->m_id;
+
+            if ($pass != $passAgain){
+                return redirect('manajemen-pengguna/pengguna')->with(['gagal' => 'Password tidak sesuai']);
+            }
+
+            $pass = sha1(md5('passwordAllah') . $request->password);
+            $imgPath = null;
+            $tgl = Carbon::now('Asia/Jakarta');
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'assets/img/user/' . $m_id;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            $file = $request->file('imageUpload');
+            $name = null;
+            if ($file != null) {
+                $name = $folder . '.' . $file->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $file->move($path, $name);
+                        $imgPath = $childPath . $name;
+                    } else
+                        $imgPath = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
+            DB::table('d_mem')
+                ->where('m_id', '=', $m_id)
+                ->where('m_username', '=', $user)
+                ->update([
+                    'm_image' => $imgPath,
+                    'm_passwd' => $pass,
+                    'm_name' => ucwords(strtolower($nama)),
+                    'm_jabatan' => $jabatan,
+                    'm_birth_tgl' => $birth,
+                    'm_addr' => $alamat,
+                    'm_insert' => $tgl
+                ]);
+
+            DB::table('d_mem_comp')
+                ->where('mc_mem', '=', $m_id)
+                ->update([
                     'mc_comp' => $comp,
                     'mc_lvl' => 11,
                     'mc_active' => 1,

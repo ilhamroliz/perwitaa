@@ -59,6 +59,7 @@
                           <label for="nama" class="col-sm-2 control-label">Nama</label>
                           <div class="col-sm-10">
                               <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pengguna" style="text-transform:capitalize" value="{{ $mem->m_name }}" required>
+                              <input type="hidden" name="m_id" value="{{ $mem->m_id }}">
                           </div>
                       </div>
                       <div class="form-group row">
@@ -137,7 +138,11 @@
                             </label>
                         </div>
                         <div class="col-sm-6 image-holder col-sm-offset-3" style="padding:0px; margin-top: 20px;">
-
+                            <img src="@if (file_exists($mem->m_image))
+                                        {{ asset("$mem->m_image") }}
+                                    @else
+                                        {{ asset("assets/img/user/default.jpg") }}
+                                    @endif" class="img-responsive" width="60px">
                         </div>
                       </div>
                       <div class="hr-line-dashed"></div>
