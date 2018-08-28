@@ -437,5 +437,9 @@ function hapus(id){
         $("#modal-detail").modal("show");
     }
 
+    function cari(){
+      window.location.href = baseUrl + '/manajemen-pegawai/data-pegawai/cari';
+    }
+
 </script>
 @endsection
