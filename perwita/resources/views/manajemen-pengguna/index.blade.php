@@ -67,6 +67,7 @@
                 <td class="col-lg-4 {{ $counter }}">
                     <div>
                         <div class="contact-box">
+                            <button type="button" class="close" title="Hapus" onclick="hapus('{{ Crypt::encrypt($data->m_id) }}')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <a href="{{ url('manajemen-pengguna/edit/' . Crypt::encrypt($data->m_id) ) }}">
                             <div class="col-sm-4">
                                 <div class="text-center">
@@ -110,6 +111,20 @@
 <script type="text/javascript">
     function tambah(){
         location.href = ('{{ url('manajemen-pengguna/tambah') }}');
+    }
+
+    function hapus(id){
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah anda yakin ingin menghapus user ini?",
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: true,
+            showLoaderOnConfirm: true,
+        },
+        function(){
+            location.href = ('{{ url('manajemen-pengguna/hapus/') }}/'+id);
+        });
     }
 </script>
 @endsection
