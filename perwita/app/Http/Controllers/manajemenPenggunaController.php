@@ -39,8 +39,12 @@ class manajemenPenggunaController extends Controller
     {
         $id = Crypt::decrypt($id);
         $member = d_mem::where('m_id', $id)->first();
-        $acces = d_access::select('a_id', 'a_type')->get();
-        return view('manajemen-pengguna.edit', compact('acces', 'member'));
+        $jabatan = DB::table('d_jabatan')
+            ->get();
+        $comp = DB::table('d_comp')
+            ->select('c_id', 'c_name')
+            ->get();
+        return view('manajemen-pengguna.edit', compact('jabatan', 'member', 'comp'));
     }
 
     public function add()
