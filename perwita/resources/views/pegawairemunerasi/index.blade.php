@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Pegawai Remunerasi</h5>
-        <a href="{{ url('manajemen-pekerja/remunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-pegawai/remunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -52,13 +52,13 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">No NIK</label>
                             <div class="col-lg-9">
-                                <input type="text" id='nonik' placeholder="No NIK Pekerja" style="text-transform:uppercase" class="form-control" name="nonik" value="">
+                                <input type="text" id='nonik' placeholder="No NIK Pegawai" style="text-transform:uppercase" class="form-control" name="nonik" value="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Nama Pekerja</label>
+                            <label class="col-lg-2 control-label">Nama Pegawai</label>
                             <div class="col-lg-9">
-                                <input type="text" readonly id="namapekerja" placeholder="Nama Pekerja" style="text-transform:uppercase" class="form-control" name="namapekerja" value="">
+                                <input type="text" readonly id="namapekerja" placeholder="Nama Pegawai" style="text-transform:uppercase" class="form-control" name="namapekerja" value="">
                             </div>
                         </div>
                         <div class="form-group">
