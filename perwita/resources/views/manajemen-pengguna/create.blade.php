@@ -19,6 +19,10 @@
     .margin-correction {
         margin-right: 10px;
     }
+    #password + .glyphicon {
+       cursor: pointer;
+       pointer-events: all;
+    }
 
 </style>
 
@@ -68,7 +72,7 @@
                               </select>
                           </div>
                           <div class="col-sm-2">
-                            <button type="button" onclick="tambahPerusahaan()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Tambah</button>
+                            <button type="button" onclick="tambahPerusahaan()" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Tambah</button>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -79,8 +83,8 @@
                       </div>
                       <div class="form-group row">
                           <label for="password" class="col-sm-2 control-label">Password</label>
-                          <div class="col-sm-10">
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                          <div class="col-sm-10 has-feedback">
+                              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required><i class="glyphicon glyphicon-eye-open form-control-feedback"></i>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -100,7 +104,7 @@
                               </select>
                           </div>
                           <div class="col-sm-2">
-                            <button type="button" onclick="tambahJabatan()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Tambah</button>
+                            <button type="button" onclick="tambahJabatan()" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Tambah</button>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -394,6 +398,17 @@
       return true;
     return false;
   });
+
+   // toggle password visibility
+    $('#password + .glyphicon').on('click', function() {
+      $(this).toggleClass('glyphicon-eye-close').toggleClass('glyphicon-eye-open'); // toggle our classes for the eye icon
+      //$('#password').password('toggle'); // activate the hideShowPassword plugin
+      if (document.getElementById('password').type == 'text') {
+        document.getElementById('password').type = 'password';
+      } else {
+        document.getElementById('password').type = 'text';
+      }
+    });
 
 </script>
 @endsection

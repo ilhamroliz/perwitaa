@@ -19,6 +19,10 @@
     .margin-correction {
         margin-right: 10px;
     }
+    #password + .glyphicon {
+       cursor: pointer;
+       pointer-events: all;
+    }
 
 </style>
 
@@ -49,7 +53,7 @@
                     <h5>Form Tambah Data Pengguna</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal form-user" action="{{ url('manajemen-pengguna/simpan') }}" accept-charset="UTF-8" id="formuser" enctype="multipart/form-data" method="POST">
+                    <form class="form-horizontal form-user" action="{{ url('manajemen-pengguna/update') }}" accept-charset="UTF-8" id="formuser" enctype="multipart/form-data" method="POST">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group row">
                           <label for="nama" class="col-sm-2 control-label">Nama</label>
@@ -71,7 +75,7 @@
                               </select>
                           </div>
                           <div class="col-sm-2">
-                            <button type="button" onclick="tambahPerusahaan()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Tambah</button>
+                            <button type="button" onclick="tambahPerusahaan()" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Tambah</button>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -82,8 +86,8 @@
                       </div>
                       <div class="form-group row">
                           <label for="password" class="col-sm-2 control-label">Password</label>
-                          <div class="col-sm-10">
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                          <div class="col-sm-10 has-feedback">
+                              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required ><i class="glyphicon glyphicon-eye-open form-control-feedback"></i>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -98,18 +102,22 @@
                               <select name="jabatan" class="form-control jabatan" id="jabatan">
                                 <option value="-" selected disabled>-- Pilih Jabatan --</option>
                                 @foreach($jabatan as $data)
+                                @if($data->j_id == $mem->j_id)
+                                  <option value="{{ $data->j_id }}" selected>{{ $data->j_name }}</option>
+                                @else
                                   <option value="{{ $data->j_id }}">{{ $data->j_name }}</option>
+                                @endif
                                 @endforeach
                               </select>
                           </div>
                           <div class="col-sm-2">
-                            <button type="button" onclick="tambahJabatan()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Tambah</button>
+                            <button type="button" onclick="tambahJabatan()" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Tambah</button>
                           </div>
                       </div>
                       <div class="form-group row">
                         <label for="tanggal" class="col-sm-2 control-label">Tanggal Lahir</label>
                         <div class="col-sm-10">
-                          <select id="dobday" class="form-control col-sm-2" style="width: 13%;" name="tanggal" ></select>
+                          <select id="dobday" class="form-control col-sm-2" style="width: 13%;" name="tanggal"></select>
                           <select id="dobmonth" class="form-control col-sm-4" style="width: 20%; margin-left: 10px" name="bulan"></select>
                           <select id="dobyear" class="form-control col-sm-3" style="width: 15%; margin-left: 10px" name="tahun"></select>
                         </div>
@@ -117,7 +125,7 @@
                       <div class="form-group row">
                           <label for="alamat" class="col-sm-2 control-label">Alamat</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat" required>
+                              <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat" value="{{ $mem->m_addr }}" required>
                           </div>
                       </div>
                       <div class="form-group">
@@ -172,6 +180,10 @@
       // Maximum age
       maximumAge: 80
     });
+
+    $('#dobday').val('{{ $mem->tanggal }}');
+    $('#dobmonth').val('{{ $mem->bulan }}');
+    $('#dobyear').val('{{ $mem->tahun }}');
 
   });
 
@@ -397,6 +409,17 @@
       return true;
     return false;
   });
+
+      // toggle password visibility
+    $('#password + .glyphicon').on('click', function() {
+      $(this).toggleClass('glyphicon-eye-close').toggleClass('glyphicon-eye-open'); // toggle our classes for the eye icon
+      //$('#password').password('toggle'); // activate the hideShowPassword plugin
+      if (document.getElementById('password').type == 'text') {
+        document.getElementById('password').type = 'password';
+      } else {
+        document.getElementById('password').type = 'text';
+      }
+    });
 
 </script>
 @endsection

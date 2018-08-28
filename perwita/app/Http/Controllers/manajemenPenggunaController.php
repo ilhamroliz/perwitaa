@@ -42,9 +42,10 @@ class manajemenPenggunaController extends Controller
             ->join('d_jabatan', 'j_id', '=', 'm_jabatan')
             ->join('d_mem_comp', 'mc_mem', '=', 'm_id')
             ->join('d_comp', 'c_id', '=', 'mc_comp')
-            ->select('d_mem.*', 'd_jabatan.*', 'c_id', 'c_name')
+            ->select('d_mem.*', 'd_jabatan.*', 'c_id', 'c_name', DB::raw("DATE_FORMAT(m_birth_tgl, '%d') as tanggal"), DB::raw("DATE_FORMAT(m_birth_tgl, '%m') as bulan"), DB::raw("DATE_FORMAT(m_birth_tgl, '%Y') as tahun"))
             ->where('m_id', '=', $id)
             ->first();
+        
         $jabatan = DB::table('d_jabatan')
             ->get();
         $comp = DB::table('d_comp')
