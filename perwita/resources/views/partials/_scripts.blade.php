@@ -212,7 +212,7 @@
           })
       }
 
-        @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 6)
+        @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 2)
             getApproval();
 
             function getApproval(){

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pengguna/cekUsername', 'manajemenPenggunaController@cekUsername');
 
     Route::get('master-jabatan', 'JabatanController@index');
+    Route::get('master-jabatan/data', 'JabatanController@data');
 
     Route::get('master-perusahaan', 'PerusahaanController@index');
 
