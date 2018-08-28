@@ -20,50 +20,52 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
-                
+                  @if(Session::has('sukses'))
+                      <div class="alert alert-success alert-dismissible fade in" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                      aria-hidden="true">&times;</span></button>
+                          <strong>{{ Session::get('sukses') }}</strong>
+                      </div>
+                  @elseif(Session::has('gagal'))
+                      <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                      aria-hidden="true">&times;</span></button>
+                          <strong>{{ Session::get('gagal') }}</strong>
+                      </div>
+                  @endif
                         <div class="text-right">
-                            <button onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>                            
+                            <button onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
                             {{--<button onclick="edit()" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-edit"></i> Ubah</button>
                             <button class="btn btn-danger btn-flat btn-sm" type="button"><i class="fa fa-trash"></i> Hapus</button>--}}
                         </div>
-                        
+
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                 </div>
-                <div class="col-md-12 table-responsive" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12 table-responsive" style="margin: 10px 0px 20px 0px;">
                    <table id="mitra" class="table table-bordered table-striped" >
                         <thead>
-                            <tr>       
-                                <th>No</th>            
-                                <th>NIK</th>            
-                                <th>Nama Lengkap</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tempat Lahir</th>
-                                <th>Tanggal Lahir</th>                                                               
-                                <th>Alamat</th>
-                                <th>No Telp.</th>
-                                <th>Nama Ibu</th>
-                                <th>Pendidikan</th>
-                                <th>Tgl Masuk Kerja</th>
-                                <th>No KTP</th>
-                                <th>No Rekening</th>
-                                <th>No KPK</th>
-                                <th>No JP</th>
-                                <th>No KPJ</th>
-                                <th>Action</th>
+                            <tr>
+                              <th style="width: 5%;">No</th>
+                              <th style="width: 22%;">Nama</th>
+                              <th style="width: 15%;">NIK</th>
+                              <th style="width: 5%;">Jk</th>
+                              <th style="width: 15%;">No Telp.</th>
+                              <th style="width: 25%;">Alamat</th>
+                              <th style="width: 120%;">Aksi</th>
                             </tr>
-                        </thead>     
-                        <tbody>                       
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
-                </div>  
+                </div>
             </div>
 
         </div>
@@ -77,11 +79,11 @@
 @section('extra_scripts')
 <script type="text/javascript">
 function tambah(){
-window.location = 
+window.location =
 baseUrl+'/manajemen-pegawai/data-pegawai/tambah';
 }
 function hapus(id){
-    
+
     swal({
       title: "Konfirmasi",
       text: "Apakah anda yakin ingin menghapus data Pegawai?",
@@ -106,7 +108,7 @@ function hapus(id){
                             timer: 900
                     });
                table.draw();
-         
+
         }
           },error:function(x,e) {
             //alert(e);
@@ -131,37 +133,27 @@ function hapus(id){
       }, 2000);
 
     });
-    
-  
 
-    
+
+
+
 }
         var table = $("#mitra").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('manajemen-pegawai/data-pegawai/table') }}',  
-        dataType: 'json',           
-        columns: [            
+        ajax: '{{ url('manajemen-pegawai/data-pegawai/table') }}',
+        dataType: 'json',
+        columns: [
             {data: 'number', name: 'number'},
-            {data: 'p_nik', name: 'p_nik'},
-            {data: 'p_nama_lengkap', name: 'p_nama_lengkap'},
-            {data: 'p_jenis_kelamin', name: 'p_jenis_kelamin'},
-            {data: 'p_tempat_lahir', name: 'p_tempat_lahir'},
-            {data: 'p_tgl_lahir', name: 'p_tgl_lahir'},
-            {data: 'p_alamat', name: 'p_alamat'},
-            {data: 'p_notelp', name: 'p_notelp'},
-            {data: 'p_nama_ibu', name: 'p_nama_ibu'},
-            {data: 'p_pendidikan', name: 'p_pendidikan'},
-            {data: 'p_tgl_masuk_kerja', name: 'p_tgl_masuk_kerja'},
-            {data: 'p_no_ktp', name: 'p_no_ktp'},
-            {data: 'p_no_rekening', name: 'p_no_rekening'},
-            {data: 'p_no_kpk', aname: 'p_no_kpk'},
-            {data: 'p_no_jp', aname: 'p_no_jp'},
-            {data: 'p_no_kpj', nme: 'p_no_kpj'},                                 
+            {data: 'p_name', name: 'p_name'},
+            {data: 'p_nip', name: 'p_nip'},
+            {data: 'p_sex', name: 'p_sex'},
+            {data: 'p_telp', name: 'p_telp'},
+            {data: 'p_address', name: 'p_address'},
             {data: 'action', name: 'action',orderable:false,searchable:false}
-            
+
         ],
-        //responsive: true,        
+        //responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         //"scrollY": '50vh',

@@ -241,7 +241,7 @@ class pekerjaController extends Controller
             }
 
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/ktp/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/ktp/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -259,7 +259,7 @@ class pekerjaController extends Controller
             }
 
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/ijazah/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/ijazah/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -277,7 +277,7 @@ class pekerjaController extends Controller
             }
 
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/skck/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/skck/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -295,7 +295,7 @@ class pekerjaController extends Controller
             }
 
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/medical/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/medical/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -842,7 +842,7 @@ group by ps_pekerja");
             $imgktp = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/ktp/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/ktp/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -934,7 +934,7 @@ group by ps_pekerja");
             $imgijazah = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/ijazah/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/ijazah/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -1026,7 +1026,7 @@ group by ps_pekerja");
             $imgskck = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/skck/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/skck/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -1118,7 +1118,7 @@ group by ps_pekerja");
             $imgmedical = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/medical/' . $idPekerja;
+            $dir = 'image/uploads/pekerja/medical/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;

@@ -14,10 +14,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 
 </style>
@@ -38,21 +38,21 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <table class="table table-striped table-bordered" id="form-pegawai">
                         <tr>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input id="p_id" type="" name="p_id" value="{{ $pegawai->p_id }}">
+                            <input id="p_id" type="hidden" name="p_id" value="{{ $pegawai->p_id }}">
                             <th style="width:20%">NIK</th>
                             <td><input value="{{$pegawai->p_nik}}" id="nik" class="form-control huruf" name="NIK" placeholder="NIK" required="">
                                 <span style="color:#ed5565;display: none " class="help-block m-b-none reset" id="nik-error">
                                     <small>NIK harus diisi...!</small>
                                 </span>
                             </td>
-                        </tr>   
+                        </tr>
                         <tr>
                             <th>Nama Lengkap</th>
                             <td><input value="{{$pegawai->p_nama_lengkap}}" id="nama" class="form-control huruf" name="Nama Lengkap" placeholder="Nama Lengkap" required="">
@@ -65,11 +65,11 @@
                             <th>Jenis Kelamin</th>
                             <td>
                                 <div class="radio-inline"> <input type="radio" name="Jenis Kelamin" id="jk" value="L" required="" @if($pegawai->p_jenis_kelamin=='L')  checked @endif>Laki-Laki</div>
-                                <div class="radio-inline"> <input type="radio" name="Jenis Kelamin" id="jk2" value="P"  required="" @if($pegawai->p_jenis_kelamin=='P')  checked @endif>Perempuan</div>                                    
-                                
+                                <div class="radio-inline"> <input type="radio" name="Jenis Kelamin" id="jk2" value="P"  required="" @if($pegawai->p_jenis_kelamin=='P')  checked @endif>Perempuan</div>
+
                                 <span style="color:#ed5565;display: none " class="help-block m-b-none reset" id="jk-error">
                                     <small>Jenis Kelamin harus diisi...!</small>
-                                </span>                                    
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -78,7 +78,7 @@
                                 <span style="color:#ed5565;display: none " class="help-block m-b-none reset" id="tempat-error">
                                     <small>Tempat Lahir harus diisi...!</small>
                                 </span>
-                            
+
                             </td>
                         </tr>
                         <tr>
@@ -168,7 +168,7 @@
                                     <small>No KPJ harus diisi...!</small>
                                 </span>
                             </td>
-                        </tr>                   
+                        </tr>
                         <tr>
                             <th></th>
                             <td>
@@ -181,12 +181,12 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-</div>      
+</div>
 
 
 
@@ -212,27 +212,27 @@
          if(validateForm()){
         $.ajax({
             url: baseUrl + '/manajemen-pegawai/data-pegawai/perbarui/'+p_id,
-            // type        : 'post',            
+            // type        : 'post',
             type: 'get',
             timeout: 10000,
             data: $('#form-pegawai :input').serialize(),
             dataType: 'json',
             enctype: 'multipart/form-data',
             processData: false,  // tell jQuery not to process the data
-            contentType: false,          
+            contentType: false,
             success: function (response) {
                 if (response.status == 'berhasil') {
                     window.location = baseUrl + '/manajemen-pegawai/data-pegawai';
                 } else if(response.status=='gagal'){
                     info.css('display','');
                     $.each(response.data, function(index, error) {
-                           info.find('ul').append('<li>' + error + '</li>');                      
-                    });                    
-                    buttonLadda.ladda('stop');                     
+                           info.find('ul').append('<li>' + error + '</li>');
+                    });
+                    buttonLadda.ladda('stop');
                 }
-                
-                
-                
+
+
+
             },
             error: function (xhr, status) {
                 if (status == 'timeout') {
@@ -252,13 +252,13 @@
             }
         });
          }else{
-              buttonLadda.ladda('stop');              
+              buttonLadda.ladda('stop');
          }
     }
-    
+
         function validateForm(){
             $('.reset').css('display', 'none');
-                          
+
             var nik = document.getElementById('nik');
             var nama = document.getElementById('nama');
             var jk = document.getElementById('jk');
@@ -272,11 +272,11 @@
             var tmk = document.getElementById('tmk');
             var ktp = document.getElementById('ktp');
             var rekening = document.getElementById('rekening');
-            var kpk = document.getElementById('kpk');            
-            var jp = document.getElementById('jp');            
-            var kpj = document.getElementById('kpj');            
+            var kpk = document.getElementById('kpk');
+            var jp = document.getElementById('jp');
+            var kpj = document.getElementById('kpj');
             if(nik.validity.valueMissing){
-                $('#nik-error').css('display', '');                
+                $('#nik-error').css('display', '');
                 return false;
             }
             else if(nama.validity.valueMissing){
