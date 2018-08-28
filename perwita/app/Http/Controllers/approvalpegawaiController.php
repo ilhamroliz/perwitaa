@@ -35,7 +35,8 @@ class approvalpegawaiController extends Controller
         DB::table('d_pegawai')
           ->where('p_id', $request->id)
           ->update([
-            'p_status_approval' => 'Y'
+            'p_status_approval' => 'Y',
+            'p_nip' => $this->getnewnota($request->id)
           ]);
 
           $count = DB::table('d_pegawai')
@@ -68,7 +69,7 @@ class approvalpegawaiController extends Controller
         DB::table('d_pegawai')
           ->where('p_id', $request->id)
           ->update([
-            'p_status_approval' => 'N'
+            'p_status_approval' => 'N',
           ]);
 
           $count = DB::table('d_pegawai')
@@ -97,11 +98,17 @@ class approvalpegawaiController extends Controller
       DB::beginTransaction();
       try {
 
-        DB::table('d_pegawai')
-          ->whereIn('p_id', $request->pilih)
-          ->update([
-            'p_status_approval' => 'Y'
-          ]);
+        for ($i=0; $i < count($request->pilih); $i++) {
+          $nik = $this->getnewnota($request->pilih[$i]);
+
+          DB::table('d_pegawai')
+            ->where('p_id', $request->pilih[$i])
+            ->update([
+              'p_status_approval' => 'Y',
+              'p_nip' => $nik
+            ]);
+
+        }
 
           $count = DB::table('d_pegawai')
                   ->where('p_status_approval', null)
@@ -155,5 +162,14 @@ class approvalpegawaiController extends Controller
           'status' => 'gagal'
         ]);
       }
+    }
+
+    public function getnewnota($id){
+      $tmp = ((int)$id);
+      $kode = sprintf("%05s", $tmp);
+
+      $finalkode = 'PNG_' . $kode;
+
+      return $finalkode;
     }
 }
