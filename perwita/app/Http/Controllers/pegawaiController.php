@@ -41,13 +41,12 @@ class pegawaiController extends Controller
     }
     public function data() {
         DB::statement(DB::raw('set @rownum=0'));
-        $pegawai = d_pegawai::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pegawai.*')->get();
+        $pegawai = d_pegawai::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pegawai.*')->where('p_status_approval', 'Y')->get();
         return Datatables::of($pegawai)
                        ->addColumn('action', function ($pegawai) {
                             return '<div class="text-center">
                                     <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pegawai->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
                                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pegawai/' . $pegawai->p_id .'/edit"><i class="glyphicon glyphicon-edit"></i></a>
-                                    <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus(' . $pegawai->p_id . ')"><i class="glyphicon glyphicon-trash"></i></button>
                                     </div>';
                         })
                         ->make(true);
@@ -426,6 +425,16 @@ class pegawaiController extends Controller
                 'n_qty' => count($countpelamar),
                 'n_insert' => Carbon::now()
               ]);
+
+              $count = DB::table('d_pegawai')
+                      ->where('p_status_approval', null)
+                      ->get();
+
+              DB::table('d_notifikasi')
+                  ->where('n_fitur', 'Pegawai')
+                  ->update([
+                    'n_qty' => count($count)
+                  ]);
 
           DB::commit();
           Session::flash('sukses', 'data pegawai baru anda berhasil disimpan');
@@ -1363,7 +1372,7 @@ group by ps_pegawai");
     {
         $list_mutasi = DB::table('d_pegawai_mutation')
             ->select('d_pegawai_mutation.*')
-            ->where('d_pegawai_mutation.pm_pekerja', '=', $request->id)
+            ->where('d_pegawai_mutation.pm_pegawai', '=', $request->id)
             ->get();
 
         $data = array();
@@ -1375,19 +1384,10 @@ group by ps_pegawai");
             // add new data
             Carbon::setLocale('id');
             $data[$i]['pm_date'] = Date('d-m-Y H:i:s', strtotime($data[$i]['pm_date']));
-            if ($key['m_name'] == null) {
-                $data[$i]['m_name'] = '-';
-            }
-            if ($key['md_name'] == null) {
-                $data[$i]['md_name'] = '-';
-            }
-            if ($key['pm_from'] == null) {
-                $data[$i]['pm_from'] = '-';
-            }
-            $i++;
-        }
 
         echo json_encode($data);
 
     }
+}
+
 }

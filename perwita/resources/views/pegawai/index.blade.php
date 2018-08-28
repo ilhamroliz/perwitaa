@@ -13,16 +13,29 @@
 
 @section('content')
 
-
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title">
-                    <h5>Data Pegawai</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                    </div>
-    </div>
+  <div class="row wrapper border-bottom white-bg page-heading">
+      <div class="col-lg-8">
+          <h2>Data Pegawai</h2>
+          <ol class="breadcrumb">
+              <li>
+                  <a href="{{ url('/') }}">Home</a>
+              </li>
+              <li class="active">
+                  <strong>Daftar Pegawai</strong>
+              </li>
+          </ol>
+      </div>
+  </div>
+  <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="ibox-title ibox-info">
+          <h5>Daftar Data Pegawai</h5>
+          <button style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"
+                    aria-hidden="true" onclick="tambah()"><i class="fa fa-plus"></i>&nbsp;Tambah
+          </button>
+          <button style="float: right; margin-top: -7px; margin-right:10px;" class="btn btn-info btn-flat btn-sm" type="button"
+                    aria-hidden="true" onclick="cari()"><i class="fa fa-search"></i>&nbsp;Cari
+          </button>
+      </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
@@ -40,12 +53,6 @@
                           <strong>{{ Session::get('gagal') }}</strong>
                       </div>
                   @endif
-                        <div class="text-right">
-                            <button onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
-                            {{--<button onclick="edit()" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-edit"></i> Ubah</button>
-                            <button class="btn btn-danger btn-flat btn-sm" type="button"><i class="fa fa-trash"></i> Hapus</button>--}}
-                        </div>
-
                 </div>
                 <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                 </div>
@@ -381,16 +388,13 @@ function hapus(id){
         $.ajax({
             data: {id: id},
             type: "GET",
-            url: baseUrl + "/manajemen-pekerja/data-pekerja/detail-mutasi",
+            url: baseUrl + "/manajemen-pegawai/data-pegawai/detail_mutasi",
             dataType: 'json',
             success: function (data) {
                 var pekerja_mutasi = '<thead>'
                     + '<tr>'
                     + '<th style="text-align : center;"> TANGGAL </th>'
-                    + '<th style="text-align : center;"> MITRA</th>'
-                    + '<th style="text-align : center;"> DIVISI</th>'
                     + '<th style="text-align : center;"> KET</th>'
-                    + '<th style="text-align : center;"> NO REFF</th>'
                     + '<th style="text-align : center;"> STATUS</th>'
                     + '</tr>'
                     + '</thead>'
@@ -413,19 +417,13 @@ function hapus(id){
                   if (n.pm_detail == 'Resign') {
                     pekerja_mutasi = pekerja_mutasi + '<tr>'
                         + '<td>' + n.pm_date + '</td>'
-                        + '<td>' + n.m_name + '</td>'
-                        + '<td>' + n.md_name + '</td>'
                         + '<td>' + n.pm_note + '</td>'
-                        + '<td>' + pm_reff + '</td>'
                         + '<td>' + pm_note + '</td>'
                         + '</tr>';
                   } else {
                     pekerja_mutasi = pekerja_mutasi + '<tr>'
                         + '<td>' + n.pm_date + '</td>'
-                        + '<td>' + n.m_name + '</td>'
-                        + '<td>' + n.md_name + '</td>'
                         + '<td>' + n.pm_detail + '</td>'
-                        + '<td>' + pm_reff + '</td>'
                         + '<td>' + pm_note + '</td>'
                         + '</tr>';
                   }

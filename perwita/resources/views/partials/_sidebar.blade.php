@@ -236,6 +236,11 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Remunerasi</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/phk') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/phk/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">PHK</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
