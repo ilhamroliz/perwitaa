@@ -38,13 +38,19 @@ class manajemenPenggunaController extends Controller
     public function edit($id)
     {
         $id = Crypt::decrypt($id);
-        $member = d_mem::where('m_id', $id)->first();
+        $mem = DB::table('d_mem')
+            ->join('d_jabatan', 'j_id', '=', 'm_jabatan')
+            ->join('d_mem_comp', 'mc_mem', '=', 'm_id')
+            ->join('d_comp', 'c_id', '=', 'mc_comp')
+            ->select('d_mem.*', 'd_jabatan.*', 'c_id', 'c_name')
+            ->where('m_id', '=', $id)
+            ->first();
         $jabatan = DB::table('d_jabatan')
             ->get();
         $comp = DB::table('d_comp')
             ->select('c_id', 'c_name')
             ->get();
-        return view('manajemen-pengguna.edit', compact('jabatan', 'member', 'comp'));
+        return view('manajemen-pengguna.edit', compact('jabatan', 'mem', 'comp'));
     }
 
     public function add()

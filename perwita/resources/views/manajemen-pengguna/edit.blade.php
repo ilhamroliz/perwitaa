@@ -54,16 +54,19 @@
                       <div class="form-group row">
                           <label for="nama" class="col-sm-2 control-label">Nama</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pengguna" style="text-transform:capitalize" required>
+                              <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pengguna" style="text-transform:capitalize" value="{{ $mem->m_name }}" required>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="perusahaan" class="col-sm-2 control-label">Perusahaan</label>
                           <div class="col-sm-8">
                               <select name="perusahaan" class="form-control perusahaan" id="perusahaan">
-                                <option value="-" selected disabled>-- Pilih Perusahaan --</option>
                                 @foreach($comp as $data)
-                                  <option value="{{ $data->c_id }}">{{ $data->c_name }}</option>
+                                    @if($data->c_id == $mem->c_id)
+                                        <option value="{{ $data->c_id }}" selected>{{ $data->c_name }}</option>
+                                    @else
+                                        <option value="{{ $data->c_id }}">{{ $data->c_name }}</option>
+                                @endif
                                 @endforeach
                               </select>
                           </div>
@@ -74,7 +77,7 @@
                       <div class="form-group row">
                           <label for="username" class="col-sm-2 control-label">Username</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" name="username" id="username" placeholder="Username" onBlur="cekUsername()" required>
+                              <input type="text" class="form-control" name="username" id="username" placeholder="Username" onBlur="cekUsername()" required readonly value="{{ $mem->m_username }}">
                           </div>
                       </div>
                       <div class="form-group row">
