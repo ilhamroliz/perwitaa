@@ -78,8 +78,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pegawai/data-pegawai/simpan','pegawaiController@simpan');
     Route::post('manajemen-pegawai/data-pegawai/simpan','pegawaiController@simpan');
     Route::get('manajemen-pegawai/data-pegawai/{id}/edit','pegawaiController@edit');
-    Route::get('manajemen-pegawai/data-pegawai/perbarui/{id}','pegawaiController@perbarui');
-    Route::get('manajemen-pegawai/data-pegawai/hapus/{id}','pegawaiController@hapus');
+    Route::get('manajemen-pegawai/data-pegawai/perbarui','pegawaiController@perbarui');
+    Route::post('manajemen-pegawai/data-pegawai/perbarui','pegawaiController@perbarui');
+    Route::get('manajemen-pegawai/data-pegawai/detail','pegawaiController@detail');
+    Route::get('manajemen-pegawai/data-pegawai/detail_mutasi','pegawaiController@detail_mutasi');
 
 
     //BPJS

@@ -241,7 +241,7 @@
                                         <h3 style="font-weight:normal;" id="p_ktp">: -</h3>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h3>tanggal Kontrak Berakhir </h3>
+                                        <h3>Tanggal Kontrak Berakhir </h3>
                                     </div>
                                     <div class="col-lg-3">
                                         <h3 style="font-weight:normal;" id="mc_expired">: -</h3>
