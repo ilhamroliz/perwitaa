@@ -265,4 +265,26 @@ class manajemenPenggunaController extends Controller
             return redirect('manajemen-pengguna/pengguna');
         }
     }
+
+    public function hapus($id)
+    {
+        DB::beginTransaction();
+        try {
+            $id = Crypt::decrypt($id);
+            DB::table('d_mem')
+                ->where('m_id', '=', $id)
+                ->delete();
+
+            DB::table('d_mem_comp')
+                ->where('mc_mem', '=', $id)
+                ->delete();
+            DB::commit();
+            Session::flash('sukses', 'Data berhasil dihapus');
+            return redirect('manajemen-pengguna/pengguna');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Session::flash('gagal', 'Data tidak berhasil dihapus, cobalah sesaat lagi');
+            return redirect('manajemen-pengguna/pengguna');
+        }
+    }
 }

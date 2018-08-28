@@ -313,6 +313,8 @@
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''  }}"><a href="{{url('manajemen-pengguna/pengguna')}}">Manajemen Pengguna</a></li>
                     <li><a href="{{url('manajemen-hak-akses/group')}}">Manajemen Akses Group</a></li>
                     <li><a href="{{url('setting-aplikasi')}}">Group Akses</a></li>
+                    <li><a href="{{url('master-jabatan')}}">Master Jabatan</a></li>
+                    <li><a href="{{url('master-perusahaan')}}">Master Perusahaan</a></li>
                 </ul>
             </li>
         </ul>

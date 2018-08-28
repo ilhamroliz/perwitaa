@@ -33,7 +33,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-pengguna/simpan', 'manajemenPenggunaController@save');
     Route::post('manajemen-pengguna/update', 'manajemenPenggunaController@update');
     Route::get('manajemen-pengguna/edit/{id}', 'manajemenPenggunaController@edit');
+    Route::get('manajemen-pengguna/hapus/{id}', 'manajemenPenggunaController@hapus');
     Route::get('manajemen-pengguna/cekUsername', 'manajemenPenggunaController@cekUsername');
+
+    Route::get('master-jabatan', 'JabatanController@index');
+
+    Route::get('master-perusahaan', 'PerusahaanController@index');
 
 
     Route::get('manajemen-hak-akses/group', 'aksesGroupController@index');
