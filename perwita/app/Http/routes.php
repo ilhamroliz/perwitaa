@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     //pegawai yajra
     Route::get('manajemen-pegawai/data-pegawai','pegawaiController@index');
     Route::get('manajemen-pegawai/data-pegawai/table','pegawaiController@data');
+    Route::get('manajemen-pegawai/data-pegawai/tablecari','pegawaiController@tablecari');
     Route::get('manajemen-pegawai/data-pegawai/tambah','pegawaiController@tambah');
     Route::get('manajemen-pegawai/data-pegawai/simpan','pegawaiController@simpan');
     Route::post('manajemen-pegawai/data-pegawai/simpan','pegawaiController@simpan');
@@ -83,6 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-pegawai/data-pegawai/perbarui','pegawaiController@perbarui');
     Route::get('manajemen-pegawai/data-pegawai/detail','pegawaiController@detail');
     Route::get('manajemen-pegawai/data-pegawai/detail_mutasi','pegawaiController@detail_mutasi');
+    Route::get('manajemen-pegawai/data-pegawai/cari','pegawaiController@cari');
+    Route::get('manajemen-pegawai/data-pegawai/getno','pegawaiController@getno');
+    Route::get('manajemen-pegawai/data-pegawai/getdata','pegawaiController@getdata');
 
 
     //BPJS

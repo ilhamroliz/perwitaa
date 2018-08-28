@@ -166,9 +166,9 @@ class approvalpegawaiController extends Controller
 
     public function getnewnota($id){
       $tmp = ((int)$id);
-      $kode = sprintf("%05s", $tmp);
+      $kode = sprintf("%06s", $tmp);
 
-      $finalkode = 'PNG_' . $kode;
+      $finalkode = 'PNG-' . $kode;
 
       return $finalkode;
     }

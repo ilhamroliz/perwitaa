@@ -1390,4 +1390,49 @@ group by ps_pegawai");
     }
 }
 
+    public function cari(){
+      return view('pegawai.cari');
+    }
+
+    public function getno(Request $request){
+      $keyword = $request->term;
+
+      $data = DB::table('d_pegawai')
+            ->whereRaw("p_name LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
+            ->LIMIT(20)
+            ->get();
+
+            if ($data == null) {
+                $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+            } else {
+
+                foreach ($data as $query) {
+                    $results[] = ['id' => $query->p_id, 'label' => $query->p_name . ' (' . $query->p_nip . ')'];
+                }
+            }
+
+            return response()->json($results);
+    }
+
+    public function getdata(Request $request){
+      $data = DB::table('d_pegawai')
+              ->where('p_id', $request->id)
+              ->get();
+
+      return response()->json($data);
+    }
+
+    public function tablecari() {
+        DB::statement(DB::raw('set @rownum=0'));
+        $pegawai = d_pegawai::select(DB::raw('@rownum  := @rownum  + 1 AS number'),'d_pegawai.*')->where('p_status_approval', 'Y')->get();
+        return Datatables::of($pegawai)
+                       ->addColumn('action', function ($pegawai) {
+                            return '<div class="text-center">
+                                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pegawai->p_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="' . $pegawai->p_id .'/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                    </div>';
+                        })
+                        ->make(true);
+    }
+
 }
