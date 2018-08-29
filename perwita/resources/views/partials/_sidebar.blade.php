@@ -309,12 +309,13 @@
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''  
                                 || Request::is('master-jabatan') ? 'active' : ''
                                 || Request::is('system/hakuser/*') ? 'active' : ''
+                                || Request::is('system/hakakses/*') ? 'active' : ''
                 }}">
                 <a href="index.html"><i class="fa fa-cog"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''  }}"><a href="{{url('manajemen-pengguna/pengguna')}}">Manajemen Pengguna</a></li>
-                    <li class="{{ Request::is('system/hakuser/user') ? 'active' : '' }}">
+                    <li class="{{ Request::is('system/hakuser/user') ? 'active' : '' || Request::is('system/hakakses/*') ? 'active' : '' }}">
                         <a href="{{url('system/hakuser/user')}}">Akses Pengguna</a>
                     </li>
                     <li><a href="{{url('setting-aplikasi')}}">Group Akses</a></li>

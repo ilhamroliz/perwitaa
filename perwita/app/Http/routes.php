@@ -655,11 +655,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*System*/
     Route::get('system/hakuser/user', 'aksesUserController@indexAksesUser');
-    Route::get('/system/hakuser/tambah_user', 'aksesUserController@tambah_user');
-    Route::get('/system/hakuser/tambah_user/simpan-user', 'aksesUserController@simpanUser');
-    Route::get('/system/hakakses/edit-user-akses/{id}/edit', 'aksesUserController@editUserAkses');
-    Route::get('/system/hakuser/perbarui-user/perbarui-user/{id}', 'aksesUserController@perbaruiUser');
-    Route::get('/system/hakakses/simpan-user-akses', 'aksesUserController@simpanUserAkses');
+    Route::get('system/hakuser/tambah_user', 'aksesUserController@tambah_user');
+    Route::get('system/hakuser/tambah_user/simpan-user', 'aksesUserController@simpanUser');
+    Route::get('system/hakakses/edit-user-akses/edit/{id}', 'aksesUserController@editUserAkses');
+    Route::get('system/hakuser/perbarui-user/perbarui-user/{id}', 'aksesUserController@perbaruiUser');
+    Route::get('system/hakakses/simpan-user-akses', 'aksesUserController@simpanUserAkses');
+    Route::post('system/hakakses/dataUser', 'aksesUserController@dataUser');
 
     //mitra divisi
     Route::get('manajemen-mitra/mitra-divisi','mitraDivisiController@index');
