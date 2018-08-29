@@ -434,5 +434,4 @@ class pegawaipromosiController extends Controller
 
   }
 
-
 }
