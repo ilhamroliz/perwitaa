@@ -98,6 +98,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pegawai/data-pegawai/getno','pegawaiController@getno');
     Route::get('manajemen-pegawai/data-pegawai/getdata','pegawaiController@getdata');
 
+    //Pegawai Promosi & Demosi
+    Route::get('manajemen-pegawai/promosidemosi','pegawaipromosiController@index');
+
+    //Pegawai Remunerasi
+    Route::get('manajemen-pegawai/pegawairemunerasi','pegawairemunerasiController@index');
+
+    //Pegawai PHK
+    Route::get('manajemen-pegawai/pegawaiphk','pegawaiphkController@index');
 
     //BPJS
     Route::get('manajemen-pegawai/data-pegawai','pegawaiController@index');

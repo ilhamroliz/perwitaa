@@ -226,18 +226,18 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Data Pegawai</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/promosidemosi') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/promosidemosi/*') ? 'active' : ''">
-                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                    <li class="{{ Request::is('manajemen-pegawai/promosidemosi') ? 'active' : '' }} || Request::is('manajemen-pegawai/promosidemosi/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/promosidemosi')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Promosi & Demosi</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/remunerasi') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/remunerasi/*') ? 'active' : ''">
-                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                    <li class="{{ Request::is('manajemen-pegawai/pegawairemunerasi') ? 'active' : '' }} || Request::is('manajemen-pegawai/pegawairemunerasi/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/pegawairemunerasi')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Remunerasi</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-pegawai/data-pegawai/phk') ? 'active' : '' }} || Request::is('manajemen-pegawai/data-pegawai/phk/*') ? 'active' : ''">
-                        <a href="{{url('manajemen-pegawai/data-pegawai')}}">
+                    <li class="{{ Request::is('manajemen-pegawai/pegawaiphk') ? 'active' : '' }} || Request::is('manajemen-pegawai/pegawaiphk/*') ? 'active' : ''">
+                        <a href="{{url('manajemen-pegawai/pegawaiphk')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">PHK</span>
                         </a>
                     </li>
