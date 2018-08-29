@@ -37,7 +37,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pengguna/cekUsername', 'manajemenPenggunaController@cekUsername');
 
     Route::get('master-jabatan', 'JabatanController@index');
-    Route::get('master-jabatan/data', 'JabatanController@data');
+    Route::post('master-jabatan/data', 'JabatanController@data');
+    Route::post('master-jabatan/table', 'JabatanController@table');
+    Route::post('master-jabatan/rename', 'JabatanController@rename');
+    Route::post('master-jabatan/update', 'JabatanController@update');
+    Route::post('master-jabatan/simpan', 'JabatanController@simpan');
+    Route::post('master-jabatan/hapus', 'JabatanController@hapus');
 
     Route::get('master-perusahaan', 'PerusahaanController@index');
 
@@ -662,7 +667,7 @@ Route::group(['middleware' => 'auth'], function () {
     //thoriq
 
     /*System*/
-    Route::get('/system/hakuser/user', 'aksesUserController@indexAksesUser');
+    Route::get('system/hakuser/user', 'aksesUserController@indexAksesUser');
     Route::get('/system/hakuser/tambah_user', 'aksesUserController@tambah_user');
     Route::get('/system/hakuser/tambah_user/simpan-user', 'aksesUserController@simpanUser');
     Route::get('/system/hakakses/edit-user-akses/{id}/edit', 'aksesUserController@editUserAkses');
