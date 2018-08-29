@@ -47,6 +47,7 @@ class manajemenPenggunaController extends Controller
             ->first();
 
         $jabatan = DB::table('d_jabatan')
+            ->where('j_isactive', '=', 'Y')
             ->get();
         $comp = DB::table('d_comp')
             ->select('c_id', 'c_name')
@@ -57,6 +58,7 @@ class manajemenPenggunaController extends Controller
     public function add()
     {
         $jabatan = DB::table('d_jabatan')
+            ->where('j_isactive', '=', 'Y')
             ->get();
         $comp = DB::table('d_comp')
             ->select('c_id', 'c_name')

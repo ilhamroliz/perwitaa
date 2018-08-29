@@ -7,6 +7,16 @@
 <style>
 .popover-navigation [data-role="next"] { display: none; }
 .popover-navigation [data-role="end"] { display: none; }
+.checkbox.checkbox-single {
+    label {
+        width: 0;
+        height: 16px;
+        visibility: hidden;
+        &:before, &:after {
+            visibility: visible;
+        }
+    }
+}
 </style>
 
 @endsection
@@ -30,51 +40,126 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Jabatan Aktif</h5>
+    
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="ibox">        
+                <div class="ibox-title">
+                    <h5>Pengaturan Jabatan</h5>
+                    <button style="float: right; margin-top: -7px;" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
+                </div>
+                <div class="ibox-content">              
+                    <div class="row" style="padding-left: 10px; padding-right: 10px;">
+                        <form class="form-pengaturan">
+                            <table class="table table-striped col-md-12" id="table-pengaturan">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Jabatan</th>
+                                        <th>Aksi</th>
+                                        <th>Aktif</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </form>
+                        <div class="col-md-12">
+                            <button style="float: right;" class="btn btn-primary" onclick="update()" type="button">Simpan</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="ibox-content">
-              <div class="table-responsive">
-                  <table class="table table-striped" id="table-jabatan">
-                      <thead>
-                          <tr>
-                              <th>Nama Jabatan</th>
-                          </tr>
-                      </thead>
-                  </table>
-              </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="ibox">        
+                <div class="ibox-title">
+                    <h5>Jabatan Aktif</h5>
+                </div>
+                <div class="ibox-content">              
+                    <table class="table table-striped " id="table-jabatan">
+                        <thead>
+                            <tr>
+                                <th>Nama Jabatan</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Pengaturan Jabatan</h5>
+
+</div>
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-edit modal-icon"></i>
+                <h4 class="modal-title">Edit Jabatan</h4>
+                <small class="font-bold">Mengubah nama jabatan yang akan ditampilkan.</small>
             </div>
-            <div class="ibox-content">
-              
+            <div class="modal-body">
+                <form class="form-modal form-horizontal">
+                    <div class="form-group"><label class="col-lg-2 control-label">Nama</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Nama Jabatan" class="form-control namajabatan" name="namajabatan">
+                            <input type="hidden" class="idjabatan" name="idjabatan">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="simpanEdit()">Simpan</button>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
     var table;
+    var pengaturan;
     $(document).ready(function(){
+
         setTimeout(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            table = $("#pekerja").DataTable({
+            pengaturan = $("#table-pengaturan").DataTable({
                 processing: true,
                 searching: false,
-                paging: false
+                paging: false,
+                ordering: false,
+                serverSide: true,
+                "ajax": {
+                    "url": "{{ url('master-jabatan/table') }}",
+                    "type": "POST"
+                },
+                columns: [
+                    {data: 'j_name', name: 'j_name'},
+                    {data: 'edit', name: 'edit'},
+                    {data: 'aksi', name: 'aksi'}
+                ],
+                responsive: true,
+                "language": dataTableLanguage,
+            });
+        }, 500);
+
+        setTimeout(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            table = $("#table-jabatan").DataTable({
+                processing: true,
+                searching: false,
+                paging: false,
+                ordering: false,
                 serverSide: true,
                 "ajax": {
                     "url": "{{ url('master-jabatan/data') }}",
@@ -84,11 +169,82 @@
                     {data: 'j_name', name: 'j_name'},
                 ],
                 responsive: true,
-                //"scrollY": '50vh',
-                //"scrollCollapse": true,
                 "language": dataTableLanguage,
             });
         }, 1000);
     });
+
+    function edit(id, nama){
+        $('.namajabatan').val(nama);
+        $('.idjabatan').val(id);
+    }
+
+    function simpanEdit(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '{{ url('master-jabatan/rename') }}',
+            type: 'post',
+            data: $('.form-modal').serialize(),
+            success: function(response){
+                if (response.status == 'sukses') {
+                    $('#myModal').modal('hide');
+                    table.ajax.reload();
+                    pengaturan.ajax.reload();
+                }
+            }, error:function(x, e) {
+                if (x.status == 0) {
+                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                } else if (x.status == 404) {
+                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                } else if (x.status == 500) {
+                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                } else if (e == 'parsererror') {
+                    alert('Error.\nParsing JSON Request failed.');
+                } else if (e == 'timeout'){
+                    alert('Request Time out. Harap coba lagi nanti');
+                } else {
+                    alert('Unknow Error.\n' + x.responseText);
+                }
+            }
+        })
+    }
+
+    function update(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '{{ url('master-jabatan/update') }}',
+            type: 'post',
+            data: $('.form-modal').serialize(),
+            success: function(response){
+                if (response.status == 'sukses') {
+                    $('#myModal').modal('hide');
+                    table.ajax.reload();
+                    pengaturan.ajax.reload();
+                }
+            }, error:function(x, e) {
+                if (x.status == 0) {
+                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                } else if (x.status == 404) {
+                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                } else if (x.status == 500) {
+                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                } else if (e == 'parsererror') {
+                    alert('Error.\nParsing JSON Request failed.');
+                } else if (e == 'timeout'){
+                    alert('Request Time out. Harap coba lagi nanti');
+                } else {
+                    alert('Unknow Error.\n' + x.responseText);
+                }
+            }
+        })
+    }
 </script>
 @endsection

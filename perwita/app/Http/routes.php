@@ -37,7 +37,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pengguna/cekUsername', 'manajemenPenggunaController@cekUsername');
 
     Route::get('master-jabatan', 'JabatanController@index');
-    Route::get('master-jabatan/data', 'JabatanController@data');
+    Route::post('master-jabatan/data', 'JabatanController@data');
+    Route::post('master-jabatan/table', 'JabatanController@table');
+    Route::post('master-jabatan/rename', 'JabatanController@rename');
+    Route::post('master-jabatan/update', 'JabatanController@update');
+    Route::post('master-jabatan/simpan', 'JabatanController@simpan');
 
     Route::get('master-perusahaan', 'PerusahaanController@index');
 
