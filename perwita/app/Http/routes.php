@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('master-jabatan/rename', 'JabatanController@rename');
     Route::post('master-jabatan/update', 'JabatanController@update');
     Route::post('master-jabatan/simpan', 'JabatanController@simpan');
+    Route::post('master-jabatan/hapus', 'JabatanController@hapus');
 
     Route::get('master-perusahaan', 'PerusahaanController@index');
 

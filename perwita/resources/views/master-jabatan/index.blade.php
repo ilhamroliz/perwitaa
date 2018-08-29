@@ -46,7 +46,7 @@
             <div class="ibox">        
                 <div class="ibox-title">
                     <h5>Pengaturan Jabatan</h5>
-                    <button style="float: right; margin-top: -7px;" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
+                    <button style="float: right; margin-top: -7px;" data-toggle="modal" data-target="#addModal" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
                 </div>
                 <div class="ibox-content">              
                     <div class="row" style="padding-left: 10px; padding-right: 10px;">
@@ -54,9 +54,9 @@
                             <table class="table table-striped col-md-12" id="table-pengaturan">
                                 <thead>
                                     <tr>
-                                        <th>Nama Jabatan</th>
-                                        <th>Aksi</th>
-                                        <th>Aktif</th>
+                                        <th class="text-center">Nama Jabatan</th>
+                                        <th class="text-center">Aksi</th>
+                                        <th class="text-center">Aktif</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -110,6 +110,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
                 <button type="button" class="btn btn-primary" onclick="simpanEdit()">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-plus modal-icon"></i>
+                <h4 class="modal-title">Tambah Jabatan</h4>
+                <small class="font-bold">Menambah list jabatan yang akan digunakan.</small>
+            </div>
+            <div class="modal-body">
+                <form class="form-tambah form-horizontal">
+                    <div class="form-group"><label class="col-lg-2 control-label">Nama</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Nama Jabatan" class="form-control namatambah" name="namatambah">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="simpanAdd()">Simpan</button>
             </div>
         </div>
     </div>
@@ -222,10 +248,9 @@
         $.ajax({
             url: '{{ url('master-jabatan/update') }}',
             type: 'post',
-            data: $('.form-modal').serialize(),
+            data: $('.form-pengaturan').serialize(),
             success: function(response){
                 if (response.status == 'sukses') {
-                    $('#myModal').modal('hide');
                     table.ajax.reload();
                     pengaturan.ajax.reload();
                 }
@@ -245,6 +270,91 @@
                 }
             }
         })
+    }
+
+    function simpanAdd(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '{{ url('master-jabatan/simpan') }}',
+            type: 'post',
+            data: $('.form-tambah').serialize(),
+            success: function(response){
+                if (response.status == 'sukses') {
+                    $('#addModal').modal('hide');
+                    $('.namatambah').val('');
+                    table.ajax.reload();
+                    pengaturan.ajax.reload();
+                }
+            }, error:function(x, e) {
+                if (x.status == 0) {
+                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                } else if (x.status == 404) {
+                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                } else if (x.status == 500) {
+                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                } else if (e == 'parsererror') {
+                    alert('Error.\nParsing JSON Request failed.');
+                } else if (e == 'timeout'){
+                    alert('Request Time out. Harap coba lagi nanti');
+                } else {
+                    alert('Unknow Error.\n' + x.responseText);
+                }
+            }
+        })
+    }
+
+    function hapus(id){
+        swal({
+                title: "Konfirmasi",
+                text: "Apakah anda yakin ingin menghapus data Jabatan?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ url('master-jabatan/hapus') }}',
+                    type: 'post',
+                    data: { id: id },
+                    success: function(response){
+                        if (response.status == 'sukses') {
+                            swal({
+                                title: "Data Dihapus",
+                                text: "Data berhasil dihapus",
+                                type: "success",
+                                showConfirmButton: true,
+                                timer: 900
+                            });
+                            table.ajax.reload();
+                            pengaturan.ajax.reload();
+                        }
+                    }, error:function(x, e) {
+                        if (x.status == 0) {
+                            alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                        } else if (x.status == 404) {
+                            alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                        } else if (x.status == 500) {
+                            alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                        } else if (e == 'parsererror') {
+                            alert('Error.\nParsing JSON Request failed.');
+                        } else if (e == 'timeout'){
+                            alert('Request Time out. Harap coba lagi nanti');
+                        } else {
+                            alert('Unknow Error.\n' + x.responseText);
+                        }
+                    }
+                })
+            });
     }
 </script>
 @endsection

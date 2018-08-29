@@ -33,23 +33,28 @@ class JabatanController extends Controller
         return Datatables::of($data)
             ->addColumn('edit', function ($data){
                 if ($data->j_editable == 'N'){
-                    return '<button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" disabled><i class="glyphicon glyphicon-edit"></i></button>';
+                    return '<div class="text-center">
+                                <button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" disabled><i class="glyphicon glyphicon-edit"></i></button>
+                                <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" disabled><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>';
                 } else {
-                    return '<button style="margin-left:5px;" data-toggle="modal" data-target="#myModal" title="Edit" onclick="edit('. $data->j_id .', \''. $data->j_name .'\')" type="button" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>';
+                    return '<div class="text-center">
+                                <button style="margin-left:5px;" data-toggle="modal" data-target="#myModal" title="Edit" onclick="edit('. $data->j_id .', \''. $data->j_name .'\')" type="button" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" onclick="hapus('. $data->j_id .')" ><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>';
                 }
             })
             ->addColumn('aksi', function ($data){
-                //return '<input class="form-control" type="checkbox" name="pilih[]" value="' . $data->j_id . '">';
                 if ($data->j_isactive == 'Y'){
-                    return '<div class="checkbox checkbox-primary checkbox-single checkbox-inline">
+                    return '<div class="text-center"><div class="checkbox checkbox-primary checkbox-single checkbox-inline">
                                     <input type="checkbox" name="pilih[]" value="' . $data->j_id . '" checked>
                                     <label class="">  </label>
-                                </div>';
+                                </div></div>';
                 } else {
-                    return '<div class="checkbox checkbox-primary checkbox-single checkbox-inline">
+                    return '<div class="text-center"><div class="checkbox checkbox-primary checkbox-single checkbox-inline">
                                     <input type="checkbox" name="pilih[]" value="' . $data->j_id . '">
                                     <label class="">  </label>
-                                </div>';
+                                </div></div>';
                 }
             })
             ->make(true);
@@ -64,6 +69,58 @@ class JabatanController extends Controller
             ->update([
                 'j_name' => $nama
             ]);
+        return response()->json([
+            'status' => 'sukses'
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $pilih = $request->pilih;
+        DB::table('d_jabatan')
+            ->whereIn('j_id', $pilih)
+            ->update([
+                'j_isactive' => 'Y'
+            ]);
+
+        DB::table('d_jabatan')
+            ->whereNotIn('j_id', $pilih)
+            ->update([
+                'j_isactive' => 'N'
+            ]);
+
+        return response()->json([
+            'status' => 'sukses'
+        ]);
+    }
+
+    public function simpan(Request $request)
+    {
+        $nama = $request->namatambah;
+        $id = DB::table('d_jabatan')
+            ->max('j_id');
+        ++$id;
+
+        DB::table('d_jabatan')
+            ->insert([
+                'j_id' => $id,
+                'j_name' => $nama,
+                'j_editable' => 'Y',
+                'j_isactive' => 'N'
+            ]);
+
+        return response()->json([
+            'status' => 'sukses'
+        ]);
+    }
+
+    public function hapus(Request $request)
+    {
+        $id = $request->id;
+        DB::table('d_jabatan')
+            ->where('j_id', '=', $id)
+            ->delete();
+
         return response()->json([
             'status' => 'sukses'
         ]);
