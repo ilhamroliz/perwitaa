@@ -96,6 +96,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Pegawai Promosi & Demosi
     Route::get('manajemen-pegawai/promosidemosi','pegawaipromosiController@index');
+    Route::get('manajemen-pegawai/promosidemosi/data','pegawaipromosiController@data');
+    Route::post('manajemen-pegawai/promosidemosi/data','pegawaipromosiController@data');
+    Route::get('manajemen-pegawai/promosidemosi/getdetail','pegawaipromosiController@getdetail');
+    Route::get('manajemen-pegawai/promosidemosi/simpan','pegawaipromosiController@simpan');
+    Route::post('manajemen-pegawai/promosidemosi/simpan','pegawaipromosiController@simpan');
+    Route::get('manajemen-pegawai/promosidemosi/cari','pegawaipromosiController@cari');
+    Route::get('manajemen-pegawai/promosidemosi/tabelcari','pegawaipromosiController@tabelcari');
+    Route::get('manajemen-pegawai/promosidemosi/detail','pegawaipromosiController@detail');
+    Route::get('manajemen-pegawai/promosidemosi/getno','pegawaipromosiController@getno');
+    Route::get('manajemen-pegawai/promosidemosi/getdata','pegawaipromosiController@getdata');
+    Route::get('manajemen-pegawai/promosidemosi/hapus','pegawaipromosiController@hapus');
+    Route::get('manajemen-pegawai/promosidemosi/edit','pegawaipromosiController@edit');
+    Route::get('manajemen-pegawai/promosidemosi/update/{id}','pegawaipromosiController@update');
 
     //Pegawai Remunerasi
     Route::get('manajemen-pegawai/pegawairemunerasi','pegawairemunerasiController@index');
@@ -842,4 +855,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawai/tolak', 'approvalpegawaiController@tolak');
     Route::get('approvalpegawai/setujuilist', 'approvalpegawaiController@setujuilist');
     Route::get('approvalpegawai/tolaklist', 'approvalpegawaiController@tolaklist');
+
+    //Approval Promosi pegawai
+    Route::get('approvalpegawaipromosi', 'approvalpegawaipromosiController@index');
+    Route::get('approvalpegawaipromosi/setujui', 'approvalpegawaipromosiController@setujui');
+    Route::get('approvalpegawaipromosi/tolak', 'approvalpegawaipromosiController@tolak');
+    Route::get('approvalpegawaipromosi/setujuilist', 'approvalpegawaipromosiController@setujuilist');
+    Route::get('approvalpegawaipromosi/tolaklist', 'approvalpegawaipromosiController@tolaklist');
+    Route::get('approvalpegawaipromosi/detail', 'approvalpegawaipromosiController@detail');
 });

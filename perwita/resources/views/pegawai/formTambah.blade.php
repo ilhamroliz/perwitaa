@@ -61,7 +61,7 @@
                                 <select class="form-control m-b" id="jabatan-pelamar" name="jabatan_pelamar">
                                     <option disabled selected>-- Pilih Jenis Jabatan --</option>
                                     @foreach($jabPelamar as $data)
-                                    <option value="{{ $data->jp_id }}"> {{ $data->jp_name }} </option>
+                                    <option value="{{ $data->j_id }}"> {{ $data->j_name }} </option>
                                     @endforeach
                                 </select>
                             </div>

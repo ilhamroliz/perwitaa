@@ -178,7 +178,7 @@ class promosiController extends Controller
             $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
             $jumlah = $jumlah[0]->jumlah;
 
-            d_notifikasi::where('n_fitur', '=', 'Promosi')
+            d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
                 ->where('n_detail', '=', 'Create')
                 ->update([
                     'n_qty' => $jumlah,
@@ -461,7 +461,7 @@ class promosiController extends Controller
             ]);
 
         $pekerja = DB::table('d_promosi_demosi')
-                ->select('pd_no')
+                ->select('pd_no', 'pd_pekerja')
                 ->where('pd_id',$id)
                 ->get();
 
