@@ -52,9 +52,10 @@ class pegawaiController extends Controller
                         ->make(true);
     }
     public function tambah() {
-      $jabPelamar = DB::table('d_jabatan_pelamar')
+      $jabPelamar = DB::table('d_jabatan')
           ->select('*')
-          ->orderBy('jp_name')
+          ->where('j_isactive', 'Y')
+          ->orderBy('j_name')
           ->get();
 
         return view('pegawai.formTambah', compact('jabPelamar'));
@@ -446,8 +447,8 @@ class pegawaiController extends Controller
       }
     }
     public function edit($id) {
-      $jabatan = DB::table('d_jabatan_pelamar')
-          ->select('jp_name', 'jp_id')->get();
+      $jabatan = DB::table('d_jabatan')
+          ->select('j_name', 'j_id')->where('j_isactive', 'Y')->get();
 
       $pekerja = DB::table('d_pegawai')
           ->where('p_id', '=', $id)

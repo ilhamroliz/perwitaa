@@ -45,9 +45,6 @@
                                 <th>Jabatan Lama</th>
                                 <th>Jabatan Sekarang</th>
                                 <th>NIK</th>
-                                <th>NIK Mitra</th>
-                                <th>Mitra</th>
-                                <th>Divisi</th>
                                 <th width="120px">Aksi</th>
                             </tr>
                         </thead>
@@ -92,7 +89,7 @@
                             <select class="form-control jabatan" name="jabatanBaru">
                                 <option selected disabled>-- Pilih Jabatan --</option>
                                 @foreach($jabatan as $jabatan)
-                                <option value="{{ $jabatan->jp_id }}">{{ $jabatan->jp_name }}</option>
+                                <option value="{{ $jabatan->j_id }}">{{ $jabatan->j_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -119,154 +116,151 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-//     var table;
-//     $(document).ready(function () {
-//         setTimeout(function () {
-//             $.ajaxSetup({
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//                 }
-//             });
-//             table = $("#tabel-pekerja").DataTable({
-//                 "search": {
-//                     "caseInsensitive": true
-//                 },
-//                 processing: true,
-//                 serverSide: true,
-//                 "ajax": {
-//                     "url": "{{ url('manajemen-pekerja/promosi-demosi/getData') }}",
-//                     "type": "POST"
-//                 },
-//                 columns: [
-//                     {data: 'p_name', name: 'p_name'},
-//                     {data: 'pd_jabatan_awal', name: 'pd_jabatan_awal'},
-//                     {data: 'pd_jabatan_sekarang', name: 'pd_jabatan_sekarang'},
-//                     {data: 'p_nip', name: 'p_nip'},
-//                     {data: 'p_nip_mitra', name: 'p_nip_mitra'},
-//                     {data: 'm_name', name: 'm_name'},
-//                     {data: 'md_name', name: 'md_name'},
-//                     {data: 'action', name: 'action', orderable: false, searchable: false}
-//                 ],
-//                 responsive: true,
-//                 "pageLength": 10,
-//                 "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-//                 //"scrollY": '50vh',
-//                 //"scrollCollapse": true,
-//                 "language": dataTableLanguage,
-//             });
-//         }, 1500);
-//
-//
-//     });
-//
-//     function promosi(id){
-//         $('.modal-title').html('Promosi');
-//         $('.sub-tittle').html('Promosi jabatan adalah hal yang di impikan oleh pekerja :)');
-//         $('.simbol-modal').html('<i class="fa fa-arrow-circle-up modal-icon"></i>');
-//         $('.jenis').val('Promosi');
-//         $('.id_pekerja').val(id);
-//         $.ajax({
-//             type: 'get',
-//             data: {id:id},
-//             url: baseUrl + '/manajemen-pekerja/promosi-demosi/getdetail',
-//             dataType: 'json',
-//             success : function(result){
-//                 var data = result.data[0];
-//                 $('.modal-nama').html(data.p_name);
-//                 $('.modal-jabatan').html(data.jp_name);
-//             }
-//         });
-//         $('#myModal').modal('show');
-//     }
-//
-//     function demosi(id){
-//         $('.modal-title').html('Demosi');
-//         $('.sub-tittle').html('Demosi jabatan akan menurunkan semangat pekerja :(');
-//         $('.simbol-modal').html('<i class="fa fa-arrow-circle-down modal-icon"></i>');
-//         $('.jenis').val('Demosi');
-//         $('.id_pekerja').val(id);
-//         $.ajax({
-//             type: 'get',
-//             data: {id:id},
-//             url: baseUrl + '/manajemen-pekerja/promosi-demosi/getdetail',
-//             dataType: 'json',
-//             success : function(result){
-//                 var data = result.data[0];
-//                 $('.modal-nama').html(data.p_name);
-//                 $('.modal-jabatan').html(data.jp_name);
-//             }
-//         });
-//         $('#myModal').modal('show');
-//     }
-//
-//     function simpan(){
-//         var note = $('textarea.keterangan').val();
-//         var jabatan = $('.jabatan').val();
-//         var jenis = $('.jenis').val();
-//         var pekerja = $('.id_pekerja').val();
-//         if (jabatan == '' || jabatan == null) {
-//             Command: toastr["warning"]("Jabatan tidak boleh kosong", "Peringatan !")
-//
-//             toastr.options = {
-//               "closeButton": false,
-//               "debug": true,
-//               "newestOnTop": false,
-//               "progressBar": true,
-//               "positionClass": "toast-top-right",
-//               "preventDuplicates": false,
-//               "onclick": null,
-//               "showDuration": "300",
-//               "hideDuration": "1000",
-//               "timeOut": "5000",
-//               "extendedTimeOut": "1000",
-//               "showEasing": "swing",
-//               "hideEasing": "linear",
-//               "showMethod": "fadeIn",
-//               "hideMethod": "fadeOut"
-//             }
-//             return false;
-//         }
-//         waitingDialog.show();
-//         $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         $.ajax({
-//             url: baseUrl + '/manajemen-pekerja/promosi-demosi/simpan',
-//             type: 'get',
-//             data: {note: note, jabatan: jabatan, jenis: jenis, pekerja: pekerja},
-//             dataType: 'json',
-//             success: function (response) {
-//                 if (response.status == 'sukses') {
-//                     swal({
-//                       title: "Berhasil Disimpan",
-//                       text: "Data berhasil Disimpan",
-//                       type: "success",
-//                       showConfirmButton: false,
-//                       timer: 900
-//                     });
-//                     $('#myModal').modal('hide');
-//                     location.reload();
-//                 }
-//                 waitingDialog.hide();
-//             },
-//             error: function (xhr, status) {
-//                 if (status == 'timeout') {
-//                     $('.error-load').css('visibility', 'visible');
-//                     $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
-//                 }
-//                 else if (xhr.status == 0) {
-//                     $('.error-load').css('visibility', 'visible');
-//                     $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
-//                 }
-//                 else if (xhr.status == 500) {
-//                     $('.error-load').css('visibility', 'visible');
-//                     $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
-//                 }
-//                 waitingDialog.hide();
-//             }
-//         });
-//     }
+    var table;
+    $(document).ready(function () {
+        setTimeout(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            table = $("#tabel-pekerja").DataTable({
+                "search": {
+                    "caseInsensitive": true
+                },
+                processing: true,
+                serverSide: true,
+                "ajax": {
+                    "url": "{{ url('manajemen-pegawai/promosidemosi/data') }}",
+                    "type": "POST"
+                },
+                columns: [
+                    {data: 'p_name', name: 'p_name'},
+                    {data: 'ppd_jabatan_awal', name: 'ppd_jabatan_awal'},
+                    {data: 'ppd_jabatan_sekarang', name: 'ppd_jabatan_sekarang'},
+                    {data: 'p_nip', name: 'p_nip'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                responsive: true,
+                "pageLength": 10,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                //"scrollY": '50vh',
+                //"scrollCollapse": true,
+                "language": dataTableLanguage,
+            });
+        }, 1500);
+
+
+    });
+
+    function promosi(id){
+        $('.modal-title').html('Promosi');
+        $('.sub-tittle').html('Promosi jabatan adalah hal yang di impikan oleh pegawai :)');
+        $('.simbol-modal').html('<i class="fa fa-arrow-circle-up modal-icon"></i>');
+        $('.jenis').val('Promosi');
+        $('.id_pekerja').val(id);
+        $.ajax({
+            type: 'get',
+            data: {id:id},
+            url: baseUrl + '/manajemen-pegawai/promosidemosi/getdetail',
+            dataType: 'json',
+            success : function(result){
+                var data = result.data[0];
+                $('.modal-nama').html(data.p_name);
+                $('.modal-jabatan').html(data.jp_name);
+            }
+        });
+        $('#myModal').modal('show');
+    }
+
+    function demosi(id){
+        $('.modal-title').html('Demosi');
+        $('.sub-tittle').html('Demosi jabatan akan menurunkan semangat pekerja :(');
+        $('.simbol-modal').html('<i class="fa fa-arrow-circle-down modal-icon"></i>');
+        $('.jenis').val('Demosi');
+        $('.id_pekerja').val(id);
+        $.ajax({
+            type: 'get',
+            data: {id:id},
+            url: baseUrl + '/manajemen-pegawai/promosidemosi/getdetail',
+            dataType: 'json',
+            success : function(result){
+                var data = result.data[0];
+                $('.modal-nama').html(data.p_name);
+                $('.modal-jabatan').html(data.jp_name);
+            }
+        });
+        $('#myModal').modal('show');
+    }
+
+    function simpan(){
+        var note = $('textarea.keterangan').val();
+        var jabatan = $('.jabatan').val();
+        var jenis = $('.jenis').val();
+        var pekerja = $('.id_pekerja').val();
+        if (jabatan == '' || jabatan == null) {
+            Command: toastr["warning"]("Jabatan tidak boleh kosong", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            return false;
+        }
+        waitingDialog.show();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: baseUrl + '/manajemen-pegawai/promosidemosi/simpan',
+            type: 'post',
+            data: {note: note, jabatan: jabatan, jenis: jenis, pekerja: pekerja},
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'sukses') {
+                    swal({
+                      title: "Berhasil Disimpan",
+                      text: "Data berhasil Disimpan",
+                      type: "success",
+                      showConfirmButton: false,
+                      timer: 900
+                    });
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+                waitingDialog.hide();
+            },
+            error: function (xhr, status) {
+                if (status == 'timeout') {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 0) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
+                }
+                else if (xhr.status == 500) {
+                    $('.error-load').css('visibility', 'visible');
+                    $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
+                }
+                waitingDialog.hide();
+            }
+        });
+    }
 </script>
 @endsection

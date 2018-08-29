@@ -16,6 +16,8 @@ use App\d_pekerja;
 
 use Session;
 
+use App\d_notifikasi;
+
 class approvalpromosiController extends Controller
 {
     public function index(){
@@ -45,14 +47,14 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
         $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
       }
 
-      $count = DB::table('d_promosi_demosi')
-          ->where('pd_isapproved', 'P')
-          ->get();
+      $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+      $jumlah = $jumlah[0]->jumlah;
 
-      DB::table('d_notifikasi')
-          ->where('n_fitur', 'Promosi')
+      d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
+          ->where('n_detail', '=', 'Create')
           ->update([
-            'n_qty' => count($count)
+              'n_qty' => $jumlah,
+              'n_insert' => Carbon::now()
           ]);
 
 
@@ -74,14 +76,14 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
 
             print $pc->approvePromosi($request->pd_no);
 
-            $count = DB::table('d_promosi_demosi')
-                ->where('pd_isapproved', 'P')
-                ->get();
+            $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+            $jumlah = $jumlah[0]->jumlah;
 
-            DB::table('d_notifikasi')
-                ->where('n_fitur', 'Promosi')
+            d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
+                ->where('n_detail', '=', 'Create')
                 ->update([
-                  'n_qty' => count($count)
+                    'n_qty' => $jumlah,
+                    'n_insert' => Carbon::now()
                 ]);
 
         DB::commit();
@@ -105,14 +107,14 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
               'pd_isapproved' => 'N'
             ]);
 
-            $count = DB::table('d_promosi_demosi')
-                ->where('pd_isapproved', 'P')
-                ->get();
+            $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+            $jumlah = $jumlah[0]->jumlah;
 
-            DB::table('d_notifikasi')
-                ->where('n_fitur', 'Promosi')
+            d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
+                ->where('n_detail', '=', 'Create')
                 ->update([
-                  'n_qty' => count($count)
+                    'n_qty' => $jumlah,
+                    'n_insert' => Carbon::now()
                 ]);
 
         DB::commit();
@@ -135,16 +137,6 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
                 ->update([
                   'pd_isapproved' => 'Y'
                 ]);
-
-                $count = DB::table('d_promosi_demosi')
-                    ->where('pd_isapproved', 'P')
-                    ->get();
-
-                DB::table('d_notifikasi')
-                    ->where('n_fitur', 'Promosi')
-                    ->update([
-                      'n_qty' => count($count)
-                    ]);
 
             $data = DB::table('d_promosi_demosi')
                 ->whereIn('pd_id',$request->pilih)
@@ -202,14 +194,14 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
                 ]);
               }
 
-              $count = DB::table('d_promosi_demosi')
-                  ->where('pd_isapproved', 'P')
-                  ->get();
+              $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+              $jumlah = $jumlah[0]->jumlah;
 
-              DB::table('d_notifikasi')
-                  ->where('n_fitur', 'Promosi')
+              d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
+                  ->where('n_detail', '=', 'Create')
                   ->update([
-                    'n_qty' => count($count)
+                      'n_qty' => $jumlah,
+                      'n_insert' => Carbon::now()
                   ]);
 
         DB::commit();
@@ -236,14 +228,14 @@ join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
               ]);
         }
 
-        $count = DB::table('d_promosi_demosi')
-            ->where('pd_isapproved', 'P')
-            ->get();
+        $jumlah = DB::select("select count(pd_id) as jumlah from d_promosi_demosi where pd_isapproved = 'P'");
+        $jumlah = $jumlah[0]->jumlah;
 
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Promosi')
+        d_notifikasi::where('n_fitur', '=', 'Promosi & Demosi')
+            ->where('n_detail', '=', 'Create')
             ->update([
-              'n_qty' => count($count)
+                'n_qty' => $jumlah,
+                'n_insert' => Carbon::now()
             ]);
 
         DB::commit();
