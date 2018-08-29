@@ -654,7 +654,7 @@ Route::group(['middleware' => 'auth'], function () {
     //thoriq
 
     /*System*/
-    Route::get('/system/hakuser/user', 'aksesUserController@indexAksesUser');
+    Route::get('system/hakuser/user', 'aksesUserController@indexAksesUser');
     Route::get('/system/hakuser/tambah_user', 'aksesUserController@tambah_user');
     Route::get('/system/hakuser/tambah_user/simpan-user', 'aksesUserController@simpanUser');
     Route::get('/system/hakakses/edit-user-akses/{id}/edit', 'aksesUserController@editUserAkses');
