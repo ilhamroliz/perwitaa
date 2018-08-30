@@ -83,7 +83,7 @@
                 {data: 'j_name', name: 'j_name'},
                 {data: 'aksi', name: 'aksi'}
             ],
-            responsive: true,
+            responsive: false,
             "language": dataTableLanguage,
         });
     }, 500);

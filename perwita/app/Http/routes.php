@@ -672,7 +672,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/hakuser/tambah_user/simpan-user', 'aksesUserController@simpanUser');
     Route::get('system/hakakses/edit-user-akses/edit/{id}', 'aksesUserController@editUserAkses');
     Route::get('system/hakuser/perbarui-user/perbarui-user/{id}', 'aksesUserController@perbaruiUser');
-    Route::get('system/hakakses/simpan-user-akses', 'aksesUserController@simpanUserAkses');
+    Route::post('system/hakakses/simpan', 'aksesUserController@save');
     Route::post('system/hakakses/dataUser', 'aksesUserController@dataUser');
 
     //mitra divisi

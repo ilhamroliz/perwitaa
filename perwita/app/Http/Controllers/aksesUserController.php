@@ -31,212 +31,156 @@ class aksesUserController extends Controller
             ->join('d_jabatan', 'm_jabatan', '=', 'j_id')
             ->leftJoin('d_mem_comp', 'mc_mem', '=', 'm_id')
             ->leftJoin('d_comp', 'c_id', '=', 'mc_comp')
-            ->select('d_mem.*', 'd_jabatan.j_name', 'c_name')
+            ->select('d_mem.*', 'd_jabatan.j_name', 'c_name', 'j_id')
             ->orderBy('m_name')
             ->get();
 
         $user = collect($user);
         return Datatables::of($user)
             ->addColumn('aksi', function ($user){
-                return '<div class="">
-                    <button style="margin-left:5px;" title="Akses" type="button" class="btn btn-primary btn-xs" onclick="akses(\'' . Crypt::encrypt($user->m_id) . '\')"><i class="glyphicon glyphicon-wrench"></i></button>
-                  </div>';
+                if ($user->j_id == 1 || $user->j_id == 2){
+                    return '<div class="">
+                        <button style="margin-left:5px;" title="Akses" type="button" class="btn btn-primary btn-xs" onclick="akses(\'' . Crypt::encrypt($user->m_id) . '\')" disabled><i class="glyphicon glyphicon-wrench"></i></button>
+                     </div>';
+                } else {
+                    return '<div class="">
+                        <button style="margin-left:5px;" title="Akses" type="button" class="btn btn-primary btn-xs" onclick="akses(\'' . Crypt::encrypt($user->m_id) . '\')"><i class="glyphicon glyphicon-wrench"></i></button>
+                     </div>';
+                }
             })
             ->make(true);
-    }
-
-    public function tambah_user()
-    {
-        $group = d_group::get();
-        $access = d_access::get();
-        return view('/system/hakuser/tambah_user', compact('access', 'group'));
-    }
-
-
-    public function simpanUser(Request $request)
-    {
-        return DB::transaction(function () use ($request) {
-
-            $m_id = mMember::max('m_id') + 1;
-            $passwd = sha1(md5('passwordAllah') . $request->Password);
-            mMember::create([
-                'm_id' => $m_id,
-                'm_username' => $request->Username,
-                'm_passwd' => $passwd,
-                'm_name' => $request->NamaLengkap,
-            ]);
-
-            $hakAkses = d_group::join('d_group_access', 'ga_group', '=', 'g_id')
-                ->join('d_access', 'a_id', '=', 'ga_access')
-                ->where('g_id', $request->groupAkses)->get();
-
-
-            for ($i = 0; $i < count($hakAkses); $i++) {
-                $ma_id = d_mem_access::max('ma_id') + 1;
-                d_mem_access::create([
-                    'ma_id' => $ma_id,
-                    'ma_mem' => $m_id,
-                    'ma_access' => $hakAkses[$i]->a_id,
-                    'ma_group' => $hakAkses[$i]->g_id,
-                    'ma_type' => 'G',
-                    'ma_read' => $hakAkses[$i]->ga_read,
-                    'ma_insert' => $hakAkses[$i]->ga_insert,
-                    'ma_update' => $hakAkses[$i]->ga_update,
-                    'ma_delete' => $hakAkses[$i]->ga_delete
-                ]);
-            }
-
-
-            if ($request->groupAkses == null) {
-                $hakAkses = d_access::get();
-
-                $ma_id = d_mem_access::max('ma_id') + 1;
-                d_mem_access::create([
-                    'ma_id' => $ma_id,
-                    'ma_mem' => $m_id,
-                    'ma_access' => $hakAkses[$i]->a_id,
-                    'ma_group' => 0,
-                    'ma_type' => 'G'
-                ]);
-
-            }
-
-
-            for ($i = 0; $i < count($request->id_access); $i++) {
-                d_mem_access::create([
-                    'ma_mem' => $m_id,
-                    'ma_access' => $request->id_access[$i],
-                    'ma_type' => 'M',
-                    'ma_read' => $request->view[$i],
-                    'ma_insert' => $request->insert[$i],
-                    'ma_update' => $request->update[$i],
-                    'ma_delete' => $request->delete[$i],
-                ]);
-            }
-
-            $data = ['status' => 'sukses', 'm_id' => $m_id];
-            return json_encode($data);
-        });
     }
 
     public function editUserAkses($id)
     {
         $id = Crypt::decrypt($id);
-        return view('system/hakuser/akses');
+        $user = DB::table('d_mem')
+            ->join('d_jabatan', 'j_id', '=', 'm_jabatan')
+            ->join('d_mem_comp', 'mc_mem', '=', 'm_id')
+            ->join('d_comp', 'c_id', '=', 'mc_comp')
+            ->select('d_mem.*', 'j_id', 'j_name', 'd_comp.*', DB::raw('DATE_FORMAT(m_lastlogin, "%d/%m/%Y %h:%i") as m_lastlogin'), DB::raw('DATE_FORMAT(m_lastlogout, "%d/%m/%Y %h:%i") as m_lastlogout'))
+            ->where('m_id', '=', $id)
+            ->first();
+
+        $akses = DB::table('d_access')
+            ->join('d_mem_access', 'a_id', '=', 'ma_access')
+            ->where('ma_mem', '=', $id)
+            ->get();
+
+        $id = Crypt::encrypt($id);
+
+        return view('system/hakuser/akses', compact('akses', 'user', 'id'));
     }
 
-    public function perbaruiUser($m_id, Request $request)
+    public function save(Request $request)
     {
-        return DB::transaction(function () use ($m_id, $request) {
+        //dd($request);
+        DB::beginTransaction();
+        try {
+            $read = $request->read;
+            $insert = $request->insert;
+            $update = $request->update;
+            $delete = $request->delete;
+            $id = Crypt::decrypt($request->id);
 
-            $mMember = mMember::where('m_id', $m_id);
-            $mMember->update([
-                'm_username' => $request->Username,
-                'm_name' => $request->NamaLengkap,
-            ]);
+            $akses = DB::table('d_access')
+                ->select('a_id')
+                ->get();
 
-            $mem_access = d_mem_access::where('ma_mem', $m_id)
-                ->where('ma_type', '=', DB::raw("'G'"));
+            $cek = DB::table('d_mem_access')
+                ->where('ma_mem', '=', $id)
+                ->get();
 
-            $hakAkses = d_group::join('d_group_access', 'ga_group', '=', 'g_id')
-                ->join('d_access', 'a_id', '=', 'ga_access')
-                ->where('g_id', $request->groupAkses)->get();
+            if (count($cek) > 0){
+                //== update data
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->update([
+                        'ma_read' => 'N',
+                        'ma_insert' => 'N',
+                        'ma_update' => 'N',
+                        'ma_delete' => 'N'
+                    ]);
 
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $read)
+                    ->update([
+                        'ma_read' => 'Y'
+                    ]);
 
-            if ($mem_access->first()) {
-                if ($mem_access->first()->ma_group != $request->groupAkses) {
-                    $mem_access = d_mem_access::where('ma_mem', $m_id)
-                        ->where('ma_type', '=', DB::raw("'G'"));
-                    $mem_access->delete();
-                    if ($request->groupAkses != '') {
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $insert)
+                    ->update([
+                        'ma_insert' => 'Y'
+                    ]);
 
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $update)
+                    ->update([
+                        'ma_update' => 'Y'
+                    ]);
 
-                        for ($i = 0; $i < count($hakAkses); $i++) {
-                            $ma_id = d_mem_access::max('ma_id') + 1;
-                            d_mem_access::create([
-                                'ma_id' => $ma_id,
-                                'ma_mem' => $m_id,
-                                'ma_access' => $hakAkses[$i]->a_id,
-                                'ma_group' => $hakAkses[$i]->g_id,
-                                'ma_type' => 'G',
-                                'ma_read' => $hakAkses[$i]->ga_read,
-                                'ma_insert' => $hakAkses[$i]->ga_insert,
-                                'ma_update' => $hakAkses[$i]->ga_update,
-                                'ma_delete' => $hakAkses[$i]->ga_delete
-                            ]);
-                        }
-
-                    } elseif ($request->groupAkses == null) {
-                        $hakAkses = d_access::get();
-                        for ($i = 0; $i < count($hakAkses); $i++) {
-                            $ma_id = d_mem_access::max('ma_id') + 1;
-                            d_mem_access::create([
-                                'ma_id' => $ma_id,
-                                'ma_mem' => $m_id,
-                                'ma_access' => $hakAkses[$i]->a_id,
-                                'ma_group' => 0,
-                                'ma_type' => 'G'
-                            ]);
-
-                        }
-                    }
-
-                }
-
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $delete)
+                    ->update([
+                        'ma_delete' => 'Y'
+                    ]);
             } else {
-
-                for ($i = 0; $i < count($hakAkses); $i++) {
-                    $ma_id = d_mem_access::max('ma_id') + 1;
-                    d_mem_access::create([
-                        'ma_id' => $ma_id,
-                        'ma_mem' => $m_id,
-                        'ma_access' => $hakAkses[$i]->a_id,
-                        'ma_group' => $hakAkses[$i]->g_id,
-                        'ma_type' => 'G',
-                        'ma_read' => $hakAkses[$i]->ga_read,
-                        'ma_insert' => $hakAkses[$i]->ga_insert,
-                        'ma_update' => $hakAkses[$i]->ga_update,
-                        'ma_delete' => $hakAkses[$i]->ga_delete
-                    ]);
+                //== create data
+                $addAkses = [];
+                for ($i = 0; $i < count($akses); $i++){
+                    $temp = [
+                        'ma_mem' => $id,
+                        'ma_access' => $akses[$i]->a_id
+                    ];
+                    array_push($addAkses, $temp);
                 }
+                DB::table('d_mem_access')->insert($addAkses);
 
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $read)
+                    ->update([
+                        'ma_read' => 'Y'
+                    ]);
+
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $insert)
+                    ->update([
+                        'ma_insert' => 'Y'
+                    ]);
+
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $update)
+                    ->update([
+                        'ma_update' => 'Y'
+                    ]);
+
+                DB::table('d_mem_access')
+                    ->where('ma_mem', '=', $id)
+                    ->whereIn('ma_access', $delete)
+                    ->update([
+                        'ma_delete' => 'Y'
+                    ]);
             }
 
-
-            for ($i = 0; $i < count($request->id_access); $i++) {
-                $mem_access = d_mem_access::where('ma_mem', $m_id)
-                    ->where('ma_access', $request->id_access[$i])
-                    ->where('ma_type', '=', DB::raw("'M'"));
-                if ($mem_access->first()) {
-                    $mem_access->update([
-                        'ma_read' => $request->view[$i],
-                        'ma_insert' => $request->insert[$i],
-                        'ma_update' => $request->update[$i],
-                        'ma_delete' => $request->delete[$i]
-                    ]);
-
-                } else {
-                    d_mem_access::create([
-                        'ma_mem' => $m_id,
-                        'ma_access' => $request->id_access[$i],
-                        'ma_type' => 'M',
-                        'ma_read' => $request->view[$i],
-                        'ma_insert' => $request->insert[$i],
-                        'ma_update' => $request->update[$i],
-                        'ma_delete' => $request->delete[$i],
-                    ]);
-
-                }
-
-            }
-
-            $data = ['status' => 'sukses'];
-            return json_encode($data);
-        });
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
     }
 
 }
-
-
-    
-
