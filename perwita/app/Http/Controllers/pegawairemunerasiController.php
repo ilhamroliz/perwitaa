@@ -169,7 +169,8 @@ class pegawairemunerasiController extends Controller
     public function data(){
       $data = DB::table('d_pegawai_remunerasi')
             ->join('d_pegawai', 'p_id', '=', 'pr_pegawai')
-            ->select('p_name', 'pr_id', 'pr_no', 'pr_awal', 'pr_terbaru', 'pr_note', 'p_jabatan')
+            ->leftjoin('d_jabatan', 'j_id', '=', 'p_jabatan')
+            ->select('p_name', 'pr_id', 'pr_no', 'pr_awal', 'pr_terbaru', 'pr_note', 'p_jabatan', 'j_name')
             ->get();
 
 
@@ -186,7 +187,8 @@ class pegawairemunerasiController extends Controller
     public function detail(Request $request){
       $data = DB::table('d_pegawai_remunerasi')
             ->join('d_pegawai', 'p_id', '=', 'pr_pegawai')
-            ->select('p_name', 'pr_id', 'pr_no', 'pr_awal', 'pr_terbaru', 'pr_note', 'pr_isapproved')
+            ->leftjoin('d_jabatan', 'j_id', '=', 'p_jabatan')
+            ->select('p_name', 'pr_id', 'pr_no', 'pr_awal', 'pr_terbaru', 'pr_note', 'pr_isapproved', 'j_name')
             ->where('pr_id', $request->id)
             ->get();
 

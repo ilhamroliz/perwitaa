@@ -52,7 +52,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Cari Remunerasi Pegawai</h5>
-      <a href="{{url('manajemen-pekerja/remunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+      <a href="{{url('manajemen-pegawai/pegawairemunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -198,25 +198,11 @@ $(document).ready(function(){
         html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
       } else {
         for (var i = 0; i < result.length; i++) {
-          if (result[i].p_jabatan == 1) {
-            jabatan = 'Manager';
-          }
-          else if (result[i].p_jabatan == 2) {
-            jabatan = 'Supervisor';
-          }
-          else if (result[i].p_jabatan == 3) {
-            jabatan = 'Staff';
-          }
-          else if (result[i].p_jabatan == 4) {
-            jabatan = 'Operator';
-          } else {
-            jabatan = '-';
-          }
 
           html += '<tr>'+
                   '<td>'+result[i].pr_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+jabatan+'</td>'+
+                  '<td>'+result[i].j_name+'</td>'+
                   '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_awal, "", 0, ".", ",")+'</span></td>'+
                   '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_terbaru, "", 0, ".", ",")+'</span></td>'+
                   '<td>'+result[i].pr_note+'</td>'+
@@ -270,6 +256,7 @@ $(document).ready(function(){
                     '<td>'+result[i].p_jabatan+'</td>'+
                     '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_awal, "", 0, ".", ",")+'</span></td>'+
                     '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_terbaru, "", 0, ".", ",")+'</span></td>'+
+                    '<td>'+result[i].pr_note+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
                       '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].pr_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
@@ -282,7 +269,9 @@ $(document).ready(function(){
 
       $('#showdata').html(html);
       waitingDialog.hide()
-      }
+    }, error : function(){
+      waitingDialog.hide()
+    }
     });
   }
 

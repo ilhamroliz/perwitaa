@@ -879,4 +879,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawaipromosi/setujuilist', 'approvalpegawaipromosiController@setujuilist');
     Route::get('approvalpegawaipromosi/tolaklist', 'approvalpegawaipromosiController@tolaklist');
     Route::get('approvalpegawaipromosi/detail', 'approvalpegawaipromosiController@detail');
+
+    //Approval Remunerasi Pegawai
+    Route::get('approvalpegawairemunerasi', 'approvalpegawairemunerasiController@index');
+    Route::get('approvalpegawairemunerasi/setujui', 'approvalpegawairemunerasiController@setujui');
+    Route::get('approvalpegawairemunerasi/tolak', 'approvalpegawairemunerasiController@tolak');
+    Route::get('approvalpegawairemunerasi/setujuilist', 'approvalpegawairemunerasiController@setujuilist');
+    Route::get('approvalpegawairemunerasi/tolaklist', 'approvalpegawairemunerasiController@tolaklist');
 });

@@ -270,6 +270,7 @@ $(document).ready(function(){
                     '<td>'+result[i].p_jabatan+'</td>'+
                     '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_awal, "", 0, ".", ",")+'</span></td>'+
                     '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_terbaru, "", 0, ".", ",")+'</span></td>'+
+                    '<td>'+result[i].r_note+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
                       '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
@@ -282,6 +283,8 @@ $(document).ready(function(){
 
       $('#showdata').html(html);
       waitingDialog.hide()
+      }, error : function(){
+        waitingDialog.hide()
       }
     });
   }
