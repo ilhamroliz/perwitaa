@@ -244,7 +244,7 @@ class remunerasiController extends Controller
       } catch (\Exception $e) {
         DB::rollback();
         return response()->json([
-          'status' => 'berhasil'
+          'status' => 'gagal'
         ]);
       }
     }

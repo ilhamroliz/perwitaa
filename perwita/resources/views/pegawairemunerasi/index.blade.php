@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Pegawai Remunerasi</h5>
-        <a href="{{ url('manajemen-pegawai/remunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-pegawai/pegawairemunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -102,71 +102,71 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-// var num = 1;
-// var table;
-//     $(document).ready(function(){
-//       $("#nonik").autocomplete({
-//         source: baseUrl + '/manajemen-pekerja/remunerasi/carino',
-//         select: function(event, ui) {
-//           getdata(ui.item.id);
-//         }
-//       });
-//     });
-//
-//     function simpan(id){
-//       waitingDialog.show();
-//       $.ajaxSetup({
-//         headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//       });
-//       $.ajax({
-//         type: 'post',
-//         data: $('#formtambah').serialize(),
-//         url: baseUrl + '/manajemen-pekerja/remunerasi/simpan/'+id,
-//         dataType: 'json',
-//         success : function(result){
-//           waitingDialog.hide();
-//           if (result.status == 'berhasil') {
-//             swal({
-//                 title: "Berhasil",
-//                 text: "Simpan Data Remunerasi Berhasil Disimpan",
-//                 type: "success",
-//                 showConfirmButton: false,
-//                 timer: 900
-//             });
-//           }
-//           $('input[type=text]').val('');
-//           $('#simpanbtn').prop('disabled', true);
-//         }
-//       });
-//     }
-//
-//     function getdata(id){
-//       waitingDialog.show();
-//       $.ajax({
-//         type: 'get',
-//         url: baseUrl + '/manajemen-pekerja/remunerasi/getdata',
-//         data: {id:id},
-//         dataType: 'json',
-//         success : function(result){
-//           if (result.status == 'kosong') {
-//             waitingDialog.hide();
-//           }
-//           $('#namapekerja').val(result[0].p_name);
-//           $('#jabatanpekerja').val(result[0].p_jabatan);
-//
-//           //Button
-//           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
-//           $('#simpanbtn').prop('disabled', false);
-//
-//           waitingDialog.hide();
-//         }
-//       });
-//     }
-//
-//     $('#gajiawal').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-//     $('#gajiterbaru').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+var num = 1;
+
+$(document).ready(function(){
+  $("#nonik").autocomplete({
+    source: baseUrl + '/manajemen-pegawai/pegawairemunerasi/carino',
+    select: function(event, ui) {
+      getdata(ui.item.id);
+    }
+  });
+});
+
+    function simpan(id){
+      waitingDialog.show();
+      $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        type: 'post',
+        data: $('#formtambah').serialize(),
+        url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/simpan/'+id,
+        dataType: 'json',
+        success : function(result){
+          waitingDialog.hide();
+          if (result.status == 'berhasil') {
+            swal({
+                title: "Berhasil",
+                text: "Simpan Data Remunerasi Berhasil Disimpan",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+          }
+          $('input[type=text]').val('');
+          $('#simpanbtn').prop('disabled', true);
+        }
+      });
+    }
+
+    function getdata(id){
+      waitingDialog.show();
+      $.ajax({
+        type: 'get',
+        url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/getdata',
+        data: {id:id},
+        dataType: 'json',
+        success : function(result){
+          if (result.status == 'kosong') {
+            waitingDialog.hide();
+          }
+          $('#namapekerja').val(result[0].p_name);
+          $('#jabatanpekerja').val(result[0].p_jabatan);
+
+          //Button
+          $('#simpanbtn').attr('onclick', 'simpan('+id+')');
+          $('#simpanbtn').prop('disabled', false);
+
+          waitingDialog.hide();
+        }
+      });
+    }
+
+    $('#gajiawal').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+    $('#gajiterbaru').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
 </script>
 @endsection

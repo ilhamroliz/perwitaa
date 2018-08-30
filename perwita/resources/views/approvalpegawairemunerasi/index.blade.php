@@ -15,20 +15,20 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Approval Remunerasi</h2>
+        <h2>Approval Remunerasi Pegawai</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li class="active">
-                <strong>Daftar Approval Remunerasi</strong>
+                <strong>Daftar Approval Remunerasi Pegawai</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Daftar Approval Remunerasi</h5>
+        <h5>Daftar Approval Remunerasi Pegawai</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -48,7 +48,7 @@
                 </center>
                 <form class="formapprovalremunerasi" id="formapprovalremunerasi">
                   @foreach($data as $z)
-                  <input type="hidden" name="pd_no" id="pd_no" value="{{$z->r_no}}">
+                  <input type="hidden" name="pd_no" id="pd_no" value="{{$z->pr_no}}">
                   @endforeach
                     <table id="remunerasitabel" class="table table-bordered table-striped" >
                         <thead>
@@ -57,7 +57,7 @@
                                   <input type="checkbox" class="setCek" onclick="selectall()">
                                 </th>
                                 <th>No. Remunerasi</th>
-                                <th>Nama Tenaga Kerja</th>
+                                <th>Nama</th>
                                 <th>Jabatan</th>
                                 <th>Gaji Awal</th>
                                 <th>Gaji Terbaru</th>
@@ -69,18 +69,18 @@
                           @foreach($data as $index => $x)
                           <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                               <td>
-                                  <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->r_id}}">
+                                  <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->pr_id}}">
                               </td>
-                                <td>{{$x->r_no}}</td>
+                                <td>{{$x->pr_no}}</td>
                                 <td>{{$x->p_name}}</td>
-                                <td>{{$x->jp_name}}</td>
-                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_awal,2,',','.')}}</span></td>
-                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->r_terbaru,2,',','.')}}</span></td>
-                                <td>{{$x->r_note}}</td>
+                                <td>{{$x->j_name}}</td>
+                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->pr_awal,2,',','.')}}</span></td>
+                                <td><span style="float:left;">Rp.</span><span style="float:right;">{{number_format($x->pr_terbaru,2,',','.')}}</span></td>
+                                <td>{{$x->pr_note}}</td>
                                 <td align="center">
-                                <button type="button" title="Detail" onclick="detail({{$x->r_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                                <button type="button" title="Setujui" onclick="setujui({{$x->r_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                                <button type="button" title="Tolak" onclick="tolak({{$x->r_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                                <button type="button" title="Detail" onclick="detail({{$x->pr_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                                <button type="button" title="Setujui" onclick="setujui({{$x->pr_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                                <button type="button" title="Tolak" onclick="tolak({{$x->pr_id}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                                </td>
                             </tr>
                             @endforeach
@@ -253,7 +253,7 @@ function setujui(id){
               $.ajax({
                 type: 'get',
                 data: {id:id},
-                url: baseUrl + '/approvalremunerasi/setujui',
+                url: baseUrl + '/approvalpegawairemunerasi/setujui',
                 dataType: 'json',
                 timeout: 10000,
                   success: function (response) {
@@ -313,7 +313,7 @@ function tolak(id){
               $.ajax({
                 type: 'get',
                 data: {id:id},
-                url: baseUrl + '/approvalremunerasi/tolak',
+                url: baseUrl + '/approvalpegawairemunerasi/tolak',
                 dataType: 'json',
                 timeout: 10000,
                   success: function (response) {
@@ -362,7 +362,7 @@ function setujuilist(){
   $.ajax({
     type: 'get',
     data: $('#formapprovalremunerasi').serialize(),
-    url: baseUrl + '/approvalremunerasi/setujuilist',
+    url: baseUrl + '/approvalpegawairemunerasi/setujuilist',
     dataType: 'json',
     timeout: 10000,
     success : function(result){
@@ -409,7 +409,7 @@ function tolaklist(){
   $.ajax({
     type: 'get',
     data: $('#formapprovalremunerasi').serialize(),
-    url: baseUrl + '/approvalremunerasi/tolaklist',
+    url: baseUrl + '/approvalpegawairemunerasi/tolaklist',
     dataType: 'json',
     timeout: 10000,
     success : function(result){
@@ -456,25 +456,23 @@ function detail(id){
   $.ajax({
     type: 'get',
     data: {id:id},
-    url: baseUrl + '/manajemen-pekerja/remunerasi/detail',
+    url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/detail',
     dataType: 'json',
     success : function(result){
-      $('#r_no').text(result[0].r_no);
+
+      $('#r_no').text(result[0].pr_no);
       $('#namapekerja').text(result[0].p_name);
-      $('#jabatanpekerja').text(result[0].jp_name);
-      $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].r_awal, "", 0, ".", ",")+ ' -> ' + 'Rp. '+accounting.formatMoney(result[0].r_terbaru, "", 0, ".", ","));
-      $('#keteranganpekerja').text(result[0].r_note);
+      $('#jabatanpekerja').text(result[0].j_name);
+      $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].pr_awal, "", 0, ".", ",")+ ' -> ' + 'Rp. '+accounting.formatMoney(result[0].pr_terbaru, "", 0, ".", ","));
+      $('#keteranganpekerja').text(result[0].pr_note);
       //
-      if (result[0].r_isapproved == 'P') {
+      if (result[0].pr_isapproved == 'P') {
         $('#approve').html('<span class="label label-warning">Pending</span>');
-      } else if (result[0].r_isapproved == 'Y') {
+      } else if (result[0].pr_isapproved == 'Y') {
         $('#approve').html('<span class="label label-success">Disetujui</span>');
-      } else if (result[0].r_isapproved == 'N') {
+      } else if (result[0].pr_isapproved == 'N') {
         $('#approve').html('<span class="label label-danger">Ditolak</span>');
       }
-
-      //Button print
-      $('#printbtn').attr('onclick', 'print('+id+')');
 
       $('.spiner-sp').hide();
       $('#showdetail').show();

@@ -117,6 +117,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Pegawai Remunerasi
     Route::get('manajemen-pegawai/pegawairemunerasi','pegawairemunerasiController@index');
+    Route::get('manajemen-pegawai/pegawairemunerasi/cari','pegawairemunerasiController@cari');
+    Route::get('manajemen-pegawai/pegawairemunerasi/simpan/{id}','pegawairemunerasiController@simpan');
+    Route::post('manajemen-pegawai/pegawairemunerasi/simpan/{id}','pegawairemunerasiController@simpan');
+    Route::get('manajemen-pegawai/pegawairemunerasi/getdata','pegawairemunerasiController@getdata');
+    Route::get('manajemen-pegawai/pegawairemunerasi/carino','pegawairemunerasiController@carino');
+    Route::get('manajemen-pegawai/pegawairemunerasi/data','pegawairemunerasiController@data');
+    Route::get('manajemen-pegawai/pegawairemunerasi/update/{id}','pegawairemunerasiController@update');
+    Route::get('manajemen-pegawai/pegawairemunerasi/getcari','pegawairemunerasiController@getcari');
+    Route::get('manajemen-pegawai/pegawairemunerasi/detail','pegawairemunerasiController@detail');
+    Route::get('manajemen-pegawai/pegawairemunerasi/hapus','pegawairemunerasiController@hapus');
 
     //Pegawai PHK
     Route::get('manajemen-pegawai/pegawaiphk','pegawaiphkController@index');
@@ -869,4 +879,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawaipromosi/setujuilist', 'approvalpegawaipromosiController@setujuilist');
     Route::get('approvalpegawaipromosi/tolaklist', 'approvalpegawaipromosiController@tolaklist');
     Route::get('approvalpegawaipromosi/detail', 'approvalpegawaipromosiController@detail');
+
+    //Approval Remunerasi Pegawai
+    Route::get('approvalpegawairemunerasi', 'approvalpegawairemunerasiController@index');
+    Route::get('approvalpegawairemunerasi/setujui', 'approvalpegawairemunerasiController@setujui');
+    Route::get('approvalpegawairemunerasi/tolak', 'approvalpegawairemunerasiController@tolak');
+    Route::get('approvalpegawairemunerasi/setujuilist', 'approvalpegawairemunerasiController@setujuilist');
+    Route::get('approvalpegawairemunerasi/tolaklist', 'approvalpegawairemunerasiController@tolaklist');
 });

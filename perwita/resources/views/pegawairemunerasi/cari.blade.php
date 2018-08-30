@@ -35,30 +35,30 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Cari Remunerasi</h2>
+        <h2>Cari Remunerasi Pegawai</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pekerja
+                Manajemen Pegawai
             </li>
             <li class="active">
-                <strong>Cari Remunerasi</strong>
+                <strong>Cari Remunerasi Pegawai</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Cari Remunerasi</h5>
-      <a href="{{url('manajemen-pekerja/remunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+        <h5>Cari Remunerasi Pegawai</h5>
+      <a href="{{url('manajemen-pegawai/pegawairemunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
               <div class="col-md-12">
-                <label for="pencarian">Cari Berdasarkan NIK Pekerja</label>
+                <label for="pencarian">Cari Berdasarkan NIK Pegawai</label>
                 <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan NIK Pekerja">
               </div>
                 <div class="col-md-12" style="margin-top: 30px;">
@@ -66,7 +66,7 @@
                         <thead>
                             <tr>
                               <th>No. Remunerasi</th>
-                              <th>Nama Tenaga Kerja</th>
+                              <th>Nama</th>
                               <th>Jabatan</th>
                               <th>Gaji Awal</th>
                               <th>Gaji Terbaru</th>
@@ -189,7 +189,7 @@ $(document).ready(function(){
   $('#showdata').html('');
   $.ajax({
     type: 'get',
-    url: baseUrl + '/manajemen-pekerja/remunerasi/data',
+    url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/data',
     dataType: 'json',
     success : function(result){
       var jabatan;
@@ -198,33 +198,19 @@ $(document).ready(function(){
         html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
       } else {
         for (var i = 0; i < result.length; i++) {
-          if (result[i].p_jabatan == 1) {
-            jabatan = 'Manager';
-          }
-          else if (result[i].p_jabatan == 2) {
-            jabatan = 'Supervisor';
-          }
-          else if (result[i].p_jabatan == 3) {
-            jabatan = 'Staff';
-          }
-          else if (result[i].p_jabatan == 4) {
-            jabatan = 'Operator';
-          } else {
-            jabatan = '-';
-          }
 
           html += '<tr>'+
-                  '<td>'+result[i].r_no+'</td>'+
+                  '<td>'+result[i].pr_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+jabatan+'</td>'+
-                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_awal, "", 0, ".", ",")+'</span></td>'+
-                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_terbaru, "", 0, ".", ",")+'</span></td>'+
-                  '<td>'+result[i].r_note+'</td>'+
+                  '<td>'+result[i].j_name+'</td>'+
+                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_awal, "", 0, ".", ",")+'</span></td>'+
+                  '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_terbaru, "", 0, ".", ",")+'</span></td>'+
+                  '<td>'+result[i].pr_note+'</td>'+
                   '<td>'+
                   '<div class="text-center">'+
-                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].r_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].pr_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                    '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].pr_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].pr_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                   '</div>'+
                   '</tr>';
         }
@@ -234,7 +220,7 @@ $(document).ready(function(){
   });
 
     $('#pencarian').autocomplete({
-        source: baseUrl + '/manajemen-pekerja/remunerasi/carino',
+        source: baseUrl + '/manajemen-pegawai/pegawairemunerasi/carino',
         select: function(event, ui) {
             getdata(ui.item.id);
         }
@@ -257,7 +243,7 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/remunerasi/getcari',
+      url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/getcari',
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
@@ -265,17 +251,17 @@ $(document).ready(function(){
         } else {
           for (var i = 0; i < result.length; i++) {
             html += '<tr>'+
-                    '<td>'+result[i].r_no+'</td>'+
+                    '<td>'+result[i].pr_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
                     '<td>'+result[i].p_jabatan+'</td>'+
-                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_awal, "", 0, ".", ",")+'</span></td>'+
-                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].r_terbaru, "", 0, ".", ",")+'</span></td>'+
-                    '<td>'+result[i].r_note+'</td>'+
+                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_awal, "", 0, ".", ",")+'</span></td>'+
+                    '<td><span style="float:left;">Rp.</span><span style="float:right;">'+accounting.formatMoney(result[i].pr_terbaru, "", 0, ".", ",")+'</span></td>'+
+                    '<td>'+result[i].pr_note+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].r_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].r_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].pr_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                      '<a style="margin-left:5px;" title="Edit" type="button" onclick="edit('+result[i].pr_id+')"  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].pr_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                     '</div>'+
                     '</tr>';
           }
@@ -283,9 +269,9 @@ $(document).ready(function(){
 
       $('#showdata').html(html);
       waitingDialog.hide()
-      }, error : function(){
-        waitingDialog.hide()
-      }
+    }, error : function(){
+      waitingDialog.hide()
+    }
     });
   }
 
@@ -295,20 +281,20 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/remunerasi/detail',
+      url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/detail',
       dataType: 'json',
       success : function(result){
-        $('#r_no').text(result[0].r_no);
+        $('#r_no').text(result[0].pr_no);
         $('#namapekerja').text(result[0].p_name);
-        $('#jabatanpekerja').text(result[0].jp_name);
-        $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].r_awal, "", 0, ".", ",")+ ' -> ' + 'Rp. '+accounting.formatMoney(result[0].r_terbaru, "", 0, ".", ","));
-        $('#keteranganpekerja').text(result[0].r_note);
+        $('#jabatanpekerja').text(result[0].j_name);
+        $('#nilairemunerasi').text('Rp. '+accounting.formatMoney(result[0].pr_awal, "", 0, ".", ",")+ ' -> ' + 'Rp. '+accounting.formatMoney(result[0].pr_terbaru, "", 0, ".", ","));
+        $('#keteranganpekerja').text(result[0].pr_note);
         //
-        if (result[0].r_isapproved == 'P') {
+        if (result[0].pr_isapproved == 'P') {
           $('#approve').html('<span class="label label-warning">Pending</span>');
-        } else if (result[0].r_isapproved == 'Y') {
+        } else if (result[0].pr_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
-        } else if (result[0].r_isapproved == 'N') {
+        } else if (result[0].pr_isapproved == 'N') {
           $('#approve').html('<span class="label label-danger">Ditolak</span>');
         }
 
@@ -337,7 +323,7 @@ $(document).ready(function(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-pekerja/remunerasi/hapus',
+            url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/hapus',
             type: 'get',
             timeout: 10000,
             success: function(response){
@@ -392,12 +378,12 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/remunerasi/detail',
+      url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/detail',
       dataType: 'json',
       success : function(result){
-        $('#editketerangan').val(result[0].r_note);
-        $('#gajiawal').val('Rp. '+accounting.formatMoney(result[0].r_awal, "", 0, ".", ","));
-        $('#gajiterbaru').val('Rp. '+accounting.formatMoney(result[0].r_terbaru, "", 0, ".", ","));
+        $('#editketerangan').val(result[0].pr_note);
+        $('#gajiawal').val('Rp. '+accounting.formatMoney(result[0].pr_awal, "", 0, ".", ","));
+        $('#gajiterbaru').val('Rp. '+accounting.formatMoney(result[0].pr_terbaru, "", 0, ".", ","));
 
         $('#editremunerasi').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
@@ -417,7 +403,7 @@ $(document).ready(function(){
       $.ajax({
         type: 'get',
         data: $('.form-edit').serialize(),
-        url: baseUrl + '/manajemen-pekerja/remunerasi/update/'+id,
+        url: baseUrl + '/manajemen-pegawai/pegawairemunerasi/update/'+id,
         dataType: 'json',
         timeout: 10000,
         success : function(result){

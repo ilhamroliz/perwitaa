@@ -270,7 +270,7 @@ class pegawaipromosiController extends Controller
     $keyword = $request->term;
 
     $data = DB::table('d_pegawai_promosi_demosi')
-              ->join('d_pekerja', 'p_id', '=', 'ppd_pegawai')
+              ->join('d_pegawai', 'p_id', '=', 'ppd_pegawai')
               ->join('d_jabatan', 'j_id', '=', 'ppd_jabatan_sekarang')
               ->select('ppd_no', 'p_name', 'j_name', 'p_nip', 'ppd_id')
               ->where('ppd_no', 'LIKE', '%'.$keyword.'%')
@@ -283,7 +283,7 @@ class pegawaipromosiController extends Controller
           } else {
 
               foreach ($data as $query) {
-                  $results[] = ['id' => $query->ppd_id, 'label' => $query->p_name . ' (' . $query->ppd_no . ' )'];
+                  $results[] = ['id' => $query->ppd_id, 'label' => $query->p_name . ' (' . $query->ppd_no . ')'];
               }
           }
 
