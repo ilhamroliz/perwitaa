@@ -117,6 +117,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Pegawai Remunerasi
     Route::get('manajemen-pegawai/pegawairemunerasi','pegawairemunerasiController@index');
+    Route::get('manajemen-pegawai/pegawairemunerasi/cari','pegawairemunerasiController@cari');
+    Route::get('manajemen-pegawai/pegawairemunerasi/simpan/{id}','pegawairemunerasiController@simpan');
+    Route::post('manajemen-pegawai/pegawairemunerasi/simpan/{id}','pegawairemunerasiController@simpan');
+    Route::get('manajemen-pegawai/pegawairemunerasi/getdata','pegawairemunerasiController@getdata');
+    Route::get('manajemen-pegawai/pegawairemunerasi/carino','pegawairemunerasiController@carino');
+    Route::get('manajemen-pegawai/pegawairemunerasi/data','pegawairemunerasiController@data');
+    Route::get('manajemen-pegawai/pegawairemunerasi/update/{id}','pegawairemunerasiController@update');
+    Route::get('manajemen-pegawai/pegawairemunerasi/getcari','pegawairemunerasiController@getcari');
+    Route::get('manajemen-pegawai/pegawairemunerasi/detail','pegawairemunerasiController@detail');
+    Route::get('manajemen-pegawai/pegawairemunerasi/hapus','pegawairemunerasiController@hapus');
 
     //Pegawai PHK
     Route::get('manajemen-pegawai/pegawaiphk','pegawaiphkController@index');
