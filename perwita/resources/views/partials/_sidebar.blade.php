@@ -15,11 +15,17 @@
                 </div>
             </li>
 
+            <?php $sidebar = App\Http\Controllers\AksesUser::aksesSidebar() ?>
+
+            @if($sidebar[0]->ma_read == 'Y')
             <li class="{{Request::is('dashboard') ? 'active' : ''}}">
               <a href="{{url('dashboard')}}"><i class="fa fa-th-large"></i>
                   <i class="" aria-hidden="true"></i><span class="nav-label">Dashboards</span>
               </a>
             </li>
+            @endif
+
+            @if($sidebar[1]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
               || Request::is('manajemen-pekerja/data-pekerja/*') ? 'active' : ''
@@ -80,7 +86,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if($sidebar[2]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''}}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (PJTKI)</span><span class="fa arrow"></span></a>
@@ -93,7 +101,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if($sidebar[3]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                      Request::is('manajemen-mitra/data-mitra') ? 'active' : ''
                   || Request::is('manajemen-mitra/data-mitra/*') ? 'active' : ''
@@ -127,7 +137,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if($sidebar[4]->ma_read == 'Y')
             <li class="treeview sidebar data-master
                 {{ Request::is('manajemen-seragam/*') ? 'active' : ''
                 || Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''
@@ -186,7 +198,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if($sidebar[5]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-stock/mutasi-stock') ? 'active' : ''
               || Request::is('manajemen-stock/mutasi-stock/*') ? 'active' : ''
@@ -216,7 +230,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if($sidebar[6]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pegawai</span><span class="fa arrow"></span></a>
@@ -243,6 +259,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
             {{-- <li class="treeview sidebar data-master {{
                  Request::is('bpjs') ? 'active' : '' }}">
@@ -305,6 +322,8 @@
                     <li><a href="{{url('laporan-keuangan/arus-kas')}}">Laporan Arus Kas</a></li>
                 </ul>
             </li> --}}
+
+            @if($sidebar[7]->ma_read == 'Y')
             <li style="padding-bottom: 30px;" class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''  
                                 || Request::is('master-jabatan') ? 'active' : ''
@@ -325,6 +344,7 @@
                     <li><a href="{{url('master-perusahaan')}}">Master Perusahaan</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </div>
 </nav>

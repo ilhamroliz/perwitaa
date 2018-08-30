@@ -38,6 +38,9 @@ class pekerjaController extends Controller
 
     public function index()
     {
+        if (!AksesUser::checkAkses(3, 'read')){
+            return redirect('not-authorized');
+        }
         return view('pekerja.index');
     }
 

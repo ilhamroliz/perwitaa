@@ -12,9 +12,7 @@ class dashboardController extends Controller
         $this->middleware('auth');
     }
     public function index() {
-        $akses = new aksesUserController();
-        $cek = $akses->checkAkses(1, 'read');
-        if (!$cek){
+        if (!AksesUser::checkAkses(1, 'read')){
             return redirect('not-authorized');
         }
         return view('dashboard');

@@ -148,7 +148,7 @@
                                     <div class="text-center">
                                         <div class="checkbox checkbox-success checkbox-single checkbox-inline">
                                             <input type="checkbox" class="read{{ $data->a_parrent }}"
-                                                   @if($data->a_parrent == $data->a_id) onchange="handleChange(this);"
+                                                   @if($data->a_parrent == $data->a_id) id="read{{ $data->a_parrent }}" onchange="handleChange(this);" @else onchange="checkParent(this, 'read{{ $data->a_parrent }}');"
                                                    @endif name="read[]" value="{{ $data->a_id }}" @if($data->ma_read == 'Y') checked @endif>
                                             <label class=""> </label>
                                         </div>
@@ -158,7 +158,7 @@
                                     <div class="text-center">
                                         <div class="checkbox checkbox-primary checkbox-single checkbox-inline">
                                             <input type="checkbox" class="insert{{ $data->a_parrent }}"
-                                                   @if($data->a_parrent == $data->a_id) onchange="handleChange(this);"
+                                                   @if($data->a_parrent == $data->a_id) id="insert{{ $data->a_parrent }}" onchange="handleChange(this);" @else onchange="checkParent(this, 'insert{{ $data->a_parrent }}');"
                                                    @endif name="insert[]" value="{{ $data->a_id }}" @if($data->ma_insert == 'Y') checked @endif>
                                             <label class=""> </label>
                                         </div>
@@ -168,7 +168,7 @@
                                     <div class="text-center">
                                         <div class="checkbox checkbox-warning checkbox-single checkbox-inline">
                                             <input type="checkbox" class="update{{ $data->a_parrent }}"
-                                                   @if($data->a_parrent == $data->a_id) onchange="handleChange(this);"
+                                                   @if($data->a_parrent == $data->a_id) id="update{{ $data->a_parrent }}" onchange="handleChange(this);" @else onchange="checkParent(this, 'update{{ $data->a_parrent }}');"
                                                    @endif name="update[]" value="{{ $data->a_id }}" @if($data->ma_update == 'Y') checked @endif>
                                             <label class=""> </label>
                                         </div>
@@ -178,7 +178,7 @@
                                     <div class="text-center">
                                         <div class="checkbox checkbox-danger checkbox-single checkbox-inline">
                                             <input type="checkbox" class="delete{{ $data->a_parrent }}"
-                                                   @if($data->a_parrent == $data->a_id) onchange="handleChange(this);"
+                                                   @if($data->a_parrent == $data->a_id) id="delete{{ $data->a_parrent }}" onchange="handleChange(this);" @else onchange="checkParent(this, 'delete{{ $data->a_parrent }}');"
                                                    @endif name="delete[]" value="{{ $data->a_id }}" @if($data->ma_delete == 'Y') checked @endif>
                                             <label class=""> </label>
                                         </div>
@@ -201,12 +201,18 @@
 @section("extra_scripts")
     <script type="text/javascript">
         function handleChange(checkbox) {
-            if (checkbox.checked == true) {
+            if (checkbox.checked) {
                 var klas = checkbox.className;
-                $('input[class="' + klas + '"]').prop("checked", true);
+                $('input[class="'+klas+'"]').prop("checked", true);
             } else {
                 var klas = checkbox.className;
-                $('input[class="' + klas + '"]').prop("checked", false);
+                $('input[class="'+klas+'"]').prop("checked", false);
+            }
+        }
+
+        function checkParent(checkbox, id){
+            if (checkbox.checked) {
+                $('input[id="'+id+'"]').prop("checked", true);
             }
         }
 
