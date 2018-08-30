@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use App\Http\Requests;
 
 class dashboardController extends Controller
@@ -12,6 +12,7 @@ class dashboardController extends Controller
         $this->middleware('auth');
     }
     public function index() {
+        dd(Auth::check());
         return view('dashboard');
     }
 }

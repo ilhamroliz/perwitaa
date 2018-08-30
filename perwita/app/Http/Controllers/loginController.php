@@ -57,15 +57,7 @@ class loginController extends Controller
 
                 $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
                 if ($user && $user->m_passwd == sha1(md5('passwordAllah') . $request->password)) {
-                    /*$userCompany = $user->company($user->m_id);
 
-                    if ($userCompany == null) {
-                        $response = [
-                            'status' => 'gagal',
-                            'content' => 'Perusahaan'
-                        ];
-                        return json_encode($response);
-                    }*/
                     Session::set('mem', $user->m_id);
                     $getJabatan = DB::table('d_mem')
                         ->leftJoin('d_jabatan', 'm_jabatan', '=', 'j_id')

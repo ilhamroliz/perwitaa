@@ -886,4 +886,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawairemunerasi/tolak', 'approvalpegawairemunerasiController@tolak');
     Route::get('approvalpegawairemunerasi/setujuilist', 'approvalpegawairemunerasiController@setujuilist');
     Route::get('approvalpegawairemunerasi/tolaklist', 'approvalpegawairemunerasiController@tolaklist');
+
+    Route::get('not-authorized', function(){
+        return view('system/index');
+    });    
 });
