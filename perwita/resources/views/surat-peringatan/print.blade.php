@@ -81,7 +81,7 @@
     <br />
     <br />
     <br />
-    <b><u>NOVI KURNIAWAN</u></b><br>
+    <b><u>{{$data[0]->sp_approve_by}}</u></b><br>
     Supervisor/Pengawas <br>
     &nbsp; &nbsp; &nbsp; &nbsp; Lapangan
     </div>

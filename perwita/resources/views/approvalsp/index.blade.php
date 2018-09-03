@@ -464,6 +464,7 @@ function detail(id){
       $('#tanggalmulaiberakhir').text(result[0].sp_date_start + ' - ' + result[0].sp_date_end);
 
       if (result[0].sp_isapproved == 'P') {
+        $('#printbtn').hide();
         $('#approve').html('<span class="label label-warning">Pending</span>');
       } else if (result[0].sp_isapproved == 'Y') {
         $('#approve').html('<span class="label label-success">Disetujui</span>');

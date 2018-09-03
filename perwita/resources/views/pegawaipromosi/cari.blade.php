@@ -294,6 +294,7 @@ $(document).ready(function(){
         $('#jabatan').text(result[1][0].j_name + ' -> ' + result[2][0].j_name);
         //
         if (result[0][0].ppd_isapproved == 'P') {
+          $('#printbtn').hide();
           $('#approve').html('<span class="label label-warning">Pending</span>');
         } else if (result[0][0].ppd_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');

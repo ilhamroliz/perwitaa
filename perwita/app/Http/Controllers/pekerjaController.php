@@ -218,6 +218,8 @@ class pekerjaController extends Controller
             $imgijazah = null;
             $imgskck = null;
             $imgmedical = null;
+            $imgkk = null;
+            $imgrekening = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
             $dir = 'image/uploads/pekerja/' . $idPekerja;
@@ -229,6 +231,8 @@ class pekerjaController extends Controller
             $ijazah = $request->file('ijazahUpload');
             $skck = $request->file('skckUpload');
             $medical = $request->file('medicalUpload');
+            $kk = $request->file('kkUpload');
+            $rekening = $request->file('rekeningUpload');
             $name = null;
             if ($file != null) {
                 $name = $folder . '.' . $file->getClientOriginalExtension();
@@ -315,6 +319,42 @@ class pekerjaController extends Controller
                 }
             }
 
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'image/uploads/pekerja/kk/' . $idPekerja;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            if ($kk != null) {
+                $namekk = $folder . '-kk.' . $kk->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $kk->move($path, $namekk);
+                        $imgkk = $childPath . $namekk;
+                    } else
+                        $imgkk = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'image/uploads/pekerja/rekening/' . $idPekerja;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            if ($rekening != null) {
+                $namerekening = $folder . '-rekening.' . $rekening->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $rekening->move($path, $namerekening);
+                        $imgrekening = $childPath . $namerekening;
+                    } else
+                        $imgrekening = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
             if ($agama_lain != '' || $agama_lain != null) {
                 $agama = $agama_lain;
             }
@@ -378,6 +418,8 @@ class pekerjaController extends Controller
                 "p_img_ijazah" => $imgijazah,
                 "p_img_skck" => $imgskck,
                 "p_img_medical" => $imgmedical,
+                "p_img_kk" => $imgkk,
+                "p_img_rekening" => $imgrekening,
                 "p_insert_by" => Session::get('mem'),
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
@@ -576,7 +618,9 @@ class pekerjaController extends Controller
                 , 'p_img_ktp'
                 , 'p_img_skck'
                 , 'p_img_medical'
-                , 'p_img_ijazah')
+                , 'p_img_ijazah'
+                , 'p_img_kk'
+                , 'p_img_rekening')
             ->get();
 
         $child = DB::table('d_pekerja_child')
@@ -661,6 +705,7 @@ group by ps_pekerja");
          DB::beginTransaction();
           try {
         $id = $request->id;
+        $idPekerja = $request->id;
         $imglama = $request->imglama;
 
         DB::table('d_pekerja')->where('p_id', '=', $id)
@@ -753,7 +798,7 @@ group by ps_pekerja");
             $imgPath = null;
             $tgl = carbon::now('Asia/Jakarta');
             $folder = $tgl->year . $tgl->month . $tgl->timestamp;
-            $dir = 'image/uploads/pekerja/' . $id;
+            $dir = 'image/uploads/pekerja/' . $idPekerja;
             $this->deleteDir($dir);
             $childPath = $dir . '/';
             $path = $childPath;
@@ -837,6 +882,8 @@ group by ps_pekerja");
                 "p_img_skck" => $request->imgskcklama,
                 "p_img_ijazah" => $request->imgijazahlama,
                 "p_img_medical" => $request->imgmedicallama,
+                "p_img_kk" => $request->imgkklama,
+                "p_img_rekening" => $request->imgrekeninglama,
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
             ));
@@ -929,6 +976,8 @@ group by ps_pekerja");
                 "p_img_skck" => $request->imgskcklama,
                 "p_img_ijazah" => $request->imgijazahlama,
                 "p_img_medical" => $request->imgmedicallama,
+                "p_img_kk" => $request->imgkklama,
+                "p_img_rekening" => $request->imgrekeninglama,
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
             ));
@@ -1021,6 +1070,8 @@ group by ps_pekerja");
                 "p_img_skck" => $request->imgskcklama,
                 "p_img_medical" => $request->imgmedicallama,
                 "p_img_ijazah" => $imgijazah,
+                "p_img_kk" => $request->imgkklama,
+                "p_img_rekening" => $request->imgrekeninglama,
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
             ));
@@ -1113,6 +1164,8 @@ group by ps_pekerja");
                 "p_img_ijazah" => $request->imgijazahlama,
                 "p_img_medical" => $request->imgmedicallama,
                 "p_img_skck" => $imgskck,
+                "p_img_kk" => $request->imgkklama,
+                "p_img_rekening" => $request->imgrekeninglama,
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
             ));
@@ -1205,6 +1258,194 @@ group by ps_pekerja");
                 "p_img_skck" => $request->imgskcklama,
                 "p_img_ijazah" => $request->imgijazahlama,
                 "p_img_medical" => $imgmedical,
+                "p_insert" => Carbon::now('Asia/Jakarta'),
+                "p_update" => Carbon::now('Asia/Jakarta')
+            ));
+
+        } elseif (!empty($request->file('kkUpload'))) {
+            $imgkk = null;
+            $tgl = carbon::now('Asia/Jakarta');
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'image/uploads/pekerja/kk/' . $idPekerja;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            $kk = $request->file('kkUpload');
+            $namekk = null;
+            if ($kk != null) {
+                $namekk = $folder . '-kk.' . $kk->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $kk->move($path, $namekk);
+                        $imgkk = $childPath . $namekk;
+                    } else
+                        $imgkk = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
+            if ($agama_lain != '' || $agama_lain != null) {
+                $agama = $agama_lain;
+            }
+
+
+            if ($saatini == 'kuliah') {
+                $saatini = 'Kuliah di ' . $kuliahnow;
+            }
+
+
+            d_pekerja::insert(array(
+                "p_id" => $id,
+                "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
+                "p_nip" => null,
+                "p_ktp" => $no_ktp,
+                "p_name" => $nama,
+                "p_sex" => $sex,
+                "p_birthplace" => $tempat_lahir,
+                "p_birthdate" => $tanggal_lahir,
+                "p_hp" => $no_hp,
+                "p_telp" => $no_tlp,
+                "p_status" => strtoupper($status),
+                "p_many_kids" => strtoupper($jml_anak),
+                "p_religion" => strtoupper($agama),
+                "p_address" => strtoupper($alamat),
+                "p_rt_rw" => strtoupper($rt),
+                "p_kel" => strtoupper($desa),
+                "p_kecamatan" => strtoupper($kecamatan),
+                "p_city" => strtoupper($kota),
+                "p_address_now" => strtoupper($alamat_now),
+                "p_rt_rw_now" => strtoupper($rt_now),
+                "p_kel_now" => strtoupper($desa_now),
+                "p_kecamatan_now" => strtoupper($kecamatan_now),
+                "p_city_now" => strtoupper($kota_now),
+                "p_name_family" => strtoupper($nama_keluarga),
+                "p_address_family" => strtoupper($alamat_keluarga),
+                "p_telp_family" => strtoupper($telp_keluarga),
+                "p_hp_family" => strtoupper($hp_keluarga),
+                "p_hubungan_family" => strtoupper($hubungan_keluarga),
+                "p_wife_name" => strtoupper($wife_name),
+                "p_wife_birth" => strtoupper($wife_tanggal),
+                "p_wife_birthplace" => strtoupper($wife_lahir),
+                "p_dad_name" => strtoupper($dadname),
+                "p_dad_job" => strtoupper($dadjob),
+                "p_mom_name" => strtoupper($momname),
+                "p_mom_job" => strtoupper($momjob),
+                "p_job_now" => strtoupper($saatini),
+                "p_weight" => strtoupper($beratbadan),
+                "p_height" => strtoupper($tinggibadan),
+                "p_seragam_size" => strtoupper($ukuranbaju),
+                "p_celana_size" => strtoupper($ukurancelana),
+                "p_sepatu_size" => strtoupper($ukuransepatu),
+                "p_kpk" => null,
+                "p_bu" => null,
+                "p_ktp_expired" => null,
+                "p_ktp_seumurhidup" => null,
+                "p_education" => strtoupper($pendidikan),
+                "p_kpj_no" => null,
+                "p_state" => strtoupper($warga_negara),
+                "p_note" => null,
+                "p_img" => $imglama,
+                "p_img_ktp" => $request->imgktplama,
+                "p_img_skck" => $request->imgskcklama,
+                "p_img_ijazah" => $request->imgijazahlama,
+                "p_img_medical" => $request->imgmedicallama,
+                "p_img_kk" => $imgkk,
+                "p_img_rekening" => $request->imgrekeninglama,
+                "p_insert" => Carbon::now('Asia/Jakarta'),
+                "p_update" => Carbon::now('Asia/Jakarta')
+            ));
+
+        } elseif (!empty($request->file('rekeningUpload'))) {
+            $imgrekening = null;
+            $tgl = carbon::now('Asia/Jakarta');
+            $folder = $tgl->year . $tgl->month . $tgl->timestamp;
+            $dir = 'image/uploads/pekerja/rekening/' . $idPekerja;
+            $this->deleteDir($dir);
+            $childPath = $dir . '/';
+            $path = $childPath;
+            $rekening = $request->file('rekeningUpload');
+            $namerekening = null;
+            if ($rekening != null) {
+                $namerekening = $folder . '-rekening.' . $rekening->getClientOriginalExtension();
+                if (!File::exists($path)) {
+                    if (File::makeDirectory($path, 0777, true)) {
+                        $rekening->move($path, $namerekening);
+                        $imgrekening = $childPath . $namerekening;
+                    } else
+                        $imgrekening = null;
+                } else {
+                    return 'already exist';
+                }
+            }
+
+            if ($agama_lain != '' || $agama_lain != null) {
+                $agama = $agama_lain;
+            }
+
+
+            if ($saatini == 'kuliah') {
+                $saatini = 'Kuliah di ' . $kuliahnow;
+            }
+
+
+            d_pekerja::insert(array(
+                "p_id" => $id,
+                "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
+                "p_nip" => null,
+                "p_ktp" => $no_ktp,
+                "p_name" => $nama,
+                "p_sex" => $sex,
+                "p_birthplace" => $tempat_lahir,
+                "p_birthdate" => $tanggal_lahir,
+                "p_hp" => $no_hp,
+                "p_telp" => $no_tlp,
+                "p_status" => strtoupper($status),
+                "p_many_kids" => strtoupper($jml_anak),
+                "p_religion" => strtoupper($agama),
+                "p_address" => strtoupper($alamat),
+                "p_rt_rw" => strtoupper($rt),
+                "p_kel" => strtoupper($desa),
+                "p_kecamatan" => strtoupper($kecamatan),
+                "p_city" => strtoupper($kota),
+                "p_address_now" => strtoupper($alamat_now),
+                "p_rt_rw_now" => strtoupper($rt_now),
+                "p_kel_now" => strtoupper($desa_now),
+                "p_kecamatan_now" => strtoupper($kecamatan_now),
+                "p_city_now" => strtoupper($kota_now),
+                "p_name_family" => strtoupper($nama_keluarga),
+                "p_address_family" => strtoupper($alamat_keluarga),
+                "p_telp_family" => strtoupper($telp_keluarga),
+                "p_hp_family" => strtoupper($hp_keluarga),
+                "p_hubungan_family" => strtoupper($hubungan_keluarga),
+                "p_wife_name" => strtoupper($wife_name),
+                "p_wife_birth" => strtoupper($wife_tanggal),
+                "p_wife_birthplace" => strtoupper($wife_lahir),
+                "p_dad_name" => strtoupper($dadname),
+                "p_dad_job" => strtoupper($dadjob),
+                "p_mom_name" => strtoupper($momname),
+                "p_mom_job" => strtoupper($momjob),
+                "p_job_now" => strtoupper($saatini),
+                "p_weight" => strtoupper($beratbadan),
+                "p_height" => strtoupper($tinggibadan),
+                "p_seragam_size" => strtoupper($ukuranbaju),
+                "p_celana_size" => strtoupper($ukurancelana),
+                "p_sepatu_size" => strtoupper($ukuransepatu),
+                "p_kpk" => null,
+                "p_bu" => null,
+                "p_ktp_expired" => null,
+                "p_ktp_seumurhidup" => null,
+                "p_education" => strtoupper($pendidikan),
+                "p_kpj_no" => null,
+                "p_state" => strtoupper($warga_negara),
+                "p_note" => null,
+                "p_img" => $imglama,
+                "p_img_ktp" => $request->imgktplama,
+                "p_img_skck" => $request->imgskcklama,
+                "p_img_ijazah" => $request->imgijazahlama,
+                "p_img_medical" => $request->imgmedicallama,
+                "p_img_kk" => $request->imgkklama,
+                "p_img_rekening" => $imgrekening,
                 "p_insert" => Carbon::now('Asia/Jakarta'),
                 "p_update" => Carbon::now('Asia/Jakarta')
             ));

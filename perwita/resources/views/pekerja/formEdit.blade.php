@@ -53,6 +53,8 @@
                       <input type="hidden" name="imgijazahlama" value="{{$pekerja[0]->p_img_ijazah}}">
                       <input type="hidden" name="imgskcklama" value="{{$pekerja[0]->p_img_skck}}">
                       <input type="hidden" name="imgmedicallama" value="{{$pekerja[0]->p_img_medical}}">
+                      <input type="hidden" name="imgkklama" value="{{$pekerja[0]->p_img_kk}}">
+                      <input type="hidden" name="imgrekeninglama" value="{{$pekerja[0]->p_img_rekening}}">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
@@ -912,7 +914,7 @@
                                 <i class="fa fa-upload margin-correction"></i>Upload Foto KTP
                             </label>
                         </div>
-                        <div class="col-sm-6 ktp-holder" id="ktp-holder" tyle="padding:0px; ">
+                        <div class="col-sm-6 ktp-holder" id="ktp-holder" style="padding:0px; ">
                           <img src="../../../{{$pekerja[0]->p_img_ktp}}" width="150" class="thumb-image img-responsive">
                         </div>
                         <br>
@@ -927,7 +929,7 @@
                                 <i class="fa fa-upload margin-correction"></i>Upload Foto Ijazah
                             </label>
                         </div>
-                        <div class="col-sm-6 ijazah-holder" id="ijazah-holder" tyle="padding:0px; ">
+                        <div class="col-sm-6 ijazah-holder" id="ijazah-holder" style="padding:0px; ">
                           <img src="../../../{{$pekerja[0]->p_img_ijazah}}" width="150" class="thumb-image img-responsive">
                         </div>
                         <br>
@@ -942,7 +944,7 @@
                                 <i class="fa fa-upload margin-correction"></i>Upload Foto SKCK
                             </label>
                         </div>
-                        <div class="col-sm-6 skck-holder" id="skck-holder" tyle="padding:0px; ">
+                        <div class="col-sm-6 skck-holder" id="skck-holder" style="padding:0px; ">
                           <img src="../../../{{$pekerja[0]->p_img_skck}}" width="150" class="thumb-image img-responsive">
                         </div>
                         <br>
@@ -957,8 +959,38 @@
                                 <i class="fa fa-upload margin-correction"></i>Upload Foto Hasil Medical
                             </label>
                         </div>
-                        <div class="col-sm-6 medical-holder" id="medical-holder" tyle="padding:0px; ">
+                        <div class="col-sm-6 medical-holder" id="medical-holder" style="padding:0px; ">
                           <img src="../../../{{$pekerja[0]->p_img_medical}}" width="150" class="thumb-image img-responsive">
+                        </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto KK</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadkk">
+                                <input id="uploadkk" name="kkUpload" class="uploadkk" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto KK
+                            </label>
+                        </div>
+                        <div class="col-sm-6 kk-holder" id="kk-holder" style="padding:0px; ">
+                          <img src="../../../{{$pekerja[0]->p_img_kk}}" width="150" class="thumb-image img-responsive">
+                        </div>
+                        <br>
+                        <br>
+                        <div class="hr-line-dashed"></div>
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">Foto Rekening</label>
+                        <div class="col-sm-3">
+                            <label class="btn btn-default" for="uploadrekening">
+                                <input id="uploadrekening" name="rekeningUpload" class="uploadrekening" type="file" style="display:none;">
+                                <i class="fa fa-upload margin-correction"></i>Upload Foto Rekening
+                            </label>
+                        </div>
+                        <div class="col-sm-6 rekening-holder" id="rekening-holder" style="padding:0px; ">
+                          <img src="../../../{{$pekerja[0]->p_img_rekening}}" width="150" class="thumb-image img-responsive">
                         </div>
                         </div>
                         <br>
@@ -1125,6 +1157,58 @@ $(document).ready(function(){
       $('.save').attr('disabled', false);
       if (typeof (FileReader) != "undefined") {
           var image_holder = $("#medical-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+    });
+
+    $("#uploadkk").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#kk-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading1.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
+              setTimeout(function(){
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "height": "80px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+    });
+
+    $("#uploadrekening").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $("#rekening-holder");
           image_holder.empty();
           var reader = new FileReader();
           reader.onload = function (e) {

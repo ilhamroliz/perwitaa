@@ -301,6 +301,7 @@ $(document).ready(function(){
         $('#jabatan').text(result[1][0].jp_name + ' -> ' + result[2][0].jp_name);
         //
         if (result[0][0].pd_isapproved == 'P') {
+          $('#printbtn').hide();
           $('#approve').html('<span class="label label-warning">Pending</span>');
         } else if (result[0][0].pd_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');

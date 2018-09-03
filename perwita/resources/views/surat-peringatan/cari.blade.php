@@ -312,6 +312,7 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-pekerja/surat-peringatan/detail',
       dataType: 'json',
       success : function(result){
+
         $('#sp_jenis').text(result[0].sp_jenis);
         $('#sp_no').text(result[0].sp_no);
         $('#namapekerja').text(result[0].p_name);
@@ -321,6 +322,7 @@ $(document).ready(function(){
         $('#tanggalmulaiberakhir').text(result[0].sp_date_start + ' - ' + result[0].sp_date_end);
 
         if (result[0].sp_isapproved == 'P') {
+          $('#printbtn').hide();
           $('#approve').html('<span class="label label-warning">Pending</span>');
         } else if (result[0].sp_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');

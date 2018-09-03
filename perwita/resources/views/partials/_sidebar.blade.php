@@ -261,6 +261,20 @@
             </li>
             @endif
 
+            @if($sidebar[8]->ma_read == 'Y')
+            <li class="treeview sidebar data-master {{
+                 Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
+                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="{{ Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-payroll/payroll')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Penggajian</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
+
             {{-- <li class="treeview sidebar data-master {{
                  Request::is('bpjs') ? 'active' : '' }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Bpjs Tk</span><span class="fa arrow"></span></a>
@@ -325,7 +339,7 @@
 
             @if($sidebar[7]->ma_read == 'Y')
             <li style="padding-bottom: 30px;" class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
-                                || Request::is('manajemen-pengguna/*') ? 'active' : ''  
+                                || Request::is('manajemen-pengguna/*') ? 'active' : ''
                                 || Request::is('master-jabatan') ? 'active' : ''
                                 || Request::is('system/hakuser/*') ? 'active' : ''
                                 || Request::is('system/hakakses/*') ? 'active' : ''
@@ -345,6 +359,8 @@
                 </ul>
             </li>
             @endif
+
+
         </ul>
     </div>
 </nav>

@@ -100,17 +100,17 @@ a#pdf:hover { background: #222; }
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
-					<h2 id="p_name">{{$lempar['p_name']}}</h2>
+					@if(empty($lempar['p_img']))
+							<img src="{{asset('assets/img/user/default.jpg')}}" class="img-rounded" alt="Cinque Terre" width="160" height="160" style="float:left;">
+					@else
+							<img src="{{url('/')}}/{{$lempar['p_img']}}" class="img-rounded" alt="Cinque Terre" width="160" height="160" style="float:left;">
+					@endif
 				</div>
 
 				<div class="yui-u">
 					<div class="contact-info">
             <div class="image" id="showimage">
-							@if(empty($lempar['p_img']))
-                  <img src="{{asset('assets/img/user/default.jpg')}}" class="img-rounded" alt="Cinque Terre" width="160" height="160" style="float:right;">
-							@else
-									<img src="{{url('/')}}/{{$lempar['p_img']}}" class="img-rounded" alt="Cinque Terre" width="160" height="160" style="float:right;">
-							@endif
+							<img src="{{asset('assets/img/dboard/logo/sublogo.png')}}" class="img-rounded" alt="Cinque Terre" width="160" height="160" style="float:right;">
 						</div>
 					</div><!--// .contact-info -->
 				</div>
@@ -119,7 +119,18 @@ a#pdf:hover { background: #222; }
 		<br>
 		<div id="bd">
 			<div id="yui-main">
-				<div class="yui-b" style="font-size:21px;">
+				<div class="yui-b" style="font-size:15px;">
+
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<b>Nama</b>
+						</div>
+						<div class="yui-u">
+              <div class="talent">
+                <b id="p_address">{{$lempar['p_name']}}</b>
+              </div>
+						</div>
+					</div><!--// .yui-gf -->
 
 					<div class="yui-gf">
 						<div class="yui-u first">
@@ -554,21 +565,37 @@ a#pdf:hover { background: #222; }
 						</div>
 					</div>
 
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_ktp']}}" class="img-rounded" alt="Cinque Terre">
+					@if(!empty($history))
+					<div class="col-lg-12">
+							<h3 style="font-style: italic; color: blue">History Pekerja</h3>
 					</div>
-					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_skck']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
-					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_ijazah']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
-					<br>
-					<div align="center">
-						 <img src="{{url('/')}}/{{$lempar['p_img_medical']}}" class="img-rounded" alt="Cinque Terre">
-					</div>
+					<form class="form-horizontal">
+							<table id="tabel_detail" class="table table-bordered table-striped tabel_detail">
+								<thead>
+									<tr>
+										<th style="text-align : center;"> TANGGAL </th>
+										<th style="text-align : center;"> MITRA</th>
+										<th style="text-align : center;"> DIVISI</th>
+										<th style="text-align : center;"> KET</th>
+										<th style="text-align : center;"> NO REFF</th>
+										<th style="text-align : center;"> STATUS</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($history as $value)
+										<tr>
+											<td>{{$value['pm_date']}}</td>
+											<td>{{$value['m_name']}}</td>
+											<td>{{$value['md_name']}}</td>
+											<td>{{$value['pm_detail']}}</td>
+											<td>{{$value['pm_reff']}}</td>
+											<td>{{$value['pm_note']}}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+					</form>
+				@endif
 
 				</div><!--// .yui-b -->
 			</div><!--// yui-main -->

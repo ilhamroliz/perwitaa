@@ -471,7 +471,7 @@ class SuratPeringatanController extends Controller
               $e->on('md_mitra', '=', 'm_id')
                 ->on('md_id', '=', 'mp_divisi');
             })
-            ->select('sp_no', 'sp_jenis', 'p_name', 'p_hp', 'p_nip', 'p_nip_mitra', 'p_workdate', 'md_name', 'm_name', 'spd_pelanggaran', 'sp_date_end', DB::raw('(sp_date_end) as diff'))
+            ->select('sp_no', 'sp_jenis', 'p_name', 'p_hp', 'sp_approve_by', 'p_nip', 'p_nip_mitra', 'p_workdate', 'md_name', 'm_name', 'spd_pelanggaran', 'sp_date_end', DB::raw('(sp_date_end) as diff'))
             ->where('sp_id', $request->id)
             ->get();
 

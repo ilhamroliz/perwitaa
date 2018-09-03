@@ -291,6 +291,7 @@ $(document).ready(function(){
         $('#keteranganpekerja').text(result[0].pr_note);
         //
         if (result[0].pr_isapproved == 'P') {
+          $('#printbtn').hide();
           $('#approve').html('<span class="label label-warning">Pending</span>');
         } else if (result[0].pr_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');

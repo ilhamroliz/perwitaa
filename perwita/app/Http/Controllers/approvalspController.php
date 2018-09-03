@@ -14,6 +14,8 @@ use Session;
 
 use Carbon\Carbon;
 
+use Auth;
+
 class approvalspController extends Controller
 {
     public function index(){
@@ -54,7 +56,8 @@ class approvalspController extends Controller
         DB::table('d_surat_pringatan')
             ->where('sp_id',$request->id)
             ->update([
-              'sp_isapproved' => 'Y'
+              'sp_isapproved' => 'Y',
+              'sp_approve_by' => Auth::user()->m_name
             ]);
 
           $id = DB::table('d_surat_pringatan')
@@ -154,7 +157,8 @@ class approvalspController extends Controller
           DB::table('d_surat_pringatan')
               ->where('sp_id',$request->pilih[$i])
               ->update([
-                'sp_isapproved' => 'Y'
+                'sp_isapproved' => 'Y',
+                'sp_approve_by' => Auth::user()->m_name
               ]);
         }
 

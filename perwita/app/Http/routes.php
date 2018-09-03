@@ -889,5 +889,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('not-authorized', function(){
         return view('system/index');
-    });    
+    });
+
+    //Penggajian
+    Route::get('manajemen-payroll/payroll', 'penggajianController@index');
 });

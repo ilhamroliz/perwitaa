@@ -373,6 +373,8 @@ class approvalpelamarController extends Controller
            'p_img_skck' => $data[0]->p_img_skck,
            'p_img_ijazah' => $data[0]->p_img_ijazah,
            'p_img_medical' => $data[0]->p_img_medical,
+           'p_img_kk' => $data[0]->p_img_kk,
+           'p_img_rekening' => $data[0]->p_img_rekening,
            'p_update' => $data[0]->p_update,
            'p_note' => $data[0]->p_note
          );
@@ -405,18 +407,24 @@ class approvalpelamarController extends Controller
                 $i++;
             }
 
-            $status = 'No';
-            foreach ($history as $key => $value) {
-              if (stristr($value['pm_status'], 'Ex')) {
-                $status = 'Yes';
-              }
-            }
+            $parameter = 'No';
 
-        if ($status == 'Yes') {
-          return view('approvalpelamar.print1', compact('lempar', 'history', 'status'));
-        } else {
-          return view('approvalpelamar.print', compact('lempar', 'history', 'status'));
-        }
+          if (!empty($lempar['p_img_ktp'])) {
+            $parameter = 'Yes';
+          } elseif (!empty($lempar['p_img_skck'])) {
+            $parameter = 'Yes';
+          } elseif (!empty($lempar['p_img_ijazah'])) {
+            $parameter = 'Yes';
+          } elseif (!empty($lempar['p_img_medical'])) {
+            $parameter = 'Yes';
+          }
+
+          if ($parameter == 'No') {
+              return view('approvalpelamar.print', compact('lempar', 'history', 'status'));
+          } else {
+              return view('approvalpelamar.print1', compact('lempar', 'history', 'status'));
+          }
+
     }
 
     public function setujuilist(Request $request){
