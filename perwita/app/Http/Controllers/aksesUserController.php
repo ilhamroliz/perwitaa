@@ -62,7 +62,7 @@ class aksesUserController extends Controller
             ->where('m_id', '=', $id)
             ->first();
 
-        $akses = DB::select("select * from d_access left join d_mem_access on a_id = ma_access and ma_mem = '".$id."'");
+        $akses = DB::select("select * from d_access left join d_mem_access on a_id = ma_access and ma_mem = '".$id."' order by a_order");
 
         $id = Crypt::encrypt($id);
 
