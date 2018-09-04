@@ -92,68 +92,68 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
-// var num = 1;
-// var table;
-//     $(document).ready(function(){
-//       $("#nonik").autocomplete({
-//         source: baseUrl + '/manajemen-pekerja/phk/carino',
-//         select: function(event, ui) {
-//           getdata(ui.item.id);
-//         }
-//       });
-//     });
-//
-//     function simpan(id){
-//       waitingDialog.show();
-//       $.ajaxSetup({
-//         headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//       });
-//       $.ajax({
-//         type: 'post',
-//         data: $('#formtambah').serialize(),
-//         url: baseUrl + '/manajemen-pekerja/phk/simpan/'+id,
-//         dataType: 'json',
-//         success : function(result){
-//           waitingDialog.hide();
-//           if (result.status == 'berhasil') {
-//             swal({
-//                 title: "Berhasil",
-//                 text: "Simpan Data Remunerasi Berhasil Disimpan",
-//                 type: "success",
-//                 showConfirmButton: false,
-//                 timer: 900
-//             });
-//           }
-//           $('input[type=text]').val('');
-//           $('#simpanbtn').prop('disabled', true);
-//         }
-//       });
-//     }
-//
-//     function getdata(id){
-//       waitingDialog.show();
-//       $.ajax({
-//         type: 'get',
-//         url: baseUrl + '/manajemen-pekerja/phk/getdata',
-//         data: {id:id},
-//         dataType: 'json',
-//         success : function(result){
-//           if (result.status == 'kosong') {
-//             waitingDialog.hide();
-//           }
-//           $('#namapekerja').val(result[0].p_name);
-//           $('#jabatanpekerja').val(result[0].p_jabatan);
-//
-//           //Button
-//           $('#simpanbtn').attr('onclick', 'simpan('+id+')');
-//           $('#simpanbtn').prop('disabled', false);
-//
-//           waitingDialog.hide();
-//         }
-//       });
-//     }
+var num = 1;
+var table;
+    $(document).ready(function(){
+      $("#nonik").autocomplete({
+        source: baseUrl + '/manajemen-pegawai/pegawaiphk/carino',
+        select: function(event, ui) {
+          getdata(ui.item.id);
+        }
+      });
+    });
+
+    function simpan(id){
+      waitingDialog.show();
+      $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        type: 'get',
+        data: $('#formtambah').serialize(),
+        url: baseUrl + '/manajemen-pegawai/pegawaiphk/simpan/'+id,
+        dataType: 'json',
+        success : function(result){
+          waitingDialog.hide();
+          if (result.status == 'berhasil') {
+            swal({
+                title: "Berhasil",
+                text: "Simpan Data PHK Berhasil Disimpan",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+          }
+          $('input[type=text]').val('');
+          $('#simpanbtn').prop('disabled', true);
+        }
+      });
+    }
+
+    function getdata(id){
+      waitingDialog.show();
+      $.ajax({
+        type: 'get',
+        url: baseUrl + '/manajemen-pegawai/pegawaiphk/getdata',
+        data: {id:id},
+        dataType: 'json',
+        success : function(result){
+          if (result.status == 'kosong') {
+            waitingDialog.hide();
+          }
+          $('#namapekerja').val(result[0].p_name);
+          $('#jabatanpekerja').val(result[0].j_name);
+
+          //Button
+          $('#simpanbtn').attr('onclick', 'simpan('+id+')');
+          $('#simpanbtn').prop('disabled', false);
+
+          waitingDialog.hide();
+        }
+      });
+    }
 
 </script>
 @endsection

@@ -130,6 +130,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Pegawai PHK
     Route::get('manajemen-pegawai/pegawaiphk','pegawaiphkController@index');
+    Route::get('manajemen-pegawai/pegawaiphk/carino','pegawaiphkController@carino');
+    Route::get('manajemen-pegawai/pegawaiphk/getdata','pegawaiphkController@getdata');
+    Route::get('manajemen-pegawai/pegawaiphk/simpan/{id}','pegawaiphkController@simpan');
+    Route::post('manajemen-pegawai/pegawaiphk/simpan/{id}','pegawaiphkController@simpan');
+    Route::get('manajemen-pegawai/pegawaiphk/cari','pegawaiphkController@cari');
+    Route::get('manajemen-pegawai/pegawaiphk/data','pegawaiphkController@data');
+    Route::get('manajemen-pegawai/pegawaiphk/getcari','pegawaiphkController@getcari');
+    Route::get('manajemen-pegawai/pegawaiphk/detail','pegawaiphkController@detail');
+    Route::get('manajemen-pegawai/pegawaiphk/hapus','pegawaiphkController@hapus');
 
     //BPJS
     Route::get('manajemen-pegawai/data-pegawai','pegawaiController@index');

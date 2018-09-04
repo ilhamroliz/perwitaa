@@ -41,7 +41,7 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pekerja
+                Manajemen Pegawai
             </li>
             <li class="active">
                 <strong>Cari PHK</strong>
@@ -52,13 +52,13 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Cari PHK</h5>
-      <a href="{{url('manajemen-pekerja/phk')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+      <a href="{{url('manajemen-pegawai/pegawaiphk')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
               <div class="col-md-12">
-                <label for="pencarian">Cari Berdasarkan NIK Pekerja</label>
+                <label for="pencarian">Cari Berdasarkan NIK Pegawai</label>
                 <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan NIK Pekerja">
               </div>
                 <div class="col-md-12" style="margin-top: 30px;">
@@ -184,7 +184,7 @@ $(document).ready(function(){
   $('#showdata').html('');
   $.ajax({
     type: 'get',
-    url: baseUrl + '/manajemen-pekerja/phk/data',
+    url: baseUrl + '/manajemen-pegawai/pegawaiphk/data',
     dataType: 'json',
     success : function(result){
       var jabatan;
@@ -193,30 +193,15 @@ $(document).ready(function(){
         html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
       } else {
         for (var i = 0; i < result.length; i++) {
-          if (result[i].p_jabatan == 1) {
-            jabatan = 'Manager';
-          }
-          else if (result[i].p_jabatan == 2) {
-            jabatan = 'Supervisor';
-          }
-          else if (result[i].p_jabatan == 3) {
-            jabatan = 'Staff';
-          }
-          else if (result[i].p_jabatan == 4) {
-            jabatan = 'Operator';
-          } else {
-            jabatan = '-';
-          }
-
           html += '<tr>'+
-                  '<td>'+result[i].p_no+'</td>'+
+                  '<td>'+result[i].pp_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+jabatan+'</td>'+
-                  '<td>'+result[i].p_keterangan+'</td>'+
+                  '<td>'+result[i].j_name+'</td>'+
+                  '<td>'+result[i].pp_keterangan+'</td>'+
                   '<td>'+
                   '<div class="text-center">'+
-                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].p_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                    '<a style="margin-left:5px;" title="Kembalikan" type="button" onclick="Kembalikan('+result[i].p_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-repeat"></i></a>'+
+                    '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].pp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                    '<a style="margin-left:5px;" title="Kembalikan" type="button" onclick="hapus('+result[i].pp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-repeat"></i></a>'+
                   '</div>'+
                   '</tr>';
         }
@@ -226,7 +211,7 @@ $(document).ready(function(){
   });
 
     $('#pencarian').autocomplete({
-        source: baseUrl + '/manajemen-pekerja/phk/carino',
+        source: baseUrl + '/manajemen-pegawai/pegawaiphk/carino',
         select: function(event, ui) {
             getdata(ui.item.id);
         }
@@ -249,7 +234,7 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/phk/getcari',
+      url: baseUrl + '/manajemen-pegawai/pegawaiphk/getcari',
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
@@ -257,14 +242,14 @@ $(document).ready(function(){
         } else {
           for (var i = 0; i < result.length; i++) {
             html += '<tr>'+
-                    '<td>'+result[i].p_no+'</td>'+
+                    '<td>'+result[i].pp_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].p_jabatan+'</td>'+
-                    '<td>'+result[i].p_keterangan+'</td>'+
+                    '<td>'+result[i].j_name+'</td>'+
+                    '<td>'+result[i].pp_keterangan+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].p_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
-                      '<a style="margin-left:5px;" title="Kembalikan" type="button" onclick="hapus('+result[i].p_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-repeat"></i></a>'+
+                      '<a style="margin-left:5px;" title="Detail" type="button" onclick="detail('+result[i].pp_id+')"  class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></a>'+
+                      '<a style="margin-left:5px;" title="Kembalikan" type="button" onclick="Kembalikan('+result[i].pp_id+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-repeat"></i></a>'+
                     '</div>'+
                     '</tr>';
           }
@@ -282,20 +267,20 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-pekerja/phk/detail',
+      url: baseUrl + '/manajemen-pegawai/pegawaiphk/detail',
       dataType: 'json',
       success : function(result){
-        $('#r_no').text(result[0].p_no);
+        $('#r_no').text(result[0].pp_no);
         $('#namapekerja').text(result[0].p_name);
-        $('#jabatanpekerja').text(result[0].p_jabatan);
-        $('#keteranganpekerja').text(result[0].p_keterangan);
+        $('#jabatanpekerja').text(result[0].j_name);
+        $('#keteranganpekerja').text(result[0].pp_keterangan);
         //
-        if (result[0].p_isapproved == 'P') {
+        if (result[0].pp_isapproved == 'P') {
           $('#printbtn').hide();
           $('#approve').html('<span class="label label-warning">Pending</span>');
-        } else if (result[0].p_isapproved == 'Y') {
+        } else if (result[0].pp_isapproved == 'Y') {
           $('#approve').html('<span class="label label-success">Disetujui</span>');
-        } else if (result[0].p_isapproved == 'N') {
+        } else if (result[0].pp_isapproved == 'N') {
           $('#approve').html('<span class="label label-danger">Ditolak</span>');
         }
 
@@ -324,7 +309,7 @@ $(document).ready(function(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-pekerja/phk/hapus',
+            url: baseUrl + '/manajemen-pegawai/pegawaiphk/hapus',
             type: 'get',
             timeout: 10000,
             success: function(response){
@@ -372,10 +357,6 @@ $(document).ready(function(){
       }, 2000);
 
     });
-  }
-
-  function print(id){
-    window.location.href = baseUrl + '/manajemen-pekerja/phk/print?id='+id;
   }
 
 </script>
