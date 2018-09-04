@@ -21,10 +21,6 @@ class penggajianController extends Controller
       return view('penggajian.index', compact('data'));
     }
 
-    public function gaji(Request $request){
-      dd($request);
-    }
-
     public function getpekerja(Request $request){
       $data = DB::table('d_pekerja')
             ->where('p_id', $request->id)
@@ -45,10 +41,33 @@ class penggajianController extends Controller
                     ->where('p_pekerja', $id)
                     ->max('p_detailid');
 
+        $kode = "";
+
+        $querykode = DB::select(DB::raw("SELECT MAX(MID(p_no,4,5)) as counter, MAX(MID(p_no,10,2)) as bulan, MAX(MID(p_no,13)) as tahun FROM d_payroll"));
+
+        if (count($querykode) > 0) {
+          if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+              $kode = "00001";
+          } else {
+            foreach($querykode as $k)
+              {
+                $tmp = ((int)$k->counter)+1;
+                $kode = sprintf("%05s", $tmp);
+              }
+          }
+        } else {
+          $kode = "00001";
+        }
+
+
+        $finalkode = 'PY-' . $kode . '/' . date('m') . '/' . date('Y');
+
+
         DB::table('d_payroll')
           ->insert([
             'p_pekerja' => $id,
             'p_detailid' => $detailid + 1,
+            'p_no' => $finalkode,
             'p_date' => Carbon::now('Asia/Jakarta'),
             'p_start_periode' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
             'p_end_periode' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
