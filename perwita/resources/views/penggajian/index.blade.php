@@ -17,7 +17,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>penggajian</h2>
+        <h2>Penggajian</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-6 col-sm-2">
                 <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
-                </div>                
+                </div>
             </div>
             <br>
             <div class="col-md-8" style="margin-left: -15px;">
@@ -93,34 +93,37 @@
 </div>
 
 <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-newspaper-o modal-icon"></i>
-                <h4 class="modal-title">Edit Mitra NIK</h4>
-                <small class="font-bold">Edit Mitra NIK</small>
-            </div>
-            <div class="modal-body">
-                <h3 class="namabarang"></h3>
-                <form class="form-horizontal">
-                    <div class="form-dinamis">
-                        <div class="form-group getkonten0">
-                            <label class="col-sm-2 control-label" for="ukuranbarang">Mitra NIK</label>
-                            <div class="col-sm-9 selectukuran0">
-                                <input type="text" name="nik" id="nik" class="form-control" placeholder="Mitra NIK" title="Mitra NIK">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpannik()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+              <div class="modal-dialog">
+              <div class="modal-content animated bounceInRight">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <i class="fa fa-money modal-icon"></i>
+                          <h4 class="modal-title">Penggajian</h4>
+                          <small class="font-bold"></small>
+                      </div>
+                      <div class="modal-body">
+                        <form id="data">
+                          <div class="form-group"><label>Nama</label> <input type="text" placeholder="Nama" name="nama" class="form-control" readonly></div>
+                          <div class="form-group"><label>NIK</label> <input type="text" placeholder="NIK" name="nik" class="form-control" readonly></div>
+                          <div class="form-group"><label>NIK Mitra</label> <input type="text" placeholder="NIK Mitra" name="nikmitra" class="form-control" readonly></div>
+                          <label>Pemberian Gaji</label>
+                          <div class="input-daterange input-group col-md-12 isimodal" id="datepicker">
+                              <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
+                              <span class="input-group-addon">sampai</span>
+                              <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
+                          </div>
+                          <br>
+                          <div class="form-group"><label>Total Gaji</label> <input type="text" placeholder="Total gaji" name="totalgaji" class="form-control"></div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" id="prosesbtn" class="btn btn-info">Proses</button>
+                          <button type="button" id="simpanbtn" class="btn btn-success">Simpan</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
 
 @endsection
 
@@ -141,6 +144,12 @@ $(document).ready(function(){
       getdata(ui.item.id);
     }
   });
+  $('.input-daterange').datepicker({
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
 });
 
 function printDiv() {
@@ -159,41 +168,41 @@ function printDiv() {
     newWin.close();
 }
 
-// var table;
-// $(document).ready(function() {
-//     $('#select-picker').select2();
-//
-//     setTimeout(function () {
-//         $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         table = $("#pekerja").DataTable({
-//             "search": {
-//                 "caseInsensitive": true
-//             },
-//             processing: true,
-//             serverSide: true,
-//             "ajax": {
-//                 "url": "{{ url('pekerja-di-mitra/pekerja-mitra/table') }}",
-//                 "type": "get",
-//                 "data": {mitra: idmitra, divisi: id_divisi}
-//             },
-//             columns: [
-//                 {data: 'p_name', name: 'p_name'},
-//                 {data: 'mp_mitra_nik', name: 'mp_mitra_nik'},
-//                 {data: 'm_name', name: 'm_name'},
-//                 {data: 'mp_workin_date', name: 'mp_workin_date'},
-//                 {data: 'action', name: 'action', orderable: false, searchable: false}
-//             ],
-//             responsive: true,
-//             "pageLength": 10,
-//             "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-//             "language": dataTableLanguage,
-//         });
-//     }, 1500);
-// });
+var table;
+$(document).ready(function() {
+    $('#select-picker').select2();
+
+    setTimeout(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        table = $("#pekerja").DataTable({
+            "search": {
+                "caseInsensitive": true
+            },
+            processing: true,
+            serverSide: true,
+            "ajax": {
+                "url": "{{ url('pekerja-di-mitra/pekerja-mitra/table') }}",
+                "type": "get",
+                "data": {mitra: idmitra, divisi: id_divisi}
+            },
+            columns: [
+                {data: 'p_name', name: 'p_name'},
+                {data: 'mp_mitra_nik', name: 'mp_mitra_nik'},
+                {data: 'm_name', name: 'm_name'},
+                {data: 'mp_workin_date', name: 'mp_workin_date'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ],
+            responsive: true,
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "language": dataTableLanguage,
+        });
+    }, 1500);
+});
 
 function filterColumnmitra () {
     $("#selectdivisi").html('<option value="all">Select All</option>');
@@ -246,7 +255,7 @@ function cari(){
               '<td>'+result[i].md_name+'</td>'+
               '<td>'+result[i].mp_workin_date+'</td>'+
               '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[i].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                  '<a style="margin-left:5px;" title="Gaji" type="button" onclick="gaji('+result[i].mp_id+')" class="btn btn-success btn-xs"><i class="fa fa-money"></i></a>'+
               '</td>'+
               '</tr>';
       }
@@ -288,7 +297,7 @@ function cari(){
               '<td>'+result[0].md_name+'</td>'+
               '<td>'+result[0].mp_workin_date+'</td>'+
               '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[0].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                  '<a style="margin-left:5px;" title="Gaji" type="button" onclick="gaji('+result[0].mp_id+')" class="btn btn-success btn-xs"><i class="fa fa-money"></i></a>'+
               '</td>'+
               '</tr>';
       $('#showdata').html(html);
@@ -313,31 +322,39 @@ function cari(){
     });
   }
 
-  function editnik(id){
+  function gaji(id){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/pekerja-di-mitra/getnik',
+      url: baseUrl + '/manajemen-payroll/payroll/getpekerja',
       dataType: 'json',
       success : function(result){
-        $('#nik').val(result[0].mp_mitra_nik);
-        $('#simpanbtn').attr('onclick', 'simpannik('+id+')');
+        $('input[name=nama]').val(result[0].p_name);
+        $('input[name=nik]').val(result[0].p_nip);
+        $('input[name=nikmitra]').val(result[0].p_nip_mitra);
+
         $('#myModal').modal('show');
+
+        //Button
+        $('#prosesbtn').attr('onclick', 'proses('+id+')');
+        $('#simpanbtn').attr('onclick', 'simpan('+id+')');
       }
     });
   }
 
-  function simpannik(id){
+  $('input[name=totalgaji]').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+
+  function simpan(id){
     $.ajax({
       type: 'get',
-      data: {id:id, nik:$('#nik').val()},
-      url: baseUrl + '/pekerja-di-mitra/simpannik',
+      data: $('#data').serialize(),
       dataType: 'json',
+      url: baseUrl + '/manajemen-payroll/payroll/simpan/'+id,
       success : function(result){
         if (result.status == 'berhasil') {
           swal({
-              title: "Data NIK Disimpan",
-              text: "Data NIK berhasil Disimpan",
+              title: "Penggajian Disimpan",
+              text: "Penggajian Berhasil Disimpan",
               type: "success",
               showConfirmButton: false,
               timer: 900
@@ -345,9 +362,33 @@ function cari(){
           setTimeout(function(){
                 window.location.reload();
         }, 850);
-        }
       }
-    });
+    }
+  });
+}
+
+function proses(id){
+  $.ajax({
+    type: 'get',
+    data: $('#data').serialize(),
+    dataType: 'json',
+    url: baseUrl + '/manajemen-payroll/payroll/proses/'+id,
+    success : function(result){
+      if (result.status == 'berhasil') {
+        swal({
+            title: "Penggajian Diproses",
+            text: "Penggajian Berhasil Diproses",
+            type: "success",
+            showConfirmButton: false,
+            timer: 900
+        });
+        setTimeout(function(){
+              window.location.reload();
+      }, 850);
+    }
   }
+});
+}
+
 </script>
 @endsection

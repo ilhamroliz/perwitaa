@@ -261,7 +261,7 @@
             </li>
             @endif
 
-            @if($sidebar[8]->ma_read == 'Y')
+            @if($sidebar[7]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
@@ -337,7 +337,7 @@
                 </ul>
             </li> --}}
 
-            @if($sidebar[7]->ma_read == 'Y')
+            @if($sidebar[8]->ma_read == 'Y')
             <li style="padding-bottom: 30px;" class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''
                                 || Request::is('master-jabatan') ? 'active' : ''
