@@ -149,6 +149,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pegawai/data-pegawai/perbarui/{id}','pegawaiController@perbarui');
     Route::get('manajemen-pegawai/data-pegawai/hapus/{id}','pegawaiController@hapus');
 
+    //======== Faskes
+    Route::get('manajemen-faskes','faskesController@index');
+
     //pekerja yajra
     Route::get('manajemen-pekerja/data-pekerja','pekerjaController@index');
     Route::POST('manajemen-pekerja/data-pekerja/table','pekerjaController@data');

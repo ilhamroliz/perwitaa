@@ -277,7 +277,10 @@
 
             @if($sidebar[8]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
-                 Request::is('manajemen-bpjs/ansuransi') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/*') ? 'active' : ''}}">
+                 Request::is('manajemen-bpjs/ansuransi') ? 'active' : '' 
+                 || Request::is('manajemen-bpjs/ansuransi/*') ? 'active' : ''
+                 || Request::is('manajemen-faskes/*') ? 'active' : ''
+                }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Ansuransi</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/kesehatan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/kesehatan/*') ? 'active' : ''}}">
@@ -285,7 +288,9 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">BPJS Kesehatan</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan/*') ? 'active' : ''}}">
+                    <li class="{{ Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan') ? 'active' : '' 
+                            || Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan/*') ? 'active' : ''
+                        }}">
                         <a href="{{url('manajemen-bpjs/ansuransi/ketenagakerjaan')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">BPJS Ketenagakerjaan</span>
                         </a>
@@ -298,6 +303,11 @@
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/dapan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-bpjs/ansuransi/dapan')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Dapan</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-faskes/*') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-faskes')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Fasilitas Kesehatan</span>
                         </a>
                     </li>
                 </ul>
