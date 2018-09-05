@@ -912,4 +912,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawaiphk/tolak', 'approvalpegawaiphkController@tolak');
     Route::get('approvalpegawaiphk/setujuilist', 'approvalpegawaiphkController@setujuilist');
     Route::get('approvalpegawaiphk/tolaklist', 'approvalpegawaiphkController@tolaklist');
+
+    //BPJS Kesehatan
+    Route::get('manajemen-bpjs/ansuransi/kesehatan', 'bpjskesehatanController@index');
+    Route::get('manajemen-bpjs/ansuransi/getfaskes', 'bpjskesehatanController@getfaskes');
+    Route::get('manajemen-bpjs/ansuransi/simpan/{id}', 'bpjskesehatanController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/simpan/{id}', 'bpjskesehatanController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/cari', 'bpjskesehatanController@cari');
+    Route::get('manajemen-bpjs/ansuransi/data', 'bpjskesehatanController@data');
+    Route::get('manajemen-bpjs/ansuransi/getdata', 'bpjskesehatanController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/hapus', 'bpjskesehatanController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/nonaktif', 'bpjskesehatanController@nonaktif');
 });

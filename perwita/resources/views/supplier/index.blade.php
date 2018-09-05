@@ -13,8 +13,7 @@
 
 @section('content')
 
-
-<div class="wrapper wrapper-content animated fadeInRight">
+  </div><div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Master Supplier</h5>
         <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" data-toggle="modal" data-target="#myModal" onclick="tambah()"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
@@ -33,7 +32,7 @@
                 </div>
             @endif
             <div class="row m-b-lg">
-                <div class="col-md-12">                        
+                <div class="col-md-12">
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#item-active">Supplier Aktif</a></li>
@@ -47,7 +46,7 @@
                         <div class="col-md-12 item-active" style="padding-top: 20px;">
                             <table id="itemY" class="table table-bordered table-striped" >
                                 <thead>
-                                    <tr>                                                             
+                                    <tr>
                                         <th class="col-md-2">Nama Supplier</th>
                                         <th class="col-md-2">Nama Pemilik</th>
                                         <th class="col-md-5 text-center">Alamat Supplier</th>
@@ -60,12 +59,12 @@
                             </table>
                         </div>
                     </div>
-                    
+
                     <div role="tabpanel" class="tab-pane fade" id="item-nonactive">
                       <div class="col-md-12 item-nonactive" style="padding: 20px;">
                          <table id="itemN" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                             <thead>
-                                <tr>                                                             
+                                <tr>
                                     <th class="col-md-3">Nama Supplier</th>
                                     <th class="col-md-2">Nama Pemilik</th>
                                     <th class="col-md-6 text-center">Alamat Supplier</th>
@@ -83,7 +82,7 @@
                       <div class="col-md-12 item-all" style="padding: 20px;">
                          <table id="itemA" class="table table-bordered table-hover text table-striped" style="width: 100%;">
                             <thead>
-                                <tr>                                                             
+                                <tr>
                                     <th class="col-md-3">Nama Supplier</th>
                                     <th class="col-md-2">Nama Pemilik</th>
                                     <th class="col-md-6 text-center">Alamat Supplier</th>
@@ -105,7 +104,7 @@
                         </div>
                         <table id="searchi" class="table table-bordered table-hover text table-striped">
                             <thead>
-                                <tr>                                                             
+                                <tr>
                                     <th class="col-md-3">Nama Supplier</th>
                                     <th class="col-md-2">Nama Pemilik</th>
                                     <th class="col-md-6 text-center">Alamat Supplier</th>
@@ -114,7 +113,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                         </table>
                       </div>
@@ -140,8 +139,8 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label text-left" style="text-align: left">Perusahaan</label>
                         <div class="col-lg-10">
-                            <input type="text" placeholder="Nama Perusahaan" class="form-control" name="company" id="company"> 
-                            <input type="hidden" name="id" id="id_supp" value=""> 
+                            <input type="text" placeholder="Nama Perusahaan" class="form-control" name="company" id="company">
+                            <input type="hidden" name="id" id="id_supp" value="">
                             {{-- <span class="help-block m-b-none">Example block-level help text here.</span> --}}
                         </div>
                     </div>
@@ -179,10 +178,10 @@
                         <label class="col-lg-2 control-label text-left" style="text-align: left">Aktif</label>
                         <div class="input-group col-lg-10" style="margin-top: 8px;">
                             <label for="yes" style="margin-right: 10px; cursor: pointer; margin-left: 20px;">Aktif </label>
-                            <input class="iCheck suppaktif" type="radio" id="yes" name="aktif" value="Y" style="cursor: pointer;" checked>   
-                            
+                            <input class="iCheck suppaktif" type="radio" id="yes" name="aktif" value="Y" style="cursor: pointer;" checked>
+
                             <label for="no" style="margin-right: 10px; margin-left: 40px; cursor: pointer;">Tidak </label>
-                            <input class="iCheck suppaktif" type="radio" id="no" name="aktif" value="N" style="cursor: pointer;">               
+                            <input class="iCheck suppaktif" type="radio" id="no" name="aktif" value="N" style="cursor: pointer;">
                         </div>
                     </div>
                 </form>
@@ -207,65 +206,65 @@ $( document ).ready(function() {
     tableY = $("#itemY").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('master-supplier/get-data-y') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-supplier/get-data-y') }}',
+        dataType: 'json',
+        columns: [
             {data: 's_company', name: 's_company'},
             {data: 's_name', name: 's_name'},
             {data: 's_address', name: 's_address'},
-            {data: 's_phone', name: 's_phone'},      
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 's_phone', name: 's_phone'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ]        
+              ]
     });
     tableN = $("#itemN").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('master-supplier/get-data-n') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-supplier/get-data-n') }}',
+        dataType: 'json',
+        columns: [
             {data: 's_company', name: 's_company'},
             {data: 's_name', name: 's_name'},
             {data: 's_address', name: 's_address'},
-            {data: 's_phone', name: 's_phone'},      
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 's_phone', name: 's_phone'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ] 
+              ]
     });
     tableA = $("#itemA").DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url('master-supplier/get-data-a') }}',  
-        dataType: 'json',           
-        columns: [                     
+        ajax: '{{ url('master-supplier/get-data-a') }}',
+        dataType: 'json',
+        columns: [
             {data: 's_company', name: 's_company'},
             {data: 's_name', name: 's_name'},
             {data: 's_address', name: 's_address'},
-            {data: 's_phone', name: 's_phone'},      
-            {data: 'action', name: 'action',orderable:false,searchable:false}            
+            {data: 's_phone', name: 's_phone'},
+            {data: 'action', name: 'action',orderable:false,searchable:false}
         ],
-        
-        responsive: true,        
+
+        responsive: true,
         "pageLength": 10,
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "language": dataTableLanguage,
         columnDefs: [
                 {className: "dt-body-center", "targets": [ 4 ]}
-              ] 
+              ]
     });
 
     tableS = $('#searchi').DataTable({
@@ -328,7 +327,7 @@ function simpan(){
     var id = $('#id_supp').val();
     var keterangan = $('#keterangan').val();
     var aktif = $('.suppaktif:checked').val();
-    
+
     $.ajax({
       url: baseUrl + '/master-supplier/simpan',
       type: 'get',

@@ -13,7 +13,6 @@
 
 @section('content')
 
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Master Seragam</h5>
