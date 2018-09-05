@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //======== Faskes
     Route::get('manajemen-faskes','faskesController@index');
+    Route::get('manajemen-faskes/simpan','faskesController@save');
 
     //pekerja yajra
     Route::get('manajemen-pekerja/data-pekerja','pekerjaController@index');
