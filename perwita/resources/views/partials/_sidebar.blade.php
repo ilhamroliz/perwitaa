@@ -84,6 +84,11 @@
                             <i class="" aria-hidden="true"></i><span class="nav-label">PHK</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-pekerja/rekening') ? 'active' : '' || Request::is('manajemen-pekerja/rekening/*') ? 'active' : '' }}">
+                        <a href="{{ url('manajemen-pekerja/rekening') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Rekening Pekerja</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endif

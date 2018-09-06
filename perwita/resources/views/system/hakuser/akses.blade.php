@@ -54,7 +54,7 @@
                     <a href="{{ url('/') }}">Home</a>
                 </li>
                 <li>
-                    Manajemen Pengguna
+                    Setting Aplikasi
                 </li>
                 <li class="active">
                     <strong>Akses Pengguna</strong>
@@ -119,6 +119,11 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-md-3">
+                <small>Username</small>
+                <h2 class="no-margins">{{ $user->m_username }}</h2>
+                <div id="sparkline1"><canvas style="display: inline-block; width: 247px; height: 50px; vertical-align: top;" width="247" height="50"></canvas></div>
             </div>
         </div>
         <div class="ibox">
