@@ -29,11 +29,11 @@ class promosiController extends Controller
         $pekerja = DB::table('d_pekerja')
             ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
             ->leftjoin('d_promosi_demosi', 'pd_jabatan_awal', '=', 'jp_id')
-            ->leftJoin('d_mitra_pekerja', function ($e){
+            ->leftJoin('d_mitra_pekerja', function ($e) {
                 $e->on('mp_pekerja', '=', 'p_id');
             })
             ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->leftJoin('d_mitra_divisi', function ($q){
+            ->leftJoin('d_mitra_divisi', function ($q) {
                 $q->on('md_mitra', '=', 'mp_mitra');
                 $q->on('md_id', '=', 'mp_divisi');
                 $q->on('md_mitra', '=', 'm_id');
@@ -45,30 +45,30 @@ class promosiController extends Controller
             ->groupBy('p_id')
             ->get();
 
-            for ($i=0; $i < count($pekerja); $i++) {
-             if ($pekerja[$i]->pd_jabatan_awal == 1) {
-               $pekerja[$i]->pd_jabatan_awal = 'Manager';
-             } elseif ($pekerja[$i]->pd_jabatan_awal == 2) {
-               $pekerja[$i]->pd_jabatan_awal = 'Supervisor';
-             } elseif ($pekerja[$i]->pd_jabatan_awal == 3) {
-               $pekerja[$i]->pd_jabatan_awal = 'Staff';
-             } elseif ($pekerja[$i]->pd_jabatan_awal == 4) {
-               $pekerja[$i]->pd_jabatan_awal = 'Operator';
-             }
+        for ($i = 0; $i < count($pekerja); $i++) {
+            if ($pekerja[$i]->pd_jabatan_awal == 1) {
+                $pekerja[$i]->pd_jabatan_awal = 'Manager';
+            } elseif ($pekerja[$i]->pd_jabatan_awal == 2) {
+                $pekerja[$i]->pd_jabatan_awal = 'Supervisor';
+            } elseif ($pekerja[$i]->pd_jabatan_awal == 3) {
+                $pekerja[$i]->pd_jabatan_awal = 'Staff';
+            } elseif ($pekerja[$i]->pd_jabatan_awal == 4) {
+                $pekerja[$i]->pd_jabatan_awal = 'Operator';
+            }
 
-             }
+        }
 
-             for ($i=0; $i < count($pekerja); $i++) {
-               if ($pekerja[$i]->pd_jabatan_sekarang == 1) {
-                 $pekerja[$i]->pd_jabatan_sekarang = 'Manager';
-               } elseif ($pekerja[$i]->pd_jabatan_sekarang == 2) {
-                 $pekerja[$i]->pd_jabatan_sekarang = 'Supervisor';
-               } elseif ($pekerja[$i]->pd_jabatan_sekarang == 3) {
-                 $pekerja[$i]->pd_jabatan_sekarang = 'Staff';
-               } elseif ($pekerja[$i]->pd_jabatan_sekarang == 4) {
-                 $pekerja[$i]->pd_jabatan_sekarang = 'Operator';
-               }
-             }
+        for ($i = 0; $i < count($pekerja); $i++) {
+            if ($pekerja[$i]->pd_jabatan_sekarang == 1) {
+                $pekerja[$i]->pd_jabatan_sekarang = 'Manager';
+            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 2) {
+                $pekerja[$i]->pd_jabatan_sekarang = 'Supervisor';
+            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 3) {
+                $pekerja[$i]->pd_jabatan_sekarang = 'Staff';
+            } elseif ($pekerja[$i]->pd_jabatan_sekarang == 4) {
+                $pekerja[$i]->pd_jabatan_sekarang = 'Operator';
+            }
+        }
 
         $pekerja = collect($pekerja);
 
@@ -87,11 +87,11 @@ class promosiController extends Controller
         $id = $request->id;
         $pekerja = DB::table('d_pekerja')
             ->leftJoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan_lamaran')
-            ->leftJoin('d_mitra_pekerja', function ($e){
+            ->leftJoin('d_mitra_pekerja', function ($e) {
                 $e->on('mp_pekerja', '=', 'p_id');
             })
             ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->leftJoin('d_mitra_divisi', function ($q){
+            ->leftJoin('d_mitra_divisi', function ($q) {
                 $q->on('md_mitra', '=', 'mp_mitra');
                 $q->on('md_id', '=', 'mp_divisi');
                 $q->on('md_mitra', '=', 'm_id');
@@ -112,7 +112,7 @@ class promosiController extends Controller
     public function save(Request $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             $note = $request->note;
             $jabatan = $request->jabatan;
             $jenis = $request->jenis;
@@ -125,7 +125,7 @@ class promosiController extends Controller
                 ->where('p_id', '=', $pekerja)
                 ->get();
 
-            if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal[0]->p_jabatan == ''){
+            if ($jabatanAwal[0]->p_jabatan == null || $jabatanAwal[0]->p_jabatan == '') {
                 $jabatanAwal = $jabatanAwal[0]->p_jabatan_lamaran;
             } else {
                 $jabatanAwal = $jabatanAwal[0]->p_jabatan;
@@ -135,7 +135,7 @@ class promosiController extends Controller
                 ->max('pd_id');
 
             $tempKode = '';
-            if ($jenis == 'Promosi'){
+            if ($jenis == 'Promosi') {
                 $cek = DB::table('d_promosi_demosi')
                     ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
                     ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'PMS')
@@ -145,11 +145,11 @@ class promosiController extends Controller
 
                 foreach ($cek as $x) {
                     $temp = ((int)$x->counter);
-                    $kode = sprintf("%05s",$temp);
+                    $kode = sprintf("%05s", $temp);
                 }
                 $tempKode = $kode . '/' . 'PMS/PN/' . $sekarang->format("m") . '/' . $sekarang->year;
 
-            } elseif ($jenis == 'Demosi'){
+            } elseif ($jenis == 'Demosi') {
                 $cek = DB::table('d_promosi_demosi')
                     ->select(DB::raw('coalesce(max(left(pd_no, 5)) + 1, "00001") as counter'))
                     ->where(DB::raw('mid(pd_no, 7,3)'), '=', 'DMS')
@@ -159,7 +159,7 @@ class promosiController extends Controller
 
                 foreach ($cek as $x) {
                     $temp = ((int)$x->counter);
-                    $kode = sprintf("%05s",$temp);
+                    $kode = sprintf("%05s", $temp);
                 }
                 $tempKode = $kode . '/' . 'DMS/PN/' . $sekarang->format("m") . '/' . $sekarang->year;
             }
@@ -190,7 +190,7 @@ class promosiController extends Controller
                 'status' => 'sukses'
             ]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
                 'status' => 'gagal',
@@ -202,54 +202,56 @@ class promosiController extends Controller
     public function approvePromosi($nomor)
     {
 
-            $data = DB::table('d_promosi_demosi')
-                ->where('pd_no', '=', $nomor)
-                ->get();
+        $data = DB::table('d_promosi_demosi')
+            ->where('pd_no', '=', $nomor)
+            ->get();
 
-            $pekerja = $data[0]->pd_pekerja;
-            $jabatan = $data[0]->pd_jabatan_sekarang;
-            $sekarang = Carbon::now('Asia/Jakarta');
+        $pekerja = $data[0]->pd_pekerja;
+        $jabatan = $data[0]->pd_jabatan_sekarang;
+        $sekarang = Carbon::now('Asia/Jakarta');
 
-            $detailid = DB::table('d_pekerja_mutation')
-                ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
-                ->where('pm_pekerja', '=', $pekerja)
-                ->get();
+        $detailid = DB::table('d_pekerja_mutation')
+            ->select(DB::raw('max(pm_detailid) as detailid'), 'pm_status')
+            ->where('pm_pekerja', '=', $pekerja)
+            ->get();
 
-            $info = DB::table('d_mitra_pekerja')
-                ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
-                ->where('mp_status', '=', 'Aktif')
-                ->where('mp_pekerja', '=', $pekerja)
-                ->get();
+        $info = DB::table('d_mitra_pekerja')
+            ->select(DB::raw('coalesce(mp_mitra, null) as mitra'), DB::raw('coalesce(mp_divisi, null) as divisi'))
+            ->where('mp_status', '=', 'Aktif')
+            ->where('mp_pekerja', '=', $pekerja)
+            ->get();
 
-            d_pekerja_mutation::insert(array(
-                'pm_pekerja' => $pekerja,
-                'pm_detailid' => $detailid[0]->detailid + 1,
-                'pm_date' => $sekarang,
-                'pm_mitra' => $info[0]->mitra,
-                'pm_divisi' => $info[0]->divisi,
-                'pm_detail' => 'Promosi',
-                'pm_status' => 'Aktif',
-                'pm_note' => $data[0]->pd_note,
-                'pm_insert_by' => Session::get('mem'),
-                'pm_reff' => $nomor
-            ));
+        d_pekerja_mutation::insert(array(
+            'pm_pekerja' => $pekerja,
+            'pm_detailid' => $detailid[0]->detailid + 1,
+            'pm_date' => $sekarang,
+            'pm_mitra' => $info[0]->mitra,
+            'pm_divisi' => $info[0]->divisi,
+            'pm_detail' => 'Promosi',
+            'pm_status' => 'Aktif',
+            'pm_note' => $data[0]->pd_note,
+            'pm_insert_by' => Session::get('mem'),
+            'pm_reff' => $nomor
+        ));
 
-            d_pekerja::where('p_id', '=', $pekerja)
-                ->update([
-                    'p_jabatan' => $jabatan
-                ]);
+        d_pekerja::where('p_id', '=', $pekerja)
+            ->update([
+                'p_jabatan' => $jabatan
+            ]);
 
     }
 
-    public function cari(){
-      $jabatan = DB::table('d_jabatan_pelamar')
-                ->get();
+    public function cari()
+    {
+        $jabatan = DB::table('d_jabatan_pelamar')
+            ->get();
 
-      return view('promosi.cari', compact('jabatan'));
+        return view('promosi.cari', compact('jabatan'));
     }
 
-    public function data(){
-      $data = DB::table('d_promosi_demosi')
+    public function data()
+    {
+        $data = DB::table('d_promosi_demosi')
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
@@ -258,76 +260,76 @@ class promosiController extends Controller
             ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id', 'pd_jabatan_awal', 'pd_jabatan_sekarang')
             ->get();
 
-            for ($i=0; $i < count($data); $i++) {
-             if ($data[$i]->pd_jabatan_awal == 1) {
-               $data[$i]->pd_jabatan_awal = 'Manager';
-             } elseif ($data[$i]->pd_jabatan_awal == 2) {
-               $data[$i]->pd_jabatan_awal = 'Supervisor';
-             } elseif ($data[$i]->pd_jabatan_awal == 3) {
-               $data[$i]->pd_jabatan_awal = 'Staff';
-             } elseif ($data[$i]->pd_jabatan_awal == 4) {
-               $data[$i]->pd_jabatan_awal = 'Operator';
-             } elseif ($data[$i]->pd_jabatan_awal == 0) {
-               $data[$i]->pd_jabatan_awal = '-';
-             }
-
-             }
-
-             for ($i=0; $i < count($data); $i++) {
-               if ($data[$i]->pd_jabatan_sekarang == 1) {
-                 $data[$i]->pd_jabatan_sekarang = 'Manager';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
-                 $data[$i]->pd_jabatan_sekarang = 'Supervisor';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
-                 $data[$i]->pd_jabatan_sekarang = 'Staff';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
-                 $data[$i]->pd_jabatan_sekarang = 'Operator';
-               }
-               elseif ($data[$i]->pd_jabatan_sekarang == 0) {
-                 $data[$i]->pd_jabatan_sekarang = '-';
-               }
-             }
-
-
-
-      if (count($data) > 0) {
-        return response()->json($data);
-      } else {
-        return response()->json([
-          'status' => 'kosong'
-        ]);
-      }
-    }
-
-    public function getno(Request $request){
-      $keyword = $request->term;
-
-      $data = DB::table('d_promosi_demosi')
-                ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
-                ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
-                ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
-                ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-                ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
-                ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
-                ->where('pd_no', 'LIKE', '%'.$keyword.'%')
-                ->groupBy('pd_id')
-                ->LIMIT(20)
-                ->get();
-
-            if ($data == null) {
-                $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
-            } else {
-
-                foreach ($data as $query) {
-                    $results[] = ['id' => $query->pd_id, 'label' => $query->p_name . ' (' . $query->pd_no . ' )'];
-                }
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]->pd_jabatan_awal == 1) {
+                $data[$i]->pd_jabatan_awal = 'Manager';
+            } elseif ($data[$i]->pd_jabatan_awal == 2) {
+                $data[$i]->pd_jabatan_awal = 'Supervisor';
+            } elseif ($data[$i]->pd_jabatan_awal == 3) {
+                $data[$i]->pd_jabatan_awal = 'Staff';
+            } elseif ($data[$i]->pd_jabatan_awal == 4) {
+                $data[$i]->pd_jabatan_awal = 'Operator';
+            } elseif ($data[$i]->pd_jabatan_awal == 0) {
+                $data[$i]->pd_jabatan_awal = '-';
             }
 
-            return response()->json($results);
+        }
+
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]->pd_jabatan_sekarang == 1) {
+                $data[$i]->pd_jabatan_sekarang = 'Manager';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
+                $data[$i]->pd_jabatan_sekarang = 'Supervisor';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
+                $data[$i]->pd_jabatan_sekarang = 'Staff';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
+                $data[$i]->pd_jabatan_sekarang = 'Operator';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 0) {
+                $data[$i]->pd_jabatan_sekarang = '-';
+            }
+        }
+
+
+        if (count($data) > 0) {
+            return response()->json($data);
+        } else {
+            return response()->json([
+                'status' => 'kosong'
+            ]);
+        }
     }
 
-    public function getcari(Request $request){
-      $data = DB::table('d_promosi_demosi')
+    public function getno(Request $request)
+    {
+        $keyword = $request->term;
+
+        $data = DB::table('d_promosi_demosi')
+            ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
+            ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
+            ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+            ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
+            ->where('pd_no', 'LIKE', '%' . $keyword . '%')
+            ->groupBy('pd_id')
+            ->LIMIT(20)
+            ->get();
+
+        if ($data == null) {
+            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+        } else {
+
+            foreach ($data as $query) {
+                $results[] = ['id' => $query->pd_id, 'label' => $query->p_name . ' (' . $query->pd_no . ' )'];
+            }
+        }
+
+        return response()->json($results);
+    }
+
+    public function getcari(Request $request)
+    {
+        $data = DB::table('d_promosi_demosi')
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
@@ -338,47 +340,47 @@ class promosiController extends Controller
             ->get();
 
 
-            for ($i=0; $i < count($data); $i++) {
-             if ($data[$i]->pd_jabatan_awal == 1) {
-               $data[$i]->pd_jabatan_awal = 'Manager';
-             } elseif ($data[$i]->pd_jabatan_awal == 2) {
-               $data[$i]->pd_jabatan_awal = 'Supervisor';
-             } elseif ($data[$i]->pd_jabatan_awal == 3) {
-               $data[$i]->pd_jabatan_awal = 'Staff';
-             } elseif ($data[$i]->pd_jabatan_awal == 4) {
-               $data[$i]->pd_jabatan_awal = 'Operator';
-             } elseif ($data[$i]->pd_jabatan_awal == 0) {
-               $data[$i]->pd_jabatan_awal = '-';
-             }
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]->pd_jabatan_awal == 1) {
+                $data[$i]->pd_jabatan_awal = 'Manager';
+            } elseif ($data[$i]->pd_jabatan_awal == 2) {
+                $data[$i]->pd_jabatan_awal = 'Supervisor';
+            } elseif ($data[$i]->pd_jabatan_awal == 3) {
+                $data[$i]->pd_jabatan_awal = 'Staff';
+            } elseif ($data[$i]->pd_jabatan_awal == 4) {
+                $data[$i]->pd_jabatan_awal = 'Operator';
+            } elseif ($data[$i]->pd_jabatan_awal == 0) {
+                $data[$i]->pd_jabatan_awal = '-';
+            }
 
-             }
+        }
 
-             for ($i=0; $i < count($data); $i++) {
-               if ($data[$i]->pd_jabatan_sekarang == 1) {
-                 $data[$i]->pd_jabatan_sekarang = 'Manager';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
-                 $data[$i]->pd_jabatan_sekarang = 'Supervisor';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
-                 $data[$i]->pd_jabatan_sekarang = 'Staff';
-               } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
-                 $data[$i]->pd_jabatan_sekarang = 'Operator';
-               }
-               elseif ($data[$i]->pd_jabatan_sekarang == 0) {
-                 $data[$i]->pd_jabatan_sekarang = '-';
-               }
-             }
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]->pd_jabatan_sekarang == 1) {
+                $data[$i]->pd_jabatan_sekarang = 'Manager';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 2) {
+                $data[$i]->pd_jabatan_sekarang = 'Supervisor';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 3) {
+                $data[$i]->pd_jabatan_sekarang = 'Staff';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 4) {
+                $data[$i]->pd_jabatan_sekarang = 'Operator';
+            } elseif ($data[$i]->pd_jabatan_sekarang == 0) {
+                $data[$i]->pd_jabatan_sekarang = '-';
+            }
+        }
 
-      if (count($data) > 0) {
-        return response()->json($data);
-      } else {
-        return response()->json([
-          'status' => 'kosong'
-        ]);
-      }
+        if (count($data) > 0) {
+            return response()->json($data);
+        } else {
+            return response()->json([
+                'status' => 'kosong'
+            ]);
+        }
     }
 
-    public function detail(Request $request){
-      $data = DB::table('d_promosi_demosi')
+    public function detail(Request $request)
+    {
+        $data = DB::table('d_promosi_demosi')
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
@@ -388,133 +390,137 @@ class promosiController extends Controller
             ->where('pd_id', $request->id)
             ->get();
 
-      $jabatanawal = DB::table('d_jabatan_pelamar')
-                  ->where('jp_id',$data[0]->pd_jabatan_awal)
-                  ->get();
+        $jabatanawal = DB::table('d_jabatan_pelamar')
+            ->where('jp_id', $data[0]->pd_jabatan_awal)
+            ->get();
 
-      $jabatansekarang = DB::table('d_jabatan_pelamar')
-                  ->where('jp_id',$data[0]->pd_jabatan_sekarang)
-                  ->get();
+        $jabatansekarang = DB::table('d_jabatan_pelamar')
+            ->where('jp_id', $data[0]->pd_jabatan_sekarang)
+            ->get();
 
-      return response()->json([$data, $jabatanawal, $jabatansekarang]);
+        return response()->json([$data, $jabatanawal, $jabatansekarang]);
     }
 
-    public function hapus(Request $request){
-      DB::beginTransaction();
-      try {
+    public function hapus(Request $request)
+    {
+        DB::beginTransaction();
+        try {
 
-        $pekerja = DB::table('d_promosi_demosi')
+            $pekerja = DB::table('d_promosi_demosi')
                 ->select('pd_no')
-                ->where('pd_id',$request->id)
+                ->where('pd_id', $request->id)
                 ->get();
 
-        d_pekerja_mutation::where('pm_reff',$pekerja[0]->pd_no)
+            d_pekerja_mutation::where('pm_reff', $pekerja[0]->pd_no)
                 ->where('pm_detail', 'Promosi')
                 ->update([
-                  'pm_note' => 'dihapus'
+                    'pm_note' => 'dihapus'
                 ]);
 
 
-        DB::table('d_promosi_demosi')
-          ->where('pd_id', $request->id)
-          ->delete();
+            DB::table('d_promosi_demosi')
+                ->where('pd_id', $request->id)
+                ->delete();
 
-          $count = DB::table('d_promosi_demosi')
-                  ->where('pd_isapproved', 'P')
-                  ->get();
+            $count = DB::table('d_promosi_demosi')
+                ->where('pd_isapproved', 'P')
+                ->get();
 
-          DB::table('d_notifikasi')
-            ->where('n_fitur', 'Promosi')
-            ->update([
-              'n_qty' => count($count)
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Promosi')
+                ->update([
+                    'n_qty' => count($count)
+                ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
             ]);
-
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
 
     }
 
-    public function edit(Request $request){
-      $data = DB::table('d_promosi_demosi')
+    public function edit(Request $request)
+    {
+        $data = DB::table('d_promosi_demosi')
             ->where('pd_id', $request->id)
             ->get();
 
-      return response()->json($data);
+        return response()->json($data);
     }
 
-    public function update(Request $request, $id){
-      DB::beginTransaction();
-      try {
-        DB::table('d_promosi_demosi')
-            ->where('pd_id', $id)
-            ->update([
-              'pd_jabatan_sekarang' => $request->jabatanBaru,
-              'pd_note' => $request->note
-            ]);
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            DB::table('d_promosi_demosi')
+                ->where('pd_id', $id)
+                ->update([
+                    'pd_jabatan_sekarang' => $request->jabatanBaru,
+                    'pd_note' => $request->note
+                ]);
 
-        $pekerja = DB::table('d_promosi_demosi')
+            $pekerja = DB::table('d_promosi_demosi')
                 ->select('pd_no', 'pd_pekerja')
-                ->where('pd_id',$id)
+                ->where('pd_id', $id)
                 ->get();
 
-        d_pekerja_mutation::where('pm_reff',$pekerja[0]->pd_no)
+            d_pekerja_mutation::where('pm_reff', $pekerja[0]->pd_no)
                 ->where('pm_detail', 'Promosi')
                 ->update([
-                  'pm_note' => $request->note
+                    'pm_note' => $request->note
                 ]);
 
-        d_pekerja::where('p_id',$pekerja[0]->pd_pekerja)
+            d_pekerja::where('p_id', $pekerja[0]->pd_pekerja)
                 ->update([
-                  'p_jabatan' => $request->jabatanBaru
+                    'p_jabatan' => $request->jabatanBaru
                 ]);
 
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
 
     }
 
-    public function print(Request $request){
-      $data = DB::table('d_pekerja')
-      ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
-      ->join('d_mitra_pekerja', function ($e){
-          $e->on('mp_pekerja', '=', 'p_id');
-      })
-      ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-      ->join('d_mitra_divisi', function ($q){
-          $q->on('md_mitra', '=', 'mp_mitra');
-          $q->on('md_id', '=', 'mp_divisi');
-          $q->on('md_mitra', '=', 'm_id');
-      })
-      ->select('pd_id', 'p_id', 'p_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no', 'p_address', 'm_name', 'md_name')
-      ->where('pd_id', $request->id)
-      ->get();
+    public function print(Request $request)
+    {
+        $data = DB::table('d_pekerja')
+            ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')
+            ->join('d_mitra_pekerja', function ($e) {
+                $e->on('mp_pekerja', '=', 'p_id');
+            })
+            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->join('d_mitra_divisi', function ($q) {
+                $q->on('md_mitra', '=', 'mp_mitra');
+                $q->on('md_id', '=', 'mp_divisi');
+                $q->on('md_mitra', '=', 'm_id');
+            })
+            ->select('pd_id', 'p_id', 'p_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'd_mitra.m_name', 'd_mitra_divisi.md_name', 'pd_no', 'p_address', 'm_name', 'md_name')
+            ->where('pd_id', $request->id)
+            ->get();
 
-      $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
+        $jabatan = DB::select("select pd_pekerja, jpa.jp_name as awal, jpm.jp_name as sekarang from d_promosi_demosi
       join d_jabatan_pelamar jpa on jpa.jp_id = pd_jabatan_awal
       join d_jabatan_pelamar jpm on jpm.jp_id = pd_jabatan_sekarang");
 
-      for ($i=0; $i < count($data); $i++) {
-        $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
-        $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
-      }
+        for ($i = 0; $i < count($data); $i++) {
+            $data[$i]->pd_jabatan_awal = $jabatan[$i]->awal;
+            $data[$i]->pd_jabatan_sekarang = $jabatan[$i]->sekarang;
+        }
 
-      return view('promosi.print', compact('data'));
+        return view('promosi.print', compact('data'));
     }
 
 }

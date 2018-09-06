@@ -39,6 +39,8 @@
               || Request::is('manajemen-pekerja/promosi-demosi/*') ? 'active' : ''
               || Request::is('manajemen-pekerja/remunerasi') ? 'active' : ''
               || Request::is('manajemen-pekerja/remunerasi/*') ? 'active' : ''
+              || Request::is('manajemen-pekerja/rekening') ? 'active' : ''
+              || Request::is('manajemen-pekerja/rekening/*') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra/*') ? 'active' : '' }}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (MJI)</span><span class="fa arrow"></span></a>
