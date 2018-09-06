@@ -305,11 +305,11 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Dapan</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-faskes/*') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">
+                    {{-- <li class="{{ Request::is('manajemen-faskes/*') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-faskes')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Fasilitas Kesehatan</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             @endif
@@ -390,7 +390,7 @@
                     <li class="{{ Request::is('system/hakuser/user') ? 'active' : '' || Request::is('system/hakakses/*') ? 'active' : '' }}">
                         <a href="{{url('system/hakuser/user')}}">Akses Pengguna</a>
                     </li>
-                    <li><a href="{{url('setting-aplikasi')}}">Group Akses</a></li>
+                    {{-- <li><a href="{{url('setting-aplikasi')}}">Group Akses</a></li> --}}
                     <li class="{{ Request::is('master-jabatan') ? 'active' : ''}}">
                         <a href="{{url('master-jabatan')}}">Master Jabatan</a>
                     </li>
