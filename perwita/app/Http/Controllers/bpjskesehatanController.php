@@ -13,10 +13,7 @@ use Carbon\Carbon;
 class bpjskesehatanController extends Controller
 {
     public function index(){
-      $data = DB::table('d_faskes')
-              ->get();
-
-      return view('bpjskesehatan.index', compact('data'));
+      return view('bpjskesehatan.index');
     }
 
     public function getfaskes(Request $request){
@@ -40,7 +37,7 @@ class bpjskesehatanController extends Controller
               'b_no' => $request->nobpjs,
               'b_pekerja' => $id,
               'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
-              'b_faskes' => $request->b_faskes,
+              'b_faskes' => $request->faskes,
               'b_kelas' => $request->kelas,
               'b_mitra' => $pekerja[0]->mp_mitra,
               'b_divisi' => $pekerja[0]->mp_divisi,
@@ -67,10 +64,9 @@ class bpjskesehatanController extends Controller
     public function data(){
       $data = DB::table('d_bpjs_kesehatan')
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
-              ->join('d_faskes', 'f_id', '=', 'b_faskes')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
-              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'f_name')
+              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'b_faskes')
               ->get();
 
       for ($i=0; $i < count($data); $i++) {
@@ -83,10 +79,9 @@ class bpjskesehatanController extends Controller
     public function getdata(Request $request){
       $data = DB::table('d_bpjs_kesehatan')
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
-              ->join('d_faskes', 'f_id', '=', 'b_faskes')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
-              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'f_name')
+              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'b_faskes')
               ->where('p_id', $request->id)
               ->get();
 

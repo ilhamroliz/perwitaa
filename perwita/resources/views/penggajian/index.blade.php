@@ -65,21 +65,18 @@
                 </div>
             </div>
             <br>
-            <div class="col-md-8" style="margin-left: -15px;">
-              <label for="carino">Cari Berdasarkan No Mitra / No Mitra Contract</label>
-              <input type="text" name="carino" value="" class="form-control" id="carino" placeholder="Nomer Mitra/Contract" >
-            </div>
-            <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
                <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Mitra NIK</th>
-                            <th>Mitra</th>
-                            <th>Divisi</th>
-                            <th>Mulai Bekerja</th>
-                            <th style="width:5px;">Action</th>
+                            <th>NIK</th>
+                            <th>BPJS Kesehatan</th>
+                            <th>BPJS Ketenagakerjaan</th>
+                            <th>Gaji</th>
+                            <th>RBH</th>
+                            <th>Dapan</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -91,38 +88,6 @@
 </div>
 </div>
 </div>
-
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog">
-              <div class="modal-content animated bounceInRight">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                          <i class="fa fa-money modal-icon"></i>
-                          <h4 class="modal-title">Penggajian</h4>
-                          <small class="font-bold"></small>
-                      </div>
-                      <div class="modal-body">
-                        <form id="data">
-                          <div class="form-group"><label>Nama</label> <input type="text" placeholder="Nama" name="nama" class="form-control" readonly></div>
-                          <div class="form-group"><label>NIK</label> <input type="text" placeholder="NIK" name="nik" class="form-control" readonly></div>
-                          <div class="form-group"><label>NIK Mitra</label> <input type="text" placeholder="NIK Mitra" name="nikmitra" class="form-control" readonly></div>
-                          <label>Pemberian Gaji</label>
-                          <div class="input-daterange input-group col-md-12 isimodal" id="datepicker">
-                              <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
-                              <span class="input-group-addon">sampai</span>
-                              <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
-                          </div>
-                          <br>
-                          <div class="form-group"><label>Total Gaji</label> <input type="text" placeholder="Total gaji" name="totalgaji" class="form-control"></div>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" id="prosesbtn" class="btn btn-info">Proses</button>
-                          <button type="button" id="simpanbtn" class="btn btn-success">Simpan</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
 
 
 @endsection
@@ -138,35 +103,7 @@ $(document).ready(function(){
     // "scrollCollapse": true,
         "language": dataTableLanguage,
   });
-  $("#carino").autocomplete({
-    source: baseUrl + '/pekerja-di-mitra/getnomor',
-    select: function(event, ui) {
-      getdata(ui.item.id);
-    }
-  });
-  $('.input-daterange').datepicker({
-      keyboardNavigation: false,
-      forceParse: false,
-      autoclose: true,
-      format: 'dd/mm/yyyy'
-  });
 });
-
-function printDiv() {
-    var divToPrint = document.getElementById('pekerja');
-    var htmlToPrint = '' +
-        '<style type="text/css">' +
-        'table th, table td {' +
-        'border:1px solid #000;' +
-        'padding;0.5em;' +
-        '}' +
-        '</style>';
-    htmlToPrint += divToPrint.outerHTML;
-    newWin = window.open("");
-    newWin.document.write(htmlToPrint);
-    newWin.print();
-    newWin.close();
-}
 
 var table;
 $(document).ready(function() {
@@ -242,15 +179,15 @@ function cari(){
   var mitra = $('#selectmitra').val();
   var divisi = $('#selectdivisi').val();
   $.ajax({
-    type: 'post',
+    type: 'get',
     data: 'mitra='+mitra+"&divisi="+divisi,
-    url: baseUrl + '/pekerja-di-mitra/getpekerja',
+    url: baseUrl + '/manajemen-payroll/payroll/cari',
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
-              '<td>'+result[i].mp_mitra_nik+'</td>'+
+              '<td>'+result[i].p_nip+'</td>'+
               '<td>'+result[i].m_name+'</td>'+
               '<td>'+result[i].md_name+'</td>'+
               '<td>'+result[i].mp_workin_date+'</td>'+
@@ -321,74 +258,6 @@ function cari(){
       }
     });
   }
-
-  function gaji(id){
-    $.ajax({
-      type: 'get',
-      data: {id:id},
-      url: baseUrl + '/manajemen-payroll/payroll/getpekerja',
-      dataType: 'json',
-      success : function(result){
-        $('input[name=nama]').val(result[0].p_name);
-        $('input[name=nik]').val(result[0].p_nip);
-        $('input[name=nikmitra]').val(result[0].p_nip_mitra);
-
-        $('#myModal').modal('show');
-
-        //Button
-        $('#prosesbtn').attr('onclick', 'proses('+id+')');
-        $('#simpanbtn').attr('onclick', 'simpan('+id+')');
-      }
-    });
-  }
-
-  $('input[name=totalgaji]').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-
-  function simpan(id){
-    $.ajax({
-      type: 'get',
-      data: $('#data').serialize(),
-      dataType: 'json',
-      url: baseUrl + '/manajemen-payroll/payroll/simpan/'+id,
-      success : function(result){
-        if (result.status == 'berhasil') {
-          swal({
-              title: "Penggajian Disimpan",
-              text: "Penggajian Berhasil Disimpan",
-              type: "success",
-              showConfirmButton: false,
-              timer: 900
-          });
-          setTimeout(function(){
-                window.location.reload();
-        }, 850);
-      }
-    }
-  });
-}
-
-function proses(id){
-  $.ajax({
-    type: 'get',
-    data: $('#data').serialize(),
-    dataType: 'json',
-    url: baseUrl + '/manajemen-payroll/payroll/proses/'+id,
-    success : function(result){
-      if (result.status == 'berhasil') {
-        swal({
-            title: "Penggajian Diproses",
-            text: "Penggajian Berhasil Diproses",
-            type: "success",
-            showConfirmButton: false,
-            timer: 900
-        });
-        setTimeout(function(){
-              window.location.reload();
-      }, 850);
-    }
-  }
-});
-}
 
 </script>
 @endsection

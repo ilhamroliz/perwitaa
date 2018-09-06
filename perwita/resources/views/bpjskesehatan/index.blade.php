@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
                             <div class="col-lg-9">
-                                <input type="text" id="faskes" onclick="showfaskes()" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
+                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
                             </div>
                         </div>
                         <div class="form-group">
@@ -99,46 +99,13 @@
                         </div>
                     </form>
                     <br>
-                    <div class="pull-right">
+                    <div class="pull-right" style="margin-right:20px;">
                       <button type="button" id="simpanbtn" disabled onclick="simpan()" class="btn btn-primary" name="button"><i class="fa fa-save">&nbsp;</i>Simpan</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <i class="fa fa-folder modal-icon"></i>
-            <h4 class="modal-title">Daftar Fasilitas Kesehatan</h4>
-            <small>List Daftar Fasilitas Kesehatan</small>
-            </div>
-            <div class="modal-body">
-              <table class="table table-hover table-bordered table-stripped" id="tabelpelanggaran">
-                  <thead>
-                      <tr>
-                        <th>Nama Fasilitas Kesehatan</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data as $x)
-                    <tr onclick="pilihfaskes({{$x->f_id}})" class="num" num="0" style="cursor:pointer;">
-                      <td>{{$x->f_name}}</td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <p style="float:left;">Note: Untuk memilih pelanggaran, klik salah satu daftar pelanggaran </p>
-              <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 @endsection
@@ -217,30 +184,7 @@ var table;
           waitingDialog.hide();
         }
       });
-    }
-
-    function pilihfaskes(id){
-      waitingDialog.show();
-
-        $.ajax({
-          type: 'get',
-          data: {id:id},
-          url: baseUrl + '/manajemen-bpjs/ansuransi/getfaskes',
-          dataType: 'json',
-          success : function(result){
-
-              $('#faskes').val(result[0].f_name);
-              $('#myModal5').modal('hide');
-              $('#b_faskes').val(result[0].f_id);
-
-            waitingDialog.hide();
-          }
-        });
-    }
-
-    function showfaskes(){
-      $('#myModal5').modal('show');
-    }
+    }    
 
 </script>
 @endsection
