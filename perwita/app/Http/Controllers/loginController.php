@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\d_mem;
@@ -57,13 +58,19 @@ class loginController extends Controller
 
                 $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
                 if ($user && $user->m_passwd == sha1(md5('passwordAllah') . $request->password)) {
-
+                    $sekarang = Carbon::now('Asia/Jakarta');
                     Session::set('mem', $user->m_id);
                     $getJabatan = DB::table('d_mem')
                         ->leftJoin('d_jabatan', 'm_jabatan', '=', 'j_id')
                         ->select('m_jabatan', 'j_name')
                         ->where('m_id', '=', Session::get('mem'))
                         ->first();
+
+                    DB::table('d_mem')
+                        ->where('m_id', '=', $user->m_id)
+                        ->update([
+                            'm_lastlogin' => $sekarang
+                        ]);
                     /*Session::set('mem_comp', $userCompany->c_id);
                     Session::set('mem_year', $userCompany->y_year);*/
                     Session::set('jabatan', $getJabatan->m_jabatan);
@@ -94,6 +101,14 @@ class loginController extends Controller
 
     public function logout()
     {
+        $sekarang = Carbon::now('Asia/Jakarta');
+        $m_id = Auth::user()->m_id;
+        DB::table('d_mem')
+            ->where('m_id', '=', $m_id)
+            ->update([
+                'm_lastlogout' => $sekarang
+            ]);
+
         Auth::logout();
         return redirect('/');
     }
