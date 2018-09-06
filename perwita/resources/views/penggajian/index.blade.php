@@ -47,8 +47,7 @@
                   <p>Data tidak Ketemu</p>
                     @else
                     <select id="selectmitra" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="filterColumnmitra()">
-                    <option value="" selected="true" >- Cari Mitra -</option>
-                    <option value="all">Select All</option>
+                    <option value="" selected="true" >- Pilih Mitra -</option>
                     @foreach ($data as $key => $value)
                         <option value="{{ $value ->md_mitra }}" id="optionvalue">{{$value ->m_name}}</option>
                     @endforeach
@@ -57,7 +56,7 @@
                 </div>
                 <div class="col-6 col-md-3">
                   <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
-                    <option value="all">Select All</option>
+                    <option value="all">Pilih Divisi</option>
                   </select>
                 </div>
                 <div class="col-6 col-sm-2">
@@ -78,14 +77,14 @@
                <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
                     <thead>
                         <tr>
-                            <th>Nama</th>
-                            <th>NIK</th>
-                            <th>BPJS Kes</th>
-                            <th>BPJS Ket</th>
-                            <th>RBH</th>
-                            <th>Dapan</th>
-                            <th>Total</th>
-                            <th>No Reff</th>
+                            <th style="width:13%;">Nama</th>
+                            <th style="width:13%;">NIK</th>
+                            <th style="width:12%;">BPJS Kes</th>
+                            <th style="width:12%;">BPJS Ket</th>
+                            <th style="width:12%;">RBH</th>
+                            <th style="width:12%;">Dapan</th>
+                            <th style="width:13%;">Total</th>
+                            <th style="width:13%;">No Reff</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -128,7 +127,7 @@ $(document).ready(function(){
 });
 
 function filterColumnmitra () {
-    $("#selectdivisi").html('<option value="all">Select All</option>');
+    $("#selectdivisi").html('<option value="all">Pilih Divisi</option>');
     var nmitra = $('#selectmitra').val();
     $('#table').DataTable().column(2).search(nmitra).draw();
     id =  $('#selectmitra').val();
@@ -199,13 +198,13 @@ function cari(){
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
-              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'"></td>'+
-              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'"></td>'+
-              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'"></td>'+
-              '<td><input type="text" name="dapan[]" class="form-control rp"></td>'+
-              '<td><input type="text" name="totalgaji[]" class="form-control rp"></td>'+
-              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)"></td>'+
-              '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control rp"></td>'+
+              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;"></td>'+
+              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;"></td>'+
+              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;"></td>'+
+              '<td><input type="text" name="dapan[]" class="form-control rp" style="width:100%;"></td>'+
+              '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;"></td>'+
+              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;"></td>'+
+              '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control rp" style="width:100%;"></td>'+
               '</tr>';
       }
       $('#showdata').html(html);
