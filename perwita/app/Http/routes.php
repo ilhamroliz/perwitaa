@@ -172,6 +172,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja/data-pekerja/resign','pekerjaController@resign');
     Route::get('manajemen-pekerja/data-pekerja/detail-mutasi','pekerjaController@detail_mutasi');
 
+    Route::get('manajemen-pekerja/rekening','rekeningController@index');
+
 
     //mitra-pekerja
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra','mitraPekerjaController@index');

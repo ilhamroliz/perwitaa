@@ -27,7 +27,7 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pengguna
+                Setting Aplikasi
             </li>
             <li class="active">
                 <strong>Akses Pengguna</strong>

@@ -212,7 +212,8 @@
           })
       }
 
-        @if(Session::get('jabatan') == 1 || Session::get('jabatan') == 2)
+        <?php $cekAksesApproval = App\Http\Controllers\AksesUser::checkAkses(55, 'read') ?>
+          @if($cekAksesApproval)
             getApproval();
 
             function getApproval(){
