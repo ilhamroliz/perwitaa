@@ -85,6 +85,7 @@
                             <th>RBH</th>
                             <th>Dapan</th>
                             <th>Total</th>
+                            <th>No Reff</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -94,6 +95,9 @@
             </div>
         </div>
         <button type="button" name="button" class="btn btn-primary pull-right" onclick="simpan()">Simpan</button>
+        <div class="pull-right" style="margin-right:10px;">
+          <button type="button" name="button" class="btn btn-info" onclick="proses()">Proses</button>
+        </div>
     </div>
 </div>
 </div>
@@ -163,6 +167,9 @@ function cari(){
   var nokes = '';
   var noket = '';
   var r_no = '';
+  var clskes = '';
+  var clsket = '';
+  var clsr = '';
   $.ajax({
     type: 'get',
     data: 'mitra='+mitra+"&divisi="+divisi,
@@ -172,22 +179,32 @@ function cari(){
       for (var i = 0; i < result.length; i++) {
         if (result[i].b_nokes == "-") {
            nokes = 'readonly';
+           clskes = '';
+        } else {
+          clskes = 'rp';
         }
         if (result[i].b_noket == "-") {
            noket = 'readonly';
+           clsket = '';
+        } else {
+          clsket = 'rp';
         }
         if (result[i].r_no == "-") {
            r_no = 'readonly';
+           clsr = '';
+        } else {
+          clsr = 'rp';
         }
 
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
-              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control rp"></td>'+
-              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control rp"></td>'+
-              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control rp"></td>'+
+              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'"></td>'+
+              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'"></td>'+
+              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'"></td>'+
               '<td><input type="text" name="dapan[]" class="form-control rp"></td>'+
               '<td><input type="text" name="totalgaji[]" class="form-control rp"></td>'+
+              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)"></td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control rp"></td>'+
               '</tr>';
       }
@@ -215,14 +232,80 @@ function cari(){
 }
 
   function simpan(){
+    var start = $('#start').val();
+    var end = $('#end').val();
     waitingDialog.show();
     $.ajax({
       type: 'get',
-      data: $('#data').serialize(),
+      data: $('#data').serialize()+'&start='+start+'&end='+end,
       url: baseUrl + '/manajemen-payroll/payroll/simpan',
       dataType: 'json',
       success : function(result){
-        console.log(result);
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Penggajian Disimpan",
+                text: "Penggajian Berhasil Disimpan",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      }, error:function(x, e) {
+          waitingDialog.hide();
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+          waitingDialog.hide();
+      }
+    });
+  }
+
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+  }
+
+  function proses(){
+    var start = $('#start').val();
+    var end = $('#end').val();
+    waitingDialog.show();
+    $.ajax({
+      type: 'get',
+      data: $('#data').serialize()+'&start='+start+'&end='+end,
+      url: baseUrl + '/manajemen-payroll/payroll/proses',
+      dataType: 'json',
+      success : function(result){
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Penggajian Diproses",
+                text: "Penggajian Berhasil Diproses",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
       }, error:function(x, e) {
           waitingDialog.hide();
           if (x.status == 0) {
