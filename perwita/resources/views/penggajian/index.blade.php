@@ -63,17 +63,25 @@
                 <div class="col-6 col-sm-2">
                 <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
                 </div>
+                <br>
+                <br>
+                <br>
+                <div class="input-daterange input-group col-md-5 isimodal" id="datepicker" style="margin-left:15px;">
+                    <input type="text" class="input-sm form-control awal" id="start" name="start" value="05/06/2014"/>
+                    <span class="input-group-addon">sampai</span>
+                    <input type="text" class="input-sm form-control akhir" id="end" name="end" value="05/06/2014"/>
+                </div>
             </div>
             <br>
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
+              <form id="data">
                <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
                     <thead>
                         <tr>
                             <th>Nama</th>
                             <th>NIK</th>
-                            <th>BPJS Kesehatan</th>
-                            <th>BPJS Ketenagakerjaan</th>
-                            <th>Gaji</th>
+                            <th>BPJS Kes</th>
+                            <th>BPJS Ket</th>
                             <th>RBH</th>
                             <th>Dapan</th>
                             <th>Total</th>
@@ -82,8 +90,10 @@
                     <tbody id="showdata">
                     </tbody>
                 </table>
+                </form>
             </div>
         </div>
+        <button type="button" name="button" class="btn btn-primary pull-right" onclick="simpan()">Simpan</button>
     </div>
 </div>
 </div>
@@ -98,47 +108,19 @@ $(document).ready(function(){
   $('#pekerja').DataTable({
     responsive: true,
     "pageLength": 10,
+    "pagging": false,
     "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
     // "scrollY": '50vh',
     // "scrollCollapse": true,
         "language": dataTableLanguage,
   });
-});
 
-var table;
-$(document).ready(function() {
-    $('#select-picker').select2();
-
-    setTimeout(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        table = $("#pekerja").DataTable({
-            "search": {
-                "caseInsensitive": true
-            },
-            processing: true,
-            serverSide: true,
-            "ajax": {
-                "url": "{{ url('pekerja-di-mitra/pekerja-mitra/table') }}",
-                "type": "get",
-                "data": {mitra: idmitra, divisi: id_divisi}
-            },
-            columns: [
-                {data: 'p_name', name: 'p_name'},
-                {data: 'mp_mitra_nik', name: 'mp_mitra_nik'},
-                {data: 'm_name', name: 'm_name'},
-                {data: 'mp_workin_date', name: 'mp_workin_date'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ],
-            responsive: true,
-            "pageLength": 10,
-            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-            "language": dataTableLanguage,
-        });
-    }, 1500);
+  $('.input-daterange').datepicker({
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
 });
 
 function filterColumnmitra () {
@@ -178,6 +160,9 @@ function cari(){
   var html = "";
   var mitra = $('#selectmitra').val();
   var divisi = $('#selectdivisi').val();
+  var nokes = '';
+  var noket = '';
+  var r_no = '';
   $.ajax({
     type: 'get',
     data: 'mitra='+mitra+"&divisi="+divisi,
@@ -185,18 +170,29 @@ function cari(){
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
+        if (result[i].b_nokes == "-") {
+           nokes = 'readonly';
+        }
+        if (result[i].b_noket == "-") {
+           noket = 'readonly';
+        }
+        if (result[i].r_no == "-") {
+           r_no = 'readonly';
+        }
+
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
-              '<td>'+result[i].m_name+'</td>'+
-              '<td>'+result[i].md_name+'</td>'+
-              '<td>'+result[i].mp_workin_date+'</td>'+
-              '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Gaji" type="button" onclick="gaji('+result[i].mp_id+')" class="btn btn-success btn-xs"><i class="fa fa-money"></i></a>'+
-              '</td>'+
+              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control rp"></td>'+
+              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control rp"></td>'+
+              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control rp"></td>'+
+              '<td><input type="text" name="dapan[]" class="form-control rp"></td>'+
+              '<td><input type="text" name="totalgaji[]" class="form-control rp"></td>'+
+              '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control rp"></td>'+
               '</tr>';
       }
       $('#showdata').html(html);
+      $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
       waitingDialog.hide();
     }, error:function(x, e) {
         waitingDialog.hide();
@@ -218,27 +214,15 @@ function cari(){
   })
 }
 
-  function getdata(id){
+  function simpan(){
     waitingDialog.show();
-    var html = "";
     $.ajax({
       type: 'get',
-      url: baseUrl + '/pekerja-di-mitra/getdata',
-      data: {id:id},
+      data: $('#data').serialize(),
+      url: baseUrl + '/manajemen-payroll/payroll/simpan',
       dataType: 'json',
       success : function(result){
-        html += '<tr>'+
-              '<td>'+result[0].p_name+'</td>'+
-              '<td>'+result[0].mp_mitra_nik+'</td>'+
-              '<td>'+result[0].m_name+'</td>'+
-              '<td>'+result[0].md_name+'</td>'+
-              '<td>'+result[0].mp_workin_date+'</td>'+
-              '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Gaji" type="button" onclick="gaji('+result[0].mp_id+')" class="btn btn-success btn-xs"><i class="fa fa-money"></i></a>'+
-              '</td>'+
-              '</tr>';
-      $('#showdata').html(html);
-      waitingDialog.hide();
+        console.log(result);
       }, error:function(x, e) {
           waitingDialog.hide();
           if (x.status == 0) {
