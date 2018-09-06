@@ -10,6 +10,8 @@ use DB;
 
 use Carbon\Carbon;
 
+use Session;
+
 class penggajianController extends Controller
 {
     public function index(){
@@ -82,72 +84,306 @@ class penggajianController extends Controller
     }
 
     public function simpan(Request $request){
-      // DB::beginTransaction();
-      // try {
+      DB::beginTransaction();
+      try {
 
-      dd($request);
+      $kode = "";
 
-      $counttotalpy = 0;
-        for ($a=0; $i < count($request->totalgaji); $a++) {
-          if ($request->totalgaji[$a] == "") {
+      $querykode = DB::select(DB::raw("SELECT MAX(MID(p_no,4,5)) as counter, MAX(MID(p_no,10,2)) as bulan, MAX(MID(p_no,13)) as tahun FROM d_payroll"));
 
-          } else {
-            $counttotalpy += 1;
-          }
+      if (count($querykode) > 0) {
+        if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+            $kode = "00001";
+        } else {
+          foreach($querykode as $k)
+            {
+              $tmp = ((int)$k->counter)+1;
+              $kode = sprintf("%05s", $tmp);
+            }
         }
+      } else {
+        $kode = "00001";
+      }
 
-        for ($b=0; $i < $counttotalpy; $b++) {
 
-        }
+      $finalkode = 'PY-' . $kode . '/' . date('m') . '/' . date('Y');
 
-      $countbpjskes = 0;
-        for ($i=0; $i < count($request->bpjskes); $i++) {
-          if ($request->bpjskes[$i] == "") {
+        for ($b=0; $b < count($request->p_id); $b++) {
 
-          } else {
-            $countbpjskes += 1;
-          }
-        }
 
-        for ($i=0; $i < $countbpjskes; $i++) {
-          $nobpjskes = DB::table('d_bpjs_kesehatan')
-                        ->where('b_pekerja', $request->p_id[$i])
-                        ->select('b_no')
-                        ->get();
+          if ($request->totalgaji[$b] != "") {
+            $detailid = DB::table('d_payroll')
+                        ->where('p_pekerja', $request->p_id[$b])
+                        ->max('p_detailid');
 
-          if ($nobpjskes != "") {
-            $tmp = str_replace('.', '', $request->bpjskes[$i]);
-            $bpjskes = str_replace('Rp .', '', $tmp);
-            $detailidkes = DB::table('d_bpjskes_iuran')
-                            ->where('bi_no_bpjs', $nobpjskes)
-                            ->max('bi_detailid');
+            $tmp = str_replace('.', '', $request->totalgaji[$b]);
+            $totalgaji = str_replace('Rp ', '', $tmp);
 
-            DB::table('d_bpjskes_iuran')
+            DB::table('d_payroll')
               ->insert([
-                'bi_no_bpjs' => $nobpjskes,
-                'bi_detailid' => $detailidkes,
-                'bi_no_pay' => $bpjskes,
-
+                'p_pekerja' => $request->p_id[$b],
+                'p_detailid' => $detailid + 1,
+                'p_no' => $finalkode,
+                'p_date' => Carbon::now('Asia/Jakarta'),
+                'p_start_periode' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                'p_end_periode' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                'p_value' => $totalgaji,
+                'p_noreff' => $request->noreff[$b],
+                'p_status' => 'P'
               ]);
           }
+        }
 
+        for ($i=0; $i < count($request->p_id); $i++) {
+          if ($request->bpjskes[$i] != "") {
+              $nobpjskes = DB::table('d_bpjs_kesehatan')
+                            ->where('b_pekerja', $request->p_id[$i])
+                            ->select('b_no')
+                            ->get();
+
+              $detailid = DB::table('d_bpjskes_iuran')
+                          ->where('bi_no_bpjs', $nobpjskes[0]->b_no)
+                          ->max('bi_detailid');
+
+              $tmp = str_replace('.', '', $request->bpjskes[$i]);
+              $bpjskes = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_bpjskes_iuran')
+                  ->insert([
+                    'bi_no_bpjs' => $nobpjskes[0]->b_no,
+                    'bi_detailid' => $detailid + 1,
+                    'bi_no_pay' => $finalkode,
+                    'bi_value' => $bpjskes,
+                    'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'bi_status' => 'N',
+                    'bi_mem' => Session::get('mem'),
+                    'bi_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
+        }
+
+        for ($j=0; $j < count($request->p_id); $j++) {
+          if ($request->bpjsket[$j] != "") {
+              $nobpjsket = DB::table('d_bpjs_ketenagakerjaan')
+                            ->where('b_pekerja', $request->p_id[$j])
+                            ->select('b_no')
+                            ->get();
+
+              $detailid = DB::table('d_bpjsket_iuran')
+                          ->where('bi_no_bpjs', $nobpjsket[0]->b_no)
+                          ->max('bi_detailid');
+
+              $tmp = str_replace('.', '', $request->bpjsket[$j]);
+              $bpjsket = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_bpjsket_iuran')
+                  ->insert([
+                    'bi_no_bpjs' => $nobpjsket[0]->b_no,
+                    'bi_detailid' => $detailid + 1,
+                    'bi_no_pay' => $finalkode,
+                    'bi_value' => $bpjsket,
+                    'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'bi_status' => 'N',
+                    'bi_mem' => Session::get('mem'),
+                    'bi_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
+        }
+
+        for ($z=0; $z < count($request->p_id); $z++) {
+          if ($request->bpjsket[$z] != "") {
+              $norbh = DB::table('d_rbh')
+                            ->where('r_pekerja', $request->p_id[$z])
+                            ->select('r_no')
+                            ->get();
+
+              $detailid = DB::table('d_rbh_iuran')
+                          ->where('ri_no_rbh', $norbh[0]->r_no)
+                          ->max('ri_detailid');
+
+              $tmp = str_replace('.', '', $request->rbh[$z]);
+              $rbh = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_rbh_iuran')
+                  ->insert([
+                    'ri_no_rbh' => $norbh[0]->b_no,
+                    'ri_detailid' => $detailid + 1,
+                    'ri_no_pay' => $finalkode,
+                    'ri_value' => $rbh,
+                    'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'ri_status' => 'N',
+                    'ri_mem' => Session::get('mem'),
+                    'ri_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
         }
 
 
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+
+    }
+
+    public function proses(Request $request){
+      DB::beginTransaction();
+      try {
+
+      $kode = "";
+
+      $querykode = DB::select(DB::raw("SELECT MAX(MID(p_no,4,5)) as counter, MAX(MID(p_no,10,2)) as bulan, MAX(MID(p_no,13)) as tahun FROM d_payroll"));
+
+      if (count($querykode) > 0) {
+        if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+            $kode = "00001";
+        } else {
+          foreach($querykode as $k)
+            {
+              $tmp = ((int)$k->counter)+1;
+              $kode = sprintf("%05s", $tmp);
+            }
+        }
+      } else {
+        $kode = "00001";
+      }
 
 
+      $finalkode = 'PY-' . $kode . '/' . date('m') . '/' . date('Y');
+
+        for ($b=0; $b < count($request->p_id); $b++) {
 
 
-      //   DB::commit();
-      //   return response()->json([
-      //     'status' => 'berhasil'
-      //   ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal'
-      //   ]);
-      // }
+          if ($request->totalgaji[$b] != "") {
+            $detailid = DB::table('d_payroll')
+                        ->where('p_pekerja', $request->p_id[$b])
+                        ->max('p_detailid');
+
+            $tmp = str_replace('.', '', $request->totalgaji[$b]);
+            $totalgaji = str_replace('Rp ', '', $tmp);
+
+            DB::table('d_payroll')
+              ->insert([
+                'p_pekerja' => $request->p_id[$b],
+                'p_detailid' => $detailid + 1,
+                'p_no' => $finalkode,
+                'p_date' => Carbon::now('Asia/Jakarta'),
+                'p_start_periode' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                'p_end_periode' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                'p_value' => $totalgaji,
+                'p_noreff' => $request->noreff[$b],
+                'p_status' => 'Y'
+              ]);
+          }
+        }
+
+        for ($i=0; $i < count($request->p_id); $i++) {
+          if ($request->bpjskes[$i] != "") {
+              $nobpjskes = DB::table('d_bpjs_kesehatan')
+                            ->where('b_pekerja', $request->p_id[$i])
+                            ->select('b_no')
+                            ->get();
+
+              $detailid = DB::table('d_bpjskes_iuran')
+                          ->where('bi_no_bpjs', $nobpjskes[0]->b_no)
+                          ->max('bi_detailid');
+
+              $tmp = str_replace('.', '', $request->bpjskes[$i]);
+              $bpjskes = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_bpjskes_iuran')
+                  ->insert([
+                    'bi_no_bpjs' => $nobpjskes[0]->b_no,
+                    'bi_detailid' => $detailid + 1,
+                    'bi_no_pay' => $finalkode,
+                    'bi_value' => $bpjskes,
+                    'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'bi_status' => 'Y',
+                    'bi_mem' => Session::get('mem'),
+                    'bi_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
+        }
+
+        for ($j=0; $j < count($request->p_id); $j++) {
+          if ($request->bpjsket[$j] != "") {
+              $nobpjsket = DB::table('d_bpjs_ketenagakerjaan')
+                            ->where('b_pekerja', $request->p_id[$j])
+                            ->select('b_no')
+                            ->get();
+
+              $detailid = DB::table('d_bpjsket_iuran')
+                          ->where('bi_no_bpjs', $nobpjsket[0]->b_no)
+                          ->max('bi_detailid');
+
+              $tmp = str_replace('.', '', $request->bpjsket[$j]);
+              $bpjsket = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_bpjsket_iuran')
+                  ->insert([
+                    'bi_no_bpjs' => $nobpjsket[0]->b_no,
+                    'bi_detailid' => $detailid + 1,
+                    'bi_no_pay' => $finalkode,
+                    'bi_value' => $bpjsket,
+                    'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'bi_status' => 'Y',
+                    'bi_mem' => Session::get('mem'),
+                    'bi_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
+        }
+
+        for ($z=0; $z < count($request->p_id); $z++) {
+          if ($request->bpjsket[$z] != "") {
+              $norbh = DB::table('d_rbh')
+                            ->where('r_pekerja', $request->p_id[$z])
+                            ->select('r_no')
+                            ->get();
+
+              $detailid = DB::table('d_rbh_iuran')
+                          ->where('ri_no_rbh', $norbh[0]->r_no)
+                          ->max('ri_detailid');
+
+              $tmp = str_replace('.', '', $request->rbh[$z]);
+              $rbh = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_rbh_iuran')
+                  ->insert([
+                    'ri_no_rbh' => $norbh[0]->b_no,
+                    'ri_detailid' => $detailid + 1,
+                    'ri_no_pay' => $finalkode,
+                    'ri_value' => $rbh,
+                    'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'ri_status' => 'Y',
+                    'ri_mem' => Session::get('mem'),
+                    'ri_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+          }
+        }
+
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
 
     }
 }
