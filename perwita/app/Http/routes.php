@@ -683,6 +683,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/update', 'ReturnPembelianController@update');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
 
+    //Penerimaan RETURN
+    Route::get('manajemen-seragam/penerimaanreturn', 'penerimaanreturnController@index');
+    Route::get('manajemen-seragam/penerimaanreturn/getnota', 'penerimaanreturnController@getnota');
+    Route::get('manajemen-seragam/penerimaanreturn/simpan', 'penerimaanreturnController@simpan');
+
     //============ Stock Opname
     Route::get('manajemen-stock/stock-opname', 'StockOpnameController@index');
     Route::get('manajemen-stock/stock-opname/tambah', 'StockOpnameController@add');

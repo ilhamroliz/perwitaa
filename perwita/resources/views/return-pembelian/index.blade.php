@@ -21,7 +21,7 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Return Pembelian
+                Manajemen Seragam
             </li>
             <li class="active">
                 <strong>Return Pembelian</strong>
@@ -33,6 +33,7 @@
     <div class="ibox-title ibox-info">
         <h5>Return Pembelian</h5>
         <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/return/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaanreturn') }}"><i class="fa fa-download"></i>&nbsp;Penerimaan Return</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
