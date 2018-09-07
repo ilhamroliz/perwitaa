@@ -174,6 +174,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('manajemen-pekerja/rekening','rekeningController@index');
     Route::get('manajemen-pekerja/rekening/getdata','rekeningController@getData');
+    Route::post('manajemen-pekerja/rekening/simpan','rekeningController@save');
 
 
     //mitra-pekerja
