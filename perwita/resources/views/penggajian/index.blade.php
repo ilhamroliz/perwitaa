@@ -33,9 +33,8 @@
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title">
-                    <h5>Penggajian</h5><br>
-                    <div class="ibox-tools">
+    <div class="ibox-title ibox-info">
+      <h5>Penggajian</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -127,7 +126,7 @@ $(document).ready(function(){
 });
 
 function filterColumnmitra () {
-    $("#selectdivisi").html('<option value="all">Pilih Divisi</option>');
+    $("#selectdivisi").html('<option value="">Pilih Divisi</option>');
     var nmitra = $('#selectmitra').val();
     $('#table').DataTable().column(2).search(nmitra).draw();
     id =  $('#selectmitra').val();
@@ -195,16 +194,56 @@ function cari(){
           clsr = 'rp';
         }
 
+        var valbikes = '';
+        var kes = '';
+        if (result[i].bikes_value == '') {
+          valbikes = '';
+          kes = '';
+        } else {
+          valbikes = 'Rp. ';
+          kes = accounting.formatMoney(result[i].bikes_value, "", 0, ".", ",");
+        }
+
+        var valbiket = '';
+        var ket = '';
+        if (result[i].biket_value == '') {
+          valbiket = '';
+          ket = '';
+        } else {
+          valbiket = 'Rp. ';
+          ket = accounting.formatMoney(result[i].biket_value, "", 0, ".", ",");
+        }
+
+        var valrbh = '';
+        var r = '';
+        if (result[i].ri_value == '') {
+          valrbh = '';
+          r = '';
+        } else {
+          valrbh = 'Rp. ';
+          r = accounting.formatMoney(result[i].ri_value, "", 0, ".", ",");
+        }
+
+        var p_value = '';
+        var pval = '';
+        if (result[i].p_value == '') {
+          p_value = '';
+          pval = '';
+        } else {
+          p_value = 'Rp. ';
+          pval = accounting.formatMoney(result[i].p_value, "", 0, ".", ",");
+        }
+
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
-              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;"></td>'+
-              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;"></td>'+
-              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;"></td>'+
+              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;" value="'+valbikes+''+kes+'"></td>'+
+              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;" value="'+valbiket+''+ket+'"></td>'+
+              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;" value="'+valrbh+''+r+'"></td>'+
               '<td><input type="text" name="dapan[]" class="form-control rp" style="width:100%;"></td>'+
-              '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;"></td>'+
-              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;"></td>'+
-              '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control rp" style="width:100%;"></td>'+
+              '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;" value="'+p_value+''+pval+'"></td>'+
+              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;" value="'+result[i].p_noreff+'"></td>'+
+              '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+
               '</tr>';
       }
       $('#showdata').html(html);
