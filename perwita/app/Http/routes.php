@@ -45,7 +45,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('master-jabatan/hapus', 'JabatanController@hapus');
 
     Route::get('master-perusahaan', 'PerusahaanController@index');
-
+    Route::get('master-perusahaan/tambah', 'PerusahaanController@add');
+    Route::post('master-perusahaan/data', 'PerusahaanController@data');
+    Route::post('master-perusahaan/table', 'PerusahaanController@table');
+    Route::post('master-perusahaan/simpan', 'PerusahaanController@save');
+    Route::post('master-perusahaan/update', 'PerusahaanController@update');
+    Route::post('master-perusahaan/hapus', 'PerusahaanController@delete');
+    Route::get('master-perusahaan/edit/{id}', 'PerusahaanController@edit');
 
     Route::get('manajemen-hak-akses/group', 'aksesGroupController@index');
     Route::get('manajemen-hak-akses/group/tambah', 'aksesGroupController@tambah');
