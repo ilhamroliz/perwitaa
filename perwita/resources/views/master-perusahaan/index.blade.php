@@ -25,7 +25,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Master Jabatan</h2>
+        <h2>Master Perusahaan</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -34,7 +34,7 @@
                 Setting Aplikasi
             </li>
             <li class="active">
-                <strong>Master Jabatan</strong>
+                <strong>Master Perusahaan</strong>
             </li>
         </ol>
     </div>
@@ -45,8 +45,8 @@
         <div class="col-lg-7">
             <div class="ibox">        
                 <div class="ibox-title">
-                    <h5>Pengaturan Jabatan</h5>
-                    <button style="float: right; margin-top: -7px;" data-toggle="modal" data-target="#addModal" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
+                    <h5>Pengaturan Perusahaan</h5>
+                    <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
                 </div>
                 <div class="ibox-content">              
                     <div class="row" style="padding-left: 10px; padding-right: 10px;">
@@ -54,7 +54,7 @@
                             <table class="table table-striped col-md-12" id="table-pengaturan">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Nama Jabatan</th>
+                                        <th class="text-center">Nama Perusahaan</th>
                                         <th class="text-center">Aksi</th>
                                         <th class="text-center">Aktif</th>
                                     </tr>
@@ -71,13 +71,13 @@
         <div class="col-lg-5">
             <div class="ibox">        
                 <div class="ibox-title">
-                    <h5>Jabatan Aktif</h5>
+                    <h5>Perusahaan Aktif</h5>
                 </div>
                 <div class="ibox-content">              
-                    <table class="table table-striped " id="table-jabatan">
+                    <table class="table table-striped " id="table-perusahaan">
                         <thead>
                             <tr>
-                                <th>Nama Jabatan</th>
+                                <th>Nama Perusahaan</th>
                             </tr>
                         </thead>
                     </table>
@@ -159,14 +159,13 @@
                 processing: true,
                 searching: false,
                 paging: false,
-                ordering: false,
                 serverSide: true,
                 "ajax": {
-                    "url": "{{ url('master-jabatan/table') }}",
+                    "url": "{{ url('master-perusahaan/table') }}",
                     "type": "POST"
                 },
                 columns: [
-                    {data: 'j_name', name: 'j_name'},
+                    {data: 'c_name', name: 'c_name'},
                     {data: 'edit', name: 'edit'},
                     {data: 'aksi', name: 'aksi'}
                 ],
@@ -181,18 +180,17 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            table = $("#table-jabatan").DataTable({
+            table = $("#table-perusahaan").DataTable({
                 processing: true,
                 searching: false,
                 paging: false,
-                ordering: false,
                 serverSide: true,
                 "ajax": {
-                    "url": "{{ url('master-jabatan/data') }}",
+                    "url": "{{ url('master-perusahaan/data') }}",
                     "type": "POST"
                 },
                 columns: [
-                    {data: 'j_name', name: 'j_name'},
+                    {data: 'c_name', name: 'c_name'},
                 ],
                 responsive: true,
                 "language": dataTableLanguage,
@@ -246,46 +244,11 @@
             }
         });
         $.ajax({
-            url: '{{ url('master-jabatan/update') }}',
+            url: '{{ url('master-perusahaan/update') }}',
             type: 'post',
             data: $('.form-pengaturan').serialize(),
             success: function(response){
                 if (response.status == 'sukses') {
-                    table.ajax.reload();
-                    pengaturan.ajax.reload();
-                }
-            }, error:function(x, e) {
-                if (x.status == 0) {
-                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-                } else if (x.status == 404) {
-                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-                } else if (x.status == 500) {
-                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-                } else if (e == 'parsererror') {
-                    alert('Error.\nParsing JSON Request failed.');
-                } else if (e == 'timeout'){
-                    alert('Request Time out. Harap coba lagi nanti');
-                } else {
-                    alert('Unknow Error.\n' + x.responseText);
-                }
-            }
-        })
-    }
-
-    function simpanAdd(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '{{ url('master-jabatan/simpan') }}',
-            type: 'post',
-            data: $('.form-tambah').serialize(),
-            success: function(response){
-                if (response.status == 'sukses') {
-                    $('#addModal').modal('hide');
-                    $('.namatambah').val('');
                     table.ajax.reload();
                     pengaturan.ajax.reload();
                 }
@@ -323,7 +286,7 @@
                     }
                 });
                 $.ajax({
-                    url: '{{ url('master-jabatan/hapus') }}',
+                    url: '{{ url('master-perusahaan/hapus') }}',
                     type: 'post',
                     data: { id: id },
                     success: function(response){
@@ -355,6 +318,10 @@
                     }
                 })
             });
+    }
+
+    function tambah(){
+        window.location.href = '{{ url('master-perusahaan/tambah') }}';
     }
 </script>
 @endsection
