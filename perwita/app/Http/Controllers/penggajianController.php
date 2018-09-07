@@ -14,13 +14,23 @@ use Session;
 
 class penggajianController extends Controller
 {
+
     public function index(){
+      $data = DB::table('d_payroll')
+              ->join('d_pekerja', 'p_id', '=', 'p_pekerja')
+              ->where('d_payroll.p_status', 'P')
+              ->get();
+
+      return view('penggajian.index', compact('data'));
+    }
+
+    public function tambah(){
       $data = DB::table('d_mitra')
               ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
               ->groupBy('m_name')
               ->get();
 
-      return view('penggajian.index', compact('data'));
+      return view('penggajian.tambah', compact('data'));
     }
 
     public function cari(Request $request){
@@ -580,5 +590,4 @@ class penggajianController extends Controller
     }
 
     }
-
 }
