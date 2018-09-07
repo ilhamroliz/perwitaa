@@ -15,7 +15,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Penerimaan Pembelian</h2>
+        <h2>Penerimaan Return</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -24,15 +24,14 @@
                 Manajemen Seragam
             </li>
             <li class="active">
-                <strong>Penerimaan Pembelian</strong>
+                <strong>Penerimaan Return</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Penerimaan Pembelian</h5>
-        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaan/cari') }}"><i class="fa fa-history"></i>&nbsp;History</a>
+        <h5>Penerimaan Return</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -42,7 +41,7 @@
                         <select class="form-control chosen-select-width" name="nota" style="width:100%; cursor: pointer;" id="nota">
                             <option value="" disabled selected>--Pilih Nota Pembelian--</option>
                         @foreach($data as $nota)
-                            <option value="{{ $nota->p_nota }}"> {{ $nota->p_nota }} ({{ $nota->s_company }}) </option>
+                            <option value="{{ $nota->rs_nota }}"> {{ $nota->rs_nota }} </option>
                         @endforeach
                         </select>
                     </div>
@@ -62,9 +61,6 @@
                                 </tr>
                             </thead>
                         </table>
-                    </div>
-                    <div class="col-md-12">
-                      <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a>
                     </div>
                 </div>
             </div>
@@ -99,6 +95,9 @@
                       </div>
                       <input type="hidden" class="id_purchase">
                       <input type="hidden" class="purchase_dt">
+                      <input type="hidden" class="item">
+                      <input type="hidden" class="itemdt">
+                      <input type="hidden" class="rsgreturn">
                     </div>
                 </form>
             </div>
@@ -152,7 +151,7 @@
         }
         waitingDialog.show();
         $.ajax({
-          url: baseUrl + '/manajemen-pembelian/carinota',
+          url: baseUrl + '/manajemen-seragam/penerimaanreturn/getnota',
           type: 'get',
           data: {nota: nota},
           success: function(response){
@@ -161,8 +160,8 @@
                 tabelitem.row.add([
                     response[i].s_company,
                     response[i].nama,
-                    response[i].pd_qty,
-                    response[i].pd_barang_masuk,
+                    response[i].rsg_qty,
+                    response[i].rsg_barang_masuk,
                     response[i].sisa,
                     buttonGen(response[i])
                 ]).draw( false );
@@ -194,16 +193,19 @@
         if (status.sisa == 0) {
             buton = '<button type="button" class="btn btn-primary btn-xs" >Sudah Diterima</button>';
         } else {
-            buton = '<button type="button" class="btn btn-warning btn-xs" onclick="TerimaBarang('+status.sisa+', '+status.p_id+', '+status.pd_detailid+', \''+status.nama+'\')">Terima Barang</button>';
+            buton = '<button type="button" class="btn btn-warning btn-xs" onclick="TerimaBarang('+status.sisa+', '+status.rsg_item+', '+status.rsg_item_dt+', '+status.rs_id+', '+status.rsg_detailid+', \''+status.nama+'\', '+status.rsg_detailid_return+')">Terima Barang</button>';
         }
         return buton;
     }
 
-    function TerimaBarang(sisa, id, dt, nama){
+    function TerimaBarang(sisa, iditem, itemdt, id, dt, nama, rsg_detailid_return){
         $('.namabarang').html(nama);
         $('.sisabarang').val(sisa);
         $('.id_purchase').val(id);
         $('.purchase_dt').val(dt);
+        $('.item').val(iditem);
+        $('.itemdt').val(itemdt);
+        $('.rsgreturn').val(rsg_detailid_return);
         $('#myModal').modal('show');
     }
 
@@ -242,6 +244,9 @@
         var id = $('.id_purchase').val();
         var dt = $('.purchase_dt').val();
         var nodo = $('.nodo').val();
+        var item = $('.item').val();
+        var itemdt = $('.itemdt').val();
+        var rsgreturn = $('.rsgreturn').val();
         $('.jumlahterima').val('');
         //waitingDialog.show();
         $.ajaxSetup({
@@ -250,13 +255,13 @@
             }
         });
         $.ajax({
-          url: baseUrl + '/manajemen-pembelian/penerimaan/update',
-          type: 'post',
-          data: {sisa: sisa, id: id, dt: dt, nodo: nodo},
+          url: baseUrl + '/manajemen-seragam/penerimaanreturn/simpan',
+          type: 'get',
+          data: {sisa: sisa, id: id, dt: dt, nodo: nodo, item:item, itemdt:itemdt, rsgreturn:rsgreturn},
           success: function(response){
             //waitingDialog.hide();
             $('#myModal').modal('hide');
-            if (response.status == 'sukses') {
+            if (response.status == 'berhasil') {
                 swal({
                         title: "Sukses",
                         text: "Data sudah tersimpan",

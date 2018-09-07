@@ -21,7 +21,7 @@
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li>
-                Manajemen Pembelian
+                Manajemen Seragam
             </li>
             <li>
                 Penerimaan Pembelian
