@@ -689,4 +689,51 @@ class penggajianController extends Controller
 
       return response()->json($data);
     }
+
+    public function printbank(Request $request){
+      $data = DB::table('d_payroll')
+              ->join('d_payroll_dt', 'pd_payroll', '=', 'd_payroll.p_id')
+              ->join('d_pekerja', 'd_pekerja.p_id', '=', 'pd_pekerja')
+              ->select('p_name', 'p_norek', 'pd_value')
+              ->where('p_no', $request->nota)
+              ->get();
+
+      return view('penggajian.printbank', compact('data'));
+    }
+
+    public function printpekerja(Request $request){
+      $data = DB::table('d_payroll')
+              ->join('d_payroll_dt', 'pd_payroll', '=', 'd_payroll.p_id')
+              ->join('d_pekerja', 'd_pekerja.p_id', '=', 'pd_pekerja')
+              ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
+              ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
+              ->join('d_mitra', 'm_id', '=', 'mp_mitra')
+              ->leftJoin('d_mitra_divisi', function ($q){
+                  $q->on('md_mitra', '=', 'mp_mitra')
+                      ->on('md_id', '=', 'mp_divisi');
+              })
+              ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'pd_pekerja')
+              ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'pd_pekerja')
+              ->leftJoin('d_rbh', 'r_pekerja', '=', 'pd_pekerja')
+              ->leftJoin('d_bpjskes_iuran',  function($e){
+                $e->on('d_bpjskes_iuran.bi_no_bpjs', '=', 'd_bpjs_kesehatan.b_no')
+                  ->on('d_bpjskes_iuran.bi_no_pay', '=', 'p_no');
+              })
+              ->leftJoin('d_bpjsket_iuran', function($e){
+                $e->on('d_bpjsket_iuran.bi_no_bpjs', '=', 'd_bpjs_ketenagakerjaan.b_no')
+                  ->on('d_bpjsket_iuran.bi_no_pay', '=', 'p_no');
+              })
+              ->leftJoin('d_rbh_iuran', function($e){
+                $e->on('d_rbh_iuran.ri_no_rbh', '=', 'd_rbh.r_no')
+                  ->on('d_rbh_iuran.ri_no_pay', '=', 'p_no');
+              })
+              ->select(
+                'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(p_nip, '') as p_nip"), DB::raw("COALESCE(p_nip_mitra, '') as p_nip_mitra"), DB::raw("COALESCE(d_rbh_iuran.ri_value, '0') as ri_value"), DB::raw("COALESCE(d_bpjskes_iuran.bi_value, '0') as bikes_value"), DB::raw("COALESCE(d_bpjsket_iuran.bi_value, '0') as biket_value"), DB::raw("COALESCE(pd_value, '0') as pd_value"), DB::raw("COALESCE(pd_reff, '') as p_noreff"), DB::raw("COALESCE(p_nip, '') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              )
+              ->where('p_no', $request->nota)
+              ->where('mp_isapproved', 'Y')
+              ->get();
+
+        return view('penggajian.printpekerja', compact('data'));
+    }
 }

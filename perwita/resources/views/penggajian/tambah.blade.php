@@ -117,6 +117,13 @@ $(document).ready(function(){
         "language": dataTableLanguage,
   });
 
+  // $('#pekerja').DataTable({
+  //        dom: 'Bfrtip',
+  //        buttons: [
+  //            'copy', 'csv', 'excel', 'pdf', 'print'
+  //        ]
+  //    });
+
   $('.input-daterange').datepicker({
       keyboardNavigation: false,
       forceParse: false,

@@ -47,7 +47,7 @@
                             <div class="sk-rect4"></div>
                             <div class="sk-rect5"></div>
                         </div>
-                        <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Daftar Approval</span>
+                        <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data</span>
                     </div>
                 </center>
                 <form class="formapprovalremunerasi" id="formapprovalremunerasi">
@@ -69,6 +69,15 @@
                                 <td>{{Carbon\Carbon::parse($x->p_end_periode)->format('d/m/Y')}}</td>
                                 <td> <span class="badge badge-warning">Belum Diproses</span> </td>
                                 <td align="center">
+                                  <div class="btn-group">
+                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" title="Cetak" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   <i class="fa fa-print"></i> <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{url('manajemen-payroll/payroll/printbank?nota=')}}{{$x->p_no}}">Bank</a></li>
+                                    <li><a href="{{url('manajemen-payroll/payroll/printpekerja?nota=')}}{{$x->p_no}}">Pekerja</a></li>
+                                  </ul>
+                                </div>
                                 <button type="button" title="Lanjutkan" onclick="lanjutkan('{{$x->p_no}}')"  class="btn btn-info btn-sm" name="button"> <i class="fa fa-chevron-circle-right"></i> </button>
                                 <button type="button" title="Hapus" onclick="hapus('{{$x->p_no}}')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
                                </td>
