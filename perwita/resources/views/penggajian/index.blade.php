@@ -54,25 +54,23 @@
                     <table id="remunerasitabel" class="table table-bordered table-striped" >
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>NIK</th>
                                 <th>No Payroll</th>
                                 <th>Start Periode</th>
                                 <th>End Periode</th>
+                                <th>Status</th>
                                 <th style="width: 120%;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                           @foreach($data as $index => $x)
                           <tr>
-                                <td>{{$x->p_name}}</td>
-                                <td>{{$x->p_nip}}</td>
                                 <td>{{$x->p_no}}</td>
                                 <td>{{Carbon\Carbon::parse($x->p_start_periode)->format('d/m/Y')}}</td>
                                 <td>{{Carbon\Carbon::parse($x->p_end_periode)->format('d/m/Y')}}</td>
+                                <td> <span class="badge badge-warning">Belum Diproses</span> </td>
                                 <td align="center">
-                                <button type="button" title="Lanjutkan" onclick="Lanjutkan({{$x->p_no}})"  class="btn btn-info btn-sm" name="button"> <i class="fa fa-chevron-circle-right"></i> </button>
-                                <button type="button" title="Hapus" onclick="hapus({{$x->p_no}})"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
+                                <button type="button" title="Lanjutkan" onclick="lanjutkan('{{$x->p_no}}')"  class="btn btn-info btn-sm" name="button"> <i class="fa fa-chevron-circle-right"></i> </button>
+                                <button type="button" title="Hapus" onclick="hapus('{{$x->p_no}}')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
                                </td>
                             </tr>
                             @endforeach
@@ -114,6 +112,33 @@ setTimeout(function(){
   }
 
 });
+
+function hapus(nota){
+  $.ajax({
+    type: 'get',
+    data: {nota:nota},
+    dataType: 'json',
+    url: baseUrl + '/manajemen-payroll/payroll/hapus',
+    success : function(result){
+      if (result.status == 'berhasil') {
+          swal({
+              title: "Penggajian Dihapus",
+              text: "Penggajian Berhasil Dihapus",
+              type: "success",
+              showConfirmButton: false,
+              timer: 900
+          });
+          setTimeout(function(){
+                window.location.reload();
+        }, 850);
+      }
+    }
+  });
+}
+
+function lanjutkan(nota){
+  window.location.href = baseUrl + '/manajemen-payroll/payroll/edit?nota='+nota;
+}
 
 </script>
 @endsection

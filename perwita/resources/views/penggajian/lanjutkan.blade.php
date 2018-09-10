@@ -17,7 +17,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Penggajian</h2>
+        <h2>Lanjutkan Penggajian</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -26,7 +26,7 @@
                 Payroll
             </li>
             <li class="active">
-                <strong>Penggajian</strong>
+                <strong>Lanjutkan Penggajian</strong>
             </li>
         </ol>
     </div>
@@ -34,36 +34,13 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-      <h5>Penggajian</h5>
+      <h5>Lanjutkan Penggajian</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
         <div id="filter">
               <div class="row">
-                <div class="col-6 col-md-3">
-                  @if(empty($data))
-                  <p>Data tidak Ketemu</p>
-                    @else
-                    <select id="selectmitra" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="filterColumnmitra()">
-                    <option value="" selected="true" >- Pilih Mitra -</option>
-                    @foreach ($data as $key => $value)
-                        <option value="{{ $value ->md_mitra }}" id="optionvalue">{{$value ->m_name}}</option>
-                    @endforeach
-                    </select>
-                    @endif
-                </div>
-                <div class="col-6 col-md-3">
-                  <select class="select-picker form-control" name="selectdivisi" id="selectdivisi" onchange="filterColumndivisi()">
-                    <option value="all">Pilih Divisi</option>
-                  </select>
-                </div>
-                <div class="col-6 col-sm-2">
-                <button  style="margin-left: 40px;" type="button" name="button" id="cari" class="btn btn-primary" mitra="" divisi="" onclick="cari()">Filter Cari</button>
-                </div>
-                <br>
-                <br>
-                <br>
                 <div class="input-daterange input-group col-md-5 isimodal" id="datepicker" style="margin-left:15px;">
                     <input type="text" class="input-sm form-control awal" id="start" name="start" value="05/06/2014"/>
                     <span class="input-group-addon">sampai</span>
@@ -71,6 +48,7 @@
                 </div>
             </div>
             <br>
+            <input type="hidden" name="nota" value="{{$nota}}">
             <div class="col-md-12 table-responsive " id="tabledinamis"  style="margin: 10px 0px 20px 0px;">
               <form id="data">
                <table id="pekerja" class="table table-bordered table-striped display" style="border-collapse:collapse;">
@@ -124,55 +102,23 @@ $(document).ready(function(){
       format: 'dd/mm/yyyy'
   });
 
-});
-
-function filterColumnmitra () {
-    $("#selectdivisi").html('<option value="">Pilih Divisi</option>');
-    var nmitra = $('#selectmitra').val();
-    $('#table').DataTable().column(2).search(nmitra).draw();
-    id =  $('#selectmitra').val();
-    var html = "";
-    $.ajax({
-      type: 'get',
-      data: {id:id},
-      url: baseUrl + '/pekerja-di-mitra/getdivisi',
-      dataType: 'json',
-      success : function(result){
-        // console.log(result);
-        for (var i = 0; i < result.length; i++) {
-          html += '<option value="'+result[i].md_id+'">'+result[i].md_name+'</option>';
-        }
-        $("#selectdivisi").append(html);
-        $("#cari").attr('mitra',id);
-      }
-    });
-}
-
-function filterColumndivisi(){
-  var id = $('#selectdivisi').val();
-  $("#cari").attr('divisi',id);
-}
-
-function cari(){
-  waitingDialog.show();
   $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
   var html = "";
-  var mitra = $('#selectmitra').val();
-  var divisi = $('#selectdivisi').val();
   var nokes = '';
   var noket = '';
   var r_no = '';
+  var nota = $('input[name=nota]').val();
   var clskes = '';
   var clsket = '';
   var clsr = '';
   $.ajax({
     type: 'get',
-    data: 'mitra='+mitra+"&divisi="+divisi,
-    url: baseUrl + '/manajemen-payroll/payroll/cari',
+    data: {nota:nota},
+    url: baseUrl + '/manajemen-payroll/payroll/editval',
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
@@ -238,12 +184,12 @@ function cari(){
         html += '<tr role="row" class="odd">'+
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
-              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;"></td>'+
-              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;"></td>'+
-              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;"></td>'+
+              '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;" value="'+valbikes+''+kes+'"></td>'+
+              '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;" value="'+valbiket+''+ket+'"></td>'+
+              '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;" value="'+valrbh+''+r+'"></td>'+
               '<td><input type="text" name="dapan[]" class="form-control rp" style="width:100%;"></td>'+
-              '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;"></td>'+
-              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;"></td>'+
+              '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;" value="'+p_value+''+pval+'"></td>'+
+              '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;" value="'+result[i].p_noreff+'"></td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+
               '</tr>';
       }
@@ -267,8 +213,9 @@ function cari(){
         }
         waitingDialog.hide();
     }
-  })
-}
+  });
+});
+
 
   function simpan(){
     var start = $('#start').val();
