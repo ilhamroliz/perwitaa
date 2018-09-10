@@ -930,6 +930,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-payroll/payroll/editval', 'penggajianController@editval');
     Route::get('manajemen-payroll/payroll/printbank', 'penggajianController@printbank');
     Route::get('manajemen-payroll/payroll/printpekerja', 'penggajianController@printpekerja');
+    Route::get('manajemen-payroll/payroll/simpanedit', 'penggajianController@simpanedit');
+    Route::get('manajemen-payroll/payroll/prosesedit', 'penggajianController@prosesedit');
 
     //Approval PHK
     Route::get('approvalpegawaiphk', 'approvalpegawaiphkController@index');

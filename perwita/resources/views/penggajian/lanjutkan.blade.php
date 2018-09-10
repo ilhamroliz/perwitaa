@@ -227,11 +227,12 @@ $(document).ready(function(){
   function simpan(){
     var start = $('#start').val();
     var end = $('#end').val();
+    var nota = $('input[name=nota]').val();
     waitingDialog.show();
     $.ajax({
       type: 'get',
-      data: $('#data').serialize()+'&start='+start+'&end='+end,
-      url: baseUrl + '/manajemen-payroll/payroll/simpan',
+      data: $('#data').serialize()+'&start='+start+'&end='+end+'&nota='+nota,
+      url: baseUrl + '/manajemen-payroll/payroll/simpanedit',
       dataType: 'json',
       success : function(result){
         waitingDialog.hide();
@@ -279,11 +280,12 @@ $(document).ready(function(){
   function proses(){
     var start = $('#start').val();
     var end = $('#end').val();
+    var nota = $('input[name=nota]').val();
     waitingDialog.show();
     $.ajax({
       type: 'get',
-      data: $('#data').serialize()+'&start='+start+'&end='+end,
-      url: baseUrl + '/manajemen-payroll/payroll/proses',
+      data: $('#data').serialize()+'&start='+start+'&end='+end+'&nota='+nota,
+      url: baseUrl + '/manajemen-payroll/payroll/prosesedit',
       dataType: 'json',
       success : function(result){
         waitingDialog.hide();
