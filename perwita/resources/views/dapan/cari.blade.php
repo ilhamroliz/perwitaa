@@ -35,7 +35,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Cari BPJS Ketenagakerjaan</h2>
+        <h2>Cari Dapan</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -44,15 +44,15 @@
                 Ansuransi
             </li>
             <li class="active">
-                <strong>Cari BPJS Ketenagakerjaan</strong>
+                <strong>Cari Dapan</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Cari BPJS Ketenagakerjaan</h5>
-      <a href="{{url('/manajemen-bpjs/ansuransi/ketenagakerjaan')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+        <h5>Cari Dapan</h5>
+      <a href="{{url('/manajemen-bpjs/ansuransi/dapan/rbh')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -65,7 +65,7 @@
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
                         <thead>
                             <tr>
-                              <th>No. BPJS Ketenagakerjaan</th>
+                              <th>No. Dapan</th>
                               <th>Nama Tenaga Kerja</th>
                               <th>Fasilitas Kesehatan</th>
                               <th>Kelas</th>
@@ -100,29 +100,29 @@ $(document).ready(function(){
   $('#showdata').html('');
   $.ajax({
     type: 'get',
-    url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/data',
+    url: baseUrl + '/manajemen-bpjs/ansuransi/dapan/data',
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
-        if (result[i].b_status == 'Y') {
+        if (result[i].d_status == 'Y') {
           var status = '<center><span class="badge badge-primary">Aktif</span></center>';
         } else {
           var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
         }
 
         html += '<tr>'+
-                '<td>'+result[i].b_no+'</td>'+
+                '<td>'+result[i].d_no+'</td>'+
                 '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].b_faskes+'</td>'+
-                '<td>'+result[i].b_kelas+'</td>'+
+                '<td>'+result[i].d_faskes+'</td>'+
+                '<td>'+result[i].d_kelas+'</td>'+
                 '<td>'+result[i].m_name+'</td>'+
                 '<td>'+result[i].md_name+'</td>'+
-                '<td>'+result[i].b_date+'</td>'+
+                '<td>'+result[i].d_date+'</td>'+
                 '<td>'+status+'</td>'+
                 '<td>'+
                 '<div class="text-center">'+
-                  '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].d_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].d_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                 '</div>'+
                 '</tr>';
       }
@@ -148,42 +148,42 @@ $(document).ready(function(){
 
 });
 
-function loaddata(){
-  var html = '';
-  $('#showdata').html('');
-  $.ajax({
-    type: 'get',
-    url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/data',
-    dataType: 'json',
-    success : function(result){
-      for (var i = 0; i < result.length; i++) {
-        if (result[i].b_status == 'Y') {
-          var status = '<center><span class="badge badge-primary">Aktif</span></center>';
-        } else {
-          var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
+  function loaddata(){
+    var html = '';
+    $('#showdata').html('');
+    $.ajax({
+      type: 'get',
+      url: baseUrl + '/manajemen-bpjs/ansuransi/dapan/data',
+      dataType: 'json',
+      success : function(result){
+        for (var i = 0; i < result.length; i++) {
+          if (result[i].d_status == 'Y') {
+            var status = '<center><span class="badge badge-primary">Aktif</span></center>';
+          } else {
+            var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
+          }
+
+          html += '<tr>'+
+                  '<td>'+result[i].d_no+'</td>'+
+                  '<td>'+result[i].p_name+'</td>'+
+                  '<td>'+result[i].d_faskes+'</td>'+
+                  '<td>'+result[i].d_kelas+'</td>'+
+                  '<td>'+result[i].m_name+'</td>'+
+                  '<td>'+result[i].md_name+'</td>'+
+                  '<td>'+result[i].d_date+'</td>'+
+                  '<td>'+status+'</td>'+
+                  '<td>'+
+                  '<div class="text-center">'+
+                    '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].d_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].d_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '</div>'+
+                  '</tr>';
         }
 
-        html += '<tr>'+
-                '<td>'+result[i].b_no+'</td>'+
-                '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].b_faskes+'</td>'+
-                '<td>'+result[i].b_kelas+'</td>'+
-                '<td>'+result[i].m_name+'</td>'+
-                '<td>'+result[i].md_name+'</td>'+
-                '<td>'+result[i].b_date+'</td>'+
-                '<td>'+status+'</td>'+
-                '<td>'+
-                '<div class="text-center">'+
-                  '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
-                '</div>'+
-                '</tr>';
+      $('#showdata').html(html);
       }
-
-    $('#showdata').html(html);
+    });
   }
-});
-}
 
   function getdata(id){
     waitingDialog.show();
@@ -192,32 +192,32 @@ function loaddata(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/getdata',
+      url: baseUrl + '/manajemen-bpjs/ansuransi/dapan/getdata',
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
           html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
         } else {
           for (var i = 0; i < result.length; i++) {
-            if (result[i].b_status == 'Y') {
+            if (result[i].d_status == 'Y') {
               var status = '<center><span class="badge badge-primary">Aktif</span></center>';
             } else {
               var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
             }
 
             html += '<tr>'+
-                    '<td>'+result[i].b_no+'</td>'+
+                    '<td>'+result[i].d_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].b_faskes+'</td>'+
-                    '<td>'+result[i].b_kelas+'</td>'+
+                    '<td>'+result[i].d_faskes+'</td>'+
+                    '<td>'+result[i].d_kelas+'</td>'+
                     '<td>'+result[i].m_name+'</td>'+
                     '<td>'+result[i].md_name+'</td>'+
-                    '<td>'+result[i].b_date+'</td>'+
+                    '<td>'+result[i].d_date+'</td>'+
                     '<td>'+status+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                      '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].d_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].d_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                     '</div>'+
                     '</tr>';
           }
@@ -234,7 +234,7 @@ function loaddata(){
   function hapus(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data BPJS Ketenagakerjaan?",
+        text: "Apakah anda yakin ingin menghapus data Dapan?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -246,7 +246,7 @@ function loaddata(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/hapus',
+            url: baseUrl + '/manajemen-bpjs/ansuransi/dapan/hapus',
             type: 'get',
             timeout: 10000,
             success: function(response){
@@ -297,7 +297,7 @@ function loaddata(){
   function nonaktif(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin non aktifkan data BPJS Ketenagakerjaan?",
+        text: "Apakah anda yakin ingin non aktifkan data Dapan?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -309,7 +309,7 @@ function loaddata(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/nonaktif',
+            url: baseUrl + '/manajemen-bpjs/ansuransi/dapan/nonaktif',
             type: 'get',
             timeout: 10000,
             success: function(response){

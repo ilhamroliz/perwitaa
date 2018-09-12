@@ -972,4 +972,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-bpjs/ansuransi/rbh/getdata', 'rbhController@getdata');
     Route::get('manajemen-bpjs/ansuransi/rbh/hapus', 'rbhController@hapus');
     Route::get('manajemen-bpjs/ansuransi/rbh/nonaktif', 'rbhController@nonaktif');
+
+    //Dapan
+    Route::get('manajemen-bpjs/ansuransi/dapan', 'dapanController@index');
+    Route::get('manajemen-bpjs/ansuransi/dapan/getfaskes', 'dapanController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/dapan/simpan/{id}', 'dapanController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/dapan/simpan/{id}', 'dapanController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/dapan/cari', 'dapanController@cari');
+    Route::get('manajemen-bpjs/ansuransi/dapan/data', 'dapanController@data');
+    Route::get('manajemen-bpjs/ansuransi/dapan/getdata', 'dapanController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/dapan/hapus', 'dapanController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/dapan/nonaktif', 'dapanController@nonaktif');
 });
