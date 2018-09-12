@@ -173,9 +173,11 @@ function cari(){
   var nokes = '';
   var noket = '';
   var r_no = '';
+  var d_no = '';
   var clskes = '';
   var clsket = '';
   var clsr = '';
+  var clsd = '';
   $.ajax({
     type: 'get',
     data: 'mitra='+mitra+"&divisi="+divisi,
@@ -217,6 +219,19 @@ function cari(){
           } else {
             r_no = '';
             clsr = 'rp';
+          }
+        }
+
+        if (result[i].d_no == "-") {
+           d_no = 'readonly';
+           clsd = '';
+        } else {
+          if (result[i].statusd == 'N') {
+            d_no = 'readonly';
+            clsd = '';
+          } else {
+            d_no = '';
+            clsd = 'rp';
           }
         }
 
@@ -266,7 +281,7 @@ function cari(){
               '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;"></td>'+
               '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;"></td>'+
               '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;"></td>'+
-              '<td><input type="text" name="dapan[]" class="form-control rp" style="width:100%;"></td>'+
+              '<td><input type="text" name="dapan[]" '+d_no+' class="form-control '+clsd+'" style="width:100%;"></td>'+
               '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;"></td>'+
               '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;"></td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+

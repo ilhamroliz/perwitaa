@@ -51,6 +51,10 @@ class penggajianController extends Controller
               $z->on('r_pekerja', '=', 'p_id')
                 ->where('r_status', '=', 'Y');
             })
+            ->leftJoin('d_dapan', function($z){
+              $z->on('d_pekerja', '=', 'p_id')
+                ->where('d_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -58,7 +62,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_isapproved', 'Y')
             ->get();
@@ -77,6 +81,10 @@ class penggajianController extends Controller
               $z->on('r_pekerja', '=', 'p_id')
                 ->where('r_status', '=', 'Y');
             })
+            ->leftJoin('d_dapan', function($z){
+              $z->on('d_pekerja', '=', 'p_id')
+                ->where('d_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -84,7 +92,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_isapproved', 'Y')
@@ -105,6 +113,10 @@ class penggajianController extends Controller
               $z->on('r_pekerja', '=', 'p_id')
                 ->where('r_status', '=', 'Y');
             })
+            ->leftJoin('d_dapan', function($z){
+              $z->on('d_pekerja', '=', 'p_id')
+                ->where('d_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -112,7 +124,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(d_status, '-') as statusd"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
@@ -328,7 +340,7 @@ class penggajianController extends Controller
         }
 
         for ($z=0; $z < count($request->p_id); $z++) {
-          if ($request->bpjsket[$z] != "") {
+          if ($request->rbh[$z] != "") {
             // $check1 = DB::table('d_rbh')
             //               ->where('r_pekerja', $request->p_id[$z])
             //               ->select('r_no')
@@ -374,6 +386,58 @@ class penggajianController extends Controller
                     'ri_status' => 'N',
                     'ri_mem' => Session::get('mem'),
                     'ri_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+            // }
+          }
+        }
+
+        for ($x=0; $x < count($request->p_id); $x++) {
+          if ($request->dapan[$x] != "") {
+            // $check1 = DB::table('d_rbh')
+            //               ->where('r_pekerja', $request->p_id[$z])
+            //               ->select('r_no')
+            //               ->get();
+            //
+            // $check2 = DB::table('d_rbh_iuran')
+            //             ->where('ri_no_rbh', $norbh[0]->r_no)
+            //             ->get();
+            // if (!empty($check2)) {
+            //   $tmp = str_replace('.', '', $request->rbh[$z]);
+            //   $rbh = str_replace('Rp ', '', $tmp);
+            //
+            //   DB::table('d_rbh_iuran')
+            //     ->where('ri_no_rbh', $norbh[0]->r_no)
+            //     ->update([
+            //       'ri_value' => $rbh,
+            //       'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+            //       'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+            //       'ri_status' => 'N',
+            //       'ri_mem' => Session::get('mem')
+            //     ]);
+            // } else {
+              $nodapan = DB::table('d_dapan')
+                            ->where('d_pekerja', $request->p_id[$x])
+                            ->select('d_no')
+                            ->get();
+
+              $detailid = DB::table('d_dapan_iuran')
+                          ->where('di_no_dapan', $nodapan[0]->d_no)
+                          ->max('di_detailid');
+
+              $tmp = str_replace('.', '', $request->dapan[$x]);
+              $dapan = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_dapan_iuran')
+                  ->insert([
+                    'di_no_dapan' => $nodapan[0]->d_no,
+                    'di_detailid' => $detailid + 1,
+                    'di_no_pay' => $finalkode,
+                    'di_value' => $dapan,
+                    'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'di_status' => 'N',
+                    'di_mem' => Session::get('mem'),
+                    'di_insert' => Carbon::now('Asia/Jakarta')
                   ]);
             // }
           }
@@ -586,7 +650,7 @@ class penggajianController extends Controller
         }
 
         for ($z=0; $z < count($request->p_id); $z++) {
-          if ($request->bpjsket[$z] != "") {
+          if ($request->rbh[$z] != "") {
             // $check1 = DB::table('d_rbh')
             //               ->where('r_pekerja', $request->p_id[$z])
             //               ->select('r_no')
@@ -637,6 +701,58 @@ class penggajianController extends Controller
           }
         }
 
+        for ($x=0; $x < count($request->p_id); $x++) {
+          if ($request->dapan[$x] != "") {
+            // $check1 = DB::table('d_rbh')
+            //               ->where('r_pekerja', $request->p_id[$z])
+            //               ->select('r_no')
+            //               ->get();
+            //
+            // $check2 = DB::table('d_rbh_iuran')
+            //             ->where('ri_no_rbh', $norbh[0]->r_no)
+            //             ->get();
+            // if (!empty($check2)) {
+            //   $tmp = str_replace('.', '', $request->rbh[$z]);
+            //   $rbh = str_replace('Rp ', '', $tmp);
+            //
+            //   DB::table('d_rbh_iuran')
+            //     ->where('ri_no_rbh', $norbh[0]->r_no)
+            //     ->update([
+            //       'ri_value' => $rbh,
+            //       'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+            //       'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+            //       'ri_status' => 'N',
+            //       'ri_mem' => Session::get('mem')
+            //     ]);
+            // } else {
+              $nodapan = DB::table('d_dapan')
+                            ->where('d_pekerja', $request->p_id[$x])
+                            ->select('d_no')
+                            ->get();
+
+              $detailid = DB::table('d_dapan_iuran')
+                          ->where('di_no_dapan', $nodapan[0]->d_no)
+                          ->max('di_detailid');
+
+              $tmp = str_replace('.', '', $request->dapan[$x]);
+              $dapan = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_dapan_iuran')
+                  ->insert([
+                    'di_no_dapan' => $nodapan[0]->d_no,
+                    'di_detailid' => $detailid + 1,
+                    'di_no_pay' => $finalkode,
+                    'di_value' => $dapan,
+                    'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                    'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                    'di_status' => 'Y',
+                    'di_mem' => Session::get('mem'),
+                    'di_insert' => Carbon::now('Asia/Jakarta')
+                  ]);
+            // }
+          }
+        }
+
 
         DB::commit();
         return response()->json([
@@ -677,6 +793,10 @@ class penggajianController extends Controller
 
         DB::table('d_rbh_iuran')
           ->where('ri_no_pay', $request->nota)
+          ->delete();
+
+        DB::table('d_dapan_iuran')
+          ->where('di_no_pay', $request->nota)
           ->delete();
 
         DB::commit();
@@ -721,6 +841,10 @@ class penggajianController extends Controller
                 $z->on('r_pekerja', '=', 'pd_pekerja')
                   ->where('r_status', '=', 'Y');
               })
+              ->leftJoin('d_dapan', function($z){
+                $z->on('d_pekerja', '=', 'pd_pekerja')
+                  ->where('d_status', '=', 'Y');
+              })
               ->leftJoin('d_bpjskes_iuran',  function($e){
                 $e->on('d_bpjskes_iuran.bi_no_bpjs', '=', 'd_bpjs_kesehatan.b_no')
                   ->on('d_bpjskes_iuran.bi_no_pay', '=', 'p_no');
@@ -733,8 +857,12 @@ class penggajianController extends Controller
                 $e->on('d_rbh_iuran.ri_no_rbh', '=', 'd_rbh.r_no')
                   ->on('d_rbh_iuran.ri_no_pay', '=', 'p_no');
               })
+              ->leftJoin('d_dapan_iuran', function($e){
+                $e->on('d_dapan_iuran.di_no_dapan', '=', 'd_dapan.d_no')
+                  ->on('d_dapan_iuran.di_no_pay', '=', 'p_no');
+              })
               ->select(
-                'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(d_rbh_iuran.ri_value, '') as ri_value"), DB::raw("COALESCE(d_bpjskes_iuran.bi_value, '') as bikes_value"), DB::raw("COALESCE(d_bpjsket_iuran.bi_value, '') as biket_value"), DB::raw("COALESCE(pd_value, '') as p_value"), DB::raw("COALESCE(pd_reff, '') as p_noreff"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+                'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(d_status, '') as d_status"), DB::raw("COALESCE(d_no, '') as d_no"), DB::raw("COALESCE(di_value, '') as di_value"), DB::raw("COALESCE(d_rbh_iuran.ri_value, '') as ri_value"), DB::raw("COALESCE(d_bpjskes_iuran.bi_value, '') as bikes_value"), DB::raw("COALESCE(d_bpjsket_iuran.bi_value, '') as biket_value"), DB::raw("COALESCE(pd_value, '') as p_value"), DB::raw("COALESCE(pd_reff, '') as p_noreff"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
               )
               ->where('p_no', $request->nota)
               ->where('mp_isapproved', 'Y')
@@ -816,6 +944,10 @@ class penggajianController extends Controller
 
         DB::table('d_rbh_iuran')
           ->where('ri_no_pay', $request->nota)
+          ->delete();
+
+        DB::table('d_dapan_iuran')
+          ->where('di_no_pay', $request->nota)
           ->delete();
 
           DB::table('d_payroll')
@@ -978,8 +1110,8 @@ class penggajianController extends Controller
             }
           }
 
-          for ($z=0; $z < count($request->p_id); $z++) {
-            if ($request->bpjsket[$z] != "") {
+          for ($x=0; $x < count($request->p_id); $x++) {
+            if ($request->dapan[$x] != "") {
               // $check1 = DB::table('d_rbh')
               //               ->where('r_pekerja', $request->p_id[$z])
               //               ->select('r_no')
@@ -1002,29 +1134,29 @@ class penggajianController extends Controller
               //       'ri_mem' => Session::get('mem')
               //     ]);
               // } else {
-                $norbh = DB::table('d_rbh')
-                              ->where('r_pekerja', $request->p_id[$z])
-                              ->select('r_no')
+                $nodapan = DB::table('d_dapan')
+                              ->where('d_pekerja', $request->p_id[$x])
+                              ->select('d_no')
                               ->get();
 
-                $detailid = DB::table('d_rbh_iuran')
-                            ->where('ri_no_rbh', $norbh[0]->r_no)
-                            ->max('ri_detailid');
+                $detailid = DB::table('d_dapan_iuran')
+                            ->where('di_no_dapan', $nodapan[0]->d_no)
+                            ->max('di_detailid');
 
-                $tmp = str_replace('.', '', $request->rbh[$z]);
-                $rbh = str_replace('Rp ', '', $tmp);
+                $tmp = str_replace('.', '', $request->dapan[$x]);
+                $dapan = str_replace('Rp ', '', $tmp);
 
-                DB::table('d_rbh_iuran')
+                DB::table('d_dapan_iuran')
                     ->insert([
-                      'ri_no_rbh' => $norbh[0]->b_no,
-                      'ri_detailid' => $detailid + 1,
-                      'ri_no_pay' => $request->nota,
-                      'ri_value' => $rbh,
-                      'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-                      'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-                      'ri_status' => 'N',
-                      'ri_mem' => Session::get('mem'),
-                      'ri_insert' => Carbon::now('Asia/Jakarta')
+                      'di_no_dapan' => $nodapan[0]->d_no,
+                      'di_detailid' => $detailid + 1,
+                      'di_no_pay' => $request->nota,
+                      'di_value' => $dapan,
+                      'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                      'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                      'di_status' => 'N',
+                      'di_mem' => Session::get('mem'),
+                      'di_insert' => Carbon::now('Asia/Jakarta')
                     ]);
               // }
             }
@@ -1278,6 +1410,58 @@ class penggajianController extends Controller
                       'ri_status' => 'Y',
                       'ri_mem' => Session::get('mem'),
                       'ri_insert' => Carbon::now('Asia/Jakarta')
+                    ]);
+              // }
+            }
+          }
+
+          for ($x=0; $x < count($request->p_id); $x++) {
+            if ($request->dapan[$x] != "") {
+              // $check1 = DB::table('d_rbh')
+              //               ->where('r_pekerja', $request->p_id[$z])
+              //               ->select('r_no')
+              //               ->get();
+              //
+              // $check2 = DB::table('d_rbh_iuran')
+              //             ->where('ri_no_rbh', $norbh[0]->r_no)
+              //             ->get();
+              // if (!empty($check2)) {
+              //   $tmp = str_replace('.', '', $request->rbh[$z]);
+              //   $rbh = str_replace('Rp ', '', $tmp);
+              //
+              //   DB::table('d_rbh_iuran')
+              //     ->where('ri_no_rbh', $norbh[0]->r_no)
+              //     ->update([
+              //       'ri_value' => $rbh,
+              //       'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+              //       'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+              //       'ri_status' => 'N',
+              //       'ri_mem' => Session::get('mem')
+              //     ]);
+              // } else {
+                $nodapan = DB::table('d_dapan')
+                              ->where('d_pekerja', $request->p_id[$x])
+                              ->select('d_no')
+                              ->get();
+
+                $detailid = DB::table('d_dapan_iuran')
+                            ->where('di_no_dapan', $nodapan[0]->d_no)
+                            ->max('di_detailid');
+
+                $tmp = str_replace('.', '', $request->dapan[$x]);
+                $dapan = str_replace('Rp ', '', $tmp);
+
+                DB::table('d_dapan_iuran')
+                    ->insert([
+                      'di_no_dapan' => $nodapan[0]->d_no,
+                      'di_detailid' => $detailid + 1,
+                      'di_no_pay' => $request->nota,
+                      'di_value' => $dapan,
+                      'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                      'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                      'di_status' => 'Y',
+                      'di_mem' => Session::get('mem'),
+                      'di_insert' => Carbon::now('Asia/Jakarta')
                     ]);
               // }
             }

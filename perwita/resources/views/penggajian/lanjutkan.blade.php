@@ -118,10 +118,12 @@ $(document).ready(function(){
   var nokes = '';
   var noket = '';
   var r_no = '';
+  var d_no = '';
   var nota = $('input[name=nota]').val();
   var clskes = '';
   var clsket = '';
   var clsr = '';
+  var clsd = '';
   $.ajax({
     type: 'get',
     data: {nota:nota},
@@ -146,6 +148,18 @@ $(document).ready(function(){
            clsr = '';
         } else {
           clsr = 'rp';
+        }
+        if (result[i].d_no == "-") {
+           d_no = 'readonly';
+           clsd = '';
+        } else {
+          if (result[i].d_status == 'N') {
+            d_no = 'readonly';
+            clsd = '';
+          } else {
+            d_no = '';
+            clsd = 'rp';
+          }
         }
 
         var valbikes = '';
@@ -178,6 +192,16 @@ $(document).ready(function(){
           r = accounting.formatMoney(result[i].ri_value, "", 0, ".", ",");
         }
 
+        var vald = '';
+        var d = '';
+        if (result[i].di_value == '') {
+          vald = '';
+          d = '';
+        } else {
+          vald = 'Rp. ';
+          d = accounting.formatMoney(result[i].di_value, "", 0, ".", ",");
+        }
+
         var p_value = '';
         var pval = '';
         if (result[i].p_value == '') {
@@ -194,7 +218,7 @@ $(document).ready(function(){
               '<td><input type="text" name="bpjskes[]" '+nokes+' class="form-control '+clskes+'" style="width:100%;" value="'+valbikes+''+kes+'"></td>'+
               '<td><input type="text" name="bpjsket[]" '+noket+' class="form-control '+clsket+'" style="width:100%;" value="'+valbiket+''+ket+'"></td>'+
               '<td><input type="text" name="rbh[]" '+r_no+' class="form-control '+clsr+'" style="width:100%;" value="'+valrbh+''+r+'"></td>'+
-              '<td><input type="text" name="dapan[]" class="form-control rp" style="width:100%;"></td>'+
+              '<td><input type="text" name="dapan[]" '+d_no+' class="form-control '+clsd+'" style="width:100%;" value="'+vald+''+d+'"></td>'+
               '<td><input type="text" name="totalgaji[]" class="form-control rp" style="width:100%;" value="'+p_value+''+pval+'"></td>'+
               '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;" value="'+result[i].p_noreff+'"></td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+
