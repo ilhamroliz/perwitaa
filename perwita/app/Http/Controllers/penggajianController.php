@@ -39,9 +39,18 @@ class penggajianController extends Controller
       if ($mitra == 'all') {
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_rbh', 'r_pekerja', '=', 'p_id')
+            ->leftJoin('d_bpjs_kesehatan', function($q){
+              $q->on('d_bpjs_kesehatan.b_pekerja', '=', 'p_id');
+              $q->where('d_bpjs_kesehatan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_bpjs_ketenagakerjaan', function($e){
+              $e->on('d_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
+                ->where('d_bpjs_ketenagakerjaan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_rbh', function($z){
+              $z->on('r_pekerja', '=', 'p_id')
+                ->where('r_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -49,17 +58,25 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_isapproved', 'Y')
             ->get();
       } elseif (!empty($mitra) && $divisi == "all") {
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_rbh', 'r_pekerja', '=', 'p_id')
-            ->leftJoin('d_rbh_iuran', 'd_rbh_iuran.ri_no_rbh', '=', 'd_rbh.r_no')
+            ->leftJoin('d_bpjs_kesehatan', function($q){
+              $q->on('d_bpjs_kesehatan.b_pekerja', '=', 'p_id');
+              $q->where('d_bpjs_kesehatan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_bpjs_ketenagakerjaan', function($e){
+              $e->on('d_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
+                ->where('d_bpjs_ketenagakerjaan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_rbh', function($z){
+              $z->on('r_pekerja', '=', 'p_id')
+                ->where('r_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -67,7 +84,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_isapproved', 'Y')
@@ -76,9 +93,18 @@ class penggajianController extends Controller
       else {
         $pekerja = DB::table('d_mitra_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
-            ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
-            ->leftJoin('d_rbh', 'r_pekerja', '=', 'p_id')
+            ->leftJoin('d_bpjs_kesehatan', function($q){
+              $q->on('d_bpjs_kesehatan.b_pekerja', '=', 'p_id');
+              $q->where('d_bpjs_kesehatan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_bpjs_ketenagakerjaan', function($e){
+              $e->on('d_bpjs_ketenagakerjaan.b_pekerja', '=', 'p_id')
+                ->where('d_bpjs_ketenagakerjaan.b_status', '=', 'Y');
+            })
+            ->leftJoin('d_rbh', function($z){
+              $z->on('r_pekerja', '=', 'p_id')
+                ->where('r_status', '=', 'Y');
+            })
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -86,12 +112,22 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
             ->where('mp_isapproved', 'Y')
             ->get();
+
+       // $p_id = [];
+       //
+       // for ($i=0; $i < count($pekerja); $i++) {
+       //   $p_id[$i] = $pekerja[$i]->p_id;
+       // }
+       //
+       //  $bpjskes = DB::table('d_bpjs_kesehatan')
+       //              ->whereIn('b_pekerja', $p_id)
+       //              ->get();
       }
 
 
@@ -673,9 +709,18 @@ class penggajianController extends Controller
                   $q->on('md_mitra', '=', 'mp_mitra')
                       ->on('md_id', '=', 'mp_divisi');
               })
-              ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'pd_pekerja')
-              ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'pd_pekerja')
-              ->leftJoin('d_rbh', 'r_pekerja', '=', 'pd_pekerja')
+              ->leftJoin('d_bpjs_kesehatan', function($q){
+                $q->on('d_bpjs_kesehatan.b_pekerja', '=', 'pd_pekerja');
+                $q->where('d_bpjs_kesehatan.b_status', '=', 'Y');
+              })
+              ->leftJoin('d_bpjs_ketenagakerjaan', function($e){
+                $e->on('d_bpjs_ketenagakerjaan.b_pekerja', '=', 'pd_pekerja')
+                  ->where('d_bpjs_ketenagakerjaan.b_status', '=', 'Y');
+              })
+              ->leftJoin('d_rbh', function($z){
+                $z->on('r_pekerja', '=', 'pd_pekerja')
+                  ->where('r_status', '=', 'Y');
+              })
               ->leftJoin('d_bpjskes_iuran',  function($e){
                 $e->on('d_bpjskes_iuran.bi_no_bpjs', '=', 'd_bpjs_kesehatan.b_no')
                   ->on('d_bpjskes_iuran.bi_no_pay', '=', 'p_no');

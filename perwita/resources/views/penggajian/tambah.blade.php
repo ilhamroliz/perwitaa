@@ -187,19 +187,37 @@ function cari(){
            nokes = 'readonly';
            clskes = '';
         } else {
-          clskes = 'rp';
+          if (result[i].statuskes == 'N') {
+            nokes = 'readonly';
+            clskes = '';
+          } else {
+            nokes = '';
+            clskes = 'rp';
+          }
         }
         if (result[i].b_noket == "-") {
            noket = 'readonly';
            clsket = '';
         } else {
-          clsket = 'rp';
+          if (result[i].statusket == 'N') {
+            noket = 'readonly';
+            clsket = '';
+          } else {
+            noket = '';
+            clsket = 'rp';
+          }
         }
         if (result[i].r_no == "-") {
            r_no = 'readonly';
            clsr = '';
         } else {
-          clsr = 'rp';
+          if (result[i].statusr == 'N') {
+            r_no = 'readonly';
+            clsr = '';
+          } else {
+            r_no = '';
+            clsr = 'rp';
+          }
         }
 
         var valbikes = '';

@@ -26,6 +26,18 @@ class bpjsketenagakerjaanController extends Controller
 
     public function simpan(Request $request, $id){
 
+      $check = DB::table('d_bpjs_ketenagakerjaan')
+              ->where('b_pekerja', $id)
+              ->get();
+
+      for ($i=0; $i < count($check); $i++) {
+        if (!empty($check)) {
+          if ($check[$i]->b_status == 'Y') {
+            return response()->json([
+              'status' => 'ada'
+            ]);
+          } else {
+
         $pekerja = DB::table('d_mitra_pekerja')
                   ->where('mp_pekerja', $id)
                   ->get();
@@ -43,11 +55,14 @@ class bpjsketenagakerjaanController extends Controller
               'b_insert' => Carbon::now('Asia/Jakarta')
             ]);
 
+          }
+
         return response()->json([
           'status' => 'berhasil'
         ]);
-
+      }
     }
+  }
 
     public function cari(){
       return view('bpjsketenagakerjaan.cari');

@@ -142,7 +142,7 @@ var table;
         }
       });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/'+id,
         dataType: 'json',
@@ -155,6 +155,13 @@ var table;
                 type: "success",
                 showConfirmButton: false,
                 timer: 900
+            });
+          } else if (result.status == 'ada') {
+            swal({
+                title: "Gagal",
+                text: "Data BPJS kesehatan dengan pekerja yang sama sudah ada, jika ingin menginput data dengan pekerja ini, anda harus menonaktifkan data sebelumnya!",
+                type: "warning",
+                showConfirmButton: true,
             });
           }
           $('input[type=text]').val('');
