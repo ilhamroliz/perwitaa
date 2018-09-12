@@ -35,7 +35,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Cari BPJS Kesehatan</h2>
+        <h2>Cari RBH</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -44,15 +44,15 @@
                 Ansuransi
             </li>
             <li class="active">
-                <strong>Cari BPJS Kesehatan</strong>
+                <strong>Cari RBH</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Cari BPJS Kesehatan</h5>
-      <a href="{{url('/manajemen-bpjs/ansuransi/kesehatan')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+        <h5>Cari RBH</h5>
+      <a href="{{url('/manajemen-bpjs/ansuransi/rbh')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -100,29 +100,29 @@ $(document).ready(function(){
   $('#showdata').html('');
   $.ajax({
     type: 'get',
-    url: baseUrl + '/manajemen-bpjs/ansuransi/data',
+    url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/data',
     dataType: 'json',
     success : function(result){
       for (var i = 0; i < result.length; i++) {
-        if (result[i].b_status == 'Y') {
+        if (result[i].r_status == 'Y') {
           var status = '<center><span class="badge badge-primary">Aktif</span></center>';
         } else {
           var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
         }
 
         html += '<tr>'+
-                '<td>'+result[i].b_no+'</td>'+
+                '<td>'+result[i].r_no+'</td>'+
                 '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].b_faskes+'</td>'+
-                '<td>'+result[i].b_kelas+'</td>'+
+                '<td>'+result[i].r_faskes+'</td>'+
+                '<td>'+result[i].r_kelas+'</td>'+
                 '<td>'+result[i].m_name+'</td>'+
                 '<td>'+result[i].md_name+'</td>'+
-                '<td>'+result[i].b_date+'</td>'+
+                '<td>'+result[i].r_date+'</td>'+
                 '<td>'+status+'</td>'+
                 '<td>'+
                 '<div class="text-center">'+
-                  '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].r_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                  '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                 '</div>'+
                 '</tr>';
       }
@@ -153,29 +153,29 @@ $(document).ready(function(){
     $('#showdata').html('');
     $.ajax({
       type: 'get',
-      url: baseUrl + '/manajemen-bpjs/ansuransi/data',
+      url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/data',
       dataType: 'json',
       success : function(result){
         for (var i = 0; i < result.length; i++) {
-          if (result[i].b_status == 'Y') {
+          if (result[i].r_status == 'Y') {
             var status = '<center><span class="badge badge-primary">Aktif</span></center>';
           } else {
             var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
           }
 
           html += '<tr>'+
-                  '<td>'+result[i].b_no+'</td>'+
+                  '<td>'+result[i].r_no+'</td>'+
                   '<td>'+result[i].p_name+'</td>'+
-                  '<td>'+result[i].b_faskes+'</td>'+
-                  '<td>'+result[i].b_kelas+'</td>'+
+                  '<td>'+result[i].r_faskes+'</td>'+
+                  '<td>'+result[i].r_kelas+'</td>'+
                   '<td>'+result[i].m_name+'</td>'+
                   '<td>'+result[i].md_name+'</td>'+
-                  '<td>'+result[i].b_date+'</td>'+
+                  '<td>'+result[i].r_date+'</td>'+
                   '<td>'+status+'</td>'+
                   '<td>'+
                   '<div class="text-center">'+
-                    '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                    '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].r_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                   '</div>'+
                   '</tr>';
         }
@@ -192,32 +192,32 @@ $(document).ready(function(){
     $.ajax({
       type: 'get',
       data: {id:id},
-      url: baseUrl + '/manajemen-bpjs/ansuransi/getdata',
+      url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/getdata',
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
           html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
         } else {
           for (var i = 0; i < result.length; i++) {
-            if (result[i].b_status == 'Y') {
+            if (result[i].r_status == 'Y') {
               var status = '<center><span class="badge badge-primary">Aktif</span></center>';
             } else {
               var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
             }
 
             html += '<tr>'+
-                    '<td>'+result[i].b_no+'</td>'+
+                    '<td>'+result[i].r_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].b_faskes+'</td>'+
-                    '<td>'+result[i].b_kelas+'</td>'+
+                    '<td>'+result[i].r_faskes+'</td>'+
+                    '<td>'+result[i].r_kelas+'</td>'+
                     '<td>'+result[i].m_name+'</td>'+
                     '<td>'+result[i].md_name+'</td>'+
-                    '<td>'+result[i].b_date+'</td>'+
+                    '<td>'+result[i].r_date+'</td>'+
                     '<td>'+status+'</td>'+
                     '<td>'+
                     '<div class="text-center">'+
-                      '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
-                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                      '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].r_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                      '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].r_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
                     '</div>'+
                     '</tr>';
           }
@@ -234,7 +234,7 @@ $(document).ready(function(){
   function hapus(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data BPJS Kesehatan?",
+        text: "Apakah anda yakin ingin menghapus data RBH?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -246,7 +246,7 @@ $(document).ready(function(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-bpjs/ansuransi/hapus',
+            url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/hapus',
             type: 'get',
             timeout: 10000,
             success: function(response){
@@ -297,7 +297,7 @@ $(document).ready(function(){
   function nonaktif(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin non aktifkan data BPJS Kesehatan?",
+        text: "Apakah anda yakin ingin non aktifkan data RBH?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -309,7 +309,7 @@ $(document).ready(function(){
         setTimeout(function(){
           $.ajax({
             data: {id:id},
-            url: baseUrl + '/manajemen-bpjs/ansuransi/nonaktif',
+            url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/nonaktif',
             type: 'get',
             timeout: 10000,
             success: function(response){

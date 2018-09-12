@@ -961,4 +961,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/getdata', 'bpjsketenagakerjaanController@getdata');
     Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/hapus', 'bpjsketenagakerjaanController@hapus');
     Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/nonaktif', 'bpjsketenagakerjaanController@nonaktif');
+
+    //RBH
+    Route::get('manajemen-bpjs/ansuransi/rbh', 'rbhController@index');
+    Route::get('manajemen-bpjs/ansuransi/rbh/getfaskes', 'rbhController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/rbh/simpan/{id}', 'rbhController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/rbh/simpan/{id}', 'rbhController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/rbh/cari', 'rbhController@cari');
+    Route::get('manajemen-bpjs/ansuransi/rbh/data', 'rbhController@data');
+    Route::get('manajemen-bpjs/ansuransi/rbh/getdata', 'rbhController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/rbh/hapus', 'rbhController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/rbh/nonaktif', 'rbhController@nonaktif');
 });

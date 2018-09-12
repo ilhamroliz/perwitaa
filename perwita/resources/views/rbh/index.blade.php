@@ -15,7 +15,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>BPJS Ketenagakerjaan</h2>
+        <h2>RBH</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -24,15 +24,15 @@
                 Ansuransi
             </li>
             <li class="active">
-                <strong>BPJS Ketenagakerjaan</strong>
+                <strong>RBH</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>BPJS Ketenagakerjaan</h5>
-        <a href="{{ url('manajemen-bpjs/ansuransi/ketenagakerjaan/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <h5>RBH</h5>
+        <a href="{{ url('manajemen-bpjs/ansuransi/rbh/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -51,9 +51,9 @@
                                 <a class="alert-link">Pemberitahuan</a><span id="isipemberitahuan">Pekerja ini dalam masa ... sampai ... </span>.
                         </div> -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">No BPJS</label>
+                            <label class="col-lg-2 control-label">No RBH</label>
                             <div class="col-lg-9">
-                                <input type="text" id='nobpjs' placeholder="No NIK BPJS" style="text-transform:uppercase" class="form-control" name="nobpjs" value="">
+                                <input type="text" id='nobpjs' placeholder="No NIK RBH" style="text-transform:uppercase" class="form-control" name="nobpjs" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -144,14 +144,14 @@ var table;
       $.ajax({
         type: 'get',
         data: $('#formtambah').serialize(),
-        url: baseUrl + '/manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/'+id,
+        url: baseUrl + '/manajemen-bpjs/ansuransi/rbh/simpan/'+id,
         dataType: 'json',
         success : function(result){
           waitingDialog.hide();
           if (result.status == 'berhasil') {
             swal({
                 title: "Berhasil",
-                text: "Simpan Data BPJS ketenagakerjaan Berhasil Disimpan",
+                text: "Simpan Data RBH Berhasil Disimpan",
                 type: "success",
                 showConfirmButton: false,
                 timer: 900
@@ -159,7 +159,7 @@ var table;
           } else if (result.status == 'ada') {
             swal({
                 title: "Gagal",
-                text: "Data BPJS ketenagakerjaan dengan pekerja yang sama sudah ada, jika ingin menginput data dengan pekerja ini, anda harus menonaktifkan data sebelumnya!",
+                text: "Data RBH dengan pekerja yang sama sudah ada, jika ingin menginput data dengan pekerja ini, anda harus menonaktifkan data sebelumnya!",
                 type: "warning",
                 showConfirmButton: true,
             });

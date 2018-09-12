@@ -30,38 +30,59 @@ class bpjsketenagakerjaanController extends Controller
               ->where('b_pekerja', $id)
               ->get();
 
-      for ($i=0; $i < count($check); $i++) {
-        if (!empty($check)) {
-          if ($check[$i]->b_status == 'Y') {
-            return response()->json([
-              'status' => 'ada'
-            ]);
-          } else {
 
-        $pekerja = DB::table('d_mitra_pekerja')
-                  ->where('mp_pekerja', $id)
-                  ->get();
+              if (!empty($check)) {
+                for ($i=0; $i < count($check); $i++) {
+                  if ($check[$i]->b_status == 'Y') {
+                    return response()->json([
+                      'status' => 'ada'
+                    ]);
 
-        DB::table('d_bpjs_ketenagakerjaan')
-            ->insert([
-              'b_no' => $request->nobpjs,
-              'b_pekerja' => $id,
-              'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
-              'b_faskes' => $request->faskes,
-              'b_kelas' => $request->kelas,
-              'b_mitra' => $pekerja[0]->mp_mitra,
-              'b_divisi' => $pekerja[0]->mp_divisi,
-              'b_status' => 'Y',
-              'b_insert' => Carbon::now('Asia/Jakarta')
-            ]);
+                  } else {
 
-          }
+               $pekerja = DB::table('d_mitra_pekerja')
+                         ->where('mp_pekerja', $id)
+                         ->get();
+
+               DB::table('d_bpjs_ketenagakerjaan')
+                   ->insert([
+                     'b_no' => $request->nobpjs,
+                     'b_pekerja' => $id,
+                     'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
+                     'b_faskes' => $request->faskes,
+                     'b_kelas' => $request->kelas,
+                     'b_mitra' => $pekerja[0]->mp_mitra,
+                     'b_divisi' => $pekerja[0]->mp_divisi,
+                     'b_status' => 'Y',
+                     'b_insert' => Carbon::now('Asia/Jakarta')
+                   ]);
+
+                 }
+               }
+              } else {
+
+            $pekerja = DB::table('d_mitra_pekerja')
+                      ->where('mp_pekerja', $id)
+                      ->get();
+
+            DB::table('d_bpjs_ketenagakerjaan')
+                ->insert([
+                  'b_no' => $request->nobpjs,
+                  'b_pekerja' => $id,
+                  'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
+                  'b_faskes' => $request->faskes,
+                  'b_kelas' => $request->kelas,
+                  'b_mitra' => $pekerja[0]->mp_mitra,
+                  'b_divisi' => $pekerja[0]->mp_divisi,
+                  'b_status' => 'Y',
+                  'b_insert' => Carbon::now('Asia/Jakarta')
+                ]);
+
+              }
 
         return response()->json([
           'status' => 'berhasil'
         ]);
-      }
-    }
   }
 
     public function cari(){

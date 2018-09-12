@@ -138,6 +138,14 @@ $(document).ready(function(){
         }
     });
 
+    table = $("#tabelcari").DataTable({
+        "language": dataTableLanguage,
+        "columnDefs": [{
+            "targets": 0,
+            "orderable": false
+        }]
+    });
+
 });
 
 function loaddata(){
@@ -226,7 +234,7 @@ function loaddata(){
   function hapus(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data BPJS Kesehatan?",
+        text: "Apakah anda yakin ingin menghapus data BPJS Ketenagakerjaan?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -289,7 +297,7 @@ function loaddata(){
   function nonaktif(id){
       swal({
         title: "Konfirmasi",
-        text: "Apakah anda yakin ingin non aktifkan data BPJS Kesehatan?",
+        text: "Apakah anda yakin ingin non aktifkan data BPJS Ketenagakerjaan?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false,
