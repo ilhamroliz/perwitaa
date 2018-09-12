@@ -44,6 +44,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Rekening</th>
                                 <th>Total Gaji</th>
+                                <th>No Reff</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,7 @@
                               <td>{{$x->p_name}}</td>
                               <td>{{$x->p_norek}}</td>
                               <td>Rp. {{number_format($x->pd_value,2,',','.')}}</td>
+                              <td>{{$x->pd_reff}}</td>
                           </tr>
                           @endforeach
                         </tbody>

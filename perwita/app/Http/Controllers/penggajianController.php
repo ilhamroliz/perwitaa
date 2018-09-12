@@ -702,7 +702,7 @@ class penggajianController extends Controller
       $data = DB::table('d_payroll')
               ->join('d_payroll_dt', 'pd_payroll', '=', 'd_payroll.p_id')
               ->join('d_pekerja', 'd_pekerja.p_id', '=', 'pd_pekerja')
-              ->select('p_name', 'p_norek', 'pd_value')
+              ->select('p_name', 'p_norek', 'pd_value', 'pd_reff')
               ->where('p_no', $request->nota)
               ->get();
 

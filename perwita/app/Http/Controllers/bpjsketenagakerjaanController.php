@@ -10,10 +10,10 @@ use DB;
 
 use Carbon\Carbon;
 
-class bpjskesehatanController extends Controller
+class bpjsketenagakerjaanController extends Controller
 {
     public function index(){
-      return view('bpjskesehatan.index');
+      return view('bpjsketenagakerjaan.index');
     }
 
     public function getfaskes(Request $request){
@@ -25,14 +25,12 @@ class bpjskesehatanController extends Controller
     }
 
     public function simpan(Request $request, $id){
-      DB::beginTransaction();
-      try {
 
         $pekerja = DB::table('d_mitra_pekerja')
                   ->where('mp_pekerja', $id)
                   ->get();
 
-        DB::table('d_bpjs_kesehatan')
+        DB::table('d_bpjs_ketenagakerjaan')
             ->insert([
               'b_no' => $request->nobpjs,
               'b_pekerja' => $id,
@@ -45,25 +43,18 @@ class bpjskesehatanController extends Controller
               'b_insert' => Carbon::now('Asia/Jakarta')
             ]);
 
-        DB::commit();
         return response()->json([
           'status' => 'berhasil'
         ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
 
     }
 
     public function cari(){
-      return view('bpjskesehatan.cari');
+      return view('bpjsketenagakerjaan.cari');
     }
 
     public function data(){
-      $data = DB::table('d_bpjs_kesehatan')
+      $data = DB::table('d_bpjs_ketenagakerjaan')
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
@@ -78,7 +69,7 @@ class bpjskesehatanController extends Controller
     }
 
     public function getdata(Request $request){
-      $data = DB::table('d_bpjs_kesehatan')
+      $data = DB::table('d_bpjs_ketenagakerjaan')
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
@@ -99,7 +90,7 @@ class bpjskesehatanController extends Controller
       DB::beginTransaction();
       try {
 
-        DB::table('d_bpjs_kesehatan')
+        DB::table('d_bpjs_ketenagakerjaan')
             ->where('b_no', $request->id)
             ->Delete();
 
@@ -120,7 +111,7 @@ class bpjskesehatanController extends Controller
       DB::beginTransaction();
       try {
 
-        DB::table('d_bpjs_kesehatan')
+        DB::table('d_bpjs_ketenagakerjaan')
             ->where('b_no', $request->id)
             ->update([
               'b_status' => 'N'
@@ -138,5 +129,4 @@ class bpjskesehatanController extends Controller
       }
 
     }
-
 }

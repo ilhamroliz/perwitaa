@@ -950,4 +950,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-bpjs/ansuransi/getdata', 'bpjskesehatanController@getdata');
     Route::get('manajemen-bpjs/ansuransi/hapus', 'bpjskesehatanController@hapus');
     Route::get('manajemen-bpjs/ansuransi/nonaktif', 'bpjskesehatanController@nonaktif');
+
+    //BPJS Ketenagakerjaan
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan', 'bpjsketenagakerjaanController@index');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/getfaskes', 'bpjsketenagakerjaanController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/{id}', 'bpjsketenagakerjaanController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/{id}', 'bpjsketenagakerjaanController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/cari', 'bpjsketenagakerjaanController@cari');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/data', 'bpjsketenagakerjaanController@data');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/getdata', 'bpjsketenagakerjaanController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/hapus', 'bpjsketenagakerjaanController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/nonaktif', 'bpjsketenagakerjaanController@nonaktif');
 });
