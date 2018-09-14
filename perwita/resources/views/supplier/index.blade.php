@@ -13,7 +13,7 @@
 
 @section('content')
 
-  </div><div class="wrapper wrapper-content animated fadeInRight">
+  <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Master Supplier</h5>
         <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" data-toggle="modal" data-target="#myModal" onclick="tambah()"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
