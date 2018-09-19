@@ -68,8 +68,8 @@
 
                 <div class="profile-image">
                     <img src="
-                    @if (file_exists($user->m_image))
-                    {{ asset("$user->m_image") }}
+                    @if (file_exists($user[0]->m_image))
+                    {{ asset("$user[0]->m_image") }}
                     @else
                     {{ asset("assets/img/user/default.jpg") }}
                     @endif
@@ -79,11 +79,11 @@
                     <div class="">
                         <div>
                             <h2 class="no-margins">
-                                {{ $user->m_name }}
+                                {{ $user[0]->m_name }}
                             </h2>
-                            <h4>{{ $user->j_name }}</h4>
+                            <h4>{{ $user[0]->j_name }}</h4>
                             <small>
-                                {{ $user->m_addr }}
+                                {{ $user[0]->m_addr }}
                             </small>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                             <strong>Perusahaan</strong>
                         </td>
                         <td>
-                            {{ $user->c_name }}
+                            {{ $user[0]->c_name }}
                         </td>
 
                     </tr>
@@ -106,7 +106,7 @@
                             <strong>Last Login</strong>
                         </td>
                         <td>
-                            {{ $user->m_lastlogin }}
+                            {{ $user[0]->m_lastlogin }}
                         </td>
                     </tr>
                     <tr>
@@ -114,7 +114,7 @@
                             <strong>Last Logout</strong>
                         </td>
                         <td>
-                            {{ $user->m_lastlogout }}
+                            {{ $user[0]->m_lastlogout }}
                         </td>
                     </tr>
                     </tbody>
@@ -122,7 +122,7 @@
             </div>
             <div class="col-md-3">
                 <small>Username</small>
-                <h2 class="no-margins">{{ $user->m_username }}</h2>
+                <h2 class="no-margins">{{ $user[0]->m_username }}</h2>
                 <div id="sparkline1"><canvas style="display: inline-block; width: 247px; height: 50px; vertical-align: top;" width="247" height="50"></canvas></div>
             </div>
         </div>

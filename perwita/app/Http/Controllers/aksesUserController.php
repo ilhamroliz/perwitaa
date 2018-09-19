@@ -60,7 +60,7 @@ class aksesUserController extends Controller
             ->join('d_comp', 'c_id', '=', 'mc_comp')
             ->select('d_mem.*', 'j_id', 'j_name', 'd_comp.*', DB::raw('DATE_FORMAT(m_lastlogin, "%d/%m/%Y %h:%i") as m_lastlogin'), DB::raw('DATE_FORMAT(m_lastlogout, "%d/%m/%Y %h:%i") as m_lastlogout'))
             ->where('m_id', '=', $id)
-            ->first();
+            ->get();
 
         $akses = DB::select("select * from d_access left join d_mem_access on a_id = ma_access and ma_mem = '".$id."' order by a_order");
 
