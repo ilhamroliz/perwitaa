@@ -12,8 +12,19 @@ use Carbon\Carbon;
 
 class bpjskesehatanController extends Controller
 {
-    public function index(){
-      return view('bpjskesehatan.index');
+    public function index(Request $request){
+      $id = $request->id;
+      if (!empty($id)) {
+      $data =  DB::table('d_pekerja')
+          ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
+          ->where('p_id', $request->id)
+          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"))
+          ->get();
+
+        return view('bpjskesehatan.indexdinamis', compact('id', 'data'));
+      } else {
+        return view('bpjskesehatan.index');
+      }
     }
 
     public function getfaskes(Request $request){
@@ -56,7 +67,7 @@ class bpjskesehatanController extends Controller
                       'b_insert' => Carbon::now('Asia/Jakarta')
                     ]);
               }
-            }            
+            }
           } else {
             $pekerja = DB::table('d_mitra_pekerja')
                       ->where('mp_pekerja', $id)

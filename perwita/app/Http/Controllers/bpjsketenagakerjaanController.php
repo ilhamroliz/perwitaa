@@ -12,8 +12,19 @@ use Carbon\Carbon;
 
 class bpjsketenagakerjaanController extends Controller
 {
-    public function index(){
-      return view('bpjsketenagakerjaan.index');
+    public function index(Request $request){
+      $id = $request->id;
+      if (!empty($id)) {
+      $data =  DB::table('d_pekerja')
+          ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
+          ->where('p_id', $request->id)
+          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"))
+          ->get();
+
+        return view('bpjsketenagakerjaan.indexdinamis', compact('id', 'data'));
+      } else {
+        return view('bpjsketenagakerjaan.index');
+      }
     }
 
     public function getfaskes(Request $request){

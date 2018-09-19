@@ -1,5 +1,5 @@
 @extends('main')
-@section('title', 'Akses User')
+@section('title', 'Dashboard')
 @section('extra_styles')
 <style>
     .popover-navigation [data-role="next"] { display: none; }
@@ -11,10 +11,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
 </style>
 @endsection
@@ -65,7 +65,7 @@
     </div>
   </div>
 </div>
-           
+
 
 @endsection
 @section("extra_scripts")

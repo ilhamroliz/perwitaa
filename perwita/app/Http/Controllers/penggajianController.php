@@ -62,7 +62,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', 'p_gaji_pokok', 'p_tjg_jabatan', 'p_tjg_makan', 'p_tjg_transport', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(d_status, '-') as ansuransi"), DB::raw("COALESCE(d_status, '-') as tunjangan"), DB::raw("COALESCE(d_status, '-') as statusd"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_isapproved', 'Y')
             ->get();
@@ -92,7 +92,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', 'p_gaji_pokok', 'p_tjg_jabatan', 'p_tjg_makan', 'p_tjg_transport', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(d_status, '-') as ansuransi"), DB::raw("COALESCE(d_status, '-') as tunjangan"), DB::raw("COALESCE(d_status, '-') as statusd"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_isapproved', 'Y')
@@ -124,7 +124,7 @@ class penggajianController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(d_status, '-') as statusd"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'p_id', 'p_gaji_pokok', 'p_tjg_jabatan', 'p_tjg_makan', 'p_tjg_transport', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(d_status, '-') as ansuransi"), DB::raw("COALESCE(d_status, '-') as tunjangan"), DB::raw("COALESCE(d_status, '-') as statusd"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
@@ -140,6 +140,12 @@ class penggajianController extends Controller
        //  $bpjskes = DB::table('d_bpjs_kesehatan')
        //              ->whereIn('b_pekerja', $p_id)
        //              ->get();
+      }
+
+      for ($i=0; $i < count($pekerja); $i++) {
+        $pekerja[$i]->tunjangan = (int)$pekerja[$i]->p_tjg_makan + (int)$pekerja[$i]->p_tjg_jabatan + (int)$pekerja[$i]->p_tjg_transport;
+        $pekerja[$i]->ansuransi = (int)$pekerja[$i]->bikes_value + (int)$pekerja[$i]->biket_value + (int)$pekerja[$i]->biker_value + (int)$pekerja[$i]->biked_value;
+        $pekerja[$i]->p_gaji_pokok = (int)$pekerja[$i]->p_gaji_pokok;
       }
 
 

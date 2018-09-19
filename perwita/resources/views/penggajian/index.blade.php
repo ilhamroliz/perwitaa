@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>List Payroll Yang Belum Di Proses</h5>
-        <a href="{{ url('manajemen-payroll/payroll/tambah') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a href="{{ url('manajemen-payroll/payroll/penggajian/tambah') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -140,7 +140,7 @@ function hapus(nota){
                 type: 'get',
                 data: {nota:nota},
                 dataType: 'json',
-                url: baseUrl + '/manajemen-payroll/payroll/hapus',
+                url: baseUrl + '/manajemen-payroll/payroll/penggajian/hapus',
                 success : function(result){
                       waitingDialog.hide();
                       if (result.status == 'berhasil') {
@@ -182,7 +182,7 @@ function hapus(nota){
 }
 
 function lanjutkan(nota){
-  window.location.href = baseUrl + '/manajemen-payroll/payroll/edit?nota='+nota;
+  window.location.href = baseUrl + '/manajemen-payroll/payroll/penggajian/edit?nota='+nota;
 }
 
 </script>
