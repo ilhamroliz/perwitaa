@@ -44,11 +44,15 @@
                                 <th>Nama</th>
                                 <th>NIK</th>
                                 <th>NIK Mitra</th>
+                                <th>Tunjangan Makan</th>
+                                <th>Tunjangan Jabatan</th>
+                                <th>Tunjangan Transport</th>
                                 <th>BPJS Kesehatan</th>
                                 <th>BPJS Ketenagakerjaan</th>
                                 <th>RBH</th>
                                 <th>Dapan</th>
                                 <th>Total Gaji</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,11 +61,15 @@
                               <td>{{$x->p_name}}</td>
                               <td>{{$x->p_nip}}</td>
                               <td>{{$x->p_nip_mitra}}</td>
-                              <td>Rp. {{number_format($x->bikes_value,2,',','.')}}</td>
-                              <td>Rp. {{number_format($x->biket_value,2,',','.')}}</td>
-                              <td>Rp. {{number_format($x->ri_value,2,',','.')}}</td>
-                              <td></td>
-                              <td>Rp. {{number_format($x->pd_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->p_tjg_makan,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->p_tjg_jabatan,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->p_tjg_transport,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->bikes_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->biket_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->biker_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->biked_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->pd_total,2,',','.')}}</td>
+                              <td>{{$x->pd_note}}</td>
                           </tr>
                           @endforeach
                         </tbody>
@@ -81,6 +89,7 @@
 $('#remunerasitabel').DataTable({
        dom: 'Bfrtip',
        title: '',
+       scrollX: true,
        buttons: [
            'copy', 'csv', 'excel', 'pdf', 'print'
        ]

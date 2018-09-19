@@ -74,8 +74,8 @@
                                    <i class="fa fa-print"></i> <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{url('manajemen-payroll/payroll/printbank?nota=')}}{{$x->p_no}}">Bank</a></li>
-                                    <li><a href="{{url('manajemen-payroll/payroll/printpekerja?nota=')}}{{$x->p_no}}">Pekerja</a></li>
+                                    <li><a href="{{url('manajemen-payroll/payroll/penggajian/printbank?nota=')}}{{$x->p_no}}">Bank</a></li>
+                                    <li><a href="{{url('manajemen-payroll/payroll/penggajian/printpekerja?nota=')}}{{$x->p_no}}">Pekerja</a></li>
                                   </ul>
                                 </div>
                                 <button type="button" title="Lanjutkan" onclick="lanjutkan('{{$x->p_no}}')"  class="btn btn-info btn-sm" name="button"> <i class="fa fa-chevron-circle-right"></i> </button>

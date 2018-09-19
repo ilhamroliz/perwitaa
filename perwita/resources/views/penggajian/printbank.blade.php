@@ -52,7 +52,7 @@
                           <tr>
                               <td>{{$x->p_name}}</td>
                               <td>{{$x->p_norek}}</td>
-                              <td>Rp. {{number_format($x->pd_value,2,',','.')}}</td>
+                              <td>Rp. {{number_format((int)$x->pd_total,2,',','.')}}</td>
                               <td>{{$x->pd_reff}}</td>
                           </tr>
                           @endforeach

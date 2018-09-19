@@ -84,6 +84,7 @@
                             <th style="width:12%;">Potongan Lain</th>
                             <th style="width:13%;">Total</th>
                             <th style="width:13%;">No Reff</th>
+                            <th style="width:13%;">Keterangan</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -185,9 +186,10 @@ function cari(){
               '<td><input type="text" readonly name="gajipokok[]" class="form-control" style="width:100%;" value="Rp. '+accounting.formatMoney(result[i].p_gaji_pokok, "", 0, ".", ",")+'"></td>'+
               '<td><input type="text" readonly name="tunjangan[]" class="form-control" style="width:100%;" value="Rp. '+accounting.formatMoney(result[i].tunjangan, "", 0, ".", ",")+'"></td>'+
               '<td><input type="text" readonly name="ansuransi[]" class="form-control" style="width:100%;" value="Rp. '+accounting.formatMoney(result[i].ansuransi, "", 0, ".", ",")+'"></td>'+
-              '<td><input type="text" name="potonganlain" id="potongan'+result[i].p_id+'" class="form-control rp" onkeyup="hitung('+result[i].p_id+','+result[i].p_gaji_pokok+','+result[i].tunjangan+','+result[i].ansuransi+')" style="width:100%;"></td>'+
+              '<td><input type="text" name="potonganlain[]" id="potongan'+result[i].p_id+'" class="form-control rp" onkeyup="hitung('+result[i].p_id+','+result[i].p_gaji_pokok+','+result[i].tunjangan+','+result[i].ansuransi+')" style="width:100%;"></td>'+
               '<td id="td'+result[i].p_id+'"><input type="text" readonly name="totalgaji[]" class="form-control" style="width:100%;"></td>'+
               '<td><input type="text" name="noreff[]" class="form-control" onkeypress="return isNumber(event)" style="width:100%;"></td>'+
+              '<td><input type="text" name="Keterangan[]" class="form-control" style="width:100%;"></td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+
               '</tr>';
 
@@ -224,101 +226,101 @@ function hitung(id, gajipokok, tunjangan, ansuransi){
 
   $('#td'+id).html('<input type="text" readonly name="totalgaji[]" class="form-control" style="width:100%;" value="Rp. '+accounting.formatMoney(hasil, "", 0, ".", ",")+'">');
 }
-//
-//   function simpan(){
-//     var start = $('#start').val();
-//     var end = $('#end').val();
-//     waitingDialog.show();
-//     $.ajax({
-//       type: 'get',
-//       data: $('#data').serialize()+'&start='+start+'&end='+end,
-//       url: baseUrl + '/manajemen-payroll/payroll/penggajian/simpan',
-//       dataType: 'json',
-//       success : function(result){
-//         waitingDialog.hide();
-//         if (result.status == 'berhasil') {
-//             swal({
-//                 title: "Penggajian Disimpan",
-//                 text: "Penggajian Berhasil Disimpan",
-//                 type: "success",
-//                 showConfirmButton: false,
-//                 timer: 900
-//             });
-//             setTimeout(function(){
-//                   window.location.reload();
-//           }, 850);
-//         }
-//       }, error:function(x, e) {
-//           waitingDialog.hide();
-//           if (x.status == 0) {
-//               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-//           } else if (x.status == 404) {
-//               alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-//           } else if (x.status == 500) {
-//               alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-//           } else if (e == 'parsererror') {
-//               alert('Error.\nParsing JSON Request failed.');
-//           } else if (e == 'timeout'){
-//               alert('Request Time out. Harap coba lagi nanti');
-//           } else {
-//               alert('Unknow Error.\n' + x.responseText);
-//           }
-//           waitingDialog.hide();
-//       }
-//     });
-//   }
-//
-//   function isNumber(evt) {
-//     evt = (evt) ? evt : window.event;
-//     var charCode = (evt.which) ? evt.which : evt.keyCode;
-//     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-//         return false;
-//     }
-//     return true;
-//   }
-//
-//   function proses(){
-//     var start = $('#start').val();
-//     var end = $('#end').val();
-//     waitingDialog.show();
-//     $.ajax({
-//       type: 'get',
-//       data: $('#data').serialize()+'&start='+start+'&end='+end,
-//       url: baseUrl + '/manajemen-payroll/payroll/penggajian/proses',
-//       dataType: 'json',
-//       success : function(result){
-//         waitingDialog.hide();
-//         if (result.status == 'berhasil') {
-//             swal({
-//                 title: "Penggajian Diproses",
-//                 text: "Penggajian Berhasil Diproses",
-//                 type: "success",
-//                 showConfirmButton: false,
-//                 timer: 900
-//             });
-//             setTimeout(function(){
-//                   window.location.reload();
-//           }, 850);
-//         }
-//       }, error:function(x, e) {
-//           waitingDialog.hide();
-//           if (x.status == 0) {
-//               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-//           } else if (x.status == 404) {
-//               alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-//           } else if (x.status == 500) {
-//               alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-//           } else if (e == 'parsererror') {
-//               alert('Error.\nParsing JSON Request failed.');
-//           } else if (e == 'timeout'){
-//               alert('Request Time out. Harap coba lagi nanti');
-//           } else {
-//               alert('Unknow Error.\n' + x.responseText);
-//           }
-//           waitingDialog.hide();
-//       }
-//     });
-//   }
+
+  function simpan(){
+    var start = $('#start').val();
+    var end = $('#end').val();
+    waitingDialog.show();
+    $.ajax({
+      type: 'get',
+      data: $('#data').serialize()+'&start='+start+'&end='+end,
+      url: baseUrl + '/manajemen-payroll/payroll/penggajian/simpan',
+      dataType: 'json',
+      success : function(result){
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Penggajian Disimpan",
+                text: "Penggajian Berhasil Disimpan",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      }, error:function(x, e) {
+          waitingDialog.hide();
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+          waitingDialog.hide();
+      }
+    });
+  }
+
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+  }
+
+  function proses(){
+    var start = $('#start').val();
+    var end = $('#end').val();
+    waitingDialog.show();
+    $.ajax({
+      type: 'get',
+      data: $('#data').serialize()+'&start='+start+'&end='+end,
+      url: baseUrl + '/manajemen-payroll/payroll/penggajian/proses',
+      dataType: 'json',
+      success : function(result){
+        waitingDialog.hide();
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Penggajian Diproses",
+                text: "Penggajian Berhasil Diproses",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      }, error:function(x, e) {
+          waitingDialog.hide();
+          if (x.status == 0) {
+              alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+          } else if (x.status == 404) {
+              alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+          } else if (x.status == 500) {
+              alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+          } else if (e == 'parsererror') {
+              alert('Error.\nParsing JSON Request failed.');
+          } else if (e == 'timeout'){
+              alert('Request Time out. Harap coba lagi nanti');
+          } else {
+              alert('Unknow Error.\n' + x.responseText);
+          }
+          waitingDialog.hide();
+      }
+    });
+  }
 
 </script>
 @endsection
