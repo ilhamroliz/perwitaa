@@ -12,6 +12,8 @@ use Carbon\Carbon;
 
 use Session;
 
+use Terbilang;
+
 class penggajianController extends Controller
 {
 
@@ -441,8 +443,8 @@ class penggajianController extends Controller
                     $tmp = str_replace('.', '', $request->potonganlain[$i]);
                     $potonganlain = str_replace('Rp. ', '', $tmp);
 
-                    $tmp1 = str_replace('.', '', $request->totalgaji[$i]);
-                    $totalgaji = str_replace('Rp. ', '', $tmp1);
+                    $tmp1 = str_replace('.', '', $request->total[$i]);
+                    $total = str_replace('Rp. ', '', $tmp1);
 
                 DB::table('d_payroll_dt')
                   ->insert([
@@ -461,7 +463,7 @@ class penggajianController extends Controller
                     'pd_bpjs_dapan' => $dapaninsert,
                     'pd_lain' => $potonganlain,
                     'pd_reff' => $request->noreff[$i],
-                    'pd_total' => $totalgaji,
+                    'pd_total' => $total,
                     'pd_note' => $request->Keterangan[$i]
                   ]);
 
@@ -1096,7 +1098,7 @@ class penggajianController extends Controller
               ->leftJoin('d_dapan', 'd_pekerja', '=', 'mp_pekerja')
               ->leftJoin('d_rbh', 'r_pekerja', '=', 'mp_pekerja')
               ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'mp_pekerja')
-              ->select('d_pekerja.p_id', 'p_name', 'p_nip', DB::raw("COALESCE(p_tjg_makan, 0) as p_tjg_makan"), DB::raw("COALESCE(p_tjg_jabatan, 0) as p_tjg_jabatan"), DB::raw("COALESCE(p_tjg_transport, 0) as p_tjg_transport"), DB::raw("COALESCE(p_gaji_pokok, 0) as p_gaji_pokok"), DB::raw("COALESCE(r_value, 0) as r_value"), DB::raw("COALESCE(d_value, 0) as d_value"), DB::raw("COALESCE(p_value, 0) as p_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, 0) as b_valuekes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as b_valueket"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as ansuransi"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as tunjangan"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as total"))
+              ->select('d_pekerja.p_id', 'p_name', 'p_nip', DB::raw("COALESCE(p_tjg_makan, 0) as p_tjg_makan"), DB::raw("COALESCE(p_tjg_makan, 0) as p_tjg_makan"), DB::raw("COALESCE(p_tjg_jabatan, 0) as p_tjg_jabatan"), DB::raw("COALESCE(p_tjg_transport, 0) as p_tjg_transport"), DB::raw("COALESCE(p_gaji_pokok, 0) as p_gaji_pokok"), DB::raw("COALESCE(r_value, 0) as r_value"), DB::raw("COALESCE(d_value, 0) as d_value"), DB::raw("COALESCE(p_value, 0) as p_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, 0) as b_valuekes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as b_valueket"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as ansuransi"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as tunjangan"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as total"))
               ->get();
 
       for ($i=0; $i < count($data); $i++) {
@@ -1108,4 +1110,26 @@ class penggajianController extends Controller
       return response()->json($data);
     }
 
+    public function cetak(Request $request){
+      $data = DB::table('d_pekerja')
+              ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'd_pekerja.p_jabatan')
+              ->leftjoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'd_pekerja.p_id')
+              ->leftjoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'd_pekerja.p_id')
+              ->leftjoin('d_potonganlain', 'p_pekerja', '=', 'd_pekerja.p_id')
+              ->leftjoin('d_payroll_dt', 'pd_pekerja', '=', 'd_pekerja.p_id')
+              ->leftjoin('d_payroll', 'd_payroll.p_id', '=', 'pd_payroll')
+              ->where('d_pekerja.p_id', $request->id)
+              ->select('p_name', 'p_start_periode', 'b_value_jht', 'b_value_pensiun', 'p_end_periode', 'p_nip', 'p_nip_mitra', 'p_value', 'jp_name', DB::raw("coalesce(d_bpjs_kesehatan.b_value) as terbilang"), DB::raw("coalesce(d_bpjs_kesehatan.b_value) as ansuransi"), DB::raw("coalesce(d_bpjs_kesehatan.b_value) as tunjangan"), DB::raw("coalesce(d_bpjs_kesehatan.b_value) as totalgajikotor"), DB::raw("coalesce(d_bpjs_kesehatan.b_value) as gajiditerima"), DB::raw("coalesce(d_bpjs_kesehatan.b_value) as bikes_value"), DB::raw("coalesce(d_bpjs_ketenagakerjaan.b_value) as biket_value"), 'p_gaji_pokok', 'p_tjg_makan', 'p_tjg_jabatan', 'p_tjg_transport')
+              ->get();
+
+        for ($i=0; $i < count($data); $i++) {
+          $data[$i]->gajiditerima = $data[$i]->p_gaji_pokok + $data[$i]->p_tjg_makan + $data[$i]->p_tjg_jabatan + $data[$i]->p_tjg_transport - $data[$i]->bikes_value + $data[$i]->biket_value - $data[$i]->p_value;
+          $data[$i]->ansuransi = $data[$i]->bikes_value + $data[$i]->biket_value;
+          $data[$i]->tunjangan = $data[$i]->p_tjg_makan + $data[$i]->p_tjg_jabatan + $data[$i]->p_tjg_transport;
+          $data[$i]->totalgajikotor = $data[$i]->p_gaji_pokok + $data[$i]->p_tjg_makan + $data[$i]->p_tjg_jabatan + $data[$i]->p_tjg_transport;
+          $data[$i]->terbilang = Terbilang::make($data[$i]->gajiditerima, ' rupiah');;
+        }
+
+      return view('penggajian.print', compact('data'));
+    }
 }

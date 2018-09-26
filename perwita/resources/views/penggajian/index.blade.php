@@ -190,7 +190,6 @@ function ambildata(){
     dataType: 'json',
     url: baseUrl + '/manajemen-payroll/payroll/penggajian/ambildata',
     success : function(result){
-      console.log(result);
     for (var i = 0; i < result.length; i++) {
       html += '<tr>'+
       '<td>'+result[i].p_name+'</td>'+
@@ -201,7 +200,7 @@ function ambildata(){
       '<td><input type="text" class="form-control" readonly name="potonganlain[]" value="Rp. '+accounting.formatMoney(result[i].p_value, "", 0, ".", ",")+'"></td>'+
       '<td><input type="text" class="form-control" readonly name="total[]" value="Rp. '+accounting.formatMoney(result[i].total, "", 0, ".", ",")+'"></td>'+
       '<input type="hidden" name="p_id[]" value="'+result[i].p_id+'">'+
-      '<td align="center"> <button type="button" class="btn btn-primary btn-sm" name="button"> <i class="fa fa-print"></i> Cetak </button> </td>'+
+      '<td align="center"> <button type="button" class="btn btn-primary btn-sm" onclick="cetak('+result[i].p_id+')" name="button"> <i class="fa fa-print"></i> Cetak </button> </td>'+
       '<tr>';
     }
 
@@ -252,6 +251,10 @@ function ambildata(){
       }
       }
     });
+  }
+
+  function cetak(id){
+    window.location.href = baseUrl + '/manajemen-payroll/payroll/penggajian/cetak?id='+id;
   }
 
 </script>

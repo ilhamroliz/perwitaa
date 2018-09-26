@@ -133,8 +133,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,        
+        Barryvdh\DomPDF\ServiceProvider::class,
         Anouar\Fpdf\FpdfServiceProvider::class,
+        Riskihajar\Terbilang\TerbilangServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -155,7 +156,7 @@ return [
       |
      */
     'aliases' => [
-
+        'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
