@@ -73,7 +73,7 @@
 <script type="text/javascript" src="{{asset('assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
 <script type="text/javascript">
-	// window.print();
+	window.print();
 </script>
 </body>
 </html>
