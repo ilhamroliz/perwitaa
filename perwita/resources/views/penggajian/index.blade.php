@@ -7,6 +7,15 @@
 <style>
     .popover-navigation [data-role="next"] { display: none; }
     .popover-navigation [data-role="end"] { display: none; }
+
+    .scrollable {
+    overflow-x: scroll;
+}
+
+.bodycontainer {
+    height: 100px !important;
+    width: 100%;
+}
 </style>
 
 @endsection
@@ -15,7 +24,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>List Payroll</h2>
+        <h2>Proses Gaji</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -24,71 +33,59 @@
               Payroll
             </li>
             <li class="active">
-                <strong>List Payroll</strong>
+                <strong>Proses Gaji</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>List Payroll Yang Belum Di Proses</h5>
-        <a href="{{ url('manajemen-payroll/payroll/penggajian/tambah') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <h5>Proses Gaji</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
+              <div class="col-md-4">
+                @if(empty($data))
+                <p>Data tidak Ketemu</p>
+                  @else
+                  <select id="selectmitra" class="select-picker form-control" data-show-subtext="true" data-live-search="true" onchange="ambildata()">
+                  <option value="" selected="true" >- Pilih Mitra -</option>
+                  @foreach ($data as $key => $value)
+                      <option value="{{ $value ->md_mitra }}" id="optionvalue">{{$value ->m_name}}</option>
+                  @endforeach
+                  </select>
+                  @endif
+              </div>
+              <div class="input-daterange input-group col-md-5 isimodal" id="datepicker" style="margin-left:15px;">
+                  <input type="text" class="input-sm form-control awal" id="start" name="start" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}"/>
+                  <span class="input-group-addon">sampai</span>
+                  <input type="text" class="input-sm form-control akhir" id="end" name="end" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}"/>
+              </div>
+              <br>
                 <div class="col-md-12">
-                  <center>
-                    <div class="spiner-example">
-                        <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
-                            <div class="sk-rect1 tampilkan" ></div>
-                            <div class="sk-rect2"></div>
-                            <div class="sk-rect3"></div>
-                            <div class="sk-rect4"></div>
-                            <div class="sk-rect5"></div>
-                        </div>
-                        <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Data</span>
-                    </div>
-                </center>
-                <form class="formapprovalremunerasi" id="formapprovalremunerasi">
-                    <table id="remunerasitabel" class="table table-bordered table-striped" >
+                <form class="formapprovalremunerasi scrollable" id="formapprovalremunerasi">
+                    <table id="remunerasitabel" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>No Payroll</th>
-                                <th>Start Periode</th>
-                                <th>End Periode</th>
-                                <th>Status</th>
-                                <th style="width: 120%;">Aksi</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Gaji Pokok</th>
+                                <th>Tunjangan</th>
+                                <th>Ansuransi</th>
+                                <th>Potongan Lain</th>
+                                <th>Total</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                          @foreach($data as $index => $x)
-                          <tr>
-                                <td>{{$x->p_no}}</td>
-                                <td>{{Carbon\Carbon::parse($x->p_start_periode)->format('d/m/Y')}}</td>
-                                <td>{{Carbon\Carbon::parse($x->p_end_periode)->format('d/m/Y')}}</td>
-                                <td> <span class="badge badge-warning">Belum Diproses</span> </td>
-                                <td align="center">
-                                  <div class="btn-group">
-                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" title="Cetak" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   <i class="fa fa-print"></i> <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="{{url('manajemen-payroll/payroll/penggajian/printbank?nota=')}}{{$x->p_no}}">Bank</a></li>
-                                    <li><a href="{{url('manajemen-payroll/payroll/penggajian/printpekerja?nota=')}}{{$x->p_no}}">Pekerja</a></li>
-                                  </ul>
-                                </div>
-                                <button type="button" title="Lanjutkan" onclick="lanjutkan('{{$x->p_no}}')"  class="btn btn-info btn-sm" name="button"> <i class="fa fa-chevron-circle-right"></i> </button>
-                                <button type="button" title="Hapus" onclick="hapus('{{$x->p_no}}')"  class="btn btn-danger btn-sm" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                               </td>
-                            </tr>
-                            @endforeach
+                        <tbody id="showdata">
+
                         </tbody>
                     </table>
                   </form>
                 </div>
+                <button type="button" class="btn btn-primary pull-right" onclick="proses()" style="margin-top:20px; margin-right:20px;" name="button">Proses</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -102,23 +99,21 @@ var countmitra;
 var totalmitra;
 $( document ).ready(function() {
 
-$('#remunerasitabel').hide();
-myFunction();
+  $('.input-daterange').datepicker({
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true,
+      format: 'dd/mm/yyyy'
+  });
 
-function myFunction() {
-setTimeout(function(){
-  $(".spiner-example").css('display', 'none');
   table = $("#remunerasitabel").DataTable({
     "processing": true,
     "paging": false,
-    "searching": false,
+    "searching": true,
     "deferLoading": 57,
     responsive: true,
     "language": dataTableLanguage
   });
-  $('#remunerasitabel').show();
-},1500);
-  }
 
 });
 
@@ -184,6 +179,80 @@ function hapus(nota){
 function lanjutkan(nota){
   window.location.href = baseUrl + '/manajemen-payroll/payroll/penggajian/edit?nota='+nota;
 }
+
+function ambildata(){
+  waitingDialog.show();
+  var mitra = $('#selectmitra').val();
+  var html = '';
+  $.ajax({
+    type: 'get',
+    data: {mitra:mitra},
+    dataType: 'json',
+    url: baseUrl + '/manajemen-payroll/payroll/penggajian/ambildata',
+    success : function(result){
+      console.log(result);
+    for (var i = 0; i < result.length; i++) {
+      html += '<tr>'+
+      '<td>'+result[i].p_name+'</td>'+
+      '<td>'+result[i].p_nip+'</td>'+
+      '<td><input type="text" class="form-control" readonly name="gajipokok[]" value="Rp. '+accounting.formatMoney(result[i].p_gaji_pokok, "", 0, ".", ",")+'"></td>'+
+      '<td><input type="text" class="form-control" readonly name="tunjangan[]" value="Rp. '+accounting.formatMoney(result[i].tunjangan, "", 0, ".", ",")+'"></td>'+
+      '<td><input type="text" class="form-control" readonly name="ansuransi[]" value="Rp. '+accounting.formatMoney(result[i].ansuransi, "", 0, ".", ",")+'"></td>'+
+      '<td><input type="text" class="form-control" readonly name="potonganlain[]" value="Rp. '+accounting.formatMoney(result[i].p_value, "", 0, ".", ",")+'"></td>'+
+      '<td><input type="text" class="form-control" readonly name="total[]" value="Rp. '+accounting.formatMoney(result[i].total, "", 0, ".", ",")+'"></td>'+
+      '<input type="hidden" name="p_id[]" value="'+result[i].p_id+'">'+
+      '<td align="center"> <button type="button" class="btn btn-primary btn-sm" name="button"> <i class="fa fa-print"></i> Cetak </button> </td>'+
+      '<tr>';
+    }
+
+    $('#showdata').html(html);
+
+    waitingDialog.hide();
+    }
+  });
+}
+
+  function proses(){
+    var form = $('#formapprovalremunerasi').serialize();
+    var start = $('#start').val();
+    var end = $('#end').val();
+    $.ajax({
+      type: 'get',
+      dataType: 'json',
+      data: $('#formapprovalremunerasi').serialize()+'&start='+start+'&end='+end,
+      url: baseUrl + '/manajemen-payroll/payroll/penggajian/proses',
+      success : function(result){
+        if (result.status == 'berhasil') {
+            swal({
+                title: "Berhasil Diproses",
+                text: "Berhasil Diproses",
+                type: "success",
+                showConfirmButton: false,
+                timer: 900
+            });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        }
+      else if (result.status == 'tidak lengkap') {
+        swal({
+            title: "Data tidak lengkap",
+            text: "Data tidak lengkap",
+            type: "info",
+            showConfirmButton: true
+        });
+      }
+      else if (result.status == 'gagal') {
+        swal({
+            title: "Data tidak lengkap",
+            text: "Data tidak lengkap",
+            type: "info",
+            showConfirmButton: true
+        });
+      }
+      }
+    });
+  }
 
 </script>
 @endsection

@@ -74,9 +74,11 @@
                             <th style="width:13%;">Nama</th>
                             <th style="width:13%;">NIK</th>
                             <th style="width:12%;">BPJS Kes</th>
-                            <th style="width:12%;">BPJS Ket</th>
+                            <th style="width:12%;">BPJS Ket (JHT)</th>
+                            <th style="width:12%;">BPJS Ket (Pensiun)</th>
                             <th style="width:12%;">RBH</th>
                             <th style="width:12%;">Dapan</th>
+                            <th style="width:12%;">Potongan Lain Lain</th>
                         </tr>
                     </thead>
                     <tbody id="showdata">
@@ -169,7 +171,7 @@ function getdata(data){
            classket = 'btn btn-default';
            valueket = 'Register';
            onclickket = 'linkket';
-           imbuhanket = '<input type="hidden" name="bpjsket[]">';
+           imbuhanket = '<input type="hidden" name="bpjsketjht[]">';
         } else {
           if (result.statusket == 'N') {
             noket = 'readonly';
@@ -178,15 +180,42 @@ function getdata(data){
             classket = 'btn btn-default';
             valueket = 'Register';
             onclickket = 'linkket';
-            imbuhanket = '<input type="hidden" name="bpjsket[]">';
+            imbuhanket = '<input type="hidden" name="bpjsketjht[]">';
           } else {
             noket = '';
             clsket = 'rp';
             typeket = 'text';
             classket = 'form-control';
-            valueket = 'Rp. '+accounting.formatMoney(result.biket_value, "", 0, ".", ",");
+            valueket = 'Rp. '+accounting.formatMoney(result.b_value_jht, "", 0, ".", ",")
             onclickket = '';
             imbuhanket = '';
+          }
+        }
+        if (result.b_noket == "-") {
+           noketpens = 'readonly';
+           clsketpens = '';
+           typeketpens = 'button';
+           classketpens = 'btn btn-default';
+           valueketpens = 'Register';
+           onclickketpens = 'linkket';
+           imbuhanketpens = '<input type="hidden" name="bpjsketpens[]">';
+        } else {
+          if (result.statusket == 'N') {
+            noketpens = 'readonly';
+            clsketpens = '';
+            typeketpens = 'button';
+            classketpens = 'btn btn-default';
+            valueketpens = 'Register';
+            onclickketpens = 'linkket';
+            imbuhanketpens = '<input type="hidden" name="bpjsketpens[]">';
+          } else {
+            noketpens = '';
+            clsketpens = 'rp';
+            typeketpens = 'text';
+            classketpens = 'form-control';
+            valueketpens = 'Rp. '+accounting.formatMoney(result.b_value_pensiun, "", 0, ".", ",")
+            onclickketpens = '';
+            imbuhanketpens = '';
           }
         }
         if (result.r_no == "-") {
@@ -243,15 +272,17 @@ function getdata(data){
             onclickked = '';
             imbuhanked = '';
            }
-        }        
+        }
 
         html += '<tr role="row" class="odd">'+
               '<td>'+result.p_name+'</td>'+
               '<td>'+result.p_nip+'</td>'+
               '<td><input type="'+typekes+'" name="bpjskes[]" class="'+classkes+' '+clskes+'" style="width:100%;" value="'+valuekes+'" onclick="'+onclickkes+'('+result.p_id+')">'+imbuhankes+'</td>'+
-              '<td><input type="'+typeket+'" name="bpjsket[]" class="'+classket+' '+clsket+'" style="width:100%;" value="'+valueket+'" onclick="'+onclickket+'('+result.p_id+')">'+imbuhanket+'</td>'+
+              '<td><input type="'+typeket+'" name="bpjsketjht[]" class="'+classket+' '+clsket+'" style="width:100%;" value="'+valueket+'" onclick="'+onclickket+'('+result.p_id+')">'+imbuhanket+'</td>'+
+              '<td><input type="'+typeketpens+'" name="bpjsketpens[]" class="'+classketpens+' '+clsketpens+'" style="width:100%;" value="'+valueketpens+'" onclick="'+onclickketpens+'('+result.p_id+')">'+imbuhanketpens+'</td>'+
               '<td><input type="'+typeker+'" name="rbh[]" class="'+classker+' '+clsr+'" style="width:100%;" value="'+valueker+'" onclick="'+onclickker+'('+result.p_id+')">'+imbuhanker+'</td>'+
               '<td><input type="'+typeked+'" name="dapan[]" class="'+classked+' '+clsd+'" style="width:100%;" value="'+valueked+'" onclick="'+onclickked+'('+result.p_id+')">'+imbuhanked+'</td>'+
+              '<td> <input type="text" class="form-control rp" name="potonganlain[]" value="Rp. '+accounting.formatMoney(result.p_value, "", 0, ".", ",")+'"> </td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result.p_id+'" class="form-control" style="width:100%;"></td>'+
               '</tr>';
 
@@ -366,7 +397,7 @@ function cari(){
            classket = 'btn btn-default';
            valueket = 'Register';
            onclickket = 'linkket';
-           imbuhanket = '<input type="hidden" name="bpjsket[]">';
+           imbuhanket = '<input type="hidden" name="bpjsketjht[]">';
         } else {
           if (result[i].statusket == 'N') {
             noket = 'readonly';
@@ -375,15 +406,42 @@ function cari(){
             classket = 'btn btn-default';
             valueket = 'Register';
             onclickket = 'linkket';
-            imbuhanket = '<input type="hidden" name="bpjsket[]">';
+            imbuhanket = '<input type="hidden" name="bpjsketjht[]">';
           } else {
             noket = '';
             clsket = 'rp';
             typeket = 'text';
             classket = 'form-control';
-            valueket = 'Rp. '+accounting.formatMoney(result[i].biket_value, "", 0, ".", ",")
+            valueket = 'Rp. '+accounting.formatMoney(result[i].b_value_jht, "", 0, ".", ",")
             onclickket = '';
             imbuhanket = '';
+          }
+        }
+        if (result[i].b_noket == "-") {
+           noketpens = 'readonly';
+           clsketpens = '';
+           typeketpens = 'button';
+           classketpens = 'btn btn-default';
+           valueketpens = 'Register';
+           onclickketpens = 'linkket';
+           imbuhanketpens = '<input type="hidden" name="bpjsketpens[]">';
+        } else {
+          if (result[i].statusket == 'N') {
+            noketpens = 'readonly';
+            clsketpens = '';
+            typeketpens = 'button';
+            classketpens = 'btn btn-default';
+            valueketpens = 'Register';
+            onclickketpens = 'linkket';
+            imbuhanketpens = '<input type="hidden" name="bpjsketpens[]">';
+          } else {
+            noketpens = '';
+            clsketpens = 'rp';
+            typeketpens = 'text';
+            classketpens = 'form-control';
+            valueketpens = 'Rp. '+accounting.formatMoney(result[i].b_value_pensiun, "", 0, ".", ",")
+            onclickketpens = '';
+            imbuhanketpens = '';
           }
         }
         if (result[i].r_no == "-") {
@@ -436,7 +494,7 @@ function cari(){
             clsd = 'rp';
             typeked = 'text';
             classked = 'form-control';
-            valueked = 'Rp. '+accounting.formatMoney(result[i].bikes_value, "", 0, ".", ",")
+            valueked = 'Rp. '+accounting.formatMoney(result[i].biked_value, "", 0, ".", ",")
             onclickked = '';
             imbuhanked = '';
            }
@@ -447,9 +505,11 @@ function cari(){
               '<td>'+result[i].p_name+'</td>'+
               '<td>'+result[i].p_nip+'</td>'+
               '<td><input type="'+typekes+'" name="bpjskes[]" class="'+classkes+' '+clskes+'" style="width:100%;" value="'+valuekes+'" onclick="'+onclickkes+'('+result[i].p_id+')">'+imbuhankes+'</td>'+
-              '<td><input type="'+typeket+'" name="bpjsket[]" class="'+classket+' '+clsket+'" style="width:100%;" value="'+valueket+'" onclick="'+onclickket+'('+result[i].p_id+')">'+imbuhanket+'</td>'+
+              '<td><input type="'+typeket+'" name="bpjsketjht[]" class="'+classket+' '+clsket+'" style="width:100%;" value="'+valueket+'" onclick="'+onclickket+'('+result[i].p_id+')">'+imbuhanket+'</td>'+
+              '<td><input type="'+typeketpens+'" name="bpjsketpens[]" class="'+classketpens+' '+clsketpens+'" style="width:100%;" value="'+valueketpens+'" onclick="'+onclickketpens+'('+result[i].p_id+')">'+imbuhanketpens+'</td>'+
               '<td><input type="'+typeker+'" name="rbh[]" class="'+classker+' '+clsr+'" style="width:100%;" value="'+valueker+'" onclick="'+onclickker+'('+result[i].p_id+')">'+imbuhanker+'</td>'+
               '<td><input type="'+typeked+'" name="dapan[]" class="'+classked+' '+clsd+'" style="width:100%;" value="'+valueked+'" onclick="'+onclickked+'('+result[i].p_id+')">'+imbuhanked+'</td>'+
+              '<td> <input type="text" class="form-control rp" name="potonganlain[]" value="Rp. '+accounting.formatMoney(result[i].p_value, "", 0, ".", ",")+'"> </td>'+
               '<td><input type="hidden" name="p_id[]" value="'+result[i].p_id+'" class="form-control" style="width:100%;"></td>'+
               '</tr>';
       }

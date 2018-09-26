@@ -16,8 +16,9 @@ class penggajianController extends Controller
 {
 
     public function index(){
-      $data = DB::table('d_payroll')
-              ->where('d_payroll.p_status', 'P')
+      $data = DB::table('d_mitra')
+              ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+              ->groupBy('m_name')
               ->get();
 
       return view('penggajian.index', compact('data'));
@@ -303,230 +304,282 @@ class penggajianController extends Controller
       DB::beginTransaction();
       try {
 
-        $id = DB::table('d_payroll')
-              ->max('p_id');
-
-        if (empty($id)) {
-          $id = 0;
-        }
-
-        $kode = "";
-
-        $querykode = DB::select(DB::raw("SELECT MAX(MID(p_no,4,5)) as counter, MAX(MID(p_no,10,2)) as bulan, MAX(MID(p_no,13)) as tahun FROM d_payroll"));
-
-        if (count($querykode) > 0) {
-          if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
-              $kode = "00001";
-          } else {
-            foreach($querykode as $k)
-              {
-                $tmp = ((int)$k->counter)+1;
-                $kode = sprintf("%05s", $tmp);
-              }
+        for ($z=0; $z < count($request->p_id); $z++) {
+          if ($request->gajipokok[$z] == 'Rp. 0') {
+             return response()->json([
+               'status' => 'tidak lengkap'
+             ]);
           }
-        } else {
-          $kode = "00001";
-        }
+          else if ($request->tunjangan[$z] == 'Rp. 0') {
+             return response()->json([
+               'status' => 'tidak lengkap'
+             ]);
+          }
+          else if ($request->ansuransi[$z] == 'Rp. 0') {
+             return response()->json([
+               'status' => 'tidak lengkap'
+             ]);
+          }
+          else if ($request->total[$z] == 'Rp. 0') {
+             return response()->json([
+               'status' => 'tidak lengkap'
+             ]);
+          } else {
+            $id = DB::table('d_payroll')
+                  ->max('p_id');
+
+            if (empty($id)) {
+              $id = 0;
+            }
+
+            $kode = "";
+
+            $querykode = DB::select(DB::raw("SELECT MAX(MID(p_no,4,5)) as counter, MAX(MID(p_no,10,2)) as bulan, MAX(MID(p_no,13)) as tahun FROM d_payroll"));
+
+            if (count($querykode) > 0) {
+              if ($querykode[0]->bulan != date('m') || $querykode[0]->tahun != date('Y')) {
+                  $kode = "00001";
+              } else {
+                foreach($querykode as $k)
+                  {
+                    $tmp = ((int)$k->counter)+1;
+                    $kode = sprintf("%05s", $tmp);
+                  }
+              }
+            } else {
+              $kode = "00001";
+            }
 
 
-        $finalkode = 'PY-' . $kode . '/' . date('m') . '/' . date('Y');
+            $finalkode = 'PY-' . $kode . '/' . date('m') . '/' . date('Y');
 
-        DB::table('d_payroll')
-          ->insert([
-            'p_id' => $id + 1,
-            'p_no' => $finalkode,
-            'p_date' => Carbon::now('Asia/Jakarta'),
-            'p_start_periode' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-            'p_end_periode' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-            'p_status' => 'Y'
-          ]);
-
-          for ($i=0; $i < count($request->p_id); $i++) {
-            $detailid = DB::table('d_payroll_dt')
-                        ->where('pd_payroll', $id + 1)
-                        ->max('pd_detailid');
-
-                $gajipokok = DB::table('d_pekerja')
-                                ->where('p_id', $request->p_id[$i])
-                                ->select('p_gaji_pokok')
-                                ->get();
-
-                $tunjangan = DB::table('d_pekerja')
-                                ->where('p_id', $request->p_id[$i])
-                                ->select('p_tjg_jabatan', 'p_tjg_makan', 'p_tjg_transport')
-                                ->get();
-
-                $kesehatan = DB::table('d_bpjs_kesehatan')
-                                ->where('b_pekerja', $request->p_id[$i])
-                                ->where('b_status', 'Y')
-                                ->select('b_value')
-                                ->get();
-
-                $ketenagakerjaan = DB::table('d_bpjs_ketenagakerjaan')
-                                ->where('b_pekerja', $request->p_id[$i])
-                                ->where('b_status', 'Y')
-                                ->select('b_value')
-                                ->get();
-
-                $rbh = DB::table('d_rbh')
-                                ->where('r_pekerja', $request->p_id[$i])
-                                ->where('r_status', 'Y')
-                                ->select('r_value')
-                                ->get();
-
-                $dapan = DB::table('d_dapan')
-                                ->where('d_pekerja', $request->p_id[$i])
-                                ->where('d_status', 'Y')
-                                ->select('d_value')
-                                ->get();
-
-                if (empty($rbh)) {
-                  $rbhinsert = 0;
-                } else {
-                  $rbhinsert = $rbh[0]->r_value;
-                }
-
-                if (empty($ketenagakerjaan)) {
-                  $ketenagakerjaaninsert = 0;
-                } else {
-                  $ketenagakerjaaninsert = $ketenagakerjaan[0]->b_value;
-                }
-
-                if (empty($dapan)) {
-                  $dapaninsert = 0;
-                } else {
-                  $dapaninsert = $dapan[0]->d_value;
-                }
-
-                if (empty($kesehatan)) {
-                  $kesehataninsert = 0;
-                } else {
-                  $kesehataninsert = $kesehatan[0]->b_value;
-                }
-
-                $tmp = str_replace('.', '', $request->potonganlain[$i]);
-                $potonganlain = str_replace('Rp. ', '', $tmp);
-
-                $tmp1 = str_replace('.', '', $request->totalgaji[$i]);
-                $totalgaji = str_replace('Rp. ', '', $tmp1);
-
-            DB::table('d_payroll_dt')
+            DB::table('d_payroll')
               ->insert([
-                'pd_payroll' => $id + 1,
-                'pd_detailid' => $detailid + 1,
-                'pd_pekerja' => $request->p_id[$i],
-                'pd_gaji_pokok' => $gajipokok[0]->p_gaji_pokok,
-                'pd_tjg_jabatan' => $tunjangan[0]->p_tjg_jabatan,
-                'pd_tjg_makan' => $tunjangan[0]->p_tjg_makan,
-                'pd_tjg_transport' => $tunjangan[0]->p_tjg_transport,
-                'pd_bpjs_kes' => $kesehataninsert,
-                'pd_bpjs_tk' => $ketenagakerjaaninsert,
-                'pd_bpjs_rbh' => $rbhinsert,
-                'pd_bpjs_dapan' => $dapaninsert,
-                'pd_lain' => $potonganlain,
-                'pd_reff' => $request->noreff[$i],
-                'pd_total' => $totalgaji,
-                'pd_note' => $request->Keterangan[$i]
+                'p_id' => $id + 1,
+                'p_no' => $finalkode,
+                'p_date' => Carbon::now('Asia/Jakarta'),
+                'p_start_periode' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                'p_end_periode' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                'p_status' => 'Y'
               ]);
 
-              if ($kesehataninsert != 0) {
-                $bpjskes = DB::table('d_bpjs_kesehatan')
-                                  ->where('b_pekerja', $request->p_id[$i])
-                                  ->where('b_status', 'Y')
-                                  ->get();
+              for ($i=0; $i < count($request->p_id); $i++) {
+                $detailid = DB::table('d_payroll_dt')
+                            ->where('pd_payroll', $id + 1)
+                            ->max('pd_detailid');
 
-                $detailid = DB::table('d_bpjskes_iuran')
-                            ->where('bi_no_bpjs', $bpjskes[0]->b_no)
-                            ->max("bi_detailid");
+                    $gajipokok = DB::table('d_pekerja')
+                                    ->where('p_id', $request->p_id[$i])
+                                    ->select('p_gaji_pokok')
+                                    ->get();
 
-                  DB::table('d_bpjskes_iuran')
-                    ->insert([
-                      'bi_no_bpjs' => $bpjskes[0]->b_no,
-                      'bi_detailid' => $detailid + 1,
-                      'bi_no_pay' => $finalkode,
-                      'bi_value' => $kesehataninsert,
-                      'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-                      'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-                      'bi_status' => 'Y',
-                      'bi_mem' => Session::get('mem'),
-                      'bi_insert' => Carbon::now('Asia/Jakarta')
-                    ]);
+                    $tunjangan = DB::table('d_pekerja')
+                                    ->where('p_id', $request->p_id[$i])
+                                    ->select('p_tjg_jabatan', 'p_tjg_makan', 'p_tjg_transport')
+                                    ->get();
+
+                    $kesehatan = DB::table('d_bpjs_kesehatan')
+                                    ->where('b_pekerja', $request->p_id[$i])
+                                    ->where('b_status', 'Y')
+                                    ->select('b_value')
+                                    ->get();
+
+                    $ketenagakerjaan = DB::table('d_bpjs_ketenagakerjaan')
+                                    ->where('b_pekerja', $request->p_id[$i])
+                                    ->where('b_status', 'Y')
+                                    ->select('b_value', 'b_value_jht', 'b_value_pensiun')
+                                    ->get();
+
+                    $rbh = DB::table('d_rbh')
+                                    ->where('r_pekerja', $request->p_id[$i])
+                                    ->where('r_status', 'Y')
+                                    ->select('r_value')
+                                    ->get();
+
+                    $dapan = DB::table('d_dapan')
+                                    ->where('d_pekerja', $request->p_id[$i])
+                                    ->where('d_status', 'Y')
+                                    ->select('d_value')
+                                    ->get();
+
+                    if (empty($rbh)) {
+                      $rbhinsert = 0;
+                    } else {
+                      $rbhinsert = $rbh[0]->r_value;
+                    }
+
+                    if (empty($ketenagakerjaan[0]->b_value)) {
+                      $ketenagakerjaaninsert = 0;
+                    } else {
+                      $ketenagakerjaaninsert = $ketenagakerjaan[0]->b_value;
+                    }
+
+                    if (empty($ketenagakerjaan[0]->b_value_jht)) {
+                      $ketenagakerjaaninsertjht = 0;
+                    } else {
+                      $ketenagakerjaaninsertjht = $ketenagakerjaan[0]->b_value_jht;
+                    }
+
+                    if (empty($ketenagakerjaan[0]->b_value_pensiun)) {
+                      $ketenagakerjaaninsertpensiun = 0;
+                    } else {
+                      $ketenagakerjaaninsertpensiun = $ketenagakerjaan[0]->b_value_pensiun;
+                    }
+
+                    if (empty($dapan)) {
+                      $dapaninsert = 0;
+                    } else {
+                      $dapaninsert = $dapan[0]->d_value;
+                    }
+
+                    if (empty($kesehatan)) {
+                      $kesehataninsert = 0;
+                    } else {
+                      $kesehataninsert = $kesehatan[0]->b_value;
+                    }
+
+                    $tmp = str_replace('.', '', $request->potonganlain[$i]);
+                    $potonganlain = str_replace('Rp. ', '', $tmp);
+
+                    $tmp1 = str_replace('.', '', $request->totalgaji[$i]);
+                    $totalgaji = str_replace('Rp. ', '', $tmp1);
+
+                DB::table('d_payroll_dt')
+                  ->insert([
+                    'pd_payroll' => $id + 1,
+                    'pd_detailid' => $detailid + 1,
+                    'pd_pekerja' => $request->p_id[$i],
+                    'pd_gaji_pokok' => $gajipokok[0]->p_gaji_pokok,
+                    'pd_tjg_jabatan' => $tunjangan[0]->p_tjg_jabatan,
+                    'pd_tjg_makan' => $tunjangan[0]->p_tjg_makan,
+                    'pd_tjg_transport' => $tunjangan[0]->p_tjg_transport,
+                    'pd_bpjs_kes' => $kesehataninsert,
+                    'pd_bpjs_tk' => $ketenagakerjaaninsert,
+                    'pd_bpjs_tk_jht' => $ketenagakerjaaninsertjht,
+                    'pd_bpjs_tk_pensiun' => $ketenagakerjaaninsertpensiun,
+                    'pd_bpjs_rbh' => $rbhinsert,
+                    'pd_bpjs_dapan' => $dapaninsert,
+                    'pd_lain' => $potonganlain,
+                    'pd_reff' => $request->noreff[$i],
+                    'pd_total' => $totalgaji,
+                    'pd_note' => $request->Keterangan[$i]
+                  ]);
+
+                  if ($kesehataninsert != 0) {
+                    $bpjskes = DB::table('d_bpjs_kesehatan')
+                                      ->where('b_pekerja', $request->p_id[$i])
+                                      ->where('b_status', 'Y')
+                                      ->get();
+
+                    $detailid = DB::table('d_bpjskes_iuran')
+                                ->where('bi_no_bpjs', $bpjskes[0]->b_no)
+                                ->max("bi_detailid");
+
+                                if ($detailid == null) {
+                                  $detailid = 0;
+                                }
+
+                      DB::table('d_bpjskes_iuran')
+                        ->insert([
+                          'bi_no_bpjs' => $bpjskes[0]->b_no,
+                          'bi_detailid' => $detailid + 1,
+                          'bi_no_pay' => $finalkode,
+                          'bi_value' => $kesehataninsert,
+                          'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                          'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                          'bi_status' => 'Y',
+                          'bi_mem' => Session::get('mem'),
+                          'bi_insert' => Carbon::now('Asia/Jakarta')
+                        ]);
+                  }
+
+                  if ($ketenagakerjaaninsert != 0) {
+                    $bpjsket = DB::table('d_bpjs_ketenagakerjaan')
+                                      ->where('b_pekerja', $request->p_id[$i])
+                                      ->where('b_status', 'Y')
+                                      ->get();
+
+                    $detailid = DB::table('d_bpjsket_iuran')
+                                ->where('bi_no_bpjs', $bpjsket[0]->b_no)
+                                ->max("bi_detailid");
+
+                                if ($detailid == null) {
+                                  $detailid = 0;
+                                }
+
+                      DB::table('d_bpjsket_iuran')
+                        ->insert([
+                          'bi_no_bpjs' => $bpjsket[0]->b_no,
+                          'bi_detailid' => $detailid + 1,
+                          'bi_no_pay' => $finalkode,
+                          'bi_value' => $ketenagakerjaaninsert,
+                          'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                          'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                          'bi_status' => 'Y',
+                          'bi_mem' => Session::get('mem'),
+                          'bi_insert' => Carbon::now('Asia/Jakarta')
+                        ]);
+                  }
+
+                  if ($rbhinsert != 0) {
+                    $rbh = DB::table('d_rbh')
+                                      ->where('r_pekerja', $request->p_id[$i])
+                                      ->where('r_status', 'Y')
+                                      ->get();
+
+                    $detailid = DB::table('d_rbh_iuran')
+                                ->where('ri_no_rbh', $rbh[0]->r_no)
+                                ->max("ri_detailid");
+
+                                if ($detailid == null) {
+                                  $detailid = 0;
+                                }
+
+                      DB::table('d_rbh_iuran')
+                        ->insert([
+                          'ri_no_rbh' => $rbh[0]->r_no,
+                          'ri_detailid' => $detailid + 1,
+                          'ri_no_pay' => $finalkode,
+                          'ri_value' => $rbhinsert,
+                          'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                          'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                          'ri_status' => 'Y',
+                          'ri_mem' => Session::get('mem'),
+                          'ri_insert' => Carbon::now('Asia/Jakarta')
+                        ]);
+                  }
+
+                  if ($dapaninsert != 0) {
+                    $dapan = DB::table('d_dapan')
+                                      ->where('d_pekerja', $request->p_id[$i])
+                                      ->where('d_status', 'Y')
+                                      ->get();
+
+                    $detailid = DB::table('d_dapan_iuran')
+                                ->where('di_no_dapan', $dapan[0]->d_no)
+                                ->max("di_detailid");
+
+                                if ($detailid == null) {
+                                  $detailid = 0;
+                                }
+
+                      DB::table('d_dapan_iuran')
+                        ->insert([
+                          'di_no_dapan' => $dapan[0]->d_no,
+                          'di_detailid' => $detailid + 1,
+                          'di_no_pay' => $finalkode,
+                          'di_value' => $dapaninsert,
+                          'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
+                          'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
+                          'di_status' => 'Y',
+                          'di_mem' => Session::get('mem'),
+                          'di_insert' => Carbon::now('Asia/Jakarta')
+                        ]);
+                  }
+
               }
-
-              if ($ketenagakerjaaninsert != 0) {
-                $bpjsket = DB::table('d_bpjs_ketenagakerjaan')
-                                  ->where('b_pekerja', $request->p_id[$i])
-                                  ->where('b_status', 'Y')
-                                  ->get();
-
-                $detailid = DB::table('d_bpjsket_iuran')
-                            ->where('bi_no_bpjs', $bpjsket[0]->b_no)
-                            ->max("bi_detailid");
-
-                  DB::table('d_bpjsket_iuran')
-                    ->insert([
-                      'bi_no_bpjs' => $bpjskes[0]->b_no,
-                      'bi_detailid' => $detailid + 1,
-                      'bi_no_pay' => $finalkode,
-                      'bi_value' => $ketenagakerjaaninsert,
-                      'bi_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-                      'bi_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-                      'bi_status' => 'Y',
-                      'bi_mem' => Session::get('mem'),
-                      'bi_insert' => Carbon::now('Asia/Jakarta')
-                    ]);
-              }
-
-              if ($rbhinsert != 0) {
-                $rbh = DB::table('d_rbh')
-                                  ->where('r_pekerja', $request->p_id[$i])
-                                  ->where('r_status', 'Y')
-                                  ->get();
-
-                $detailid = DB::table('d_rbh_iuran')
-                            ->where('ri_no_rbh', $rbh[0]->r_no)
-                            ->max("ri_detailid");
-
-                  DB::table('d_rbh_iuran')
-                    ->insert([
-                      'ri_no_rbh' => $rbh[0]->r_no,
-                      'ri_detailid' => $detailid + 1,
-                      'ri_no_pay' => $finalkode,
-                      'ri_value' => $rbhinsert,
-                      'ri_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-                      'ri_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-                      'ri_status' => 'Y',
-                      'ri_mem' => Session::get('mem'),
-                      'ri_insert' => Carbon::now('Asia/Jakarta')
-                    ]);
-              }
-
-              if ($dapaninsert != 0) {
-                $dapan = DB::table('d_dapan')
-                                  ->where('d_pekerja', $request->p_id[$i])
-                                  ->where('d_status', 'Y')
-                                  ->get();
-
-                $detailid = DB::table('d_dapan_iuran')
-                            ->where('di_no_dapan', $rbh[0]->d_no)
-                            ->max("di_detailid");
-
-                  DB::table('d_dapan_iuran')
-                    ->insert([
-                      'di_no_dapan' => $dapan[0]->d_no,
-                      'di_detailid' => $detailid + 1,
-                      'di_no_pay' => $finalkode,
-                      'di_value' => $dapaninsert,
-                      'di_date_start' => Carbon::createFromFormat('d/m/Y', $request->start, 'Asia/Jakarta'),
-                      'di_date_end' => Carbon::createFromFormat('d/m/Y', $request->end, 'Asia/Jakarta'),
-                      'di_status' => 'Y',
-                      'di_mem' => Session::get('mem'),
-                      'di_insert' => Carbon::now('Asia/Jakarta')
-                    ]);
-              }
-
           }
-
+        }
 
         DB::commit();
         return response()->json([
@@ -798,8 +851,8 @@ class penggajianController extends Controller
     }
 
     public function prosesedit(Request $request){
-      // DB::beginTransaction();
-      // try {
+      DB::beginTransaction();
+      try {
 
         $id = DB::table('d_payroll')
               ->where('p_no', $request->nota)
@@ -1021,17 +1074,38 @@ class penggajianController extends Controller
 
             }
 
-      //   DB::commit();
-      //   return response()->json([
-      //     'status' => 'berhasil'
-      //   ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal'
-      //   ]);
-      // }
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
 
+    }
+
+    public function ambildata(Request $request){
+      $data = DB::table('d_mitra_pekerja')
+              ->where('mp_mitra', $request->mitra)
+              ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+              ->leftJoin('d_bpjs_kesehatan', 'd_bpjs_kesehatan.b_pekerja', '=', 'mp_pekerja')
+              ->leftJoin('d_bpjs_ketenagakerjaan', 'd_bpjs_ketenagakerjaan.b_pekerja', '=', 'mp_pekerja')
+              ->leftJoin('d_dapan', 'd_pekerja', '=', 'mp_pekerja')
+              ->leftJoin('d_rbh', 'r_pekerja', '=', 'mp_pekerja')
+              ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'mp_pekerja')
+              ->select('d_pekerja.p_id', 'p_name', 'p_nip', DB::raw("COALESCE(p_tjg_makan, 0) as p_tjg_makan"), DB::raw("COALESCE(p_tjg_jabatan, 0) as p_tjg_jabatan"), DB::raw("COALESCE(p_tjg_transport, 0) as p_tjg_transport"), DB::raw("COALESCE(p_gaji_pokok, 0) as p_gaji_pokok"), DB::raw("COALESCE(r_value, 0) as r_value"), DB::raw("COALESCE(d_value, 0) as d_value"), DB::raw("COALESCE(p_value, 0) as p_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, 0) as b_valuekes"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as b_valueket"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as ansuransi"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as tunjangan"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, 0) as total"))
+              ->get();
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->total = $data[$i]->p_gaji_pokok + $data[$i]->p_tjg_makan + $data[$i]->p_tjg_jabatan + $data[$i]->p_tjg_transport - $data[$i]->r_value + $data[$i]->d_value + $data[$i]->b_valuekes + $data[$i]->b_valueket - $data[$i]->p_value;
+        $data[$i]->ansuransi = $data[$i]->b_valuekes + $data[$i]->b_valueket + $data[$i]->r_value + $data[$i]->d_value;
+        $data[$i]->tunjangan = $data[$i]->p_tjg_makan + $data[$i]->p_tjg_jabatan + $data[$i]->p_tjg_transport;
+      }
+
+      return response()->json($data);
     }
 
 }

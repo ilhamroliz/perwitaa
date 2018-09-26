@@ -52,9 +52,9 @@
                                 <a class="alert-link">Pemberitahuan</a><span id="isipemberitahuan">Pekerja ini dalam masa ... sampai ... </span>.
                         </div> -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">No Dapan</label>
+                            <label class="col-lg-2 control-label">No Rekening Dapan</label>
                             <div class="col-lg-9">
-                                <input type="text" id='nobpjs' placeholder="No NIK RBH" style="text-transform:uppercase" class="form-control" name="nobpjs" value="">
+                                <input type="text" id='nobpjs' placeholder="No Rekening Dapan" style="text-transform:uppercase" class="form-control" name="nodapan" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,6 +89,12 @@
                             <label class="col-lg-2 control-label">Terhitung Mulai Tanggal (TMT)</label>
                             <div class="col-lg-9">
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nominal</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="nominal" class="form-control" name="nominal">
                             </div>
                         </div>
                         </div>

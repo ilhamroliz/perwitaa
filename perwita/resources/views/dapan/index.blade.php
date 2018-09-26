@@ -51,9 +51,9 @@
                                 <a class="alert-link">Pemberitahuan</a><span id="isipemberitahuan">Pekerja ini dalam masa ... sampai ... </span>.
                         </div> -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">No Dapan</label>
+                            <label class="col-lg-2 control-label">No Rekening Dapan</label>
                             <div class="col-lg-9">
-                                <input type="text" id='nobpjs' placeholder="No NIK RBH" style="text-transform:uppercase" class="form-control" name="nobpjs" value="">
+                                <input type="text" id='nobpjs' placeholder="No Rekening Dapan" style="text-transform:uppercase" class="form-control" name="nodapan" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -77,23 +77,19 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
                             <div class="col-lg-9">
-                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kelas</label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="kelas" name="kelas">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                </select>
+                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Terhitung Mulai Tanggal (TMT)</label>
                             <div class="col-lg-9">
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nominal</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="nominal" class="form-control" name="nominal">
                             </div>
                         </div>
                         </div>
@@ -192,6 +188,8 @@ var table;
         }
       });
     }
+
+    $('#nominal').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
 </script>
 @endsection

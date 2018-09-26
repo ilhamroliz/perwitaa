@@ -44,43 +44,49 @@ class dapanController extends Controller
 
       if (!empty($check)) {
           for ($i=0; $i < count($check); $i++) {
-            if ($check[$i]->b_status == 'Y') {
+            if ($check[$i]->d_status == 'Y') {
               return response()->json([
                 'status' => 'ada'
               ]);
             } else {
+              $request->nominal = str_replace('.', '', $request->nominal);
+              $request->nominal = str_replace('Rp ', '', $request->nominal);
+
           $pekerja = DB::table('d_mitra_pekerja')
                     ->where('mp_pekerja', $id)
                     ->get();
 
           DB::table('d_dapan')
               ->insert([
-                'd_no' => $request->nobpjs,
+                'd_no' => $request->nodapan,
                 'd_pekerja' => $id,
                 'd_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
                 'd_faskes' => $request->faskes,
-                'd_kelas' => $request->kelas,
                 'd_mitra' => $pekerja[0]->mp_mitra,
                 'd_divisi' => $pekerja[0]->mp_divisi,
+                'd_value' => $request->nominal,
                 'd_status' => 'Y',
                 'd_insert' => Carbon::now('Asia/Jakarta')
               ]);
         }
       }
     } else {
+      $request->nominal = str_replace('.', '', $request->nominal);
+      $request->nominal = str_replace('Rp ', '', $request->nominal);
+
     $pekerja = DB::table('d_mitra_pekerja')
               ->where('mp_pekerja', $id)
               ->get();
 
     DB::table('d_dapan')
         ->insert([
-          'd_no' => $request->nobpjs,
+          'd_no' => $request->nodapan,
           'd_pekerja' => $id,
           'd_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
           'd_faskes' => $request->faskes,
-          'd_kelas' => $request->kelas,
           'd_mitra' => $pekerja[0]->mp_mitra,
           'd_divisi' => $pekerja[0]->mp_divisi,
+          'd_value' => $request->nominal,
           'd_status' => 'Y',
           'd_insert' => Carbon::now('Asia/Jakarta')
         ]);

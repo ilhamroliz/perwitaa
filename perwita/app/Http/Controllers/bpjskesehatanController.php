@@ -18,8 +18,14 @@ class bpjskesehatanController extends Controller
       $data =  DB::table('d_pekerja')
           ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
           ->where('p_id', $request->id)
-          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"))
+          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"), DB::raw("coalesce(p_gaji_pokok, 0) as bpjskes"))
           ->get();
+
+          $percentage = 1;
+
+          $new_width = ($percentage / 100) * $data[0]->bpjskes;
+
+          $data[0]->bpjskes = $new_width;
 
         return view('bpjskesehatan.indexdinamis', compact('id', 'data'));
       } else {
@@ -50,6 +56,9 @@ class bpjskesehatanController extends Controller
                   'status' => 'ada'
                 ]);
               } else {
+                $request->iuran = str_replace('.', '', $request->iuran);
+                $request->iuran = str_replace('Rp ', '', $request->iuran);
+
                 $pekerja = DB::table('d_mitra_pekerja')
                           ->where('mp_pekerja', $id)
                           ->get();
@@ -60,15 +69,21 @@ class bpjskesehatanController extends Controller
                       'b_pekerja' => $id,
                       'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
                       'b_faskes' => $request->faskes,
+                      'b_poli_umum' => $request->polimum,
+                      'b_poli_gigi' => $request->poligi,
                       'b_kelas' => $request->kelas,
                       'b_mitra' => $pekerja[0]->mp_mitra,
                       'b_divisi' => $pekerja[0]->mp_divisi,
+                      'b_value' => $request->iuran,
                       'b_status' => 'Y',
                       'b_insert' => Carbon::now('Asia/Jakarta')
                     ]);
               }
             }
           } else {
+            $request->iuran = str_replace('.', '', $request->iuran);
+            $request->iuran = str_replace('Rp ', '', $request->iuran);
+
             $pekerja = DB::table('d_mitra_pekerja')
                       ->where('mp_pekerja', $id)
                       ->get();
@@ -79,9 +94,12 @@ class bpjskesehatanController extends Controller
                   'b_pekerja' => $id,
                   'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
                   'b_faskes' => $request->faskes,
+                  'b_poli_umum' => $request->polimum,
+                  'b_poli_gigi' => $request->poligi,
                   'b_kelas' => $request->kelas,
                   'b_mitra' => $pekerja[0]->mp_mitra,
                   'b_divisi' => $pekerja[0]->mp_divisi,
+                  'b_value' => $request->iuran,
                   'b_status' => 'Y',
                   'b_insert' => Carbon::now('Asia/Jakarta')
                 ]);

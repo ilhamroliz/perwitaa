@@ -18,8 +18,20 @@ class bpjsketenagakerjaanController extends Controller
       $data =  DB::table('d_pekerja')
           ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
           ->where('p_id', $request->id)
-          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"))
+          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"), DB::raw("COALESCE(p_gaji_pokok, '-') as jht"), DB::raw("COALESCE(p_gaji_pokok, '-') as p_gaji_pokok"), DB::raw("COALESCE(p_gaji_pokok, '-') as pensiun"))
           ->get();
+
+          $percentage = 2;
+
+          $new_width = ($percentage / 100) * $data[0]->p_gaji_pokok;
+
+          $data[0]->jht = $new_width;
+
+          $percentage = 1;
+
+          $new_width = ($percentage / 100) * $data[0]->p_gaji_pokok;
+
+          $data[0]->pensiun = $new_width;
 
         return view('bpjsketenagakerjaan.indexdinamis', compact('id', 'data'));
       } else {
@@ -36,7 +48,6 @@ class bpjsketenagakerjaanController extends Controller
     }
 
     public function simpan(Request $request, $id){
-
       $check = DB::table('d_bpjs_ketenagakerjaan')
               ->where('b_pekerja', $id)
               ->get();
@@ -50,6 +61,11 @@ class bpjsketenagakerjaanController extends Controller
                     ]);
 
                   } else {
+                    $request->iuranjht = str_replace('.', '', $request->iuranjht);
+                    $request->iuranjht = str_replace('Rp ', '', $request->iuranjht);
+
+                    $request->iuranpensiun = str_replace('.', '', $request->iuranpensiun);
+                    $request->iuranpensiun = str_replace('Rp ', '', $request->iuranpensiun);
 
                $pekerja = DB::table('d_mitra_pekerja')
                          ->where('mp_pekerja', $id)
@@ -60,10 +76,11 @@ class bpjsketenagakerjaanController extends Controller
                      'b_no' => $request->nobpjs,
                      'b_pekerja' => $id,
                      'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
-                     'b_faskes' => $request->faskes,
-                     'b_kelas' => $request->kelas,
                      'b_mitra' => $pekerja[0]->mp_mitra,
                      'b_divisi' => $pekerja[0]->mp_divisi,
+                     'b_value' => $request->iuranjht + $request->iuranpensiun,
+                     'b_value_jht' => $request->iuranjht,
+                     'b_value_pensiun' => $request->iuranpensiun,
                      'b_status' => 'Y',
                      'b_insert' => Carbon::now('Asia/Jakarta')
                    ]);
@@ -71,6 +88,11 @@ class bpjsketenagakerjaanController extends Controller
                  }
                }
               } else {
+                $request->iuranjht = str_replace('.', '', $request->iuranjht);
+                $request->iuranjht = str_replace('Rp ', '', $request->iuranjht);
+
+                $request->iuranpensiun = str_replace('.', '', $request->iuranpensiun);
+                $request->iuranpensiun = str_replace('Rp ', '', $request->iuranpensiun);
 
             $pekerja = DB::table('d_mitra_pekerja')
                       ->where('mp_pekerja', $id)
@@ -81,10 +103,11 @@ class bpjsketenagakerjaanController extends Controller
                   'b_no' => $request->nobpjs,
                   'b_pekerja' => $id,
                   'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
-                  'b_faskes' => $request->faskes,
-                  'b_kelas' => $request->kelas,
                   'b_mitra' => $pekerja[0]->mp_mitra,
                   'b_divisi' => $pekerja[0]->mp_divisi,
+                  'b_value' => $request->iuranjht + $request->iuranpensiun,
+                  'b_value_jht' => $request->iuranjht,
+                  'b_value_pensiun' => $request->iuranpensiun,
                   'b_status' => 'Y',
                   'b_insert' => Carbon::now('Asia/Jakarta')
                 ]);
@@ -105,7 +128,7 @@ class bpjsketenagakerjaanController extends Controller
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
-              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'b_faskes')
+              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_status', 'b_no')
               ->get();
 
       for ($i=0; $i < count($data); $i++) {
@@ -120,7 +143,7 @@ class bpjsketenagakerjaanController extends Controller
               ->join('d_pekerja', 'p_id', '=', 'b_pekerja')
               ->join('d_mitra', 'm_id', '=', 'b_mitra')
               ->join('d_mitra_divisi', 'md_id', '=', 'b_divisi')
-              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_kelas', 'b_status', 'b_no', 'b_faskes')
+              ->select('p_name', 'm_name', 'md_name', 'b_date', 'b_status', 'b_no')
               ->where('p_id', $request->id)
               ->get();
 

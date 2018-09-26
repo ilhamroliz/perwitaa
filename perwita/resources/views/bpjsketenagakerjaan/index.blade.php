@@ -51,7 +51,7 @@
                                 <a class="alert-link">Pemberitahuan</a><span id="isipemberitahuan">Pekerja ini dalam masa ... sampai ... </span>.
                         </div> -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">No BPJS</label>
+                            <label class="col-lg-2 control-label">No BPJS ketenagakerjaan</label>
                             <div class="col-lg-9">
                                 <input type="text" id='nobpjs' placeholder="No NIK BPJS" style="text-transform:uppercase" class="form-control" name="nobpjs" value="">
                             </div>
@@ -75,25 +75,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
-                            <div class="col-lg-9">
-                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kelas</label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="kelas" name="kelas">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-lg-2 control-label">Terhitung Mulai Tanggal (TMT)</label>
                             <div class="col-lg-9">
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran (JHT)</label>
+                            <div class="col-lg-9">
+                                <input type="text" readonly id="iuranjht" class="form-control" name="iuranjht">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran (Pensiun)</label>
+                            <div class="col-lg-9">
+                                <input type="text" readonly id="iuranpensiun" class="form-control" name="iuranpensiun">
                             </div>
                         </div>
                         </div>
@@ -183,6 +179,8 @@ var table;
           }
           $('#namapekerja').val(result[0].p_name);
           $('#jabatanpekerja').val(result[0].p_jabatan);
+          $('#iuranjht').val('Rp. '+accounting.formatMoney(result[0].jht, "", 0, ".", ","));
+          $('#iuranpensiun').val('Rp. '+accounting.formatMoney(result[0].pensiun, "", 0, ".", ","));
 
           //Button
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');

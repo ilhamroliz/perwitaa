@@ -283,14 +283,14 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Tunjangan</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-payroll/payroll/potongan/') ? 'active' : '' || Request::is('manajemen-payroll/payroll/potongan/*') ? 'active' : ''}}">
+                    <li class="{{ Request::is('manajemen-payroll/payroll/potongan') ? 'active' : '' || Request::is('manajemen-payroll/payroll/potongan/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-payroll/payroll/potongan')}}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Potongan</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-payroll/payroll/penggajian/') ? 'active' : '' || Request::is('manajemen-payroll/payroll/penggajian/*') ? 'active' : ''}}">
+                    <li class="{{ Request::is('manajemen-payroll/payroll/penggajian') ? 'active' : '' || Request::is('manajemen-payroll/payroll/penggajian/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-payroll/payroll/penggajian')}}">
-                            <i class=" " aria-hidden="true"></i><span class="nav-label">Penggajian</span>
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Proses Gaji</span>
                         </a>
                     </li>
                 </ul>
@@ -319,7 +319,7 @@
                     </li>
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/rbh') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/rbh/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-bpjs/ansuransi/rbh')}}">
-                            <i class=" " aria-hidden="true"></i><span class="nav-label">RBH</span>
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">RBH (Ramamuza Bhakti Husada)</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/dapan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">

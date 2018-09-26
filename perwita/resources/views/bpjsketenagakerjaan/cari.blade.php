@@ -67,8 +67,6 @@
                             <tr>
                               <th>No. BPJS Ketenagakerjaan</th>
                               <th>Nama Tenaga Kerja</th>
-                              <th>Fasilitas Kesehatan</th>
-                              <th>Kelas</th>
                               <th>Mitra</th>
                               <th>Divisi</th>
                               <th>Tanggal Mulai</th>
@@ -113,8 +111,6 @@ $(document).ready(function(){
         html += '<tr>'+
                 '<td>'+result[i].b_no+'</td>'+
                 '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].b_faskes+'</td>'+
-                '<td>'+result[i].b_kelas+'</td>'+
                 '<td>'+result[i].m_name+'</td>'+
                 '<td>'+result[i].md_name+'</td>'+
                 '<td>'+result[i].b_date+'</td>'+
@@ -166,8 +162,6 @@ function loaddata(){
         html += '<tr>'+
                 '<td>'+result[i].b_no+'</td>'+
                 '<td>'+result[i].p_name+'</td>'+
-                '<td>'+result[i].b_faskes+'</td>'+
-                '<td>'+result[i].b_kelas+'</td>'+
                 '<td>'+result[i].m_name+'</td>'+
                 '<td>'+result[i].md_name+'</td>'+
                 '<td>'+result[i].b_date+'</td>'+
@@ -208,8 +202,6 @@ function loaddata(){
             html += '<tr>'+
                     '<td>'+result[i].b_no+'</td>'+
                     '<td>'+result[i].p_name+'</td>'+
-                    '<td>'+result[i].b_faskes+'</td>'+
-                    '<td>'+result[i].b_kelas+'</td>'+
                     '<td>'+result[i].m_name+'</td>'+
                     '<td>'+result[i].md_name+'</td>'+
                     '<td>'+result[i].b_date+'</td>'+

@@ -52,7 +52,7 @@ class phkController extends Controller
 
     public function getdata(Request $request){
       $data = DB::table('d_pekerja')
-             ->select('p_name', 'p_jabatan')
+             ->select('p_name', 'p_jabatan', DB::raw("coalesce(p_gaji_pokok, '') as bpjskes"), DB::raw("COALESCE(p_gaji_pokok, '-') as jht"), DB::raw("COALESCE(p_gaji_pokok, '-') as pensiun"))
              ->where('p_id',$request->id)
              ->get();
 
@@ -65,6 +65,25 @@ class phkController extends Controller
              } else {
                $data[0]->p_jabatan = '-';
              }
+
+       $percentage = 1;
+
+       $new_width = ($percentage / 100) * $data[0]->bpjskes;
+
+       $data[0]->bpjskes = $new_width;
+
+       $percentage = 2;
+
+       $new_width = ($percentage / 100) * $data[0]->jht;
+
+       $data[0]->jht = $new_width;
+
+       $percentage = 1;
+
+       $new_width = ($percentage / 100) * $data[0]->pensiun;
+
+       $data[0]->pensiun = $new_width;
+
 
       if (count($data) > 0) {
        return response()->json($data);

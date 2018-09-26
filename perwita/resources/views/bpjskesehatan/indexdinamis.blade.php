@@ -72,7 +72,19 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
                             <div class="col-lg-9">
-                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
+                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Poli Umum</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="polimum" class="form-control" name="polimum" style="text-transform:uppercase" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Poli Gigi</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="poligi" class="form-control" name="poligi" style="text-transform:uppercase" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,6 +101,12 @@
                             <label class="col-lg-2 control-label">Terhitung Mulai Tanggal (TMT)</label>
                             <div class="col-lg-9">
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="iuran" class="form-control" name="iuran" readonly placeholder="" value="Rp. {{$data[0]->bpjskes}}">
                             </div>
                         </div>
                         </div>

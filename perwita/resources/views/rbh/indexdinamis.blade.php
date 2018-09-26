@@ -91,6 +91,12 @@
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nominal</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="nominal" class="form-control" name="nominal" style="text-transform:uppercase">
+                            </div>
+                        </div>
                         </div>
                     </form>
                     <br>

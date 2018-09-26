@@ -70,25 +70,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
-                            <div class="col-lg-9">
-                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kelas</label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="kelas" name="kelas">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-lg-2 control-label">Terhitung Mulai Tanggal (TMT)</label>
                             <div class="col-lg-9">
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran (JHT)</label>
+                            <div class="col-lg-9">
+                                <input type="text" readonly id="iuranjht" class="form-control" name="iuranjht" value="Rp. {{$data[0]->jht}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran (Pensiun)</label>
+                            <div class="col-lg-9">
+                                <input type="text" readonly id="iuranpensiun" class="form-control" name="iuranpensiun" value="Rp. {{$data[0]->pensiun}}">
                             </div>
                         </div>
                         </div>

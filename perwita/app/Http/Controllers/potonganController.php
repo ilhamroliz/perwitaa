@@ -39,18 +39,42 @@ class potonganController extends Controller
           }
         }
 
-        for ($i=0; $i < count($request->bpjsket); $i++) {
-          if ($request->bpjsket[$i] == "") {
+        for ($i=0; $i < count($request->bpjsketjht); $i++) {
+          if ($request->bpjsketjht[$i] == "") {
 
           } else {
-            $tmp = str_replace('.', '', $request->bpjsket[$i]);
-            $bpjsket = str_replace('Rp ', '', $tmp);
+            $tmp = str_replace('.', '', $request->bpjsketjht[$i]);
+            $bpjsketjht = str_replace('Rp ', '', $tmp);
+
+            $tmp = str_replace('.', '', $request->bpjsketpens[$i]);
+            $bpjsketpens = str_replace('Rp ', '', $tmp);
 
             DB::table('d_bpjs_ketenagakerjaan')
               ->where('b_pekerja', $request->p_id[$i])
               ->where('b_status', 'Y')
               ->update([
-                'b_value' => $bpjsket
+                'b_value_jht' => $bpjsketjht,
+                'b_value' => $bpjsketjht + $bpjsketpens
+              ]);
+          }
+        }
+
+        for ($i=0; $i < count($request->bpjsketpens); $i++) {
+          if ($request->bpjsketpens[$i] == "") {
+
+          } else {
+            $tmp = str_replace('.', '', $request->bpjsketpens[$i]);
+            $bpjsketpens = str_replace('Rp ', '', $tmp);
+
+            $tmp = str_replace('.', '', $request->bpjsketjht[$i]);
+            $bpjsketjht = str_replace('Rp ', '', $tmp);
+
+            DB::table('d_bpjs_ketenagakerjaan')
+              ->where('b_pekerja', $request->p_id[$i])
+              ->where('b_status', 'Y')
+              ->update([
+                'b_value_pensiun' => $bpjsketpens,
+                'b_value' => $bpjsketjht + $bpjsketpens
               ]);
           }
         }
@@ -84,6 +108,44 @@ class potonganController extends Controller
               ->update([
                 'd_value' => $dapan
               ]);
+          }
+        }
+
+        for ($i=0; $i < count($request->potonganlain); $i++) {
+          if ($request->potonganlain[$i] == "") {
+
+          } else {
+            $check = DB::table('d_potonganlain')
+              ->where('p_pekerja', $request->p_id[$i])
+              ->get();
+
+            if (count($check) > 0) {
+              $tmp = str_replace('.', '', $request->potonganlain[$i]);
+              $potonganlain = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_potonganlain')
+                ->where('p_pekerja', $request->p_id[$i])
+                ->update([
+                  'p_value' => $potonganlain
+                ]);
+            } else {
+              $id = DB::table('d_potonganlain')
+                    ->max('p_id');
+
+              if (empty($id)) {
+                $id = 0;
+              }
+
+              $tmp = str_replace('.', '', $request->potonganlain[$i]);
+              $potonganlain = str_replace('Rp ', '', $tmp);
+
+              DB::table('d_potonganlain')
+                ->insert([
+                  'p_id' => $id + 1,
+                  'p_pekerja' => $request->p_id[$i],
+                  'p_value' => $potonganlain
+                ]);
+            }
           }
         }
 
@@ -123,6 +185,7 @@ class potonganController extends Controller
               $z->on('d_pekerja', '=', 'p_id')
                 ->where('d_status', '=', 'Y');
             })
+            ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'd_pekerja.p_id')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -130,7 +193,7 @@ class potonganController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(p_value, '') as p_value"), DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_pensiun, '') as b_value_pensiun"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_jht, '') as b_value_jht"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_isapproved', 'Y')
             ->get();
@@ -153,6 +216,7 @@ class potonganController extends Controller
               $z->on('d_pekerja', '=', 'p_id')
                 ->where('d_status', '=', 'Y');
             })
+            ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'd_pekerja.p_id')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -160,7 +224,7 @@ class potonganController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(p_value, '') as p_value"), DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_pensiun, '') as b_value_pensiun"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_jht, '') as b_value_jht"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_isapproved', 'Y')
@@ -185,6 +249,7 @@ class potonganController extends Controller
               $z->on('d_pekerja', '=', 'p_id')
                 ->where('d_status', '=', 'Y');
             })
+            ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'd_pekerja.p_id')
             ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
             ->join('d_mitra', 'm_id', '=', 'mp_mitra')
             ->leftJoin('d_mitra_divisi', function ($q){
@@ -192,7 +257,7 @@ class potonganController extends Controller
                     ->on('md_id', '=', 'mp_divisi');
             })
             ->select(
-              'p_name', 'p_id', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+              'p_name', 'd_pekerja.p_id', DB::raw("COALESCE(p_value, '') as p_value"), DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_pensiun, '') as b_value_pensiun"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_jht, '') as b_value_jht"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
             )
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
@@ -235,6 +300,7 @@ class potonganController extends Controller
             $z->on('d_pekerja', '=', 'p_id')
               ->where('d_status', '=', 'Y');
           })
+          ->leftJoin('d_potonganlain', 'p_pekerja', '=', 'd_pekerja.p_id')
           ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
           ->join('d_mitra', 'm_id', '=', 'mp_mitra')
           ->leftJoin('d_mitra_divisi', function ($q){
@@ -242,7 +308,7 @@ class potonganController extends Controller
                   ->on('md_id', '=', 'mp_divisi');
           })
           ->select(
-            'p_name', 'p_id', 'p_nip_mitra', DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value, '') as biket_value"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
+            'p_name', 'p_nip_mitra', 'd_pekerja.p_id', DB::raw("COALESCE(p_value, '') as p_value"), DB::raw("COALESCE(d_dapan.d_value, '') as biked_value"), DB::raw("COALESCE(d_rbh.r_value, '') as biker_value"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_pensiun, '') as b_value_pensiun"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_value_jht, '') as b_value_jht"), DB::raw("COALESCE(d_bpjs_kesehatan.b_value, '') as bikes_value"), DB::raw("COALESCE(r_status, '-') as statusr"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_status, '-') as statusket"), DB::raw("COALESCE(d_bpjs_kesehatan.b_status, '-') as statuskes"), DB::raw("COALESCE(p_nip, '-') as p_nip"), DB::raw("COALESCE(d_bpjs_kesehatan.b_no, '-') as b_nokes"), DB::raw("COALESCE(d_no, '-') as d_no"), DB::raw("COALESCE(d_bpjs_ketenagakerjaan.b_no, '-') as b_noket"), DB::raw("COALESCE(d_rbh.r_no, '-') as r_no")
           )
           ->where('mp_isapproved', 'Y')
           ->where(function ($q) use ($key) {

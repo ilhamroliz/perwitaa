@@ -44,11 +44,14 @@ class rbhController extends Controller
 
       if (!empty($check)) {
           for ($i=0; $i < count($check); $i++) {
-            if ($check[$i]->b_status == 'Y') {
+            if ($check[$i]->r_status == 'Y') {
               return response()->json([
                 'status' => 'ada'
               ]);
             } else {
+              $request->nominal = str_replace('.', '', $request->nominal);
+              $request->nominal = str_replace('Rp ', '', $request->nominal);
+
           $pekerja = DB::table('d_mitra_pekerja')
                     ->where('mp_pekerja', $id)
                     ->get();
@@ -62,12 +65,16 @@ class rbhController extends Controller
                 'r_kelas' => $request->kelas,
                 'r_mitra' => $pekerja[0]->mp_mitra,
                 'r_divisi' => $pekerja[0]->mp_divisi,
+                'r_value' => $request->nominal,
                 'r_status' => 'Y',
                 'r_insert' => Carbon::now('Asia/Jakarta')
               ]);
         }
       }
     } else {
+      $request->nominal = str_replace('.', '', $request->nominal);
+      $request->nominal = str_replace('Rp ', '', $request->nominal);
+
     $pekerja = DB::table('d_mitra_pekerja')
               ->where('mp_pekerja', $id)
               ->get();
@@ -81,6 +88,7 @@ class rbhController extends Controller
           'r_kelas' => $request->kelas,
           'r_mitra' => $pekerja[0]->mp_mitra,
           'r_divisi' => $pekerja[0]->mp_divisi,
+          'r_value' => $request->nominal,
           'r_status' => 'Y',
           'r_insert' => Carbon::now('Asia/Jakarta')
         ]);
