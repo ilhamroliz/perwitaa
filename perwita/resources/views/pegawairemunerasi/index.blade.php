@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Pegawai Remunerasi</h5>
-        <a href="{{ url('manajemen-pegawai/pegawairemunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-pegawai/pegawairemunerasi/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-outline btn-info btn-flat" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

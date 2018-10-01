@@ -29,7 +29,7 @@
   <div class="wrapper wrapper-content animated fadeInRight">
       <div class="ibox-title ibox-info">
           <h5>Daftar Data Pegawai</h5>
-          <button style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"
+          <button style="float: right; margin-top: -7px;" class="btn btn-primary btn-outline btn-flat btn-sm" type="button"
                     aria-hidden="true" onclick="tambah()"><i class="fa fa-plus"></i>&nbsp;Tambah
           </button>
           <button style="float: right; margin-top: -7px; margin-right:10px;" class="btn btn-info btn-flat btn-sm" type="button"

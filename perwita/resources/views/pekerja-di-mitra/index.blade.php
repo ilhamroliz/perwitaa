@@ -119,7 +119,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpannik()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+                <button onclick="simpannik()" id="simpanbtn" class="btn btn-primary btn-outline" type="button">Simpan</button>
             </div>
         </div>
     </div>

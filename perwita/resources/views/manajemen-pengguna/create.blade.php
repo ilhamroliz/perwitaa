@@ -136,7 +136,7 @@
                       <div class="hr-line-dashed"></div>
                       <div class="form-group row">
                           <div class="col-sm-4 col-sm-offset-8 pull-right">
-                              <button class="pull-right btn btn-primary btn-flat simpan" type="submit" style="margin-left: 5px;">
+                              <button class="pull-right btn btn-primary btn-outlinebtn-flat simpan" type="submit" style="margin-left: 5px;">
                                   Simpan
                               </button>
                               <a href="{{url('/manajemen-pengguna/pengguna')}}" class="btn btn-danger btn-flat pull-right">Kembali</a>

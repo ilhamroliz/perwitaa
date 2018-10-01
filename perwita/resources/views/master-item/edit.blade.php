@@ -117,7 +117,7 @@
                 <div class="hr-line-dashed" style="margin-top: -10px;"></div>
                 <div class="form-group">
                     <div class="col-sm-4" style="float: right;">
-                        <button class="btn btn-primary simpan" type="submit" style="float: right;">Update Data</button>
+                        <button class="btn btn-primary btn-outline simpan" type="submit" style="float: right;">Update Data</button>
                     </div>
                 </div>
             </form>

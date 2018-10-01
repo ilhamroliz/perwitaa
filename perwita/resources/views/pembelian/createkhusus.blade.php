@@ -52,7 +52,7 @@
                                 <label for="namabarang" class="sr-only">Nama Barang</label>
                                 <input type="text" placeholder="Masukan Nomor Rencana Pembelian" id="namabarang" class="form-control" style="width: 100%;">
                             </div>
-                            
+
                             <div class="table-responsive col-md-12" style="margin-top: 30px;">
                                 <table class="table table-striped table-bordered table-hover" id="tabelitem">
                                     <thead>
@@ -97,7 +97,7 @@
 
                             <div class="m-t-sm">
                                 <div class="btn-group">
-                                <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
+                                <button onclick="simpan()" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
                                 <a href="{{ url('/manajemen-seragam/pembelian') }}" class="btn btn-white btn-sm"> Batal</a>
                                 </div>
                             </div>

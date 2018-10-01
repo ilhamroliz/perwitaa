@@ -16,7 +16,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Master Seragam</h5>
-        <a href="{{ url('master-item/create') }}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a href="{{ url('master-item/create') }}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-outline btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -159,7 +159,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" id="simpanbtn" class="btn btn-primary" type="button">Simpan</button>
+                <button onclick="simpan()" id="simpanbtn" class="btn btn-primary btn-outline" type="button">Simpan</button>
             </div>
         </div>
     </div>

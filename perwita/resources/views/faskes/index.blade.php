@@ -6,7 +6,7 @@
 
 <style>
     .popover-navigation [data-role="next"] { display: none; }
-    .popover-navigation [data-role="end"] { display: none; }    
+    .popover-navigation [data-role="end"] { display: none; }
 </style>
 
 @endsection
@@ -68,7 +68,7 @@
                 <div class="row m-b-lg">
                     <input type="text" name="faskes" class="form-control" id="namefaskes" placeholder="Masukkan Fasilitas Kesehatan">
                     <div style="margin-top: 10px;">
-                        <button style="float: right;" class="btn btn-primary" type="button" onclick="simpan()"> Simpan</button>
+                        <button style="float: right;" class="btn btn-primary btn-outline" type="button" onclick="simpan()"> Simpan</button>
                     </div>
                 </div>
             </div>

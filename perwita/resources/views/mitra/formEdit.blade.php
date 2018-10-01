@@ -147,7 +147,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
                                       <a href="{{url('/manajemen-mitra/data-mitra')}}" class="btn btn-danger btn-flat">Kembali</a>
-                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="button" onclick="perbarui({{$mitra->m_id}})">
+                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-outline btn-flat simpan" type="button" onclick="perbarui({{$mitra->m_id}})">
                                             Perbarui
                                         </button>
                                     </div>

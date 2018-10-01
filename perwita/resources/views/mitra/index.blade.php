@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Mitra Perusahaan</h5>
-        <a href="{{ url('manajemen-mitra/data-mitra/tambah') }}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a href="{{ url('manajemen-mitra/data-mitra/tambah') }}" style="float: right; margin-top: -7px;" class="btn btn-outline btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

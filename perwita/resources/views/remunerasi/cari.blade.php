@@ -52,7 +52,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Cari Remunerasi</h5>
-      <a href="{{url('manajemen-pekerja/remunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+      <a href="{{url('manajemen-pekerja/remunerasi')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-outline btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -167,7 +167,7 @@
               </form>
               </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="updatebtn" onclick="update()" name="button">Simpan</button>
+                  <button type="button" class="btn btn-primary btn-outline" id="updatebtn" onclick="update()" name="button">Simpan</button>
                     <div class="btn-group">
                         <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                     </div>

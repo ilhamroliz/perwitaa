@@ -32,7 +32,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Rencana Pembelian</h5>
-        <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/rencana-pembelian/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-outline btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/rencana-pembelian/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -79,7 +79,7 @@
                   </table>
               </div>
               <div class="modal-footer">
-                  
+
               </div>
           </div>
       </div>
@@ -128,7 +128,7 @@
                 //"scrollCollapse": true,
                 "language": dataTableLanguage,
             });
-          
+
         }, 1500);
     });
 
@@ -215,4 +215,3 @@
     }
 </script>
 @endsection
-

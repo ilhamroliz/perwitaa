@@ -134,7 +134,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="" class="btn btn-primary" onclick="getprint()" id="printbtn"><em class="fa fa-print">&nbsp;</em>Print</a>
+        <a href="" class="btn btn-primary btn-outline" onclick="getprint()" id="printbtn"><em class="fa fa-print">&nbsp;</em>Print</a>
       </div>
     </div>
   </div>

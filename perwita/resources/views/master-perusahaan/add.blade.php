@@ -40,11 +40,11 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox">        
+    <div class="ibox">
         <div class="ibox-title">
             <h5>Tambah Perusahaan</h5>
         </div>
-        <div class="ibox-content">              
+        <div class="ibox-content">
             <div class="row" style="padding-left: 10px; padding-right: 10px;">
                 <form class="form-tambah form-horizontal">
                     <div class="form-group">
@@ -77,7 +77,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <button style="float: right;" class="btn btn-primary" onclick="simpan()" type="button">Simpan</button>
+                    <button style="float: right;" class="btn btn-primary btn-outline" onclick="simpan()" type="button">Simpan</button>
                 </div>
             </div>
         </div>

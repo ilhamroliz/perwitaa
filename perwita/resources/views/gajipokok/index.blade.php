@@ -81,7 +81,7 @@
                     </tbody>
                 </table>
               </form>
-              <button type="button" class="btn btn-primary pull-right" onclick="simpan()" name="button">Simpan</button>
+              <button type="button" class="btn btn-primary btn-outline pull-right" onclick="simpan()" name="button">Simpan</button>
             </div>
             </div>
         </div>

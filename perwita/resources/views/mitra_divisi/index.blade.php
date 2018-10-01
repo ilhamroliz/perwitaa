@@ -41,13 +41,13 @@
                 <div class="ibox-content">
                         <div class="row">
             <div class="col-xs-12">
-              
+
               <div class="box" id="seragam_box">
                 <div class="col-md-10 col-sm-10 col-xs-10" style="padding-bottom: 10px;">
-   
+
                 </div>
                 <div class="box-body">
-                
+
                   <table id="addColumn1" class="table table-bordered table-striped tabel_opname1">
                       <thead>
                            <tr>
@@ -105,7 +105,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button onclick="edit()" class="btn btn-primary" type="button">Save Change</button>
+                                <button onclick="edit()" class="btn btn-primary btn-outline" type="button">Save Change</button>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                 <h3 id="nama_mitra_detail"> - </h3>
                             </div>
                             <div class="modal-body">
-                                
+
                                 <form class="form-horizontal">
                                    <table id="tabel_detail" class="table table-bordered table-striped tabel_detail">
 
@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                  </div><!-- /.box-footer --> 
+                  </div><!-- /.box-footer -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -180,7 +180,7 @@ $(document).ready(function() {
                     { "data": "m_address" },
                     { "data": "button" },
                 ],
-                responsive: true,        
+                responsive: true,
                 "pageLength": 10,
                 "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
                 "language": dataTableLanguage,
@@ -191,7 +191,7 @@ $(document).ready(function() {
                 .draw();*/
         },1500);
 
-      
+
   });
 
 $(document).on('click','.tambah',function(){
@@ -202,12 +202,12 @@ $(document).on('click','.tambah',function(){
         };
 
       $.ajax({
-          data: {id : value}, 
+          data: {id : value},
           type: "GET",
           url : baseUrl + "/manajemen-mitra/mitra-divisi/get_mitra",
           dataType:'json',
           success: function(data)
-          {   
+          {
             var mydata = '<thead>'
                            +'<tr>'
                               +'<th style="text-align : center;"> NAMA DIVISI </th>'
@@ -228,14 +228,14 @@ $(document).on('click','.tambah',function(){
                                   + '</tr>';
 
             });
-                  mydata = mydata +'</tbody>'; 
+                  mydata = mydata +'</tbody>';
 
             $('#addColumn').html(mydata);
             $('#nama_mitra').html(nama_mitra);
             $('#id_mitra').attr('value',id_mitra);
           }
       })
-      
+
       $("#modal").modal("show");
       //console.log($('#id_mitra').val());
    });
@@ -247,12 +247,12 @@ $(document).on('click','.detail',function(){
         };
 
       $.ajax({
-          data: {id : value}, 
+          data: {id : value},
           type: "GET",
           url : baseUrl + "/manajemen-mitra/mitra-divisi/detail",
           dataType:'json',
           success: function(data)
-          {   
+          {
             var mydata = '<thead>'
                            +'<tr>'
                               +'<th style="text-align : center;"> NO </th>'
@@ -268,9 +268,9 @@ $(document).on('click','.detail',function(){
                                       +'<td style="text-align : left;">'+n.md_name+'</td>'
                                   +'</tr>';
                   nama_mitra_detail = n.m_name;
-                  
+
             });
-                  mydata = mydata +'</tbody>'; 
+                  mydata = mydata +'</tbody>';
 
             $('#tabel_detail').html(mydata);
             $('#nama_mitra_detail').html(nama_mitra_detail);
@@ -284,7 +284,7 @@ $(document).on('click','.detail',function(){
 function append(p){
   var par = p.parentNode.parentNode;
   var count_append = 0;
-                  
+
   var append = '<button class="btn btn-default btn-sm append" onclick="remove_append(this)"><a class="fa fa-minus"></a></button>';
   var append_plus = '<button class="btn btn-default btn-sm append" onclick="append(this)"><a class="fa fa-plus"></a></button>';
 
@@ -362,7 +362,7 @@ function simpan(){
 
             });
        }
-      });  
+      });
      });
 }
 
@@ -371,19 +371,19 @@ function cleartabel(){
 }
 
 $(document).on('click','.edit',function(){
-     
+
       var id=$(this).attr("id");
       var value = {
             id: id
         };
 
       $.ajax({
-          data: {id : value}, 
+          data: {id : value},
           type: "GET",
           url : baseUrl + "/manajemen-mitra/mitra-divisi/get_data_edit",
           dataType:'json',
           success: function(data)
-          {   
+          {
             var mydata = '<thead>'
                            +'<tr>'
                               +'<th style="text-align : center;"> NO </th>'
@@ -409,14 +409,14 @@ $(document).on('click','.edit',function(){
                   nama_mitra_edit = n.m_name;
 
             });
-                  mydata = mydata +'</tbody>'; 
+                  mydata = mydata +'</tbody>';
 
             $('#tabel_edit').html(mydata);
             $('#nama_mitra_edit').html(nama_mitra_edit);
           }
       })
          $("#modal-edit").modal("show");
-      
+
    });
 
 function edit(){
@@ -479,7 +479,7 @@ function edit(){
 
             });
        }
-      });  
+      });
      });
   }
 
@@ -487,4 +487,3 @@ function edit(){
 
 </script>
 @endsection
-

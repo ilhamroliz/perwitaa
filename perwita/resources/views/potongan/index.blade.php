@@ -87,7 +87,7 @@
                 </form>
             </div>
         </div>
-        <button type="button" name="button" class="btn btn-primary pull-right" onclick="simpan()">Simpan</button>
+        <button type="button" name="button" class="btn btn-primary btn-outline pull-right" onclick="simpan()">Simpan</button>
     </div>
 </div>
 </div>

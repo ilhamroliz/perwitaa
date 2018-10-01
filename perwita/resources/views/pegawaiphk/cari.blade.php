@@ -52,7 +52,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Cari PHK</h5>
-      <a href="{{url('manajemen-pegawai/pegawaiphk')}}" style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
+      <a href="{{url('manajemen-pegawai/pegawaiphk')}}" style="float: right; margin-top: -7px;" class="btn btn-outline btn-primary btn-flat"><i class="fa fa-plus">&nbsp;</i>Tambah</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

@@ -61,32 +61,32 @@
 
                     {{ Form::open(['id'=>'createAkun', 'files' => true]) }}
 
-                    <div >   
+                    <div >
                         <div class="form-group form-inline col-md-6">
                             <div class="col-md-4">
                                 <label for="exampleInputName2" style="padding-top: 7px;">Tahun Akun</label>
-                            </div> 
+                            </div>
                             <div class="col-md-8">
                                 <div class="input-group">
                                        <input   readonly="" value="" type="number" class="form-control " id="tahunakun" name="Tahun Akun" placeholder="Tahun Akun">
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="form-group form-inline col-md-6">
                             <div class="col-md-4">
                                 <label class="control-label col-sm-2" >Level COA</label>
-                            </div> 
+                            </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input class="form-control "  id="level_coa" name="Level COA" value="{{$coa->coa_level+1}}" readonly="">                                                                                                          
-                                </div> 
+                                    <input class="form-control "  id="level_coa" name="Level COA" value="{{$coa->coa_level+1}}" readonly="">
+                                </div>
                             </div>
-                        </div>                      
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Parent COA</label>
                             <div class="col-sm-2 div_parentCoa">
-                                <input type="hidden" id="Parent_COA" class="form-control"  name="Parent COA" value="{{$coa_level->coa_code}}" readonly="">                                                                                                          
-                                <input class="form-control" value="{{$coa_level->coa_name}}" readonly="">                                                                                                          
+                                <input type="hidden" id="Parent_COA" class="form-control"  name="Parent COA" value="{{$coa_level->coa_code}}" readonly="">
+                                <input class="form-control" value="{{$coa_level->coa_name}}" readonly="">
                                 {{--<select class="form-control"  id="Parent_COA" name="Parent COA" onchange="hapus()">
                             <option value="{{$coa_level->coa_code}}" @if($coa_level->coa_code==$coa->coa_code) selected='selected' @endif>{{$coa_level->coa_name}}</option>
                                 </select>--}}
@@ -97,8 +97,8 @@
                                 <label class="control-label col-sm-2" >Masukkan Kode</label>
                                 <div class="col-sm-2">
                                     <input title="Kode Maks. 2 Digit" data-toggle="tooltip" data-placement="bottom" type="number" class="form-control " id="kode" name="Kode" placeholder="Masukkan Kode" onchange="chekminus()"  maxlength="2">
-                                </div> 
-                            </div> 
+                                </div>
+                            </div>
                             <label class="control-label col-sm-2" >Kode Akun</label>
                             <div class="col-sm-4">
                                 <input type="number" class="form-control " id="coa_code" name="Kode Akun" placeholder="" readonly>
@@ -109,14 +109,14 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control " id="coa_code" name="Nama Akun" placeholder="Masukkan Nama Akun">
                             </div>
-                        </div>               
+                        </div>
                         {{--<div class="form-group">
                     <label class="control-label col-sm-2" >Akun Induk</label>
                     <div class="col-sm-9">
                         <select class="form-control"  id="AkunInduk" name="Akun Induk">
                             <option value="1">Ya</option>
-                            <option value="0">Tidak</option>                                    
-                        </select>                               
+                            <option value="0">Tidak</option>
+                        </select>
                     </div>
                 </div>--}}
                         {{--<div class="form-group">
@@ -124,8 +124,8 @@
                     <div class="col-sm-9">
                         <select class="form-control"  id="Akun Memiliki Saldo" name="Akun Memiliki Saldo">
                             <option value="1">Ya</option>
-                            <option value="0">Tidak</option>                                    
-                        </select>                                
+                            <option value="0">Tidak</option>
+                        </select>
                     </div>
                 </div>--}}
                         <div class="form-group">
@@ -133,7 +133,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control " id="coa_opening_tgl" placeholder="Masukkan Tanggal Pembukaan Akun" name="Coa Opening Tgl">
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Pembukaan Akun</label>
                             <div class="col-sm-8">
@@ -154,7 +154,7 @@
 
                     <div class="col-md-offset-9" style="padding-top:10px;">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-flat btn-sm save">Simpan Data</button>
+                            <button type="submit" class="btn btn-primary btn-outline btn-flat btn-sm save">Simpan Data</button>
                         </div>
                     </div>
 
@@ -238,7 +238,7 @@
     function chek() {
         $('#kode').unbind('keyup change input paste').bind('keyup change input paste', function (e) {
 //        alert(parseInt($(this).val()));
-//        alert($('#tahunakun').val());  
+//        alert($('#tahunakun').val());
             if ($('#kode').val() < 0) {
                 $('#kode').val('');
             }
@@ -415,5 +415,3 @@
 
 </script>
 @endsection
-
-

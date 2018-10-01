@@ -176,7 +176,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-9">
                                         <a href="{{url('manajemen-kontrak-mitra/data-kontrak-mitra')}}" class="btn btn-danger btn-flat" type="button">Kembali</a>
-                                        <button class="ladda-button ladda-button-demo btn btn-success btn-flat simpan" type="button" onclick="perbarui()">
+                                        <button class="ladda-button ladda-button-demo btn btn-outline btn-success btn-flat simpan" type="button" onclick="perbarui()">
                                             Perbarui
                                         </button>
                                     </div>

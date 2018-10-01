@@ -93,7 +93,7 @@
                 </form>
             </div>
         </div>
-        <button type="button" name="button" class="btn btn-primary pull-right" onclick="simpan()">Simpan</button>
+        <button type="button" name="button" class="btn btn-primary btn-outline pull-right" onclick="simpan()">Simpan</button>
         <div class="pull-right" style="margin-right:10px;">
           <button type="button" name="button" class="btn btn-info" onclick="proses()">Proses</button>
         </div>

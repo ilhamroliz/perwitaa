@@ -40,15 +40,15 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    
+
     <div class="row">
         <div class="col-lg-7">
-            <div class="ibox">        
+            <div class="ibox">
                 <div class="ibox-title">
                     <h5>Pengaturan Perusahaan</h5>
-                    <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
+                    <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-outline btn-success btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
                 </div>
-                <div class="ibox-content">              
+                <div class="ibox-content">
                     <div class="row" style="padding-left: 10px; padding-right: 10px;">
                         <form class="form-pengaturan">
                             <table class="table table-striped col-md-12" id="table-pengaturan">
@@ -69,11 +69,11 @@
             </div>
         </div>
         <div class="col-lg-5">
-            <div class="ibox">        
+            <div class="ibox">
                 <div class="ibox-title">
                     <h5>Perusahaan Aktif</h5>
                 </div>
-                <div class="ibox-content">              
+                <div class="ibox-content">
                     <table class="table table-striped " id="table-perusahaan">
                         <thead>
                             <tr>

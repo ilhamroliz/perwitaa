@@ -78,7 +78,7 @@
                     </form>
                     <br>
                     <div class="pull-right">
-                      <button type="button" id="simpanbtn" disabled onclick="simpan()" class="btn btn-primary" name="button"><i class="fa fa-save">&nbsp;</i>Simpan</button>
+                      <button type="button" id="simpanbtn" disabled onclick="simpan()" class="btn btn-outline btn-primary" name="button"><i class="fa fa-save">&nbsp;</i>Simpan</button>
                     </div>
                 </div>
             </div>

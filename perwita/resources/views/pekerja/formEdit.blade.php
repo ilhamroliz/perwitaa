@@ -1002,7 +1002,7 @@
                         </div> --}}
                         <div class="form-group">
                             <div class="col-sm-2" style="float: right">
-                                <button class="btn btn-primary"  {{-- onclick="perbarui({{$id}})" --}} type="perbarui" style="float: right">Simpan</button>
+                                <button class="btn btn-primary btn-outline"  {{-- onclick="perbarui({{$id}})" --}} type="perbarui" style="float: right"><i class="fa fa-check"></i>&nbsp;Simpan</button>
                             </div>
                         </div>
                     </form>
