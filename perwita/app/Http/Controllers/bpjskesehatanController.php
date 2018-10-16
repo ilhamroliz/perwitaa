@@ -12,8 +12,25 @@ use Carbon\Carbon;
 
 class bpjskesehatanController extends Controller
 {
-    public function index(){
-      return view('bpjskesehatan.index');
+    public function index(Request $request){
+      $id = $request->id;
+      if (!empty($id)) {
+      $data =  DB::table('d_pekerja')
+          ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')
+          ->where('p_id', $request->id)
+          ->select('p_name', DB::raw("COALESCE(jp_name, '-') as jp_name"), DB::raw("coalesce(p_gaji_pokok, 0) as bpjskes"))
+          ->get();
+
+          $percentage = 1;
+
+          $new_width = ($percentage / 100) * $data[0]->bpjskes;
+
+          $data[0]->bpjskes = $new_width;
+
+        return view('bpjskesehatan.indexdinamis', compact('id', 'data'));
+      } else {
+        return view('bpjskesehatan.index');
+      }
     }
 
     public function getfaskes(Request $request){
@@ -28,21 +45,66 @@ class bpjskesehatanController extends Controller
       DB::beginTransaction();
       try {
 
-        $pekerja = DB::table('d_mitra_pekerja')
-                  ->where('mp_pekerja', $id)
-                  ->get();
+      $check = DB::table('d_bpjs_kesehatan')
+              ->where('b_pekerja', $id)
+              ->get();
 
-        DB::table('d_bpjs_kesehatan')
-            ->insert([
-              'b_no' => $request->nobpjs,
-              'b_pekerja' => $id,
-              'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
-              'b_faskes' => $request->faskes,
-              'b_kelas' => $request->kelas,
-              'b_mitra' => $pekerja[0]->mp_mitra,
-              'b_divisi' => $pekerja[0]->mp_divisi,
-              'b_insert' => Carbon::now('Asia/Jakarta')
-            ]);
+          if (!empty($check)) {
+            for ($i=0; $i < count($check); $i++) {
+              if ($check[$i]->b_status == 'Y') {
+                return response()->json([
+                  'status' => 'ada'
+                ]);
+              } else {
+                $request->iuran = str_replace('.', '', $request->iuran);
+                $request->iuran = str_replace('Rp ', '', $request->iuran);
+
+                $pekerja = DB::table('d_mitra_pekerja')
+                          ->where('mp_pekerja', $id)
+                          ->get();
+
+                DB::table('d_bpjs_kesehatan')
+                    ->insert([
+                      'b_no' => $request->nobpjs,
+                      'b_pekerja' => $id,
+                      'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
+                      'b_faskes' => $request->faskes,
+                      'b_poli_umum' => $request->polimum,
+                      'b_poli_gigi' => $request->poligi,
+                      'b_kelas' => $request->kelas,
+                      'b_mitra' => $pekerja[0]->mp_mitra,
+                      'b_divisi' => $pekerja[0]->mp_divisi,
+                      'b_value' => $request->iuran,
+                      'b_status' => 'Y',
+                      'b_insert' => Carbon::now('Asia/Jakarta')
+                    ]);
+              }
+            }
+          } else {
+            $request->iuran = str_replace('.', '', $request->iuran);
+            $request->iuran = str_replace('Rp ', '', $request->iuran);
+
+            $pekerja = DB::table('d_mitra_pekerja')
+                      ->where('mp_pekerja', $id)
+                      ->get();
+
+            DB::table('d_bpjs_kesehatan')
+                ->insert([
+                  'b_no' => $request->nobpjs,
+                  'b_pekerja' => $id,
+                  'b_date' => Carbon::createFromFormat('d/m/Y', $request->tmt, 'Asia/Jakarta'),
+                  'b_faskes' => $request->faskes,
+                  'b_poli_umum' => $request->polimum,
+                  'b_poli_gigi' => $request->poligi,
+                  'b_kelas' => $request->kelas,
+                  'b_mitra' => $pekerja[0]->mp_mitra,
+                  'b_divisi' => $pekerja[0]->mp_divisi,
+                  'b_value' => $request->iuran,
+                  'b_status' => 'Y',
+                  'b_insert' => Carbon::now('Asia/Jakarta')
+                ]);
+          }
+
 
         DB::commit();
         return response()->json([

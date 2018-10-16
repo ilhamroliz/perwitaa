@@ -41,7 +41,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Data Pekerja</h5>
-        <button style="float: right; margin-top: -7px;" class="btn btn-primary btn-flat btn-sm" type="button"
+        <button style="float: right; margin-top: -7px;" class="btn btn-outline btn-primary btn-flat btn-sm" type="button"
                 aria-hidden="true" onclick="tambah()"><i class="fa fa-plus"></i>&nbsp;Tambah
         </button>
     </div>

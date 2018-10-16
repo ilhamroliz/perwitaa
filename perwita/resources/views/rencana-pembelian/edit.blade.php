@@ -76,7 +76,7 @@
                         </table>
                     </div>
                     <div>
-                        <button onclick="simpan()" class="btn btn-primary btn-sm pull-right">Update</button>
+                        <button onclick="simpan()" class="btn btn-primary btn-outline btn-sm pull-right">Update</button>
                     </div>
                 </div>
             </div>

@@ -118,7 +118,7 @@
 
                             <div class="m-t-sm">
                                 <div class="btn-group">
-                                <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
+                                <button onclick="simpan()" class="btn btn-primary btn-outline btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
                                 <a href="{{ url('/manajemen-seragam/pembelian') }}" class="btn btn-white btn-sm"> Batal</a>
                                 </div>
                             </div>

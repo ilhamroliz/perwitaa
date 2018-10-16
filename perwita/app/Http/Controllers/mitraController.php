@@ -86,13 +86,16 @@ class mitraController extends Controller
                       'mm_status' => 'null',
                   ));
 
-                  $jumlah = DB::select("select count(m_id) as jumlah from d_mitra where m_status_approval = 'P' and m_status != 'Tidak'");
-                  $jumlah = $jumlah[0]->jumlah;
+                  $jumlah = DB::table('d_mitra')
+                          ->where('m_status_approval', null)
+                          ->where('m_date_approval', null)
+                          ->where('m_status', '!=', 'Tidak')
+                          ->get();
 
                   d_notifikasi::where('n_fitur', '=', 'Mitra')
                       ->where('n_detail', '=', 'Create')
                       ->update([
-                          'n_qty' => $jumlah,
+                          'n_qty' => count($jumlah),
                           'n_insert' => Carbon::now()
                       ]);
 

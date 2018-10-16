@@ -224,7 +224,7 @@
                                     <div class="col-sm-4 col-sm-offset-9">
                                         <a href="{{url('manajemen-pekerja-mitra/data-pekerja-mitra')}}"
                                            class="btn btn-danger btn-flat" type="button">Kembali</a>
-                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan"
+                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-outline btn-flat simpan"
                                                 type="submit" {{-- onclick="simpan()" --}}>
                                             Lanjutkan
                                         </button>

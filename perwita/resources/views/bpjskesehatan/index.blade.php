@@ -77,7 +77,19 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Fasilitas Kesehatan</label>
                             <div class="col-lg-9">
-                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase" title="Fasilitas Kesehatan" placeholder="Fasilitas Kesehatan">
+                                <input type="text" id="faskes" class="form-control" name="faskes" style="text-transform:uppercase"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Poli Umum</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="polimum" class="form-control" name="polimum" style="text-transform:uppercase" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Poli Gigi</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="poligi" class="form-control" name="poligi" style="text-transform:uppercase" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -96,11 +108,17 @@
                                 <input type="text" id="tmt" class="form-control" name="tmt" style="text-transform:uppercase" placeholder="dd/mm/YYYY">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Iuran</label>
+                            <div class="col-lg-9">
+                                <input type="text" id="iuran" class="form-control" name="iuran" readonly placeholder="">
+                            </div>
+                        </div>
                         </div>
                     </form>
                     <br>
                     <div class="pull-right" style="margin-right:20px;">
-                      <button type="button" id="simpanbtn" disabled onclick="simpan()" class="btn btn-primary" name="button"><i class="fa fa-save">&nbsp;</i>Simpan</button>
+                      <button type="button" id="simpanbtn" disabled onclick="simpan()" class="btn btn-primary btn-outline" name="button"><i class="fa fa-save">&nbsp;</i>Simpan</button>
                     </div>
                 </div>
             </div>
@@ -142,7 +160,7 @@ var table;
         }
       });
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('#formtambah').serialize(),
         url: baseUrl + '/manajemen-bpjs/ansuransi/simpan/'+id,
         dataType: 'json',
@@ -155,6 +173,13 @@ var table;
                 type: "success",
                 showConfirmButton: false,
                 timer: 900
+            });
+          } else if (result.status == 'ada') {
+            swal({
+                title: "Gagal",
+                text: "Data BPJS kesehatan dengan pekerja yang sama sudah ada, jika ingin menginput data dengan pekerja ini, anda harus menonaktifkan data sebelumnya!",
+                type: "warning",
+                showConfirmButton: true,
             });
           }
           $('input[type=text]').val('');
@@ -176,6 +201,7 @@ var table;
           }
           $('#namapekerja').val(result[0].p_name);
           $('#jabatanpekerja').val(result[0].p_jabatan);
+          $('#iuran').val('Rp. '+accounting.formatMoney(result[0].bpjskes, "", 0, ".", ","));
 
           //Button
           $('#simpanbtn').attr('onclick', 'simpan('+id+')');

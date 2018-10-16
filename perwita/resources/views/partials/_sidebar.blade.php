@@ -273,9 +273,24 @@
                  Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
                 <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li class="{{ Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
-                        <a href="{{url('manajemen-payroll/payroll')}}">
-                            <i class=" " aria-hidden="true"></i><span class="nav-label">Penggajian</span>
+                    <li class="{{ Request::is('manajemen-payroll/payroll/gaji') ? 'active' : '' || Request::is('manajemen-payroll/payroll/gaji/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-payroll/payroll/gaji')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Gaji Pokok</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-payroll/payroll/tunjangan') ? 'active' : '' || Request::is('manajemen-payroll/payroll/tunjangan/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-payroll/payroll/tunjangan')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Tunjangan</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-payroll/payroll/potongan') ? 'active' : '' || Request::is('manajemen-payroll/payroll/potongan/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-payroll/payroll/potongan')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Potongan</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-payroll/payroll/penggajian') ? 'active' : '' || Request::is('manajemen-payroll/payroll/penggajian/*') ? 'active' : ''}}">
+                        <a href="{{url('manajemen-payroll/payroll/penggajian')}}">
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">Proses Gaji</span>
                         </a>
                     </li>
                 </ul>
@@ -284,7 +299,7 @@
 
             @if($sidebar[8]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
-                 Request::is('manajemen-bpjs/ansuransi') ? 'active' : '' 
+                 Request::is('manajemen-bpjs/ansuransi') ? 'active' : ''
                  || Request::is('manajemen-bpjs/ansuransi/*') ? 'active' : ''
                  || Request::is('manajemen-faskes/*') ? 'active' : ''
                 }}">
@@ -295,7 +310,7 @@
                             <i class=" " aria-hidden="true"></i><span class="nav-label">BPJS Kesehatan</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan') ? 'active' : '' 
+                    <li class="{{ Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan') ? 'active' : ''
                             || Request::is('manajemen-bpjs/ansuransi/ketenagakerjaan/*') ? 'active' : ''
                         }}">
                         <a href="{{url('manajemen-bpjs/ansuransi/ketenagakerjaan')}}">
@@ -304,7 +319,7 @@
                     </li>
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/rbh') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/rbh/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-bpjs/ansuransi/rbh')}}">
-                            <i class=" " aria-hidden="true"></i><span class="nav-label">RBH</span>
+                            <i class=" " aria-hidden="true"></i><span class="nav-label">RBH (Ramamuza Bhakti Husada)</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/dapan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/dapan/*') ? 'active' : ''}}">

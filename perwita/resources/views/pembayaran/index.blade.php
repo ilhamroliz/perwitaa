@@ -74,7 +74,7 @@
                       @endforeach
                     </tbody>
                   </table>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
+                <button onclick="simpan()" class="btn btn-primary btn-outline" type="button">Simpan</button>
             </div>
         </div>
     </div>

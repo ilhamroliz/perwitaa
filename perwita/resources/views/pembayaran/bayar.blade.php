@@ -93,10 +93,10 @@
                 </div>
                 <div class="col-md-12">
                   <div class="btn-group" style="float: right">
-                    <a onclick="simpan()" class="btn btn-primary btn-sm"> Simpan</a>
+                    <a onclick="simpan()" class="btn btn-primary btn-outline btn-sm"> Simpan</a>
                     <a href="{{ url('manajemen-seragam/pembayaran-seragam') }}" class="btn btn-white btn-sm"> Batal</a>
                   </div>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -128,7 +128,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                
+
             </div>
         </div>
     </div>
@@ -167,7 +167,7 @@
     function simpan(){
         waitingDialog.show();
         var ar = $();
-        for (var i = 0; i < tabelpembayaran.rows()[0].length; i++) { 
+        for (var i = 0; i < tabelpembayaran.rows()[0].length; i++) {
             ar = ar.add(tabelpembayaran.row(i).node());
         }
         $.ajaxSetup({
@@ -219,12 +219,12 @@
     }
 
     function convertToRupiah(angka) {
-        var rupiah = '';        
+        var rupiah = '';
         var angkarev = angka.toString().split('').reverse().join('');
         for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
         var hasil = rupiah.split('',rupiah.length-1).reverse().join('');
         return 'Rp. '+hasil;
-    
+
     }
 
     function convertToAngka(rupiah)

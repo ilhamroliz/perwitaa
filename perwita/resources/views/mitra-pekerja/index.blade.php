@@ -32,36 +32,36 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <h5>Data Permintaan Pekerja</h5>
-        <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-primary btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
+        <button style="float: right; margin-top: -7px;" onclick="tambah()" class="btn btn-primary btn-outline btn-flat btn-sm" type="button"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
         <a href="{{ url('manajemen-pekerja-mitra/data-pekerja-mitra/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
                 <div class="col-md-12">
-                        
+
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                 </div>
-                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">                    
+                <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
                    <table id="mitra" class="table table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Tanggal Kontrak</th>
                                 <th>No Kotrak</th>
-                                <th>Kontrak Selesai</th>            
-                                <th>Nama Perusahaan</th>            
+                                <th>Kontrak Selesai</th>
+                                <th>Nama Perusahaan</th>
                                 <th>Nama Mitra</th>
-                                <th>Nama Divisi</th>                                           
-                                <th>Maksimal Pekerja</th>            
-                                <th>Jumlah Pekerja</th>            
-                                <th style="width: 8%;">Aksi</th>            
+                                <th>Nama Divisi</th>
+                                <th>Maksimal Pekerja</th>
+                                <th>Jumlah Pekerja</th>
+                                <th style="width: 8%;">Aksi</th>
                             </tr>
-                        </thead>     
-                        <tbody>                       
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
-                </div>  
+                </div>
             </div>
 
         </div>
@@ -99,10 +99,10 @@
                     {data: 'md_name', name: 'md_name'},
                     //{data: 'm_address', name: 'm_address'},
                     {data: 'mc_need', name: 'mc_need'},
-                    {data: 'mc_fulfilled', name: 'mc_fulfilled'},            
+                    {data: 'mc_fulfilled', name: 'mc_fulfilled'},
                     {data: 'action', name: 'action',orderable:false,searchable:false}
                 ],
-                responsive: true,        
+                responsive: true,
                 "pageLength": 10,
                 "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
                 "language": dataTableLanguage,
@@ -118,7 +118,7 @@
 function tambah(){
     window.location = baseUrl+'/manajemen-pekerja-mitra/data-pekerja-mitra/tambah';
 }
-function hapus(mitra,mc_contractid){    
+function hapus(mitra,mc_contractid){
     swal({
       title: "Konfirmasi",
       text: "Apakah anda yakin ingin menghapus data kontrak mitra?",
@@ -135,7 +135,7 @@ function hapus(mitra,mc_contractid){
           timeout: 10000,
           success: function(response){
          if(response.status=='berhasil'){
-          
+
           swal({
 
                     title:"Berhasil",
@@ -145,7 +145,7 @@ function hapus(mitra,mc_contractid){
                             timer: 900
                     });
                table.draw();
-         
+
         }
           },error:function(x,e) {
             //alert(e);

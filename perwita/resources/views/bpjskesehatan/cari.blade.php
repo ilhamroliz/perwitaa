@@ -138,7 +138,52 @@ $(document).ready(function(){
         }
     });
 
+    table = $("#tabelcari").DataTable({
+        "language": dataTableLanguage,
+        "columnDefs": [{
+            "targets": 0,
+            "orderable": false
+        }]
+    });
+
 });
+
+  function loaddata(){
+    var html = '';
+    $('#showdata').html('');
+    $.ajax({
+      type: 'get',
+      url: baseUrl + '/manajemen-bpjs/ansuransi/data',
+      dataType: 'json',
+      success : function(result){
+        for (var i = 0; i < result.length; i++) {
+          if (result[i].b_status == 'Y') {
+            var status = '<center><span class="badge badge-primary">Aktif</span></center>';
+          } else {
+            var status = '<center><span class="badge badge-danger">Non Aktif</span></center>';
+          }
+
+          html += '<tr>'+
+                  '<td>'+result[i].b_no+'</td>'+
+                  '<td>'+result[i].p_name+'</td>'+
+                  '<td>'+result[i].b_faskes+'</td>'+
+                  '<td>'+result[i].b_kelas+'</td>'+
+                  '<td>'+result[i].m_name+'</td>'+
+                  '<td>'+result[i].md_name+'</td>'+
+                  '<td>'+result[i].b_date+'</td>'+
+                  '<td>'+status+'</td>'+
+                  '<td>'+
+                  '<div class="text-center">'+
+                    '<a style="margin-left:5px;" title="Non Aktifkan" type="button" onclick="nonaktif('+result[i].b_no+')"  class="btn btn-warning btn-xs"><i class="fa fa-ban"></i></a>'+
+                    '<a style="margin-left:5px;" title="Hapus" type="button" onclick="hapus('+result[i].b_no+')"  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>'+
+                  '</div>'+
+                  '</tr>';
+        }
+
+      $('#showdata').html(html);
+      }
+    });
+  }
 
   function getdata(id){
     waitingDialog.show();
@@ -213,9 +258,7 @@ $(document).ready(function(){
                   showConfirmButton: false,
                   timer: 900
               });
-              setTimeout(function(){
-                    window.location.reload();
-            }, 850);
+              loaddata();
             } else {
               swal({
                   title:"Perhatian",
@@ -278,9 +321,7 @@ $(document).ready(function(){
                   showConfirmButton: false,
                   timer: 900
               });
-              setTimeout(function(){
-                    window.location.reload();
-            }, 850);
+              loaddata();
             } else {
               swal({
                   title:"Perhatian",

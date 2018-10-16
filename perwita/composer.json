@@ -11,7 +11,8 @@
         "barryvdh/laravel-dompdf": "^0.7.0",
         "yajra/laravel-datatables-oracle": "~6.0",
         "crabbly/fpdf-laravel": "^1.0",
-        "anouar/fpdf": "^1.0"
+        "anouar/fpdf": "^1.0",
+        "riskihajar/terbilang": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

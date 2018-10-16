@@ -76,7 +76,7 @@
                             </table>
                         </div>
                         <div class="col-lg-12">
-                            <button type="button" class="btn btn-primary pull-right" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary btn-outline pull-right" onclick="simpan()">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -178,7 +178,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
             });
-            
+
             $.ajax({
                 url: baseUrl + '/manajemen-stock/stock-opname/simpan',
                 type: 'get',

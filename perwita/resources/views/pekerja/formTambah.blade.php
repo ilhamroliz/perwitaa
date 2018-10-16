@@ -673,7 +673,7 @@
                         </div> --}}
                         <div class="form-group">
                             <div class="col-sm-2" style="float: right">
-                                <button class="btn btn-primary" {{-- onclick="simpan()" --}} type="simpan" style="float: right">Simpan</button>
+                                <button class="btn btn-primary btn-outline" {{-- onclick="simpan()" --}} type="simpan" style="float: right"><i class="fa fa-check"></i>&nbsp;Simpan</button>
                             </div>
                         </div>
                     </form>

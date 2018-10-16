@@ -176,8 +176,8 @@
             </div>
               <div class="modal-footer">
                 <a class="no-print btn btn-info" id="print" onclick="print()" href=""><i class="fa fa-print">&nbsp;</i>Print</a>
-                <button type="button" name="button" class="btn btn-primary" id="setujui" onclick="setujui()">Setujui</button>
-                <button type="button" name="button" class="btn btn-danger" id="tolak" onclick="tolak()">Tolak</button>
+                <button type="button" name="button" class="btn btn-primary btn-outline" id="setujui" onclick="setujui()">Setujui</button>
+                <button type="button" name="button" class="btn btn-danger btn-outline" id="tolak" onclick="tolak()">Tolak</button>
                   <div class="btn-group">
                       <a href="#" class="btn btn-white btn-md" data-dismiss="modal">Close</a>
                   </div>

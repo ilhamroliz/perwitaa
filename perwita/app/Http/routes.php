@@ -920,11 +920,20 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     //Penggajian
-    Route::get('manajemen-payroll/payroll', 'penggajianController@index');
-    Route::get('manajemen-payroll/payroll/tambah', 'penggajianController@tambah');
-    Route::get('manajemen-payroll/payroll/cari', 'penggajianController@cari');
-    Route::get('manajemen-payroll/payroll/simpan', 'penggajianController@simpan');
-    Route::get('manajemen-payroll/payroll/proses', 'penggajianController@proses');
+    Route::get('manajemen-payroll/payroll/penggajian', 'penggajianController@index');
+    Route::get('manajemen-payroll/payroll/penggajian/tambah', 'penggajianController@tambah');
+    Route::get('manajemen-payroll/payroll/penggajian/cari', 'penggajianController@cari');
+    Route::get('manajemen-payroll/payroll/penggajian/simpan', 'penggajianController@simpan');
+    Route::get('manajemen-payroll/payroll/penggajian/proses', 'penggajianController@proses');
+    Route::get('manajemen-payroll/payroll/penggajian/hapus', 'penggajianController@hapus');
+    Route::get('manajemen-payroll/payroll/penggajian/edit', 'penggajianController@edit');
+    Route::get('manajemen-payroll/payroll/penggajian/editval', 'penggajianController@editval');
+    Route::get('manajemen-payroll/payroll/penggajian/printbank', 'penggajianController@printbank');
+    Route::get('manajemen-payroll/payroll/penggajian/printpekerja', 'penggajianController@printpekerja');
+    Route::get('manajemen-payroll/payroll/penggajian/simpanedit', 'penggajianController@simpanedit');
+    Route::get('manajemen-payroll/payroll/penggajian/prosesedit', 'penggajianController@prosesedit');
+    Route::get('manajemen-payroll/payroll/penggajian/ambildata', 'penggajianController@ambildata');
+    Route::get('manajemen-payroll/payroll/penggajian/cetak', 'penggajianController@cetak');
 
     //Approval PHK
     Route::get('approvalpegawaiphk', 'approvalpegawaiphkController@index');
@@ -943,4 +952,56 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-bpjs/ansuransi/getdata', 'bpjskesehatanController@getdata');
     Route::get('manajemen-bpjs/ansuransi/hapus', 'bpjskesehatanController@hapus');
     Route::get('manajemen-bpjs/ansuransi/nonaktif', 'bpjskesehatanController@nonaktif');
+
+    //BPJS Ketenagakerjaan
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan', 'bpjsketenagakerjaanController@index');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/getfaskes', 'bpjsketenagakerjaanController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/{id}', 'bpjsketenagakerjaanController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/ketenagakerjaan/simpan/{id}', 'bpjsketenagakerjaanController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/cari', 'bpjsketenagakerjaanController@cari');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/data', 'bpjsketenagakerjaanController@data');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/getdata', 'bpjsketenagakerjaanController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/hapus', 'bpjsketenagakerjaanController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/ketenagakerjaan/nonaktif', 'bpjsketenagakerjaanController@nonaktif');
+
+    //RBH
+    Route::get('manajemen-bpjs/ansuransi/rbh', 'rbhController@index');
+    Route::get('manajemen-bpjs/ansuransi/rbh/getfaskes', 'rbhController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/rbh/simpan/{id}', 'rbhController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/rbh/simpan/{id}', 'rbhController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/rbh/cari', 'rbhController@cari');
+    Route::get('manajemen-bpjs/ansuransi/rbh/data', 'rbhController@data');
+    Route::get('manajemen-bpjs/ansuransi/rbh/getdata', 'rbhController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/rbh/hapus', 'rbhController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/rbh/nonaktif', 'rbhController@nonaktif');
+
+    //Dapan
+    Route::get('manajemen-bpjs/ansuransi/dapan', 'dapanController@index');
+    Route::get('manajemen-bpjs/ansuransi/dapan/getfaskes', 'dapanController@getfasket');
+    Route::get('manajemen-bpjs/ansuransi/dapan/simpan/{id}', 'dapanController@simpan');
+    Route::post('manajemen-bpjs/ansuransi/dapan/simpan/{id}', 'dapanController@simpan');
+    Route::get('manajemen-bpjs/ansuransi/dapan/cari', 'dapanController@cari');
+    Route::get('manajemen-bpjs/ansuransi/dapan/data', 'dapanController@data');
+    Route::get('manajemen-bpjs/ansuransi/dapan/getdata', 'dapanController@getdata');
+    Route::get('manajemen-bpjs/ansuransi/dapan/hapus', 'dapanController@hapus');
+    Route::get('manajemen-bpjs/ansuransi/dapan/nonaktif', 'dapanController@nonaktif');
+
+    //Gaji Pokok
+    Route::get('manajemen-payroll/payroll/gaji', 'gajipokokController@index');
+    Route::get('manajemen-payroll/payroll/gaji/simpan', 'gajipokokController@simpan');
+    Route::post('manajemen-payroll/payroll/gaji/simpan', 'gajipokokController@simpan');
+    Route::get('manajemen-payroll/payroll/gaji/cari', 'gajipokokController@cari');
+    Route::get('manajemen-payroll/payroll/gaji/getdata', 'gajipokokController@getdata');
+
+    //Tunjangan
+    Route::get('manajemen-payroll/payroll/tunjangan', 'tunjanganController@index');
+    Route::get('manajemen-payroll/payroll/tunjangan/simpan', 'tunjanganController@simpan');
+    Route::get('manajemen-payroll/payroll/tunjangan/cari', 'tunjanganController@cari');
+    Route::get('manajemen-payroll/payroll/tunjangan/getdata', 'tunjanganController@getdata');
+
+    //Potongan
+    Route::get('manajemen-payroll/payroll/potongan', 'potonganController@index');
+    Route::get('manajemen-payroll/payroll/potongan/simpan', 'potonganController@simpan');
+    Route::get('manajemen-payroll/payroll/potongan/cari', 'potonganController@cari');
+    Route::get('manajemen-payroll/payroll/potongan/getdata', 'potonganController@getdata');
 });

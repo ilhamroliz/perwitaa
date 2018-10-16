@@ -207,7 +207,7 @@
                               @endforeach
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-primary pull-right" name="button" onclick="simpan()"> <i class="fa fa-save"></i> Simpan</button>
+                        <button type="button" class="btn btn-primary btn-outline pull-right" name="button" onclick="simpan()"> <i class="fa fa-save"></i> Simpan</button>
                     </div>
                     </form>
                 </div>

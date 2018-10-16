@@ -195,7 +195,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-6" style="float: left;">
                                     <a href="{{url('manajemen-pekerja-mitra/data-pekerja-mitra/tambah')}}"
-                                       class="btn btn-primary btn-flat" type="button" style="float: left;">Tambah Pekerja</a>
+                                       class="btn btn-primary btn-outline btn-flat" type="button" style="float: left;">Tambah Pekerja</a>
                                 </div>
                                 <div class="col-sm-6" style="float: right;">
                                     <button class="ladda-button ladda-button-demo btn btn-success btn-flat simpan"
@@ -256,7 +256,7 @@
             waitingDialog.show();
             var hapus = JSON.stringify(hapuspekerja);
             var ar = $();
-            for (var i = 0; i < table.rows()[0].length; i++) { 
+            for (var i = 0; i < table.rows()[0].length; i++) {
                 ar = ar.add(table.row(i).node());
             }
             $.ajaxSetup({

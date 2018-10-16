@@ -92,7 +92,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary pull-right m-t-n-xs" type="button" onclick="lanjut()">Lanjutkan</button>
+                        <button class="btn btn-primary btn-outline pull-right m-t-n-xs" type="button" onclick="lanjut()">Lanjutkan</button>
                     </div>
                 </div>
             </div>

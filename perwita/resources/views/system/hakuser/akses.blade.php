@@ -68,7 +68,7 @@
 
                 <div class="profile-image">
                     <img src="
-                @if (file_exists($user->m_image))
+                    @if (file_exists($user->m_image))
                     {{ asset("$user->m_image") }}
                     @else
                     {{ asset("assets/img/user/default.jpg") }}

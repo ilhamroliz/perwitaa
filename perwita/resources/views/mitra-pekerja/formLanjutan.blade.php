@@ -38,7 +38,7 @@
     </style>
 @endsection
 @section('content')
-    
+
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
             <h2>Penerimaan Pekerja</h2>
@@ -132,7 +132,7 @@
                                     <br>
                                     <small><strong>NB:</strong> Jika pekerja tidak memiliki NIK lama, maka sistem akan otomatis menggunakan NIK baru</small>
                                 </div>
-                                <button class="btn btn-primary simpan" type="button" onclick="simpan()" style="float: right">
+                                <button class="btn btn-primary btn-outline simpan" type="button" onclick="simpan()" style="float: right">
                                     Simpan
                                 </button>
                             </div>
@@ -157,9 +157,9 @@ var table = $(".pilihMitraPekerja").DataTable({
 });
 function simpan(){
     waitingDialog.show();
-            
+
     var ar = $();
-    for (var i = 0; i < table.rows()[0].length; i++) { 
+    for (var i = 0; i < table.rows()[0].length; i++) {
         ar = ar.add(table.row(i).node());
     }
     $.ajaxSetup({

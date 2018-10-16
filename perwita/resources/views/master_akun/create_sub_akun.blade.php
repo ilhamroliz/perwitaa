@@ -20,16 +20,16 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
     </div>
     <div class="ibox">
         <div class="ibox-content">
-               
-            
+
+
            {{ Form::open([ 'id'=>'createAkun', 'files' => true]) }}
 
-            <div class="form-horizontal ">   
+            <div class="form-horizontal ">
                 <div class="form-group">
                     <label class="control-label col-sm-2" >Tahun Akun</label>
                     <div class="col-sm-2">
@@ -40,14 +40,14 @@
                 <div style="display: none;"class="form-group">
                     <label class="control-label col-sm-2" >Level COA</label>
                     <div class="col-sm-4">
-                        <input class="form-control "  id="level_coa" name="Level COA" value="{{$coa->coa_level+1}}" readonly="">                                                                                                          
+                        <input class="form-control "  id="level_coa" name="Level COA" value="{{$coa->coa_level+1}}" readonly="">
                     </div>
-                </div>                      
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" >Parent COA</label>
                     <div class="col-sm-2 div_parentCoa">
-                        <input type="hidden" id="Parent_COA" class="form-control"  name="Parent COA" value="{{$coa->coa_code}}" readonly="">                                                                                                          
-                        <input class="form-control" value="{{$coa->coa_name}}" readonly="">                                                                                                                                             
+                        <input type="hidden" id="Parent_COA" class="form-control"  name="Parent COA" value="{{$coa->coa_code}}" readonly="">
+                        <input class="form-control" value="{{$coa->coa_name}}" readonly="">
                     </div>
                 </div>
                 <div class="form-group">
@@ -55,8 +55,8 @@
                         <label class="control-label col-sm-2" >Masukkan Kode</label>
                         <div class="col-sm-2">
                             <input value="{{$kode}}" title="Kode Maks. 2 Digit" data-toggle="tooltip" data-placement="bottom" type="number" class="form-control " id="kode" name="Kode" placeholder="Masukkan Kode" onchange="chekminus()"  maxlength="2">
-                        </div> 
-                    </div> 
+                        </div>
+                    </div>
                     <label class="control-label col-sm-2" >Kode Akun</label>
                     <div class="col-sm-4">
                         <input type="number" class="form-control " id="coa_code" name="Kode Akun" placeholder="" readonly>
@@ -67,13 +67,13 @@
                     <div class="col-sm-8">
                         <input type="text" class="form-control " id="coa_code" name="Nama Akun" placeholder="Masukkan Nama Akun">
                     </div>
-                </div>        
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" >Tanggal Pembukaan Akun</label>
                     <div class="col-sm-8">
                         <input readonly="" type="text" class="form-control " id="coa_opening_tgl" placeholder="Masukkan Tanggal Pembukaan Akun" name="Coa Opening Tgl">
                     </div>
-                </div> 
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" >Pembukaan Akun</label>
                     <div class="col-sm-8">
@@ -95,16 +95,16 @@
             <div class="col-md-offset-8" style="padding-top:10px;">
                 <div class="form-group">
                     <a href="{{ url('data-master/master-akun') }}" class="btn btn-danger  btn-flat btn-sm ">Kembali</a>
-                    <button type="submit" class="btn btn-primary btn-flat btn-sm save tampilkan">Simpan Data</button>
+                    <button type="submit" class="btn btn-primary btn-outline btn-flat btn-sm save tampilkan">Simpan Data</button>
                 </div>
             </div>
             {{ Form::close() }}
-                    
-            
-            
-            
-        
-            
+
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -119,7 +119,7 @@
     $('#coa_opening_tgl').datepicker({
         format: 'dd-M-yyyy',
     }).datepicker("setDate", "0");
-    
+
 
     $('.save').click(function (e) {
         info.hide().find('ul').empty();
@@ -129,7 +129,7 @@
             dataType: 'json',
             url: baseUrl + '/manajemen-akun/data-akun/simpan',
             data: $('#createAkun').serialize(),
-            success: function (response) {                
+            success: function (response) {
                 console.log(response);
                 if (response.status == 'berhasil') {
                     swal({
@@ -141,7 +141,7 @@
                     }, function () {
                        window.location.href = baseUrl + '/manajemen-akun/data-akun'
                     });
-                    //setDetailData($('.p_id').val());  
+                    //setDetailData($('.p_id').val());
 
                 }
                else if (response.status == 'error') {
@@ -173,7 +173,7 @@
     function chek() {
         $('#kode').unbind('keyup change input paste').bind('keyup change input paste', function (e) {
 //        alert(parseInt($(this).val()));
-//        alert($('#tahunakun').val());  
+//        alert($('#tahunakun').val());
             if ($('#kode').val() < 0) {
                 $('#kode').val('');
             }
@@ -349,18 +349,3 @@
 
 </script>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

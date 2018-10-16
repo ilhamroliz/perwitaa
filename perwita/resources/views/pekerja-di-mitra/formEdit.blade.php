@@ -109,7 +109,7 @@
                                     <div class="col-sm-4 col-sm-offset-9">
                                                <a href="{{url('pekerja-di-mitra/pekerja-mitra')}}" class="btn btn-danger btn-flat" type="button">Kembali</a>
                                         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-flat simpan" type="submit" name="Insert" value="Insert">
+                                        <button class="ladda-button ladda-button-demo btn btn-primary btn-outline btn-flat simpan" type="submit" name="Insert" value="Insert">
                                             Simpan
                                         </button>
                                     </div>
