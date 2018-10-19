@@ -96,7 +96,7 @@ class mitraController extends Controller
                       ->where('n_detail', '=', 'Create')
                       ->update([
                           'n_qty' => count($jumlah),
-                          'n_insert' => Carbon::now()
+                          'n_insert' => Carbon::now('Asia/Jakarta')
                       ]);
 
             DB::commit();

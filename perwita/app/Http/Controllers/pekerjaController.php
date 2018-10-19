@@ -551,7 +551,7 @@ class pekerjaController extends Controller
                 ->where('n_fitur', 'Calon Pekerja')
                 ->update([
                   'n_qty' => count($countpelamar),
-                  'n_insert' => Carbon::now()
+                  'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
             DB::commit();

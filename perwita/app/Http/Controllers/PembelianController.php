@@ -159,6 +159,17 @@ class PembelianController extends Controller
                     ]);
             }
 
+            $countpembelian = DB::table('d_purchase')
+                              ->where('p_isapproved', 'P')
+                              ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Pembelian')
+                ->update([
+                  'n_qty' => count($countpembelian),
+                  'n_insert' => Carbon::now('Asia/Jakarta')
+                ]);
+
             DB::commit();
             return response()->json([
                 'status' => 'sukses'

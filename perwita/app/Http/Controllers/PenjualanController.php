@@ -558,7 +558,7 @@ class PenjualanController extends Controller
             ->where('n_fitur', 'Penjualan')
             ->update([
               'n_qty' => count($count),
-              'n_insert' => Carbon::now()
+              'n_insert' => Carbon::now('Asia/Jakarta')
             ]);
 
             for ($j=0; $j < count($countukuran); $j++) {

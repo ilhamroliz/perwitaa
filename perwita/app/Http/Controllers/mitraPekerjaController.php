@@ -340,7 +340,8 @@ class mitraPekerjaController extends Controller
             d_notifikasi::where('n_fitur', '=', 'Penerimaan Pekerja')
                 ->where('n_detail', '=', 'Create')
                 ->update([
-                    'n_qty' => $jumlah
+                    'n_qty' => $jumlah,
+                    'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
             DB::commit();
