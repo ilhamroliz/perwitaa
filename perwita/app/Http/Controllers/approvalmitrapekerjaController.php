@@ -79,8 +79,8 @@ class approvalmitrapekerjaController extends Controller
     }
 
     public function setujui(Request $request){
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
 
       $ap = new mitraPekerjaController;
 
@@ -105,16 +105,16 @@ class approvalmitrapekerjaController extends Controller
                           'n_qty' => count($countmitrapekerja)
                         ]);
 
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+      //   DB::commit();
+      //   return response()->json([
+      //     'status' => 'berhasil'
+      //   ]);
+      // } catch (\Exception $e) {
+      //   DB::rollback();
+      //   return response()->json([
+      //     'status' => 'gagal'
+      //   ]);
+      // }
     }
 
     public function tolak(Request $request){
