@@ -657,8 +657,8 @@ class mitraPekerjaController extends Controller
             'pm_from' => null,
             'pm_status' => 'Aktif'
         );
+        dd($tempMutasi);
         d_pekerja_mutation::insert($tempMutasi);
-        dd($mp_contract);
         DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $mp_contract . " and mp_isapproved = 'Y') where mc_contractid = '".$mp_contract."'");
 
     }
