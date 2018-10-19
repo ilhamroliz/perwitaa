@@ -67,8 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="659" column="22" selection-start-line="659" selection-start-column="22" selection-end-line="659" selection-end-column="22" />
+            <state relative-caret-position="273">
+              <caret line="659" column="8" selection-start-line="659" selection-start-column="8" selection-end-line="659" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -216,12 +216,12 @@
       <updated>1539843181701</updated>
       <workItem from="1539843183650" duration="1494000" />
       <workItem from="1539917721703" duration="35000" />
-      <workItem from="1539932432997" duration="373000" />
+      <workItem from="1539932432997" duration="643000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1902000" />
+    <option name="totallyTimeSpent" value="2172000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
@@ -264,8 +264,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="659" column="22" selection-start-line="659" selection-start-column="22" selection-end-line="659" selection-end-column="22" />
+        <state relative-caret-position="273">
+          <caret line="659" column="8" selection-start-line="659" selection-start-column="8" selection-end-line="659" selection-end-column="8" />
         </state>
       </provider>
     </entry>
