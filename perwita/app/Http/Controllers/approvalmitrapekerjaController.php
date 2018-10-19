@@ -91,7 +91,7 @@ class approvalmitrapekerjaController extends Controller
                   'mp_isapproved' => 'Y'
                 ]);
 
-        DB::select("update d_mitra_contract
+        DB::update("update d_mitra_contract
                     set mc_fulfilled =
                     (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '".$request->mp_contract."' and mp_isapproved = 'Y') where mc_contractid = '".$request->mp_contract."'");
 
