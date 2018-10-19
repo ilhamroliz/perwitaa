@@ -292,7 +292,7 @@
 
         function hitung() {
             countchecked = table.$("input[name='pilih[]']:checked").length;
-            $('#totalPekerja').val(countchecked + totalpekerja);
+            $('#totalPekerja').val(parseInt(countchecked) + parseInt(totalpekerja));
         }
 
         function hitungSelect() {
