@@ -130,7 +130,7 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'N'
                 ]);
 
-            DB::select("update d_mitra_contract
+            DB::update("update d_mitra_contract
                     set mc_fulfilled =
                     (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
 
@@ -158,8 +158,8 @@ class approvalmitrapekerjaController extends Controller
 
     public function setujuilist(Request $request)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
 
             $sekarang = Carbon::now('Asia/Jakarta');
 
@@ -214,14 +214,16 @@ class approvalmitrapekerjaController extends Controller
 
             for ($i = 0; $i < count($request->pilih); $i++) {
                 d_pekerja_mutation::insert($tempMutasi[$i]);
-            }          
+            }
 
             d_mitra_pekerja::whereIn('mp_id', $request->pilih)
                 ->update([
                     'mp_isapproved' => 'Y'
                 ]);
 
-            DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_isapproved = 'Y') where mc_contractid = " . $request->kontrak . "");
+                DB::update("update d_mitra_contract
+                        set mc_fulfilled =
+                        (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -234,16 +236,16 @@ class approvalmitrapekerjaController extends Controller
                 ]);
 
 
-            DB::commit();
-            return response()->json([
-                'status' => 'berhasil'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => 'gagal'
-            ]);
-        }
+        //     DB::commit();
+        //     return response()->json([
+        //         'status' => 'berhasil'
+        //     ]);
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     return response()->json([
+        //         'status' => 'gagal'
+        //     ]);
+        // }
     }
 
     public function tolaklist(Request $request)
@@ -255,7 +257,9 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'N'
                 ]);
 
-            DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_isapproved = 'Y') where mc_contractid = " . $request->kontrak . "");
+                DB::update("update d_mitra_contract
+                        set mc_fulfilled =
+                        (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
