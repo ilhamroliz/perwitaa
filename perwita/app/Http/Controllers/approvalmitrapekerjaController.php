@@ -158,8 +158,8 @@ class approvalmitrapekerjaController extends Controller
 
     public function setujuilist(Request $request)
     {
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
 
             $sekarang = Carbon::now('Asia/Jakarta');
 
@@ -236,16 +236,16 @@ class approvalmitrapekerjaController extends Controller
                 ]);
 
 
-        //     DB::commit();
-        //     return response()->json([
-        //         'status' => 'berhasil'
-        //     ]);
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return response()->json([
-        //         'status' => 'gagal'
-        //     ]);
-        // }
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
     }
 
     public function tolaklist(Request $request)
