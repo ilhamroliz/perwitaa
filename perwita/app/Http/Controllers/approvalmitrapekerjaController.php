@@ -214,9 +214,7 @@ class approvalmitrapekerjaController extends Controller
 
             for ($i = 0; $i < count($request->pilih); $i++) {
                 d_pekerja_mutation::insert($tempMutasi[$i]);
-            }
-
-            DB::select("update d_mitra_contract set mc_fulfilled = (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = " . $request->kontrak . " and mp_isapproved = 'Y') where mc_contractid = '" . $request->kontrak . "'");
+            }          
 
             d_mitra_pekerja::whereIn('mp_id', $request->pilih)
                 ->update([
