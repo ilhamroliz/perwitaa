@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalmitrapekerjaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalmitrapekerjaController.php" afterDir="false" />
-    </list>
+    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +15,7 @@
     <session id="-912952">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.44" value="1" />
@@ -226,12 +224,12 @@
       <updated>1539843181701</updated>
       <workItem from="1539843183650" duration="1494000" />
       <workItem from="1539917721703" duration="35000" />
-      <workItem from="1539932432997" duration="1646000" />
+      <workItem from="1539932432997" duration="2247000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3175000" />
+    <option name="totallyTimeSpent" value="3776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
