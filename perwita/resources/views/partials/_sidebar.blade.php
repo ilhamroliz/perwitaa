@@ -19,7 +19,7 @@
 
             @if($sidebar[0]->ma_read == 'Y')
             <li class="{{Request::is('dashboard') ? 'active' : ''}}">
-              <a href="{{url('dashboard')}}"><i class="fa fa-th-large"></i>
+              <a href="{{url('dashboard')}}"><i class="glyphicon glyphicon-home"></i>
                   <i class="" aria-hidden="true"></i><span class="nav-label">Dashboards</span>
               </a>
             </li>
@@ -43,7 +43,7 @@
               || Request::is('manajemen-pekerja/rekening/*') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra/*') ? 'active' : '' }}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (MJI)</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="glyphicon glyphicon-briefcase"></i> <span class="nav-label">Manajemen TK (MJI)</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pekerja/data-pekerja') ? 'active' : ''
                                 || Request::is('manajemen-pekerja/data-pekerja/*') ? 'active' : ''  }}">
@@ -98,7 +98,7 @@
             @if($sidebar[2]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''}}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen TK (PJTKI)</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="glyphicon glyphicon-briefcase"></i> <span class="nav-label">Manajemen TK (PJTKI)</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('pekerja-pjtki/data-pekerja') ? 'active' : ''
                                 || Request::is('pekerja-pjtki/data-pekerja/*') ? 'active' : ''  }}">
@@ -120,7 +120,7 @@
                   || Request::is('manajemen-mitra/mitra-mou') ? 'active' : ''
               }}
               ">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Mitra</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-handshake-o"></i> <span class="nav-label">Manajemen Mitra</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-mitra/data-mitra') ? 'active' : ''
                                 || Request::is('manajemen-mitra/data-mitra/*') ? 'active' : ''  }} sidebar master-akun">
@@ -152,7 +152,7 @@
                 || Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''
                 || Request::is('manajemen-seragam') ? 'active' : ''
                 }}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Seragam</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-list"></i> <span class="nav-label">Manajemen Seragam</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{
                         Request::is('manajemen-seragam/rencana-pembelian') ? 'active' : '' ||
@@ -215,7 +215,7 @@
               || Request::is('manajemen-stock/stock-opname/*') ? 'active' : ''
               || Request::is('manajemen-stock/data-stock') ? 'active' : ''
               || Request::is('manajemen-stock/data-stock/*') ? 'active' : ''}}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Stock</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-cube"></i> <span class="nav-label">Manajemen Stock</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-stock/data-stock') ? 'active' : ''
                                 || Request::is('manajemen-stock/data-stock/*') ? 'active' : ''  }}">
@@ -242,7 +242,7 @@
             @if($sidebar[6]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Manajemen Pegawai</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-user"></i> <span class="nav-label">Manajemen Pegawai</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-pegawai/data-pegawai')}}">
@@ -271,7 +271,7 @@
             @if($sidebar[7]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
                  Request::is('manajemen-payroll/payroll') ? 'active' : '' || Request::is('manajemen-payroll/payroll/*') ? 'active' : ''}}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-money"></i> <span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-payroll/payroll/gaji') ? 'active' : '' || Request::is('manajemen-payroll/payroll/gaji/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-payroll/payroll/gaji')}}">
@@ -303,7 +303,7 @@
                  || Request::is('manajemen-bpjs/ansuransi/*') ? 'active' : ''
                  || Request::is('manajemen-faskes/*') ? 'active' : ''
                 }}">
-                <a href="#" id="step1"><i class="fa fa-file-o"></i> <span class="nav-label">Ansuransi</span><span class="fa arrow"></span></a>
+                <a href="#" id="step1"><i class="fa fa-ambulance"></i> <span class="nav-label">Ansuransi</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-bpjs/ansuransi/kesehatan') ? 'active' : '' || Request::is('manajemen-bpjs/ansuransi/kesehatan/*') ? 'active' : ''}}">
                         <a href="{{url('manajemen-bpjs/ansuransi/kesehatan')}}">
