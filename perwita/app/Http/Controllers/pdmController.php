@@ -106,6 +106,7 @@ class pdmController extends Controller
             })
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
             ->where('mp_isapproved', 'Y')
+            ->where('mp_status', 'Aktif')
             ->get();
       } elseif (!empty($mitra) && $divisi == "all") {
         $pekerja = DB::table('d_mitra_pekerja')
@@ -119,6 +120,7 @@ class pdmController extends Controller
             ->select('p_name', 'mp_mitra_nik', 'mp_workin_date', 'm_name', 'md_name', 'mp_id', 'p_id')
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_isapproved', 'Y')
+            ->where('mp_status', 'Aktif')
             ->get();
       }
       else {
@@ -134,6 +136,7 @@ class pdmController extends Controller
             ->where('mp_mitra', '=', $mitra)
             ->where('mp_divisi', '=', $divisi)
             ->where('mp_isapproved', 'Y')
+            ->where('mp_status', 'Aktif')
             ->get();
       }
 
@@ -234,6 +237,52 @@ class pdmController extends Controller
         $d_mitra_pekerja->update([
           'mp_mitra_nik' => $request->nik
         ]);
+
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+    }
+
+    public function destroy(Request $request){
+      DB::beginTransaction();
+      try {
+
+        $data = DB::table('d_mitra_pekerja')
+                  ->where('mp_id', $request->id)
+                  ->get();
+
+        DB::table('d_mitra_pekerja')
+            ->where('mp_id', $request->id)
+            ->update([
+              'mp_status' => 'Tidak'
+            ]);
+
+        $contract = DB::table('d_mitra_contract')
+                      ->where('mc_mitra', $data[0]->mp_mitra)
+                      ->where('mc_divisi', $data[0]->mp_divisi)
+                      ->get();
+
+        DB::table('d_mitra_contract')
+        ->where('mc_mitra', $data[0]->mp_mitra)
+        ->where('mc_divisi', $data[0]->mp_divisi)
+        ->update([
+          'mc_fulfilled' => (int)$contract[0]->mc_fulfilled - 1
+        ]);
+
+        DB::table('d_pekerja_mutation')
+            ->where('pm_pekerja', (int)$data[0]->mp_pekerja)
+            ->where('pm_detail', 'Seleksi')
+            ->where('pm_status', 'Aktif')
+            ->where('mc_mitra', $data[0]->mp_mitra)
+            ->where('mc_divisi', $data[0]->mp_divisi)
+            ->delete();
 
         DB::commit();
         return response()->json([

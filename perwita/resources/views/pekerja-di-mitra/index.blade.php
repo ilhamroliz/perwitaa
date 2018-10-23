@@ -250,6 +250,8 @@ function cari(){
               '<td>'+result[i].mp_workin_date+'</td>'+
               '<td align="center">'+
                   '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[i].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                  ' '+
+                  '<button type="button" class="btn btn-danger btn-xs" onclick="hapus('+result[i].mp_id+')" name="button"> <i class="fa fa-trash"></i> </button>'+
               '</td>'+
               '</tr>';
       }
@@ -292,6 +294,8 @@ function cari(){
               '<td>'+result[0].mp_workin_date+'</td>'+
               '<td align="center">'+
                   '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[0].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+                  ' '+
+                  '<button type="button" class="btn btn-danger btn-xs" onclick="hapus('+result[i].mp_id+')" name="button"> <i class="fa fa-trash"></i> </button>'+
               '</td>'+
               '</tr>';
       $('#showdata').html(html);
@@ -352,5 +356,71 @@ function cari(){
       }
     });
   }
+
+  function hapus(id){
+      swal({
+        title: "Konfirmasi",
+        text: "Apakah anda yakin ingin menghapus data?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+    },
+    function(){
+      swal.close();
+      waitingDialog.show();
+        setTimeout(function(){
+          $.ajax({
+            type: 'get',
+            data: {id:id},
+            dataType: 'json',
+            url: baseUrl + '/pekerja-di-mitra/hapus',
+            success : function(result){
+             if(result.status=='berhasil'){
+                swal({
+                  title:"Berhasil",
+                  text: "Data berhasil dihapus",
+                  type: "success",
+                  showConfirmButton: false,
+                  timer: 900
+              });
+              setTimeout(function(){
+                    window.location.reload();
+            }, 850);
+            } else {
+              swal({
+                  title:"Perhatian",
+                  text: "Data tidak bisa dihapus, terdapat data penting!!",
+                  type: "warning",
+                  showConfirmButton: true,
+                  timer: 2500
+              });
+            }
+            waitingDialog.hide();
+        },error:function(x,e) {
+          //alert(e);
+          var message;
+          if (x.status==0) {
+              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
+          } else if(x.status==404) {
+              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
+          } else if(x.status==500) {
+              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
+          } else if(e =='parsererror') {
+              message = 'Error.\nParsing JSON Request failed.';
+          } else if(e =='timeout'){
+              message = 'Request Time out. Harap coba lagi nanti';
+          } else {
+              message = 'Unknow Error.\n'+x.responseText;
+          }
+          throwLoadError(message);
+          waitingDialog.hide();
+      }
+    });
+      }, 2000);
+
+    });
+  }
+
 </script>
 @endsection
