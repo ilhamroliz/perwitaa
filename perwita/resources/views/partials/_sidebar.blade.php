@@ -1,3 +1,36 @@
+<style media="screen">
+.spin {
+-webkit-animation: spin 2s infinite linear;
+-moz-animation: spin 2s infinite linear;
+-o-animation: spin 2s infinite linear;
+animation: spin 2s infinite linear;
+}
+@-moz-keyframes spin {
+from {
+  -moz-transform: rotate(0deg);
+}
+to {
+  -moz-transform: rotate(360deg);
+}
+}
+@-webkit-keyframes spin {
+from {
+  -webkit-transform: rotate(0deg);
+}
+to {
+  -webkit-transform: rotate(360deg);
+}
+}
+@keyframes spin {
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}
+</style>
+
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
@@ -407,7 +440,7 @@
                                 || Request::is('master-perusahaan') ? 'active' : ''
                                 || Request::is('master-perusahaan/*') ? 'active' : ''
                 }}">
-                <a href="index.html"><i class="fa fa-cog"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
+                <a href="index.html"><i class="fa fa-cog spin"></i> <span class="nav-label">Setting Aplikasi</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pengguna/pengguna') ? 'active' : ''
                                 || Request::is('manajemen-pengguna/*') ? 'active' : ''  }}"><a href="{{url('manajemen-pengguna/pengguna')}}">Manajemen Pengguna</a></li>
