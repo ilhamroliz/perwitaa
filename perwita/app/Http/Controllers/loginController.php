@@ -59,7 +59,11 @@ class loginController extends Controller
                 $user = d_mem::where(DB::raw('BINARY m_username'), $request->username)->first();
                 if ($user && $user->m_passwd == sha1(md5('passwordAllah') . $request->password)) {
                     if ($request->username != 'superuser'){
-                        return redirect(url('maintenance'));
+                        $response = [
+                            'status' => 'maintenance'
+                        ];
+
+                        return json_encode($response);
                     }
                     $sekarang = Carbon::now('Asia/Jakarta');
                     Session::set('mem', $user->m_id);
