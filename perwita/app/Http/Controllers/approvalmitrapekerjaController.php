@@ -94,9 +94,16 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'Y'
                 ]);
 
-            DB::update("update d_mitra_contract
-                    set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
+            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                ->where('mp_contract', $request->mp_contract)
+                ->where('mp_isapproved', 'Y')
+                ->get();
+
+            DB::table('d_mitra_contract')
+                ->where('mc_contractid', $request->mp_contract)
+                ->update([
+                  'mc_fulfilled' => count($countmitrapekerja)
+                ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -130,9 +137,16 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'N'
                 ]);
 
-            DB::update("update d_mitra_contract
-                    set mc_fulfilled =
-                    (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
+            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                ->where('mp_contract', $request->mp_contract)
+                ->where('mp_isapproved', 'Y')
+                ->get();
+
+            DB::table('d_mitra_contract')
+                ->where('mc_contractid', $request->mp_contract)
+                ->update([
+                  'mc_fulfilled' => count($countmitrapekerja)
+                ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -221,9 +235,16 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'Y'
                 ]);
 
-                DB::update("update d_mitra_contract
-                        set mc_fulfilled =
-                        (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
+            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                ->where('mp_contract', $request->mp_contract)
+                ->where('mp_isapproved', 'Y')
+                ->get();
+
+            DB::table('d_mitra_contract')
+                ->where('mc_contractid', $request->mp_contract)
+                ->update([
+                  'mc_fulfilled' => count($countmitrapekerja)
+                ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -257,9 +278,16 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'N'
                 ]);
 
-                DB::update("update d_mitra_contract
-                        set mc_fulfilled =
-                        (select count(mp_pekerja) from d_mitra_pekerja where mp_contract = '" . $request->mp_contract . "' and mp_isapproved = 'Y') where mc_contractid = '" . $request->mp_contract . "'");
+                $countmitrapekerja = DB::table('d_mitra_pekerja')
+                    ->where('mp_contract', $request->mp_contract)
+                    ->where('mp_isapproved', 'Y')
+                    ->get();
+
+                DB::table('d_mitra_contract')
+                    ->where('mc_contractid', $request->mp_contract)
+                    ->update([
+                      'mc_fulfilled' => count($countmitrapekerja)
+                    ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
