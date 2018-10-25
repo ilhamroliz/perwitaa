@@ -99,15 +99,15 @@ class mitraPekerjaController extends Controller
 
             })
             ->addColumn('action', function ($mc) {
-                return ' <div class="dropdown">                                
+                return ' <div class="dropdown">
                                             <button class="btn btn-primary btn-flat btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                 Kelola
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelled by="dropdownMenu1">
                                                 <li><a href="data-pekerja-mitra/' . $mc->mc_mitra . '/' . $mc->mc_contractid . '/edit" ><i class="fa fa-pencil" aria-hidden="true"></i>Edit Data</a></li>
-                                                <li role="separator" class="divider"></li>                                                                                                                                                                         
-                                                <li><a class="btn-delete" onclick="hapus(' . $mc->mc_mitra . ',' . $mc->mc_contractid . ')"></i>Hapus Data</a></li>                                                
+                                                <li role="separator" class="divider"></li>
+                                                <li><a class="btn-delete" onclick="hapus(' . $mc->mc_mitra . ',' . $mc->mc_contractid . ')"></i>Hapus Data</a></li>
                                             </ul>
                                         </div>';
             })
@@ -118,7 +118,7 @@ class mitraPekerjaController extends Controller
     public function tambah()
     {
 
-        $mitra_contract = d_mitra_contract::where('mc_fulfilled', '<', DB::raw('mc_need'))->get();
+        $mitra_contract = d_mitra_contract::where('mc_fulfilled', '<', DB::raw('mc_need'))->where('mc_isapproved', 'Y')->get();
         $pekerja = d_pekerja::leftjoin('d_mitra_pekerja', 'd_pekerja.p_id', '=', 'd_mitra_pekerja.mp_pekerja')
             ->where('mp_pekerja', '=', null)
             ->get();
