@@ -15,6 +15,7 @@
    Route::get('/', 'loginController@index');
    Route::post('login', 'loginController@authenticate');
    Route::get('login', 'loginController@authenticate');
+   Route::get('maintenance', 'loginController@maintenance');
  });
 
 Route::group(['middleware' => 'auth'], function () {
