@@ -94,15 +94,16 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'Y'
                 ]);
 
-            $countmitrapekerja = DB::table('d_mitra_pekerja')
+            $count = DB::table('d_mitra_pekerja')
                 ->where('mp_contract', $request->mp_contract)
+                ->where('mp_status', 'Aktif')
                 ->where('mp_isapproved', 'Y')
                 ->get();
 
             DB::table('d_mitra_contract')
                 ->where('mc_contractid', $request->mp_contract)
                 ->update([
-                  'mc_fulfilled' => count($countmitrapekerja)
+                  'mc_fulfilled' => count($count)
                 ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
@@ -137,16 +138,17 @@ class approvalmitrapekerjaController extends Controller
                     'mp_isapproved' => 'N'
                 ]);
 
-            $countmitrapekerja = DB::table('d_mitra_pekerja')
+                $count = DB::table('d_mitra_pekerja')
                 ->where('mp_contract', $request->mp_contract)
+                ->where('mp_status', 'Aktif')
                 ->where('mp_isapproved', 'Y')
-                ->get();
+                    ->get();
 
-            DB::table('d_mitra_contract')
-                ->where('mc_contractid', $request->mp_contract)
-                ->update([
-                  'mc_fulfilled' => count($countmitrapekerja)
-                ]);
+                DB::table('d_mitra_contract')
+                    ->where('mc_contractid', $request->mp_contract)
+                    ->update([
+                      'mc_fulfilled' => count($count)
+                    ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -236,17 +238,6 @@ class approvalmitrapekerjaController extends Controller
                 ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
-                ->where('mp_contract', $request->mp_contract)
-                ->where('mp_isapproved', 'Y')
-                ->get();
-
-            DB::table('d_mitra_contract')
-                ->where('mc_contractid', $request->mp_contract)
-                ->update([
-                  'mc_fulfilled' => count($countmitrapekerja)
-                ]);
-
-            $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
                 ->get();
 
@@ -256,6 +247,17 @@ class approvalmitrapekerjaController extends Controller
                     'n_qty' => count($countmitrapekerja)
                 ]);
 
+                $count = DB::table('d_mitra_pekerja')
+                ->where('mp_contract', '=', $request->kontrak)
+                ->where('mp_status', 'Aktif')
+                ->where('mp_isapproved', 'Y')
+                    ->get();
+
+                DB::table('d_mitra_contract')
+                    ->where('mc_contractid', '=', $request->kontrak)
+                    ->update([
+                      'mc_fulfilled' => count($count)
+                    ]);
 
             DB::commit();
             return response()->json([
@@ -271,23 +273,13 @@ class approvalmitrapekerjaController extends Controller
 
     public function tolaklist(Request $request)
     {
+      dd($request);
         DB::beginTransaction();
         try {
             d_mitra_pekerja::whereIn('mp_id', $request->pilih)
                 ->update([
                     'mp_isapproved' => 'N'
                 ]);
-
-                $countmitrapekerja = DB::table('d_mitra_pekerja')
-                    ->where('mp_contract', $request->mp_contract)
-                    ->where('mp_isapproved', 'Y')
-                    ->get();
-
-                DB::table('d_mitra_contract')
-                    ->where('mc_contractid', $request->mp_contract)
-                    ->update([
-                      'mc_fulfilled' => count($countmitrapekerja)
-                    ]);
 
             $countmitrapekerja = DB::table('d_mitra_pekerja')
                 ->where('mp_isapproved', 'P')
@@ -299,6 +291,17 @@ class approvalmitrapekerjaController extends Controller
                     'n_qty' => count($countmitrapekerja)
                 ]);
 
+                $count = DB::table('d_mitra_pekerja')
+                ->where('mp_contract', '=', $request->kontrak)
+                ->where('mp_status', 'Aktif')
+                ->where('mp_isapproved', 'Y')
+                    ->get();
+
+                DB::table('d_mitra_contract')
+                    ->where('mc_contractid', '=', $request->kontrak)
+                    ->update([
+                      'mc_fulfilled' => count($count)
+                    ]);
 
             DB::commit();
             return response()->json([
