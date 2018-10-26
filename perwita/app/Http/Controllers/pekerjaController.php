@@ -48,19 +48,20 @@ class pekerjaController extends Controller
     {
         DB::statement(DB::raw('set @rownum=0'));
 
-        $pekerja = DB::select("select @rownum := @rownum + 1 as number, p_id, p_name, p_nip, p_sex, p_address, p_hp, pm_detailid, pm_status from d_pekerja p join d_pekerja_mutation pm on p_id = pm_pekerja cross join (select @rownum := 0) r where pm_detailid = (select max(pm_detailid) from d_pekerja_mutation where pm_pekerja = p.p_id) and pm_status = 'Aktif' order by p_name");
+        // $pekerja = DB::select("select @rownum := @rownum + 1 as number, p_id, p_name, p_nip, p_sex, p_address, p_hp, pm_detailid, pm_status from d_pekerja p join d_pekerja_mutation pm on p_id = pm_pekerja cross join (select @rownum := 0) r where pm_detailid = (select max(pm_detailid) from d_pekerja_mutation where pm_pekerja = p.p_id) and pm_status = 'Aktif' order by p_name");
+
+        $pekerja = DB::table('d_mitra_pekerja')
+                      ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+                      ->where('mp_status', 'Aktif')
+                      ->where('mp_isapproved', 'Y')
+                      ->distinct()
+                      ->get();
 
         $pekerja = collect($pekerja);
 
         return Datatables::of($pekerja)
-            ->editColumn('pm_status', function ($pekerja) {
-
-                if ($pekerja->pm_status == 'Calon')
-                    return '<div class="text-center"><span class="label label-warning ">Calon</span></div>';
-                if ($pekerja->pm_status == 'Aktif')
+            ->editColumn('pm_status', function ($pekerja) {                
                     return '<div class="text-center"><span class="label label-success ">Aktif</span></div>';
-                if ($pekerja->pm_status == 'Ex')
-                    return '<div class="text-center"><span class="label label-danger ">Tidak Aktif</span></div>';
             })
             ->addColumn('action', function ($pekerja) {
                 return '<div class="text-center">
