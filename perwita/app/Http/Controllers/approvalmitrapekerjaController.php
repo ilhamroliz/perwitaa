@@ -273,7 +273,6 @@ class approvalmitrapekerjaController extends Controller
 
     public function tolaklist(Request $request)
     {
-      dd($request);
         DB::beginTransaction();
         try {
             d_mitra_pekerja::whereIn('mp_id', $request->pilih)

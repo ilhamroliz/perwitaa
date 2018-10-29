@@ -258,14 +258,14 @@
             format: 'dd/mm/yyyy'
         }).datepicker("setDate", "0");
 
-        table = $(".pilihMitraPekerja").DataTable({
-            "language": dataTableLanguage,
-            "columnDefs": [{
-                "targets": 0,
-                "orderable": false
-            }]
-
-        });
+        table = $("#pilihMitraPekerja").DataTable({
+    "processing": true,
+    "paging": true,
+    "searching": true,
+    "deferLoading": 57,
+    responsive: true,
+    "language": dataTableLanguage
+  });
 
         table
             .column( '1:visible' )

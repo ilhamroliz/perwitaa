@@ -76,7 +76,7 @@
                             <div class="col-sm-10">
                                 <select class="form-control m-b" id="jabatan-pelamar" name="jabatan_pelamar">
                                   @foreach($jabatan as $data)
-                                      @if($pekerja[0]->p_jabatan_lamaran == $data->jp_id)
+                                      @if($pekerja[0]->p_jabatan == $data->jp_id)
                                       <option value="{{ $data->jp_id }}" selected>{{$data->jp_name}}</option>
                                       @else
                                       <option value="{{ $data->jp_id }}">{{$data->jp_name}}</option>

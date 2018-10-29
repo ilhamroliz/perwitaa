@@ -60,7 +60,7 @@ class pekerjaController extends Controller
         $pekerja = collect($pekerja);
 
         return Datatables::of($pekerja)
-            ->editColumn('pm_status', function ($pekerja) {                
+            ->editColumn('pm_status', function ($pekerja) {
                     return '<div class="text-center"><span class="label label-success ">Aktif</span></div>';
             })
             ->addColumn('action', function ($pekerja) {
@@ -580,6 +580,7 @@ class pekerjaController extends Controller
                 , 'p_nip'
                 , 'p_city'
                 , 'p_jabatan_lamaran'
+                , 'p_jabatan'
                 , 'p_address_now'
                 , 'p_rt_rw_now'
                 , 'p_kecamatan_now'
