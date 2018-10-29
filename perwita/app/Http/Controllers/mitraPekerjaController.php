@@ -386,7 +386,7 @@ class mitraPekerjaController extends Controller
             ->where('d_mitra_contract.mc_mitra', $mitra)
             ->where('d_mitra_contract.mc_contractid', $kontrak)
             ->first();
-
+dd($update_mitra_contract);
         $pekerja = DB::table('d_mitra_pekerja')
             ->leftJoin('d_pekerja', 'p_id', '=', 'mp_pekerja')
             ->select('p_name', 'mp_mitra_nik', 'p_nip', 'mp_id', DB::raw('DATE_FORMAT(mp_selection_date, "%d/%m/%Y") as mp_selection_date'), DB::raw('DATE_FORMAT(mp_workin_date, "%d/%m/%Y") as mp_workin_date'), 'p_id')
