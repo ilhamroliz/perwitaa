@@ -501,6 +501,7 @@
         }
 
         $('#form-mitra-contract').on('submit', function(e){
+            $('#pilihMitraPekerja_filter').find('input[type=search]').val('');
             var form = this;
 
               // Encode a set of form elements from all pages as an array of names and values

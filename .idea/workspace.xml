@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" afterDir="false" />
-    </list>
+    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +68,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="364" column="19" selection-start-line="364" selection-start-column="19" selection-end-line="364" selection-end-column="19" />
+            <state relative-caret-position="71">
+              <caret line="149" column="27" selection-start-line="149" selection-start-column="20" selection-end-line="149" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -85,6 +83,7 @@
       <find>simpan(</find>
       <find>simpan</find>
       <find>edit(</find>
+      <find>tambah(</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -250,12 +249,12 @@
       <workItem from="1540478547073" duration="18000" />
       <workItem from="1540520636829" duration="3438000" />
       <workItem from="1540795048683" duration="48000" />
-      <workItem from="1540795708586" duration="1652000" />
+      <workItem from="1540795708586" duration="2260000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12226000" />
+    <option name="totallyTimeSpent" value="12834000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
@@ -319,8 +318,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="364" column="19" selection-start-line="364" selection-start-column="19" selection-end-line="364" selection-end-column="19" />
+        <state relative-caret-position="71">
+          <caret line="149" column="27" selection-start-line="149" selection-start-column="20" selection-end-line="149" selection-end-column="27" />
         </state>
       </provider>
     </entry>
