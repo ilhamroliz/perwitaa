@@ -232,7 +232,7 @@ class approvalmitrapekerjaController extends Controller
                 d_pekerja_mutation::insert($tempMutasi[$i]);
             }
 
-            d_mitra_pekerja::whereIn('mp_id', $request->pilih)
+            d_mitra_pekerja::whereIn('mp_pekerja', $request->pilih)
                 ->update([
                     'mp_isapproved' => 'Y'
                 ]);
