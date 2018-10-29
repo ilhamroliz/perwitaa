@@ -359,7 +359,7 @@
                   serverSide: true,
                   "ajax": {
                       "url": "{{ url('manajemen-pekerja/data-pekerja/table') }}",
-                      "type": "POST"
+                      "type": "post"
                   },
                   columns: [
                       {data: 'p_name', name: 'p_name'},
