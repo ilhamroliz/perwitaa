@@ -71,7 +71,7 @@
                       @foreach($data as $index => $x)
                         <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                           <td>
-                          <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->mp_id}}">
+                          <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->mp_pekerja}}">
                           </td>
                           <td>{{$x->p_name}}</td>
                           <td>{{$x->m_name}}</td>

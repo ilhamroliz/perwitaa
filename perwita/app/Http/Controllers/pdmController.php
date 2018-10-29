@@ -270,8 +270,8 @@ class pdmController extends Controller
                       ->get();
 
         DB::table('d_mitra_contract')
-        ->where('mc_mitra', $data[0]->mp_mitra)
-        ->where('mc_divisi', $data[0]->mp_divisi)
+        ->where('mc_mitra', (int)$data[0]->mp_mitra)
+        ->where('mc_divisi', (int)$data[0]->mp_divisi)
         ->update([
           'mc_fulfilled' => (int)$contract[0]->mc_fulfilled - 1
         ]);
@@ -280,8 +280,8 @@ class pdmController extends Controller
             ->where('pm_pekerja', (int)$data[0]->mp_pekerja)
             ->where('pm_detail', 'Seleksi')
             ->where('pm_status', 'Aktif')
-            ->where('mc_mitra', $data[0]->mp_mitra)
-            ->where('mc_divisi', $data[0]->mp_divisi)
+            ->where('pm_mitra', $data[0]->mp_mitra)
+            ->where('pm_divisi', $data[0]->mp_divisi)
             ->delete();
 
         DB::commit();
