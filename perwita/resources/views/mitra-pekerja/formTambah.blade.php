@@ -502,6 +502,7 @@
 
         $('#form-mitra-contract').on('submit', function(e){
             table.search(''); 
+            table.draw();
             var form = this;
 
               // Encode a set of form elements from all pages as an array of names and values
