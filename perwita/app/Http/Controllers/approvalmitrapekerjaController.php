@@ -183,7 +183,7 @@ class approvalmitrapekerjaController extends Controller
                 ->join('d_mitra_contract', 'mc_contractid', '=', 'mp_contract')
                 ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
                 ->where('mp_contract', '=', $request->kontrak)
-                ->whereIn('mp_id', $request->pilih)
+                ->whereIn('mp_pekerja', $request->pilih)
                 ->where('mp_isapproved', '=', 'P')
                 ->get();
 
