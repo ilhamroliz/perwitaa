@@ -168,9 +168,15 @@ class pekerjaController extends Controller
             $agama = strtoupper($request->agama);
             $agama_lain = strtoupper($request->agamalain);
             $pendidikan = $request->pendidikan;
-            $bahasa = $request->bahasa;
+            $bahasa = [];
+            if ($request->bahasa != null){
+                $bahasa = $request->bahasa;
+            }
             $bahasa_lain = $request->bahasalain;
-            $sim = $request->sim;
+            $sim = [];
+            if ($request->sim != null){
+                $sim = $request->sim;
+            }
             $simket = $request->simket;
             $pengalaman_corp = $request->pengalamancorp;
             $start_pengalaman = $request->startpengalaman;
