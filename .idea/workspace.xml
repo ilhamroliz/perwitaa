@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php" afterDir="false" />
-    </list>
+    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +176,7 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -286,15 +283,15 @@
       <workItem from="1540795048683" duration="48000" />
       <workItem from="1540795708586" duration="5350000" />
       <workItem from="1540862672649" duration="38000" />
-      <workItem from="1541044623318" duration="266000" />
+      <workItem from="1541044623318" duration="867000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16228000" />
+    <option name="totallyTimeSpent" value="16829000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="727" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="727" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21666667" />
