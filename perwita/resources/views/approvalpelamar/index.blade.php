@@ -49,7 +49,7 @@
                 </center> --}}
 
                 <form class="formapprovalpelamar" id="formapprovalpelamar">
-                <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
+                <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>
@@ -395,28 +395,34 @@ var table;
 var countmitra = 0;
 var totalmitra = 0;
 $( document ).ready(function() {
-
-  $('#approvalpelamar').DataTable({
+    var table = $('#approvalpelamar').DataTable({
           serverSide: true,
           ordering: false,
-          searching: false,
+          searching: true,
           scrollY: 200,
           scroller: {
               loadingIndicator: true
           },
           stateSave: true,
+          processing: true,
           "ajax": {
                       "url": "{{ url('approvalpelamar/datatablepekerja') }}",
                       "type": "get"
                   },
-                  columns: [
-                      {data: 'checkbox', name: 'checkbox'},
-                      {data: 'p_name', name: 'p_name'},
-                      {data: 'p_education', name: 'p_education'},
-                      {data: 'p_address', name: 'p_address'},
-                      {data: 'p_hp', name: 'p_hp'},
-                      {data: 'action', name: 'action', orderable: false, searchable: false}
-                  ],
+          columns: [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'p_name', name: 'p_name'},
+            {data: 'p_education', name: 'p_education'},
+            {data: 'p_address', name: 'p_address'},
+            {data: 'p_hp', name: 'p_hp'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
+          ],
+          responsive: true,
+          "pageLength": 10,
+          "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+          //"scrollY": '50vh',
+          //"scrollCollapse": true,
+          "language": dataTableLanguage,
       });
 
 });

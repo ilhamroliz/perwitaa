@@ -34,8 +34,7 @@ class approvalpelamarController extends Controller
     public function datatablepekerja(){
       $data = DB::table('d_pekerja')
             ->where('p_status_approval', '=', null)
-            ->select('p_id', 'p_name', 'p_education', 'p_address', 'p_hp')
-            ->limit(100)
+            ->select('p_id', 'p_name', 'p_education', 'p_address', 'p_hp')            
             ->get();
 
       $data = collect($data);
