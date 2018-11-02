@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Perwita | Maintenance</title>
-
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/dboard/logo/sublogo2.png') }}"/>
     <link href="{{ asset('assets/vendors/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 

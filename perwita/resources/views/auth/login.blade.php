@@ -8,7 +8,7 @@
 
     <title>DBoard | Login </title>
 
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/dboard/logo/faveicon.png') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/dboard/logo/sublogo2.png') }}"/>
 
     <!-- Bootstrap -->
     <link href="{{ asset('assets/vendors/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
