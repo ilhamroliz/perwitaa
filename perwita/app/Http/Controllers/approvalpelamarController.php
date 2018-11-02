@@ -36,11 +36,7 @@ class approvalpelamarController extends Controller
     {
         $data = DB::table('d_pekerja')
             ->where('p_status_approval', '=', null)
-<<<<<<< HEAD
             ->select('p_id', 'p_name', 'p_education', 'p_address', 'p_hp')
-=======
-            ->select('p_id', 'p_name', 'p_education', 'p_address', 'p_hp')            
->>>>>>> d91df3488392523a49e8b2237629fcd090430f32
             ->get();
 
         $data = collect($data);

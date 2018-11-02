@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/approvalpelamar/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/approvalpelamar/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perwita/resources/views/errors/maintenance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/resources/views/errors/maintenance.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,8 +71,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="56" column="25" lean-forward="true" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+            <state relative-caret-position="-441">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
             </state>
           </provider>
         </entry>
@@ -264,12 +260,12 @@
       <workItem from="1540795708586" duration="5350000" />
       <workItem from="1540862672649" duration="38000" />
       <workItem from="1541044623318" duration="1036000" />
-      <workItem from="1541129387853" duration="1694000" />
+      <workItem from="1541129387853" duration="1820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18692000" />
+    <option name="totallyTimeSpent" value="18818000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
@@ -343,8 +339,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="56" column="25" lean-forward="true" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+        <state relative-caret-position="-441">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>
