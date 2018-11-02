@@ -17,9 +17,6 @@ use App\d_pekerja;
 class approvalpelamarController extends Controller
 {
     public function index(){
-      $data = DB::table('d_pekerja')
-            ->where('p_status_approval', '=', null)
-            ->get();
 
             $countpekerja = DB::table('d_pekerja')
                 ->where('p_status_approval', '=', null)
@@ -32,6 +29,31 @@ class approvalpelamarController extends Controller
                 ]);
 
       return view("approvalpelamar.index", compact('data'));
+    }
+
+    public function datatablepekerja(){
+      $data = DB::table('d_pekerja')
+            ->where('p_status_approval', '=', null)
+            ->select('p_id', 'p_name', 'p_education', 'p_address', 'p_hp')
+            ->limit(100)
+            ->get();
+
+      $data = collect($data);
+
+      return Datatables::of($data)
+          ->editColumn('checkbox', function ($data) {
+                  return '<div class="text-center">
+                          <input class="pilih-'.$data->p_id.'" type="checkbox" name="pilih[]" onclick="selectBox('.$data->p_id.')" value="'.$data->p_id.'">
+                          </div>';
+          })
+          ->addColumn('action', function ($data) {
+              return '<div class="action" align="center">
+                  <button type="button" id="'.$data->p_id.'" title="Detail" onclick="detail('.$data->p_id.')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                  <button type="button" id="'.$data->p_id.'" title="Setujui" onclick="setujui('.$data->p_id.')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                  <button type="button" id="'.$data->p_id.'" title="Tolak" onclick="tolak('.$data->p_id.')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+              </div>';
+          })
+          ->make(true);
     }
 
     public function detail(Request $request){

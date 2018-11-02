@@ -35,7 +35,7 @@
             <div class="row m-b-lg">
                 <div class="col-md-12" style="margin: 10px 0px 20px 0px;">
 
-                  <center>
+                  {{-- <center>
                     <div class="spiner-example">
                         <div class="sk-spinner sk-spinner-wave" style="margin-bottom: 10px;">
                             <div class="sk-rect1 tampilkan" ></div>
@@ -46,7 +46,7 @@
                         </div>
                         <span class="infoLoad" style="color: #aaa; font-weight: 600;">Menyiapkan Daftar Approval</span>
                     </div>
-                </center>
+                </center> --}}
 
                 <form class="formapprovalpelamar" id="formapprovalpelamar">
                 <table id="approvalpelamar" class="table table-bordered" cellspacing="0" width="100%" style="display:none">
@@ -62,25 +62,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                      @foreach($data as $index => $x)
-                      <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
-                          <td>
-                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->p_id}}">
-                          </td>
-                        <td>{{$x->p_name}}</td>
-                        <td>{{$x->p_education}}</td>
-                        <td>{{$x->p_address}}</td>
-                        <td>{{$x->p_hp}}</td>
-                      <td align="center">
-                        <div class="action">
-                            <button type="button" id="{{$x->p_id}}" title="Detail" onclick="detail({{$x->p_id}})" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" id="{{$x->p_id}}" title="Setujui" onclick="setujui({{$x->p_id}})" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" id="{{$x->p_id}}" title="Tolak" onclick="tolak({{$x->p_id}})"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
-                        </div>
-                      </td>
-                      @endforeach
-                    </tbody>
                 </table>
                 </form>
                 <div class="pull-right">
@@ -415,23 +396,28 @@ var countmitra = 0;
 var totalmitra = 0;
 $( document ).ready(function() {
 
-$('#approvalpelamar').hide();
-myFunction();
-
-function myFunction() {
-setTimeout(function(){
-  $(".spiner-example").css('display', 'none');
-  table = $("#approvalpelamar").DataTable({
-    "processing": true,
-    "paging": false,
-    "searching": false,
-    "deferLoading": 57,
-    responsive: true,
-    "language": dataTableLanguage
-  });
-  $('#approvalpelamar').show();
-},1500);
-  }
+  $('#approvalpelamar').DataTable({
+          serverSide: true,
+          ordering: false,
+          searching: false,
+          scrollY: 200,
+          scroller: {
+              loadingIndicator: true
+          },
+          stateSave: true,
+          "ajax": {
+                      "url": "{{ url('approvalpelamar/datatablepekerja') }}",
+                      "type": "get"
+                  },
+                  columns: [
+                      {data: 'checkbox', name: 'checkbox'},
+                      {data: 'p_name', name: 'p_name'},
+                      {data: 'p_education', name: 'p_education'},
+                      {data: 'p_address', name: 'p_address'},
+                      {data: 'p_hp', name: 'p_hp'},
+                      {data: 'action', name: 'action', orderable: false, searchable: false}
+                  ],
+      });
 
 });
 
