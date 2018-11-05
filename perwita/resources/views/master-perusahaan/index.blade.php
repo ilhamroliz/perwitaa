@@ -162,13 +162,14 @@
                 serverSide: true,
                 "ajax": {
                     "url": "{{ url('master-perusahaan/table') }}",
-                    "type": "POST"
+                    "type": "post"
                 },
                 columns: [
                     {data: 'c_name', name: 'c_name'},
                     {data: 'edit', name: 'edit'},
                     {data: 'aksi', name: 'aksi'}
                 ],
+                aaSorting:[],
                 responsive: true,
                 "language": dataTableLanguage,
             });

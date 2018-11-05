@@ -75,6 +75,10 @@
                 <small class="font-bold">Memperpanjang MOU mitra perusahaan</small>
             </div>
             <div class="modal-body">
+                <div class="form-group">
+                  <label>No MOU</label> 
+                  <input type="text" style="text-transform: uppercase;" placeholder="Masukan Nomor MOU Baru" name="mou" value="" class="form-control mou">
+                </div>
                 <div class="input-daterange input-group col-md-12 isimodal" id="datepicker" style="display: none">
                     <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
                     <span class="input-group-addon">sampai</span>
@@ -89,41 +93,6 @@
                         <div class="sk-rect5"></div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" onclick="update()">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-calendar modal-icon"></i>
-                <h4 class="modal-title">Perpanjang MOU</h4>
-                <small class="font-bold">Memperpanjang MOU mitra perusahaan</small>
-            </div>
-            <div class="modal-body">
-              <div class="dataedit" id="dataedit">
-                <div class="input-daterange input-group col-md-12 isimodal" id="datepicker" style="display: none">
-                    <input type="text" class="input-sm form-control awal" name="start" value="05/06/2014"/>
-                    <span class="input-group-addon">sampai</span>
-                    <input type="text" class="input-sm form-control akhir" name="end" value="05/09/2014" />
-                </div>
-                <div class="spiner-example spin">
-                    <div class="sk-spinner sk-spinner-wave">
-                        <div class="sk-rect1"></div>
-                        <div class="sk-rect2"></div>
-                        <div class="sk-rect3"></div>
-                        <div class="sk-rect4"></div>
-                        <div class="sk-rect5"></div>
-                    </div>
-                </div>
-            </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
@@ -148,7 +117,7 @@
                   <label>No MOU</label>
                 </div>
                 <div class="col">
-                  <input type="text" class="input-sm form-control nomou" name="nomou" value="">
+                  <input type="text" style="text-transform: uppercase;" class="input-sm form-control nomou" name="nomou" value="">
                 </div>
                 <br>
                 <div class="input-daterange input-group col-md-12" id="datepicker">
@@ -184,6 +153,7 @@
   var table;
   var idPublic;
   var detailPublic;
+  var mouPublic;
   $(document).ready(function(){
       setTimeout(function(){
           $.ajaxSetup({
@@ -215,9 +185,10 @@
       },1500);
   });
 
-  function perpanjang(id, detail){
+  function perpanjang(id, detail, mou){
     idPublic = id;
     detailPublic = detail;
+    mouPublic = mou;
     $.ajax({
         url: baseUrl + '/manajemen-mitra/mitra-mou/get-tgl-mou',
         type: 'get',
@@ -227,6 +198,7 @@
           var akhir = response[0].mm_mou_end;
           $('.awal').val(awal);
           $('.akhir').val(akhir);
+          $('.mou').val(mouPublic);
           $('.spin').css('display', 'none');
           $('.isimodal').show();
           $('.input-daterange').datepicker({
@@ -257,6 +229,7 @@
     waitingDialog.show();
     var awal = $('.awal').val();
     var akhir = $('.akhir').val();
+    var mouUpdate = $('.mou').val();
     $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -265,7 +238,7 @@
     $.ajax({
         url: baseUrl + '/manajemen-mitra/mitra-mou/update-mou',
         type: 'get',
-        data: { id: idPublic, detail: detailPublic, awal: awal, akhir: akhir },
+        data: { id: idPublic, detail: detailPublic, awal: awal, akhir: akhir, mou: mouUpdate},
         success: function(response){
           waitingDialog.hide();
           if (response.status == 'berhasil') {

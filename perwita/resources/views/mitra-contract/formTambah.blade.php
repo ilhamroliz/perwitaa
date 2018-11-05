@@ -77,10 +77,11 @@
                          <div class="form-group row">
                             <label for="perusahaan" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="perusahaan" id="perusahaan" required="">
-                                    <option value="" selected="true" readonly="true" disabled="">--Pilih Perusahaan--</option>
+                                <select class="form-control" name="perusahaan" id="perusahaan" required="" readonly>
                                     @foreach($comp as $data)
-                                    <option value="{{$data->c_id}}">{{$data->c_name}}</option>
+                                    @if($data->c_id == 'PWT0000003')
+                                    <option value="{{$data->c_id}}" selected>{{$data->c_name}}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 <span style="color:#ed5565;display:none" class="help-block m-b-none reset" id="perusahaan-error">

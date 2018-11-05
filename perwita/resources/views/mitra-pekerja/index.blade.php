@@ -91,8 +91,8 @@
                   },
                 dataType: 'json',
                 columns: [
-                    {data: 'mc_no', name: 'mc_no', orderable:false},
                     {data: 'mc_date', name: 'mc_date'},
+                    {data: 'mc_no', name: 'mc_no'},
                     {data: 'mc_expired', name: 'mc_expired'},
                     {data: 'c_name', name: 'c_name'},
                     {data: 'm_name', name: 'm_name'},

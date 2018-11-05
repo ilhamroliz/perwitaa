@@ -172,13 +172,13 @@ $(document).ready(function() {
                 serverSide: true,
                 "ajax": {
                       "url": "{{ url('manajemen-mitra/mitra-divisi/tabel') }}",
-                      "type": "POST"
+                      "type": "get"
                   },
                 dataType: 'json',
                 columns: [
                     { "data": "m_name" },
                     { "data": "m_address" },
-                    { "data": "button" },
+                    { "data": "button" }
                 ],
                 responsive: true,
                 "pageLength": 10,

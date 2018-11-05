@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master-perusahaan/tambah', 'PerusahaanController@add');
     Route::post('master-perusahaan/data', 'PerusahaanController@data');
     Route::post('master-perusahaan/table', 'PerusahaanController@table');
+    Route::post('master-perusahaan/table', 'PerusahaanController@table');
     Route::post('master-perusahaan/simpan', 'PerusahaanController@save');
     Route::post('master-perusahaan/update', 'PerusahaanController@update');
     Route::post('master-perusahaan/hapus', 'PerusahaanController@delete');
@@ -739,7 +740,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-mitra/mitra-mou/aktif','MouController@aktif');
     Route::get('manajemen-mitra/mitra-mou/get-tgl-mou','MouController@tglMou');
     Route::get('manajemen-mitra/mitra-mou/update-mou','MouController@UpdateMou');
-    Route::get('manajemen-mitra/mitra-mou/update-mou','MouController@UpdateMou');
+    Route::post('manajemen-mitra/mitra-mou/update-mou','MouController@UpdateMou');
     Route::get('manajemen-mitra/mitra-mou/tambah','MouController@tambah');
 
     //Cek Approval

@@ -31,7 +31,9 @@ class PerusahaanController extends Controller
     public function table()
     {
         $comp = DB::table('d_comp')
+            ->orderBy('c_editable', 'dsc')
             ->get();
+
         $data = collect($comp);
         return Datatables::of($data)
             ->addColumn('edit', function ($data){
