@@ -16,6 +16,10 @@
         table.dataTable tbody td {
             vertical-align: middle;
         }
+
+        table.dataTables_filter label input.form-control{
+            text-transform: uppercase;
+        }
     </style>
 
 @endsection
@@ -131,6 +135,7 @@
                             </div>
                         </div>
                     </div>
+                    <p><strong>NB:</strong> Pencarian data gunakan huruf kapital</p>
                 </div>
 
                 <div class="modal inmodal" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">

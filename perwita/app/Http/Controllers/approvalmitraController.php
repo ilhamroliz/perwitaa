@@ -18,28 +18,31 @@ use App\d_mitra_mou;
 
 class approvalmitraController extends Controller
 {
-    public function index(){
-      $data = DB::table('d_mitra')
-            ->where('m_status_approval', '=', null)->get();
+    public function index()
+    {
+        $data = DB::table('d_mitra')
+            ->where('m_status_approval', '=', null)
+            ->get();
 
-      $countmitra = DB::table('d_mitra')
-          ->where('m_status_approval', null)
-          ->get();
+        $countmitra = DB::table('d_mitra')
+            ->where('m_status_approval', null)
+            ->get();
 
-      DB::table('d_notifikasi')
-          ->where('n_fitur', 'Mitra')
-          ->update([
-            'n_qty' => count($countmitra)
-          ]);
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Mitra')
+            ->update([
+                'n_qty' => count($countmitra)
+            ]);
 
-      return view('approvalmitra.index', compact('data'));
+        return view('approvalmitra.index', compact('data'));
     }
 
-    public function detail(Request $request){
-      $id = $request->id;
+    public function detail(Request $request)
+    {
+        $id = $request->id;
 
-      $data = DB::table('d_mitra')->selectRaw(
-        "*,
+        $data = DB::table('d_mitra')->selectRaw(
+            "*,
         coalesce(m_name, '-') as m_name,
         coalesce(m_address, '-') as m_address,
         coalesce(m_cp, '-') as m_cp,
@@ -48,100 +51,103 @@ class approvalmitraController extends Controller
         coalesce(m_fax, '-') as m_fax,
         coalesce(m_note, '-') as m_note"
         )
-      ->where('m_id', $id)->get();
+            ->where('m_id', $id)->get();
 
-      return response()->json([
-        'm_name' => $data[0]->m_name,
-        'm_address' => $data[0]->m_address,
-        'm_cp' => $data[0]->m_cp,
-        'm_cp_phone' => $data[0]->m_cp_phone,
-        'm_phone' => $data[0]->m_phone,
-        'm_fax' => $data[0]->m_fax,
-        'm_note' => $data[0]->m_note
-      ]);
+        return response()->json([
+            'm_name' => $data[0]->m_name,
+            'm_address' => $data[0]->m_address,
+            'm_cp' => $data[0]->m_cp,
+            'm_cp_phone' => $data[0]->m_cp_phone,
+            'm_phone' => $data[0]->m_phone,
+            'm_fax' => $data[0]->m_fax,
+            'm_note' => $data[0]->m_note
+        ]);
     }
 
 
-    public function setujui(Request $request){
-      // dd($request->id);
-      try {
-        $d_mitra = d_mitra::where('m_id',$request->id)->where('m_status_approval', null);
-        $d_mitra->update([
-          'm_status_approval' => 'Y',
-          'm_date_approval' => Carbon::now()
-        ]);
-
-        $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->id)->where('mm_status', null);
-        $d_mitra_mou->update([
-          'mm_status' => 'Aktif',
-          'mm_aktif' => Carbon::now()
-        ]);
-
-        $countmitra = DB::table('d_mitra')
-            ->where('m_status_approval', null)
-            ->get();
-
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Mitra')
-            ->update([
-              'n_qty' => count($countmitra)
+    public function setujui(Request $request)
+    {
+        // dd($request->id);
+        try {
+            $d_mitra = d_mitra::where('m_id', $request->id)->where('m_status_approval', null);
+            $d_mitra->update([
+                'm_status_approval' => 'Y',
+                'm_date_approval' => Carbon::now()
             ]);
 
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
-
-
-    }
-
-    public function tolak(Request $request){
-      // dd($request);
-      try {
-        $d_mitra = d_mitra::where('m_id',$request->id)->where('m_status_approval', null);
-        $d_mitra->update([
-          'm_status_approval' => 'N',
-          'm_date_approval' => Carbon::now()
-        ]);
-
-        $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->id)->where('mm_status', null);
-        $d_mitra_mou->update([
-          'mm_status' => 'Tidak',
-          'mm_aktif' => Carbon::now()
-        ]);
-
-        $countmitra = DB::table('d_mitra')
-            ->where('m_status_approval', null)
-            ->get();
-
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Mitra')
-            ->update([
-              'n_qty' => count($countmitra)
+            $d_mitra_mou = d_mitra_mou::where('mm_mitra', $request->id)->where('mm_status', null);
+            $d_mitra_mou->update([
+                'mm_status' => 'Aktif',
+                'mm_aktif' => Carbon::now()
             ]);
 
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+            $countmitra = DB::table('d_mitra')
+                ->where('m_status_approval', null)
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Mitra')
+                ->update([
+                    'n_qty' => count($countmitra)
+                ]);
+
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
 
 
     }
 
-    public function print(Request $request){
-      try {
-        $id = $request->id;
+    public function tolak(Request $request)
+    {
+        // dd($request);
+        try {
+            $d_mitra = d_mitra::where('m_id', $request->id)->where('m_status_approval', null);
+            $d_mitra->update([
+                'm_status_approval' => 'N',
+                'm_date_approval' => Carbon::now()
+            ]);
 
-        $data = DB::table('d_mitra')->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')->selectRaw(
-          "*,
+            $d_mitra_mou = d_mitra_mou::where('mm_mitra', $request->id)->where('mm_status', null);
+            $d_mitra_mou->update([
+                'mm_status' => 'Tidak',
+                'mm_aktif' => Carbon::now()
+            ]);
+
+            $countmitra = DB::table('d_mitra')
+                ->where('m_status_approval', null)
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Mitra')
+                ->update([
+                    'n_qty' => count($countmitra)
+                ]);
+
+            return response()->json([
+                'status' => 'berhasil'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
+
+
+    }
+
+    public function print(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            $data = DB::table('d_mitra')->join('d_mitra_mou', 'mm_mitra', '=', 'm_id')->selectRaw(
+                "*,
           coalesce(m_name, '-') as m_name,
           coalesce(m_address, '-') as m_address,
           coalesce(m_cp, '-') as m_cp,
@@ -152,125 +158,127 @@ class approvalmitraController extends Controller
           coalesce(mm_mou, '-') as mm_mou,
           coalesce(mm_mou_start, '-') as mm_mou_start,
           coalesce(mm_mou_end, '-') as mm_mou_end"
-          )
-        ->where('m_id', $id)->where('mm_status', 'Aktif')->get();
+            )
+                ->where('m_id', $id)->where('mm_status', 'Aktif')->get();
 
-        if (!empty($data[0]->mm_mou_start)) {
-          $moustart = Carbon::parse($data[0]->mm_mou_start)->format('d/m/Y');
+            if (!empty($data[0]->mm_mou_start)) {
+                $moustart = Carbon::parse($data[0]->mm_mou_start)->format('d/m/Y');
+            }
+
+            if (!empty($data[0]->mm_mou_end)) {
+                $mouend = Carbon::parse($data[0]->mm_mou_end)->format('d/m/Y');
+            }
+
+
+            $lempar = array(
+                'm_name' => $data[0]->m_name,
+                'm_address' => $data[0]->m_address,
+                'm_cp' => $data[0]->m_cp,
+                'm_cp_phone' => $data[0]->m_cp_phone,
+                'm_phone' => $data[0]->m_phone,
+                'm_fax' => $data[0]->m_fax,
+                'm_note' => $data[0]->m_note,
+                'mm_mou' => $data[0]->mm_mou,
+                'mm_mou_start' => $moustart,
+                'mm_mou_end' => $mouend
+            );
+            // return response()->json([
+            //   'm_name' => $data[0]->m_name,
+            //   'm_address' => $data[0]->m_address,
+            //   'm_cp' => $data[0]->m_cp,
+            //   'm_cp_phone' => $data[0]->m_cp_phone,
+            //   'm_phone' => $data[0]->m_phone,
+            //   'm_fax' => $data[0]->m_fax,
+            //   'm_note' => $data[0]->m_note
+            // ]);
+            // dd($lempar);
+            return view('approvalmitra.print', compact('lempar'));
+        } catch (\Exception $e) {
+            echo "Terjadi Kesalahan!";
         }
 
-        if (!empty($data[0]->mm_mou_end)) {
-          $mouend = Carbon::parse($data[0]->mm_mou_end)->format('d/m/Y');
-        }
-
-
-        $lempar = array(
-          'm_name' => $data[0]->m_name,
-          'm_address' => $data[0]->m_address,
-          'm_cp' => $data[0]->m_cp,
-          'm_cp_phone' => $data[0]->m_cp_phone,
-          'm_phone' => $data[0]->m_phone,
-          'm_fax' => $data[0]->m_fax,
-          'm_note' => $data[0]->m_note,
-          'mm_mou' => $data[0]->mm_mou,
-          'mm_mou_start' => $moustart,
-          'mm_mou_end' => $mouend
-        );
-        // return response()->json([
-        //   'm_name' => $data[0]->m_name,
-        //   'm_address' => $data[0]->m_address,
-        //   'm_cp' => $data[0]->m_cp,
-        //   'm_cp_phone' => $data[0]->m_cp_phone,
-        //   'm_phone' => $data[0]->m_phone,
-        //   'm_fax' => $data[0]->m_fax,
-        //   'm_note' => $data[0]->m_note
-        // ]);
-        // dd($lempar);
-        return view('approvalmitra.print', compact('lempar'));
-      } catch (\Exception $e) {
-        echo "Terjadi Kesalahan!";
-      }
-
-      // dd($request);
+        // dd($request);
 
     }
 
-    public function setujuilist(Request $request){
-      DB::beginTransaction();
-      try {
-        for ($i=0; $i < count($request->pilih); $i++) {
-          $d_mitra = d_mitra::where('m_id',$request->pilih[$i])->where('m_status_approval', null);
-          $d_mitra->update([
-            'm_status_approval' => 'Y',
-            'm_date_approval' => Carbon::now()
-          ]);
+    public function setujuilist(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            for ($i = 0; $i < count($request->pilih); $i++) {
+                $d_mitra = d_mitra::where('m_id', $request->pilih[$i])->where('m_status_approval', null);
+                $d_mitra->update([
+                    'm_status_approval' => 'Y',
+                    'm_date_approval' => Carbon::now()
+                ]);
 
-          $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->pilih[$i])->where('mm_status', null);
-          $d_mitra_mou->update([
-            'mm_status' => 'Aktif',
-            'mm_aktif' => Carbon::now()
-          ]);
-        }
+                $d_mitra_mou = d_mitra_mou::where('mm_mitra', $request->pilih[$i])->where('mm_status', null);
+                $d_mitra_mou->update([
+                    'mm_status' => 'Aktif',
+                    'mm_aktif' => Carbon::now()
+                ]);
+            }
 
-        $countmitra = DB::table('d_mitra')
-            ->where('m_status_approval', null)
-            ->get();
+            $countmitra = DB::table('d_mitra')
+                ->where('m_status_approval', null)
+                ->get();
 
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Mitra')
-            ->update([
-              'n_qty' => count($countmitra)
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Mitra')
+                ->update([
+                    'n_qty' => count($countmitra)
+                ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
             ]);
-
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
     }
 
-    public function tolaklist(Request $request){
-      DB::beginTransaction();
-      try {
-        for ($i=0; $i < count($request->pilih); $i++) {
-          $d_mitra = d_mitra::where('m_id',$request->pilih[$i])->where('m_status_approval', null);
-          $d_mitra->update([
-            'm_status_approval' => 'N',
-            'm_date_approval' => Carbon::now()
-          ]);
+    public function tolaklist(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            for ($i = 0; $i < count($request->pilih); $i++) {
+                $d_mitra = d_mitra::where('m_id', $request->pilih[$i])->where('m_status_approval', null);
+                $d_mitra->update([
+                    'm_status_approval' => 'N',
+                    'm_date_approval' => Carbon::now()
+                ]);
 
-          $d_mitra_mou = d_mitra_mou::where('mm_mitra',$request->pilih[$i])->where('mm_status', null);
-          $d_mitra_mou->update([
-            'mm_status' => 'Tidak',
-            'mm_aktif' => Carbon::now()
-          ]);
-        }
+                $d_mitra_mou = d_mitra_mou::where('mm_mitra', $request->pilih[$i])->where('mm_status', null);
+                $d_mitra_mou->update([
+                    'mm_status' => 'Tidak',
+                    'mm_aktif' => Carbon::now()
+                ]);
+            }
 
-        $countmitra = DB::table('d_mitra')
-            ->where('m_status_approval', null)
-            ->get();
+            $countmitra = DB::table('d_mitra')
+                ->where('m_status_approval', null)
+                ->get();
 
-        DB::table('d_notifikasi')
-            ->where('n_fitur', 'Mitra')
-            ->update([
-              'n_qty' => count($countmitra)
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Mitra')
+                ->update([
+                    'n_qty' => count($countmitra)
+                ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'berhasil'
             ]);
-
-        DB::commit();
-        return response()->json([
-          'status' => 'berhasil'
-        ]);
-      } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json([
-          'status' => 'gagal'
-        ]);
-      }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal'
+            ]);
+        }
 
     }
 }

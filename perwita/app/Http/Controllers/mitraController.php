@@ -83,7 +83,7 @@ class mitraController extends Controller
                       'mm_mou_start' => Carbon::createFromFormat('d/m/Y', $request->startmou, 'Asia/Jakarta'),
                       'mm_mou_end' => Carbon::createFromFormat('d/m/Y', $request->endmou, 'Asia/Jakarta'),
                       'mm_aktif' => null,
-                      'mm_status' => 'null',
+                      'mm_status' => null,
                   ));
 
                   $jumlah = DB::table('d_mitra')

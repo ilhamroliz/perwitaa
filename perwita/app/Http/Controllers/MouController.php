@@ -16,6 +16,11 @@ class MouController extends Controller
         return view('mou-mitra.index');
     }
 
+    public function tambah()
+    {
+        return view('mou-mitra.add');
+    }
+
     public function table(Request $request)
     {
         $data = DB::table('d_mitra')
@@ -28,7 +33,12 @@ class MouController extends Controller
         return Datatables::of($mou)
             ->addColumn('sisa', function ($mou) {
                 Carbon::setLocale('id');
-                $akhir = Carbon::createFromFormat('d/m/Y', $mou->mm_mou_end)->diffForHumans(null, true);
+                $akhir = null;
+                if (Carbon::createFromFormat('d/m/Y', $mou->mm_mou_end)->lessThan(Carbon::now('Asia/Jakarta'))){
+                    $akhir = 'Expired';
+                } else {
+                    $akhir = Carbon::createFromFormat('d/m/Y', $mou->mm_mou_end)->diffForHumans(null, true);
+                }
                 return $akhir;
             })
             ->addColumn('action', function ($mou) {
