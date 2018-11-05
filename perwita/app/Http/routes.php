@@ -747,10 +747,13 @@ Route::group(['middleware' => 'auth'], function () {
     //Approval pelamar
     Route::get('approvalpelamar', 'approvalpelamarController@index');
     Route::get('approvalpelamar/datatablepekerja', 'approvalpelamarController@datatablepekerja');
+    Route::post('approvalpelamar/datatablepekerja', 'approvalpelamarController@datatablepekerja');
     Route::get('approvalpelamar/detail', 'approvalpelamarController@detail');
     Route::get('approvalpelamar/setujui', 'approvalpelamarController@setujui');
+    Route::post('approvalpelamar/setujuilist', 'approvalpelamarController@setujuilist');
     Route::get('approvalpelamar/setujuilist', 'approvalpelamarController@setujuilist');
     Route::get('approvalpelamar/tolak', 'approvalpelamarController@tolak');
+    Route::post('approvalpelamar/tolaklist', 'approvalpelamarController@tolaklist');
     Route::get('approvalpelamar/tolaklist', 'approvalpelamarController@tolaklist');
     Route::get('approvalpelamar/print', 'approvalpelamarController@print');
 

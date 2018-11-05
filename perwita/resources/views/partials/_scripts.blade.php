@@ -1,5 +1,6 @@
-<!-- Mainly scripts -->
+    <!-- Mainly scripts -->
     <script type="text/javascript" src="{{ asset('assets/plugins/jquery-1.12.3.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('assets/plugins/jquery-3.min.js') }}"></script> --}}
 
     <!-- jQuery UI -->
     <script src="{{ asset('assets/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -27,6 +28,7 @@
 
     <!-- Datatable -->
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/datatables.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/datatables_scroller.js')}}"></script>
 
 	  <!-- bootbox  -->
     <script src="{{ asset('assets/vendors/bootbox/bootbox.js') }}"></script>

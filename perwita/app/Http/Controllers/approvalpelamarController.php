@@ -19,14 +19,15 @@ class approvalpelamarController extends Controller
     public function index()
     {
 
-        $countpekerja = DB::table('d_pekerja')
+        $data = DB::table('d_pekerja')
             ->where('p_status_approval', '=', null)
+            ->limit(999)
             ->get();
 
         DB::table('d_notifikasi')
             ->where('n_fitur', 'Calon Pekerja')
             ->update([
-                'n_qty' => count($countpekerja)
+                'n_qty' => count($data)
             ]);
 
         return view("approvalpelamar.index", compact('data'));
@@ -43,15 +44,13 @@ class approvalpelamarController extends Controller
 
         return Datatables::of($data)
             ->editColumn('checkbox', function ($data) {
-                return '<div class="text-center">
-                          <input class="pilih-' . $data->p_id . '" type="checkbox" name="pilih[]" onclick="selectBox(' . $data->p_id . ')" value="' . $data->p_id . '">
-                          </div>';
+                return '<input class="pilih-' . $data->p_id . '" type="checkbox" name="pilih[]" onclick="selectBox(' . $data->p_id . ')" value="' . $data->p_id . '">';
             })
             ->addColumn('action', function ($data) {
                 return '<div class="action" align="center">
-                  <button type="button" id="' . $data->p_id . '" title="Detail" onclick="detail(' . $data->p_id . ')" class="btn btn-info btn-sm btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                  <button type="button" id="' . $data->p_id . '" title="Setujui" onclick="setujui(' . $data->p_id . ')" class="btn btn-primary btn-sm btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                  <button type="button" id="' . $data->p_id . '" title="Tolak" onclick="tolak(' . $data->p_id . ')"  class="btn btn-danger btn-sm btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                  <button type="button" id="' . $data->p_id . '" title="Detail" onclick="detail(' . $data->p_id . ')" class="btn btn-info btn-xs btndetail" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                  <button type="button" id="' . $data->p_id . '" title="Setujui" onclick="setujui(' . $data->p_id . ')" class="btn btn-primary btn-xs btnsetujui" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                  <button type="button" id="' . $data->p_id . '" title="Tolak" onclick="tolak(' . $data->p_id . ')"  class="btn btn-danger btn-xs btntolak" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
               </div>';
             })
             ->make(true);
