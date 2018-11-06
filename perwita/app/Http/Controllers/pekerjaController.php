@@ -768,12 +768,12 @@ group by ps_pekerja");
             $agama = strtoupper($request->agama);
             $agama_lain = strtoupper($request->agamalain);
             $pendidikan = $request->pendidikan;
-            $bahasa = null;
+            $bahasa = [];
             if ($request->bahasa != null){
                 $bahasa = $request->bahasa;
             }
             $bahasa_lain = $request->bahasalain;
-            $sim = null;
+            $sim = [];
             if ($request->sim != null){
                 $sim = $request->sim;
             }
@@ -1224,7 +1224,6 @@ group by ps_pekerja");
                     $saatini = 'Kuliah di ' . $kuliahnow;
                 }
 
-
                 d_pekerja::insert(array(
                     "p_id" => $id,
                     "p_jabatan_lamaran" => strtoupper($jabatanpelamar),
@@ -1673,8 +1672,6 @@ group by ps_pekerja");
                 }
             }
             d_pekerja_child::insert($addChild);
-
-
             DB::commit();
             Session::flash('sukses', 'data pekerja anda berhasil diperbarui');
             return redirect('manajemen-pekerja/data-pekerja');
