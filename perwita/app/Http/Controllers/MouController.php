@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\d_mitra_mou;
 use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
@@ -284,6 +285,12 @@ class MouController extends Controller
 
         $data = collect($data);
         return Datatables::of($data)
+            ->editColumn('mm_mou_start', function ($data){
+                return Carbon::createFromFormat('Y-m-d', $data->mm_mou_start)->format('d/m/Y');
+            })
+            ->editColumn('mm_mou_end', function ($data){
+                return Carbon::createFromFormat('Y-m-d', $data->mm_mou_end)->format('d/m/Y');
+            })
             ->make('true');
     }
 
