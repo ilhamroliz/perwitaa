@@ -1342,9 +1342,6 @@ function TambahPengalaman(){
                     });
                     buttonLadda.ladda('stop');
                 }
-
-
-
             },
             error: function (xhr, status) {
                 if (status == 'timeout') {

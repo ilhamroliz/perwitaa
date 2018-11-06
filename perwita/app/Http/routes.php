@@ -739,6 +739,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-mitra/mitra-mou/hapus','MouController@hapus');
     Route::get('manajemen-mitra/mitra-mou/aktif','MouController@aktif');
     Route::get('manajemen-mitra/mitra-mou/get-tgl-mou','MouController@tglMou');
+    Route::get('manajemen-mitra/mitra-mou/get-mou','MouController@getMou');
     Route::get('manajemen-mitra/mitra-mou/update-mou','MouController@UpdateMou');
     Route::post('manajemen-mitra/mitra-mou/update-mou','MouController@UpdateMou');
     Route::get('manajemen-mitra/mitra-mou/tambah','MouController@tambah');

@@ -21,7 +21,7 @@ class MouController extends Controller
         return view('mou-mitra.add');
     }
 
-    public function table(Request $request)
+    public function table()
     {
         $data = DB::table('d_mitra')
             ->leftJoin('d_mitra_mou', 'mm_mitra', '=', 'm_id')
@@ -45,6 +45,7 @@ class MouController extends Controller
                 return '<div class="text-center">
                     <button style="margin-left:5px;" title="Perpanjang" data-toggle="modal" data-target="#myModal"  type="button" class="btn btn-info btn-xs" onclick="perpanjang(' . $mou->m_id . ',' . $mou->mm_detailid . ', \'' . $mou->mm_mou . '\')"><i class="glyphicon glyphicon-export"></i></button>
                     <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" data-target="modal-edit" onclick="edit(' . $mou->m_id . ')"><i class="glyphicon glyphicon-edit"></i></a>
+                    <button style="margin-left:5px;" title="History" data-toggle="modal" data-target="#myModalHistory"  type="button" class="btn btn-success btn-xs" onclick="history(' . $mou->m_id . ',' . $mou->mm_detailid . ')"><i class="fa fa-history"></i></button>
                     <button style="margin-left:5px;" type="button" class="btn btn-danger btn-xs" title="Non Aktif" onclick="hapus(' . $mou->m_id . ')"><i class="glyphicon glyphicon-remove"></i></button>
                   </div>';
             })
@@ -272,6 +273,18 @@ class MouController extends Controller
                 'data' => $e
             ]);
         }
+    }
+
+    public function getMou(Request $request)
+    {
+        $id = $request->id;
+        $data = DB::table('d_mitra_mou')
+            ->where('mm_mitra', '=', $id)
+            ->get();
+
+        $data = collect($data);
+        return Datatables::of($data)
+            ->make('true');
     }
 
 }
