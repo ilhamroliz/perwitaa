@@ -53,7 +53,7 @@
                             <select class="form-control comp" name="comp" id="comp">
                                 <option selected disabled>-- Pilih Mitra --</option>
                                 @foreach($mitra as $data)
-                                <option value="{{ $data->m_name }}">{{ $data->m_name }}</option>
+                                <option value="{{ $data->m_id }}">{{ $data->m_name }}</option>
                                 @endforeach
                             </select>
                         </div>

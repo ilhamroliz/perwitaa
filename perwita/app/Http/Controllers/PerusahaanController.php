@@ -89,18 +89,28 @@ class PerusahaanController extends Controller
             }
 
             $sekarang = Carbon::now('Asia/Jakarta');
+            $c_name = DB::table('d_mitra')
+                ->select('m_name')
+                ->where('m_id', '=', $comp)
+                ->first();
 
             $kode = 'MTR' . $kode;
             DB::table('d_comp')
                 ->insert([
                     'c_id' => $kode,
                     'c_owner' => $owner,
-                    'c_name' => $comp,
+                    'c_name' => $c_name->m_name,
                     'c_address' => $alamat,
                     'c_type' => 11,
                     'c_insert' => $sekarang,
                     'c_isactive' => 'Y',
                     'c_editable' => 'Y'
+                ]);
+
+            DB::table('d_mitra_comp')
+                ->insert([
+                    'mc_mitra' => $comp,
+                    'mc_comp' => $kode
                 ]);
 
             DB::commit();
