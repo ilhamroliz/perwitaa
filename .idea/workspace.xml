@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/MouController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/MouController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,21 +18,21 @@
     <session id="-912952">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.2" value="5" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.44" value="2" />
           <entry key="project.open.time.47" value="1" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="php" value="35" />
+          <entry key="php" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -44,7 +45,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Blade" value="4" />
-          <entry key="PHP" value="31" />
+          <entry key="PHP" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -65,32 +66,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-81">
+            <state relative-caret-position="714">
               <caret line="59" column="33" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="33" />
               <folding>
                 <element signature="e#40#64#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/MouController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="338">
               <caret line="291" column="74" selection-start-line="291" selection-start-column="74" selection-end-line="291" selection-end-column="74" />
-              <folding>
-                <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="62" column="46" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -98,7 +96,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
+            <state relative-caret-position="546">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
@@ -154,7 +152,6 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraPekerjaController.php" />
         <option value="$PROJECT_DIR$/perwita/resources/views/approvalpelamar/index.blade.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpelamarController.php" />
-        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" />
         <option value="$PROJECT_DIR$/perwita/resources/views/mou-mitra/add.blade.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/mitraController.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/approvalController.php" />
@@ -167,6 +164,7 @@
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php" />
         <option value="$PROJECT_DIR$/perwita/resources/views/mou-mitra/index.blade.php" />
         <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/MouController.php" />
+        <option value="$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php" />
       </list>
     </option>
   </component>
@@ -225,7 +223,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -300,10 +297,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="moucontro&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;approvalmitrapekerja&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/approvalmitrapekerjaController.php&#10;manaje&#9;null&#9;null&#10;pekerjaController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/pekerjaController.php&#10;mitraPekerjaController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;mitradivisi&#9;null&#9;null&#10;mitrapekerjacon&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;moucontr&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;aksesuser&#9;null&#9;null&#10;moucon&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;mitraController&#9;null&#9;null&#10;mitraControll&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;perusahaa&#9;null&#9;null&#10;MouController&#9;null&#9;null&#10;approvalpela&#9;null&#9;null&#10;loginController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/loginController.php&#10;approvalmitra&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/approvalmitrapekerjaController.php&#10;mitrapekerja&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="login&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/loginController.php&#10;moucontro&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;approvalmitrapekerja&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/approvalmitrapekerjaController.php&#10;manaje&#9;null&#9;null&#10;pekerjaController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/pekerjaController.php&#10;mitraPekerjaController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;mitradivisi&#9;null&#9;null&#10;mitrapekerjacon&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;moucontr&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;aksesuser&#9;null&#9;null&#10;moucon&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/MouController.php&#10;mitraController&#9;null&#9;null&#10;mitraControll&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/mitraPekerjaController.php&#10;perusahaa&#9;null&#9;null&#10;MouController&#9;null&#9;null&#10;approvalpela&#9;null&#9;null&#10;loginController&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/loginController.php&#10;approvalmitra&#9;FILE&#9;file:///media/hdd/xampp/htdocs/perwita/perwita/app/Http/Controllers/approvalmitrapekerjaController.php&#10;mitrapekerja&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunDashboard">
@@ -340,18 +338,19 @@
       <workItem from="1541044623318" duration="1036000" />
       <workItem from="1541129387853" duration="6830000" />
       <workItem from="1541391101021" duration="15272000" />
-      <workItem from="1541457235786" duration="11985000" />
+      <workItem from="1541457235786" duration="12623000" />
+      <workItem from="1541573215300" duration="50000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51085000" />
+    <option name="totallyTimeSpent" value="51773000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22727273" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19015151" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -390,13 +389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="831" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -477,16 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalmitrapekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
@@ -503,18 +485,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-81">
+        <state relative-caret-position="714">
           <caret line="59" column="33" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="33" />
           <folding>
             <element signature="e#40#64#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -523,10 +507,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
           <caret line="291" column="74" selection-start-line="291" selection-start-column="74" selection-end-line="291" selection-end-column="74" />
-          <folding>
-            <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="62" column="46" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
         </state>
       </provider>
     </entry>
