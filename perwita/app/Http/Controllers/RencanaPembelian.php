@@ -19,37 +19,37 @@ class RencanaPembelian extends Controller
 
     public function data(Request $request)
     {
-/*        $data = DB::table('d_purchase_planning')
-            ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
-            ->join('d_item', 'i_id', '=', 'ppd_item')
-            ->join('d_item_dt', function ($q){
-                $q->on('ppd_item', '=', 'id_item');
-                $q->on('ppd_item_dt', '=', 'id_detailid');
-            })
-            ->join('d_size', 's_id', '=', 'id_size')
-            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'd_purchase_planning.*', 'd_purchase_planning_dt.*')
-            ->where('pp_status', '=', 'Belum')
-            ->where('pp_isapproved', '!=', 'N')
-            ->toSql();*/
+        /*        $data = DB::table('d_purchase_planning')
+                    ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
+                    ->join('d_item', 'i_id', '=', 'ppd_item')
+                    ->join('d_item_dt', function ($q){
+                        $q->on('ppd_item', '=', 'id_item');
+                        $q->on('ppd_item_dt', '=', 'id_detailid');
+                    })
+                    ->join('d_size', 's_id', '=', 'id_size')
+                    ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(s_nama, ""), " ") as nama'), 'd_purchase_planning.*', 'd_purchase_planning_dt.*')
+                    ->where('pp_status', '=', 'Belum')
+                    ->where('pp_isapproved', '!=', 'N')
+                    ->toSql();*/
 
         $data = DB::select('select m_name, d_purchase_planning.*, sum(ppd_qty) as jumlah from d_purchase_planning inner join d_purchase_planning_dt on ppd_purchase_planning = pp_id inner join d_item on i_id = ppd_item inner join d_item_dt on ppd_item = id_item and ppd_item_dt = id_detailid inner join d_size on s_id = id_size inner join d_mem on pp_mem = m_id where pp_status = "Belum" and pp_isapproved != "N" group by pp_id');
         $data = collect($data);
         return Datatables::of($data)
-            ->editColumn('pp_isapproved', function ($data){
+            ->editColumn('pp_isapproved', function ($data) {
                 if ($data->pp_isapproved == 'P') {
                     return '<div class="text-center"><span class="label label-warning ">Pending</span></div>';
                 } elseif ($data->pp_isapproved == 'Y') {
                     return '<div class="text-center"><span class="label label-success ">Disetujui</span></div>';
                 }
             })
-            ->editColumn('pp_date', function ($data){
+            ->editColumn('pp_date', function ($data) {
                 return Carbon::createFromFormat('Y-m-d', $data->pp_date)->format('d/m/Y');
             })
-            ->addColumn('aksi', function ($data){
+            ->addColumn('aksi', function ($data) {
                 return '<div class="text-center">
-                        <button type="button" title="detail" onclick="detail(\''.$data->pp_nota.'\')" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></button>
-                        <button type="button" title="edit" onclick="edit(\''.$data->pp_nota.'\')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button type="button" title="hapus" onclick="hapus(\''.$data->pp_nota.'\')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>
+                        <button type="button" title="detail" onclick="detail(\'' . $data->pp_nota . '\')" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-folder-open"></i></button>
+                        <button type="button" title="edit" onclick="edit(\'' . $data->pp_nota . '\')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button type="button" title="hapus" onclick="hapus(\'' . $data->pp_nota . '\')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>
                         </div>';
             })
             ->make(true);
@@ -66,7 +66,7 @@ class RencanaPembelian extends Controller
         $info = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'pp_id', '=', 'ppd_purchase_planning')
             ->join('d_item', 'i_id', '=', 'ppd_item')
-            ->join('d_item_dt', function ($q){
+            ->join('d_item_dt', function ($q) {
                 $q->on('id_item', '=', 'i_id');
                 $q->on('id_detailid', '=', 'ppd_item_dt');
             })
@@ -88,9 +88,9 @@ class RencanaPembelian extends Controller
         $counter = DB::select("select max(mid(pp_nota,4,3)) as counter, (mid(pp_nota,8,2)) as tanggal, MAX(MID(pp_nota,10,2)) as bulan, (right(pp_nota,4)) as tahun from d_purchase_planning");
         $counter = $counter[0]->counter;
 
-        $tmp = ((int)$counter)+1;
+        $tmp = ((int)$counter) + 1;
         $kode = sprintf("%03s", $tmp);
-        $finalkode = 'PP-'.$kode.'/'.$tanggal.'/'.$bulan.'/'.$tahun;
+        $finalkode = 'PP-' . $kode . '/' . $tanggal . '/' . $bulan . '/' . $tahun;
         return $finalkode;
     }
 
@@ -132,7 +132,7 @@ class RencanaPembelian extends Controller
                     'pp_insert' => Carbon::now('Asia/Jakarta')
                 ]);
             $tempPlan = [];
-            for ($i = 0; $i < count($idItem); $i++){
+            for ($i = 0; $i < count($idItem); $i++) {
                 $temp = [
                     'ppd_purchase_planning' => $id,
                     'ppd_detailid' => $i + 1,
@@ -151,7 +151,7 @@ class RencanaPembelian extends Controller
                 'nota' => $nota
             ]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
                 'status' => 'gagal',
@@ -186,7 +186,7 @@ class RencanaPembelian extends Controller
                 ]);
 
             $tempPlan = [];
-            for ($i = 0; $i < count($idItem); $i++){
+            for ($i = 0; $i < count($idItem); $i++) {
                 $temp = [
                     'ppd_purchase_planning' => $id,
                     'ppd_detailid' => $i + 1,
@@ -200,13 +200,14 @@ class RencanaPembelian extends Controller
             DB::table('d_purchase_planning_dt')->insert($tempPlan);
 
             $count = DB::table('d_purchase_planning')
-                    ->where('pp_isapproved', 'P')
-                    ->get();
+                ->where('pp_isapproved', 'P')
+                ->get();
 
             DB::table('d_notifikasi')
                 ->where('n_fitur', 'Rencana Pembelian')
                 ->update([
-                  'n_qty' => count($count)
+                    'n_qty' => count($count),
+                    'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
             DB::commit();
@@ -215,7 +216,7 @@ class RencanaPembelian extends Controller
                 'id' => $id
             ]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
                 'status' => 'gagal',
@@ -230,7 +231,7 @@ class RencanaPembelian extends Controller
         $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->join('d_item', 'i_id', '=', 'ppd_item')
-            ->join('d_item_dt', function ($q){
+            ->join('d_item_dt', function ($q) {
                 $q->on('id_item', '=', 'i_id');
                 $q->on('id_detailid', '=', 'ppd_item_dt');
             })
@@ -265,39 +266,41 @@ class RencanaPembelian extends Controller
         ]);
     }
 
-    public function print(Request $request){
+    public function print(Request $request)
+    {
 
-      $data = DB::table('d_purchase_planning')
+        $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->join('d_item', 'i_id', '=', 'ppd_item')
-            ->join('d_item_dt', function($e){
-              $e->on('id_item', '=', 'i_id')
-                ->on('id_detailid', '=', 'ppd_item_dt');
+            ->join('d_item_dt', function ($e) {
+                $e->on('id_item', '=', 'i_id')
+                    ->on('id_detailid', '=', 'ppd_item_dt');
             })
             ->join('d_size', 's_id', '=', 'id_size')
             ->join('d_kategori', 'k_id', '=', 'i_kategori')
             ->where('pp_id', $request->id)
             ->get();
 
-      return view('rencana-pembelian.print', compact('data'));
+        return view('rencana-pembelian.print', compact('data'));
 
     }
 
-    public function printwithnota(Request $request){
+    public function printwithnota(Request $request)
+    {
 
-      $data = DB::table('d_purchase_planning')
+        $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->join('d_item', 'i_id', '=', 'ppd_item')
-            ->join('d_item_dt', function($e){
-              $e->on('id_item', '=', 'i_id')
-                ->on('id_detailid', '=', 'ppd_item_dt');
+            ->join('d_item_dt', function ($e) {
+                $e->on('id_item', '=', 'i_id')
+                    ->on('id_detailid', '=', 'ppd_item_dt');
             })
             ->join('d_size', 's_id', '=', 'id_size')
             ->join('d_kategori', 'k_id', '=', 'i_kategori')
             ->where('pp_nota', $request->nota)
             ->get();
 
-      return view('rencana-pembelian.print', compact('data'));
+        return view('rencana-pembelian.print', compact('data'));
 
     }
 

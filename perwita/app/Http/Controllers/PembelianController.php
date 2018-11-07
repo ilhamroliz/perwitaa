@@ -151,7 +151,7 @@ class PembelianController extends Controller
             }
             d_purchase_dt::insert($pd);
             DB::update("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian' and n_detail = 'Create')");
-            if ($notarencana != null || $notarencana != ''){
+            if ($notarencana != null || $notarencana != '') {
                 DB::table('d_purchase_planning')
                     ->where('pp_nota', '=', $notarencana)
                     ->update([
@@ -160,14 +160,14 @@ class PembelianController extends Controller
             }
 
             $countpembelian = DB::table('d_purchase')
-                              ->where('p_isapproved', 'P')
-                              ->get();
+                ->where('p_isapproved', 'P')
+                ->get();
 
             DB::table('d_notifikasi')
-                ->where('n_fitur', 'Pembelian')
+                ->where('n_fitur', '=', 'Pembelian')
                 ->update([
-                  'n_qty' => count($countpembelian),
-                  'n_insert' => Carbon::now('Asia/Jakarta')
+                    'n_qty' => count($countpembelian),
+                    'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
             $id = encrypt($id);
@@ -279,7 +279,7 @@ class PembelianController extends Controller
         $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->select(DB::raw('date_format(pp_date, "%d/%m/%Y") as pp_date'), 'pp_nota')
-            ->where('pp_nota', 'like', '%'.$keyword.'%')
+            ->where('pp_nota', 'like', '%' . $keyword . '%')
             ->where('pp_isapproved', '=', 'Y')
             ->where('pp_status', '=', 'Belum')
             ->groupBy('pp_id')
@@ -484,7 +484,7 @@ class PembelianController extends Controller
         $info = DB::table('d_purchase')
             ->join('d_purchase_dt', 'p_id', '=', 'pd_purchase')
             ->join('d_item', 'i_id', '=', 'pd_item')
-            ->join('d_item_dt', function ($q){
+            ->join('d_item_dt', function ($q) {
                 $q->on('id_item', '=', 'i_id');
                 $q->on('id_detailid', '=', 'pd_item_dt');
                 $q->on('id_item', '=', 'pd_item');
@@ -508,7 +508,7 @@ class PembelianController extends Controller
             ->where('p_isapproved', '!=', 'Y')
             ->max('p_id');
 
-        if ($id == null || $id == ''){
+        if ($id == null || $id == '') {
             return response()->json([
                 'status' => 'gagal'
             ]);

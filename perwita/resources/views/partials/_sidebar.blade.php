@@ -184,6 +184,8 @@ to {
                 {{ Request::is('manajemen-seragam/*') ? 'active' : ''
                 || Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''
                 || Request::is('manajemen-seragam') ? 'active' : ''
+                || Request::is('master-item') ? 'active' : ''
+                || Request::is('master-item/*') ? 'active' : ''
                 }}">
                 <a href="#" id="step1"><i class="fa fa-list"></i> <span class="nav-label">Manajemen Seragam</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -226,7 +228,7 @@ to {
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Pembayaran Seragam</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-seragam/master-seragam') ? 'active' : '' || Request::is('manajemen-seragam/master-seragam/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('manajemen-seragam/master-seragam') ? 'active' : '' || Request::is('manajemen-seragam/master-seragam/*') ? 'active' : '' || Request::is('master-item') ? 'active' : '' || Request::is('master-item/*') ? 'active' : '' }}">
                         <a href="{{ url('manajemen-seragam/master-seragam') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Master Seragam</span>
                         </a>
