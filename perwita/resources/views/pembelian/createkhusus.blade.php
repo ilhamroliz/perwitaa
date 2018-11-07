@@ -97,7 +97,7 @@
 
                             <div class="m-t-sm">
                                 <div class="btn-group">
-                                <button onclick="simpan()" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
+                                <button onclick="simpan()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Simpan</button>
                                 <a href="{{ url('/manajemen-seragam/pembelian') }}" class="btn btn-white btn-sm"> Batal</a>
                                 </div>
                             </div>
@@ -195,7 +195,6 @@
             type: 'get',
             data: {nota: nota},
             success: function(response){
-                console.log(response);
                 tablepembelian.clear();
                 var data = response;
                 var akhir = 0;
@@ -228,7 +227,7 @@
                         affixesStay: false
                     });
 
-                    hitung = i;
+                    hitung = i + 1;
                     $('.jumlahitem').html(i + 1);
                 }
                 akhir = accounting.formatMoney(akhir, "", 0, ".", ",");
