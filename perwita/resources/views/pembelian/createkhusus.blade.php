@@ -416,7 +416,7 @@
         });
         $.ajax({
             url: baseUrl + '/manajemen-pembelian/simpan',
-            type: 'get',
+            type: 'post',
             data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+notaPublic,
             success: function(response){
                 if (response.status == 'sukses') {
