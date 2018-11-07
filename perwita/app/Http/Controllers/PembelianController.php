@@ -86,9 +86,9 @@ class PembelianController extends Controller
 
     public function save(Request $request)
     {
-        dd($request);
+        /*dd($request);
         DB::beginTransaction();
-        try {
+        try {*/
             $notarencana = $request->nota;
             $nota = $this->getNewNota();
 
@@ -171,7 +171,7 @@ class PembelianController extends Controller
                   'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
-            DB::commit();
+            /*DB::commit();
             return response()->json([
                 'status' => 'sukses'
             ]);
@@ -181,7 +181,7 @@ class PembelianController extends Controller
                 'status' => 'gagal',
                 'data' => $e
             ]);
-        }
+        }*/
     }
 
     public function update(Request $request)
