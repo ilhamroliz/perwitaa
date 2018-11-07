@@ -151,7 +151,7 @@ class PembelianController extends Controller
                 array_push($pd, $data_dt);
             }
             d_purchase_dt::insert($pd);
-            DB::select("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian' and n_detail = 'Create')");
+            DB::update("update d_notifikasi set n_qty = (select count('p_id') from d_purchase where p_isapproved = 'P' and n_fitur = 'Pembelian' and n_detail = 'Create')");
             if ($notarencana != null || $notarencana != ''){
                 DB::table('d_purchase_planning')
                     ->where('pp_nota', '=', $notarencana)
@@ -170,6 +170,10 @@ class PembelianController extends Controller
                   'n_qty' => count($countpembelian),
                   'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
+
+        return response()->json([
+            'status' => 'sukses'
+        ]);
 
             /*DB::commit();
             return response()->json([
