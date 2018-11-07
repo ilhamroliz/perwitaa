@@ -95,8 +95,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="90" column="13" selection-start-line="88" selection-start-column="8" selection-end-line="90" selection-end-column="13" />
+            <state relative-caret-position="239">
+              <caret line="479" column="8" lean-forward="true" selection-start-line="479" selection-start-column="8" selection-end-line="479" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -117,7 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>p_reli</find>
       <find>data(</find>
       <find>simpan(</find>
       <find>edit(</find>
@@ -147,6 +146,7 @@
       <find>return</find>
       <find>modal</find>
       <find>table(</find>
+      <find>cetak</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -348,12 +348,12 @@
       <workItem from="1541129387853" duration="6830000" />
       <workItem from="1541391101021" duration="15272000" />
       <workItem from="1541457235786" duration="12623000" />
-      <workItem from="1541573215300" duration="1718000" />
+      <workItem from="1541573215300" duration="1964000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53441000" />
+    <option name="totallyTimeSpent" value="53687000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="727" extended-state="6" />
@@ -528,8 +528,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="90" column="13" selection-start-line="88" selection-start-column="8" selection-end-line="90" selection-end-column="13" />
+        <state relative-caret-position="239">
+          <caret line="479" column="8" lean-forward="true" selection-start-line="479" selection-start-column="8" selection-end-line="479" selection-end-column="8" />
         </state>
       </provider>
     </entry>

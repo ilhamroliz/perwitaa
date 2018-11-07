@@ -477,7 +477,7 @@ class PembelianController extends Controller
 
         $count = count($data);
 
-        // dd($data);
+        dd($data);
         return view('pembelian.print', compact('data', 'count'));
     }
 
