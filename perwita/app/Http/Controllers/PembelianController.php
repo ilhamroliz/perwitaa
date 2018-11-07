@@ -86,6 +86,7 @@ class PembelianController extends Controller
 
     public function save(Request $request)
     {
+        dd($request);
         DB::beginTransaction();
         try {
             $notarencana = $request->nota;
