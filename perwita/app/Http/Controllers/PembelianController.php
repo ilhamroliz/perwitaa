@@ -170,13 +170,12 @@ class PembelianController extends Controller
                   'n_insert' => Carbon::now('Asia/Jakarta')
                 ]);
 
-        return response()->json([
-            'status' => 'sukses'
-        ]);
+            $id = encrypt($id);
 
             DB::commit();
             return response()->json([
-                'status' => 'sukses'
+                'status' => 'sukses',
+                'id' => $id
             ]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -436,10 +435,9 @@ class PembelianController extends Controller
         ]);
     }
 
-    public function cetak()
+    public function cetak($id)
     {
-        $id = DB::table('d_purchase')
-            ->max('p_id');
+        $id = decrypt($id);
 
         $data = DB::table('d_purchase')
             ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
@@ -477,7 +475,6 @@ class PembelianController extends Controller
 
         $count = count($data);
 
-        dd($data);
         return view('pembelian.print', compact('data', 'count'));
     }
 

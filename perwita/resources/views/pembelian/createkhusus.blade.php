@@ -420,6 +420,7 @@
             data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+notaPublic,
             success: function(response){
                 if (response.status == 'sukses') {
+                    var id = response.id;
                     waitingDialog.hide();
                     swal({
                         title: "Sukses",
@@ -427,7 +428,7 @@
                         type: "success"
                     }, function () {
                             window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print','','width=700,height=500');
+                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print/'+id,'','width=700,height=500');
                     });
                 } else {
                     waitingDialog.hide();
