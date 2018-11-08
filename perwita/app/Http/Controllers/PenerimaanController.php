@@ -84,7 +84,13 @@ class PenerimaanController extends Controller
                     'pa_isapproved' => 'P'
                 ]);
 
-            DB::update("update d_notifikasi set n_qty = (select count(pa_purchase) from d_purchase_approval where pa_isapproved = 'P') where n_fitur = 'Penerimaan Seragam' and n_detail = 'Create'");
+            DB::table('d_notifikasi')
+                ->where('n_fitur', '=', 'Penerimaan Seragam')
+                ->where('n_detail', '=', 'Create')
+                ->update([
+                    'n_qty' => DB::raw('(n_qty + 1)'),
+                    'n_insert' => Carbon::now('Asia/Jakarta')
+                ]);
 
             DB::commit();
             return response()->json([
