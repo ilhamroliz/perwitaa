@@ -251,7 +251,7 @@
         });
         $.ajax({
           url: baseUrl + '/manajemen-pembelian/penerimaan/update',
-          type: 'post',
+          type: 'get',
           data: {sisa: sisa, id: id, dt: dt, nodo: nodo},
           success: function(response){
             //waitingDialog.hide();

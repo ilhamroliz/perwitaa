@@ -52,22 +52,73 @@ class PenerimaanController extends Controller
     {
         DB::beginTransaction();
         try {
+            $p_id = $request->id;
+            $p_detailid = $request->dt;
+            $qty = $request->sisa;
+            $nodo = strtoupper($request->nodo);
+
+            $info = DB::table('d_purchase_dt')
+                ->select('pd_item', 'pd_item_dt')
+                ->where('pd_purchase', '=', $p_id)
+                ->where('pd_detailid', '=', $p_detailid)
+                ->first();
+
+            $item = $info->pd_item;
+            $itemdt = $info->pd_item_dt;
+
+            $idPa = DB::table('d_purchase_approval')
+                ->where('pa_purchase', '=', $p_id)
+                ->max('pa_detailid');
+
+            ++$idPa;
+
+            DB::table('d_purchase_approval')
+                ->insert([
+                    'pa_purchase' => $p_id,
+                    'pa_detailid' => $idPa,
+                    'pa_date' => Carbon::now('Asia/Jakarta'),
+                    'pa_item' => $item,
+                    'pa_item_dt' => $itemdt,
+                    'pa_qty' => $qty,
+                    'pa_do' => $nodo,
+                    'pa_isapproved' => 'P'
+                ]);
+
+            DB::update("update d_notifikasi set n_qty = (select count(pa_purchase) from d_purchase_approval where pa_isapproved = 'P') where n_fitur = 'Penerimaan Seragam' and n_detail = 'Create'");
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
+    }
+
+    public function approvePenerimaan($id, $dt, $qty, $nodo)
+    {
+        DB::beginTransaction();
+        try {
 
             $getStockLama = DB::table('d_purchase_dt')
                 ->select('pd_barang_masuk', 'pd_qty')
-                ->where('pd_purchase', '=', $request->id)
-                ->where('pd_detailid', '=', $request->dt)
+                ->where('pd_purchase', '=', $id)
+                ->where('pd_detailid', '=', $dt)
                 ->get();
 
-            $updateBarang = $getStockLama[0]->pd_barang_masuk + $request->sisa;
+            $updateBarang = $getStockLama[0]->pd_barang_masuk + $qty;
             $sekarang = Carbon::now('Asia/Jakarta');
 
             if ($updateBarang == $getStockLama[0]->pd_qty) {
                 $data = array('pd_barang_masuk' => $updateBarang, 'pd_receivetime' => $sekarang);
-                d_purchase_dt::where('pd_purchase', '=', $request->id)->where('pd_detailid', '=', $request->dt)->update($data);
+                d_purchase_dt::where('pd_purchase', '=', $id)->where('pd_detailid', '=', $dt)->update($data);
             } else {
                 $data = array('pd_barang_masuk' => $updateBarang);
-                d_purchase_dt::where('pd_purchase', '=', $request->id)->where('pd_detailid', '=', $request->dt)->update($data);
+                d_purchase_dt::where('pd_purchase', '=', $id)->where('pd_detailid', '=', $dt)->update($data);
             }
 
 //========== cek id stock
@@ -76,8 +127,8 @@ class PenerimaanController extends Controller
             $info = DB::table('d_purchase')
                 ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
                 ->select('pd_item', 'pd_item_dt', 'pd_qty', 'pd_total_net', 'p_nota')
-                ->where('p_id', '=', $request->id)
-                ->where('pd_detailid', '=', $request->dt)
+                ->where('p_id', '=', $id)
+                ->where('pd_detailid', '=', $dt)
                 ->first();
 
             $idStok = DB::table('d_stock')
@@ -106,7 +157,7 @@ class PenerimaanController extends Controller
                     's_position' => $comp,
                     's_item' => $info->pd_item,
                     's_item_dt' => $info->pd_item_dt,
-                    's_qty' => $request->sisa,
+                    's_qty' => $qty,
                     's_insert' => $sekarang,
                     's_update' => $sekarang
                 );
@@ -121,12 +172,12 @@ class PenerimaanController extends Controller
                     'sm_item' => $info->pd_item,
                     'sm_item_dt' => $info->pd_item_dt,
                     'sm_detail' => 'Pembelian',
-                    'sm_qty' => $request->sisa,
+                    'sm_qty' => $qty,
                     'sm_use' => 0,
                     'sm_hpp' => $info->pd_total_net / $info->pd_qty,
                     'sm_sell' => $hargaJual[0]->id_price,
                     'sm_nota' => $info->p_nota,
-                    'sm_delivery_order' => strtoupper($request->nodo),
+                    'sm_delivery_order' => strtoupper($nodo),
                     'sm_petugas' => Session::get('mem')
                 );
 
@@ -140,7 +191,7 @@ class PenerimaanController extends Controller
                     ->where('s_id', '=', $idStok)
                     ->first();
 
-                $stockAkhir = $stock->s_qty + $request->sisa;
+                $stockAkhir = $stock->s_qty + $qty;
                 $update = array('s_qty' => $stockAkhir);
 
                 d_stock::where('s_id', '=', $idStok)->update($update);
@@ -157,12 +208,12 @@ class PenerimaanController extends Controller
                     'sm_item' => $info->pd_item,
                     'sm_item_dt' => $info->pd_item_dt,
                     'sm_detail' => 'Pembelian',
-                    'sm_qty' => $request->sisa,
+                    'sm_qty' => $qty,
                     'sm_use' => 0,
                     'sm_hpp' => $info->pd_total_net / $info->pd_qty,
                     'sm_sell' => $hargaJual[0]->id_price,
                     'sm_nota' => $info->p_nota,
-                    'sm_delivery_order' => strtoupper($request->nodo),
+                    'sm_delivery_order' => strtoupper($nodo),
                     'sm_petugas' => Session::get('mem')
                 );
 
