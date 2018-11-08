@@ -924,6 +924,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpegawairemunerasi/setujuilist', 'approvalpegawairemunerasiController@setujuilist');
     Route::get('approvalpegawairemunerasi/tolaklist', 'approvalpegawairemunerasiController@tolaklist');
 
+    //Approval Penerimaan Seragam
+    Route::get('approvalpenerimaan', 'approvalpenerimaanseragamController@index');
+    Route::get('approvalpenerimaan/detail', 'approvalpenerimaanseragamController@detail');
+    Route::get('approvalpenerimaan/setujui', 'approvalpenerimaanseragamController@setujui');
+    Route::get('approvalpenerimaan/tolak', 'approvalpenerimaanseragamController@tolak');
+    Route::get('approvalpenerimaan/setujuilist', 'approvalpenerimaanseragamController@setujuilist');
+    Route::get('approvalpenerimaan/tolaklist', 'approvalpenerimaanseragamController@tolaklist');
+
     Route::get('not-authorized', function(){
         return view('system/index');
     });
