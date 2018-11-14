@@ -71,7 +71,10 @@ class approvalpenjualanController extends Controller
                     ->join('d_sales_dt', 'sd_sales', '=', 's_id')
                     ->where('s_id', $request->id)
                     ->get();
-
+                $nota = null;
+                if ($sales != null){
+                    $nota = $sales[0]->s_nota;
+                }
                 DB::table('d_sales')
                     ->where('s_id', $request->id)
                     ->update([
@@ -174,7 +177,8 @@ class approvalpenjualanController extends Controller
 
             DB::commit();
             return response()->json([
-                'status' => 'berhasil'
+                'status' => 'berhasil',
+                'nota' => $nota
             ]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -343,6 +347,12 @@ class approvalpenjualanController extends Controller
                 ->where('s_id', $request->id)
                 ->get();
 
+            $nota = null;
+
+            if ($sales != null){
+                $nota = $sales[0]->s_nota;
+            }
+
             DB::table('d_sales')
                 ->where('s_id', $request->id)
                 ->update([
@@ -444,7 +454,8 @@ class approvalpenjualanController extends Controller
 
             DB::commit();
             return response()->json([
-                'status' => 'berhasil'
+                'status' => 'berhasil',
+                'nota' => $nota
             ]);
         } catch (\Exception $e) {
             DB::rollback();
