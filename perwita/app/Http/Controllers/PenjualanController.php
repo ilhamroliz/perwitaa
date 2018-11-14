@@ -11,7 +11,7 @@ use App\d_stock_mutation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
-use App\Http\Requests;
+use Response;
 use Illuminate\Support\Facades\Session;
 
 class PenjualanController extends Controller
@@ -73,11 +73,11 @@ class PenjualanController extends Controller
     public function getItem(Request $request)
     {
         $mitra = $request->mitra;
-        $item = DB::table('d_mitra_item')
+        /*$item = DB::table('d_mitra_item')
             ->join('d_item', 'i_id', '=', 'mi_item')
             ->select('i_nama', 'i_id', 'i_warna')
             ->where('mi_mitra', '=', $mitra)
-            ->get();
+            ->get();*/
 
         $info = DB::table('d_mitra')
             ->select('m_phone', 'm_id', 'm_name')
@@ -87,10 +87,10 @@ class PenjualanController extends Controller
         $divisi = DB::table('d_mitra_divisi')
             ->select('md_id', 'md_name')
             ->where('md_mitra', $mitra)
+            ->orderBy('md_name')
             ->get();
 
         return response()->json([
-            'data' => $item,
             'info' => $info,
             'divisi' => $divisi
         ]);
@@ -130,308 +130,6 @@ class PenjualanController extends Controller
     }
 
     public function savelama(Request $request)
-    {
-        DB::beginTransaction();
-        try {
-
-            $seragam = $request->seragam;
-            $mitra = $request->mitra;
-            $ukuran = $request->ukuran;
-            $pekerja = $request->masuk;
-            $comp = Session::get('mem_comp');
-            $sekarang = Carbon::now('Asia/Jakarta');
-            $nota = $request->nota;
-
-            $getItem_dt = DB::table('d_item_dt')
-                ->select('id_detailid')
-                ->where('id_item', '=', $seragam)
-                ->whereIn('id_size', $ukuran)
-                ->get();
-
-            $item_dt = [];
-            for ($i = 0; $i < count($getItem_dt); $i++) {
-                $item_dt[$i] = $getItem_dt[$i]->id_detailid;
-            }
-
-            $getStock = DB::table('d_stock_mutation')
-                ->join('d_stock', 's_id', '=', 'sm_stock')
-                ->join('d_item_dt', function ($q) {
-                    $q->on('s_item', '=', 'id_item')
-                        ->on('s_item_dt', '=', 'id_detailid');
-                })
-                ->select('sm_stock', 'sm_detailid', 'sm_qty', 'sm_use', 'sm_item_dt', DB::raw('(sm_qty - sm_use) as sisa'), 'sm_hpp', 'sm_sell', 'id_size', 'id_price')
-                ->where('s_item', '=', $seragam)
-                ->whereIn('s_item_dt', $item_dt)
-                ->where('s_comp', '=', $comp)
-                ->where('s_position', '=', $comp)
-                ->where(DB::raw('(sm_qty - sm_use)'), '!=', 0)
-                ->orderBy('sm_stock', 'asc')
-                ->orderBy('sm_detailid', 'asc')
-                ->orderBy('sm_date', 'asc')
-                ->get();
-
-//========== pengurangan stock
-            $jumlahUkuran = array_count_values($ukuran);
-            $ukuranUnik = array_unique($ukuran);
-            $ukuranUnik = array_values($ukuranUnik);
-            $jumlahSimpan = $jumlahUkuran;
-            $ukuranSudah = [];
-            $temp_sisa['sisa'] = 0;
-            $temp_sisa['size'] = null;
-            $totalGross = 0;
-
-            $idSales = DB::table('d_sales')
-                ->max('s_id');
-            $idSales = $idSales + 1;
-            $detailSales = DB::table('d_sales_dt')
-                ->where('sd_sales', '=', $idSales)
-                ->max('sd_sales');
-            $detailSales = $detailSales + 1;
-
-            $sales = array(
-                's_id' => $idSales,
-                's_comp' => Session::get('mem_comp'),
-                's_date' => $sekarang,
-                's_member' => $mitra,
-                's_nota' => $nota,
-                's_disc_percent' => 0,
-                's_disc_value' => 0
-            );
-
-            d_sales::insert($sales);
-
-            for ($j = 0; $j < count($getStock); $j++) {
-                for ($i = 0; $i < count($ukuranUnik); $i++) {
-
-                    if ($ukuranUnik[$i] == $getStock[$j]->id_size && !in_array($ukuranUnik[$i], $ukuranSudah, true)) {
-
-                        $permintaan = $jumlahUkuran[$ukuranUnik[$i]];
-                        $updateUse = $getStock[$j]->sm_use + $permintaan;
-                        $cekStock = $getStock[$j]->sm_qty - $getStock[$j]->sm_use;
-                        $sisaSmQty = $cekStock - $permintaan;
-
-//========== jika terdapat sisa pada transaksi sebelumnya
-                        if ($temp_sisa['sisa'] != 0 && $temp_sisa['size'] == $getStock[$j]->id_size) {
-//========== stok tidak memenuhi
-                            if ($sisaSmQty < $temp_sisa['sisa']) {
-                                d_stock_mutation::where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->where('sm_detailid', '=', $getStock[$j]->sm_detailid)
-                                    ->update(array(
-                                        'sm_use' => $cekStock
-                                    ));
-                                $temp_sisa['sisa'] = $sisaSmQty * (-1);
-                                $temp_sisa['size'] = $getStock[$j]->id_size;
-                            } //========== stok memenuhi
-                            else {
-                                d_stock_mutation::where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->where('sm_detailid', '=', $getStock[$j]->sm_detailid)
-                                    ->update(array(
-                                        'sm_use' => $updateUse
-                                    ));
-
-                                $detel = DB::table('d_stock_mutation')
-                                    ->where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->max('sm_detailid');
-
-                                $sm_detil = $detel + 1;
-
-                                $data = array(
-                                    'sm_stock' => $getStock[$j]->sm_stock,
-                                    'sm_detailid' => $sm_detil,
-                                    'sm_comp' => Session::get('mem_comp'),
-                                    'sm_date' => $sekarang,
-                                    'sm_item' => $seragam,
-                                    'sm_item_dt' => $getStock[$j]->sm_item_dt,
-                                    'sm_detail' => 'Pengeluaran',
-                                    'sm_qty' => $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sm_use' => '0',
-                                    'sm_hpp' => $getStock[$j]->sm_hpp,
-                                    'sm_sell' => $getStock[$j]->sm_sell,
-                                    'sm_nota' => $nota,
-                                    'sm_delivery_order' => $nota,
-                                    'sm_petugas' => Session::get('mem')
-                                );
-
-                                d_stock_mutation::insert($data);
-
-                                $getQtyStock = DB::table('d_stock')
-                                    ->select('s_qty')
-                                    ->where('s_id', '=', $getStock[$j]->sm_stock)
-                                    ->max('s_qty');
-
-                                $updateQtyStock = $getQtyStock - $jumlahSimpan[$getStock[$j]->id_size];
-
-                                d_stock::where('s_id', '=', $getStock[$j]->sm_stock)->update(array(
-                                    's_qty' => $updateQtyStock
-                                ));
-
-                                $salesdt = array(
-                                    'sd_sales' => $idSales,
-                                    'sd_detailid' => $detailSales,
-                                    'sd_comp' => Session::get('mem_comp'),
-                                    'sd_item' => $seragam,
-                                    'sd_item_dt' => $getStock[$j]->sm_item_dt,
-                                    'sd_qty' => $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_value' => $getStock[$j]->id_price,
-                                    'sd_total_gross' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_disc_percent' => 0,
-                                    'sd_disc_value' => 0,
-                                    'sd_total_net' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_sell' => $getStock[$j]->sm_sell,
-                                    'sd_hpp' => $getStock[$j]->sm_hpp
-                                );
-
-                                $detailSales = $detailSales + 1;
-
-                                d_sales_dt::insert($salesdt);
-                                $totalGross = $totalGross + ($getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size]);
-                                array_push($ukuranSudah, $ukuranUnik[$i]);
-                                $i = count($ukuranUnik) + 1;
-                                $temp_sisa['sisa'] = 0;
-                                $temp_sisa['size'] = null;
-                            }
-                        } //========== jika tidak terdapat sisa pada transaksi sebelumnya
-                        else {
-//========== stok tidak memenuhi
-                            if ($sisaSmQty < 0) {
-                                d_stock_mutation::where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->where('sm_detailid', '=', $getStock[$j]->sm_detailid)
-                                    ->update(array(
-                                        'sm_use' => $cekStock
-                                    ));
-                                $temp_sisa['sisa'] = $sisaSmQty * (-1);
-                                $temp_sisa['size'] = $getStock[$j]->id_size;
-                                $jumlahUkuran[$ukuranUnik[$i]] = $jumlahUkuran[$ukuranUnik[$i]] - $cekStock;
-                            } //========== stok memenuhi
-                            else {
-                                d_stock_mutation::where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->where('sm_detailid', '=', $getStock[$j]->sm_detailid)
-                                    ->update(array(
-                                        'sm_use' => $updateUse
-                                    ));
-
-                                $detel = DB::table('d_stock_mutation')
-                                    ->where('sm_stock', '=', $getStock[$j]->sm_stock)
-                                    ->max('sm_detailid');
-
-                                $sm_detil = $detel + 1;
-
-                                $data = array(
-                                    'sm_stock' => $getStock[$j]->sm_stock,
-                                    'sm_detailid' => $sm_detil,
-                                    'sm_comp' => Session::get('mem_comp'),
-                                    'sm_date' => $sekarang,
-                                    'sm_item' => $seragam,
-                                    'sm_item_dt' => $getStock[$j]->sm_item_dt,
-                                    'sm_detail' => 'Pengeluaran',
-                                    'sm_qty' => $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sm_use' => '0',
-                                    'sm_hpp' => $getStock[$j]->sm_hpp,
-                                    'sm_sell' => $getStock[$j]->sm_sell,
-                                    'sm_nota' => $nota,
-                                    'sm_delivery_order' => $nota,
-                                    'sm_petugas' => Session::get('mem')
-                                );
-
-                                d_stock_mutation::insert($data);
-
-                                $getQtyStock = DB::table('d_stock')
-                                    ->select('s_qty')
-                                    ->where('s_id', '=', $getStock[$j]->sm_stock)
-                                    ->max('s_qty');
-
-                                $updateQtyStock = $getQtyStock - $jumlahSimpan[$getStock[$j]->id_size];
-
-                                d_stock::where('s_id', '=', $getStock[$j]->sm_stock)->update(array(
-                                    's_qty' => $updateQtyStock
-                                ));
-
-                                $salesdt = array(
-                                    'sd_sales' => $idSales,
-                                    'sd_detailid' => $detailSales,
-                                    'sd_comp' => Session::get('mem_comp'),
-                                    'sd_item' => $seragam,
-                                    'sd_item_dt' => $getStock[$j]->sm_item_dt,
-                                    'sd_qty' => $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_value' => $getStock[$j]->id_price,
-                                    'sd_total_gross' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_disc_percent' => 0,
-                                    'sd_disc_value' => 0,
-                                    'sd_total_net' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                                    'sd_sell' => $getStock[$j]->sm_sell,
-                                    'sd_hpp' => $getStock[$j]->sm_hpp
-                                );
-
-                                $detailSales = $detailSales + 1;
-
-                                d_sales_dt::insert($salesdt);
-                                $totalGross = $totalGross + ($getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size]);
-                                array_push($ukuranSudah, $ukuranUnik[$i]);
-                                $i = count($ukuranUnik) + 1;
-                                $temp_sisa['sisa'] = 0;
-                                $temp_sisa['size'] = null;
-                            }
-                        }
-                    }
-                }
-            }
-
-            $getHarga = DB::table('d_item_dt')
-                ->select('id_item', 'id_detailid', 'id_size', 'id_price')
-                ->whereIn('id_size', $ukuran)
-                ->get();
-
-            $getId = DB::table('d_seragam_pekerja')
-                ->where('sp_sales', '=', $idSales)
-                ->max('sp_id');
-
-            $idSP = $getId + 1;
-
-            $data = [];
-            $count = 0;
-
-            for ($j = 0; $j < count($ukuran); $j++) {
-                for ($i = 0; $i < count($getHarga); $i++) {
-                    if ($ukuran[$j] == $getHarga[$i]->id_size) {
-                        $temp = array(
-                            'sp_sales' => $idSales,
-                            'sp_id' => $idSP + $count,
-                            'sp_pekerja' => $pekerja[$j],
-                            'sp_item' => $seragam,
-                            'sp_item_size' => $ukuran[$j],
-                            'sp_qty' => 1,
-                            'sp_value' => $getHarga[$i]->id_price,
-                            'sp_pay_value' => 0,
-                            'sp_status' => 'Belum'
-                        );
-                        array_push($data, $temp);
-                        $i = count($getHarga) + 1;
-                        $count = $count + 1;
-                    }
-                }
-            }
-
-            d_seragam_pekerja::insert($data);
-
-            d_sales::where('s_id', '=', $idSales)->update(array(
-                's_total_gross' => $totalGross,
-                's_total_net' => $totalGross
-            ));
-
-            DB::commit();
-            return response()->json([
-                'status' => 'sukses'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => 'gagal',
-                'data' => $e
-            ]);
-        }
-    }
-
-    public function save(Request $request)
     {
         $divisi = $request->divisi;
         $seragam = $request->seragam;
@@ -581,6 +279,93 @@ class PenjualanController extends Controller
                 d_sales_dt::insert($salesdt);
             }
 
+
+            DB::commit();
+            return response()->json([
+                'status' => 'sukses'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e
+            ]);
+        }
+
+    }
+
+    public function save(Request $request)
+    {
+        $nota = $this->getnewnota();
+        $mitra = $request->mitra;
+        $divisi = $request->divisi;
+        $total = $request->total;
+        $qty = $request->qty;
+        $idStock = $request->idStock;
+
+        DB::beginTransaction();
+        try {
+
+            $id = DB::table('d_sales')
+                ->max('s_id');
+            ++$id;
+
+            DB::table('d_sales')->insert([
+                's_id' => $id,
+                's_comp' => 'PWT0000003',
+                's_member' => $mitra,
+                's_nota' => $nota,
+                's_total_gross' => $total,
+                's_disc_percent' => 0,
+                's_disc_value' => 0,
+                's_total_net' => $total,
+                's_isapproved' => 'P'
+            ]);
+
+
+            $count = DB::table('d_sales')
+                ->where('s_isapproved', 'P')
+                ->get();
+
+            DB::table('d_notifikasi')
+                ->where('n_fitur', 'Penjualan')
+                ->update([
+                    'n_qty' => count($count),
+                    'n_insert' => Carbon::now('Asia/Jakarta')
+                ]);
+
+            for ($j = 0; $j < count($idStock); $j++) {
+                $item = DB::table('d_stock')
+                    ->join('d_item', 's_item', '=', 'i_id')
+                    ->join('d_item_dt', function ($q){
+                        $q->on('id_item', '=', 'i_id');
+                        $q->on('id_detailid', '=', 's_item_dt');
+                        $q->on('id_item', '=', 's_item');
+                    })
+                    ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+                    ->select('s_item', 's_item_dt', 'id_price', 'sm_hpp')
+                    ->where('s_id', '=', $idStock[$j])
+                    ->where('sm_detail', '=', 'Pembelian')
+                    ->orderBy('sm_detailid', 'desc')
+                    ->first();
+
+                $salesdt = array(
+                    'sd_sales' => $id,
+                    'sd_detailid' => $j + 1,
+                    'sd_comp' => 'PWT0000003',
+                    'sd_item' => $item->s_item,
+                    'sd_item_dt' => $item->s_item_dt,
+                    'sd_qty' => $qty[$j],
+                    'sd_value' => $item->id_price,
+                    'sd_total_gross' => ($item->id_price * $qty[$j]),
+                    'sd_disc_percent' => 0,
+                    'sd_disc_value' => 0,
+                    'sd_total_net' => ($item->id_price * $qty[$j]),
+                    'sd_sell' => $item->id_price,
+                    'sd_hpp' => $item->sm_hpp
+                );
+                d_sales_dt::insert($salesdt);
+            }
 
             DB::commit();
             return response()->json([
@@ -954,6 +739,37 @@ class PenjualanController extends Controller
                 'status' => 'gagal'
             ]);
         }
+    }
+
+    public function search($mitra, Request $request)
+    {
+        $cari = $request->term;
+
+        $data = DB::table('d_stock')
+            ->join('d_item', 'i_id', '=', 'd_stock.s_item')
+            ->join('d_item_dt', function ($q){
+                $q->on('id_item', '=', 'i_id');
+                $q->on('id_detailid', '=', 'd_stock.s_item_dt');
+                $q->on('id_item', '=', 'd_stock.s_item');
+            })
+            ->join('d_mitra_item', 'mi_item', '=', 'd_item.i_id')
+            ->join('d_size', 'd_size.s_id', '=', 'id_size')
+            ->select(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ") as nama'), 'd_stock.s_id', 'd_stock.s_qty', 'id_price')
+            ->where('d_stock.s_qty', '>', 0)
+            ->where(DB::raw('concat(i_nama, " ", i_warna, " ", coalesce(d_size.s_nama, ""), " ")'), 'like', '%'.$cari.'%')
+            ->where('mi_mitra', '=', $mitra)
+            ->get();
+
+        if ($data == null) {
+            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+        } else {
+
+            foreach ($data as $query) {
+                $results[] = ['id' => $query, 'label' => $query->nama ];
+            }
+        }
+
+        return Response::json($results);
     }
 
 }

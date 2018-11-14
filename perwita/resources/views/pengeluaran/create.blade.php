@@ -69,9 +69,35 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-1">
-                                <button class="btn btn-info " type="button"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-info lock" onclick="lock()" type="button"><i class="fa fa-lock"></i></button>
+                                <button class="btn btn-info unlock" onclick="unlock()" type="button" style="display: none;"><i class="fa fa-unlock-alt"></i></button>
                             </div>
                             <input type="hidden" name="total" id="total">
+
+                            <div class="hr-line-dashed col-md-12" style="margin-top: 20px;"></div>
+
+                            <div class="form-group col-md-8" style="margin-top: 20px;">
+                                <input type="text" name="cari" placeholder="Masukan Nama Barang" style="text-transform: uppercase;"  class="form-control" id="cariItem" onkeyup="setNull('s_id')" readonly>
+                                <input type="hidden" class="s_id" name="s_id">
+                            </div>
+                            <div class="form-group col-md-3" style="margin-top: 20px;">
+                                <input type="text" onkeyup="cekQty()" style="text-align: right;" name="setQty" class="form-control" id="setQty" readonly>
+                                <input type="hidden" class="s_qty" name="s_qty">
+                            </div>
+                            <div class="form-group col-md-1" style="margin-top: 20px;">
+                                <button class="btn btn-primary tanam" onclick="tanam()" type="button" disabled><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <div class="form-group col-md-12" style="">
+                                <table class="table table-striped table-bordered table-hover" id="table-penjualan">
+                                    <thead>
+                                        <th>Nama Barang</th>
+                                        <th>Qty</th>
+                                        <th>Harga @</th>
+                                        <th></th>
+                                    </thead>
+                                </table>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -116,16 +142,6 @@
                             </span>
                     </div>
                 </div>
-                <div class="ibox info-stock" style="display: block;">
-                    <div class="ibox-title">
-                        <h5 class="infosupp">Info Stock Seragam</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <ul class="list-group clear-list m-t" id='showinfo'>
-
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -136,18 +152,89 @@
     <script type="text/javascript">
         var stock = [];
         var tablepenjualan;
+        var data
         var nota = '{{ $nota }}';
+        var publicHarga = 0;
+        var totalPublic = 0;
         $(document).ready(function () {
-            tablepenjualan = $("#tabelitem").DataTable({
-                responsive: true,
+
+            tablepenjualan = $("#table-penjualan").DataTable({
                 paging: false,
-                "language": dataTableLanguage
+                searching: false,
+                "language": dataTableLanguage,
+                "columnDefs": [
+                    { "width": "50%", "targets": 0 },
+                    { "width": "15%", "targets": 1 },
+                    { "width": "25%", "targets": 2 },
+                    { "width": "10%", "targets": 2 },
+                ],
+                ordering: false
             });
 
             $("#showinfo").hide();
             $("#mitra").chosen();
 
+            if ($('#mitra').val() != null && $('#mitra').val() != '') {
+                getItem();
+            }
+
         });
+
+        $("#setQty").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape 
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 110]) !== -1 ||
+         // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+         // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+         // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+         // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+             // let it happen, don't do anything
+                return;
+            }
+
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+
+            if (e.keyCode == 13) {
+                if (parseInt($('#setQty').val()) == 0) {
+                    Command: toastr["warning"]("Kuantitas tidak boleh 0", "Peringatan !")
+
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": true,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    return false;
+                }
+                tanam();
+            }
+        });
+
+        function cekQty(){
+            var qty = parseInt($('.s_qty').val());
+            var input = parseInt($('#setQty').val());
+            
+            if (input > qty) {
+                $('#setQty').val(qty);
+            }
+        }
 
         function getItem() {
             waitingDialog.show();
@@ -158,19 +245,13 @@
                 data: {mitra: mitra},
                 success: function (response) {
                     $('.telpmitra').html('<i class="fa fa-phone"></i> ' + response.info.m_phone);
-                    var form = '<select class="form-control chosen-select-width" name="seragam" style="width:100%" id="seragam">';
-                    form = form + '<option value=" " selected>--Pilih Seragam--</option>';
                     var divisi = '<select class="form-control chosen-select-width" name="divisi" style="width:100%" id="divisi">';
                     divisi = divisi + '<option value=" " selected>--Pilih Divisi--</option>';
                     var data = response.data;
-                    for (var i = 0; i < data.length; i++) {
-                        form = form + '<option value="' + data[i].i_id + '"> ' + data[i].i_nama + ' (' + data[i].i_warna + ')' + ' </option>';
-                    }
                     for (var i = 0; i < response.divisi.length; i++) {
                         divisi += '<option value="' + response.divisi[i].md_id + '">' + response.divisi[i].md_name + '</option>';
                     }
                     $('.divisi').html(divisi);
-                    $('.pilihseragam').html(form);
                     waitingDialog.hide();
                 }, error: function (x, e) {
                     waitingDialog.hide();
@@ -192,6 +273,235 @@
             waitingDialog.hide();
         }
 
+        function lock(){
+            var mitra = $('#mitra').val();
+            var divisi = $('#divisi').val();
+            if (mitra == null || divisi == null || mitra == ' ' || divisi == ' ') {
+                Command: toastr["warning"]("Mitra dan Divisi tidak boleh kosong", "Peringatan !")
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": true,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                return false;
+            } else {
+                $('#mitra').chosen().chosenReadonly(true);
+                $('.lock').hide();
+                $('.unlock').show();
+                $('#cariItem').prop('readonly', false);
+                $('#setQty').prop('readonly', false);
+                $('.tanam').prop('disabled', false);
+
+                $( "#cariItem" ).autocomplete({
+                    source: baseUrl+'/manajemen-penjualan/search/'+mitra,
+                    minLength: 2,
+                    select: function(event, data) {
+                        setData(data);
+                    }
+                });
+
+            }
+            
+        }
+
+        function unlock(){
+            $('#mitra').chosen().chosenReadonly(false);
+            $('.unlock').hide();
+            $('.lock').show();
+            $('#cariItem').val('');
+            $('#setQty').val('');
+            $('.s_qty').val('');
+            $('.s_id').val('');
+            $('#cariItem').prop('readonly', true);
+            $('#setQty').prop('readonly', true);
+            $('.tanam').prop('disabled', true);
+            tablepenjualan.clear().draw(false);
+        }
+
+        function setData(data){
+            var idStock = data.item.id.s_id;
+            var qty = data.item.id.s_qty;
+            publicHarga = parseInt(data.item.id.id_price);
+            $('.s_id').val(idStock);
+            $('.s_qty').val(qty);
+            $('#setQty').focus();
+        }
+
+        function setNull(klas){
+            $('.'+klas).val('');
+        }
+
+        function tanam(){
+            var idStock = $('.s_id').val();
+            var qty = parseInt($('.s_qty').val());
+            var setQty = parseInt($('#setQty').val());
+            var nama = $('#cariItem').val();
+
+            var myEle = document.getElementById("item-"+idStock);
+            if(myEle){
+                var qtyAwal = parseInt($('#setQty-'+idStock).val());
+                var qtyAkhir = setQty + qtyAwal;
+                if (qtyAkhir <= qty) {
+                    $('#setQty-'+idStock).val(qtyAkhir);
+                } else {
+                    $('#setQty-'+idStock).val(qty);
+                }
+            } else {
+                tablepenjualan.row.add( [
+                    nama + '<input type="hidden" name="idStock[]" id="item-'+idStock+'" value="'+idStock+'">',
+                    '<input type="text" style="width:100%;text-align:right;" onblur="blurQty('+idStock+', '+qty+')" onkeyup="checkQty('+idStock+', '+qty+'), this.value=this.value.replace(/[^0-9]/g,\'\')" onkeypress="totoalHarga()" id="setQty-'+idStock+'" name="qty[]" value="'+setQty+'"><input type="hidden" id="qty-'+idStock+'" value="'+qty+'">',
+                    '<div class="pull-right">Rp. '+ accounting.formatMoney(publicHarga, "", 0, ".", ",")+'</div><input type="hidden" id="harga-'+idStock+'" name="harga[]" value="'+publicHarga+'">',
+                    '<div class="text-center"><button class="btn btn-danger btn-xs hapus-penjualan" id="hapus-penjualan" type="button" style=""><i class="fa fa-minus"></i></button></div>'
+                ] ).draw( false );
+            }
+
+            $('#cariItem').val('');
+            $('#setQty').val('');
+            $('#cariItem').focus();
+            totoalHarga();
+        }
+
+        $('#table-penjualan').on( 'click', 'tbody tr .hapus-penjualan', function () {
+            tablepenjualan.row( $(this).parents('tr') )
+            .remove()
+            .draw();
+            totoalHarga();
+        } );
+
+        function checkQty(id, qty){
+            var input = parseInt($('#setQty-'+id).val());
+            id = parseInt(id);
+            qty = parseInt(qty);
+            if (input > qty) {
+                Command: toastr["warning"]("Jumlah barang melebihi stock", "Peringatan!")
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": true,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                $('#setQty-'+id).val(qty);
+                totoalHarga();
+                return false;
+            }
+            totoalHarga();
+        }
+
+        function blurQty(id, qty){
+            var input = parseInt($('#setQty-'+id).val());
+            id = parseInt(id);
+            qty = parseInt(qty);
+            
+            if (isNaN(input)) {
+                $('#setQty-'+id).val(1);
+                input = 1;
+            }
+
+            if (input == 0) {
+                $('#setQty-'+id).val(1);
+                input = 1;
+            }
+            totoalHarga();
+        }
+
+        function totoalHarga(){
+            var totalHarga = $("input[name='harga[]']").map(function(){return $(this).val();}).get();
+            var totalQty = $("input[name='qty[]']").map(function(){return $(this).val();}).get();
+
+            var total = 0;
+
+            for(var j = 0; j < totalQty.length; j++){
+                  var hasil = parseInt(totalHarga[j]) * parseInt(totalQty[j]);
+                  total = hasil + total;
+            }
+            totalPublic = total;
+            total = accounting.formatMoney(total, "", 0, ".", ",");
+            $('.totalpembelian').html('Rp. ' + total);
+            $('.jumlahitem').html(totalQty.length);
+        }
+
+    function simpan(){
+        waitingDialog.show();
+        var ar = $();
+        for (var i = 0; i < tablepenjualan.rows()[0].length; i++) {
+            ar = ar.add(tablepenjualan.row(i).node());
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var mitra = $('#mitra').val();
+        var divisi = $('#divisi').val();
+        var total = totalPublic;
+        $.ajax({
+          url: baseUrl + '/manajemen-penjualan/save',
+          type: 'get',
+          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&nota='+nota+'&total='+total+'&divisi='+divisi,
+          success: function(response){
+            waitingDialog.hide();
+            if (response.status == 'sukses') {
+                swal({
+                        title: "Sukses",
+                        text: "Data sudah tersimpan",
+                        type: "success"
+
+                    }, function () {
+                      //cari();
+                      location.reload();
+                    });
+            } else {
+                swal({
+                    title: "Gagal",
+                    text: "Sistem gagal menyimpan data",
+                    type: "error",
+                    showConfirmButton: true
+                });
+            }
+          }, error:function(x, e) {
+            waitingDialog.hide();
+              if (x.status == 0) {
+                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+              } else if (x.status == 404) {
+                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+              } else if (x.status == 500) {
+                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+              } else if (e == 'parsererror') {
+                  alert('Error.\nParsing JSON Request failed.');
+              } else if (e == 'timeout'){
+                  alert('Request Time out. Harap coba lagi nanti');
+              } else {
+                  alert('Unknow Error.\n' + x.responseText);
+              }
+              waitingDialog.hide();
+            }
+        })
+    }
 
     </script>
 @endsection

@@ -50,6 +50,7 @@
     <script src="{{ asset('assets/dist/js/app.min.js') }}"></script>
 
     <script src="{{ asset('assets/vendors/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('assets/vendors/chosen/chosen-readonly.js') }}"></script>
 
     <script src="{{ asset('assets/vendors/iCheck/icheck.min.js') }}"></script>
 
