@@ -158,7 +158,7 @@
                   </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="print()"><i class="fa fa-print">&nbsp;</i>Print</button>
+                <button type="button" class="btn btn-primary" id="printbtn" name="button" onclick="cetak()"><i class="fa fa-print">&nbsp;</i>Print</button>
                 <button type="button" class="btn btn-white" data-dismiss="modal">Tutup</button>
             </div>
         </div>
@@ -351,7 +351,7 @@
           $(".rp").digits();
 
           //Button
-          $('#printbtn').attr('onclick','print('+id+')');
+          $('#printbtn').attr('onclick','cetak('+id+')');
 
         }
       });
@@ -504,7 +504,7 @@
     }, 2000);
     }
 
-    function print(id){
+    function cetak(id){
       window.location.href = baseUrl + '/approvalpembelian/print?id='+id;
     }
 
