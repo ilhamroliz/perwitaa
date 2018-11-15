@@ -600,7 +600,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/print/{id}','PembelianController@cetak');
     Route::get('manajemen-pembelian/getItem','PembelianController@getItem');
     Route::post('manajemen-pembelian/simpan','PembelianController@save');
-    Route::post('manajemen-pembelian/simpan','PembelianController@save');
     Route::post('manajemen-pembelian/update','PembelianController@update');
     Route::get('manajemen-pembelian/update','PembelianController@update');
     Route::get('manajemen-pembelian/getDetail','PembelianController@getDetail');
