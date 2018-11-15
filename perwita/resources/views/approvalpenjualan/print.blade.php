@@ -31,15 +31,15 @@
 
                                 <div class="col-sm-6 text-right">
                                     <h4>Invoice No.</h4>
-                                    <h4 class="text-navy" id="nota">{{$data[0]->p_nota}}</h4>
+                                    <h4 class="text-navy" id="nota">{{$data[0]->s_nota}}</h4>
                                     <span>To:</span>
                                     <address id="address">
-                                      <strong>{{$data[0]->s_company}}</strong><br>
-                                        {{$data[0]->s_address}}<br>
-                                        <abbr title="Phone">P:&nbsp;</abbr> {{$data[0]->s_phone}}
+                                      <strong>{{$data[0]->m_name}}</strong><br>
+                                        {{$data[0]->m_address}}<br>
+                                        <abbr title="Phone">P:&nbsp;</abbr> {{$data[0]->m_phone}}
                                     </address>
                                     <p>
-                                        <span><strong>Invoice Date: </strong>{{Carbon\Carbon::parse($data[0]->p_date)->format('d/m/Y')}}</span>
+                                        <span><strong>Invoice Date: </strong>{{Carbon\Carbon::parse($data[0]->s_date)->format('d/m/Y')}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -63,10 +63,10 @@
                                           <div><strong>{{$x->k_nama}}</strong></div>
                                           <small>{{$x->i_nama}} Warna {{$x->i_warna}} Ukuran {{$x->s_nama}}</small>
                                           </td>
-                                          <td>{{$x->pd_qty}}</td>
-                                          <td class="rp">Rp. {{number_format($x->pd_value, 0, ',', '.')}}</td>
-                                          <td class="rp">Rp. {{number_format($x->pd_disc_value, 0, ',', '.')}}</td>
-                                          <td class="rp">Rp. {{number_format($x->pd_total_net, 0, ',', '.')}}</td>
+                                          <td>{{$x->sd_qty}}</td>
+                                          <td class="rp">Rp. {{number_format($x->sd_value, 0, ',', '.')}}</td>
+                                          <td class="rp">Rp. {{number_format($x->sd_disc_value, 0, ',', '.')}}</td>
+                                          <td class="rp">Rp. {{number_format($x->sd_total_net, 0, ',', '.')}}</td>
                                       </tr>
                                       @endforeach
                                     </tbody>
@@ -77,15 +77,15 @@
                               <tbody id="foo">
                                 <tr>
                                     <td><strong>Sub Total :</strong></td>
-                                    <td class="rp" id="subtotal">Rp. {{number_format($x->p_total_gross, 0, ',', '.')}}</td>
+                                    <td class="rp" id="subtotal">Rp. {{number_format($x->s_total_gross, 0, ',', '.')}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>TAX :</strong></td>
-                                    <td class="rp" id="pajak">Rp. {{number_format($x->p_pajak, 0, ',', '.')}}</td>
+                                    <td class="rp" id="pajak">Rp. {{number_format($x->s_pajak, 0, ',', '.')}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>TOTAL :</strong></td>
-                                    <td class="rp" id="total">Rp. {{number_format($x->p_total_net, 0, ',', '.')}}</td>
+                                    <td class="rp" id="total">Rp. {{number_format($x->s_total_net, 0, ',', '.')}}</td>
                                 </tr>
                               </tbody>
                             </table>

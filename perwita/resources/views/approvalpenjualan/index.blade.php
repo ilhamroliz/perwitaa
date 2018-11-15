@@ -234,7 +234,7 @@
                                         timer: 900
                                     });
                                     setTimeout(function () {
-                                        window.location.reload();
+                                        window.open('approvalpenjualan/cetak?id='+response.nota);
                                     }, 850);
                                 }
                             }, error: function (x, e) {
@@ -440,9 +440,13 @@
                                 showConfirmButton: false,
                                 timer: 900
                             });
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 850);
+                            console.log(result.nota.length);
+                            for (var i = 0; i < result.nota.length; i++) {
+                              var nota = result.nota[i];
+                              setTimeout(function () {
+                                  window.open('approvalpenjualan/cetak?id='+nota);
+                              }, 850);
+                            }
                         }
                     }, error: function (x, e) {
                         waitingDialog.hide();
