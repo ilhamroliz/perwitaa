@@ -33,6 +33,7 @@ class approvalpenerimaanseragamController extends Controller
 
         $data = DB::table('d_purchase_approval')
                     ->where('pa_detailid', $request->id)
+                    ->where('pa_purchase', $request->purchase)
                     ->get();
 
         $check = DB::table('d_purchase_dt')
@@ -43,7 +44,6 @@ class approvalpenerimaanseragamController extends Controller
                   ->get();
 
         $sisa = (int)$check[0]->pd_qty - (int)$check[0]->pd_barang_masuk;
-
         if ($sisa < $data[0]->pa_qty) {
           return response()->json([
             'status' => 'barang masuk tidak sesuai'
@@ -86,6 +86,7 @@ class approvalpenerimaanseragamController extends Controller
 
         $data = DB::table('d_purchase_approval')
                     ->where('pa_detailid', $request->pilih[$i])
+                    ->where('pa_purchase', $request->purchase[$i])
                     ->get();
 
         $check = DB::table('d_purchase_dt')
@@ -96,7 +97,6 @@ class approvalpenerimaanseragamController extends Controller
                   ->get();
 
         $sisa = (int)$check[0]->pd_qty - (int)$check[0]->pd_barang_masuk;
-
         if ($sisa < $data[0]->pa_qty) {
           return response()->json([
             'status' => 'barang masuk tidak sesuai'
@@ -139,6 +139,7 @@ class approvalpenerimaanseragamController extends Controller
 
         DB::table('d_purchase_approval')
           ->where('pa_detailid', $request->id)
+          ->where('pa_purchase', $request->purchase)
           ->update([
             'pa_isapproved' => 'N'
           ]);
@@ -161,6 +162,7 @@ class approvalpenerimaanseragamController extends Controller
 
         DB::table('d_purchase_approval')
           ->whereIn('pa_detailid', $request->pilih)
+          ->whereIn('pa_purchase', $request->purchase)
           ->update([
             'pa_isapproved' => 'N'
           ]);
@@ -182,6 +184,7 @@ class approvalpenerimaanseragamController extends Controller
 
       $data = DB::table('d_purchase_approval')
                   ->where('pa_detailid', $id)
+                  ->where('pa_purchase', $request->purchase)
                   ->get();
 
       $info = DB::table('d_purchase')

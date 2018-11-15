@@ -67,6 +67,7 @@
                       <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                           <td>
                               <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->pa_detailid}}">
+                              <input class="pilih-{{$index}}" type="hidden" name="purchase[]" onclick="selectBox({{$index}})" value="{{$x->pa_purchase}}">
                           </td>
                         <td>{{$x->pa_do}}</td>
                         <td>{{Carbon\Carbon::parse($x->pa_date)->format('d/m/Y h:i:s')}}</td>
@@ -74,9 +75,9 @@
                         <td>{{$x->pa_qty}}</td>
                         <td align="center">
                           <div class="action">
-                            <button type="button" title="Detail" onclick="detail({{$x->pa_detailid}})" class="btn btn-info btn-xs" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
-                            <button type="button" title="Setujui" onclick="setujui({{$x->pa_detailid}})" class="btn btn-primary btn-xs" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" title="Tolak" onclick="tolak({{$x->pa_detailid}})"  class="btn btn-danger btn-xs" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button type="button" title="Detail" onclick="detail({{$x->pa_detailid}},{{$x->pa_purchase}})" class="btn btn-info btn-xs" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
+                            <button type="button" title="Setujui" onclick="setujui({{$x->pa_detailid}},{{$x->pa_purchase}})" class="btn btn-primary btn-xs" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" title="Tolak" onclick="tolak({{$x->pa_detailid}},{{$x->pa_purchase}})"  class="btn btn-danger btn-xs" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                           </div>
                       </td>
                       </tr>
@@ -160,11 +161,11 @@ setTimeout(function(){
 
 });
 
-function detail(id){
+function detail(id, purchase){
     $.ajax({
       url: baseUrl + '/approvalpenerimaan/detail',
       type: 'get',
-      data: {id: id},
+      data: {id:id, purchase:purchase},
       success: function(response){
         if (response.status == 'sukses') {
             var data = response.data;
@@ -200,7 +201,7 @@ function detail(id){
     })
 }
 
- function setujui(id){
+ function setujui(id, purchase){
    swal({
            title: "Konfirmasi",
            text: "Apakah anda yakin ingin menyetujui Penerimaan ini?",
@@ -216,7 +217,7 @@ function detail(id){
            setTimeout(function () {
                $.ajax({
                  type: 'get',
-                 data: {id:id},
+                 data: {id:id, purchase:purchase},
                  url: baseUrl + '/approvalpenerimaan/setujui',
                  dataType: 'json',
                    success: function (response) {
@@ -266,7 +267,7 @@ function detail(id){
        });
  }
 
-    function tolak(id){
+    function tolak(id, purchase){
       swal({
               title: "Konfirmasi",
               text: "Apakah anda yakin ingin menolak Penerimaan ini?",
@@ -282,7 +283,7 @@ function detail(id){
               setTimeout(function () {
                   $.ajax({
                     type: 'get',
-                    data: {id:id},
+                    data: {id:id, purchase:purchase},
                     url: baseUrl + '/approvalpenerimaan/tolak',
                     dataType: 'json',
                     timeout: 10000,
@@ -336,6 +337,15 @@ function detail(id){
             table.$('input[name="pilih[]"]').prop("checked", false);
             table.$('.chek-all').val('');
         }
+
+        if ($('.setCek').is(":checked")) {
+            table.$('input[name="purchase[]"]').prop("checked", true);
+            //table.$('input[name="pilih[]"]').css('background','red');
+            table.$('.chek-all').val('1');
+        } else {
+            table.$('input[name="purchase[]"]').prop("checked", false);
+            table.$('.chek-all').val('');
+        }
         hitung();
         //hitungSelect();
     }
@@ -354,6 +364,7 @@ function detail(id){
 
     function hitung() {
         countmitra = table.$("input[name='pilih[]']:checked").length;
+        countmitra = table.$("input[name='purchase[]']:checked").length;
         $('#totalPekerja').val(countmitra + totalmitra);
     }
 
