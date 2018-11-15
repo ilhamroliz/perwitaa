@@ -97,6 +97,7 @@ class PenerimaanController extends Controller
                 'status' => 'sukses'
             ]);
         } catch (\Exception $e) {
+            perwitaController::log('update Penerimaan Controller', $nodo);
             DB::rollback();
             return response()->json([
                 'status' => 'gagal',
@@ -232,6 +233,7 @@ class PenerimaanController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
+            perwitaController::log('approvePenerimaan', $nodo);
             return response()->json([
                 'status' => 'gagal',
                 'data' => $e

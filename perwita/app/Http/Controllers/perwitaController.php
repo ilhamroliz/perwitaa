@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
 use DB;
+use Storage;
 
 class perwitaController
 {
@@ -34,5 +36,11 @@ class perwitaController
             $info[2] = $mitra->mc_mitra;
             return $info;
         }
+    }
+
+    public static function log($fitur, $data)
+    {
+        $text = '{'.$fitur.' | '.$data.' | '.Carbon::now("Asia/Jakarta")->format("d/m/Y H:m:s").'}';
+        Storage::append(asset('customLog/log.txt'), $text);
     }
 }
