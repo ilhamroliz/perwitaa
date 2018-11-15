@@ -17,6 +17,16 @@ use Session;
 class approvalpenerimaanseragamController extends Controller
 {
     public function index(){
+      $count = DB::table('d_purchase_approval')
+                  ->where('pa_isapproved', 'P')
+                  ->count();
+
+      DB::table('d_notifikasi')
+          ->where('n_fitur', 'Penerimaan Seragam')
+          ->update([
+            'n_qty' => $count
+          ]);
+
       $data = DB::table('d_purchase_approval')
                 ->join('d_item', 'i_id', '=', 'pa_item')
                 ->join('d_item_dt', 'id_detailid', '=', 'pa_item_dt')
