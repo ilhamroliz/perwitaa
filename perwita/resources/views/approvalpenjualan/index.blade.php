@@ -230,7 +230,7 @@
                                         title: "Penjualan Disetujui",
                                         text: "Penjualan Berhasil Disetujui",
                                         type: "success",
-                                        showConfirmButton: false,
+                                        showConfirmButton: true,
                                         timer: 900
                                     });
                                     setTimeout(function () {
@@ -434,15 +434,14 @@
                         waitingDialog.hide();
                         if (result.status == 'berhasil') {
                             swal({
-                                title: "Pembelian Disetujui",
-                                text: "Pembelian Berhasil Disetujui",
+                                title: "Penjualan Disetujui",
+                                text: "Penjualan Berhasil Disetujui",
                                 type: "success",
-                                showConfirmButton: false,
+                                showConfirmButton: true,
                                 timer: 900
                             });
-                            console.log(result.nota.length);
                             for (var i = 0; i < result.nota.length; i++) {
-                              var nota = result.nota[i];
+                              var nota = result.nota[i].s_nota;
                               setTimeout(function () {
                                   window.open('approvalpenjualan/cetak?id='+nota);
                               }, 850);
