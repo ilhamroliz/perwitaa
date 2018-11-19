@@ -503,10 +503,10 @@ class ReturnPembelianController extends Controller
       return view('return-pembelian.history');
     }
 
-    public function datatable_history(Request $request){
-      if ($request->tanggal1 != null && $request->tanggal2 != null) {
-        $start = Carbon::parse($request->tanggal1)->startOfDay();  //2016-09-29 00:00:00.000000
-        $end = Carbon::parse($request->tanggal2)->endOfDay(); //2016-09-29 23:59:59.000000
+    public function datatable_history(Request $request){      
+      if ($request->tgl_awal != null && $request->tgl_akhir != null) {
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
         DB::statement(DB::raw('set @rownum=0'));
         $list = DB::table('d_return_seragam')
                   ->where('rs_isapproved', 'Y')
@@ -516,14 +516,34 @@ class ReturnPembelianController extends Controller
                   ->get();
 
         for ($i=0; $i < count($list); $i++) {
-          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y');
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
         }
 
         $data = collect($list);
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<div class="text-center">
-                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      } elseif ($request->keyword != null) {
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->where('rs_id', $request->keyword)
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
                   </div>';
             })
             ->make(true);
@@ -535,18 +555,42 @@ class ReturnPembelianController extends Controller
                   ->get();
 
         for ($i=0; $i < count($list); $i++) {
-          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y');
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
         }
 
         $data = collect($list);
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<div class="text-center">
-                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
                   </div>';
             })
             ->make(true);
       }
+    }
+
+    public function achistory(Request $request){
+      $cari = $request->term;
+
+      $data = DB::table('d_return_seragam')
+                ->where('rs_nota', 'LiKE', "%$cari%")
+                ->limit(20)
+                ->get();
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->rs_date = Carbon::parse($data[$i]->rs_date)->format('d/m/Y h:i:s');
+      }
+
+      if ($data == null) {
+          $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+      } else {
+
+          foreach ($data as $query) {
+              $results[] = ['id' => $query->rs_id, 'label' => $query->rs_nota . ' ('.$query->rs_date.')' ];
+          }
+      }
+
+      return Response::json($results);
     }
 
 }
