@@ -149,6 +149,7 @@
 
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-info" id="cetak" onclick="cetak()" name="button"> <i class="fa fa-print"></i> Print</button>
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -315,12 +316,16 @@ caritanggal.click(function(){
           } else {
             $('#divganti').hide();
           }
-
+            $('#cetak').attr('onclick', 'cetak('+id+')');
             $('.rp').digits();
             $('#myModal5').modal('show');
 
           }
         });
+    }
+
+    function cetak(id){
+      window.open(baseUrl + '/manajemen-seragam/return/cetak?id='+id);
     }
 </script>
 @endsection

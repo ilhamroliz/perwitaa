@@ -694,6 +694,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/history', 'ReturnPembelianController@history');
     Route::get('manajemen-seragam/return/datatable_history', 'ReturnPembelianController@datatable_history');
     Route::get('manajemen-seragam/return/achistory', 'ReturnPembelianController@achistory');
+    Route::get('manajemen-seragam/return/cetak', 'ReturnPembelianController@cetak');
 
     //Penerimaan RETURN
     Route::get('manajemen-seragam/penerimaanreturn', 'penerimaanreturnController@index');

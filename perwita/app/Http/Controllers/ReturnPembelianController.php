@@ -503,7 +503,7 @@ class ReturnPembelianController extends Controller
       return view('return-pembelian.history');
     }
 
-    public function datatable_history(Request $request){      
+    public function datatable_history(Request $request){
       if ($request->tgl_awal != null && $request->tgl_akhir != null) {
         $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
         $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
@@ -591,6 +591,44 @@ class ReturnPembelianController extends Controller
       }
 
       return Response::json($results);
+    }
+
+    public function cetak(Request $request){
+
+      $uang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'uang')
+            ->groupBy('rs_id')
+            ->get();
+
+      $barang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_return_seragam_ganti', 'rsg_return_seragam', '=', 'rs_id')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'barang')
+            ->groupBy('rsd_detailid')
+            ->get();
+
+      $barangbaru = DB::table('d_return_seragam_ganti')
+                  ->leftjoin('d_item', 'i_id', '=', 'rsg_item')
+                  ->leftjoin('d_item_dt', 'id_detailid', '=', 'rsg_item_dt')
+                  ->leftjoin('d_kategori', 'k_id', '=', 'i_kategori')
+                  ->leftjoin('d_size', 's_id', '=', 'id_size')
+                  ->where('rsg_return_seragam', $request->id)
+                  ->groupBy('rsg_detailid')
+                  ->get();
+
+     return view('return-pembelian.print', compact('uang', 'barang', 'barangbaru'));
+
     }
 
 }
