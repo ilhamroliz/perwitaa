@@ -8,6 +8,7 @@ use DB;
 use App\Http\Requests;
 use Response;
 use Carbon\Carbon;
+use Yajra\Datatables\Datatables;
 
 class ReturnPembelianController extends Controller
 {
@@ -496,6 +497,56 @@ class ReturnPembelianController extends Controller
           ]);
         }
 
+    }
+
+    public function history(){
+      return view('return-pembelian.history');
+    }
+
+    public function datatable_history(Request $request){
+      if ($request->tanggal1 != null && $request->tanggal2 != null) {
+        $start = Carbon::parse($request->tanggal1)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tanggal2)->endOfDay(); //2016-09-29 23:59:59.000000
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->where('rs_date', '>', $start)
+                  ->where('rs_date', '<', $end)
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      } else {
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      }
     }
 
 }

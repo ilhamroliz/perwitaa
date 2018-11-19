@@ -34,12 +34,12 @@ class approvalpenjualanController extends Controller
             ->get();
 
         DB::table('d_notifikasi')
-            ->where('n_fitur', 'Penjualan')
+            ->where('n_fitur', 'Pengeluaran')
             ->update([
                 'n_qty' => count($count)
             ]);
 
-        return view('approvalpenjualan.index', compact('data'));
+        return view('approvalpengeluaran.index', compact('data'));
 
     }
 
@@ -529,7 +529,7 @@ class approvalpenjualanController extends Controller
                 ->where('s_nota', $request->id)
                 ->get();
 
-      return view('approvalpenjualan.print', compact('data'));
+      return view('approvalpengeluaran.print', compact('data'));
     }
 
 }

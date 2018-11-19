@@ -20,20 +20,20 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Approval Penjualan</h2>
+            <h2>Approval Pengeluaran</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="active">
-                    <strong>Daftar Approval Penjualan</strong>
+                    <strong>Daftar Approval Pengeluaran</strong>
                 </li>
             </ol>
         </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="ibox-title ibox-info">
-            <h5>Daftar Approval Penjualan Seragam</h5>
+            <h5>Daftar Approval Pengeluaran Seragam</h5>
         </div>
         <div class="ibox">
             <div class="ibox-content">
@@ -207,7 +207,7 @@
         function setujui(id) {
             swal({
                     title: "Konfirmasi",
-                    text: "Apakah anda yakin ingin menyetujui Penjualan ini?",
+                    text: "Apakah anda yakin ingin menyetujui Pengeluaran ini?",
                     type: "warning",
                     showCancelButton: true,
                     closeOnConfirm: false,
@@ -220,21 +220,21 @@
                         $.ajax({
                             type: 'get',
                             data: {id: id},
-                            url: baseUrl + '/approvalpenjualan/setujui',
+                            url: baseUrl + '/approvalpengeluaran/setujui',
                             dataType: 'json',
                             timeout: 10000,
                             success: function (response) {
                                 waitingDialog.hide();
                                 if (response.status == 'berhasil') {
                                     swal({
-                                        title: "Penjualan Disetujui",
-                                        text: "Penjualan Berhasil Disetujui",
+                                        title: "Pengeluaran Disetujui",
+                                        text: "Pengeluaran Berhasil Disetujui",
                                         type: "success",
                                         showConfirmButton: true,
                                         timer: 900
                                     });
                                     setTimeout(function () {
-                                        window.open('approvalpenjualan/cetak?id='+response.nota);
+                                        window.open('approvalpengeluaran/cetak?id='+response.nota);
                                     }, 850);
                                 }
                             }, error: function (x, e) {
@@ -266,7 +266,7 @@
         function tolak(id) {
             swal({
                     title: "Konfirmasi",
-                    text: "Apakah anda yakin ingin menolak Penjualan ini?",
+                    text: "Apakah anda yakin ingin menolak Pengeluaran ini?",
                     type: "warning",
                     showCancelButton: true,
                     closeOnConfirm: false,
@@ -280,15 +280,15 @@
                         $.ajax({
                             type: 'get',
                             data: {id: id},
-                            url: baseUrl + '/approvalpenjualan/tolak',
+                            url: baseUrl + '/approvalpengeluaran/tolak',
                             dataType: 'json',
                             timeout: 10000,
                             success: function (response) {
                                 waitingDialog.hide();
                                 if (response.status == 'berhasil') {
                                     swal({
-                                        title: "Penjualan Ditolak",
-                                        text: "Penjualan Berhasil Ditolak",
+                                        title: "Pengeluaran Ditolak",
+                                        text: "Pengeluaran Berhasil Ditolak",
                                         type: "success",
                                         showConfirmButton: false,
                                         timer: 900
@@ -330,7 +330,7 @@
             $.ajax({
                 type: 'get',
                 data: {id: id},
-                url: baseUrl + '/approvalpenjualan/detail',
+                url: baseUrl + '/approvalpengeluaran/detail',
                 dataType: 'json',
                 success: function (result) {
                     if (result.length == 1) {
@@ -428,14 +428,14 @@
                 $.ajax({
                     type: 'get',
                     data: $('#formapprovalpenjualan').serialize(),
-                    url: baseUrl + '/approvalpenjualan/setujuilist',
+                    url: baseUrl + '/approvalpengeluaran/setujuilist',
                     dataType: 'json',
                     success: function (result) {
                         waitingDialog.hide();
                         if (result.status == 'berhasil') {
                             swal({
-                                title: "Penjualan Disetujui",
-                                text: "Penjualan Berhasil Disetujui",
+                                title: "Pengeluaran Disetujui",
+                                text: "Pengeluaran Berhasil Disetujui",
                                 type: "success",
                                 showConfirmButton: true,
                                 timer: 900
@@ -443,7 +443,7 @@
                             for (var i = 0; i < result.nota.length; i++) {
                               var nota = result.nota[i].s_nota;
                               setTimeout(function () {
-                                  window.open('approvalpenjualan/cetak?id='+nota);
+                                  window.open('approvalpengeluaran/cetak?id='+nota);
                               }, 850);
                             }
                         }
@@ -477,14 +477,14 @@
                 $.ajax({
                     type: 'get',
                     data: $('#formapprovalpenjualan').serialize(),
-                    url: baseUrl + '/approvalpenjualan/tolaklist',
+                    url: baseUrl + '/approvalpengeluaran/tolaklist',
                     dataType: 'json',
                     success: function (result) {
                         waitingDialog.hide();
                         if (result.status == 'berhasil') {
                             swal({
-                                title: "Penjualan Ditolak",
-                                text: "Penjualan Berhasil Ditolak",
+                                title: "Pengeluaran Ditolak",
+                                text: "Pengeluaran Berhasil Ditolak",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 900
