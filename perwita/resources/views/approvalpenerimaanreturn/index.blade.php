@@ -409,7 +409,7 @@ setTimeout(function(){
               setTimeout(function(){
                     window.location.reload();
             }, 850);
-          } else if (response.status == 'tidak sesuai') {
+          } else if (result.status == 'tidak sesuai') {
             swal({
                 title: "Info!",
                 text: "QTY tidak sesuai",

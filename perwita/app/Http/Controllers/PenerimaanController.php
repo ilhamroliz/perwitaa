@@ -263,12 +263,12 @@ class PenerimaanController extends Controller
                 $items = $data->whereBetween('pa_date', array($tgl_awal, $tgl_akhir));
             }
             else {
-                $items = $data->where(DB::raw('DATE(pa_date)'), $tgl_awal);                
+                $items = $data->where(DB::raw('DATE(pa_date)'), $tgl_awal);
             }
         }
         else {
-            $now = date('Y-m-d');        
-            $items = $data->where(DB::raw('DATE(pa_date)'), $now);                
+            $now = date('Y-m-d');
+            $items = $data->where(DB::raw('DATE(pa_date)'), $now);
         }
 
         $items = $items->orderBy('pa_date', 'DESC')->get();
