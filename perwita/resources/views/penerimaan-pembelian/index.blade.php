@@ -242,53 +242,61 @@
         var id = $('.id_purchase').val();
         var dt = $('.purchase_dt').val();
         var nodo = $('.nodo').val();
-        $('.jumlahterima').val('');
-        //waitingDialog.show();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-          url: baseUrl + '/manajemen-pembelian/penerimaan/update',
-          type: 'get',
-          data: {sisa: sisa, id: id, dt: dt, nodo: nodo},
-          success: function(response){
-            //waitingDialog.hide();
-            $('#myModal').modal('hide');
-            if (response.status == 'sukses') {
-                swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
-                    }, function () {
-                      cari();
-                        //location.reload();
-                    });
-            } else {
-                swal({
-                    title: "Gagal",
-                    text: "Sistem gagal menyimpan data",
-                    type: "error",
-                    showConfirmButton: true
-                });
-            }
-          }, error:function(x, e) {
-              if (x.status == 0) {
-                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-              } else if (x.status == 404) {
-                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-              } else if (x.status == 500) {
-                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-              } else if (e == 'parsererror') {
-                  alert('Error.\nParsing JSON Request failed.');
-              } else if (e == 'timeout'){
-                  alert('Request Time out. Harap coba lagi nanti');
-              } else {
-                  alert('Unknow Error.\n' + x.responseText);
+
+        if (sisa == 0 || sisa == undefined || sisa == null || sisa == '') {
+          swal({
+              title: "Gagal",
+              text: "Tidak boleh 0!",
+              type: "error",
+              showConfirmButton: true
+          });
+        } else {
+          //waitingDialog.show();
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
-            }
-        })
+          });
+          $.ajax({
+            url: baseUrl + '/manajemen-pembelian/penerimaan/update',
+            type: 'get',
+            data: {sisa: sisa, id: id, dt: dt, nodo: nodo},
+            success: function(response){
+              //waitingDialog.hide();
+              $('#myModal').modal('hide');
+              if (response.status == 'sukses') {
+                  swal({
+                          title: "Sukses",
+                          text: "Data sudah tersimpan",
+                          type: "success"
+                      }, function () {
+                          window.location.reload();
+                      });
+              } else {
+                  swal({
+                      title: "Gagal",
+                      text: "Sistem gagal menyimpan data",
+                      type: "error",
+                      showConfirmButton: true
+                  });
+              }
+            }, error:function(x, e) {
+                if (x.status == 0) {
+                    alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+                } else if (x.status == 404) {
+                    alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+                } else if (x.status == 500) {
+                    alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+                } else if (e == 'parsererror') {
+                    alert('Error.\nParsing JSON Request failed.');
+                } else if (e == 'timeout'){
+                    alert('Request Time out. Harap coba lagi nanti');
+                } else {
+                    alert('Unknow Error.\n' + x.responseText);
+                }
+              }
+          })
+        }
     }
 
     // $(document).ready(function() {

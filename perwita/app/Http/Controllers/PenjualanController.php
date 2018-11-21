@@ -251,7 +251,7 @@ class PenjualanController extends Controller
                 ->get();
 
             DB::table('d_notifikasi')
-                ->where('n_fitur', 'Penjualan')
+                ->where('n_fitur', 'Pengeluaran')
                 ->update([
                     'n_qty' => count($count),
                     'n_insert' => Carbon::now('Asia/Jakarta')
@@ -328,7 +328,7 @@ class PenjualanController extends Controller
                 ->get();
 
             DB::table('d_notifikasi')
-                ->where('n_fitur', 'Penjualan')
+                ->where('n_fitur', 'Pengeluaran')
                 ->update([
                     'n_qty' => count($count),
                     'n_insert' => Carbon::now('Asia/Jakarta')

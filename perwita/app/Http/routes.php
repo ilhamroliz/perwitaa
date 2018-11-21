@@ -694,6 +694,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
     Route::get('manajemen-seragam/return/update', 'ReturnPembelianController@update');
     Route::post('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
+    Route::get('manajemen-seragam/return/history', 'ReturnPembelianController@history');
+    Route::get('manajemen-seragam/return/datatable_history', 'ReturnPembelianController@datatable_history');
+    Route::get('manajemen-seragam/return/achistory', 'ReturnPembelianController@achistory');
+    Route::get('manajemen-seragam/return/cetak', 'ReturnPembelianController@cetak');
 
     //Penerimaan RETURN
     Route::get('manajemen-seragam/penerimaanreturn', 'penerimaanreturnController@index');
@@ -837,13 +841,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpermintaan/setujuilist', 'approvalpenerimaanController@setujuilist');
 
     //Approval Penjualan
-    Route::get('approvalpenjualan', 'approvalpenjualanController@index');
-    Route::get('approvalpenjualan/detail', 'approvalpenjualanController@detail');
-    Route::get('approvalpenjualan/setujui', 'approvalpenjualanController@setujui');
-    Route::get('approvalpenjualan/setujuilist', 'approvalpenjualanController@approve');
-    Route::get('approvalpenjualan/tolak', 'approvalpenjualanController@tolak');
-    Route::get('approvalpenjualan/tolaklist', 'approvalpenjualanController@tolaklist');
-    Route::get('approvalpenjualan/cetak', 'approvalpenjualanController@cetak');
+    Route::get('approvalpengeluaran', 'approvalpenjualanController@index');
+    Route::get('approvalpengeluaran/detail', 'approvalpenjualanController@detail');
+    Route::get('approvalpengeluaran/setujui', 'approvalpenjualanController@setujui');
+    Route::get('approvalpengeluaran/setujuilist', 'approvalpenjualanController@approve');
+    Route::get('approvalpengeluaran/tolak', 'approvalpenjualanController@tolak');
+    Route::get('approvalpengeluaran/tolaklist', 'approvalpenjualanController@tolaklist');
+    Route::get('approvalpengeluaran/cetak', 'approvalpenjualanController@cetak');
 
     //Approval Rencana Pembelian
     Route::get('approvalrencanapembelian', 'approvalrencanapembelianController@index');

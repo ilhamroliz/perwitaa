@@ -39,7 +39,7 @@
                 <div class="col-md-12">
                     <div class="col-md-5">
                         <select class="form-control chosen-select-width" name="nota" style="width:100%; cursor: pointer;" id="nota">
-                            <option value="" disabled selected>--Pilih Nota Pembelian--</option>
+                            <option value="" disabled selected>--Pilih Nota Return--</option>
                         @foreach($data as $nota)
                             <option value="{{ $nota->rs_nota }}"> {{ $nota->rs_nota }} </option>
                         @endforeach

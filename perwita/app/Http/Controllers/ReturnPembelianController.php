@@ -8,6 +8,7 @@ use DB;
 use App\Http\Requests;
 use Response;
 use Carbon\Carbon;
+use Yajra\Datatables\Datatables;
 
 class ReturnPembelianController extends Controller
 {
@@ -495,6 +496,138 @@ class ReturnPembelianController extends Controller
             'status' => 'gagal'
           ]);
         }
+
+    }
+
+    public function history(){
+      return view('return-pembelian.history');
+    }
+
+    public function datatable_history(Request $request){
+      if ($request->tgl_awal != null && $request->tgl_akhir != null) {
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->where('rs_date', '>', $start)
+                  ->where('rs_date', '<', $end)
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      } elseif ($request->keyword != null) {
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->where('rs_id', $request->keyword)
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      } else {
+        DB::statement(DB::raw('set @rownum=0'));
+        $list = DB::table('d_return_seragam')
+                  ->where('rs_isapproved', 'Y')
+                  ->select(DB::raw('@rownum  := @rownum  + 1 AS number'), 'rs_nota', 'rs_date', 'rs_id')
+                  ->get();
+
+        for ($i=0; $i < count($list); $i++) {
+          $list[$i]->rs_date = Carbon::parse($list[$i]->rs_date)->format('d/m/Y h:i:s');
+        }
+
+        $data = collect($list);
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                return '<div class="text-center">
+                    <button title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $data->rs_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
+                  </div>';
+            })
+            ->make(true);
+      }
+    }
+
+    public function achistory(Request $request){
+      $cari = $request->term;
+
+      $data = DB::table('d_return_seragam')
+                ->where('rs_nota', 'LiKE', "%$cari%")
+                ->limit(20)
+                ->get();
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->rs_date = Carbon::parse($data[$i]->rs_date)->format('d/m/Y h:i:s');
+      }
+
+      if ($data == null) {
+          $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+      } else {
+
+          foreach ($data as $query) {
+              $results[] = ['id' => $query->rs_id, 'label' => $query->rs_nota . ' ('.$query->rs_date.')' ];
+          }
+      }
+
+      return Response::json($results);
+    }
+
+    public function cetak(Request $request){
+
+      $uang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'uang')
+            ->groupBy('rs_id')
+            ->get();
+
+      $barang = DB::table('d_return_seragam')
+            ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
+            ->join('d_return_seragam_ganti', 'rsg_return_seragam', '=', 'rs_id')
+            ->join('d_item', 'i_id', '=', 'rsd_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'rsd_itemdt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->where('rs_id', $request->id)
+            ->where('rsd_action', 'barang')
+            ->groupBy('rsd_detailid')
+            ->get();
+
+      $barangbaru = DB::table('d_return_seragam_ganti')
+                  ->leftjoin('d_item', 'i_id', '=', 'rsg_item')
+                  ->leftjoin('d_item_dt', 'id_detailid', '=', 'rsg_item_dt')
+                  ->leftjoin('d_kategori', 'k_id', '=', 'i_kategori')
+                  ->leftjoin('d_size', 's_id', '=', 'id_size')
+                  ->where('rsg_return_seragam', $request->id)
+                  ->groupBy('rsg_detailid')
+                  ->get();
+
+     return view('return-pembelian.print', compact('uang', 'barang', 'barangbaru'));
 
     }
 

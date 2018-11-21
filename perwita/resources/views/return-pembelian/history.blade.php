@@ -15,7 +15,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Return Pembelian</h2>
+        <h2>History Return</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
@@ -23,54 +23,62 @@
             <li>
                 Manajemen Seragam
             </li>
+            <li>
+                Return Pembelian
+            </li>
             <li class="active">
-                <strong>Return Pembelian</strong>
+                <strong>History Return</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Return Pembelian</h5>
-        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/return/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Pengajuan Return</a>
-        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaanreturn') }}"><i class="fa fa-download"></i>&nbsp;Penerimaan Return</a>
-        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{url('/manajemen-seragam/return/history')}}"><i class="fa fa-history"></i>&nbsp;History</a>
+        <h5>History Return</h5>
     </div>
     <div class="ibox">
         <div class="ibox-content">
             <div class="row m-b-lg">
+              <div class="col-md-12">
+                    <div class="form-group" style="display: ">
+                      <div class="input-daterange input-group col-md-8" style="margin-left:170px">
+                        <input class="form-control input-md" id="tanggal1" name="date" type="text" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control input-md" id="tanggal2" name="date" type="text" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn btn-primary" id="caritanggal"> <i class="fa fa-search"></i> Cari</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 <div class="col-md-12">
-                    <table id="tabelreturn" class="table table-bordered table-striped" >
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Supplier</th>
-                                <th>Nota Pembelian</th>
-                                <th>No Return</th>
-                                <th>Tanggal Return</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($data as $index => $x)
-                            <tr>
-                              <td>{{$index + 1}}</td>
-                              <td>{{$x->s_company}}</td>
-                              <td>{{$x->p_nota}}</td>
-                              <td>{{$x->rs_nota}}</td>
-                              <td>{{Carbon\Carbon::parse($x->rs_date)->format('d/m/Y h:i:s')}}</td>
-                              <td class="text-center">
-                                    <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail({{$x->rs_id}})"><i class="glyphicon glyphicon-folder-open"></i></button>
-                                    <button style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" onclick="edit({{$x->rs_id}})"><i class="glyphicon glyphicon-edit"></i></button>
-                                    <button style="margin-left:5px;" title="Hapus" type="button" class="btn btn-danger btn-xs" onclick="hapus({{$x->rs_id}})"><i class="glyphicon glyphicon-trash"></i></button>
-                              </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="input-group col-md-8" style="margin-left:170px">
+                        <center>
+                        <input type="text" placeholder="Cari berdasarkan nota return" id="inputcari" class="cari input col-md-8 form-control">
+                        </center>
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Cari</button>
+                        </span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="table-responsive">
+                      <table class="table table-hover" cellspacing="0" id="history">
+										  <thead class="bg-gradient-info">
+										    <tr>
+										      <th>No</th>
+										      <th>Tanggal</th>
+										      <th>Nota</th>
+										      <th>Action</th>
+										    </tr>
+										  </thead>
+										  <tbody class="center">
+
+										  </tbody>
+										</table>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -141,47 +149,104 @@
 
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-info" id="cetak" onclick="cetak()" name="button"> <i class="fa fa-print"></i> Print</button>
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
-    var table;
-    var tableuang;
-    var tablebarang;
-    var gantibarang;
-    $(document).ready(function() {
-      table = $("#tabelreturn").DataTable({
-        "processing": true,
-        "deferLoading": 57,
-        responsive: true,
-        "language": dataTableLanguage
-      });
-      gantibarang = $("#tableganti").DataTable({
-        "processing": true,
-        "deferLoading": 57,
-        responsive: true,
-        "language": dataTableLanguage
-      });
-      tableuang = $("#tableuang").DataTable({
-        "processing": true,
-        "deferLoading": 57,
-        responsive: true,
-        "language": dataTableLanguage
-      });
-      tablebarang = $("#tablebarang").DataTable({
-        "processing": true,
-        "deferLoading": 57,
-        responsive: true,
-        "language": dataTableLanguage
-      });
+  var table;
+  var date_param = '';
+  var div_param = '';
+  var historyurl = "{{ url('/manajemen-seragam/return/datatable_history') }}";
+  $(document).ready(function(){
+    $( "#inputcari" ).autocomplete({
+        source: baseUrl+'/manajemen-seragam/return/achistory',
+        minLength: 2,
+        select: function(event, data) {
+            getData(data.item.id);
+        }
     });
+
+
+});
+
+function getData(keyword){
+  if(keyword != '' && keyword != '') {
+      date_param = '&keyword=' + keyword;
+  }
+  var tmp_url = historyurl + '?' + div_param + date_param;
+  table.ajax.url(tmp_url).load();
+}
+
+// Datatable Absensi manajemen
+var valtgl_awal = $('#tanggal1');
+var valtgl_akhir = $('#tanggal2');
+var caritanggal = $('#caritanggal');
+
+
+table = $('#history').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: {
+              url: historyurl,
+          },
+  "columns": [
+          { "data": "number" },
+          { "data": "rs_date" },
+          { "data": "rs_nota" },
+					{ "data": "action" },
+          ]
+});
+
+
+// Pencarian berdasarkan tanggal
+caritanggal.click(function(){
+  var tgl_awal = valtgl_awal.val() != '' ? valtgl_awal.val() : '' ;
+  var tgl_akhir = valtgl_akhir.val() != '' ? valtgl_akhir.val() : '' ;
+
+  if(tgl_awal != '' && tgl_akhir != '') {
+      date_param = '&tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
+  }
+
+  var tmp_url = historyurl + '?' + div_param + date_param;
+  table.ajax.url(tmp_url).load();
+});
+
+
+// ======================================================
+
+  // ====select range date picker =====//
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    var options={
+      format: 'dd/mm/yyyy',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    };
+    date_input.datepicker(options);
+
+    var date = new Date();
+    var day = date.getDate();
+    var month1 = date.getMonth();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (month1 < 10) month1 = "0" + month1;
+    if (day < 10) day = "0" + day;
+
+    var bulanlalu = month1 + "/" + day + "/" + year;
+    var today = month + "/" + day + "/" + year;
+    $("#tanggal1").attr("value", bulanlalu);
+    $("#tanggal2").attr("value", today);
+  // ====select range date picker =====//
 
     function detail(id){
       var uang = '';
@@ -251,7 +316,7 @@
           } else {
             $('#divganti').hide();
           }
-
+            $('#cetak').attr('onclick', 'cetak('+id+')');
             $('.rp').digits();
             $('#myModal5').modal('show');
 
@@ -259,67 +324,8 @@
         });
     }
 
-    function hapus(id){
-      swal({
-              title: "Konfirmasi",
-              text: "Apakah anda yakin ingin menghapus Return Pembelian ini?",
-              type: "warning",
-              showCancelButton: true,
-              closeOnConfirm: false,
-              showLoaderOnConfirm: true,
-          },
-          function () {
-              swal.close();
-              waitingDialog.show();
-              setTimeout(function () {
-                  $.ajax({
-                    type: 'get',
-                    data: {id:id},
-                    url: baseUrl + '/manajemen-seragam/return/hapus',
-                    dataType: 'json',
-                      success: function (response) {
-                          waitingDialog.hide();
-                          if (response.status == 'berhasil') {
-                              swal({
-                                  title: "Return Pembelian Dihapus",
-                                  text: "Return Pembelian Berhasil Dihapus",
-                                  type: "success",
-                                  showConfirmButton: false,
-                                  timer: 900
-                              });
-                              setTimeout(function(){
-                                    window.location.reload();
-                            }, 850);
-                          }
-                      }, error: function (x, e) {
-                          waitingDialog.hide();
-                          var message;
-                          if (x.status == 0) {
-                              message = 'ups !! gagal menghubungi server, harap cek kembali koneksi internet anda';
-                          } else if (x.status == 404) {
-                              message = 'ups !! Halaman yang diminta tidak dapat ditampilkan.';
-                          } else if (x.status == 500) {
-                              message = 'ups !! Server sedang mengalami gangguan. harap coba lagi nanti';
-                          } else if (e == 'parsererror') {
-                              message = 'Error.\nParsing JSON Request failed.';
-                          } else if (e == 'timeout') {
-                              message = 'Request Time out. Harap coba lagi nanti';
-                          } else {
-                              message = 'Unknow Error.\n' + x.responseText;
-                          }
-                          waitingDialog.hide();
-                          throwLoadError(message);
-                          //formReset("store");
-                      }
-                  })
-              }, 2000);
-
-          });
+    function cetak(id){
+      window.open(baseUrl + '/manajemen-seragam/return/cetak?id='+id);
     }
-
-    function edit(id){
-      window.location.href = baseUrl + '/manajemen-seragam/return/edit?id='+id;
-    }
-
 </script>
 @endsection
