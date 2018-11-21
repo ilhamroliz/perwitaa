@@ -1034,4 +1034,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-payroll/payroll/potongan/simpan', 'potonganController@simpan');
     Route::get('manajemen-payroll/payroll/potongan/cari', 'potonganController@cari');
     Route::get('manajemen-payroll/payroll/potongan/getdata', 'potonganController@getdata');
+
+    //Approval Penerimaan Return
+    Route::get('approvalpenerimaanreturn', 'approvalpenerimaanreturnController@index');
+    Route::get('approvalpenerimaanreturn/setujui', 'approvalpenerimaanreturnController@setujui');
+    Route::get('approvalpenerimaanreturn/tolak', 'approvalpenerimaanreturnController@tolak');
+    Route::get('approvalpenerimaanreturn/tolaklist', 'approvalpenerimaanreturnController@tolaklist');
+    Route::get('approvalpenerimaanreturn/setujuilist', 'approvalpenerimaanreturnController@setujuilist');
 });
