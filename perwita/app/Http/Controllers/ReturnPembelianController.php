@@ -507,6 +507,7 @@ class ReturnPembelianController extends Controller
       if ($request->tgl_awal != null && $request->tgl_akhir != null) {
         $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
         $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
+        dd($start);
         DB::statement(DB::raw('set @rownum=0'));
         $list = DB::table('d_return_seragam')
                   ->where('rs_isapproved', 'Y')
