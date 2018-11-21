@@ -276,17 +276,25 @@ class PenerimaanController extends Controller
         $params = '';
         $x = 0;
         foreach ($items as $item) {
-            $purchase = $item->d_purchase->where('p_isapproved', 'Y')->get()->first();
-            if($purchase->count() > 0 ) {
-                $params .= $x > 0 ? ', ' : '';
+            $purchase = $item->d_purchase;
+            if($purchase != null ) {
+                $purchase = $purchase->where('p_isapproved', 'Y')->first();
+                if($purchase != null) {
 
-                $d_item = $item->d_item;
-                $d_item_dt = $item->d_item_dt;
-                $seragam = $d_item->i_nama . ' ' . $d_item->i_warna . ' size ' . $d_item_dt->d_size->s_nama;
-                $penerima = '';
-                $penerima = $item->d_stock_mutation->d_mem->m_name;
-                $params .= "{\"pa_purchase\" : \"{$item->pa_purchase}\", \"pa_date\" : \"{$item->pa_date}\", \"pa_qty\" : {$item->pa_qty}, \"pa_do\" : \"{$item->pa_do}\", \"seragam\" : \"$seragam\", \"penerima\" : \"$penerima\" }";
-                $x++;
+                    $params .= $x > 0 ? ', ' : '';
+
+                    $d_item = $item->d_item;
+                    $d_item_dt = $item->d_item_dt;
+                    $seragam = $d_item->i_nama . ' ' . $d_item->i_warna . ' size ' . $d_item_dt->d_size->s_nama;
+                    $penerima = '';
+                    if($item->d_stock_mutation != null) {
+                        if($item->d_stock_mutation->d_mem != null) {
+                            $penerima = $item->d_stock_mutation->d_mem->m_name;
+                        }
+                    }
+                    $params .= "{\"pa_purchase\" : \"{$item->pa_purchase}\", \"pa_date\" : \"{$item->pa_date}\", \"pa_qty\" : {$item->pa_qty}, \"pa_do\" : \"{$item->pa_do}\", \"seragam\" : \"$seragam\", \"penerima\" : \"$penerima\" }";
+                    $x++;
+                }
             }
 
         }
