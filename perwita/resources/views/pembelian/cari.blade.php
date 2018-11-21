@@ -153,6 +153,8 @@ $(document).ready(function(){
         source: baseUrl + '/manajemen-seragam/getnota',
         select: function(event, ui) {
             getdata(ui.item.id);
+            $('[name="startmou"]').val('');
+            $('[name="endmou"]').val('');
         }
     });
 
@@ -167,11 +169,11 @@ $(document).ready(function(){
 
     $('.startmou').datepicker({
         autoclose: true,
-        format: 'yyyy-mm-dd'
+        format: 'dd/mm/yyyy'
     });
     $('.endmou').datepicker({
         autoclose: true,
-        format: 'yyyy-mm-dd'
+        format: 'dd/mm/yyyy'
     });
 
   });
@@ -189,7 +191,8 @@ $(document).ready(function(){
      success : function(result){
        if (result.status == 'kosong') {
          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
-       } else {
+       } 
+       else {
          if (result.pd_receivetime == null) {
            status += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
          } else {
@@ -202,7 +205,7 @@ $(document).ready(function(){
            keterangan += '<td class="text-center"><span class="label label-success">Sudah disetujui</span></td>';
          }
 
-           html += '<tr>'+
+           html = '<tr>'+
                    '<td>'+(1)+'</td>'+
                    '<td>'+result.p_date+'</td>'+
                    '<td>'+result.s_company+'</td>'+
@@ -215,7 +218,6 @@ $(document).ready(function(){
                    '</td>'+
                    '</tr>';
        }
-
         $("#tbody").html(html);
         $("#total_net").digits();
         waitingDialog.hide();
@@ -224,6 +226,7 @@ $(document).ready(function(){
  }
 
   function filter(){
+    $('#pencarian').val('');
     waitingDialog.show();
     var moustart = $(".startmou").val();
     var mouend = $(".endmou").val();
@@ -237,6 +240,7 @@ $(document).ready(function(){
       url: baseUrl + '/manajemen-seragam/filter',
       dataType: 'json',
       success : function(result){
+        var html = '';
         if (result.status == 'kosong') {
           html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
         } else {
