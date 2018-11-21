@@ -263,6 +263,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('ambil-data-supplier/autocomplete','supplierController@ambilSupplier');
 
+    // Penerimaan pengeluaran barang
+
+    Route::get('manajemen-seragam/penerimaan-pengeluaran/','penerimaanPengeluaran@index');
+    // ================================================
+
     //red
 
     Route::get('manajemen-akun/auto-generate-akun','d_comp_coaController@generate_akun');

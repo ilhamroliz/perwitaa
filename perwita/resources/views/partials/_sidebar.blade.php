@@ -211,6 +211,18 @@ to {
                             <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pembelian</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-seragam/penerimaan') ? 'active' : ''
+                                || Request::is('manajemen-seragam/penerimaan/*') ? 'active' : '' }} sidebar master-akun">
+                        <a href="{{ url('manajemen-seragam/penerimaan') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pengeluaran Barang</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('manajemen-seragam/penerimaan-pengeluaran') ? 'active' : ''
+                                || Request::is('manajemen-seragam/penerimaan-pengeluaran/*') ? 'active' : '' }} sidebar master-akun">
+                        <a href="{{ url('manajemen-seragam/penerimaan-pengeluaran') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pengeluaran Barang</span>
+                        </a>
+                    </li>
                     <li class="{{ Request::is('manajemen-seragam/return') ? 'active' : ''
                                 || Request::is('manajemen-seragam/return/*') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/return') }}">
