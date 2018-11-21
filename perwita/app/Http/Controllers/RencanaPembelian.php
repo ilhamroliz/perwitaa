@@ -127,7 +127,7 @@ class RencanaPembelian extends Controller
                     'pp_nota' => $nota,
                     'pp_date' => Carbon::now('Asia/Jakarta'),
                     'pp_status' => 'Belum',
-                    'pp_isapproved' => 'P',
+                    'pp_isapproved' => 'Y',
                     'pp_mem' => Session::get('mem'),
                     'pp_insert' => Carbon::now('Asia/Jakarta')
                 ]);
@@ -260,6 +260,17 @@ class RencanaPembelian extends Controller
         DB::table('d_purchase_planning_dt')
             ->where('ppd_purchase_planning', '=', $id[0]->pp_id)
             ->delete();
+
+        $count = DB::table('d_purchase_planning')
+            ->where('pp_isapproved', 'P')
+            ->get();
+
+        DB::table('d_notifikasi')
+            ->where('n_fitur', 'Rencana Pembelian')
+            ->update([
+                'n_qty' => count($count),
+                'n_insert' => Carbon::now('Asia/Jakarta')
+            ]);
 
         return response()->json([
             'status' => 'berhasil'
