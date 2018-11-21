@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\d_purchase_dt;
 use App\d_stock;
 use App\d_stock_mutation;
+use App\d_purchase_approval;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
@@ -244,6 +245,54 @@ class PenerimaanController extends Controller
     public function history()
     {
         return view('penerimaan-pembelian.history');
+    }
+
+    public function findHistory(Request $req) {
+        $d_purchase_approval = new d_purchase_approval();
+        $tgl_awal = $req->tgl_awal;
+        $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
+        $tgl_akhir = $req->tgl_akhir;
+        $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+        $data = $d_purchase_approval->where('pa_isapproved', 'Y');
+
+        if($tgl_awal != '' && $tgl_akhir != '') {
+            $tgl_awal = date('Y-m-d', strtotime($tgl_awal));
+            $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
+
+            if($tgl_awal != $tgl_akhir) {
+                $items = $data->whereBetween('pa_date', array($tgl_awal, $tgl_akhir));
+            }
+            else {
+                $items = $data->where(DB::raw('DATE(pa_date)'), $tgl_awal);                
+            }
+        }
+        else {
+            $now = date('Y-m-d');        
+            $items = $data->where(DB::raw('DATE(pa_date)'), $now);                
+        }
+
+        $items = $items->orderBy('pa_date', 'DESC')->get();
+
+        $params = '';
+        $x = 0;
+        foreach ($items as $item) {
+            $purchase = $item->d_purchase->where('p_isapproved', 'Y')->get()->first();
+            if($purchase->count() > 0 ) {
+                $params .= $x > 0 ? ', ' : '';
+
+                $d_item = $item->d_item;
+                $d_item_dt = $item->d_item_dt;
+                $seragam = $d_item->i_nama . ' ' . $d_item->i_warna . ' size ' . $d_item_dt->d_size->s_nama;
+                $penerima = '';
+                $penerima = $item->d_stock_mutation->d_mem->m_name;
+                $params .= "{\"pa_purchase\" : \"{$item->pa_purchase}\", \"pa_date\" : \"{$item->pa_date}\", \"pa_qty\" : {$item->pa_qty}, \"pa_do\" : \"{$item->pa_do}\", \"seragam\" : \"$seragam\", \"penerima\" : \"$penerima\" }";
+                $x++;
+            }
+
+        }
+
+        $result = "{\"data\" : [$params]}";
+        return response($result, 200)->header('Content-Type', 'application/json');
     }
 
     public function cariHistory(Request $request)

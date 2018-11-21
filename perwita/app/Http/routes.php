@@ -626,7 +626,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //============== penerimaan ===============
     Route::get('manajemen-seragam/penerimaan','PenerimaanController@index');
+
     Route::get('manajemen-seragam/penerimaan/cari','PenerimaanController@history');
+    Route::get('manajemen-seragam/penerimaan/find-history','PenerimaanController@findHistory');
+
     Route::get('manajemen-seragam/penerimaan/cariHistory','PenerimaanController@cariHistory');
     Route::get('manajemen-seragam/penerimaan/detailHistory','PenerimaanController@detailHistory');
     Route::get('manajemen-pembelian/carinota','PenerimaanController@cari');

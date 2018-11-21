@@ -62,4 +62,6 @@ class d_mem extends Model implements AuthenticatableContract, CanResetPasswordCo
 
         return $data;
     }
+
+    
 }

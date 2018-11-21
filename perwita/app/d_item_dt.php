@@ -14,4 +14,11 @@ class d_item_dt extends Model
     const UPDATED_AT = 'id_updated';
 
     protected $fillable = ['id_item', 'id_detailid', 'id_size', 'id_price', 'id_inserted', 'id_updated'];
+
+    public function d_size() {
+    	$res = $this->belongsTo('App\d_size', 'id_size', 's_id');
+    	
+
+    	return $res;
+    }
 }
