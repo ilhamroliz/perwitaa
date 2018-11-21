@@ -49,17 +49,32 @@ class penerimaanreturnController extends Controller
                     ->max('rsa_id');
 
         if ($id == null) {
-          $id = 0;
+          $id = 1;
         } else {
           $id += 1;
         }
 
-        // DB::table('d_return_seragam_approval')
-        //       ->insert([
-        //         'rsa_return' => $request->id,
-        //         'rsa_id' => $id,
-        //         'rsa_qty' =>
-        //       ]);
+        DB::table('d_return_seragam_approval')
+              ->insert([
+                'rsa_return' => $request->id,
+                'rsa_detail_return' => $request->rsgreturn,
+                'rsa_return_ganti' => $request->dt,
+                'rsa_id' => $id,
+                'rsa_qty' => $request->sisa,
+                'rsa_nodo' => $request->nodo,
+                'rsa_isapproved' => 'P',
+                'rsa_insert' => Carbon::now('Asia/Jakarta')
+              ]);
+
+        $count = DB::table('d_return_seragam_approval')
+                      ->where('rsa_isapproved', 'P')
+                      ->count();
+
+        DB::table('d_notifikasi')
+              ->where('n_fitur', 'Penerimaan Return')
+              ->update([
+                'n_qty' => $count
+              ]);
 
         DB::commit();
         return response()->json([

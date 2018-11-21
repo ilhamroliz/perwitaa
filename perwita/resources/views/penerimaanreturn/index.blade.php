@@ -267,8 +267,7 @@
                         text: "Data sudah tersimpan",
                         type: "success"
                     }, function () {
-                      cari();
-                        //location.reload();
+                      window.location.reload();
                     });
             } else {
                 swal({
