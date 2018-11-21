@@ -250,6 +250,13 @@
               type: "error",
               showConfirmButton: true
           });
+        } else if (nodo == '' || nodo == undefined || nodo == null) {
+          swal({
+              title: "Gagal",
+              text: "No Do tidak boleh kosong!",
+              type: "error",
+              showConfirmButton: true
+          });
         } else {
           //waitingDialog.show();
           $.ajaxSetup({
