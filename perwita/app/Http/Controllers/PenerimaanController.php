@@ -247,60 +247,82 @@ class PenerimaanController extends Controller
         return view('penerimaan-pembelian.history');
     }
 
-    public function findHistory(Request $req) {
-        $d_purchase_approval = new d_purchase_approval();
-        $tgl_awal = $req->tgl_awal;
-        $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
-        $tgl_akhir = $req->tgl_akhir;
-        $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
-        $data = $d_purchase_approval->where('pa_isapproved', 'Y');
+    public function findHistory(Request $request) {
+      if ($request->nota == "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
+        $request->tgl_awal = str_replace('/','-',$request->tgl_awal);
+        $request->tgl_akhir = str_replace('/','-',$request->tgl_akhir);
 
-        if($tgl_awal != '' && $tgl_akhir != '') {
-            $tgl_awal = date('Y-m-d', strtotime($tgl_awal));
-            $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
 
-            if($tgl_awal != $tgl_akhir) {
-                $items = $data->whereBetween('pa_date', array($tgl_awal, $tgl_akhir));
-            }
-            else {
-                $items = $data->where(DB::raw('DATE(pa_date)'), $tgl_awal);
-            }
-        }
-        else {
-            $now = date('Y-m-d');
-            $items = $data->where(DB::raw('DATE(pa_date)'), $now);
-        }
+        $data = DB::table('d_purchase')
+                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_item', 'i_id', '=', 'pa_item')
+                      ->join('d_item_dt', function($e){
+                        $e->on('id_item', '=', 'i_id')
+                          ->on('id_detailid', '=', 'pa_item_dt');
+                      })
+                      ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                      ->join('d_size', 's_id', '=', 'id_size')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
+                      ->join('d_mem', 'm_id', '=', 'sm_petugas')
+                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
+                      ->where('pa_date', '>=', $start)
+                      ->where('pa_date', '<=', $end)
+                      ->where('p_isapproved', 'Y')
+                      ->where('pa_isapproved', 'Y')
+                      ->get();
 
-        $items = $items->orderBy('pa_date', 'DESC')->get();
+      } elseif ($request->nota != "" && $request->tgl_awal == "" && $request->tgl_akhir == "") {
+        $data = DB::table('d_purchase')
+                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_item', 'i_id', '=', 'pa_item')
+                      ->join('d_item_dt', function($e){
+                        $e->on('id_item', '=', 'i_id')
+                          ->on('id_detailid', '=', 'pa_item_dt');
+                      })
+                      ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                      ->join('d_size', 's_id', '=', 'id_size')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
+                      ->join('d_mem', 'm_id', '=', 'sm_petugas')
+                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
+                      ->where('p_nota', $request->nota)
+                      ->where('p_isapproved', 'Y')
+                      ->where('pa_isapproved', 'Y')
+                      ->get();
 
-        $params = '';
-        $x = 0;
-        foreach ($items as $item) {
-            $purchase = $item->d_purchase;
-            if($purchase != null ) {
-                $purchase = $purchase->where('p_isapproved', 'Y')->first();
-                if($purchase != null) {
+      } elseif ($request->nota != "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
+        $request->tgl_awal = str_replace('/','-',$request->tgl_awal);
+        $request->tgl_akhir = str_replace('/','-',$request->tgl_akhir);
 
-                    $params .= $x > 0 ? ', ' : '';
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
 
-                    $d_item = $item->d_item;
-                    $d_item_dt = $item->d_item_dt;
-                    $seragam = $d_item->i_nama . ' ' . $d_item->i_warna . ' size ' . $d_item_dt->d_size->s_nama;
-                    $penerima = '';
-                    if($item->d_stock_mutation != null) {
-                        if($item->d_stock_mutation->d_mem != null) {
-                            $penerima = $item->d_stock_mutation->d_mem->m_name;
-                        }
-                    }
-                    $params .= "{\"pa_purchase\" : \"{$item->pa_purchase}\", \"pa_date\" : \"{$item->pa_date}\", \"pa_qty\" : {$item->pa_qty}, \"pa_do\" : \"{$item->pa_do}\", \"seragam\" : \"$seragam\", \"penerima\" : \"$penerima\" }";
-                    $x++;
-                }
-            }
+        $data = DB::table('d_purchase')
+                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_item', 'i_id', '=', 'pa_item')
+                      ->join('d_item_dt', function($e){
+                        $e->on('id_item', '=', 'i_id')
+                          ->on('id_detailid', '=', 'pa_item_dt');
+                      })
+                      ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                      ->join('d_size', 's_id', '=', 'id_size')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
+                      ->join('d_mem', 'm_id', '=', 'sm_petugas')
+                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
+                      ->where('p_nota', $request->nota)
+                      ->where('pa_date', '>=', $start)
+                      ->where('pa_date', '<=', $end)
+                      ->where('p_isapproved', 'Y')
+                      ->where('pa_isapproved', 'Y')
+                      ->get();
+      }
 
-        }
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->pa_date = Carbon::parse($data[$i]->pa_date)->format('d/m/Y h:i:s');
+      }
 
-        $result = "{\"data\" : [$params]}";
-        return response($result, 200)->header('Content-Type', 'application/json');
+      return Response::json($data);
     }
 
     public function cariHistory(Request $request)

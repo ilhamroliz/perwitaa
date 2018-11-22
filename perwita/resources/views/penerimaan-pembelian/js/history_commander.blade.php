@@ -1,18 +1,18 @@
-<script>
+{{-- <script>
 	$(document).ready(function(){
-		
+
     // Datatable Absensi manajemen
-    var hist_search = $('#hist_search'); 
-    var hist_refresh = $('#hist_refresh'); 
-    var hist_tgl_awal = $('#tgl_awal'); 
-    var hist_tgl_akhir = $('#tgl_akhir'); 
+    var hist_search = $('#hist_search');
+    var hist_refresh = $('#hist_refresh');
+    var hist_tgl_awal = $('#tgl_awal');
+    var hist_tgl_akhir = $('#tgl_akhir');
     var hist_url = "{{ url('/manajemen-seragam/penerimaan/find-history') }}";
 
     var tbl_hist = $('#tbl_history').DataTable( {
         ajax: hist_url,
         columns: [
-            
-            { 
+
+            {
                 data: null,
                 render : function(res) {
                     var new_date = new Date(res.pa_date);
@@ -22,17 +22,17 @@
 
                     var result = date + '-' + month + '-' + year;
                     return result;
-                } 
+                }
             },
             { data: "seragam" },
             { data: "pa_qty" },
             { data: "pa_do" },
             { data: "penerima" }
-            
+
         ]
     } );
 
-   
+
 
     hist_refresh.click(function(){
         // Merefresh tabel manajemen
@@ -70,4 +70,4 @@
 			format : 'dd-mm-yyyy'
 		});
 	});
-</script>
+</script> --}}

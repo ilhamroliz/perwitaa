@@ -211,9 +211,9 @@ to {
                             <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pembelian</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-seragam/penerimaan') ? 'active' : ''
-                                || Request::is('manajemen-seragam/penerimaan/*') ? 'active' : '' }} sidebar master-akun">
-                        <a href="{{ url('manajemen-seragam/penerimaan') }}">
+                    <li class="{{ Request::is('manajemen-seragam/penerimaanpengeluaranseragam') ? 'active' : ''
+                                || Request::is('manajemen-seragam/penerimaanpengeluaranseragam/*') ? 'active' : '' }} sidebar master-akun">
+                        <a href="{{ url('manajemen-seragam/penerimaanpengeluaranseragam') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pengeluaran Barang</span>
                         </a>
                     </li>
