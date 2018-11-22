@@ -35,31 +35,26 @@
          <div class="row form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
                <label class="col-lg-12 col-form-label alamraya-no-padding">Tanggal</label>
-               <div class="col-lg-12 col-md-12 col-sm-12">
-                  <div class="row col-12" style="display:flex;align-items: center">
-                    <div class="col-3">
-                      <div class="input-daterange input-group " id="date-range" style="">
-                          <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
-                          <span class="input-group-addon bg-custom text-white b-0">to</span>
-                          <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
-                      </div>
+               <div class="form-group col-md-12">
+                  <div class="col-md-4">
+                    <div class="input-daterange input-group " id="date-range" style="">
+                        <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
+                        <span class="input-group-addon bg-custom text-white b-0">to</span>
+                        <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
                     </div>
-                    <div class="col-9" style="margin-left:50px;">
-                      <input type="text" id="search" class="form-control" name="search" placeholder="Cari berdasarkan supplier / Nota">
-                      <input type="hidden" name="searchhidden" id="searchhidden">
-                    </div>
-                     <div class="col-2" style="margin-left:50px;">
-                        <span class="input-group-append">
-                        <button type="button" class="btn btn-primary btn-sm icon-btn ml-2" id="hist_search">
-                        <i class="fa fa-search"></i>
-                        </button>
-                        <button type="button" class="btn btn-info btn-sm icon-btn ml-2"  id='hist_refresh'>
-                        <i class="fa fa-refresh"></i>
-                        </button>
-                        </span>
-                     </div>
                   </div>
-               </div>
+                  <div class="col-md-6">
+                    <input type="text" id="search" class="form-control" name="search" placeholder="Cari berdasarkan supplier / Nota">
+                    <input type="hidden" name="searchhidden" id="searchhidden">
+                  </div>
+                   <div class="col-md-2">
+                      <span class="input-group-append">
+                      <button type="button" class="btn btn-primary btn-sm icon-btn ml-2" id="hist_search">
+                      <i class="fa fa-search"></i>
+                      </button>
+                      </span>
+                   </div>
+                </div>
             </div>
          </div>
          <div class="row m-b-lg">
