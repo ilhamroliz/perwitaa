@@ -38,9 +38,9 @@
                <div class="form-group col-md-12">
                   <div class="col-md-4">
                     <div class="input-daterange input-group " id="date-range" style="">
-                        <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
+                        <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" value="">
                         <span class="input-group-addon bg-custom text-white b-0">to</span>
-                        <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" value="{{Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y')}}">
+                        <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" value="">
                     </div>
                   </div>
                   <div class="col-md-6">
