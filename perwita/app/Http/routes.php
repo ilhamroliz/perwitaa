@@ -1041,4 +1041,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpenerimaanreturn/tolak', 'approvalpenerimaanreturnController@tolak');
     Route::get('approvalpenerimaanreturn/tolaklist', 'approvalpenerimaanreturnController@tolaklist');
     Route::get('approvalpenerimaanreturn/setujuilist', 'approvalpenerimaanreturnController@setujuilist');
+
+    //Penerimaan Pengeluaran seragam
+    Route::get('manajemen-seragam/penerimaanpengeluaranseragam', 'penerimaanpengeluaranseragamController@index');
+    Route::get('manajemen-seragam/penerimaanpengeluaranseragam/cari', 'penerimaanpengeluaranseragamController@cari');
+    Route::get('manajemen-seragam/penerimaanpengeluaranseragam/simpan', 'penerimaanpengeluaranseragamController@simpan');
 });
