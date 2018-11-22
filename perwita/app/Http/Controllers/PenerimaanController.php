@@ -256,7 +256,8 @@ class PenerimaanController extends Controller
         $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
 
         $data = DB::table('d_purchase')
-                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_item', 'i_id', '=', 'pa_item')
                       ->join('d_item_dt', function($e){
                         $e->on('id_item', '=', 'i_id')
@@ -264,18 +265,18 @@ class PenerimaanController extends Controller
                       })
                       ->join('d_kategori', 'k_id', '=', 'i_kategori')
                       ->join('d_size', 's_id', '=', 'id_size')
-                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_mem', 'm_id', '=', 'sm_petugas')
-                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
-                      ->where('pa_date', '>=', $start)
-                      ->where('pa_date', '<=', $end)
+                      ->select('m_name', 'k_nama', 's_nama', 'i_nama', 'sm_delivery_order', 'sm_date', 'sm_qty')
+                      ->where('sm_date', '>=', $start)
+                      ->where('sm_date', '<=', $end)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
                       ->get();
 
       } elseif ($request->nota != "" && $request->tgl_awal == "" && $request->tgl_akhir == "") {
         $data = DB::table('d_purchase')
-                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_item', 'i_id', '=', 'pa_item')
                       ->join('d_item_dt', function($e){
                         $e->on('id_item', '=', 'i_id')
@@ -283,9 +284,8 @@ class PenerimaanController extends Controller
                       })
                       ->join('d_kategori', 'k_id', '=', 'i_kategori')
                       ->join('d_size', 's_id', '=', 'id_size')
-                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_mem', 'm_id', '=', 'sm_petugas')
-                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
+                      ->select('m_name', 'k_nama', 's_nama', 'i_nama', 'sm_delivery_order', 'sm_date', 'sm_qty')
                       ->where('p_nota', $request->nota)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
@@ -299,7 +299,8 @@ class PenerimaanController extends Controller
         $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
 
         $data = DB::table('d_purchase')
-                      ->leftjoin('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->join('d_purchase_approval', 'pa_purchase', '=', 'p_id')
+                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_item', 'i_id', '=', 'pa_item')
                       ->join('d_item_dt', function($e){
                         $e->on('id_item', '=', 'i_id')
@@ -307,19 +308,18 @@ class PenerimaanController extends Controller
                       })
                       ->join('d_kategori', 'k_id', '=', 'i_kategori')
                       ->join('d_size', 's_id', '=', 'id_size')
-                      ->leftjoin('d_stock_mutation', 'sm_delivery_order', '=', 'pa_do')
                       ->join('d_mem', 'm_id', '=', 'sm_petugas')
-                      ->select('m_username', 'k_nama', 's_nama', 'i_nama', 'pa_do', 'pa_date', 'pa_qty')
+                      ->select('m_name', 'k_nama', 's_nama', 'i_nama', 'sm_delivery_order', 'sm_date', 'sm_qty')
                       ->where('p_nota', $request->nota)
-                      ->where('pa_date', '>=', $start)
-                      ->where('pa_date', '<=', $end)
+                      ->where('sm_date', '>=', $start)
+                      ->where('sm_date', '<=', $end)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
                       ->get();
       }
 
       for ($i=0; $i < count($data); $i++) {
-        $data[$i]->pa_date = Carbon::parse($data[$i]->pa_date)->format('d/m/Y h:i:s');
+        $data[$i]->sm_date = Carbon::parse($data[$i]->sm_date)->format('d/m/Y h:i:s');
       }
 
       return Response::json($data);

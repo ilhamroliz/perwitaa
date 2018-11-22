@@ -69,7 +69,6 @@
                            <td>Seragam</td>
                            <td>Qty</td>
                            <td>No DO</td>
-                           <td>Penerima</td>
                         </tr>
                      </thead>
                   </table>
@@ -127,11 +126,11 @@
          table.clear();
          for (var i = 0; i < response.length; i++) {
            table.row.add([
-               response[i].pa_date,
+               response[i].sm_date,
                seragam(response[i].k_nama, response[i].s_nama, response[i].i_nama),
-               response[i].pa_qty,
-               response[i].pa_do,
-               response[i].m_username,
+               response[i].sm_qty,
+               response[i].sm_delivery_order,
+               response[i].m_name
            ]).draw( false );
          }
        }
