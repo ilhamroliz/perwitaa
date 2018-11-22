@@ -319,7 +319,7 @@ class PenerimaanController extends Controller
       }
 
       for ($i=0; $i < count($data); $i++) {
-        $data[$i]->sm_date = Carbon::parse($data[$i]->sm_date)->format('d/m/Y h:i:s');
+        $data[$i]->sm_date = Carbon::parse($data[$i]->sm_date)->format('d/m/Y G:i:s');
       }
 
       return Response::json($data);
