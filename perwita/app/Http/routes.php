@@ -597,7 +597,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/gunakan-rencana-pembelian','PembelianController@createKhusus');
     Route::get('manajemen-seragam/getnotarencana','PembelianController@getNotaRencana');
     Route::get('manajemen-seragam/getnotarencana/detail','PembelianController@detailRencana');
-    Route::get('manajemen-seragam/cari','PembelianController@cari');
+    Route::get('manajemen-seragam/pembelian/cari','PembelianController@cari');
     Route::get('manajemen-seragam/getnota','PembelianController@getnota');
     Route::get('manajemen-seragam/getdata','PembelianController@getdata');
     Route::get('manajemen-seragam/filter','PembelianController@filter');
@@ -705,9 +705,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/cetak', 'ReturnPembelianController@cetak');
 
     //Penerimaan RETURN
-    Route::get('manajemen-seragam/penerimaanreturn', 'penerimaanreturnController@index');
-    Route::get('manajemen-seragam/penerimaanreturn/getnota', 'penerimaanreturnController@getnota');
-    Route::get('manajemen-seragam/penerimaanreturn/simpan', 'penerimaanreturnController@simpan');
+    Route::get('manajemen-seragam/return/penerimaanreturn', 'penerimaanreturnController@index');
+    Route::get('manajemen-seragam/return/penerimaanreturn/getnota', 'penerimaanreturnController@getnota');
+    Route::get('manajemen-seragam/return/penerimaanreturn/simpan', 'penerimaanreturnController@simpan');
 
     //============ Stock Opname
     Route::get('manajemen-stock/stock-opname', 'StockOpnameController@index');

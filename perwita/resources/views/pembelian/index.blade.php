@@ -34,7 +34,7 @@
         <h5>Pembelian</h5>
         <a style="float: right; margin-top: -7px; " class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/gunakan-rencana-pembelian') }}"><i class="fa fa-plus"></i>&nbsp;Gunakan Rencana Pembelian</a>
         <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-outline btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
-        <a href="{{ url('manajemen-seragam/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
+        <a href="{{ url('manajemen-seragam/pembelian/cari') }}" style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button"><i class="fa fa-search"></i>&nbsp;Cari</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

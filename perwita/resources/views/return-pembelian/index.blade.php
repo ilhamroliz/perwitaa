@@ -33,7 +33,7 @@
     <div class="ibox-title ibox-info">
         <h5>Return Pembelian</h5>
         <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-primary btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/return/tambah') }}"><i class="fa fa-plus"></i>&nbsp;Pengajuan Return</a>
-        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/penerimaanreturn') }}"><i class="fa fa-download"></i>&nbsp;Penerimaan Return</a>
+        <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/return/penerimaanreturn') }}"><i class="fa fa-download"></i>&nbsp;Penerimaan Return</a>
         <a style="float: right; margin-top: -7px; margin-right: 10px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{url('/manajemen-seragam/return/history')}}"><i class="fa fa-history"></i>&nbsp;History</a>
     </div>
     <div class="ibox">

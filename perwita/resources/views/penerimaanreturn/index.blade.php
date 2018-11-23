@@ -151,7 +151,7 @@
         }
         waitingDialog.show();
         $.ajax({
-          url: baseUrl + '/manajemen-seragam/penerimaanreturn/getnota',
+          url: baseUrl + '/manajemen-seragam/return/penerimaanreturn/getnota',
           type: 'get',
           data: {nota: nota},
           success: function(response){
@@ -255,7 +255,7 @@
             }
         });
         $.ajax({
-          url: baseUrl + '/manajemen-seragam/penerimaanreturn/simpan',
+          url: baseUrl + '/manajemen-seragam/return/penerimaanreturn/simpan',
           type: 'get',
           data: {sisa: sisa, id: id, dt: dt, nodo: nodo, item:item, itemdt:itemdt, rsgreturn:rsgreturn},
           success: function(response){
