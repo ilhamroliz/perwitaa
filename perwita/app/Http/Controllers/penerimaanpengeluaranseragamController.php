@@ -50,6 +50,7 @@ class penerimaanpengeluaranseragamController extends Controller
                       ->where('sr_sales', $data[$i]->s_id)
                       ->where('sr_item', $data[$i]->sd_item)
                       ->where('sr_item_dt', $data[$i]->sd_item_dt)
+                      ->where('sr_isapproved', 'Y')
                       ->get();
       }
 
