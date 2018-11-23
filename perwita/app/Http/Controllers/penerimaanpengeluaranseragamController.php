@@ -98,6 +98,16 @@ class penerimaanpengeluaranseragamController extends Controller
               'sr_penerima' => Session::get('mem')
             ]);
 
+        $count = DB::table('d_sales_received')
+                    ->where('sr_isapproved', 'P')
+                    ->count();
+
+        DB::table('d_notifikasi')
+              ->where('n_fitur', 'Penerimaan Pengeluaran Seragam')
+              ->update([
+                'n_qty' => $count
+              ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'

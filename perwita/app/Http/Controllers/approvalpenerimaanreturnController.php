@@ -28,6 +28,17 @@ class approvalpenerimaanreturnController extends Controller
                   ->where('rsa_isapproved', 'P')
                   ->get();
 
+
+      $count = DB::table('d_return_seragam_approval')
+                    ->where('rsa_isapproved', 'P')
+                    ->count();
+
+            DB::table('d_notifikasi')
+                  ->where('n_fitur', 'Penerimaan Return')
+                  ->update([
+                    'n_qty' => $count
+                  ]);
+
       return view('approvalpenerimaanreturn.index', compact('data'));
     }
 
@@ -121,6 +132,16 @@ class approvalpenerimaanreturnController extends Controller
               ]);
         }
 
+        $count = DB::table('d_return_seragam_approval')
+                      ->where('rsa_isapproved', 'P')
+                      ->count();
+
+              DB::table('d_notifikasi')
+                    ->where('n_fitur', 'Penerimaan Return')
+                    ->update([
+                      'n_qty' => $count
+                    ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -142,6 +163,16 @@ class approvalpenerimaanreturnController extends Controller
                 ->update([
                   'rsa_isapproved' => 'N'
                 ]);
+
+                $count = DB::table('d_return_seragam_approval')
+                              ->where('rsa_isapproved', 'P')
+                              ->count();
+
+                      DB::table('d_notifikasi')
+                            ->where('n_fitur', 'Penerimaan Return')
+                            ->update([
+                              'n_qty' => $count
+                            ]);
 
         DB::commit();
         return response()->json([
@@ -249,6 +280,16 @@ class approvalpenerimaanreturnController extends Controller
           }
         }
 
+        $count = DB::table('d_return_seragam_approval')
+                      ->where('rsa_isapproved', 'P')
+                      ->count();
+
+              DB::table('d_notifikasi')
+                    ->where('n_fitur', 'Penerimaan Return')
+                    ->update([
+                      'n_qty' => $count
+                    ]);
+
         DB::commit();
         return response()->json([
           'status' => 'berhasil'
@@ -270,6 +311,16 @@ class approvalpenerimaanreturnController extends Controller
             ->update([
               'rsa_isapproved' => 'N'
             ]);
+
+            $count = DB::table('d_return_seragam_approval')
+                          ->where('rsa_isapproved', 'P')
+                          ->count();
+
+                  DB::table('d_notifikasi')
+                        ->where('n_fitur', 'Penerimaan Return')
+                        ->update([
+                          'n_qty' => $count
+                        ]);
 
         DB::commit();
         return response()->json([

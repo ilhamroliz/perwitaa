@@ -1046,4 +1046,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/penerimaanpengeluaranseragam', 'penerimaanpengeluaranseragamController@index');
     Route::get('manajemen-seragam/penerimaanpengeluaranseragam/cari', 'penerimaanpengeluaranseragamController@cari');
     Route::get('manajemen-seragam/penerimaanpengeluaranseragam/simpan', 'penerimaanpengeluaranseragamController@simpan');
+
+    //Approval penerimaan pengeluaran seragam
+    Route::get('approvalpenerimaanpengeluaranseragam', 'approvalpenerimaanpengeluaranseragamController@index');
+    Route::get('approvalpenerimaanpengeluaranseragam/setujui', 'approvalpenerimaanpengeluaranseragamController@setujui');
+    Route::get('approvalpenerimaanpengeluaranseragam/tolak', 'approvalpenerimaanpengeluaranseragamController@tolak');
+    Route::get('approvalpenerimaanpengeluaranseragam/setujuilist', 'approvalpenerimaanpengeluaranseragamController@setujuilist');
+    Route::get('approvalpenerimaanpengeluaranseragam/tolaklist', 'approvalpenerimaanpengeluaranseragamController@tolaklist');
 });

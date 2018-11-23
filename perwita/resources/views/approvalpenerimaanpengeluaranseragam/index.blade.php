@@ -15,20 +15,20 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Approval Penerimaan Return</h2>
+        <h2>Approval Penerimaan Pengeluaran Seragam</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url('/') }}">Home</a>
             </li>
             <li class="active">
-                <strong>Daftar Penerimaan Return</strong>
+                <strong>Daftar Penerimaan Pengeluaran Seragam</strong>
             </li>
         </ol>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
-        <h5>Daftar Penerimaan Return</h5>
+        <h5>Daftar Penerimaan Pengeluaran Seragam</h5>
       </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -55,10 +55,10 @@
                           <th>
                               <input type="checkbox" class="setCek" onclick="selectall()">
                           </th>
-                          <th>Nota Return</th>
                           <th>Nama Item</th>
                           <th>QTY</th>
-                          <th>No Do</th>
+                          <th>Tanggal</th>
+                          <th>Penerima</th>
                           <th style="width:140px;">Aksi</th>
                         </tr>
                     </thead>
@@ -66,16 +66,16 @@
                       @foreach($data as $index => $x)
                       <tr class="select-{{$index}}" onclick="select({{$index}})" style="cursor: pointer;">
                           <td>
-                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->rsa_id}}">
+                              <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->sr_detailid}}">
                           </td>
-                        <td>{{$x->rs_nota}}</td>
                         <td> <strong>{{$x->k_nama}}</strong> </br> {{$x->i_nama}} {{$x->s_nama}} </td>
-                        <td>{{$x->rsa_qty}}</td>
-                        <td>{{$x->rsa_nodo}}</td>
+                        <td>{{$x->sr_qty}}</td>
+                        <td>{{Carbon\Carbon::parse($x->sr_date)->format('d/m/Y G:i:s')}}</td>
+                        <td>{{$x->m_name}}</td>
                         <td align="center">
                           <div class="action">
-                            <button type="button" title="Setujui" onclick="setujui({{$x->rsa_id}})" class="btn btn-primary btn-xs" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
-                            <button type="button" title="Tolak" onclick="tolak({{$x->rsa_id}})"  class="btn btn-danger btn-xs" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button type="button" title="Setujui" onclick="setujui({{$x->sr_detailid}})" class="btn btn-primary btn-xs" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>
+                            <button type="button" title="Tolak" onclick="tolak({{$x->sr_detailid}})"  class="btn btn-danger btn-xs" name="button"> <i class="glyphicon glyphicon-remove"></i> </button>
                           </div>
                       </td>
                       </tr>
@@ -141,7 +141,7 @@ setTimeout(function(){
                $.ajax({
                  type: 'get',
                  data: {id:id},
-                 url: baseUrl + '/approvalpenerimaanreturn/setujui',
+                 url: baseUrl + '/approvalpenerimaanpengeluaranseragam/setujui',
                  dataType: 'json',
                    success: function (response) {
                        waitingDialog.hide();
@@ -206,7 +206,7 @@ setTimeout(function(){
                   $.ajax({
                     type: 'get',
                     data: {id:id},
-                    url: baseUrl + '/approvalpenerimaanreturn/tolak',
+                    url: baseUrl + '/approvalpenerimaanpengeluaranseragam/tolak',
                     dataType: 'json',
                       success: function (response) {
                           waitingDialog.hide();
@@ -307,7 +307,7 @@ setTimeout(function(){
       $.ajax({
         type: 'get',
         data: $('#formapprovalpermintaan').serialize(),
-        url: baseUrl + '/approvalpenerimaanreturn/setujuilist',
+        url: baseUrl + '/approvalpenerimaanpengeluaranseragam/setujuilist',
         dataType: 'json',
         success : function(result){
           waitingDialog.hide();
@@ -360,7 +360,7 @@ setTimeout(function(){
       $.ajax({
         type: 'get',
         data: $('#formapprovalpermintaan').serialize(),
-        url: baseUrl + '/approvalpenerimaanreturn/tolaklist',
+        url: baseUrl + '/approvalpenerimaanpengeluaranseragam/tolaklist',
         dataType: 'json',
         success : function(result){
           waitingDialog.hide();

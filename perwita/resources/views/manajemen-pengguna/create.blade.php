@@ -410,5 +410,13 @@
       }
     });
 
+  function tambahPerusahaan(){
+    window.location.href = baseUrl + '/master-perusahaan';
+  }
+
+  function tambahJabatan(){
+    window.location.href = baseUrl + '/master-jabatan';
+  }
+
 </script>
 @endsection
