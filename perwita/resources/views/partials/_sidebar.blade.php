@@ -197,9 +197,9 @@ to {
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-seragam/pembelian/*') ? 'active' : ''
-                                || Request::is('manajemen-seragam/gunakan-rencana-pembelian/*') ? 'active' : ''
-                                || Request::is('manajemen-seragam/edit/*') ? 'active' : ''
-                                || Request::is('manajemen-seragam/tambah/*') ? 'active' : ''
+                                || Request::is('manajemen-seragam/pembelian') ? 'active' : ''
+                                || Request::is('manajemen-seragam/tambah') ? 'active' : ''
+                                || Request::is('manajemen-seragam/gunakan-rencana-pembelian') ? 'active' : ''
                                 }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/pembelian') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pembelian Seragam</span>

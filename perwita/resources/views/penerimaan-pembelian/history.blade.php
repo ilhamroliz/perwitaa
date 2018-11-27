@@ -69,6 +69,8 @@
                            <td>Seragam</td>
                            <td>Qty</td>
                            <td>No DO</td>
+                           <td>Penerima</td>
+                           <td>Supplier</td>
                         </tr>
                      </thead>
                   </table>
@@ -130,7 +132,8 @@
                seragam(response[i].k_nama, response[i].s_nama, response[i].i_nama),
                response[i].sm_qty,
                response[i].sm_delivery_order,
-               response[i].m_name
+               response[i].m_name,
+               response[i].s_company
            ]).draw( false );
          }
        }

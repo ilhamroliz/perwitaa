@@ -106,7 +106,8 @@ class penerimaanpengeluaranseragamController extends Controller
         DB::table('d_notifikasi')
               ->where('n_fitur', 'Penerimaan Pengeluaran Seragam')
               ->update([
-                'n_qty' => $count
+                'n_qty' => $count,
+                'n_insert' => Carbon::now('Asia/Jakarta')
               ]);
 
         DB::commit();
