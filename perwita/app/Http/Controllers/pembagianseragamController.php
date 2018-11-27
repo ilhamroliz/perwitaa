@@ -336,7 +336,7 @@ class pembagianseragamController extends Controller
 
       return Datatables::of($list)
           ->editColumn('status', function ($list) {
-              return '<div class="text-center"><span class="label label-warning ">Belum Lengkap</span></div>';
+              return '<div class="text-center"><span class="badge badge-warning ">Belum Lengkap</span></div>';
           })
           ->make(true);
     }
