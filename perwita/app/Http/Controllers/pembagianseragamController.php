@@ -335,7 +335,7 @@ class pembagianseragamController extends Controller
       $list = collect($data);
 
       return Datatables::of($list)
-          ->editColumn('status', function ($pekerja) {
+          ->editColumn('status', function ($list) {
               return '<div class="text-center"><span class="label label-warning ">Belum Lengkap</span></div>';
           })
           ->make(true);
