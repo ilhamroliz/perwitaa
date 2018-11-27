@@ -54,6 +54,7 @@
                         <th>Seragam</th>
                         <th>Mitra</th>
                         <th>Jumlah</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -65,9 +66,14 @@
                         <td>{{ $data->i_nama }}</td>
                         <td>{{ $data->m_name }}</td>
                         <td>{{ $data->jumlah }} PCS</td>
+                        <td align="center"> @if ($data->tagihan == 0)
+                          <span class="badge badge-info"> Lunas </span>
+                        @else
+                          <span class="badge badge-warning"> Belum Lunas </span>
+                        @endif </td>
                         <td>
                           <div class="text-center">
-                            <button onclick="goBayar('{{ $data->s_nota }}')" style="margin-left:5px;" title="Bayar" type="button" class="btn btn-info btn-xs" ><i class="fa fa-credit-card-alt"></i> Bayar</button>
+                            <button onclick="goBayar('{{ $data->s_nota }}')" style="margin-left:5px;" title="Bayar" type="button" class="btn btn-info btn-xs"><i class="fa fa-credit-card-alt"></i> Bayar</button>
                           </div>
                         </td>
                       </tr>

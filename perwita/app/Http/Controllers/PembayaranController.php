@@ -17,8 +17,7 @@ class PembayaranController extends Controller
             ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'))
-            ->where('sp_status', '=', 'Belum')
+            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
             ->groupBy('s_id')
             ->get();
 
@@ -34,8 +33,11 @@ class PembayaranController extends Controller
             ->get();
         $pekerja = DB::table('d_seragam_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'sp_pekerja')
-            ->join('d_size', 's_id', '=', 'sp_item_size')
-            ->select('p_name', 'p_hp', 'p_id', 's_nama', DB::raw('round(sp_value - sp_pay_value) as tagihan'), 'sp_value', 'sp_pay_value', 'sp_sales')
+            ->join('d_item', 'i_id', '=', 'sp_item')
+            ->join('d_item_dt', 'id_detailid', '=', 'sp_item_dt')
+            ->join('d_kategori', 'k_id', '=', 'i_kategori')
+            ->join('d_size', 's_id', '=', 'id_size')
+            ->select('p_name', 'p_hp', 'p_id', 's_nama', 'i_nama', 'k_nama', 'i_warna', DB::raw('round(sp_value - sp_pay_value) as tagihan'), 'sp_value', 'sp_pay_value', 'sp_sales')
             ->where('sp_sales', '=', $idSales[0]->s_id)
             ->get();
 

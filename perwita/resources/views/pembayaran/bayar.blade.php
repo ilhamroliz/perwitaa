@@ -53,8 +53,8 @@
                   <table class="table table-responsive table-striped table-bordered table-hover" id="tabel-pembayaran">
                     <thead>
                       <tr>
-                        <th style="width: 30%;">Nama</th>
-                        <th style="width: 5%;">Ukuran</th>
+                        <th style="width: 20%;">Nama</th>
+                        <th style="width: 15%;">Seragam</th>
                         <th style="width: 15%;">Tagihan</th>
                         <th style="width: 15%;">Dibayarkan</th>
                         <th style="width: 15%;">Sisa</th>
@@ -66,7 +66,7 @@
                       @foreach($pekerja as $index=>$data)
                       <tr>
                         <td>{{ $data->p_name }} ({{ $data->p_hp }})</td>
-                        <td>{{ $data->s_nama }}</td>
+                        <td><strong>{{$data->k_nama}}</strong> <br> {{$data->i_nama}} {{$data->i_warna}} {{ $data->s_nama }}</td>
                         <td><span style="float: left">Rp. </span><span style="float:right" class="hargaitem">{{ number_format($data->sp_value, 0, ',', '.') }}</span></td>
                         <td><span style="float: left">Rp. </span><span style="float:right" class="hargaitem">{{ number_format($data->sp_pay_value, 0, ',', '.') }}</span></td>
                         <td><span style="float: left">Rp. </span><span style="float:right" class="hargaitem">{{ number_format($data->tagihan, 0, ',', '.') }}</span></td>
