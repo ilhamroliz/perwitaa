@@ -160,9 +160,7 @@ class approvalpenerimaanreturnController extends Controller
 
         DB::table('d_return_seragam_approval')
                 ->where('rsa_id', $request->id)
-                ->update([
-                  'rsa_isapproved' => 'N'
-                ]);
+                ->delete();
 
                 $count = DB::table('d_return_seragam_approval')
                               ->where('rsa_isapproved', 'P')
@@ -308,9 +306,7 @@ class approvalpenerimaanreturnController extends Controller
 
         DB::table('d_return_seragam_approval')
             ->whereIn('rsa_id', $request->pilih)
-            ->update([
-              'rsa_isapproved' => 'N'
-            ]);
+            ->delete();
 
             $count = DB::table('d_return_seragam_approval')
                           ->where('rsa_isapproved', 'P')

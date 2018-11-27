@@ -1053,4 +1053,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('approvalpenerimaanpengeluaranseragam/tolak', 'approvalpenerimaanpengeluaranseragamController@tolak');
     Route::get('approvalpenerimaanpengeluaranseragam/setujuilist', 'approvalpenerimaanpengeluaranseragamController@setujuilist');
     Route::get('approvalpenerimaanpengeluaranseragam/tolaklist', 'approvalpenerimaanpengeluaranseragamController@tolaklist');
+
+    //Pembagian Seragam
+    Route::get('manajemen-seragam/pembagianseragam', 'pembagianseragamController@index');
+    Route::get('manajemen-seragam/pembagianseragam/tambah', 'pembagianseragamController@tambah');
+    Route::get('manajemen-seragam/pembagianseragam/getdivisi', 'pembagianseragamController@getdivisi');
+    Route::get('manajemen-seragam/pembagianseragam/getnota', 'pembagianseragamController@getnota');
+    Route::get('manajemen-seragam/pembagianseragam/getseragam', 'pembagianseragamController@getseragam');
+    Route::get('manajemen-seragam/pembagianseragam/showdata', 'pembagianseragamController@showdata');
+    Route::get('manajemen-seragam/pembagianseragam/simpan', 'pembagianseragamController@simpan');
+    Route::get('manajemen-seragam/pembagianseragam/datatable_data', 'pembagianseragamController@datatable_data');
 });

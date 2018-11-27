@@ -217,6 +217,7 @@
 
         <?php $cekAksesApproval = App\Http\Controllers\AksesUser::checkAkses(55, 'read') ?>
           @if($cekAksesApproval)
+          getApproval();
           setInterval(function () {
             getApproval();
           }, 5000);

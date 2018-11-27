@@ -229,6 +229,12 @@ to {
                             <i class="" aria-hidden="true"></i><span class="nav-label">Penerimaan Pengeluaran Seragam</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('manajemen-seragam/pembagianseragam') ? 'active' : ''
+                                || Request::is('manajemen-seragam/pembagianseragam/*') ? 'active' : '' }} sidebar master-akun">
+                        <a href="{{ url('manajemen-seragam/pembagianseragam') }}">
+                            <i class="" aria-hidden="true"></i><span class="nav-label">Pembagian Seragam</span>
+                        </a>
+                    </li>
                     <li class="{{ Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''  }}">
                         <a href="{{ url('manajemen-seragam/pembayaran-seragam') }}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Pembayaran Seragam</span>
