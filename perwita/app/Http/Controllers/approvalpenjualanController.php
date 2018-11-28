@@ -376,11 +376,11 @@ class approvalpenjualanController extends Controller
                 $permintaan = $sales[$i]->sd_qty;
 
                 DB::table('d_stock')
-                    ->where('s_id', $stock[$i]->sm_stock)
-                    ->where('s_item', $stock[$i]->sm_item)
-                    ->where('s_item_dt', $stock[$i]->sm_item_dt)
+                    ->where('s_id', $stock[0]->sm_stock)
+                    ->where('s_item', $stock[0]->sm_item)
+                    ->where('s_item_dt', $stock[0]->sm_item_dt)
                     ->update([
-                        's_qty' => $stock[$i]->s_qty - $permintaan
+                        's_qty' => $stock[0]->s_qty - $permintaan
                     ]);
 
                 for ($j = 0; $j < count($stock); $j++) {
