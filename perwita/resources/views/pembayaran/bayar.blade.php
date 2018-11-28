@@ -288,7 +288,7 @@
             }
             waitingDialog.hide();
             $('#myModal').modal('show');
-            console.log(response);
+            
           }, error:function(x, e) {
               if (x.status == 0) {
                   alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');

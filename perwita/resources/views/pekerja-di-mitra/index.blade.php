@@ -129,8 +129,9 @@
 
 @section('extra_scripts')
 <script type="text/javascript">
+var table;
 $(document).ready(function(){
-  $('#pekerja').DataTable({
+  table = $('#pekerja').DataTable({
     responsive: true,
     "pageLength": 10,
     "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
@@ -232,7 +233,6 @@ function cari(){
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-  var html = "";
   var mitra = $('#selectmitra').val();
   var divisi = $('#selectdivisi').val();
   $.ajax({
@@ -241,21 +241,17 @@ function cari(){
     url: baseUrl + '/pekerja-di-mitra/getpekerja',
     dataType: 'json',
     success : function(result){
+      table.clear();
       for (var i = 0; i < result.length; i++) {
-        html += '<tr role="row" class="odd">'+
-              '<td>'+result[i].p_name+'</td>'+
-              '<td>'+result[i].mp_mitra_nik+'</td>'+
-              '<td>'+result[i].m_name+'</td>'+
-              '<td>'+result[i].md_name+'</td>'+
-              '<td>'+result[i].mp_workin_date+'</td>'+
-              '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[i].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                  ' '+
-                  '<button type="button" class="btn btn-danger btn-xs" onclick="hapus('+result[i].mp_id+')" name="button"> <i class="fa fa-trash"></i> </button>'+
-              '</td>'+
-              '</tr>';
+        table.row.add([
+          result[i].p_name,
+          result[i].mp_mitra_nik,
+          result[i].m_name,
+          result[i].md_name,
+          result[i].mp_workin_date,
+          generatebutton(result[i].mp_id)
+        ]).draw(false);
       }
-      $('#showdata').html(html);
       waitingDialog.hide();
     }, error:function(x, e) {
         waitingDialog.hide();
@@ -277,28 +273,31 @@ function cari(){
   })
 }
 
+ function generatebutton(id){
+   var html = '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
+              ' '+
+              '<button type="button" class="btn btn-danger btn-xs" onclick="hapus('+id+')" name="button"> <i class="fa fa-trash"></i> </button>';
+
+  return html;
+ }
+
   function getdata(id){
     waitingDialog.show();
-    var html = "";
     $.ajax({
       type: 'get',
       url: baseUrl + '/pekerja-di-mitra/getdata',
       data: {id:id},
       dataType: 'json',
       success : function(result){
-        html += '<tr>'+
-              '<td>'+result[0].p_name+'</td>'+
-              '<td>'+result[0].mp_mitra_nik+'</td>'+
-              '<td>'+result[0].m_name+'</td>'+
-              '<td>'+result[0].md_name+'</td>'+
-              '<td>'+result[0].mp_workin_date+'</td>'+
-              '<td align="center">'+
-                  '<a style="margin-left:5px;" title="Edit NIK" type="button" onclick="editnik('+result[0].mp_id+')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>'+
-                  ' '+
-                  '<button type="button" class="btn btn-danger btn-xs" onclick="hapus('+result[i].mp_id+')" name="button"> <i class="fa fa-trash"></i> </button>'+
-              '</td>'+
-              '</tr>';
-      $('#showdata').html(html);
+        table.clear();
+          table.row.add([
+            result[0].p_name,
+            result[0].mp_mitra_nik,
+            result[0].m_name,
+            result[0].md_name,
+            result[0].mp_workin_date,
+            generatebutton(result[0].mp_id)
+          ]).draw(false);
       waitingDialog.hide();
       }, error:function(x, e) {
           waitingDialog.hide();
