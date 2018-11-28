@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="" />
+    <list default="true" id="3f6ccce9-2a8a-4496-87f2-71f0afb09689" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +17,7 @@
     <session id="-912952">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="25" />
+          <entry key="project.closed" value="26" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
@@ -32,7 +34,8 @@
           <entry key="project.open.time.44" value="2" />
           <entry key="project.open.time.47" value="2" />
           <entry key="project.open.time.49" value="1" />
-          <entry key="project.opened" value="26" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -74,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
+            <state relative-caret-position="2625">
               <caret line="133" column="49" selection-start-line="133" selection-start-column="49" selection-end-line="133" selection-end-column="49" />
             </state>
           </provider>
@@ -84,9 +87,10 @@
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="21">
-              <caret line="76" column="91" lean-forward="true" selection-start-line="76" selection-start-column="91" selection-end-line="76" selection-end-column="91" />
+              <caret line="76" column="91" selection-start-line="76" selection-start-column="91" selection-end-line="76" selection-end-column="91" />
               <folding>
                 <element signature="e#40#64#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,15 +98,13 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/config/app.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2520" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="1134">
               <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
             </state>
           </provider>
@@ -111,7 +113,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="11529">
               <caret line="559" column="29" selection-start-line="559" selection-start-column="26" selection-end-line="559" selection-end-column="29" />
               <folding>
                 <element signature="e#40#56#0#PHP" expanded="true" />
@@ -132,7 +134,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="588">
               <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
               <folding>
                 <element signature="e#40#58#0#PHP" expanded="true" />
@@ -276,6 +278,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -343,7 +346,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -398,17 +400,18 @@
       <workItem from="1542854402970" duration="543000" />
       <workItem from="1542870801040" duration="938000" />
       <workItem from="1543302868904" duration="1435000" />
+      <workItem from="1543372695723" duration="1203000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93346000" />
+    <option name="totallyTimeSpent" value="94549000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="732" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22878788" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23257576" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -591,64 +594,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpenjualanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3423">
-          <caret line="177" selection-start-line="177" selection-end-line="177" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ItemController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3003">
-          <caret line="152" column="18" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding>
-            <element signature="e#40#58#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="559" column="29" selection-start-line="559" selection-start-column="26" selection-end-line="559" selection-end-column="29" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/d_purchase.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="133" column="49" selection-start-line="133" selection-start-column="49" selection-end-line="133" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/perwita/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2520" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/perwita/vendor/yajra/laravel-datatables-oracle/src/Datatables.php">
@@ -677,12 +627,64 @@
         <state relative-caret-position="-882" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PembelianController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2625">
+          <caret line="133" column="49" selection-start-line="133" selection-start-column="49" selection-end-line="133" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/config/app.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/loginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/PenjualanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11529">
+          <caret line="559" column="29" selection-start-line="559" selection-start-column="26" selection-end-line="559" selection-end-column="29" />
+          <folding>
+            <element signature="e#40#56#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/approvalpenjualanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3423">
+          <caret line="177" selection-start-line="177" selection-end-line="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/perwitaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+          <folding>
+            <element signature="e#40#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/ItemController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3003">
+          <caret line="152" column="18" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/perwita/app/Http/Controllers/pekerjaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
-          <caret line="76" column="91" lean-forward="true" selection-start-line="76" selection-start-column="91" selection-end-line="76" selection-end-column="91" />
+          <caret line="76" column="91" selection-start-line="76" selection-start-column="91" selection-end-line="76" selection-end-column="91" />
           <folding>
             <element signature="e#40#64#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
