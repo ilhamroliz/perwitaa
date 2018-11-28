@@ -304,6 +304,7 @@
                 $('#cariItem').prop('readonly', false);
                 $('#setQty').prop('readonly', false);
                 $('.tanam').prop('disabled', false);
+                $('#divisi').prop('disabled', true);
 
                 $( "#cariItem" ).autocomplete({
                     source: baseUrl+'/manajemen-penjualan/search/'+mitra,
@@ -312,7 +313,6 @@
                         setData(data);
                     }
                 });
-
             }
             
         }
