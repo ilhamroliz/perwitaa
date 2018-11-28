@@ -464,6 +464,7 @@
           values.push(selectedVal);
       });
       var jumlahitem = values.reduce(getSum);
+      console.log(jumlahitem);
       var jumlahpekerja = $('.jumlahpekerja').text();
 
         if (parseInt(jumlahitem) != parseInt(jumlahpekerja)) {
@@ -594,7 +595,7 @@
     }
 
     function getSum(total, num) {
-    return total + num;
+    return parseInt(total) + parseInt(num);
     }
 
     </script>
