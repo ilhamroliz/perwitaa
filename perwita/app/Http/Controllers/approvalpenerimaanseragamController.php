@@ -30,7 +30,10 @@ class approvalpenerimaanseragamController extends Controller
 
         $data = DB::table('d_purchase_approval')
             ->join('d_item', 'i_id', '=', 'pa_item')
-            ->join('d_item_dt', 'id_detailid', '=', 'pa_item_dt')
+            ->join('d_item_dt', function($e){
+              $e->on('id_item', '=', 'pa_item')
+                ->on('id_detailid', '=', 'pa_item_dt');
+            })
             ->join('d_size', 's_id', '=', 'id_size')
             ->where('pa_isapproved', 'P')
             ->get();
