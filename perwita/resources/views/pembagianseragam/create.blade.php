@@ -479,6 +479,9 @@ var qty = [];
             "hideMethod": "fadeOut"
           }
           waitingDialog.hide();
+          setTimeout(function () {
+            window.location.href = baseUrl + '/manajemen-seragam/pembagianseragam';
+          }, 500);
           } else {
             Command: toastr["warning"]("Gagal Disimpan!", "Peringatan !")
 

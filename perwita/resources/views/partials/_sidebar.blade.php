@@ -230,7 +230,8 @@ to {
                         </a>
                     </li>
                     <li class="{{ Request::is('manajemen-seragam/pembagianseragam') ? 'active' : ''
-                                || Request::is('manajemen-seragam/pembagianseragam/*') ? 'active' : '' }} sidebar master-akun">
+                                || Request::is('manajemen-seragam/pembagianseragam/*') ? 'active' : ''
+                                || Request::is('manajemen-seragam/pembayaran-pekerja') ? 'active' : '' }} sidebar master-akun">
                         <a href="{{ url('manajemen-seragam/pembagianseragam') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pembagian Seragam</span>
                         </a>

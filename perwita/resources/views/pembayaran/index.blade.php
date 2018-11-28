@@ -128,7 +128,7 @@
   $( document ).ready(function() {
        tabelpembayaran  = $("#tabel-pembayaran").DataTable({
             responsive: true,
-            paging: false,
+            paging: true,
             "language": dataTableLanguage,
             "columnDefs": [
                 { "orderable": false, "targets": 0 }

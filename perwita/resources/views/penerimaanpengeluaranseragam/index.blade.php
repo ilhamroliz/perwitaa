@@ -31,7 +31,8 @@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
-        <h5>Penerimaan Pengeluaran Seragam</h5>        
+        <h5>Penerimaan Pengeluaran Seragam</h5>
+        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{url('manajemen-seragam/penerimaanpengeluaranseragam/history')}}"><i class="fa fa-history"></i>&nbsp;History</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -41,7 +42,9 @@
                         <select class="form-control chosen-select-width" name="nota" style="width:100%; cursor: pointer;" id="nota">
                             <option value="" disabled selected>--Pilih Nota Pengeluaran--</option>
                         @foreach($data as $nota)
+                          @if ($nota->sisa != 0)
                             <option value="{{ $nota->s_nota }}"> {{ $nota->s_nota }} </option>
+                          @endif
                         @endforeach
                         </select>
                     </div>
@@ -203,7 +206,7 @@
       url: baseUrl + '/manajemen-seragam/penerimaanpengeluaranseragam/simpan',
       success : function(response){
         if (response.status == 'berhasil') {
-          Command: toastr["success"]("Berhasil Disimpan", "Info !")
+          Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
 
           toastr.options = {
             "closeButton": false,

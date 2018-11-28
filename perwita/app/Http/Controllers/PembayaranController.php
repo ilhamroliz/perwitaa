@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
+use Session;
 
 class PembayaranController extends Controller
 {
@@ -100,7 +101,8 @@ class PembayaranController extends Controller
                         'spd_detailid' => $detailid,
                         'spd_pekerja' => $pekerja[$i],
                         'spd_installments' => $bayar[$i],
-                        'spd_date' => $sekarang
+                        'spd_date' => $sekarang,
+                        'spd_pegawai' => Session::get('mem')
                     ));
                 }
             }
@@ -125,7 +127,8 @@ class PembayaranController extends Controller
 
         $data = DB::table('d_seragam_pekerja_dt')
             ->join('d_pekerja', 'spd_pekerja', '=', 'p_id')
-            ->select(DB::raw('round(spd_installments) as spd_installments'), 'p_name', 'spd_date')
+            ->join('d_mem', 'm_id', '=', 'spd_pegawai')
+            ->select(DB::raw('round(spd_installments) as spd_installments'), 'p_name', 'spd_date', 'm_name')
             ->where('spd_sales', '=', $sales)
             ->where('spd_pekerja', '=', $pekerja)
             ->get();

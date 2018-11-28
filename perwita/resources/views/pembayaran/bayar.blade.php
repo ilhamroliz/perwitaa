@@ -121,6 +121,7 @@
                               <th style="width: 40%;" class="col-md-5">Nama</th>
                               <th style="width: 30%;" class="col-md-4">Tanggal</th>
                               <th style="width: 30%;" class="col-md-3">Jumlah Pembayaran</th>
+                              <th style="width: 30%;" class="col-md-3">Pegawai</th>
                             </tr>
                           </thead>
                         </table>
@@ -281,7 +282,8 @@
               detil.row.add([
                     data[i].p_name,
                     data[i].spd_date,
-                    '<span style="float: left">Rp. </span><span style="float:right" class="hargaitem">'+tagihan+'</span>'
+                    '<span style="float: left">Rp. </span><span style="float:right" class="hargaitem">'+tagihan+'</span>',
+                    data[i].m_name
                 ]).draw( false );
             }
             waitingDialog.hide();
