@@ -772,4 +772,13 @@ class PenjualanController extends Controller
         return Response::json($results);
     }
 
+    public function countpekerja(Request $request){
+      $count = DB::table('d_mitra_pekerja')
+                    ->where('mp_mitra', $request->mitra)
+                    ->where('mp_divisi', $request->divisi)
+                    ->count();
+
+      return response()->json($count);
+    }
+
 }

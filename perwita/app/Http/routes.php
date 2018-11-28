@@ -647,6 +647,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/data','PenjualanController@data');
     Route::post('manajemen-seragam/data','PenjualanController@data');
     Route::get('manajemen-seragam/tambah-pengeluaran','PenjualanController@create');
+    Route::get('manajemen-seragam/countpekerja','PenjualanController@countpekerja');
     Route::get('manajemen-penjualan/getItem','PenjualanController@getItem');
     Route::get('manajemen-penjualan/getPekerja','PenjualanController@getPekerja');
     Route::get('manajemen-penjualan/save','PenjualanController@save');

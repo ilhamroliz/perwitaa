@@ -48,6 +48,7 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <span class="pull-right">(<strong class="jumlahitem">0</strong>) items</span>
+                        <span class="pull-right" style="margin-right:15px">(<strong class="jumlahpekerja">0</strong>) Pekerja</span>
                         <h5>Pengeluaran Barang ke Mitra</h5>
                     </div>
 
@@ -181,7 +182,7 @@
         });
 
         $("#setQty").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape 
+        // Allow: backspace, delete, tab, escape
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 110]) !== -1 ||
          // Allow: Ctrl/cmd+A
             (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -230,7 +231,7 @@
         function cekQty(){
             var qty = parseInt($('.s_qty').val());
             var input = parseInt($('#setQty').val());
-            
+
             if (input > qty) {
                 $('#setQty').val(qty);
             }
@@ -276,6 +277,16 @@
         function lock(){
             var mitra = $('#mitra').val();
             var divisi = $('#divisi').val();
+
+            $.ajax({
+              type: 'get',
+              data: {mitra:mitra, divisi:divisi},
+              dataType: 'json',
+              url: baseUrl + '/manajemen-seragam/countpekerja',
+              success : function(response){
+                $('.jumlahpekerja').text(response);
+              }
+            });
             if (mitra == null || divisi == null || mitra == ' ' || divisi == ' ') {
                 Command: toastr["warning"]("Mitra dan Divisi tidak boleh kosong", "Peringatan !")
 
@@ -314,7 +325,7 @@
                     }
                 });
             }
-            
+
         }
 
         function unlock(){
@@ -362,7 +373,7 @@
             } else {
                 tablepenjualan.row.add( [
                     nama + '<input type="hidden" name="idStock[]" id="item-'+idStock+'" value="'+idStock+'">',
-                    '<input type="text" style="width:100%;text-align:right;" onblur="blurQty('+idStock+', '+qty+')" onkeyup="checkQty('+idStock+', '+qty+'), this.value=this.value.replace(/[^0-9]/g,\'\')" onkeypress="totoalHarga()" id="setQty-'+idStock+'" name="qty[]" value="'+setQty+'"><input type="hidden" id="qty-'+idStock+'" value="'+qty+'">',
+                    '<input type="text" style="width:100%;text-align:right;" class="form-control inqty" onblur="blurQty('+idStock+', '+qty+')" onkeyup="checkQty('+idStock+', '+qty+'), this.value=this.value.replace(/[^0-9]/g,\'\')" onkeypress="totoalHarga()" id="setQty-'+idStock+'" name="qty[]" value="'+setQty+'"><input type="hidden" id="qty-'+idStock+'" value="'+qty+'">',
                     '<div class="pull-right">Rp. '+ accounting.formatMoney(publicHarga, "", 0, ".", ",")+'</div><input type="hidden" id="harga-'+idStock+'" name="harga[]" value="'+publicHarga+'">',
                     '<div class="text-center"><button class="btn btn-danger btn-xs hapus-penjualan" id="hapus-penjualan" type="button" style=""><i class="fa fa-minus"></i></button></div>'
                 ] ).draw( false );
@@ -416,7 +427,7 @@
             var input = parseInt($('#setQty-'+id).val());
             id = parseInt(id);
             qty = parseInt(qty);
-            
+
             if (isNaN(input)) {
                 $('#setQty-'+id).val(1);
                 input = 1;
@@ -446,7 +457,27 @@
         }
 
     function simpan(){
-        waitingDialog.show();
+      var values = [];
+      var selectedVal;
+      $(".inqty").each(function(i, sel){
+          selectedVal = $(sel).val();
+          values.push(selectedVal);
+      });
+      var jumlahitem = values.reduce(getSum);
+      var jumlahpekerja = $('.jumlahpekerja').text();
+
+        if (parseInt(jumlahitem) != parseInt(jumlahpekerja)) {
+          swal({
+                  title: "Konfirmasi",
+                  text: "Jumlah item tidak sama dengan jumlah pekerja, ingin melanjutkan?",
+                  type: "warning",
+                  showCancelButton: true,
+                  closeOnConfirm: false,
+                  showLoaderOnConfirm: true,
+              },
+              function () {
+                  swal.close();
+                  waitingDialog.show();
         var ar = $();
         for (var i = 0; i < tablepenjualan.rows()[0].length; i++) {
             ar = ar.add(tablepenjualan.row(i).node());
@@ -501,6 +532,69 @@
               waitingDialog.hide();
             }
         })
+              });
+
+        } else {
+          waitingDialog.show();
+        var ar = $();
+        for (var i = 0; i < tablepenjualan.rows()[0].length; i++) {
+            ar = ar.add(tablepenjualan.row(i).node());
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var mitra = $('#mitra').val();
+        var divisi = $('#divisi').val();
+        var total = totalPublic;
+        $.ajax({
+          url: baseUrl + '/manajemen-penjualan/save',
+          type: 'get',
+          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&nota='+nota+'&total='+total+'&divisi='+divisi,
+          success: function(response){
+            waitingDialog.hide();
+            if (response.status == 'sukses') {
+                swal({
+                        title: "Sukses",
+                        text: "Data sudah tersimpan",
+                        type: "success"
+
+                    }, function () {
+                      //cari();
+                      location.reload();
+                    });
+            } else {
+                swal({
+                    title: "Gagal",
+                    text: "Sistem gagal menyimpan data",
+                    type: "error",
+                    showConfirmButton: true
+                });
+            }
+          }, error:function(x, e) {
+            waitingDialog.hide();
+              if (x.status == 0) {
+                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+              } else if (x.status == 404) {
+                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+              } else if (x.status == 500) {
+                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+              } else if (e == 'parsererror') {
+                  alert('Error.\nParsing JSON Request failed.');
+              } else if (e == 'timeout'){
+                  alert('Request Time out. Harap coba lagi nanti');
+              } else {
+                  alert('Unknow Error.\n' + x.responseText);
+              }
+              waitingDialog.hide();
+            }
+        })
+        }
+    }
+
+    function getSum(total, num) {
+    return total + num;
     }
 
     </script>

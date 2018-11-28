@@ -71,13 +71,14 @@
                           </div>
                           <br>
                           <div class="row">
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-8">
                               <select class="form-control select2" name="jenis" style="width: 80%;" id="jenis" disabled>
                                 <option value=""> - Pilih Jenis Seragam - </option>
                               </select>
                             </div>
                             <div class="form-group col-md-3">
                               <button class="btn btn-info" type="button" onclick="cari()"> <i class="fa fa-search"></i> </button>
+                              <button class="btn btn-info unlock" onclick="unlock()" id="lockdinamis" type="button"><i class="fa fa-unlock"></i></button>
                             </div>
                           </div>
                             <div class="table-responsive" style="margin-top: 30px;">
@@ -156,6 +157,7 @@ var qty = [];
 
   $('#nota').on('change', function(){
     waitingDialog.show();
+    $('#nota').attr('disabled', true);
     var s_id = $(this).val();
     var html = '';
     $.ajax({
@@ -191,6 +193,7 @@ var qty = [];
   });
 
   $('#mitra').on('change', function(){
+    $('#mitra').attr('disabled', true);
     mitra = $(this).val();
     if (mitra == '') {
       $('#divisi').attr('disabled', true);
@@ -213,6 +216,7 @@ var qty = [];
   });
 
   $('#divisi').on('change', function(){
+    $('#divisi').attr('disabled', true);
     var html = '<option value="" disabled selected> - Pilih Nota - </option>';
     $.ajax({
       type: 'get',
@@ -444,10 +448,13 @@ var qty = [];
 
   function simpan(){
     waitingDialog.show();
-
+    var mitra = $('#mitra').val();
+    var divisi = $('#divisi').val();
+    var jenis = $('#jenis').val();
+    var nota = $('#nota').val();
     $.ajax({
       type: 'get',
-      data: $('#formdata').serialize(),
+      data: $('#formdata').serialize()+'&nota='+nota+'&jenis='+jenis+'&divisi='+divisi+'&mitra='+mitra,
       dataType: 'json',
       url: baseUrl + '/manajemen-seragam/pembagianseragam/simpan',
       success : function (response){
@@ -496,6 +503,35 @@ var qty = [];
           }
         }
     });
+  }
+
+  $('#jenis').on('change', function(){
+    $('#jenis').attr('disabled', true);
+    $('#lockdinamis').attr('onclick', 'unlock()');
+    $('#lockdinamis').attr('class', 'btn btn-info lock');
+    $('#lockdinamis').html('<i class="fa fa-lock"></i>');
+  });
+
+  function unlock(){
+    $('#mitra').attr('disabled', false);
+    $('#jenis').attr('disabled', false);
+    $('#divisi').attr('disabled', false);
+    $('#nota').attr('disabled', false);
+
+    $('#lockdinamis').attr('onclick', 'lock()');
+    $('#lockdinamis').attr('class', 'btn btn-info unlock');
+    $('#lockdinamis').html('<i class="fa fa-unlock"></i>');
+  }
+
+  function lock(){
+    $('#mitra').attr('disabled', true);
+    $('#jenis').attr('disabled', true);
+    $('#divisi').attr('disabled', true);
+    $('#nota').attr('disabled', true);
+
+    $('#lockdinamis').attr('onclick', 'unlock()');
+    $('#lockdinamis').attr('class', 'btn btn-info lock');
+    $('#lockdinamis').html('<i class="fa fa-lock"></i>');
   }
 
 </script>
