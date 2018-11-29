@@ -47,7 +47,7 @@ class PembayaranController extends Controller
             ->select('p_name', 'p_hp', 'p_id', 's_nama', 'i_nama', 'k_nama', 'i_warna', DB::raw('round(sp_value - sp_pay_value) as tagihan'), 'sp_value', 'sp_pay_value', 'sp_sales')
             ->where('sp_sales', '=', $idSales[0]->s_id)
             ->get();        
-        
+
         return view('pembayaran.bayar', compact('pekerja', 'nota', 'link', 'status'));
     }
 
