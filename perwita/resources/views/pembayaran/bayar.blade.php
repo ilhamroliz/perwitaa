@@ -335,7 +335,47 @@
         dataType: 'json',
         url: baseUrl + '/manajemen-seragam/pembayaran-seragam/update',
         success : function(response){
-          console.log(response);
+          if (response.status == 'berhasil') {
+            Command: toastr["success"]("Berhasil Disimpan", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+          } else {
+            Command: toastr["warning"]("Gagal disimpan", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+          }
         }
       });
     });

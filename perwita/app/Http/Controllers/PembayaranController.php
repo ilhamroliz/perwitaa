@@ -272,8 +272,8 @@ class PembayaranController extends Controller
     }
 
     public function update(Request $request){
-      // DB::beginTransaction();
-      // try {
+      DB::beginTransaction();
+      try {
       $bayar = $request->harga;
       for ($i = 0; $i < count($bayar); $i++) {
         $bayar[$i] = str_replace('Rp. ', '', $bayar[$i]);
@@ -298,16 +298,16 @@ class PembayaranController extends Controller
                 ]);
         }
 
-      //   DB::commit();
-      //   return response()->json([
-      //     'status' => 'berhasil'
-      //   ]);
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return response()->json([
-      //     'status' => 'gagal'
-      //   ]);
-      // }
+        DB::commit();
+        return response()->json([
+          'status' => 'berhasil'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
 
     }
 }
