@@ -236,7 +236,8 @@ to {
                             <i class="" aria-hidden="true"></i><span class="nav-label">Pembagian Seragam</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''  }}">
+                    <li class="{{ Request::is('manajemen-seragam/pembayaran-seragam') ? 'active' : ''
+                                || Request::is('manajemen-seragam/pembayaran-seragam/*') ? 'active' : '' }}">
                         <a href="{{ url('manajemen-seragam/pembayaran-seragam') }}">
                             <i class=" " aria-hidden="true"></i><span class="nav-label">Pembayaran Seragam</span>
                         </a>

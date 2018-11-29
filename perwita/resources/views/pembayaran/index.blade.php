@@ -41,6 +41,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title ibox-info">
         <h5>Pembayaran Seragam</h5>
+        <a style="float: right; margin-top: -7px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{url('manajemen-seragam/pembayaran-seragam/history')}}"><i class="fa fa-history"></i>&nbsp;History</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">
@@ -54,29 +55,25 @@
                         <th>Seragam</th>
                         <th>Mitra</th>
                         <th>Jumlah</th>
-                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($data as $data)
-                      <tr>
-                        <td>{{ $data->s_nota }}</td>
-                        <td>{{ Carbon\Carbon::parse($data->s_date)->format('d/M/Y H:i:s') }}</td>
-                        <td>{{ $data->i_nama }}</td>
-                        <td>{{ $data->m_name }}</td>
-                        <td>{{ $data->jumlah }} PCS</td>
-                        <td align="center"> @if ($data->tagihan == 0)
-                          <span class="badge badge-info"> Lunas </span>
-                        @else
-                          <span class="badge badge-warning"> Belum Lunas </span>
-                        @endif </td>
-                        <td>
-                          <div class="text-center">
-                            <button onclick="goBayar('{{ $data->s_nota }}')" style="margin-left:5px;" title="Bayar" type="button" class="btn btn-info btn-xs"><i class="fa fa-credit-card-alt"></i> Bayar</button>
-                          </div>
-                        </td>
-                      </tr>
+                        @if ($data->tagihan != 0)
+                          <tr>
+                            <td>{{ $data->s_nota }}</td>
+                            <td>{{ Carbon\Carbon::parse($data->s_date)->format('d/M/Y H:i:s') }}</td>
+                            <td>{{ $data->i_nama }}</td>
+                            <td>{{ $data->m_name }}</td>
+                            <td>{{ $data->jumlah }} PCS</td>
+                            <td>
+                              <div class="text-center">
+                                <button onclick="goBayar('{{ $data->s_nota }}')" style="margin-left:5px;" title="Bayar" type="button" class="btn btn-info btn-xs"><i class="fa fa-credit-card-alt"></i> Bayar</button>
+                              </div>
+                            </td>
+                          </tr>
+                        @endif
                       @endforeach
                     </tbody>
                   </table>
@@ -181,7 +178,8 @@
   }
 
   function goBayar(nota){
-    window.location.href = baseUrl+"/manajemen-seragam/pembayaran-pekerja?nota="+nota;
+    var link = baseUrl + '/manajemen-seragam/pembayaran-seragam';
+    window.location.href = baseUrl+"/manajemen-seragam/pembayaran-pekerja?nota="+nota+'&link='+link;
   }
 </script>
 @endsection

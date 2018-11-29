@@ -38,6 +38,7 @@
             </li>
             <li class="active">
                 <strong>Pembayaran Seragam</strong>
+                <input type="hidden" name="status" value="{{$status}}" id="status">
             </li>
         </ol>
     </div>
@@ -75,7 +76,7 @@
                           <button class="btn btn-primary btn-xs text-center">Lunas</button>
                         </td>
                         <td>
-                          <button onclick="lihat({{ $data->p_id }}, {{ $data->sp_sales }})" class="btn btn-info btn-xs text-center">Detail</button>
+                          <button onclick="lihat({{ $data->p_id }}, {{ $data->sp_sales }}, {{ $data->sp_value }})" class="btn btn-info btn-xs text-center">Detail</button>
                         </td>
                         @else
                         <td>
@@ -83,7 +84,7 @@
                           <input type="hidden" class="idPekerja" name="pekerja[]" value="{{ $data->p_id }}">
                         </td>
                         <td>
-                          <button onclick="lihat({{ $data->p_id }}, {{ $data->sp_sales }})" class="btn btn-info btn-xs text-center">Detail</button>
+                          <button onclick="lihat({{ $data->p_id }}, {{ $data->sp_sales }}, {{ $data->sp_value }})" class="btn btn-info btn-xs text-center">Detail</button>
                         </td>
                         @endif
                       </tr>
@@ -94,7 +95,7 @@
                 <div class="col-md-12">
                   <div class="btn-group" style="float: right">
                     <a onclick="simpan()" class="btn btn-primary btn-outline btn-sm"> Simpan</a>
-                    <a href="{{ url('manajemen-seragam/pembayaran-seragam') }}" class="btn btn-white btn-sm"> Batal</a>
+                    <a href="{{$link}}" class="btn btn-white btn-sm"> Batal</a>
                   </div>
                 </div>
             </div>
@@ -113,7 +114,7 @@
             </div>
             <div class="modal-body">
                 <h3 class="namabarang"></h3>
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="form-detail">
                     <div class="form-group">
                         <table class="table table-responsive table-striped table-bordered table-hover" id="detilpembayaran">
                           <thead>
@@ -129,7 +130,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-
+              <button type="button" class="btn btn-primary" style="display:none" id="modalsimpan" name="button">Simpan</button>
+              <button type="button" class="btn" name="button" data-dismiss="modal">Batal</button>
             </div>
         </div>
     </div>
@@ -143,6 +145,8 @@
   var tabelpekerja;
   var detil;
   var nota = '{{ $nota }}';
+  var jumlah;
+
   $( document ).ready(function() {
        tabelpembayaran = $("#tabel-pembayaran").DataTable({
             responsive: true,
@@ -151,6 +155,7 @@
                 { "orderable": false, "targets": 0 }
               ]
         });
+
 
        detil = $("#detilpembayaran").DataTable({
             responsive: true,
@@ -267,8 +272,9 @@
 
     }
 
-    function lihat(pekerja, sales){
+    function lihat(pekerja, sales, value){
       waitingDialog.show();
+      var status = $('#status').val();
       $.ajax({
           url: baseUrl + '/manajemen-seragam/getInfoPembayaran',
           type: 'get',
@@ -276,19 +282,33 @@
           success: function(response){
             var data = response.data;
             detil.clear();
-            for (var i = 0; i < data.length; i++) {
-              var tagihan = accounting.formatMoney(data[i].spd_installments, "", 0, ".", ","); // €4.999,99
-
-              detil.row.add([
-                    data[i].p_name,
-                    data[i].spd_date,
-                    '<span style="float: left">Rp. </span><span style="float:right" class="hargaitem">'+tagihan+'</span>',
-                    data[i].m_name
-                ]).draw( false );
+            if (status == 'history') {
+              for (var i = 0; i < data.length; i++) {
+                var tagihan = accounting.formatMoney(data[i].spd_installments, "", 0, ".", ","); // €4.999,99
+                detil.row.add([
+                      data[i].p_name,
+                      data[i].spd_date,
+                      '<input type="text" class="form-control rp harga" id="rp'+i+'" name="harga[]" onkeyup="filter('+value+','+tagihan.replace('.','')+', '+i+')" value="Rp. '+tagihan+'"><input type="hidden" class="form-control" name="spd_sales[]" value="'+data[i].spd_sales+'"><input type="hidden" class="form-control" name="spd_detailid[]" value="'+data[i].spd_detailid+'"><input type="hidden" class="form-control" name="spd_pekerja[]" value="'+data[i].spd_pekerja+'">',
+                      data[i].m_name
+                  ]).draw( false );
+              }
+              $('#modalsimpan').css('display', '');
+            } else {
+              for (var i = 0; i < data.length; i++) {
+                var tagihan = accounting.formatMoney(data[i].spd_installments, "", 0, ".", ","); // €4.999,99
+                detil.row.add([
+                      data[i].p_name,
+                      data[i].spd_date,
+                      '<input type="text" class="form-control rp" id="rp" name="harga[]" value="Rp. '+tagihan+'" disabled><input type="hidden" class="form-control" name="spd_sales[]" value="'+data[i].spd_sales+'"><input type="hidden" class="form-control" name="spd_detailid[]" value="'+data[i].spd_detailid+'"><input type="hidden" class="form-control" name="spd_pekerja[]" value="'+data[i].spd_pekerja+'">',
+                      data[i].m_name
+                  ]).draw( false );
+              }
             }
+
+            $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
             waitingDialog.hide();
             $('#myModal').modal('show');
-            
+
           }, error:function(x, e) {
               if (x.status == 0) {
                   alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -306,6 +326,62 @@
               waitingDialog.hide();
             }
         })
+    }
+
+    $('#modalsimpan').on('click', function(){
+      $.ajax({
+        type: 'get',
+        data: $('#form-detail').serialize()+'&jumlah='+jumlah,
+        dataType: 'json',
+        url: baseUrl + '/manajemen-seragam/pembayaran-seragam/update',
+        success : function(response){
+          console.log(response);
+        }
+      });
+    });
+
+    function filter(batas, tagihan, id){
+      var values = [];
+      var selectedVal;
+      $(".harga").each(function(i, sel){
+          selectedVal = $(sel).val();
+          values.push(selectedVal);
+      });
+
+      for (var i = 0; i < values.length; i++) {
+        values[i] = values[i].replace('Rp. ', '');
+        values[i] = values[i].replace('.', '');
+      }
+
+      jumlah = values.reduce(getSum);
+
+      if (jumlah > batas) {
+        Command: toastr["warning"]("Pembayaran tidak boleh melebihi sisa tagihan", "Peringatan !")
+
+        toastr.options = {
+          "closeButton": false,
+          "debug": true,
+          "newestOnTop": false,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+        $('#rp'+id).val('Rp. '+accounting.formatMoney(tagihan, "", 0, ".", ","));
+      }
+
+    }
+
+    function getSum(total, num) {
+      return parseInt(total) + parseInt(num);
     }
 
 </script>

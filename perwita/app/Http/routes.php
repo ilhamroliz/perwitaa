@@ -683,6 +683,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('manajemen-seragam/simpan', 'PembayaranController@save');
     Route::get('manajemen-seragam/simpan', 'PembayaranController@save');
     Route::get('manajemen-seragam/getInfoPembayaran', 'PembayaranController@getInfoPembayaran');
+    Route::get('manajemen-seragam/pembayaran-seragam/history', 'PembayaranController@history');
+    Route::get('manajemen-seragam/pembayaran-seragam/findHistory', 'PembayaranController@findHistory');
+    Route::get('manajemen-seragam/pembayaran-seragam/cariHistory', 'PembayaranController@cariHistory');
+    Route::get('manajemen-seragam/pembayaran-seragam/update', 'PembayaranController@update');
 
     //============= return seragam (pembelian)
     Route::get('manajemen-seragam/return', 'ReturnPembelianController@index');
