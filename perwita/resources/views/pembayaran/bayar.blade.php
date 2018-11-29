@@ -336,7 +336,7 @@
         url: baseUrl + '/manajemen-seragam/pembayaran-seragam/update',
         success : function(response){
           if (response.status == 'berhasil') {
-            Command: toastr["success"]("Berhasil Disimpan", "Peringatan !")
+            Command: toastr["success"]("Berhasil Disimpan!", "Peringatan !")
 
             toastr.options = {
               "closeButton": false,
@@ -356,7 +356,7 @@
               "hideMethod": "fadeOut"
             }
           } else {
-            Command: toastr["warning"]("Gagal disimpan", "Peringatan !")
+            Command: toastr["warning"]("Gagal Disimpan!", "Peringatan !")
 
             toastr.options = {
               "closeButton": false,
