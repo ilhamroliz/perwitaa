@@ -125,6 +125,9 @@
                               <th style="width: 30%;" class="col-md-3">Pegawai</th>
                             </tr>
                           </thead>
+                          <tbody id="datamodal">
+
+                          </tbody>
                         </table>
                     </div>
                 </form>
@@ -281,6 +284,7 @@
           data: {pekerja: pekerja, sales: sales},
           success: function(response){
             var data = response.data;
+            $('#datamodal').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Tidak ada data</td></tr>');
             detil.clear();
             if (status == 'history') {
               for (var i = 0; i < data.length; i++) {
