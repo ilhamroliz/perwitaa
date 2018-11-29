@@ -58,13 +58,13 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="divisi" class="sr-only">Divisi</label>
-                                <select class="form-control select2" name="divisi" style="width: 100%;" id="divisi" disabled>
+                                <select class="form-control select2" name="divisi" style="width: 100%;" id="divisi">
                                   <option value=""> - Pilih Divisi - </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-5">
                               <label for="nota" class="sr-only">Nota</label>
-                              <select class="form-control select2" name="nota" style="width: 80%;" id="nota" disabled>
+                              <select class="form-control select2" name="nota" style="width: 80%;" id="nota">
                                 <option value=""> - Pilih Nota - </option>
                               </select>
                             </div>
@@ -72,13 +72,13 @@
                           <br>
                           <div class="row">
                             <div class="form-group col-md-8">
-                              <select class="form-control select2" name="jenis" style="width: 80%;" id="jenis" disabled>
+                              <select class="form-control select2" name="jenis" style="width: 80%;" id="jenis">
                                 <option value=""> - Pilih Jenis Seragam - </option>
                               </select>
                             </div>
                             <div class="form-group col-md-3">
                               <button class="btn btn-info" type="button" onclick="cari()"> <i class="fa fa-search"></i> </button>
-                              <button class="btn btn-info unlock" onclick="unlock()" id="lockdinamis" type="button"><i class="fa fa-unlock"></i></button>
+                              <button class="btn btn-info unlock" id="lockdinamis" onclick="lock()" type="button"><i class="fa fa-unlock"></i></button>
                             </div>
                           </div>
                             <div class="table-responsive" style="margin-top: 30px;">
@@ -139,6 +139,7 @@ var item = [];
 var itemdt = [];
 var ukuran = [];
 var qty = [];
+var status = 'unlock';
 
   $(document).ready(function(){
     $('.select2').select2();
@@ -157,7 +158,6 @@ var qty = [];
 
   $('#nota').on('change', function(){
     waitingDialog.show();
-    $('#nota').attr('disabled', true);
     var s_id = $(this).val();
     var html = '';
     $.ajax({
@@ -186,14 +186,12 @@ var qty = [];
           html += '<option value="'+response.jenis[i].i_id+'">'+response.jenis[i].i_nama+' '+response.jenis[i].i_warna+'</option>';
         }
         $('#jenis').html(html);
-        $('#jenis').attr('disabled', false);
         waitingDialog.hide();
         }
     });
   });
 
   $('#mitra').on('change', function(){
-    $('#mitra').attr('disabled', true);
     mitra = $(this).val();
     if (mitra == '') {
       $('#divisi').attr('disabled', true);
@@ -209,14 +207,12 @@ var qty = [];
             html += '<option value="'+response[i].md_id+'">'+response[i].md_name+'</option>';
           }
           $('#divisi').html(html);
-          $('#divisi').attr('disabled', false);
         }
       });
     }
   });
 
   $('#divisi').on('change', function(){
-    $('#divisi').attr('disabled', true);
     var html = '<option value="" disabled selected> - Pilih Nota - </option>';
     $.ajax({
       type: 'get',
@@ -227,7 +223,6 @@ var qty = [];
         for (var i = 0; i < response.length; i++) {
           html += '<option value="'+response[i].s_id+'">'+response[i].s_nota+'</option>';
         }
-        $('#nota').attr('disabled', false);
         $('#nota').html(html);
       }
     })
@@ -301,6 +296,26 @@ var qty = [];
       }
     } else if (jenis == null) {
       Command: toastr["warning"]("Jenis tidak boleh kosong!", "Peringatan !")
+
+      toastr.options = {
+        "closeButton": false,
+        "debug": true,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+    } else if (status == 'unlock') {
+      Command: toastr["warning"]("Kunci Dulu!", "Peringatan !")
 
       toastr.options = {
         "closeButton": false,
@@ -508,13 +523,6 @@ var qty = [];
     });
   }
 
-  $('#jenis').on('change', function(){
-    $('#jenis').attr('disabled', true);
-    $('#lockdinamis').attr('onclick', 'unlock()');
-    $('#lockdinamis').attr('class', 'btn btn-info lock');
-    $('#lockdinamis').html('<i class="fa fa-lock"></i>');
-  });
-
   function unlock(){
     $('#mitra').attr('disabled', false);
     $('#jenis').attr('disabled', false);
@@ -524,6 +532,8 @@ var qty = [];
     $('#lockdinamis').attr('onclick', 'lock()');
     $('#lockdinamis').attr('class', 'btn btn-info unlock');
     $('#lockdinamis').html('<i class="fa fa-unlock"></i>');
+
+    status = 'unlock';
   }
 
   function lock(){
@@ -535,6 +545,8 @@ var qty = [];
     $('#lockdinamis').attr('onclick', 'unlock()');
     $('#lockdinamis').attr('class', 'btn btn-info lock');
     $('#lockdinamis').html('<i class="fa fa-lock"></i>');
+
+    status = 'lock';
   }
 
 </script>
