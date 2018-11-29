@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\d_seragam_pekerja;
 use App\d_seragam_pekerja_dt;
 use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
@@ -37,13 +38,16 @@ class PembayaranController extends Controller
         $pekerja = DB::table('d_seragam_pekerja')
             ->join('d_pekerja', 'p_id', '=', 'sp_pekerja')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->join('d_item_dt', 'id_detailid', '=', 'sp_item_dt')
+            ->join('d_item_dt', function ($q){
+                $q->on('id_detailid', '=', 'sp_item_dt');
+                $q->on('id_item', '=', 'i_id');
+            })
             ->join('d_kategori', 'k_id', '=', 'i_kategori')
             ->join('d_size', 's_id', '=', 'id_size')
             ->select('p_name', 'p_hp', 'p_id', 's_nama', 'i_nama', 'k_nama', 'i_warna', DB::raw('round(sp_value - sp_pay_value) as tagihan'), 'sp_value', 'sp_pay_value', 'sp_sales')
             ->where('sp_sales', '=', $idSales[0]->s_id)
-            ->get();
-
+            ->get();        
+        
         return view('pembayaran.bayar', compact('pekerja', 'nota', 'link', 'status'));
     }
 

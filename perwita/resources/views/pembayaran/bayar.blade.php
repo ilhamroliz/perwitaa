@@ -63,7 +63,7 @@
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody>                      
                       @foreach($pekerja as $index=>$data)
                       <tr>
                         <td>{{ $data->p_name }} ({{ $data->p_hp }})</td>
