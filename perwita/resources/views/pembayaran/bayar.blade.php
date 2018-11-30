@@ -63,7 +63,7 @@
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>                      
+                    <tbody>
                       @foreach($pekerja as $index=>$data)
                       <tr>
                         <td>{{ $data->p_name }} ({{ $data->p_hp }})</td>
@@ -103,42 +103,42 @@
     </div>
 </div>
 
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-users modal-icon"></i>
-                <h4 class="modal-title">Detail Pembayaran</h4>
-                <small class="font-bold">Detail pembayaran pekerja</small>
-            </div>
-            <div class="modal-body">
-                <h3 class="namabarang"></h3>
-                <form class="form-horizontal" id="form-detail">
-                    <div class="form-group">
-                        <table class="table table-responsive table-striped table-bordered table-hover" id="detilpembayaran">
-                          <thead>
-                            <tr>
-                              <th style="width: 40%;" class="col-md-5">Nama</th>
-                              <th style="width: 30%;" class="col-md-4">Tanggal</th>
-                              <th style="width: 30%;" class="col-md-3">Jumlah Pembayaran</th>
-                              <th style="width: 30%;" class="col-md-3">Pegawai</th>
-                            </tr>
-                          </thead>
-                          <tbody id="datamodal">
+<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                          <i class="fa fa-users modal-icon"></i>
+                                          <h4 class="modal-title">Detail Pembayaran</h4>
+                                          <small class="font-bold">Detail pembayaran pekerja</small>
+                                      </div>
+                                      <div class="modal-body">
+                                          <h3 class="namabarang"></h3>
+                                          <form class="form-horizontal" id="form-detail">
+                                              <div class="form-group">
+                                                  <table class="table table-responsive table-striped table-bordered table-hover" id="detilpembayaran">
+                                                    <thead>
+                                                      <tr>
+                                                        <th style="width: 40%;" class="col-md-5">Nama</th>
+                                                        <th style="width: 30%;" class="col-md-4">Tanggal</th>
+                                                        <th style="width: 30%;" class="col-md-3">Jumlah Pembayaran</th>
+                                                        <th style="width: 30%;" class="col-md-3">Pegawai</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody id="datamodal">
 
-                          </tbody>
-                        </table>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" style="display:none" id="modalsimpan" name="button">Simpan</button>
-              <button type="button" class="btn" name="button" data-dismiss="modal">Batal</button>
-            </div>
-        </div>
-    </div>
-</div>
+                                                    </tbody>
+                                                  </table>
+                                              </div>
+                                          </form>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" style="display:none" id="modalsimpan" name="button">Simpan</button>
+                                        <button type="button" class="btn" name="button" data-dismiss="modal">Batal</button>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
 
 @endsection
 
@@ -312,7 +312,19 @@
             $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
             waitingDialog.hide();
             $('#myModal').modal('show');
+            var values = [];
+            var selectedVal;
+            $(".harga").each(function(i, sel){
+                selectedVal = $(sel).val();
+                values.push(selectedVal);
+            });
 
+            for (var i = 0; i < values.length; i++) {
+              values[i] = values[i].replace('Rp. ', '');
+              values[i] = values[i].replace('.', '');
+            }
+
+            jumlah = values.reduce(getSum);
           }, error:function(x, e) {
               if (x.status == 0) {
                   alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
@@ -359,6 +371,9 @@
               "showMethod": "fadeIn",
               "hideMethod": "fadeOut"
             }
+            setTimeout(function () {
+              window.location.reload();
+            }, 800);
           } else {
             Command: toastr["warning"]("Gagal Disimpan!", "Peringatan !")
 
