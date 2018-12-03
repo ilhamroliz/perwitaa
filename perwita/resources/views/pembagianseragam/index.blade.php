@@ -47,6 +47,7 @@
                                 <th>Divisi</th>
                                 <th>Status</th>
                                 <th>Tanggal</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,6 +86,7 @@
               {data: 'md_name', name: 'md_name'},
               {data: 'status', name: 'status'},
               {data: 'sp_date', name: 'sp_date'},
+              {data: 'action', name: 'action'},
           ],
           responsive: true,
           "pageLength": 10,
@@ -95,90 +97,9 @@
       });
     });
 
-    // function detail(nota){
-    //     $.ajax({
-    //       url: baseUrl + '/manajemen-pembelian/getDetail',
-    //       type: 'get',
-    //       data: {nota: nota},
-    //       success: function(response){
-    //         if (response.status == 'sukses') {
-    //             var data = response.data;
-    //             tablemodal.clear();
-    //             for (var i = 0; i < data.length; i++) {
-    //                 var harga = accounting.formatMoney(data[i].pd_value, "", 0, ".", ",");
-    //                 var diskon = accounting.formatMoney(data[i].pd_disc_value, "", 0, ".", ",");
-    //                 tablemodal.row.add([
-    //                     data[i].nama,
-    //                     data[i].pd_qty,
-    //                     harga,
-    //                     diskon,
-    //                     accounting.formatMoney(data[i].pd_qty * data[i].pd_value, "", 0, ".", ",")
-    //                 ]).draw(false);
-    //             }
-    //         }
-    //         $('#myModal').modal('show');
-    //       }, error:function(x, e) {
-    //           if (x.status == 0) {
-    //               alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-    //           } else if (x.status == 404) {
-    //               alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-    //           } else if (x.status == 500) {
-    //               alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-    //           } else if (e == 'parsererror') {
-    //               alert('Error.\nParsing JSON Request failed.');
-    //           } else if (e == 'timeout'){
-    //               alert('Request Time out. Harap coba lagi nanti');
-    //           } else {
-    //               alert('Unknow Error.\n' + x.responseText);
-    //           }
-    //         }
-    //     })
-    // }
-    //
-    // function hapus(nota){
-    //     swal({
-    //         title: "Apakah anda yakin?",
-    //         text: "Data yang dihapus tidak bisa dikembalikan",
-    //         type: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#DD6B55",
-    //         confirmButtonText: "Ya, Lanjutkan!",
-    //         cancelButtonText: "Batalkan",
-    //         closeOnConfirm: false
-    //     }, function () {
-    //         waitingDialog.show();
-    //         $.ajax({
-    //             url: baseUrl + '/manajemen-pembelian/hapus',
-    //             type: 'get',
-    //             data: {nota: nota},
-    //             success: function (response) {
-    //                 waitingDialog.hide();
-    //                 if (response.status == 'sukses') {
-    //                    swal("Terhapus!", "Data sudah terhapus.", "success");
-    //                    location.reload();
-    //                 }
-    //             },
-    //             error: function (xhr, status) {
-    //                 waitingDialog.hide();
-    //                 if (status == 'timeout') {
-    //                     $('.error-load').css('visibility', 'visible');
-    //                     $('.error-load small').text('Ups. Terjadi Kesalahan, Coba Lagi Nanti');
-    //                 }
-    //                 else if (xhr.status == 0) {
-    //                     $('.error-load').css('visibility', 'visible');
-    //                     $('.error-load small').text('Ups. Koneksi Internet Bemasalah, Coba Lagi Nanti');
-    //                 }
-    //                 else if (xhr.status == 500) {
-    //                     $('.error-load').css('visibility', 'visible');
-    //                     $('.error-load small').text('Ups. Server Bemasalah, Coba Lagi Nanti');
-    //                 }
-    //             }
-    //         });
-    //     })
-    // }
-    //
-    // function edit(nota){
-    //     location.href = '{{ url('manajemen-seragam/edit') }}'+'?nota='+nota;
-    // }
+    function lanjutkan(sales, mitra, divisi){
+      window.location.href = baseUrl + '/manajemen-seragam/pembagianseragam/lanjutkan?sales='+sales+'&mitra='+mitra+'&divisi='+divisi;
+    }
+
 </script>
 @endsection

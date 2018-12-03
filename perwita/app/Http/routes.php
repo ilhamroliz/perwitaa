@@ -1072,4 +1072,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/pembagianseragam/showdata', 'pembagianseragamController@showdata');
     Route::get('manajemen-seragam/pembagianseragam/simpan', 'pembagianseragamController@simpan');
     Route::get('manajemen-seragam/pembagianseragam/datatable_data', 'pembagianseragamController@datatable_data');
+    Route::get('manajemen-seragam/pembagianseragam/lanjutkan', 'pembagianseragamController@lanjutkan');
 });

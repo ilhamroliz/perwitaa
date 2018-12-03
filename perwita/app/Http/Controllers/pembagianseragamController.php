@@ -323,7 +323,7 @@ class pembagianseragamController extends Controller
               $e->on('md_mitra', '=', 'm_id')
                 ->on('md_id', '=', 'sp_divisi');
             })
-            ->select('m_name', 'md_name', 'sd_use', 'sd_qty', 'sp_no', 'sp_date', DB::raw('@rownum := @rownum + 1 as number'))
+            ->select('m_name', 'md_name', 'sd_use', 'sd_qty', 'sp_no', 'sp_sales', 'sp_mitra', 'sp_divisi', 'sp_date', DB::raw('@rownum := @rownum + 1 as number'))
             ->where('sd_qty', '>', DB::raw('sd_use'))
             ->groupBy('sp_no')
             ->get();
@@ -338,6 +338,76 @@ class pembagianseragamController extends Controller
           ->editColumn('status', function ($list) {
               return '<div class="text-center"><span class="badge badge-warning ">Belum Lengkap</span></div>';
           })
+          ->editColumn('action', function($list){
+              return '<div align="center"> <button type="button" class="btn btn-info btn-xs" title="Lanjutkan" onclick="lanjutkan('.$list->sp_sales.','.$list->sp_mitra.','.$list->sp_divisi.')"> <i class="fa fa-sign-in"></i> </div>';
+          })
           ->make(true);
+    }
+
+    public function lanjutkan(Request $request){
+      $notasales = DB::table('d_sales')
+                    ->where('s_id', $request->sales)
+                    ->first();
+
+      $mitraselected = $request->mitra;
+
+      $data = DB::table('d_mitra_pekerja')
+                  ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
+                  ->where('mp_mitra', $request->mitra)
+                  ->where('mp_divisi', $request->divisi)
+                  ->where('mp_status', 'Aktif')
+                  ->where('mp_isapproved', 'Y')
+                  ->select('p_id', 'p_name')
+                  ->get();
+
+      $sales = [];
+      for ($i=0; $i < count($data); $i++) {
+        $sales[] = DB::table('d_seragam_pekerja')
+                      ->where('sp_sales', $request->sales)
+                      ->where('sp_pekerja', $data[$i]->p_id)
+                      ->where('sp_mitra', $request->mitra)
+                      ->where('sp_divisi', $request->divisi)
+                      ->get();
+      }
+
+      $perwita = new perwitaController;
+
+      if ($perwita->getComp()[0] == 'internal') {
+        $mitra = DB::table('d_mitra')
+                    ->get();
+      } elseif ($perwita->getComp()[0] == 'mitra') {
+        $mitra = DB::table('d_mitra')
+                  ->where('m_id', $perwita->getComp()[2])
+                  ->get();
+      }
+
+      $divisi = DB::table('d_mitra_divisi')
+                    ->where('md_id', $request->divisi)
+                    ->first();
+
+        $salesreceived = DB::table('d_sales_received')
+                  ->join('d_item', 'i_id', '=', 'sr_item')
+                  ->join('d_item_dt', function($e){
+                    $e->on('id_item', '=', 'sr_item')
+                      ->on('id_detailid', '=', 'sr_item_dt');
+                  })
+                  ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                  ->join('d_size', 'd_size.s_id', '=', 'id_size')
+                  ->select('s_nama', 'k_nama', 'i_nama', 'i_warna', 'sr_sales', 'sr_detailid', 'sr_item', 'sr_item_dt', DB::raw('sum(sr_qty) as sr_qty'))
+                  ->where('sr_sales', $request->sales)
+                  ->where('sr_isapproved', 'Y')
+                  ->groupBy('sr_item_dt')
+                  ->get();
+
+        $jenis = DB::table('d_sales_received')
+                      ->join('d_item', 'i_id', '=', 'sr_item')
+                      ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                      ->where('sr_sales', $request->sales)
+                      ->where('sr_isapproved', 'Y')
+                      ->select('k_nama', 'k_id', 'i_id', 'i_nama', 'i_warna')
+                      ->groupBy('i_kategori')
+                      ->get();
+
+      return view('pembagianseragam.lanjutkan', compact('salesreceived', 'jenis', 'notasales', 'mitraselected', 'divisi', 'data', 'sales', 'mitra'));
     }
 }
