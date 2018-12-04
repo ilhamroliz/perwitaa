@@ -239,16 +239,28 @@ function hitung(id, gajipokok, tunjangan, ansuransi){
       success : function(result){
         waitingDialog.hide();
         if (result.status == 'berhasil') {
-            swal({
-                title: "Penggajian Disimpan",
-                text: "Penggajian Berhasil Disimpan",
-                type: "success",
-                showConfirmButton: false,
-                timer: 900
-            });
-            setTimeout(function(){
-                  window.location.reload();
-          }, 850);
+          Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
+
+          toastr.options = {
+            "closeButton": false,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
         }
       }, error:function(x, e) {
           waitingDialog.hide();

@@ -428,7 +428,9 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
               }
-              location.reload();
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
             } else {
                 swal({
                     title: "Gagal",

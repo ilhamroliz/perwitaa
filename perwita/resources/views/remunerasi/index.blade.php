@@ -128,13 +128,25 @@ var table;
         success : function(result){
           waitingDialog.hide();
           if (result.status == 'berhasil') {
-            swal({
-                title: "Berhasil",
-                text: "Simpan Data Remunerasi Berhasil Disimpan",
-                type: "success",
-                showConfirmButton: false,
-                timer: 900
-            });
+            Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
           }
           $('input[type=text]').val('');
           $('#simpanbtn').prop('disabled', true);

@@ -58,7 +58,6 @@
                                 <th>Nota</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -76,11 +75,6 @@
                                 <td class="text-center"><span class="label label-warning">Belum diterima</span></td>
                                 @else
                                 <td class="text-center"><span class="label label-success">Sudah diterima</span></td>
-                                @endif
-                                @if($x->p_isapproved == 'P')
-                                <td class="text-center"><span class="label label-warning">Belum disetujui</span></td>
-                                @elseif($x->p_isapproved == 'Y')
-                                <td class="text-center"><span class="label label-success">Sudah disetujui</span></td>
                                 @endif
                                 <td align="center">
                                 <button type="button" title="Detail" onclick="detail({{$x->p_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>

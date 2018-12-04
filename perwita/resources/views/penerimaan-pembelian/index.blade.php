@@ -272,13 +272,28 @@
               //waitingDialog.hide();
               $('#myModal').modal('hide');
               if (response.status == 'sukses') {
-                  swal({
-                          title: "Sukses",
-                          text: "Data sudah tersimpan",
-                          type: "success"
-                      }, function () {
-                          window.location.reload();
-                      });
+                Command: toastr["warning"]("Jumlah yang dimasukan tidak boleh melebehi sisa", "Peringatan !")
+
+                toastr.options = {
+                  "closeButton": false,
+                  "debug": true,
+                  "newestOnTop": false,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "300",
+                  "hideDuration": "1000",
+                  "timeOut": "5000",
+                  "extendedTimeOut": "1000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                }
+                setTimeout(function () {
+                  window.location.reload();
+                }, 1000);                                     
               } else {
                   swal({
                       title: "Gagal",

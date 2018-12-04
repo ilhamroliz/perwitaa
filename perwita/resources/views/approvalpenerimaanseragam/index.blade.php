@@ -70,7 +70,7 @@
                               <input class="pilih-{{$index}}" type="hidden" name="purchase[]" onclick="selectBox({{$index}})" value="{{$x->pa_purchase}}">
                           </td>
                         <td>{{$x->pa_do}}</td>
-                        <td>{{Carbon\Carbon::parse($x->pa_date)->format('d/m/Y h:i:s')}}</td>
+                        <td>{{Carbon\Carbon::parse($x->pa_date)->format('d/m/Y G:i:s')}}</td>
                         <td>{{$x->i_nama . ' ' . $x->s_nama}}</td>
                         <td>{{$x->pa_qty}}</td>
                         <td align="center">

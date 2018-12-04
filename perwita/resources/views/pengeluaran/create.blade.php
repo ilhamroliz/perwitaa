@@ -25,7 +25,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Tambah data Pengeluaran Barang</h2>
+            <h2>Tambah Data Pengeluaran Seragam</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ url('/') }}">Home</a>
@@ -34,7 +34,7 @@
                     Pengeluaran
                 </li>
                 <li>
-                    Pengeluaran Barang
+                    Pengeluaran Seragam
                 </li>
                 <li class="active">
                     <strong>Tambah data</strong>
@@ -330,6 +330,7 @@
 
         function unlock(){
             $('#mitra').chosen().chosenReadonly(false);
+            $('#divisi').prop('disabled', false);
             $('.unlock').hide();
             $('.lock').show();
             $('#cariItem').val('');
@@ -377,6 +378,15 @@
                     '<div class="pull-right">Rp. '+ accounting.formatMoney(publicHarga, "", 0, ".", ",")+'</div><input type="hidden" id="harga-'+idStock+'" name="harga[]" value="'+publicHarga+'">',
                     '<div class="text-center"><button class="btn btn-danger btn-xs hapus-penjualan" id="hapus-penjualan" type="button" style=""><i class="fa fa-minus"></i></button></div>'
                 ] ).draw( false );
+
+                var values = [];
+                var selectedVal;
+                $(".inqty").each(function(i, sel){
+                    selectedVal = $(sel).val();
+                    values.push(selectedVal);
+                });
+                var jumlahitem = values.reduce(getSum);
+                $('.jumlahitem').text(jumlahitem)
             }
 
             $('#cariItem').val('');
@@ -420,6 +430,14 @@
                 totoalHarga();
                 return false;
             }
+            var values = [];
+            var selectedVal;
+            $(".inqty").each(function(i, sel){
+                selectedVal = $(sel).val();
+                values.push(selectedVal);
+            });
+            var jumlahitem = values.reduce(getSum);
+            $('.jumlahitem').text(jumlahitem)
             totoalHarga();
         }
 
@@ -437,6 +455,14 @@
                 $('#setQty-'+id).val(1);
                 input = 1;
             }
+            var values = [];
+            var selectedVal;
+            $(".inqty").each(function(i, sel){
+                selectedVal = $(sel).val();
+                values.push(selectedVal);
+            });
+            var jumlahitem = values.reduce(getSum);
+            $('.jumlahitem').text(jumlahitem)
             totoalHarga();
         }
 
@@ -453,7 +479,6 @@
             totalPublic = total;
             total = accounting.formatMoney(total, "", 0, ".", ",");
             $('.totalpembelian').html('Rp. ' + total);
-            $('.jumlahitem').html(totalQty.length);
         }
 
     function simpan(){
@@ -516,6 +541,9 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
               }
+              setTimeout(function () {
+                window.location.reload();
+              }, 1000);
             } else {
                 swal({
                     title: "Gagal",
@@ -584,7 +612,9 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
               }
-              location.reload();                
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
             } else {
                 swal({
                     title: "Gagal",
