@@ -314,6 +314,7 @@ class PenjualanController extends Controller
                 's_id' => $id,
                 's_comp' => 'PWT0000003',
                 's_member' => $mitra,
+                's_divisi' => $divisi,
                 's_nota' => $nota,
                 's_total_gross' => $total,
                 's_disc_percent' => 0,
@@ -496,6 +497,17 @@ class PenjualanController extends Controller
                 ->where('s_id', $request->id)
                 ->delete();
 
+                $count = DB::table('d_sales')
+                    ->where('s_isapproved', 'P')
+                    ->get();
+
+                DB::table('d_notifikasi')
+                    ->where('n_fitur', 'Pengeluaran')
+                    ->update([
+                        'n_qty' => count($count),
+                        'n_insert' => Carbon::now('Asia/Jakarta')
+                    ]);
+
             // for ($x=0; $x < count($seragampekerja); $x++) {
             //   DB::table('d_pekerja_mutation')
             //       ->where('pm_pekerja', $seragampekerja[$x]->sp_pekerja)
@@ -536,209 +548,195 @@ class PenjualanController extends Controller
 
     public function edit(Request $request)
     {
-
         $id = $request->id;
 
         $data = DB::table('d_sales')
-            ->join('d_sales_dt', 'sd_sales', '=', 'd_sales.s_id')
-            ->join('d_mitra', 'm_id', '=', 's_member')
-            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
-            ->join('d_item', 'i_id', '=', 'sd_item')
-            ->join('d_item_dt', function ($e) {
-                $e->on('id_item', '=', 'sd_item')
-                    ->on('id_detailid', '=', 'sd_item_dt');
-            })
-            ->join('d_size', 'd_size.s_id', '=', 'id_size')
-            ->join('d_seragam_pekerja', function ($e) {
-                $e->on('sp_sales', '=', 'd_sales.s_id')
-                    ->on('sp_sales', '=', 'sd_sales');
-            })
-            ->join('d_pekerja', 'p_id', '=', 'sp_pekerja')
-            ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'p_id')
-            ->where('d_sales.s_id', $request->id)
-            ->where('mp_status', 'Aktif')
-            ->where('mp_isapproved', 'Y')
-            ->get();
+                    ->select('s_member', 's_divisi', 's_nota')
+                    ->where('s_id', $request->id)
+                    ->first();
 
-        $pekerja = DB::select("select p_name, sp_item, sp_item_size, s_id, p_nip, p_id, s_nama, p_hp, sp_item from d_pekerja
-            join d_mitra_pekerja on p_id = mp_pekerja
-            left join d_seragam_pekerja on mp_pekerja = sp_pekerja AND sp_sales = '" . $request->id . "'
-            left join d_size on s_id = sp_item_size
-            where mp_status = 'Aktif'
-            AND mp_divisi = " . $data[0]->mp_divisi . " AND mp_mitra = " . $data[0]->mp_mitra . "");
+        $mitra = DB::table('d_mitra')
+                    ->select('m_name', 'm_id')
+                    ->where('m_id', $data->s_member)
+                    ->first();
 
-        $countpekerja = count($pekerja);
+        $divisi = DB::table('d_mitra_divisi')
+                    ->select('md_name', 'md_id', 'md_mitra')
+                    ->where('md_mitra', $data->s_member)
+                    ->where('md_id', $data->s_divisi)
+                    ->first();
 
-        $stock = DB::table('d_stock')
-            ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
-            ->where('sm_item', $data[0]->sd_item)
-            ->where('sm_item_dt', $data[0]->sd_item_dt)
-            ->get();
+        $dataitem = DB::table('d_sales_dt')
+                    ->join('d_item', 'i_id', '=', 'sd_item')
+                    ->join('d_item_dt', function($e){
+                      $e->on('id_item', '=', 'i_id')
+                        ->on('id_detailid', '=', 'sd_item_dt');
+                    })
+                    ->join('d_size', 's_id', '=', 'id_size')
+                    ->where('sd_sales', $request->id)
+                    ->get();
 
-        for ($i = 0; $i < count($data); $i++) {
-            $seragam = DB::table('d_item_dt')
-                ->join('d_item', 'i_id', '=', 'id_item')
-                ->join('d_size', 'id_size', '=', 's_id')
-                ->join('d_stock', function ($q) {
-                    $q->on('d_stock.s_item', '=', 'id_item');
-                    $q->on('d_stock.s_item_dt', '=', 'id_detailid');
-                })
-                ->select('i_nama', 's_nama', 'd_size.s_id', 'id_price', 'i_warna', DB::raw('d_stock.s_qty as qty'))
-                ->where('id_item', '=', $data[$i]->i_id)
-                ->orderBy('d_size.s_id')
-                ->get();
-        }
+      for ($i=0; $i < count($dataitem); $i++) {
+        $stock[] = DB::table('d_stock')
+                  ->where('s_item', $dataitem[$i]->sd_item)
+                  ->where('s_item_dt', $dataitem[$i]->sd_item_dt)
+                  ->get();
+      }
 
 
-        return view('pengeluaran.edit', compact('data', 'stock', 'pekerja', 'count', 'id', 'seragam', 'countpekerja'));
+        $nota = $data->s_nota;
+
+        // $id = $request->id;
+        //
+        // $data = DB::table('d_sales')
+        //     ->leftjoin('d_sales_dt', 'sd_sales', '=', 'd_sales.s_id')
+        //     ->leftjoin('d_mitra', 'm_id', '=', 's_member')
+        //     ->leftjoin('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+        //     ->leftjoin('d_item', 'i_id', '=', 'sd_item')
+        //     ->leftjoin('d_item_dt', function ($e) {
+        //         $e->on('id_item', '=', 'sd_item')
+        //             ->on('id_detailid', '=', 'sd_item_dt');
+        //     })
+        //     ->leftjoin('d_size', 'd_size.s_id', '=', 'id_size')
+        //     ->leftjoin('d_seragam_pekerja', function ($e) {
+        //         $e->on('sp_sales', '=', 'd_sales.s_id')
+        //             ->on('sp_sales', '=', 'sd_sales');
+        //     })
+        //     ->leftjoin('d_pekerja', 'p_id', '=', 'sp_pekerja')
+        //     ->leftjoin('d_mitra_pekerja', 'mp_pekerja', '=', 'p_id')
+        //     ->where('d_sales.s_id', $request->id)
+        //     ->where('mp_status', 'Aktif')
+        //     ->where('mp_isapproved', 'Y')
+        //     ->get();
+        //
+        // $pekerja = DB::select("select p_name, sp_item, sp_item_size, s_id, p_nip, p_id, s_nama, p_hp, sp_item from d_pekerja
+        //     join d_mitra_pekerja on p_id = mp_pekerja
+        //     left join d_seragam_pekerja on mp_pekerja = sp_pekerja AND sp_sales = '" . $request->id . "'
+        //     left join d_size on s_id = sp_item_size
+        //     where mp_status = 'Aktif'
+        //     AND mp_divisi = " . $data[0]->mp_divisi . " AND mp_mitra = " . $data[0]->mp_mitra . "");
+        //
+        // $countpekerja = count($pekerja);
+        //
+        // $stock = DB::table('d_stock')
+        //     ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+        //     ->where('sm_item', $data[0]->sd_item)
+        //     ->where('sm_item_dt', $data[0]->sd_item_dt)
+        //     ->get();
+        //
+        // for ($i = 0; $i < count($data); $i++) {
+        //     $seragam = DB::table('d_item_dt')
+        //         ->join('d_item', 'i_id', '=', 'id_item')
+        //         ->join('d_size', 'id_size', '=', 's_id')
+        //         ->join('d_stock', function ($q) {
+        //             $q->on('d_stock.s_item', '=', 'id_item');
+        //             $q->on('d_stock.s_item_dt', '=', 'id_detailid');
+        //         })
+        //         ->select('i_nama', 's_nama', 'd_size.s_id', 'id_price', 'i_warna', DB::raw('d_stock.s_qty as qty'))
+        //         ->where('id_item', '=', $data[$i]->i_id)
+        //         ->orderBy('d_size.s_id')
+        //         ->get();
+        // }
+        //
+        //
+        return view('pengeluaran.edit', compact('id', 'data', 'dataitem', 'mitra', 'divisi', 'nota', 'stock'));
 
     }
 
     public function update(Request $request)
     {
-        $divisi = $request->divisi;
-        $seragam = $request->seragam;
-        $mitra = $request->mitra;
-        $ukuran = $request->ukuran;
-        $total = $request->total;
-        $pekerja = $request->pekerja;
-        $temp = $request->pekerja;
-        $comp = Session::get('mem_comp');
-        $sekarang = Carbon::now('Asia/Jakarta');
-        $nota = $this->getnewnota();
-        $jumlahUkuran = array_count_values($ukuran);
-        $jumlahSimpan = $jumlahUkuran;
 
-        $countukuran = 0;
-        for ($i = 0; $i < count($ukuran); $i++) {
-            if ($ukuran[$i] != "Tidak") {
-                $countukuran++;
-            }
-        }
+      DB::table('d_sales_dt')
+          ->where('sd_sales', $request->id)
+          ->delete();
 
-        for ($i = 0; $i < count($ukuran); $i++) {
-            if ($ukuran[$i] != 'Tidak' && $pekerja[$i] != null) {
-                $temp[$i] = 'Iya';
-            } else {
-                $temp[$i] = 'Tidak';
-            }
-        }
+      DB::table('d_sales')
+          ->where('s_id', $request->id)
+          ->delete();
 
-        $getItem_dt = DB::table('d_item_dt')
-            ->select('id_detailid')
-            ->where('id_item', '=', $seragam)
-            ->whereIn('id_size', $ukuran)
-            ->get();
+      $nota = $request->nota;
+      $mitra = $request->mitra;
+      $divisi = $request->divisi;
+      $total = $request->total;
+      $qty = $request->qty;
+      $idStock = $request->idStock;
 
-        $item_dt = [];
-        for ($i = 0; $i < count($getItem_dt); $i++) {
-            $item_dt[$i] = $getItem_dt[$i]->id_detailid;
-        }
+      DB::beginTransaction();
+      try {
 
-        $getStock = DB::table('d_stock_mutation')
-            ->join('d_stock', 's_id', '=', 'sm_stock')
-            ->join('d_item_dt', function ($q) {
-                $q->on('s_item', '=', 'id_item')
-                    ->on('s_item_dt', '=', 'id_detailid');
-            })
-            ->select('sm_stock', 'sm_detailid', 'sm_qty', 'sm_use', 'sm_item_dt', DB::raw('(sm_qty - sm_use) as sisa'), 'sm_hpp', 'sm_sell', 'id_size', 'id_price')
-            ->where('s_item', '=', $seragam)
-            ->whereIn('s_item_dt', $item_dt)
-            ->where('s_comp', '=', $comp)
-            ->where('s_position', '=', $comp)
-            ->where(DB::raw('(sm_qty - sm_use)'), '!=', 0)
-            ->orderBy('sm_stock', 'asc')
-            ->orderBy('sm_detailid', 'asc')
-            ->orderBy('sm_date', 'asc')
-            ->get();
+          $id = DB::table('d_sales')
+              ->max('s_id');
+          ++$id;
 
-        DB::beginTransaction();
-        try {
+          DB::table('d_sales')->insert([
+              's_id' => $id,
+              's_comp' => 'PWT0000003',
+              's_member' => $mitra,
+              's_divisi' => $divisi,
+              's_nota' => $nota,
+              's_total_gross' => $total,
+              's_disc_percent' => 0,
+              's_disc_value' => 0,
+              's_total_net' => $total,
+              's_isapproved' => 'P'
+          ]);
 
-            for ($c = 0; $c < count($countukuran); $c++) {
-                $detailSales = DB::table('d_sales_dt')
-                    ->where('sd_sales', '=', $request->id)
-                    ->max('sd_detailid');
-            }
 
-            DB::table('d_sales')
-                ->where('s_id', $request->id)
-                ->update([
-                    's_total_gross' => $request->total,
-                    's_total_net' => $request->total
-                ]);
+          $count = DB::table('d_sales')
+              ->where('s_isapproved', 'P')
+              ->get();
 
-            DB::table('d_sales_dt')
-                ->where('sd_sales', $request->id)
-                ->delete();
+          DB::table('d_notifikasi')
+              ->where('n_fitur', 'Pengeluaran')
+              ->update([
+                  'n_qty' => count($count),
+                  'n_insert' => Carbon::now('Asia/Jakarta')
+              ]);
 
-            DB::table('d_seragam_pekerja')
-                ->where('sp_sales', $request->id)
-                ->delete();
+          for ($j = 0; $j < count($idStock); $j++) {
+              $item = DB::table('d_stock')
+                  ->join('d_item', 's_item', '=', 'i_id')
+                  ->join('d_item_dt', function ($q){
+                      $q->on('id_item', '=', 'i_id');
+                      $q->on('id_detailid', '=', 's_item_dt');
+                      $q->on('id_item', '=', 's_item');
+                  })
+                  ->join('d_stock_mutation', 'sm_stock', '=', 's_id')
+                  ->select('s_item', 's_item_dt', 'id_price', 'sm_hpp')
+                  ->where('s_id', '=', $idStock[$j])
+                  ->where('sm_detail', '=', 'Pembelian')
+                  ->orderBy('sm_detailid', 'desc')
+                  ->first();
 
-            for ($i = 0; $i < count($pekerja); $i++) {
-                // Insert seragam pekerja //
+              $salesdt = array(
+                  'sd_sales' => $id,
+                  'sd_detailid' => $j + 1,
+                  'sd_comp' => 'PWT0000003',
+                  'sd_item' => $item->s_item,
+                  'sd_item_dt' => $item->s_item_dt,
+                  'sd_qty' => $qty[$j],
+                  'sd_value' => $item->id_price,
+                  'sd_total_gross' => ($item->id_price * $qty[$j]),
+                  'sd_disc_percent' => 0,
+                  'sd_disc_value' => 0,
+                  'sd_total_net' => ($item->id_price * $qty[$j]),
+                  'sd_sell' => $item->id_price,
+                  'sd_hpp' => $item->sm_hpp
+              );
+              d_sales_dt::insert($salesdt);
+          }
 
-                $detailid = DB::table('d_seragam_pekerja')
-                    ->where('sp_sales', $request->id)
-                    ->max('sp_id');
-
-                if ($detailid == null) {
-                    $detailid = 0;
-                }
-
-                if ($pekerja[$i] != '' && $temp[$i] == 'Iya' && $ukuran[$i] != 'Tidak') {
-                    DB::table('d_seragam_pekerja')
-                        ->insert([
-                            'sp_sales' => $request->id,
-                            'sp_id' => $detailid + 1,
-                            'sp_pekerja' => $pekerja[$i],
-                            'sp_item' => $seragam,
-                            'sp_item_size' => $ukuran[$i],
-                            'sp_qty' => 1,
-                            'sp_value' => $getStock[0]->id_price,
-                            'sp_pay_value' => 0,
-                            'sp_status' => 'Belum',
-                            'sp_date' => Carbon::now('Asia/Jakarta'),
-                            'sp_mitra' => $mitra,
-                            'sp_divisi' => $divisi,
-                            'sp_no' => $this->getpenerimaan($request->id)
-                        ]);
-                }
-            }
-
-            for ($j = 0; $j < count($countukuran); $j++) {
-                $salesdt = array(
-                    'sd_sales' => $request->id,
-                    'sd_detailid' => $detailSales,
-                    'sd_comp' => Session::get('mem_comp'),
-                    'sd_item' => $seragam,
-                    'sd_item_dt' => $getStock[$j]->sm_item_dt,
-                    'sd_qty' => $jumlahSimpan[$getStock[$j]->id_size],
-                    'sd_value' => $getStock[$j]->id_price,
-                    'sd_total_gross' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                    'sd_disc_percent' => 0,
-                    'sd_disc_value' => 0,
-                    'sd_total_net' => $getStock[$j]->id_price * $jumlahSimpan[$getStock[$j]->id_size],
-                    'sd_sell' => $getStock[$j]->sm_sell,
-                    'sd_hpp' => $getStock[$j]->sm_hpp
-                );
-
-                $detailSales = $detailSales + 1;
-
-                d_sales_dt::insert($salesdt);
-            }
-
-            DB::commit();
-            return response()->json([
-                'status' => 'berhasil'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => 'gagal'
-            ]);
-        }
+          DB::commit();
+          return response()->json([
+              'status' => 'sukses'
+          ]);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return response()->json([
+              'status' => 'gagal',
+              'data' => $e
+          ]);
+      }
     }
 
     public function search($mitra, Request $request)

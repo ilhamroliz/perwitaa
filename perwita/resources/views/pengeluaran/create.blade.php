@@ -464,7 +464,6 @@
           values.push(selectedVal);
       });
       var jumlahitem = values.reduce(getSum);
-      console.log(jumlahitem);
       var jumlahpekerja = $('.jumlahpekerja').text();
 
         if (parseInt(jumlahitem) != parseInt(jumlahpekerja)) {
@@ -498,15 +497,25 @@
           success: function(response){
             waitingDialog.hide();
             if (response.status == 'sukses') {
-                swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
+              Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
 
-                    }, function () {
-                      //cari();
-                      location.reload();
-                    });
+              toastr.options = {
+                "closeButton": false,
+                "debug": true,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+              }
             } else {
                 swal({
                     title: "Gagal",
@@ -556,15 +565,26 @@
           success: function(response){
             waitingDialog.hide();
             if (response.status == 'sukses') {
-                swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
+              Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
 
-                    }, function () {
-                      //cari();
-                      location.reload();
-                    });
+              toastr.options = {
+                "closeButton": false,
+                "debug": true,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+              }
+              location.reload();                
             } else {
                 swal({
                     title: "Gagal",
