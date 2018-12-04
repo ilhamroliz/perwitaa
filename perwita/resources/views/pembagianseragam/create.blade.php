@@ -496,7 +496,7 @@ var status = 'unlock';
           waitingDialog.hide();
           setTimeout(function () {
             window.location.href = baseUrl + '/manajemen-seragam/pembagianseragam';
-          }, 500);
+          }, 3000);
           } else {
             Command: toastr["warning"]("Gagal Disimpan!", "Peringatan !")
 

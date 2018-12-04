@@ -56,6 +56,8 @@
                               <input type="checkbox" class="setCek" onclick="selectall()">
                           </th>
                           <th>Nama Item</th>
+                          <th>Mitra</th>
+                          <th>Divisi</th>
                           <th>QTY</th>
                           <th>Tanggal</th>
                           <th>Penerima</th>
@@ -69,6 +71,8 @@
                               <input class="pilih-{{$index}}" type="checkbox" name="pilih[]" onclick="selectBox({{$index}})" value="{{$x->sr_detailid}}">
                           </td>
                         <td> <strong>{{$x->k_nama}}</strong> </br> {{$x->i_nama}} {{$x->s_nama}} </td>
+                        <td>{{$x->m_name}}</td>
+                        <td>{{$x->md_name}}</td>
                         <td>{{$x->sr_qty}}</td>
                         <td>{{Carbon\Carbon::parse($x->sr_date)->format('d/m/Y G:i:s')}}</td>
                         <td>{{$x->m_name}}</td>

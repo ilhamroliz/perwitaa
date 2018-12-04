@@ -61,6 +61,7 @@
                                     </th>
                                     <th>Tanggal</th>
                                     <th>Mitra</th>
+                                    <th>Divisi</th>
                                     <th>Nota</th>
                                     <th>Total</th>
                                     <th>Status</th>
@@ -75,6 +76,7 @@
                                         </td>
                                         <td>{{ Carbon\Carbon::parse($x->s_date)->format('d/m/Y H:i:s') }}</td>
                                         <td>{{ $x->m_name}}</td>
+                                        <td>{{ $x->md_name }}</td>
                                         <td>{{ $x->s_nota}}</td>
                                         <td><span style="float: left;">Rp. </span><span
                                                     style="float: right">{{ number_format($x->s_total_net, 0, ',', '.') }}</span>

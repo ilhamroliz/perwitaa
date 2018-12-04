@@ -25,9 +25,13 @@ class approvalpenjualanController extends Controller
 
         $data = DB::table('d_sales')
             ->join('d_mitra', 'm_id', '=', 's_member')
-            ->select('s_id', 's_date', 'm_name', 's_nota', 's_total_net')
+            ->join('d_mitra_divisi', function($e){
+              $e->on('md_mitra', '=', 'm_id')
+                ->on('md_id', '=', 's_divisi');
+            })
+            ->select('s_id', 's_date', 'm_name', 's_nota', 's_total_net', 'md_name')
             ->where('s_isapproved', 'P')
-            ->get();
+            ->get();            
 
         $count = DB::table('d_sales')
             ->where('s_isapproved', 'P')

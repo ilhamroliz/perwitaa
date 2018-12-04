@@ -16,6 +16,7 @@ class approvalpenerimaanpengeluaranseragamController extends Controller
 {
     public function index(){
       $data = DB::table('d_sales_received')
+                ->join('d_sales', 's_id', '=', 'sr_sales')
                 ->join('d_item', 'i_id', '=', 'sr_item')
                 ->join('d_item_dt', function($e){
                   $e->on('id_item', '=', 'i_id')
@@ -24,6 +25,11 @@ class approvalpenerimaanpengeluaranseragamController extends Controller
                 ->join('d_kategori', 'k_id', '=', 'i_kategori')
                 ->join('d_size', 'd_size.s_id', '=', 'id_size')
                 ->join('d_mem', 'm_id', '=', 'sr_penerima')
+                ->join('d_mitra', 'd_mitra.m_id', '=', 's_member')
+                ->join('d_mitra_divisi', function($e){
+                  $e->on('md_mitra', '=', 'd_mitra.m_id')
+                    ->on('md_id', '=', 's_divisi');
+                })
                 ->where('sr_isapproved', 'P')
                 ->get();
 

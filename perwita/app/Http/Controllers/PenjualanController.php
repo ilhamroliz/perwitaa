@@ -779,4 +779,75 @@ class PenjualanController extends Controller
       return response()->json($count);
     }
 
+    public function history(){
+      return view('pengeluaran.history');
+    }
+
+    public function cariHistory(Request $request){
+      $cari = $request->term;
+
+      $data = DB::table('d_sales')
+                ->join('d_mitra', 'm_id', '=', 's_member')
+                ->where('s_isapproved', 'Y')
+                ->get();
+
+      if ($data == null) {
+          $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+      } else {
+
+          foreach ($data as $query) {
+              $results[] = ['id' => $query->s_nota, 'label' => $query->s_nota ];
+          }
+      }
+
+      return response()->json($results);
+
+    }
+
+    public function findHistory(Request $request){
+      if ($request->nota == "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
+        $request->tgl_awal = str_replace('/','-',$request->tgl_awal);
+        $request->tgl_akhir = str_replace('/','-',$request->tgl_akhir);
+
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
+
+        $data = DB::table('d_sales')
+                  ->join('d_mitra', 'm_id', '=', 's_member')
+                  ->where('s_isapproved', 'Y')
+                  ->where('s_date', '>=', $start)
+                  ->where('s_date', '<=', $end)
+                  ->get();
+
+      } elseif ($request->nota != "" && $request->tgl_awal == "" && $request->tgl_akhir == "") {
+        $data = DB::table('d_sales')
+                  ->join('d_mitra', 'm_id', '=', 's_member')
+                  ->where('s_isapproved', 'Y')
+                  ->where('s_nota', $request->nota)
+                  ->get();
+
+      } elseif ($request->nota != "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
+        $request->tgl_awal = str_replace('/','-',$request->tgl_awal);
+        $request->tgl_akhir = str_replace('/','-',$request->tgl_akhir);
+
+        $start = Carbon::parse($request->tgl_awal)->startOfDay();  //2016-09-29 00:00:00.000000
+        $end = Carbon::parse($request->tgl_akhir)->endOfDay(); //2016-09-29 23:59:59.000000
+
+        $data = DB::table('d_sales')
+                  ->join('d_mitra', 'm_id', '=', 's_member')
+                  ->where('s_isapproved', 'Y')
+                  ->where('s_date', '>=', $start)
+                  ->where('s_date', '<=', $end)
+                  ->where('s_nota', $request->nota)
+                  ->get();
+      }
+
+      for ($i=0; $i < count($data); $i++) {
+        $data[$i]->s_date = Carbon::parse($data[$i]->s_date)->format('d/m/Y G:i:s');
+      }
+
+      return response()->json($data);
+
+    }
+
 }

@@ -33,6 +33,7 @@
     <div class="ibox-title ibox-info">
         <h5>Pengeluaran Barang</h5>
         <a style="float: right; margin-top: -7px;" class="btn btn-primary btn-outline btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/tambah-pengeluaran') }}"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+        <a style="float: right; margin-top: -7px; margin-right:15px;" class="btn btn-info btn-flat btn-sm" type="button" aria-hidden="true" href="{{ url('manajemen-seragam/history') }}"><i class="fa fa-history"></i>&nbsp;History</a>
     </div>
     <div class="ibox">
         <div class="ibox-content">

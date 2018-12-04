@@ -50,7 +50,12 @@
                         <form role="form" class="form-inline row">
                             <div class="form-group col-md-12">
                                 <label for="namabarang" class="sr-only">Nama Barang</label>
-                                <input type="text" placeholder="Masukan Nomor Rencana Pembelian" id="namabarang" class="form-control" style="width: 100%;">
+                                <select class="form-control select2" name="nota" onchange="tanam()" id="nota">
+                                  <option value=""> - Pilih Nota Rencana Pembelian - </option>
+                                  @foreach ($nota as $key => $value)
+                                    <option value="{{$value->pp_nota}}">{{$value->pp_nota}}</option>
+                                  @endforeach
+                                </select>
                             </div>
 
                             <div class="table-responsive col-md-12" style="margin-top: 30px;">
@@ -148,6 +153,9 @@
     var hitung = 0;
     var notaPublic;
     $( document ).ready(function() {
+
+        $('.select2').select2();
+
         tablepembelian = $("#tabelitem").DataTable({
             responsive: true,
             paging: false,
@@ -158,15 +166,15 @@
 
         $("#supplier").chosen();
 
-        $( "#namabarang" ).autocomplete({
-            source: baseUrl+'/manajemen-seragam/getnotarencana',
-            minLength: 2,
-            select: function(event, ui) {
-                $('#namabarang').val(ui.item.label);
-                tanam(ui.item);
-                $('#namabarang').focus();
-            }
-        });
+        // $( "#namabarang" ).autocomplete({
+        //     source: baseUrl+'/manajemen-seragam/getnotarencana',
+        //     minLength: 2,
+        //     select: function(event, ui) {
+        //         $('#namabarang').val(ui.item.label);
+        //         tanam(ui.item);
+        //         $('#namabarang').focus();
+        //     }
+        // });
 
         $('#namabarang').focus();
 
@@ -186,10 +194,9 @@
         }
     }
 
-    function tanam(data){
+    function tanam(){
         waitingDialog.show();
-        var nota = data.id;
-        notaPublic = data.id;
+        nota = $('#nota').val();
         $.ajax({
             url: baseUrl + '/manajemen-seragam/getnotarencana/detail',
             type: 'get',

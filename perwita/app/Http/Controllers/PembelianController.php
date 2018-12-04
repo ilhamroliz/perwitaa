@@ -41,7 +41,10 @@ class PembelianController extends Controller
             ->select('s_id', 's_company')
             ->where('s_isactive', '=', 'Y')
             ->get();
-        return view('pembelian.createkhusus', compact('supplier'));
+
+        $nota = $this->getNotaRencana();
+
+        return view('pembelian.createkhusus', compact('supplier', 'nota'));
     }
 
     public function getItem(Request $request)
@@ -284,27 +287,17 @@ class PembelianController extends Controller
         return view('pembelian.cari');
     }
 
-    public function getNotaRencana(Request $request)
+    public function getNotaRencana()
     {
-        $keyword = $request->term;
         $data = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'ppd_purchase_planning', '=', 'pp_id')
             ->select(DB::raw('date_format(pp_date, "%d/%m/%Y") as pp_date'), 'pp_nota')
-            ->where('pp_nota', 'like', '%' . $keyword . '%')
             ->where('pp_isapproved', '=', 'Y')
             ->where('pp_status', '=', 'Belum')
             ->groupBy('pp_id')
             ->get();
 
-        if ($data == null) {
-            $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
-        } else {
-
-            foreach ($data as $query) {
-                $results[] = ['id' => $query->pp_nota, 'label' => $query->pp_nota . ' (' . $query->pp_date . ')'];
-            }
-        }
-        return response()->json($results);
+        return $data;
     }
 
     public function detailRencana(Request $request)

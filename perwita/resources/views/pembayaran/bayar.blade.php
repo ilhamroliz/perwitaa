@@ -108,7 +108,7 @@
                                     <div class="modal-content">
                                       <div class="modal-header">
                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                          <i class="fa fa-users modal-icon"></i>
+                                          <i class="fa fa-money modal-icon"></i>
                                           <h4 class="modal-title">Detail Pembayaran</h4>
                                           <small class="font-bold">Detail pembayaran pekerja</small>
                                       </div>

@@ -260,7 +260,7 @@ function hitung(id, gajipokok, tunjangan, ansuransi){
           }
           setTimeout(function () {
             location.reload();
-          }, 1000);
+          }, 3000);
         }
       }, error:function(x, e) {
           waitingDialog.hide();

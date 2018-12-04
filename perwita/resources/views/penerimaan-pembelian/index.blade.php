@@ -293,7 +293,7 @@
                 }
                 setTimeout(function () {
                   window.location.reload();
-                }, 1000);                                     
+                }, 3000);                                     
               } else {
                   swal({
                       title: "Gagal",
