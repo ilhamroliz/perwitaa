@@ -272,6 +272,7 @@ class PenerimaanController extends Controller
                       ->where('sm_date', '<=', $end)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
+                      ->groupBy('pa_detailid')
                       ->get();
 
       } elseif ($request->nota != "" && $request->tgl_awal == "" && $request->tgl_akhir == "") {
@@ -291,6 +292,7 @@ class PenerimaanController extends Controller
                       ->where('p_nota', $request->nota)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
+                      ->groupBy('pa_detailid')
                       ->get();
 
       } elseif ($request->nota != "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
@@ -318,6 +320,7 @@ class PenerimaanController extends Controller
                       ->where('sm_date', '<=', $end)
                       ->where('p_isapproved', 'Y')
                       ->where('pa_isapproved', 'Y')
+                      ->groupBy('pa_detailid')
                       ->get();
       }
 

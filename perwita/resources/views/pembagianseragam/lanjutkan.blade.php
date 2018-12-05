@@ -156,12 +156,8 @@ var status = 'unlock';
       language: dataTableLanguage
     });
 
-    $(document).keyup(function (event) {
-        if (event.keyCode === 13) {
             nota();
             cari();
-        }
-    });
   });
 
   function nota(){

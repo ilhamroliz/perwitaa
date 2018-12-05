@@ -128,7 +128,7 @@ class pembagianseragamController extends Controller
                       ->where('sp_divisi', $request->divisi)
                       ->get();
       }
-      
+
       if (count($sales) == 0) {
         return response()->json([
           'data' => $data,
@@ -334,7 +334,7 @@ class pembagianseragamController extends Controller
             ->select('m_name', 'md_name', 'sd_use', 'sd_qty', 'sp_no', 'sp_sales', 'sp_mitra', 'sp_divisi', 'sp_date', DB::raw('@rownum := @rownum + 1 as number'))
             ->where('sd_qty', '>', DB::raw('sd_use'))
             ->groupBy('sp_no')
-            ->get();
+            ->get();            
 
       for ($i=0; $i < count($data); $i++) {
         $data[$i]->sp_date = Carbon::parse($data[$i]->sp_date)->format('d/m/Y');

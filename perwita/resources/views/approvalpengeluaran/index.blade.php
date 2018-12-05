@@ -243,6 +243,7 @@
                                     setTimeout(function () {
                                         window.open('approvalpengeluaran/cetak?id='+response.nota);
                                     }, 850);
+                                    window.locatin.reload();
                                 }
                             }, error: function (x, e) {
                                 waitingDialog.hide();
@@ -300,6 +301,7 @@
                                     setTimeout(function () {
                                         window.open('approvalpengeluaran/cetak?id='+response.nota);
                                     }, 850);
+                                    window.locatin.reload();
                                 }
                             }, error: function (x, e) {
                                 waitingDialog.hide();
@@ -511,6 +513,7 @@
                                   window.open('approvalpengeluaran/cetak?id='+nota);
                               }, 850);
                             }
+                            window.locatin.reload();
                         }
                     }, error: function (x, e) {
                         waitingDialog.hide();
