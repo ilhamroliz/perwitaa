@@ -50,7 +50,7 @@
                         <form role="form" class="form-inline row">
                             <div class="form-group col-md-12">
                                 <label for="namabarang" class="sr-only">Nama Barang</label>
-                                <select class="form-control select2" name="nota" onchange="tanam()" id="nota">
+                                <select class="form-control select2" style="width:100%;" name="nota" onchange="tanam()" id="nota">
                                   <option value=""> - Pilih Nota Rencana Pembelian - </option>
                                   @foreach ($nota as $key => $value)
                                     <option value="{{$value->pp_nota}}">{{$value->pp_nota}}</option>
@@ -151,7 +151,7 @@
     var tablepembelian;
     var dataitem;
     var hitung = 0;
-    var notaPublic;
+
     $( document ).ready(function() {
 
         $('.select2').select2();
@@ -412,6 +412,7 @@
             return false;
         }
         waitingDialog.show();
+        var nota = $('#nota').val();
         var ar = $();
         for (var i = 0; i < tablepembelian.rows()[0].length; i++) {
             ar = ar.add(tablepembelian.row(i).node());
@@ -424,19 +425,33 @@
         $.ajax({
             url: baseUrl + '/manajemen-pembelian/simpan',
             type: 'post',
-            data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+notaPublic,
+            data: ar.find('input').serialize()+'&supplier='+supplier+'&nota='+nota,
             success: function(response){
                 if (response.status == 'sukses') {
                     var id = response.id;
                     waitingDialog.hide();
-                    swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
-                    }, function () {
-                            window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print/'+id,'','width=700,height=500');
-                    });
+                    Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
+
+                    toastr.options = {
+                      "closeButton": false,
+                      "debug": true,
+                      "newestOnTop": false,
+                      "progressBar": true,
+                      "positionClass": "toast-top-right",
+                      "preventDuplicates": false,
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }
+                    setTimeout(function () {
+                      window.location.reload();
+                    }, 3000);
                 } else {
                     waitingDialog.hide();
                     swal({

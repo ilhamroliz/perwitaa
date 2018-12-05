@@ -119,6 +119,7 @@ class pembagianseragamController extends Controller
                   ->select('p_id', 'p_name')
                   ->get();
 
+      $sales = [];
       for ($i=0; $i < count($data); $i++) {
         $sales[] = DB::table('d_seragam_pekerja')
                       ->where('sp_sales', $request->sales)
@@ -127,11 +128,18 @@ class pembagianseragamController extends Controller
                       ->where('sp_divisi', $request->divisi)
                       ->get();
       }
-
-      return response()->json([
-        'data' => $data,
-        'sales' => $sales
-      ]);
+      
+      if (count($sales) == 0) {
+        return response()->json([
+          'data' => $data,
+          'sales' => 'kosong'
+        ]);
+      } else {
+        return response()->json([
+          'data' => $data,
+          'sales' => $sales
+        ]);
+      }
     }
 
     public function simpan(Request $request){

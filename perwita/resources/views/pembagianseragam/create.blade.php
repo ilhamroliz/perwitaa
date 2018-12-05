@@ -343,21 +343,44 @@ var status = 'unlock';
         dataType: 'json',
         url: baseUrl + '/manajemen-seragam/pembagianseragam/showdata',
         success : function(response){
-          table.clear();
-          for (var i = 0; i < response.data.length; i++) {
-            if (response.sales[i].length == 0) {
-              table.row.add([
-                getpekerja(response.data[i].p_name, response.data[i].p_id),
-                getukuran(itemdt,ukuran, response.data[i].p_id),
-              ]).draw(false);
-            } else {
-              table.row.add([
-                getpekerja(response.data[i].p_name, response.data[i].p_id),
-                getukuran(itemdt,ukuran, response.data[i].p_id, response.sales[i][0].sp_item_dt),
-              ]).draw(false);
+          if (response.sales == 'kosong') {
+            waitingDialog.hide();
+            Command: toastr["warning"]("Tidak ada pekerja!", "Peringatan !")
+
+            toastr.options = {
+              "closeButton": false,
+              "debug": true,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
             }
+          } else {
+            table.clear();
+            for (var i = 0; i < response.data.length; i++) {
+              if (response.sales[i].length == 0) {
+                table.row.add([
+                  getpekerja(response.data[i].p_name, response.data[i].p_id),
+                  getukuran(itemdt,ukuran, response.data[i].p_id),
+                ]).draw(false);
+              } else {
+                table.row.add([
+                  getpekerja(response.data[i].p_name, response.data[i].p_id),
+                  getukuran(itemdt,ukuran, response.data[i].p_id, response.sales[i][0].sp_item_dt),
+                ]).draw(false);
+              }
+            }
+            waitingDialog.hide();
           }
-          waitingDialog.hide();
         }
       })
     }

@@ -272,7 +272,7 @@
               //waitingDialog.hide();
               $('#myModal').modal('hide');
               if (response.status == 'sukses') {
-                Command: toastr["warning"]("Jumlah yang dimasukan tidak boleh melebehi sisa", "Peringatan !")
+                Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
 
                 toastr.options = {
                   "closeButton": false,
@@ -290,10 +290,7 @@
                   "hideEasing": "linear",
                   "showMethod": "fadeIn",
                   "hideMethod": "fadeOut"
-                }
-                setTimeout(function () {
-                  window.location.reload();
-                }, 3000);                                     
+                }                     
               } else {
                   swal({
                       title: "Gagal",

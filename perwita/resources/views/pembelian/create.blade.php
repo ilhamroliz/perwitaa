@@ -480,14 +480,28 @@
             success: function(response){
                 if (response.status == 'sukses') {
                     waitingDialog.hide();
-                    swal({
-                        title: "Sukses",
-                        text: "Data sudah tersimpan",
-                        type: "success"
-                    }, function () {
-                            window.location.reload();
-                            var myWindow = window.open(''+baseUrl+'/manajemen-seragam/print/'+response.id,'','width=700,height=500');
-                    });
+                    Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
+
+                    toastr.options = {
+                      "closeButton": false,
+                      "debug": true,
+                      "newestOnTop": false,
+                      "progressBar": true,
+                      "positionClass": "toast-top-right",
+                      "preventDuplicates": false,
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }
+                    setTimeout(function () {
+                      window.location.reload();
+                    }, 3000);
                 } else {
                     waitingDialog.hide();
                     swal({

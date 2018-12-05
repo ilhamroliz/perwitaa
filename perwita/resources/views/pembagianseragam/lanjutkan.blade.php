@@ -60,23 +60,22 @@
                             <div class="form-group col-md-3">
                                 <label for="divisi" class="sr-only">Divisi</label>
                                 <select class="form-control select2" name="divisi" style="width: 100%;" disabled id="divisi">
-                                  <option value="{{$divisi->md_id}}">{{$divisi->md_name}}</option>
+                                  <option value="{{$divisi->md_id}}" selected>{{$divisi->md_name}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-5">
                               <label for="nota" class="sr-only">Nota</label>
                               <select class="form-control select2" name="nota" style="width: 80%;" disabled id="nota">
-                                <option value="{{$notasales->s_id}}">{{$notasales->s_nota}}</option>
+                                <option value="{{$notasales->s_id}}" selected>{{$notasales->s_nota}}</option>
                               </select>
                             </div>
                           </div>
                           <br>
                           <div class="row">
                             <div class="form-group col-md-8">
-                              <select class="form-control select2" name="jenis" style="width: 80%;" id="jenis">
-                                <option value=""> - Pilih Jenis Seragam - </option>
+                              <select class="form-control select2" name="jenis" style="width: 80%;" disabled id="jenis">
                                 @foreach ($jenis as $key => $value)
-                                  <option value="{{$value->i_id}}">{{$value->i_nama}} {{$value->i_warna}}</option>
+                                  <option value="{{$value->i_id}}" selected>{{$value->i_nama}} {{$value->i_warna}}</option>
                                 @endforeach
                               </select>
                             </div>
@@ -257,7 +256,8 @@ var status = 'unlock';
   // });
 
   function cari(){
-    var nota = $('#nota').val();
+    nota();
+    var notain = $('#nota').val();
     var mitra = $('#mitra').val();
     var divisi = $('#divisi').val();
     var jenis = $('#jenis').val();
@@ -302,7 +302,7 @@ var status = 'unlock';
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
       }
-    } else if (nota == null) {
+    } else if (notain == null) {
       Command: toastr["warning"]("Nota tidak boleh kosong!", "Peringatan !")
 
       toastr.options = {
@@ -379,6 +379,7 @@ var status = 'unlock';
   }
 
   function getukuran(itemdt, ukuran, idpekerja, selected){
+    console.log(ukuran);
     var option = '';
     var html = '';
     for (var i = 0; i < ukuran.length; i++) {

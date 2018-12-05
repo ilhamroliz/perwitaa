@@ -29,9 +29,23 @@ class approvalpenjualanController extends Controller
               $e->on('md_mitra', '=', 'm_id')
                 ->on('md_id', '=', 's_divisi');
             })
-            ->select('s_id', 's_date', 'm_name', 's_nota', 's_total_net', 'md_name')
+            ->select('s_id', 's_date', 'm_name', 's_nota', 'md_name', 'm_id', 'md_id', DB::raw('md_name as pekerja'), DB::raw('md_name as barang'))
             ->where('s_isapproved', 'P')
-            ->get();            
+            ->get();
+
+        for ($i=0; $i < count($data); $i++) {
+          $data[$i]->pekerja = DB::table('d_mitra_pekerja')
+                        ->where('mp_mitra', $data[$i]->m_id)
+                        ->where('mp_divisi', $data[$i]->md_id)
+                        ->count();
+
+          $tmpbarang = DB::table('d_sales_dt')
+                                  ->where('sd_sales', $data[$i]->s_id)
+                                  ->select(DB::raw('sum(sd_qty) as sd_qty'))
+                                  ->first();
+
+          $data[$i]->barang = $tmpbarang->sd_qty;
+        }        
 
         $count = DB::table('d_sales')
             ->where('s_isapproved', 'P')

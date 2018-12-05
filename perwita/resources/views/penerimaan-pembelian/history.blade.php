@@ -73,6 +73,9 @@
                            <td>Supplier</td>
                         </tr>
                      </thead>
+                     <tbody id="showdata">
+
+                     </tbody>
                   </table>
                </div>
             </div>
@@ -116,6 +119,7 @@
    $('#hist_search').on('click', function(){
      waitingDialog.show();
 
+     $('#showdata').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Tidak ada data</td></tr>');
      var tgl_awal = $('#tgl_awal').val();
      var tgl_akhir = $('#tgl_akhir').val();
      var nota = $('#searchhidden').val();
@@ -125,6 +129,7 @@
        type: 'get',
        data: {tgl_awal:tgl_awal, tgl_akhir:tgl_akhir, nota:nota},
        success: function(response){
+         $('#searchhidden').val('');
          table.clear();
          for (var i = 0; i < response.length; i++) {
            table.row.add([
