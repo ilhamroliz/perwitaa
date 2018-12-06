@@ -375,7 +375,6 @@ var status = 'unlock';
   }
 
   function getukuran(itemdt, ukuran, idpekerja, selected){
-    console.log(ukuran);
     var option = '';
     var html = '';
     for (var i = 0; i < ukuran.length; i++) {
@@ -406,8 +405,8 @@ var status = 'unlock';
     for (var i = 0; i < pilih.length; i++) {
       for (var j = 0; j < itemdt.length; j++) {
         if (pilih[i].value != '') {
-          if (itemdt[j] == pilih[i].value) {
-            if (qty[j] < pilih[i].count) {
+          if (parseInt(itemdt[j]) === parseInt(pilih[i].value)) {
+            if (parseInt(qty[j]) < parseInt(pilih[i].count)) {
               $('#ukuran'+id).val('');
               Command: toastr["warning"]("Tidak boleh melebihi qty seragam!", "Peringatan !")
 

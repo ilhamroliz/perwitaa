@@ -19,9 +19,21 @@ class PembayaranController extends Controller
             ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
+            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('s_total_net as tagihan'))
             ->groupBy('s_id')
             ->get();
+
+        for ($i=0; $i < count($data); $i++) {
+          $tagihan = DB::table('d_seragam_pekerja')
+                        ->select(DB::Raw('sum(sp_value) as sp_value'), DB::Raw('sum(sp_pay_value) as sp_pay_value'), DB::raw('sum(sp_value) - sum(sp_pay_value) as tagihan'))
+                        ->where('sp_sales', $data[$i]->s_id)
+                        ->get();
+        }
+
+        for ($i=0; $i < count($data); $i++) {
+          $data[$i]->tagihan = (int)$data[$i]->tagihan - (int)$tagihan[$i]->sp_pay_value;
+        }
+
 
         return view('pembayaran.index', compact('data'));
     }
@@ -46,7 +58,7 @@ class PembayaranController extends Controller
             ->join('d_size', 's_id', '=', 'id_size')
             ->select('p_name', 'p_hp', 'p_id', 's_nama', 'i_nama', 'k_nama', 'i_warna', DB::raw('round(sp_value - sp_pay_value) as tagihan'), 'sp_value', 'sp_pay_value', 'sp_sales')
             ->where('sp_sales', '=', $idSales[0]->s_id)
-            ->get();        
+            ->get();
 
         return view('pembayaran.bayar', compact('pekerja', 'nota', 'link', 'status'));
     }
@@ -154,14 +166,26 @@ class PembayaranController extends Controller
 
     public function findHistory(Request $request){
       $cari = $request->term;
-      $data = DB::table('d_sales')
-          ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
-          ->join('d_mitra', 'm_id', '=', 's_member')
-          ->join('d_item', 'i_id', '=', 'sp_item')
-          ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
-          ->groupBy('s_id')
-          ->where('s_nota', 'Like', "%$cari%")
-          ->get();
+
+          $data = DB::table('d_sales')
+              ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
+              ->join('d_mitra', 'm_id', '=', 's_member')
+              ->join('d_item', 'i_id', '=', 'sp_item')
+              ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('s_total_net as tagihan'))
+              ->groupBy('s_id')
+              ->where('s_nota', 'Like', "%$cari%")
+              ->get();
+
+          for ($i=0; $i < count($data); $i++) {
+            $tagihan = DB::table('d_seragam_pekerja')
+                          ->select(DB::Raw('sum(sp_value) as sp_value'), DB::Raw('sum(sp_pay_value) as sp_pay_value'), DB::raw('sum(sp_value) - sum(sp_pay_value) as tagihan'))
+                          ->where('sp_sales', $data[$i]->s_id)
+                          ->get();
+          }
+
+          for ($i=0; $i < count($data); $i++) {
+            $data[$i]->tagihan = (int)$data[$i]->tagihan - (int)$tagihan[$i]->sp_pay_value;
+          }
 
           if ($data == null) {
               $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
@@ -190,7 +214,7 @@ class PembayaranController extends Controller
             ->join('d_seragam_pekerja_dt', 'spd_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
+            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('s_total_net as tagihan'))
             ->groupBy('s_id')
             ->where('spd_date', '>=', $start)
             ->where('spd_date', '<=', $end)
@@ -209,13 +233,24 @@ class PembayaranController extends Controller
                   ->get();
             }
 
+            for ($i=0; $i < count($data); $i++) {
+              $tagihan = DB::table('d_seragam_pekerja')
+                            ->select(DB::Raw('sum(sp_value) as sp_value'), DB::Raw('sum(sp_pay_value) as sp_pay_value'), DB::raw('sum(sp_value) - sum(sp_pay_value) as tagihan'))
+                            ->where('sp_sales', $data[$i]->s_id)
+                            ->get();
+            }
+
+            for ($i=0; $i < count($data); $i++) {
+              $data[$i]->tagihan = (int)$data[$i]->tagihan - (int)$tagihan[$i]->sp_pay_value;
+            }
+
       } elseif ($request->nota != "" && $request->tgl_awal == "" && $request->tgl_akhir == "") {
         $data = DB::table('d_sales')
             ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
             ->join('d_seragam_pekerja_dt', 'spd_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
+            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('s_total_net as tagihan'))
             ->groupBy('s_id')
             ->where('s_nota', $request->nota)
             ->get();
@@ -233,6 +268,17 @@ class PembayaranController extends Controller
                   ->get();
             }
 
+            for ($i=0; $i < count($data); $i++) {
+              $tagihan = DB::table('d_seragam_pekerja')
+                            ->select(DB::Raw('sum(sp_value) as sp_value'), DB::Raw('sum(sp_pay_value) as sp_pay_value'), DB::raw('sum(sp_value) - sum(sp_pay_value) as tagihan'))
+                            ->where('sp_sales', $data[$i]->s_id)
+                            ->get();
+            }
+
+            for ($i=0; $i < count($data); $i++) {
+              $data[$i]->tagihan = (int)$data[$i]->tagihan - (int)$tagihan[$i]->sp_pay_value;
+            }
+
       } elseif ($request->nota != "" && $request->tgl_awal != "" && $request->tgl_akhir != "") {
         $request->tgl_awal = str_replace('/','-',$request->tgl_awal);
         $request->tgl_akhir = str_replace('/','-',$request->tgl_akhir);
@@ -245,7 +291,7 @@ class PembayaranController extends Controller
             ->join('d_seragam_pekerja_dt', 'spd_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
             ->join('d_item', 'i_id', '=', 'sp_item')
-            ->select('s_nota', 'd_sales.s_id', 's_member', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('round(sp_value - sp_pay_value) as tagihan'))
+            ->select('s_nota', 'd_sales.s_id', 's_date', 'sp_item', 's_member', 'm_name', 'i_nama', DB::raw('count(sp_id) as jumlah'), DB::raw('s_total_net as tagihan'))
             ->groupBy('s_id')
             ->where('s_nota', $request->nota)
             ->where('spd_date', '>=', $start)
@@ -265,12 +311,23 @@ class PembayaranController extends Controller
                 ->get();
           }
 
+          for ($i=0; $i < count($data); $i++) {
+            $tagihan = DB::table('d_seragam_pekerja')
+                          ->select(DB::Raw('sum(sp_value) as sp_value'), DB::Raw('sum(sp_pay_value) as sp_pay_value'), DB::raw('sum(sp_value) - sum(sp_pay_value) as tagihan'))
+                          ->where('sp_sales', $data[$i]->s_id)
+                          ->get();
+          }
+
+          for ($i=0; $i < count($data); $i++) {
+            $data[$i]->tagihan = (int)$data[$i]->tagihan - (int)$tagihan[$i]->sp_pay_value;
+          }
+
       }
 
       for ($i=0; $i < count($data); $i++) {
         $data[$i]->s_date = Carbon::parse($data[$i]->s_date)->format('d/m/Y G:i:s');
         $data[$i]->jumlah = $count[$i]->jumlah;
-      }
+      }      
 
       return response()->json($data);
     }

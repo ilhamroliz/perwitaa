@@ -58,7 +58,7 @@
                         <th>Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody>                                     
                       @foreach($data as $data)
                         @if ($data->tagihan != 0)
                           <tr>

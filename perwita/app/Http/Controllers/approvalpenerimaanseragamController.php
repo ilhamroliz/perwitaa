@@ -35,6 +35,7 @@ class approvalpenerimaanseragamController extends Controller
                 ->on('id_detailid', '=', 'pa_item_dt');
             })
             ->join('d_size', 's_id', '=', 'id_size')
+            ->join('d_mem', 'm_id', '=', 'pa_penerima')
             ->where('pa_isapproved', 'P')
             ->get();
 

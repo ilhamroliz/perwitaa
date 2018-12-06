@@ -59,6 +59,7 @@
                           <th>Tanggal</th>
                           <th>Seragam</th>
                           <th>QTY</th>
+                          <th>Penerima</th>
                           <th style="width:140px;">Aksi</th>
                         </tr>
                     </thead>
@@ -73,6 +74,7 @@
                         <td>{{Carbon\Carbon::parse($x->pa_date)->format('d/m/Y G:i:s')}}</td>
                         <td>{{$x->i_nama . ' ' . $x->s_nama}}</td>
                         <td>{{$x->pa_qty}}</td>
+                        <td>{{$x->m_name}}</td>
                         <td align="center">
                           <div class="action">
                             <button type="button" title="Detail" onclick="detail({{$x->pa_detailid}},{{$x->pa_purchase}})" class="btn btn-info btn-xs" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
@@ -171,14 +173,14 @@ function detail(id, purchase){
             var data = response.data;
             tablemodal.clear();
             for (var i = 0; i < data.length; i++) {
-                var harga = accounting.formatMoney(data[i].pd_value, "", 0, ".", ",");
+                var harga = 'Rp. '+accounting.formatMoney(data[i].pd_value, "", 0, ".", ",");
                 var diskon = accounting.formatMoney(data[i].pd_disc_value, "", 0, ".", ",");
                 tablemodal.row.add([
                     data[i].nama,
                     data[i].pd_qty,
                     harga,
                     diskon,
-                    accounting.formatMoney(data[i].pd_qty * data[i].pd_value, "", 0, ".", ",")
+                    'Rp. '+accounting.formatMoney(data[i].pd_qty * data[i].pd_value, "", 0, ".", ",")
                 ]).draw(false);
             }
         }

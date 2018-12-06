@@ -424,7 +424,7 @@ var status = 'unlock';
     for (var i = 0; i < pilih.length; i++) {
       for (var j = 0; j < itemdt.length; j++) {
         if (pilih[i].value != '') {
-          if (itemdt[j] == pilih[i].value) {
+          if (itemdt[j] === pilih[i].value) {
             if (qty[j] < pilih[i].count) {
               $('#ukuran'+id).val('');
               Command: toastr["warning"]("Tidak boleh melebihi qty seragam!", "Peringatan !")

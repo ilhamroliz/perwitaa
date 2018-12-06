@@ -57,7 +57,6 @@
                                 <th>Supplier</th>
                                 <th>Nota</th>
                                 <th>Total</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -70,12 +69,7 @@
                                 <td>{{ Carbon\Carbon::parse($x->p_date)->format('d/m/Y H:i:s') }}</td>
                                 <td>{{ $x->s_company }}</td>
                                 <td>{{ $x->p_nota }}</td>
-                                <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($x->p_total_net, 0, ',', '.') }}</span></td>
-                                @if($x->pd_receivetime == null)
-                                <td class="text-center"><span class="label label-warning">Belum diterima</span></td>
-                                @else
-                                <td class="text-center"><span class="label label-success">Sudah diterima</span></td>
-                                @endif
+                                <td><span style="float: left;">Rp. </span><span style="float: right">{{ number_format($x->p_total_net, 0, ',', '.') }}</span></td>                              
                                 <td align="center">
                                 <button type="button" title="Detail" onclick="detail({{$x->p_id}})" id="detailbtn" class="btn btn-info btn-sm" name="button"> <i class="glyphicon glyphicon-folder-open"></i> </button>
                                 <button type="button" title="Setujui" onclick="setujui({{$x->p_id}})" class="btn btn-primary btn-sm" name="button"> <i class="glyphicon glyphicon-ok"></i> </button>

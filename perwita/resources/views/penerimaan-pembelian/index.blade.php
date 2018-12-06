@@ -64,7 +64,7 @@
                         </table>
                     </div>
                     <div class="col-md-12">
-                      <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a>
+                      {{-- <a id="printbtn" href="{{url('manajemen-pembelian/print')}}" class="btn btn-info pull-right"> <em class="fa fa-print">&nbsp;</em> Print</a> --}}
                     </div>
                 </div>
             </div>
@@ -290,7 +290,7 @@
                   "hideEasing": "linear",
                   "showMethod": "fadeIn",
                   "hideMethod": "fadeOut"
-                }                     
+                }
               } else {
                   swal({
                       title: "Gagal",

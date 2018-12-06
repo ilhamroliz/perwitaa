@@ -82,6 +82,7 @@ class PenerimaanController extends Controller
                     'pa_item_dt' => $itemdt,
                     'pa_qty' => $qty,
                     'pa_do' => $nodo,
+                    'pa_penerima' => Session::get('mem'),
                     'pa_isapproved' => 'P'
                 ]);
 
