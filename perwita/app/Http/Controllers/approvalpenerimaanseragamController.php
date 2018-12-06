@@ -12,12 +12,19 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 class approvalpenerimaanseragamController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
         $count = DB::table('d_purchase_approval')
             ->where('pa_isapproved', 'P')
             ->count();

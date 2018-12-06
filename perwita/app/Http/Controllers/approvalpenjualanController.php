@@ -14,6 +14,8 @@ use App\d_stock_mutation;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use App\d_stock;
 
 use App\d_sales_dt;
@@ -22,6 +24,10 @@ class approvalpenjualanController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
         $data = DB::table('d_sales')
             ->join('d_mitra', 'm_id', '=', 's_member')
@@ -45,7 +51,7 @@ class approvalpenjualanController extends Controller
                                   ->first();
 
           $data[$i]->barang = $tmpbarang->sd_qty;
-        }        
+        }
 
         $count = DB::table('d_sales')
             ->where('s_isapproved', 'P')

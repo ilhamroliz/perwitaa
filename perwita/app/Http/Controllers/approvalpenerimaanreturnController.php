@@ -10,11 +10,18 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 class approvalpenerimaanreturnController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_return_seragam_approval')
                   ->join('d_return_seragam_ganti', 'rsg_detailid', '=', 'rsa_return_ganti')
                   ->join('d_item', 'i_id', '=', 'rsg_item')

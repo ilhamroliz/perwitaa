@@ -8,9 +8,15 @@ use App\Http\Requests;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class approvalpegawairemunerasiController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
       $data = DB::table('d_pegawai_remunerasi')
           ->join('d_pegawai', 'p_id', '=', 'pr_pegawai')

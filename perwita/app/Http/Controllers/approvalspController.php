@@ -14,11 +14,18 @@ use Session;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Auth;
 
 class approvalspController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_mitra_pekerja')
           ->join('d_pekerja', 'p_id', '=', 'mp_pekerja')
           ->join('d_surat_pringatan', 'sp_pekerja', '=', 'p_id')

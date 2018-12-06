@@ -496,10 +496,10 @@
                   title: "Konfirmasi",
                   text: "Jumlah item tidak sama dengan jumlah pekerja, ingin melanjutkan?",
                   type: "warning",
-                  showCancelButton: true,
-                  closeOnConfirm: false,
+                  // showCancelButton: true,
+                  // closeOnConfirm: false,
                   showLoaderOnConfirm: true,
-              },
+              });/*,
               function () {
                   swal.close();
                   waitingDialog.show();
@@ -570,7 +570,7 @@
               waitingDialog.hide();
             }
         })
-              });
+      });*/
 
         } else {
           waitingDialog.show();

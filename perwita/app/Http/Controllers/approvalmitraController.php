@@ -14,12 +14,18 @@ use Yajra\Datatables\Datatables;
 
 use App\d_mitra;
 
+use App\Http\Controllers\AksesUser;
+
 use App\d_mitra_mou;
 
 class approvalmitraController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_mitra')
             ->where('m_status_approval', '=', null)
             ->get();

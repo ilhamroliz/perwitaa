@@ -10,11 +10,18 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 class approvallphkController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_phk')
             ->join('d_pekerja', 'd_pekerja.p_id', '=', 'd_phk.p_pekerja')
             ->select('d_pekerja.p_name', 'd_phk.p_id', 'd_phk.p_no', 'd_phk.p_date', 'd_phk.p_keterangan', 'd_pekerja.p_jabatan')

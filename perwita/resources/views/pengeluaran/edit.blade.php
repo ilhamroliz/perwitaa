@@ -382,82 +382,82 @@
                   title: "Konfirmasi",
                   text: "Jumlah item tidak sama dengan jumlah pekerja, ingin melanjutkan?",
                   type: "warning",
-                  showCancelButton: true,
-                  closeOnConfirm: false,
+                  // showCancelButton: true,
+                  // closeOnConfirm: false,
                   showLoaderOnConfirm: true,
-              },
-              function () {
-                  swal.close();
-                  waitingDialog.show();
-        var ar = $();
-        for (var i = 0; i < tablepenjualan.rows()[0].length; i++) {
-            ar = ar.add(tablepenjualan.row(i).node());
-        }
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var mitra = $('#mitra').val();
-        var divisi = $('#divisi').val();
-        var id = $('#id').val()
-        var total = totalPublic;
-        $.ajax({
-          url: baseUrl + '/manajemen-penjualan/update',
-          type: 'get',
-          data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&nota='+nota+'&total='+total+'&divisi='+divisi+'&id='+id,
-          success: function(response){
-            waitingDialog.hide();
-            if (response.status == 'sukses') {
-              Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
-
-              toastr.options = {
-                "closeButton": false,
-                "debug": true,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-              }
-              setTimeout(function () {
-                location.reload();
-              }, 3000);
-            } else {
-                swal({
-                    title: "Gagal",
-                    text: "Sistem gagal menyimpan data",
-                    type: "error",
-                    showConfirmButton: true
-                });
-            }
-          }, error:function(x, e) {
-            waitingDialog.hide();
-              if (x.status == 0) {
-                  alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
-              } else if (x.status == 404) {
-                  alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
-              } else if (x.status == 500) {
-                  alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
-              } else if (e == 'parsererror') {
-                  alert('Error.\nParsing JSON Request failed.');
-              } else if (e == 'timeout'){
-                  alert('Request Time out. Harap coba lagi nanti');
-              } else {
-                  alert('Unknow Error.\n' + x.responseText);
-              }
-              waitingDialog.hide();
-            }
-        })
-              });
+        //       }};,
+        //       function () {
+        //           swal.close();
+        //           waitingDialog.show();
+        // var ar = $();
+        // for (var i = 0; i < tablepenjualan.rows()[0].length; i++) {
+        //     ar = ar.add(tablepenjualan.row(i).node());
+        // }
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+        // var mitra = $('#mitra').val();
+        // var divisi = $('#divisi').val();
+        // var id = $('#id').val()
+        // var total = totalPublic;
+        // $.ajax({
+        //   url: baseUrl + '/manajemen-penjualan/update',
+        //   type: 'get',
+        //   data: ar.find('input').serialize()+'&'+ar.find('select').serialize()+'&mitra='+mitra+'&nota='+nota+'&total='+total+'&divisi='+divisi+'&id='+id,
+        //   success: function(response){
+        //     waitingDialog.hide();
+        //     if (response.status == 'sukses') {
+        //       Command: toastr["success"]("Berhasil Disimpan, Menunggu approval manager!", "Info !")
+        //
+        //       toastr.options = {
+        //         "closeButton": false,
+        //         "debug": true,
+        //         "newestOnTop": false,
+        //         "progressBar": true,
+        //         "positionClass": "toast-top-right",
+        //         "preventDuplicates": false,
+        //         "onclick": null,
+        //         "showDuration": "300",
+        //         "hideDuration": "1000",
+        //         "timeOut": "5000",
+        //         "extendedTimeOut": "1000",
+        //         "showEasing": "swing",
+        //         "hideEasing": "linear",
+        //         "showMethod": "fadeIn",
+        //         "hideMethod": "fadeOut"
+        //       }
+        //       setTimeout(function () {
+        //         location.reload();
+        //       }, 3000);
+        //     } else {
+        //         swal({
+        //             title: "Gagal",
+        //             text: "Sistem gagal menyimpan data",
+        //             type: "error",
+        //             showConfirmButton: true
+        //         });
+        //     }
+        //   }, error:function(x, e) {
+        //     waitingDialog.hide();
+        //       if (x.status == 0) {
+        //           alert('ups !! gagal menghubungi server, harap cek kembali koneksi internet anda');
+        //       } else if (x.status == 404) {
+        //           alert('ups !! Halaman yang diminta tidak dapat ditampilkan.');
+        //       } else if (x.status == 500) {
+        //           alert('ups !! Server sedang mengalami gangguan. harap coba lagi nanti');
+        //       } else if (e == 'parsererror') {
+        //           alert('Error.\nParsing JSON Request failed.');
+        //       } else if (e == 'timeout'){
+        //           alert('Request Time out. Harap coba lagi nanti');
+        //       } else {
+        //           alert('Unknow Error.\n' + x.responseText);
+        //       }
+        //       waitingDialog.hide();
+        //     }
+        // })
+        //       });
 
         } else {
           waitingDialog.show();

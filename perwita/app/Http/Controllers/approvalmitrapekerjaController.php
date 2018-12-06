@@ -16,12 +16,19 @@ use App\d_pekerja_mutation;
 
 use App\d_mitra_contract;
 
+use App\Http\Controllers\AksesUser;
+
 use Carbon\Carbon;
 
 class approvalmitrapekerjaController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
         Carbon::setLocale('id');
 
         $data = DB::table('d_mitra_pekerja')

@@ -10,11 +10,17 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 class approvalreturnpembelianController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
       $data = DB::table('d_return_seragam')
               ->join('d_purchase', 'p_id', '=', 'rs_purchase')

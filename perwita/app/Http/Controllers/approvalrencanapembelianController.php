@@ -8,9 +8,15 @@ use App\Http\Requests;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class approvalrencanapembelianController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
     $data = DB::select('select m_name, d_purchase_planning.*, sum(ppd_qty) as jumlah from d_purchase_planning inner join d_purchase_planning_dt on ppd_purchase_planning = pp_id inner join d_item on i_id = ppd_item inner join d_item_dt on ppd_item = id_item and ppd_item_dt = id_detailid inner join d_size on s_id = id_size inner join d_mem on pp_mem = m_id and pp_isapproved = "P" group by pp_id');
 

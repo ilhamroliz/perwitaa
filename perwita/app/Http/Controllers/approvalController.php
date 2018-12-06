@@ -10,12 +10,18 @@ use DB;
 
 use Session;
 
+use App\Http\Controllers\AksesUser;
+
 use Carbon\Carbon;
 
 class approvalController extends Controller
 {
     public function cekapproval()
     {
+        if (!AksesUser::checkAkses(55, 'read')){
+            return redirect('not-authorized');
+        }
+
         Carbon::setLocale('id');
 
         $data = DB::table('d_notifikasi')

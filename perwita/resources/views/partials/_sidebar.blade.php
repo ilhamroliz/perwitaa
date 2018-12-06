@@ -35,8 +35,13 @@ to {
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header text-center">
-                <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle" src="{{ asset('assets/img/profile_small.jpg') }}" />
+                <div class="dropdown profile-element">
+                  <span>
+                  @if (Auth::user()->m_image != null)
+                      <img alt="image" class="img-circle" width="35%" src="{{ asset('/') }}/{{Auth::user()->m_image}}" />
+                  @else
+                      <img alt="image" class="img-circle" width="35%" src="{{ asset('assets/img/user.png') }}" />
+                  @endif
                     </span>
                     <span class="clear"> <span class="block m-t-xs">
                             <strong class="font-bold" style="color: white;">{{ Auth::user()->m_name }}</strong>

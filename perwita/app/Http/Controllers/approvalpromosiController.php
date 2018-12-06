@@ -14,6 +14,8 @@ use App\d_pekerja_mutation;
 
 use App\d_pekerja;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 use App\d_notifikasi;
@@ -21,6 +23,10 @@ use App\d_notifikasi;
 class approvalpromosiController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
       $data = DB::table('d_pekerja')
       ->join('d_promosi_demosi', 'd_promosi_demosi.pd_pekerja', '=', 'd_pekerja.p_id')

@@ -12,9 +12,16 @@ use Session;
 
 use App\d_pekerja_mutation;
 
+use App\Http\Controllers\AksesUser;
+
 class approvalremunerasiController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_remunerasi')
           ->join('d_pekerja', 'p_id', '=', 'r_pekerja')
           ->leftjoin('d_jabatan_pelamar', 'jp_id', '=', 'p_jabatan')

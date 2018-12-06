@@ -14,10 +14,16 @@ use Yajra\Datatables\Datatables;
 
 use App\d_pekerja;
 
+use App\Http\Controllers\AksesUser;
+
 class approvalpelamarController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
 
         $data = DB::table('d_pekerja')
             ->where('p_status_approval', '=', null)

@@ -8,9 +8,16 @@ use App\Http\Requests;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class approvalpegawaiController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_pegawai')
             ->where('p_status_approval', null)
             ->get();

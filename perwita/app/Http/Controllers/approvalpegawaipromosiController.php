@@ -12,6 +12,8 @@ use App\d_notifikasi;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 use Session;
 
 use App\d_pegawai;
@@ -19,6 +21,10 @@ use App\d_pegawai;
 class approvalpegawaipromosiController extends Controller
 {
   public function index(){
+
+    if (!AksesUser::checkAkses(55, 'read')){
+        return redirect('not-authorized');
+    }
 
     $data = DB::table('d_pegawai')
     ->join('d_pegawai_promosi_demosi', 'd_pegawai_promosi_demosi.ppd_pegawai', '=', 'd_pegawai.p_id')

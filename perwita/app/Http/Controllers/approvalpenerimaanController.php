@@ -6,11 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Controllers\AksesUser;
+
 use DB;
 
 class approvalpenerimaanController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(55, 'read')){
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_mitra_contract')
             ->join('d_mitra', 'm_id', '=', 'mc_mitra')
             ->join('d_mitra_divisi', 'md_id', '=', 'mc_divisi')
