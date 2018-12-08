@@ -82,7 +82,7 @@
                                 <input type="hidden" class="s_id" name="s_id">
                             </div>
                             <div class="form-group col-md-3" style="margin-top: 20px;">
-                                <input type="text" onkeyup="cekQty()" style="text-align: right;" name="setQty" class="form-control" id="setQty" readonly>
+                                <input type="text" onkeyup="cekQty()" style="text-align: right;" name="setQty" class="form-control" id="setQty" placeholder="QTY" readonly>
                                 <input type="hidden" class="s_qty" name="s_qty">
                             </div>
                             <div class="form-group col-md-1" style="margin-top: 20px;">

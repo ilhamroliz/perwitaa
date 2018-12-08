@@ -78,7 +78,8 @@
                             </div>
                             <div class="form-group col-md-3">
                               <button class="btn btn-info" type="button" onclick="cari()"> <i class="fa fa-search"></i> </button>
-                              <button class="btn btn-info unlock" id="lockdinamis" onclick="lock()" type="button"><i class="fa fa-unlock"></i></button>
+                              <button class="btn btn-info lock" onclick="lock()" type="button"><i class="fa fa-unlock-alt"></i></button>
+                              <button class="btn btn-info unlock" onclick="unlock()" type="button" style="display: none;"><i class="fa fa-lock"></i></button>
                             </div>
                           </div>
                             <div class="table-responsive" style="margin-top: 30px;">
@@ -148,13 +149,13 @@ var status = 'unlock';
       language: dataTableLanguage
     });
 
-    $(document).keyup(function (event) {
+  });
+
+ $(document).keyup(function (event) {
         if (event.keyCode === 13) {
             cari();
         }
     });
-
-  });
 
   $('#nota').on('change', function(){
     waitingDialog.show();
@@ -229,6 +230,7 @@ var status = 'unlock';
   });
 
   function cari(){
+
     var nota = $('#nota').val();
     var mitra = $('#mitra').val();
     var divisi = $('#divisi').val();
@@ -547,29 +549,39 @@ var status = 'unlock';
   }
 
   function unlock(){
+
+	status = 'unlock';
+
     $('#mitra').attr('disabled', false);
     $('#jenis').attr('disabled', false);
     $('#divisi').attr('disabled', false);
     $('#nota').attr('disabled', false);
 
+    $('.unlock').css('display', 'none');
+    $('.lock').css('display', '');
+
     $('#lockdinamis').attr('onclick', 'lock()');
     $('#lockdinamis').attr('class', 'btn btn-info unlock');
     $('#lockdinamis').html('<i class="fa fa-unlock"></i>');
 
-    status = 'unlock';
   }
 
   function lock(){
+
+	    status = 'lock';
+
     $('#mitra').attr('disabled', true);
     $('#jenis').attr('disabled', true);
     $('#divisi').attr('disabled', true);
     $('#nota').attr('disabled', true);
 
+    $('.unlock').css('display', '');
+    $('.lock').css('display', 'none');
+
     $('#lockdinamis').attr('onclick', 'unlock()');
     $('#lockdinamis').attr('class', 'btn btn-info lock');
     $('#lockdinamis').html('<i class="fa fa-lock"></i>');
 
-    status = 'lock';
   }
 
 </script>

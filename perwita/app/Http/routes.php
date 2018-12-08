@@ -703,7 +703,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/caribarang', 'ReturnPembelianController@caribarang');
     Route::get('manajemen-seragam/return/getbarang', 'ReturnPembelianController@getbarang');
     Route::post('manajemen-seragam/return/lanjut', 'ReturnPembelianController@lanjut');
-    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');\
+    Route::get('manajemen-seragam/return/simpan', 'ReturnPembelianController@save');
     Route::get('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
     Route::post('manajemen-seragam/return/simpanlanjut', 'ReturnPembelianController@simpanlanjut');
     Route::get('manajemen-seragam/return/update', 'ReturnPembelianController@update');
@@ -712,6 +712,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-seragam/return/datatable_history', 'ReturnPembelianController@datatable_history');
     Route::get('manajemen-seragam/return/achistory', 'ReturnPembelianController@achistory');
     Route::get('manajemen-seragam/return/cetak', 'ReturnPembelianController@cetak');
+    Route::get('manajemen-seragam/return/getnota', 'ReturnPembelianController@getnota');
 
     //Penerimaan RETURN
     Route::get('manajemen-seragam/return/penerimaanreturn', 'penerimaanreturnController@index');

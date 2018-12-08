@@ -634,4 +634,19 @@ class ReturnPembelianController extends Controller
 
     }
 
+    public function getnota(Request $request){
+      $cari = $request->term;
+
+      $data = DB::select("select p_id, s_company, p_nota, pd_receivetime from d_purchase inner join d_supplier on s_id = p_supplier inner join d_purchase_dt on pd_purchase = p_id where (s_company like '%".$cari."%' or p_nota like '%".$cari."%') and pd_receivetime is not null and p_id not in (select pd_purchase from d_purchase_dt where pd_receivetime is null) group by p_id limit 20");
+      if ($data == null) {
+          $results[] = ['id' => null, 'label' => 'Tidak ditemukan data terkait'];
+      } else {
+        foreach ($data as $query) {
+            $results[] = ['id' => $query->p_id, 'label' => $query->p_nota . ' (' . $query->s_company . ')'];
+        }
+      }
+
+      return response()->json($results);
+    }
+
 }

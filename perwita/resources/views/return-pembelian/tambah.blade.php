@@ -118,7 +118,7 @@
     });
 
     $( ".carinota" ).autocomplete({
-        source: baseUrl+'/manajemen-seragam/getnota',
+        source: baseUrl+'/manajemen-seragam/return/getnota',
         minLength: 2,
         select: function(event, ui) {
             getData(ui.item.id);

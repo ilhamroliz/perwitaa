@@ -78,6 +78,8 @@ to {
               || Request::is('manajemen-pekerja/remunerasi') ? 'active' : ''
               || Request::is('manajemen-pekerja/remunerasi/*') ? 'active' : ''
               || Request::is('manajemen-pekerja/rekening') ? 'active' : ''
+              || Request::is('manajemen-pekerja/phk') ? 'active' : ''
+              || Request::is('manajemen-pekerja/phk/*') ? 'active' : ''
               || Request::is('manajemen-pekerja/rekening/*') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra') ? 'active' : ''
               || Request::is('manajemen-kontrak-mitra/data-kontrak-mitra/*') ? 'active' : '' }}">
@@ -109,7 +111,7 @@ to {
                             <i class="" aria-hidden="true"></i><span class="nav-label">SP Pekerja</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('manajemen-pekerja/promosi-demosi') ? 'active' : '' || Request::is('manajemen-pekerja/manajemen-pekerja/promosi-demosi/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('manajemen-pekerja/promosi-demosi') ? 'active' : '' || Request::is('manajemen-pekerja/manajemen-pekerja/promosi-demosi/*') ? 'active' : '' || Request::is('manajemen-pekerja/promosi-demosi/cari') ? 'active' : ''}}">
                         <a href="{{ url('manajemen-pekerja/promosi-demosi') }}">
                             <i class="" aria-hidden="true"></i><span class="nav-label">Promosi & Demosi</span>
                         </a>

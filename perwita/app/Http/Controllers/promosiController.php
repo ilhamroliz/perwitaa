@@ -255,8 +255,12 @@ class promosiController extends Controller
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
-            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+            ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->leftJoin('d_mitra_divisi', function ($q) {
+                $q->on('md_mitra', '=', 'mp_mitra');
+                $q->on('md_id', '=', 'mp_divisi');
+                $q->on('md_mitra', '=', 'm_id');
+            })
             ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id', 'pd_jabatan_awal', 'pd_jabatan_sekarang')
             ->get();
 
@@ -307,10 +311,15 @@ class promosiController extends Controller
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
-            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+            ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->leftJoin('d_mitra_divisi', function ($q) {
+                $q->on('md_mitra', '=', 'mp_mitra');
+                $q->on('md_id', '=', 'mp_divisi');
+                $q->on('md_mitra', '=', 'm_id');
+            })
             ->select('pd_no', 'p_name', 'jp_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
-            ->where('pd_no', 'LIKE', '%' . $keyword . '%')
+            ->ORwhere('pd_no', 'LIKE', '%' . $keyword . '%')
+            ->ORwhere('p_name', 'LIKE', '%' . $keyword . '%')
             ->groupBy('pd_id')
             ->LIMIT(20)
             ->get();
@@ -333,8 +342,12 @@ class promosiController extends Controller
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
-            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+            ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->leftJoin('d_mitra_divisi', function ($q) {
+                $q->on('md_mitra', '=', 'mp_mitra');
+                $q->on('md_id', '=', 'mp_divisi');
+                $q->on('md_mitra', '=', 'm_id');
+            })
             ->select('pd_no', 'p_name', 'jp_name', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id')
             ->where('pd_id', $request->id)
             ->get();
@@ -384,8 +397,12 @@ class promosiController extends Controller
             ->join('d_pekerja', 'p_id', '=', 'pd_pekerja')
             ->join('d_mitra_pekerja', 'mp_pekerja', '=', 'pd_pekerja')
             ->join('d_jabatan_pelamar', 'jp_id', '=', 'pd_jabatan_sekarang')
-            ->join('d_mitra', 'm_id', '=', 'mp_mitra')
-            ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
+            ->leftJoin('d_mitra', 'm_id', '=', 'mp_mitra')
+            ->leftJoin('d_mitra_divisi', function ($q) {
+                $q->on('md_mitra', '=', 'mp_mitra');
+                $q->on('md_id', '=', 'mp_divisi');
+                $q->on('md_mitra', '=', 'm_id');
+            })
             ->select('pd_no', 'p_name', 'p_nip', 'p_nip_mitra', 'm_name', 'md_name', 'pd_id', 'pd_note', 'pd_jabatan_awal', 'pd_jabatan_sekarang', 'pd_isapproved')
             ->where('pd_id', $request->id)
             ->get();

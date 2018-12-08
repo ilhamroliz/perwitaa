@@ -58,8 +58,8 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
               <div class="col-md-12">
-                <label for="pencarian">Cari Berdasarkan No Promosi / Demosi</label>
-                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan No Promosi / Demosi">
+                <label for="pencarian">Cari Berdasarkan No Promosi / Demosi Atau Nama Pekerja</label>
+                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="Masukkan No Promosi / Demosi Atau Nama Pekerja">
               </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
@@ -205,7 +205,7 @@ $(document).ready(function(){
     dataType: 'json',
     success : function(result){
       if (result.status == 'kosong') {
-        html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+        html = '<tr><td colspan="9"><center>Tidak ada data</center></td></tr>';
       } else {
         for (var i = 0; i < result.length; i++) {
           html += '<tr>'+
@@ -258,7 +258,7 @@ $(document).ready(function(){
       dataType: 'json',
       success : function(result){
         if (result.status == 'kosong') {
-          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
+          html = '<tr><td colspan="9"><center>Tidak ada data</center></td></tr>';
         } else {
           for (var i = 0; i < result.length; i++) {
             html += '<tr>'+
