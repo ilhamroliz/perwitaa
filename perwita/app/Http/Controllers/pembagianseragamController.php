@@ -332,9 +332,8 @@ class pembagianseragamController extends Controller
                 ->on('md_id', '=', 'sp_divisi');
             })
             ->select('m_name', 'md_name', 'sd_use', 'sd_qty', 'sp_no', 'sp_sales', 'sp_mitra', 'sp_divisi', 'sp_date', DB::raw('@rownum := @rownum + 1 as number'))
-            ->where('sd_qty', '>', DB::raw('sd_use'))
             ->groupBy('sp_no')
-            ->get();            
+            ->get();
 
       for ($i=0; $i < count($data); $i++) {
         $data[$i]->sp_date = Carbon::parse($data[$i]->sp_date)->format('d/m/Y');
@@ -344,10 +343,20 @@ class pembagianseragamController extends Controller
 
       return Datatables::of($list)
           ->editColumn('status', function ($list) {
-              return '<div class="text-center"><span class="badge badge-warning ">Belum Lengkap</span></div>';
+              if ($list->sd_qty > $list->sd_use) {
+                  return '<div class="text-center"><span class="badge badge-warning ">Belum Lengkap</span></div>';
+              } else {
+                  return '<div class="text-center"><span class="badge badge-primary ">Lengkap</span></div>';
+              }
           })
           ->editColumn('action', function($list){
-              return '<div align="center"> <button type="button" class="btn btn-info btn-xs" title="Lanjutkan" onclick="lanjutkan('.$list->sp_sales.','.$list->sp_mitra.','.$list->sp_divisi.')"> <i class="fa fa-sign-in"></i> </div>';
+              if ($list->sd_qty > $list->sd_use) {
+                return '<div align="center"> <button type="button" class="btn btn-info btn-xs" title="Lanjutkan" onclick="lanjutkan('.$list->sp_sales.','.$list->sp_mitra.','.$list->sp_divisi.')"> <i class="fa fa-sign-in"></i> </div>';
+              } else {
+                return '<div align="center">
+                        <button type="button" class="btn btn-info btn-xs" title="Detail" onclick="detail('.$list->sp_sales.','.$list->sp_mitra.','.$list->sp_divisi.')"> <i class="fa fa-folder"></i>
+                        </div>';
+              }
           })
           ->make(true);
     }
@@ -417,5 +426,28 @@ class pembagianseragamController extends Controller
                       ->get();
 
       return view('pembagianseragam.lanjutkan', compact('salesreceived', 'jenis', 'notasales', 'mitraselected', 'divisi', 'data', 'sales', 'mitra'));
+    }
+
+    public function detail(Request $request){
+      $data = DB::table('d_seragam_pekerja')
+                  ->join('d_pekerja', 'p_id', '=', 'sp_pekerja')
+                  ->join('d_mitra', 'm_id', '=', 'sp_mitra')
+                  ->join('d_mitra_divisi', function($e){
+                    $e->on('md_mitra', '=', 'sp_mitra')
+                      ->on('md_id', '=', 'sp_divisi');
+                  })
+                  ->join('d_item', 'i_id', '=', 'sp_item')
+                  ->join('d_item_dt', function($e){
+                    $e->on('id_item', '=', 'sp_item')
+                      ->on('id_detailid', '=', 'sp_item_dt');
+                  })
+                  ->join('d_kategori', 'k_id', '=', 'i_kategori')
+                  ->join('d_size', 'd_size.s_id', '=', 'id_size')
+                  ->where('sp_sales', $request->sales)
+                  ->where('sp_mitra', $request->mitra)
+                  ->where('sp_divisi', $request->divisi)
+                  ->get();
+
+      return response()->json($data);
     }
 }

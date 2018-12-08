@@ -61,13 +61,50 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-folder modal-icon"></i>
+                <h4 class="modal-title">Detail</h4>
+                <small class="font-bold">Detail pembagian seragam</small>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h2 align="left">Mitra : <span id="modalmitra"></span></h2>
+                  </div>
+                  <div class="col-md-5">
+                    <h2 align="right">Divisi : <span id="modaldivisi"></span> </h2>
+                  </div>
+                  <div class="col-md-12">
+                    <table class="table table-striped" id="modal_table">
+                        <thead>
+                          <tr>
+                            <th>Pekerja</th>
+                            <th>Item</th>
+                          </tr>
+                        </thead>
+                    </table>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                <button onclick="simpan()" class="btn btn-primary" type="button">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
 @section('extra_scripts')
 <script type="text/javascript">
     var table;
-
+    var tablemodal;
     $( document ).ready(function() {
       table = $("#tabel-index").DataTable({
           "search": {
@@ -97,8 +134,33 @@
       });
     });
 
+    tablemodal = $('#modal_table').DataTable({
+                  language: dataTableLanguage
+                  });
+
     function lanjutkan(sales, mitra, divisi){
       window.location.href = baseUrl + '/manajemen-seragam/pembagianseragam/lanjutkan?sales='+sales+'&mitra='+mitra+'&divisi='+divisi;
+    }
+
+    function detail(sales, mitra, divisi){
+      $.ajax({
+        type: 'get',
+        dataType: 'json',
+        data: {sales:sales, mitra:mitra, divisi:divisi},
+        url: baseUrl + '/manajemen-seragam/pembagianseragam/detail',
+        success : function(response){
+          tablemodal.clear();
+          for (var i = 0; i < response.length; i++) {
+            tablemodal.row.add([
+              response[i].p_name,
+              '<strong>' + response[i].k_nama + '</strong> <br>' + response[i].i_nama + ' ' +  response[i].i_warna + ' ' + response[i].s_nama,
+            ]).draw(false);
+          }
+          $('#modalmitra').text(response[0].m_name);
+          $('#modaldivisi').text(response[0].md_name);
+          $('#myModal').modal('show');
+        }
+      });
     }
 
 </script>
