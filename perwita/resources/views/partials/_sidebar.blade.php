@@ -298,7 +298,13 @@ to {
 
             @if($sidebar[6]->ma_read == 'Y')
             <li class="treeview sidebar data-master {{
-                 Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">
+                 Request::is('manajemen-pegawai/data-pegawai') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/promosidemosi') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/pegawairemunerasi') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/pegawairemunerasi/*') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/pegawaiphk') ? 'active' : ''
+                 || Request::is('manajemen-pegawai/pegawaiphk/*') ? 'active' : ''}}">
                 <a href="#" id="step1"><i class="fa fa-user"></i> <span class="nav-label">Manajemen Pegawai</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{ Request::is('manajemen-pegawai/data-pegawai') ? 'active' : '' || Request::is('manajemen-pegawai/data-pegawai/*') ? 'active' : ''}}">

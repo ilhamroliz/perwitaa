@@ -1400,6 +1400,7 @@ group by ps_pegawai");
 
       $data = DB::table('d_pegawai')
             ->whereRaw("p_name LIKE '%".$keyword."%' OR p_nip LIKE '%".$keyword."%'")
+            ->where('p_status_approval', 'Y')
             ->LIMIT(20)
             ->get();
 
