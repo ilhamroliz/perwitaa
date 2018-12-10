@@ -18,6 +18,7 @@ use Validator;
 use DB;
 
 use Carbon\carbon;
+use App\Http\Controllers\AksesUser;
 
 class mitraController extends Controller
 {
@@ -28,6 +29,10 @@ class mitraController extends Controller
 
     public function index()
     {
+      if (!AksesUser::checkAkses(21, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('mitra.index');
     }
 
@@ -48,10 +53,17 @@ class mitraController extends Controller
 
     public function tambah()
     {
+      if (!AksesUser::checkAkses(21, 'insert')) {
+          return redirect('not-authorized');
+      }
+
         return view('mitra.formTambah');
     }
     public function simpan(Request $request)
     {
+      if (!AksesUser::checkAkses(21, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $idmitra = d_mitra::max('m_id') + 1;
@@ -114,6 +126,9 @@ class mitraController extends Controller
 
     public function edit($id)
     {
+      if (!AksesUser::checkAkses(21, 'update')) {
+        return redirect('not-authorized');
+      }
         $mitra = d_mitra::where('m_id', $id)->first();
 
         $mou = DB::table('d_mitra_mou')
@@ -126,6 +141,9 @@ class mitraController extends Controller
 
     public function hapus($id)
     {
+      if (!AksesUser::checkAkses(21, 'delete')) {
+          return redirect('not-authorized');
+      }
         return DB::transaction(function () use ($id) {
             try {
                 DB::table('d_mitra')->where('m_id', '=', $id)->update(['m_status' => 'Tidak']);
@@ -144,6 +162,9 @@ class mitraController extends Controller
 
     public function perbarui(Request $request, $id)
     {
+      if (!AksesUser::checkAkses(21, 'update')) {
+          return redirect('not-authorized');
+      }
         //return $request->all();
         return DB::transaction(function () use ($request, $id) {
             try {

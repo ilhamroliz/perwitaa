@@ -10,9 +10,15 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 class phkController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(10, 'read')) {
+          return redirect('not-authorized');
+      }
+
       return view('PHK.index');
     }
 
@@ -95,6 +101,9 @@ class phkController extends Controller
     }
 
     public function simpan(Request $request, $idpekerja){
+      if (!AksesUser::checkAkses(10, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -231,6 +240,9 @@ class phkController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(10, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

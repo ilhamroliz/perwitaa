@@ -142,7 +142,7 @@
                                         {{ asset("$mem->m_image") }}
                                     @else
                                         {{ asset("assets/img/user/default.jpg") }}
-                                    @endif" class="img-responsive" width="60px">
+                                    @endif" class="img-responsive" width="120px">
                         </div>
                       </div>
                       <div class="hr-line-dashed"></div>

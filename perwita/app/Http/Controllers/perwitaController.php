@@ -9,6 +9,8 @@ use App\Http\Requests;
 use DB;
 use Storage;
 
+use App\Http\Controllers\AksesUser;
+
 class perwitaController
 {
     public static function getComp()

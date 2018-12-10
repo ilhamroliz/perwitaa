@@ -13,6 +13,7 @@ use Session;
 use App\d_mem;
 use Auth;
 use Yajra\Datatables\Datatables;
+use App\Http\Controllers\AksesUser;
 
 class entri_transaksiController extends Controller {
 
@@ -24,7 +25,7 @@ class entri_transaksiController extends Controller {
         return view('entri_transaksi.table');
     }
 
-    public function index_data(Request $request) {        
+    public function index_data(Request $request) {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         DB::statement(DB::raw('set @rownum=0'));
@@ -44,17 +45,17 @@ class entri_transaksiController extends Controller {
                             if ($jurnal->jr_cashtype == 'F')
                                 return 'FCF';
                         })->addColumn('action', function ($jurnal) {
-                            return' <div class="dropdown">                                
+                            return' <div class="dropdown">
                                             <button class="btn btn-primary btn-flat btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                 Kelola
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                 <li><a href="data-transaksi/edit/' . $jurnal->jr_id . '" ><i class="fa fa-pencil" aria-hidden="true"></i>Edit Data</a></li>
-                                                <li role="separator" class="divider"></li>                                                                        
+                                                <li role="separator" class="divider"></li>
                                                  <li><a href="data-transaksi/duplikasi/' . $jurnal->jr_id . '" ><i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>Duplikasi</a></li>
-                                                <li role="separator" class="divider"></li>                                                                        
-                                                <li><a class="btn-delete" data-remote="data-transaksi/destroy/' . $jurnal->jr_id . '"></i>Hapus Data</a></li>                                                
+                                                <li role="separator" class="divider"></li>
+                                                <li><a class="btn-delete" data-remote="data-transaksi/destroy/' . $jurnal->jr_id . '"></i>Hapus Data</a></li>
                                             </ul>
                                         </div>';
                         })->editColumn('jr_value', function ($jurnal) {
@@ -67,7 +68,7 @@ class entri_transaksiController extends Controller {
 //        return view('entri_transaksi.index', compact('jurnal'));
     }
 
-    public function cari_tanggal_get(Request $request) {        
+    public function cari_tanggal_get(Request $request) {
         $request->start_tgl = date('Y-m-d', strtotime($request->start_tgl));
         $request->end_tgl = date('Y-m-d', strtotime($request->end_tgl));
         $comp = Session::get('mem_comp');
@@ -80,19 +81,19 @@ class entri_transaksiController extends Controller {
                         where('jr_comp', '=', $comp)->where('jr_year', '=', $year)
                         ->whereBetween('jr_tgl', array($request->start_tgl,$request->end_tgl))
                         ->OrderBy('jr_tgl','DESC')->get();
-            //dd($jurnal);            
+            //dd($jurnal);
             return view('entri_transaksi.cari',compact('jurnal','pilihan','start_nominal','end_nominal'));
-        }                        
-        else if($pilihan==0){    
+        }
+        else if($pilihan==0){
             $start_nominal=str_replace(['Rp', '\\','.',' '], '', $request->start_nominal);
             $end_nominal=str_replace(['Rp', '\\','.',' '], '', $request->end_nominal);
             $jurnal = d_jurnal::select(DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'jr_id', 'jr_trans', 'jr_cashtype', 'jr_tgl', 'jr_detail', 'jr_value', 'jr_note')->
                         where('jr_comp', '=', $comp)->where('jr_year', '=', $year)
                         ->whereBetween('jr_value', array($start_nominal,$end_nominal))
-                        ->OrderBy('jr_tgl','DESC')->get();                    
+                        ->OrderBy('jr_tgl','DESC')->get();
             return view('entri_transaksi.cari',compact('jurnal','pilihan','start_nominal','end_nominal'));
         }
-    }    
+    }
     public function create() {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
@@ -168,35 +169,35 @@ class entri_transaksiController extends Controller {
 
             if (($saldo1[0]->COAend - $req->Nominal) < 0) {
                 //dd('oo1');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '-') {
             if (($saldo1[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend - $req->Nominal) < 0) {
                 //dd('oo5');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '-' && $req->dk2 == '-') {
             if (($saldo1[0]->COAend - $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend - $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '+') {
             if (($saldo1[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/create')->withErrors($validator)->withInput();
             }
         }
@@ -256,7 +257,7 @@ class entri_transaksiController extends Controller {
         $trans = DB::select(DB::raw("select tr.*,coa1.coa_name as coa1name,coa2.coa_name as coa2name from d_comp_trans tr
     left join d_comp_coa coa1 on coa1.coa_comp = tr.tr_comp and coa1.coa_year = tr.tr_year and coa1.coa_code = tr.tr_acc01
     left join d_comp_coa coa2 on coa2.coa_comp = tr.tr_comp and coa2.coa_year = tr.tr_year and coa2.coa_code = tr.tr_acc02
-    where tr_code = $jurnal->jr_trans and tr_year='$year' and tr_comp='$comp' 
+    where tr_code = $jurnal->jr_trans and tr_year='$year' and tr_comp='$comp'
                     "))[0];
         //dd($trans);
 //        $datatrans = DB::select(DB::raw("select tr.*,coa1.coa_name as coa1name,coa2.coa_name as coa2name from d_comp_trans tr
@@ -272,7 +273,7 @@ class entri_transaksiController extends Controller {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         $jurnal = d_jurnal::findOrFail($req->jr_id);
-        
+
         $rules = array(
             'KodeTransaksi' => 'required', // make sure the email is an actual email
             'tanggal' => 'required',
@@ -310,35 +311,35 @@ class entri_transaksiController extends Controller {
         } else if ($req->dk1 == '-' && $req->dk2 == '+') {
             if ((($saldo1[0]->COAend+$jurnal->jr_value) - $req->Nominal) < 0) {
                 //dd('oo1');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             } else if ((($saldo2[0]->COAend-$jurnal->jr_value) + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '-') {
             if ((($saldo1[0]->COAend-$jurnal->jr_value) + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             } else if ((($saldo2[0]->COAend+$jurnal->jr_value) - $req->Nominal) < 0) {
                 //dd('oo5');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '-' && $req->dk2 == '-') {
             if ((($saldo1[0]->COAend + $jurnal->jr_value) - $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             } else if ((($saldo2[0]->COAend + $jurnal->jr_value)- $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '+') {
             if ((($saldo1[0]->COAend - $jurnal->jr_value) + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             } else if ((($saldo2[0]->COAend - $jurnal->jr_value)+ $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return Redirect('entri-transaksi/data-transaksi/edit/' . $req->jr_id)->withErrors($validator)->withInput();
             }
         }
@@ -390,7 +391,7 @@ class entri_transaksiController extends Controller {
         $trans = DB::select(DB::raw("select tr.*,coa1.coa_name as coa1name,coa2.coa_name as coa2name from d_comp_trans tr
     left join d_comp_coa coa1 on coa1.coa_comp = tr.tr_comp and coa1.coa_year = tr.tr_year and coa1.coa_code = tr.tr_acc01
     left join d_comp_coa coa2 on coa2.coa_comp = tr.tr_comp and coa2.coa_year = tr.tr_year and coa2.coa_code = tr.tr_acc02
-    where tr_code = $jurnal->jr_trans and tr_year='$year' and tr_comp='$comp' 
+    where tr_code = $jurnal->jr_trans and tr_year='$year' and tr_comp='$comp'
                     "))[0];
         $jurnal_dt = d_jurnal_dt::where('jrdt_id', '=', $id)->get();
         $akun1 = $jurnal_dt[0]->jrdt_acc;
@@ -454,35 +455,35 @@ class entri_transaksiController extends Controller {
 
             if (($saldo1[0]->COAend - $req->Nominal) < 0) {
                 //dd('oo1');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                '); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '-') {
             if (($saldo1[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend - $req->Nominal) < 0) {
                 //dd('oo5');
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '-' && $req->dk2 == '-') {
             if (($saldo1[0]->COAend - $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend - $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             }
         } else if ($req->dk1 == '+' && $req->dk2 == '+') {
             if (($saldo1[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 1 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo1[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             } else if (($saldo2[0]->COAend + $req->Nominal) < 0) {
-                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation                
+                $validator->getMessageBag()->add('login', 'Saldo Pada Akun 2 Tidak Terpenuhi, Jumlah Saldo : ' . $saldo2[0]->COAend); //manual validation
                 return redirect('entri-transaksi/data-transaksi/duplikasi/' . $idd)->withErrors($validator)->withInput();
             }
         }

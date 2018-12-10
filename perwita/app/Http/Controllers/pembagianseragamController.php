@@ -14,13 +14,23 @@ use Carbon\Carbon;
 
 use Yajra\Datatables\Datatables;
 
+use App\Http\Controllers\AksesUser;
+
 class pembagianseragamController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(31, 'read')) {
+          return redirect('not-authorized');
+      }
+
       return view('pembagianseragam.index');
     }
 
     public function tambah(){
+      if (!AksesUser::checkAkses(31, 'insert')) {
+          return redirect('not-authorized');
+      }
+
       $perwita = new perwitaController;
 
       if ($perwita->getComp()[0] == 'internal') {
@@ -143,6 +153,10 @@ class pembagianseragamController extends Controller
     }
 
     public function simpan(Request $request){
+      if (!AksesUser::checkAkses(31, 'insert')) {
+          return redirect('not-authorized');
+      }
+
       DB::beginTransaction();
       try {
 

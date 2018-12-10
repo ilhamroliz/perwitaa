@@ -10,9 +10,15 @@ use DB;
 
 use App\d_notifikasi;
 
+use App\Http\Controllers\AksesUser;
+
 class pegawairemunerasiController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(40, 'read')) {
+          return redirect('not-authorized');
+      }
+
       return view('pegawairemunerasi.index');
     }
 

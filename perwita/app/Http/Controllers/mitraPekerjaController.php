@@ -23,6 +23,7 @@ use App\Http\Controllers\pdmController;
 
 use Validator;
 use Carbon\carbon;
+use App\Http\Controllers\AksesUser;
 
 use DB;
 
@@ -31,6 +32,10 @@ class mitraPekerjaController extends Controller
 
     public function index()
     {
+      if (!AksesUser::checkAkses(5, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('mitra-pekerja.index');
 
     }
@@ -149,6 +154,9 @@ class mitraPekerjaController extends Controller
 
     public function tambah()
     {
+      if (!AksesUser::checkAkses(5, 'insert')) {
+          return redirect('not-authorized');
+      }
         $mitra_contract = DB::table('d_mitra_contract')
             ->join('d_mitra', 'm_id', '=', 'mc_mitra')
             ->join('d_mitra_divisi', 'md_id', '=', 'mc_divisi')
@@ -239,7 +247,9 @@ class mitraPekerjaController extends Controller
      */
     public function simpan(Request $request)
     {
-
+      if (!AksesUser::checkAkses(5, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $sekarang = Carbon::now('Asia/Jakarta');
@@ -359,6 +369,9 @@ class mitraPekerjaController extends Controller
 
     public function edit($mitra, $kontrak)
     {
+      if (!AksesUser::checkAkses(5, 'update')) {
+          return redirect('not-authorized');
+      }
         $update_mitra_contract = DB::table('d_mitra_contract')
             ->join('d_mitra', 'd_mitra.m_id', '=', 'd_mitra_contract.mc_mitra')
             ->join('d_comp', 'd_comp.c_id', '=', 'd_mitra_contract.mc_comp')
@@ -399,6 +412,9 @@ class mitraPekerjaController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(5, 'update')) {
+          return redirect('not-authorized');
+      }
         //dd($request);
         $hapus = $request->hapus;
         $hapus = json_decode($hapus);
@@ -489,7 +505,9 @@ class mitraPekerjaController extends Controller
 
     public function perbarui(Request $request, $mitra, $mc_contractid)
     {
-
+      if (!AksesUser::checkAkses(5, 'update')) {
+          return redirect('not-authorized');
+      }
         for ($i = 0; $i < count($request->chek); $i++) {
             if ($request->chek[$i] == "") {
 

@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
+use App\Http\Controllers\AksesUser;
 
 class rekeningController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(56, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('rekening.index');
     }
 
@@ -39,6 +44,9 @@ class rekeningController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(56, 'insert')) {
+          return redirect('not-authorized');
+      }
         $rekening = $request->norek;
         $id = $request->id;
         DB::beginTransaction();

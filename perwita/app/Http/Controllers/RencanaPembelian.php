@@ -9,11 +9,16 @@ use DB;
 use App\Http\Requests;
 use Session;
 use Yajra\Datatables\Datatables;
+use App\Http\Controllers\AksesUser;
 
 class RencanaPembelian extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(25, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('rencana-pembelian/index');
     }
 
@@ -57,11 +62,17 @@ class RencanaPembelian extends Controller
 
     public function add()
     {
+      if (!AksesUser::checkAkses(25, 'insert')) {
+          return redirect('not-authorized');
+      }
         return view('rencana-pembelian/create');
     }
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(25, 'update')) {
+          return redirect('not-authorized');
+      }
         $nota = $request->nota;
         $info = DB::table('d_purchase_planning')
             ->join('d_purchase_planning_dt', 'pp_id', '=', 'ppd_purchase_planning')
@@ -96,6 +107,9 @@ class RencanaPembelian extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(25, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
 
@@ -162,6 +176,9 @@ class RencanaPembelian extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(25, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
 
@@ -248,6 +265,9 @@ class RencanaPembelian extends Controller
 
     public function hapus(Request $request)
     {
+      if (!AksesUser::checkAkses(25, 'delete')) {
+          return redirect('not-authorized');
+      }
         $nota = $request->nota;
         $id = DB::table('d_purchase_planning')
             ->where('pp_nota', '=', $nota)

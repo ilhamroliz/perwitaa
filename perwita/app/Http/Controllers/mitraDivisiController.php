@@ -14,13 +14,16 @@ use Mail;
 use Illuminate\Support\Facades\Input;
 use Dompdf\Dompdf;
 use Yajra\Datatables\Datatables;
-
+use App\Http\Controllers\AksesUser;
 
 class mitraDivisiController extends Controller
 {
 
     public function index()
     {
+      if (!AksesUser::checkAkses(22, 'read')) {
+          return redirect('not-authorized');
+      }
         return view('mitra_divisi.index');
     }
 
@@ -55,7 +58,9 @@ class mitraDivisiController extends Controller
 
     public function tambah(Request $request)
     {
-
+      if (!AksesUser::checkAkses(22, 'insert')) {
+          return redirect('not-authorized');
+      }
         for ($j = 0; $j < count($request->nama_divisi); $j++) {
             if ($request->nama_divisi[$j] == null) {
                 return response()->json(['status' => 0]);
@@ -138,6 +143,9 @@ class mitraDivisiController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(22, 'update')) {
+          return redirect('not-authorized');
+      }
         for ($j = 0; $j < count($request->nama_divisi); $j++) {
             if ($request->nama_divisi[$j] == null) {
                 return response()->json(['status' => 0]);

@@ -16,9 +16,14 @@ use App\d_notifikasi;
 
 use App\d_pegawai;
 
+use App\Http\Controllers\AksesUser;
+
 class pegawaipromosiController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(39, 'read')) {
+          return redirect('not-authorized');
+      }
 
       $jabatan = DB::table('d_jabatan')
           ->where('j_isactive', 'Y')

@@ -8,17 +8,24 @@ use function foo\func;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
+use App\Http\Controllers\AksesUser;
 use Yajra\Datatables\Datatables;
 
 class MouController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(23, 'read')) {
+          return redirect('not-authorized');
+      }
         return view('mou-mitra.index');
     }
 
     public function tambah()
     {
+      if (!AksesUser::checkAkses(23, 'insert')) {
+          return redirect('not-authorized');
+      }
         return view('mou-mitra.add');
     }
 
@@ -68,6 +75,9 @@ class MouController extends Controller
 
     public function UpdateMou(Request $request)
     {
+      if (!AksesUser::checkAkses(23, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $idMou = $request->id;
@@ -115,6 +125,9 @@ class MouController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(23, 'update')) {
+          return redirect('not-authorized');
+      }
         $id = $request->id;
 
         $data = DB::table('d_mitra_mou')->where('mm_mitra', $id)->get();
@@ -138,6 +151,9 @@ class MouController extends Controller
 
     public function updateedit(Request $request)
     {
+      if (!AksesUser::checkAkses(23, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $idmitra = $request->mitra;
@@ -169,6 +185,9 @@ class MouController extends Controller
 
     public function hapus(Request $request)
     {
+      if (!AksesUser::checkAkses(23, 'delete')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $idmitra = $request->id;
@@ -278,6 +297,7 @@ class MouController extends Controller
 
     public function getMou(Request $request)
     {
+
         $id = $request->id;
         $data = DB::table('d_mitra_mou')
             ->where('mm_mitra', '=', $id)

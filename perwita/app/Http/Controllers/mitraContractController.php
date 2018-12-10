@@ -28,10 +28,16 @@ use Carbon\carbon;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class mitraContractController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(4, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('mitra-contract.index');
     }
 
@@ -79,6 +85,9 @@ class mitraContractController extends Controller
 
     public function tambah()
     {
+      if (!AksesUser::checkAkses(4, 'insert')) {
+          return redirect('not-authorized');
+      }
         $comp = d_comp::get();
         $mitra = d_mitra::get();
         $jabatan = DB::table('d_jabatan_pelamar')->get();
@@ -91,6 +100,9 @@ class mitraContractController extends Controller
 
     public function simpan(Request $request)
     {
+      if (!AksesUser::checkAkses(4, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $request->Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
@@ -121,7 +133,7 @@ class mitraContractController extends Controller
                 ->where('n_fitur', 'Permintaan Pekerja')
                 ->update([
                   'n_qty' => count($countpenerimaan),
-                  'n_insert' => Carbon::now()              
+                  'n_insert' => Carbon::now()
                 ]);
 
             DB::commit();
@@ -139,6 +151,9 @@ class mitraContractController extends Controller
 
     public function edit($mitra, $mc_contractid)
     {
+      if (!AksesUser::checkAkses(4, 'update')) {
+          return redirect('not-authorized');
+      }
         return DB::transaction(function () use ($mitra, $mc_contractid) {
             $mitra_contract = d_mitra_contract::where('mc_mitra', $mitra)->where('mc_contractid', $mc_contractid)->first();
             $comp = d_comp::get();
@@ -156,6 +171,9 @@ class mitraContractController extends Controller
 
     public function perbarui(Request $request, $mitra, $id_detail)
     {
+      if (!AksesUser::checkAkses(4, 'update')) {
+          return redirect('not-authorized');
+      }
       //  dd($request);
         return DB::transaction(function () use ($request, $mitra, $id_detail) {
             $Tanggal_Kontrak = Carbon::createFromFormat('d/m/Y', $request->Tanggal_Kontrak, 'Asia/Jakarta');
@@ -213,6 +231,9 @@ class mitraContractController extends Controller
 
     public function hapus($mitra, $mc_contractid)
     {
+      if (!AksesUser::checkAkses(4, 'delete')) {
+          return redirect('not-authorized');
+      }
         /*  return DB::transaction(function() use ($mitra,$mc_contractid) {
               $mitra_contract=d_mitra_contract::where('mc_mitra',$mitra)
               ->where('mc_contractid',$mc_contractid);

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Crypt;
 use Session;
 use Carbon\Carbon;
 use File;
+use App\Http\Controllers\AksesUser;
 
 class manajemenPenggunaController extends Controller
 {
@@ -24,6 +25,10 @@ class manajemenPenggunaController extends Controller
 
     public function index()
     {
+      if (!AksesUser::checkAkses(43, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $member = DB::table('d_mem')
             ->join('d_jabatan', 'm_jabatan', '=', 'j_id')
             ->leftJoin('d_mem_comp', 'mc_mem', '=', 'm_id')

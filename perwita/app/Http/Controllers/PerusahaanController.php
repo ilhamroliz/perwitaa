@@ -9,11 +9,15 @@ use DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\Datatables\Datatables;
+use App\Http\Controllers\AksesUser;
 
 class PerusahaanController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(46, 'read')) {
+          return redirect('not-authorized');
+      }
         $data = DB::table('d_jabatan')
             ->get();
         return view('master-perusahaan.index', compact('data'));

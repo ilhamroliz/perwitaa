@@ -14,10 +14,17 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
 
+use App\Http\Controllers\AksesUser;
+
 class promosiController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(8, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $jabatan = DB::table('d_jabatan_pelamar')
             ->get();
 
@@ -111,6 +118,10 @@ class promosiController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(8, 'insert')) {
+          return redirect('not-authorized');
+      }
+
         DB::beginTransaction();
         try {
             $note = $request->note;
@@ -420,6 +431,10 @@ class promosiController extends Controller
 
     public function hapus(Request $request)
     {
+      if (!AksesUser::checkAkses(8, 'delete')) {
+          return redirect('not-authorized');
+      }
+
         DB::beginTransaction();
         try {
 
@@ -464,6 +479,10 @@ class promosiController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(8, 'update')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_promosi_demosi')
             ->where('pd_id', $request->id)
             ->get();
@@ -473,6 +492,10 @@ class promosiController extends Controller
 
     public function update(Request $request, $id)
     {
+      if (!AksesUser::checkAkses(8, 'update')) {
+          return redirect('not-authorized');
+      }
+
         DB::beginTransaction();
         try {
             DB::table('d_promosi_demosi')

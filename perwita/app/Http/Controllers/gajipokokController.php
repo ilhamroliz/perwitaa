@@ -8,9 +8,14 @@ use App\Http\Requests;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class gajipokokController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(48, 'read')) {
+          return redirect('not-authorized');
+      }
       $data = DB::table('d_mitra')
               ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
               ->groupBy('m_name')

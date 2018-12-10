@@ -10,9 +10,15 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 class pegawaiphkController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(41, 'read')) {
+          return redirect('not-authorized');
+      }
+
       return view('pegawaiphk.index');
     }
 

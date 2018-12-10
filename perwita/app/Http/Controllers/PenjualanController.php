@@ -13,11 +13,16 @@ use Illuminate\Http\Request;
 use DB;
 use Response;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AksesUser;
 
 class PenjualanController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(29, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('pengeluaran.index');
     }
 

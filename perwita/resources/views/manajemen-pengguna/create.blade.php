@@ -183,7 +183,7 @@
           image_holder.empty();
           var reader = new FileReader();
           reader.onload = function (e) {
-              image_holder.html('<img src="{{ asset('image/loading1.gif') }}" class="img-responsive" width="60px">');
+              image_holder.html('<img src="{{ asset('image/loading1.gif') }}" class="img-responsive" width="120px">');
               $('.save').attr('disabled', true);
               setTimeout(function(){
                   image_holder.empty();

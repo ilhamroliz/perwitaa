@@ -14,10 +14,16 @@ use Carbon\Carbon;
 
 use Session;
 
+use App\Http\Controllers\AksesUser;
+
 class SuratPeringatanController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(7, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_master_sp')
               ->get();
 
@@ -54,6 +60,9 @@ class SuratPeringatanController extends Controller
     }
 
     public function simpan(Request $request, $id){
+      if (!AksesUser::checkAkses(7, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -315,6 +324,9 @@ class SuratPeringatanController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(7, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -356,6 +368,9 @@ class SuratPeringatanController extends Controller
     }
 
     public function edit(Request $request){
+      if (!AksesUser::checkAkses(7, 'update')) {
+          return redirect('not-authorized');
+      }
       $id = $request->id;
 
       $data = DB::table('d_mitra_pekerja')
@@ -377,6 +392,9 @@ class SuratPeringatanController extends Controller
     }
 
     public function update(Request $request, $id){
+      if (!AksesUser::checkAkses(7, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
         $d_surat_pringatan = DB::table('d_surat_pringatan')

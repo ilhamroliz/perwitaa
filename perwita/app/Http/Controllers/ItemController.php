@@ -12,6 +12,7 @@ use DB;
 use Response;
 use Yajra\Datatables\Datatables;
 use Session;
+use App\Http\Controllers\AksesUser;
 
 class ItemController extends Controller
 {
@@ -367,7 +368,7 @@ class ItemController extends Controller
 
         for ($i=0; $i < count($data); $i++) {
           $id = DB::table('d_mitra_item')->MAX('mi_id');
-          
+
           d_mitra_item::insert([
             'mi_id' => $id += 1,
             'mi_mitra' => $data[$i],

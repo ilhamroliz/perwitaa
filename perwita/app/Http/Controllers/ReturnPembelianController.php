@@ -9,11 +9,16 @@ use App\Http\Requests;
 use Response;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
+use App\Http\Controllers\AksesUser;
 
 class ReturnPembelianController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(28, 'read')) {
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_return_seragam')
               ->join('d_purchase', 'p_id', '=', 'rs_purchase')
               ->join('d_supplier', 's_id', '=', 'p_supplier')
@@ -24,6 +29,9 @@ class ReturnPembelianController extends Controller
     }
 
     public function tambah(){
+      if (!AksesUser::checkAkses(28, 'insert')) {
+          return redirect('not-authorized');
+      }
 
       return view('return-pembelian.tambah');
 
@@ -143,6 +151,9 @@ class ReturnPembelianController extends Controller
     }
 
     public function simpanlanjut(Request $request){
+      if (!AksesUser::checkAkses(28, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -352,6 +363,9 @@ class ReturnPembelianController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(28, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -380,6 +394,9 @@ class ReturnPembelianController extends Controller
     }
 
     public function edit(Request $request){
+      if (!AksesUser::checkAkses(28, 'update')) {
+          return redirect('not-authorized');
+      }
       $uang = DB::table('d_return_seragam')
             ->join('d_return_seragam_dt', 'rsd_return', '=', 'rs_id')
             ->join('d_purchase', 'p_id', '=', 'rs_purchase')
@@ -423,6 +440,9 @@ class ReturnPembelianController extends Controller
     }
 
     public function update(Request $request){
+      if (!AksesUser::checkAkses(28, 'update')) {
+          return redirect('not-authorized');
+      }
     DB::beginTransaction();
       try {
 

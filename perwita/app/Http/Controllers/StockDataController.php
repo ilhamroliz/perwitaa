@@ -11,7 +11,7 @@ use Session;
 use Mail;
 use Illuminate\Support\Facades\Input;
 use Dompdf\Dompdf;
-
+use App\Http\Controllers\AksesUser;
 
 class StockDataController extends Controller
 {
@@ -197,6 +197,10 @@ class StockDataController extends Controller
 
 
   public function index(){
+
+    if (!AksesUser::checkAkses(34, 'read')) {
+        return redirect('not-authorized');
+    }
 
     $databarang = DB::select(DB::raw("SELECT * FROM d_item"));
     $datagudang = DB::select(DB::raw("SELECT * FROM d_comp"));

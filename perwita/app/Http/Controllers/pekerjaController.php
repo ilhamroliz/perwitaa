@@ -29,6 +29,8 @@ use DB;
 
 use Carbon\carbon;
 
+use App\Http\Controllers\AksesUser;
+
 class pekerjaController extends Controller
 {
     public function __construct()
@@ -138,6 +140,9 @@ class pekerjaController extends Controller
 
     public function tambah()
     {
+      if (!AksesUser::checkAkses(3, 'insert')) {
+          return redirect('not-authorized');
+      }
 
         $jabPelamar = DB::table('d_jabatan_pelamar')
             ->select('*')
@@ -150,6 +155,9 @@ class pekerjaController extends Controller
 
     public function simpan(Request $request)
     {
+      if (!AksesUser::checkAkses(3, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
 
@@ -581,6 +589,9 @@ class pekerjaController extends Controller
 
     public function edit($id)
     {
+      if (!AksesUser::checkAkses(3, 'update')) {
+          return redirect('not-authorized');
+      }
         $jabatan = DB::table('d_jabatan_pelamar')
             ->select('jp_name', 'jp_id')->get();
 
@@ -717,6 +728,9 @@ group by ps_pekerja");
 
     public function perbarui(Request $request)
     {
+      if (!AksesUser::checkAkses(3, 'update')) {
+          return redirect('not-authorized');
+      }
 
         DB::beginTransaction();
         try {
@@ -1686,6 +1700,9 @@ group by ps_pekerja");
 
     public function hapus($id)
     {
+      if (!AksesUser::checkAkses(3, 'delete')) {
+          return redirect('not-authorized');
+      }
 
         return DB::transaction(function () use ($id) {
             $pekerja = d_pekerja::where('p_id', $id);

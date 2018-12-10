@@ -12,11 +12,17 @@ use DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use Response;
+use App\Http\Controllers\AksesUser;
 
 class PenerimaanController extends Controller
 {
     public function index()
     {
+
+      if (!AksesUser::checkAkses(27, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_purchase')
             ->join('d_purchase_dt', 'pd_purchase', '=', 'p_id')
             ->join('d_supplier', 's_id', '=', 'p_supplier')

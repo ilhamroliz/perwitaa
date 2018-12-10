@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use Yajra\Datatables\Datatables;
+use App\Http\Controllers\AksesUser;
 
 class JabatanController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(45, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_jabatan')
             ->get();
         return view('master-jabatan.index', compact('data'));

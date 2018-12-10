@@ -10,9 +10,15 @@ use DB;
 
 use Carbon\Carbon;
 
+use App\Http\Controllers\AksesUser;
+
 class dapanController extends Controller
 {
   public function index(Request $request){
+    if (!AksesUser::checkAkses(53, 'read')) {
+        return redirect('not-authorized');
+    }
+
     $id = $request->id;
     if (!empty($id)) {
     $data =  DB::table('d_pekerja')

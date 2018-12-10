@@ -11,28 +11,29 @@ use Response;
 use DB;
 use Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\AksesUser;
 
 class suratController extends Controller
-{   
+{
 
   //INDEX
 
   public function index(Request $request){
-      
+
 $mitra = DB::table('d_mitra')
       ->groupBy('m_name')
       ->get();
 
           $surat_list = surat::all();
-          $surat = DB::table('d_surat') 
+          $surat = DB::table('d_surat')
           ->leftJoin('d_mitra','d_mitra.m_id','=','d_surat.mitra')
          ->get();
-     
+
 
 
     return view('surat.index',compact('surat','mitra'));
   }
-   
+
 
   //CETAK PRINT
 
@@ -41,7 +42,7 @@ $mitra = DB::table('d_mitra')
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->where('id_surat','=',$id_surat)
          ->get();
@@ -99,7 +100,7 @@ $mitra = DB::table('d_mitra')
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->where('id_surat','=',$id_surat)
          ->get();
@@ -157,9 +158,9 @@ $mitra = DB::table('d_mitra')
 
      public function laporan($id_surat){
 
-      
+
 $surat_list = surat::findOrfail($id_surat);
-  $surat = DB::table('d_surat') 
+  $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
            ->where('id_surat','=',$id_surat)
           ->get();
@@ -217,17 +218,17 @@ $surat_list = surat::findOrfail($id_surat);
     public function delete($id_surat){
 
      DB::table('d_surat')->where('id_surat',$id_surat)->delete();
-              
+
       return redirect('surat');
 
     }
-    
+
        public function cetak3($id_surat){
 
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->where('id_surat','=',$id_surat)
          ->get();
@@ -293,7 +294,7 @@ $surat_list = surat::findOrfail($id_surat);
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->where('id_surat','=',$id_surat)
          ->get();
@@ -363,7 +364,7 @@ $surat_list = surat::findOrfail($id_surat);
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->Join('d_mitra_divisi','d_mitra_divisi.md_id','=','d_surat.divisi')
           ->where('id_surat','=',$id_surat)
@@ -428,7 +429,7 @@ $surat_list = surat::findOrfail($id_surat);
             $i = $value->instansi;
 
           }
-           
+
 
 
       return view('surat.cetak5', compact('d_mitra_divisi','tgl','tl','ttl','divisi','i','surat','m','tgl_b','tgl_m','n_pj','j_pj','a_pj','alamat','nama','no_surat','jabatan'));
@@ -439,7 +440,7 @@ $surat_list = surat::findOrfail($id_surat);
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->where('id_surat','=',$id_surat)
          ->get();
@@ -448,7 +449,7 @@ $surat_list = surat::findOrfail($id_surat);
 
           }
           foreach ($surat as $key => $value) {
-            $kpk = $value->p_kpk; 
+            $kpk = $value->p_kpk;
 
           }
           foreach ($surat as $key => $value) {
@@ -509,7 +510,7 @@ $surat_list = surat::findOrfail($id_surat);
 
 
     $surat_list   = surat::findOrfail($id_surat);
-      $surat = DB::table('d_surat') 
+      $surat = DB::table('d_surat')
           ->Join('d_mitra','d_mitra.m_id','=','d_surat.mitra')
           ->Join('d_mitra_divisi','d_mitra_divisi.md_id','=','d_surat.divisi')
           ->where('id_surat','=',$id_surat)
@@ -619,7 +620,7 @@ $bulan = $array_bulan[date('n')];
     $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -628,7 +629,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -640,7 +641,7 @@ $bulan = $array_bulan[date('n')];
 
 
 
-    // BUAT DATA TIDAK KERJA 
+    // BUAT DATA TIDAK KERJA
 
     public function create1 () {
 
@@ -654,7 +655,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -663,7 +664,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -684,7 +685,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -693,7 +694,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -725,7 +726,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -734,7 +735,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -757,7 +758,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -766,7 +767,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -792,7 +793,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -801,7 +802,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -820,12 +821,12 @@ $bulan = $array_bulan[date('n')];
       $mitra = DB::table('d_mitra')
       ->groupBy('m_name')
       ->get();
-   
+
 
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -834,7 +835,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -860,7 +861,7 @@ $bulan = $array_bulan[date('n')];
      $itung = surat::select('no_surat')->orderBy('id_surat','DESC')->first();
       if ($itung != null){
          $a = explode('/',$itung);
-     
+
        $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
       }else{
         $itung = 0;
@@ -869,7 +870,7 @@ $bulan = $array_bulan[date('n')];
 
   $itung =  "". str_pad((string) $itung,0,"",STR_PAD_LEFT);
 
-     
+
        $year = Carbon::parse()->now()->format('/Y');
 
 
@@ -900,13 +901,13 @@ $bulan = $array_bulan[date('n')];
                   "j_pj" => "required",
                   "nama" => "required",
                   "jabatan" => "required",
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
+                  "tgl_b" => "required",
                   "instansi" => "required"
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
    /*  dd($request);*/
         if ($validator->fails()){
@@ -920,14 +921,14 @@ $bulan = $array_bulan[date('n')];
           ->witherrors($validator)
           ->withinput();
           }
-        
+
           elseif ($request->kop_surat == "Tidak Aktif BPJS"){
             return redirect ('surat/create-tibpjs')
           ->witherrors($validator)
           ->withinput();
           }
           }
-/*          
+/*
    dd($request);
           */
       $surat = new surat;
@@ -955,7 +956,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
 
        public function store2 (Request $request){
@@ -976,13 +977,13 @@ $bulan = $array_bulan[date('n')];
                   "nama" => "required",
                   "jabatan" => "required",
                   "no_rek" =>"required",
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
+                  "tgl_b" => "required",
                   "instansi" => "required"
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
    /*  dd($request);*/
         if ($validator->fails()){
@@ -992,7 +993,7 @@ $bulan = $array_bulan[date('n')];
           ->withinput();
           }
           }
-/*          
+/*
    dd($request);
           */
       $surat = new surat;
@@ -1020,7 +1021,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
       public function store3 (Request $request){
 
@@ -1040,16 +1041,16 @@ $bulan = $array_bulan[date('n')];
                   "nama" => "required",
                   "jabatan" => "required",
                   "no_rek" =>"required",
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
+                  "tgl_b" => "required",
                   "tl" => "required",
-                  "ttl" => "required", 
-                  "divisi" => "required", 
+                  "ttl" => "required",
+                  "divisi" => "required",
                   "instansi" => "required"
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
    /*  dd($request);*/
         if ($validator->fails()){
@@ -1060,7 +1061,7 @@ $bulan = $array_bulan[date('n')];
 
          }
           }
-/*          
+/*
    dd($request);
           */
       $surat = new surat;
@@ -1088,7 +1089,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
 //STORE 1
 
@@ -1111,20 +1112,20 @@ $bulan = $array_bulan[date('n')];
                 /*  "no_rek" => "required",*/
                   "jabatan" => "required",
               /*    "divisi" => "required",*/
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
+                  "tgl_b" => "required",
                /*   "a" => "required",*/
-                  "instansi" => "required", 
+                  "instansi" => "required",
                /*   "gaji" => "required", */
-                  "tl" => "required", 
+                  "tl" => "required",
                   "ttl" => "required",
-                 /* "kpk" => "required", 
-                  "kpj" => "required", 
+                 /* "kpk" => "required",
+                  "kpj" => "required",
                   "bu" => "required"*/
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
     /* dd($request);*/
         if ($validator->fails()){
@@ -1132,7 +1133,7 @@ $bulan = $array_bulan[date('n')];
             return redirect ('surat/create-tkerja')
             ->witherrors($validator)
             ->withinput();
-          
+
           }
           elseif ($request->kop_surat == "Peminjaman Bank"){
             return redirect ('surat/create-pibank')
@@ -1175,9 +1176,9 @@ $bulan = $array_bulan[date('n')];
             return redirect ('surat/create-pekpr')
           ->witherrors($validator)
           ->withinput();
-          }  
           }
-/*          
+          }
+/*
    dd($request);
           */
       $surat = new surat;
@@ -1205,7 +1206,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
 
   public function store4 (Request $request){
@@ -1225,28 +1226,28 @@ $bulan = $array_bulan[date('n')];
                   "j_pj" => "required",
                   "nama" => "required",
                   "jabatan" => "required",
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
-                  "instansi" => "required", 
-                  "kpk" => "required", 
-                  "kpj" => "required", 
+                  "tgl_b" => "required",
+                  "instansi" => "required",
+                  "kpk" => "required",
+                  "kpj" => "required",
                   "bu" => "required"
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
     /* dd($request);*/
         if ($validator->fails()){
-          
+
           if ($request->kop_surat == "Pendaftaran BPJS"){
             return redirect ('surat/create-pebpjs')
           ->witherrors($validator)
           ->withinput();
           }
-         
+
           }
-/*          
+/*
    dd($request);
           */
       $surat = new surat;
@@ -1274,7 +1275,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
  public function store5 (Request $request){
 
@@ -1291,20 +1292,20 @@ $bulan = $array_bulan[date('n')];
                   "n_pj" => "required",
                   "a_pj" => "required",
                   "j_pj" => "required",
-                  "nama" => "required",     
+                  "nama" => "required",
                   "jabatan" => "required",
-                  "alamat" => "required",              
+                  "alamat" => "required",
                   "mitra" => "required",
-                  "divisi" => "required", 
+                  "divisi" => "required",
                   "tgl_m" => "required",
                   "tgl_b" => "required",
-                  "instansi" => "required", 
-                  "gaji" => "required", 
-                  "tl" => "required", 
+                  "instansi" => "required",
+                  "gaji" => "required",
+                  "tl" => "required",
                   "ttl" => "required",
-                
+
             ];
-   
+
      $validator = Validator::make($request->all(), $rules);
     /* dd($request);*/
         if ($validator->fails()){
@@ -1312,9 +1313,9 @@ $bulan = $array_bulan[date('n')];
             return redirect ('surat/create-pekpr')
           ->witherrors($validator)
           ->withinput();
-          }  
           }
-/*          
+          }
+/*
    dd($request);
           */
       $surat = new surat;
@@ -1342,7 +1343,7 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
 
        return redirect('surat');
-        
+
       }
 
 
@@ -1354,7 +1355,7 @@ $bulan = $array_bulan[date('n')];
 
             $mitra = DB::table('d_mitra')
                 ->groupBy('m_name')
-                ->get();      
+                ->get();
             $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1364,11 +1365,11 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
             $surat = surat::findOrfail($id_surat);
                   return view('surat.edit',['surat' => $surat],compact('surat','mitra','year','itung','bulan'));
               }
-              
+
                public function edit1($id_surat){
 
                 $array_bulan = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X","XI","XII");
@@ -1386,7 +1387,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-tkerja',['surat' => $surat],compact('mitra','year','itung','bulan'));
               }
@@ -1407,7 +1408,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-daupa',['surat' => $surat],compact('mitra','year','itung','bulan'));
               }
@@ -1422,7 +1423,7 @@ $bulan = $array_bulan[date('n')];
 
 
 
-                
+
              $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1432,7 +1433,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-tibpjs',['surat' => $surat],compact('mitra','year','itung','bulan'));
               }
@@ -1447,7 +1448,7 @@ $bulan = $array_bulan[date('n')];
 
 
 
-                
+
              $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1457,7 +1458,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-resign',['surat' => $surat],compact('mitra','year','itung','bulan'));
               }
@@ -1475,7 +1476,7 @@ $bulan = $array_bulan[date('n')];
                 ->get();
 
 
-                
+
              $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1485,7 +1486,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-pibank',['surat' => $surat],compact('mitra','year','itung','bulan','divisi'));
               }
@@ -1500,7 +1501,7 @@ $bulan = $array_bulan[date('n')];
 
 
 
-                
+
              $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1510,7 +1511,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-pebpjs',['surat' => $surat],compact('mitra','year','itung','bulan'));
               }
@@ -1528,7 +1529,7 @@ $bulan = $array_bulan[date('n')];
 
 
 
-                
+
              $itung = surat::select('no_surat')
                ->where('id_surat','=',$id_surat)
                ->orderBy('id_surat','DESC')
@@ -1538,7 +1539,7 @@ $bulan = $array_bulan[date('n')];
                  $itung = (int) abs( filter_var($a[0],FILTER_SANITIZE_NUMBER_INT));
                 }
                  $year = Carbon::parse()->now()->format('/Y');
-                
+
                $surat = surat::findOrfail($id_surat);
                   return view('surat.edit-pekpr',['surat' => $surat],compact('d_mitra_divisi','mitra','year','itung','bulan'));
               }
@@ -1566,17 +1567,17 @@ $bulan = $array_bulan[date('n')];
                   "jabatan" => "required",
                   "no_rek" => "required",
                   "divisi" => "required",
-                  "alamat" => "required",              
-                  "mitra" => "required", 
+                  "alamat" => "required",
+                  "mitra" => "required",
                   "tgl_m" => "required",
-                  "tgl_b" => "required", 
-                  "instansi" => "required", 
-                  "gaji" => "required", 
-                  "tl" => "required", 
+                  "tgl_b" => "required",
+                  "instansi" => "required",
+                  "gaji" => "required",
+                  "tl" => "required",
                   "ttl" => "required",
-                  "kpk" => "required", 
-                  "kpj" => "required", 
-                  "bu" => "required",   
+                  "kpk" => "required",
+                  "kpj" => "required",
+                  "bu" => "required",
 
             ];
        $validator = Validator::make($request->all(), $rules);
@@ -1603,7 +1604,7 @@ $bulan = $array_bulan[date('n')];
        $surat->p_kpj=$request->kpj;
        $surat->p_kpk=$request->kpk;
        $surat->no_rek=$request->no_rek;
-       $surat->kop_surat=$request->kop_surat; 
+       $surat->kop_surat=$request->kop_surat;
        $surat->tempat_lahir=$request->tl;
        $surat->tgl_lahir=$request->ttl;
        $surat->a_pj=$request->a_pj;
@@ -1613,9 +1614,9 @@ $bulan = $array_bulan[date('n')];
        $surat->save();
        return redirect('surat');
       }
-      
+
     }
-    
+
 
 
 
@@ -1632,7 +1633,7 @@ $bulan = $array_bulan[date('n')];
 
       public function auto(Request $request){
         $term = $request->term;
-        
+
         $results = array();
         $queries = DB::table('d_mitra_pekerja')
             ->join('d_pekerja','d_mitra_pekerja.mp_id','=','d_pekerja.p_id')
@@ -1653,7 +1654,7 @@ $bulan = $array_bulan[date('n')];
     }
         public function autocomplete(Request $request){
         $term = $request->term;
-        
+
         $results = array();
         $queries = DB::table('d_pegawai')
             ->where('d_pegawai.p_nama_lengkap', 'like', '%'.$term.'%')
@@ -1672,17 +1673,17 @@ $bulan = $array_bulan[date('n')];
         return Response::json($results);
     }
 
-   public function getData($id){         
-   
-     $getData = DB::table('d_pegawai')->select('*')->where('p_id',$id)->get();  
-        
+   public function getData($id){
+
+     $getData = DB::table('d_pegawai')->select('*')->where('p_id',$id)->get();
+
        return response()->json([
           'alamat' => $getData[0]->p_alamat
        ]);
     }
-    public function getDatanama($id){         
-   
-     $getData = DB::table('d_pegawai')->select('*')->where('p_id',$id)->get(); 
+    public function getDatanama($id){
+
+     $getData = DB::table('d_pegawai')->select('*')->where('p_id',$id)->get();
 
         $getDatanama = DB::table('d_mitra_pekerja')
             ->select('*')
@@ -1699,7 +1700,7 @@ $bulan = $array_bulan[date('n')];
           'bu'=> $getDatanama[0]->p_bu
        ]);
     }
-    
+
 
 
 
@@ -1717,7 +1718,7 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
+       }
 
        $surat = $request;
        $request->no_surat;
@@ -1737,7 +1738,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-legalisir-data-upah',compact('surat','request','a'));
-    }   
+    }
 
 //CETAK PENGALAMAN DI FORM TAMBAH
      public function gege1(Request $request){
@@ -1747,8 +1748,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1767,8 +1768,8 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-pengalaman-kerja',compact('surat','request','a'));
-    }   
-    //CETAK RESIGN DI FORM TAMBAH 
+    }
+    //CETAK RESIGN DI FORM TAMBAH
      public function gege2(Request $request){
 
 
@@ -1788,7 +1789,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-pekerja-resign',compact('surat','request'));
-    }    
+    }
     public function gege3(Request $request){
 
 
@@ -1797,8 +1798,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1817,7 +1818,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-pinjam-bank',compact('surat','request','a','b','mitra','divisi','i'));
-    }    
+    }
     public function gege4(Request $request){
 
 
@@ -1826,8 +1827,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1846,7 +1847,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-pengajuan-kpr',compact('surat','request','a','b'));
-    }    
+    }
      public function gege5(Request $request){
 
 
@@ -1855,8 +1856,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1875,7 +1876,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-pendaftaran-bpjs',compact('surat','request','a','b'));
-    }    
+    }
        public function gege6(Request $request){
 
 
@@ -1884,8 +1885,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1904,7 +1905,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-tidak-aktif-bpjs',compact('surat','request','a','b'));
-    }    
+    }
      public function gege7(Request $request){
 
 
@@ -1913,8 +1914,8 @@ if($request->instansi=="PT-PN/MJI") {
       }
        elseif ($request->instansi=="PT-AWKB") {
          $a = "PT AMERTA WIDIYA KARYA BHAKTI";
-       } 
-    
+       }
+
 
        $surat = $request;
        $request->no_surat;
@@ -1933,7 +1934,7 @@ if($request->instansi=="PT-PN/MJI") {
        $request->instansi;
 
       return view('surat.laporan-tidak-lagi-bekerja',compact('surat','request','a','b'));
-    }   
+    }
 
 
 

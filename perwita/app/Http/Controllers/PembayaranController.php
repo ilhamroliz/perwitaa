@@ -10,11 +10,16 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use Session;
+use App\Http\Controllers\AksesUser;
 
 class PembayaranController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(32, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_sales')
             ->join('d_seragam_pekerja', 'sp_sales', '=', 'd_sales.s_id')
             ->join('d_mitra', 'm_id', '=', 's_member')
@@ -79,6 +84,9 @@ class PembayaranController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(32, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
 
@@ -327,12 +335,15 @@ class PembayaranController extends Controller
       for ($i=0; $i < count($data); $i++) {
         $data[$i]->s_date = Carbon::parse($data[$i]->s_date)->format('d/m/Y G:i:s');
         $data[$i]->jumlah = $count[$i]->jumlah;
-      }      
+      }
 
       return response()->json($data);
     }
 
     public function update(Request $request){
+      if (!AksesUser::checkAkses(32, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
       $bayar = $request->harga;

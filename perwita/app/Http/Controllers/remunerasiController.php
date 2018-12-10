@@ -10,13 +10,23 @@ use App\d_notifikasi;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class remunerasiController extends Controller
 {
     public function index(){
+
+      if (!AksesUser::checkAkses(9, 'read')) {
+          return redirect('not-authorized');
+      }
+
       return view('remunerasi.index');
     }
 
     public function simpan(Request $request, $idpekerja){
+      if (!AksesUser::checkAkses(9, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -209,6 +219,9 @@ class remunerasiController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(9, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -250,6 +263,9 @@ class remunerasiController extends Controller
     }
 
     public function update(Request $request, $id){
+      if (!AksesUser::checkAkses(9, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
         $request->gajiawal = str_replace('Rp. ', '', $request->gajiawal);

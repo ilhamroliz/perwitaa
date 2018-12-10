@@ -12,24 +12,26 @@ use App\d_comp_jurnal_resume;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class neracaController extends Controller
 {
     public function kunciNeracaIndex() {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
         $bulan = [];
         foreach ($chek as $index => $data) {
             $bulan[$index] = $data->cjr_period;
-        }        
+        }
         return view('laporan.kunci_neraca', compact('bulan'));
     }
     public function kunciBulan() {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
         $bulan = [];
         foreach ($chek as $index => $data) {
             $bulan[$index] = $data->cjr_period;
@@ -84,7 +86,7 @@ and jrdt_acc = coa_code) as COAend
         }
 
         $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
         $bulan = [];
         foreach ($chek as $index => $data) {
             $bulan[$index] = $data->cjr_period;
@@ -103,24 +105,24 @@ and jrdt_acc = coa_code) as COAend
 
 
         $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
         $bulan = [];
         foreach ($chek as $index => $data) {
             $bulan[$index] = $data->cjr_period;
         }
         return $bulan;
     }
-    
-    
-    
+
+
+
     public function neracaIndex() {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
 //        $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-//                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+//                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
         $bulan = [];
         $asli = [];
-        
+
 //        foreach ($chek as $index => $data) {
 //            $months = array(1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
 //            $bulan[$index] = $months[(int) $data->cjr_period];
@@ -128,14 +130,14 @@ and jrdt_acc = coa_code) as COAend
 //        }
 //        $startDate=end($asli);
 //        $startDate=$startDate+1;
-//        
-//        $a_date = $year.'-'.$startDate."-23";        
-//        $stDate = date("01-M-Y", strtotime($a_date));        
-        
+//
+//        $a_date = $year.'-'.$startDate."-23";
+//        $stDate = date("01-M-Y", strtotime($a_date));
+
         //return $bulan;
         return view('laporan.neraca_index',compact('bulan','stDate'));
     }
-    
+
      public function neraca() {
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
@@ -184,14 +186,14 @@ and jrdt_acc = coa_code) as COAend
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         $tgl_now = date('Y-m-d', strtotime($date));
-        
+
         if (!empty($tgl_now)) {
             $asset = DB::select(DB::raw("select *,(select coa_opening from d_comp_coa coa where
 month (coa.coa_opening_tgl) BETWEEN 1 and month('$tgl_now')
 and coa.coa_name=c.coa_name and coa.coa_comp=c.coa_comp and coa.coa_year=c.coa_year)+(select COALESCE(sum(jrdt_value),0)  from d_jurnal_dt
 where jrdt_id in (select jr_id from d_jurnal where jr_comp = coa_comp and jr_year = coa_year
 and YEAR(jr_tgl)='$year' and jr_tgl BETWEEN date(coa_opening_tgl) and '$tgl_now')
-    
+
 and jrdt_acc = coa_code) as COAend
                         from d_comp_coa c
                         where coa_comp = '$comp' and coa_year = '$year'
@@ -205,7 +207,7 @@ and jrdt_acc = coa_code) as COAend
                     $cekAsetMinus++;
                 }
                 $total_asset+=$asset_total->COAend;
-            }            
+            }
             $kewajiban_modal = DB::select(DB::raw("select *,SUBSTRING(coa_code,1,1) as coa_kategori,(select coa_opening from d_comp_coa coa where
 month (coa.coa_opening_tgl) BETWEEN 1 and month('$tgl_now')
 and coa.coa_name=c.coa_name and coa.coa_comp=c.coa_comp and coa.coa_year=c.coa_year)+(select COALESCE(sum(jrdt_value),0)  from d_jurnal_dt
@@ -228,12 +230,12 @@ and jrdt_acc = coa_code) as COAend
             return view('laporan.neraca', compact('asset', 'total_asset', 'kewajiban_modal', 'total_kewajiban_modal', 'cekAsetMinus', 'cekkewajibanMinus'));
         }
     }
-    
+
      public function cari_neraca_final($bulan) {
         $comp = Session::get('mem_comp');
-        $year = Session::get('mem_year');        
+        $year = Session::get('mem_year');
         if(strlen($bulan)==1){
-          $bulan='0'.$bulan;  
+          $bulan='0'.$bulan;
         }
         //->join('m_satuan', 'm_satuan.s_id', '=', 'd_item.i_satuan')
 //        select * from d_comp_jurnalresume join d_comp_coa on d_comp_jurnalresume.cjr_comp=d_comp_coa.coa_comp
@@ -253,12 +255,12 @@ foreach ($final as $index => $data) {
     }
     if(substr($data->coa_code,0,1)==2 || substr($data->coa_code,0,1)==3){
         $total_kewajiban_modal+=$data->cjr_value;
-    
-    }      
+
+    }
 }
 
             //dd($final);
             return view('laporan.neraca_final', compact('final','total_asset','total_kewajiban_modal'));
-        
+
     }
 }

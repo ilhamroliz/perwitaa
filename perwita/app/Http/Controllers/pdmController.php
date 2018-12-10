@@ -14,12 +14,18 @@ use App\d_pekerja;
 use App\d_mitra_pekerja;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+use App\Http\Controllers\AksesUser;
 
 class pdmController extends Controller
 {
 
     public function index(Request $request)
     {
+
+      if (!AksesUser::checkAkses(6, 'read')) {
+          return redirect('not-authorized');
+      }
+
       $data = DB::table('d_mitra')
               ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
               ->groupBy('m_name')
@@ -180,6 +186,10 @@ class pdmController extends Controller
 
     public function edit($mp_id,$p_id){
 
+      if (!AksesUser::checkAkses(6, 'update')) {
+          return redirect('not-authorized');
+      }
+
      $dpm1 = pdm::findOrfail($mp_id);
      $dpm = DB::table('d_mitra_pekerja')
      ->join('d_pekerja','d_mitra_pekerja.mp_pekerja','=','d_pekerja.p_id')
@@ -216,6 +226,10 @@ class pdmController extends Controller
 
      public function hapus($mp_pekerja){
 
+       if (!AksesUser::checkAkses(6, 'delete')) {
+           return redirect('not-authorized');
+       }
+
      DB::table('d_mitra_pekerja')->where('mp_pekerja','=',$mp_pekerja)->delete();
       return redirect('pekerja-di-mitra/pekerja-mitra');
 
@@ -251,6 +265,9 @@ class pdmController extends Controller
     }
 
     public function destroy(Request $request){
+      if (!AksesUser::checkAkses(6, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

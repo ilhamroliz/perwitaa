@@ -10,34 +10,40 @@ use App\Http\Requests;
 use Yajra\Datatables\Datatables;
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 
 class supplierController extends Controller
 {
       public function ambilSupplier(Request $request ){
 	//echo $request->term;
 	$term = $request->term;
-	
-	$results = array();		
-	
+
+	$results = array();
+
 	$queries = DB::table('d_supplier')
 		->where('s_company', 'LIKE', '%'.$term.'%')
-		->orWhere('s_name', 'LIKE', '%'.$term.'%')		
+		->orWhere('s_name', 'LIKE', '%'.$term.'%')
 		->take(100)->get();
-	
+
 	foreach ($queries as $query)
 	{
 	    $results[] = [ 'id' => $query->s_id, 'label' => $query->s_company.' - '.$query->s_name,
                     ];
 		//echo $query->i_jenis.' '.$query->i_jenissub.' '.$query->i_class.' '.$query->i_classsub.' '.$query->i_detail;
 	}
-	
+
 	return response($results);
-        
+
 	//return Response::json($results);
     }
 
     public function index()
     {
+      if (!AksesUser::checkAkses(63, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('supplier.index');
     }
 
@@ -216,5 +222,5 @@ class supplierController extends Controller
             'data' => $data
         ]);
     }
-    
+
 }

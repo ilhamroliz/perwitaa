@@ -11,11 +11,16 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AksesUser;
 
 class PenerimaanPekerjaController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(14, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $pekerja = DB::table('d_pekerja')
             ->select('p_id', 'p_name', 'p_address', 'p_nik', 'p_hp')
             ->where(function ($query) {

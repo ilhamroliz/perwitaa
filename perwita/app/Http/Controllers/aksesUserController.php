@@ -22,6 +22,10 @@ class aksesUserController extends Controller
 {
     public function indexAksesUser()
     {
+      if (!AksesUser::checkAkses(44, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('/system/hakuser/user', compact('mem'));
     }
 

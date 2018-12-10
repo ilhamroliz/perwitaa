@@ -11,11 +11,16 @@ use DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use Response;
+use App\Http\Controllers\AksesUser;
 
 class PembelianController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(26, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::select("select * from d_purchase inner join d_purchase_dt on pd_purchase = p_id inner join d_supplier on s_id = p_supplier where p_id not in (select pd_purchase from d_purchase_dt where pd_receivetime is not null) and p_isapproved != 'N' group by p_nota limit 20");
 
         return view('pembelian.index', compact('data'));
@@ -23,6 +28,9 @@ class PembelianController extends Controller
 
     public function create()
     {
+      if (!AksesUser::checkAkses(26, 'insert')) {
+          return redirect('not-authorized');
+      }
         $supplier = DB::table('d_supplier')
             ->select('s_id', 's_company')
             ->where('s_isactive', '=', 'Y')
@@ -89,6 +97,9 @@ class PembelianController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(26, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $notarencana = $request->nota;
@@ -116,7 +127,7 @@ class PembelianController extends Controller
                 'p_comp' => $comp,
                 'p_date' => Carbon::now('Asia/Jakarta'),
                 'p_supplier' => $request->supplier,
-                'p_nota' => $nota,                
+                'p_nota' => $nota,
                 'p_total_gross' => $gross,
                 'p_disc_percent' => 0,
                 'p_disc_value' => 0,
@@ -191,6 +202,9 @@ class PembelianController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(26, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $nota = $request->nota;
@@ -510,6 +524,9 @@ class PembelianController extends Controller
 
     public function hapus(Request $request)
     {
+      if (!AksesUser::checkAkses(26, 'delete')) {
+          return redirect('not-authorized');
+      }
         $nota = $request->nota;
         $id = DB::table('d_purchase')
             ->where('p_nota', '=', $nota)
@@ -537,6 +554,9 @@ class PembelianController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(26, 'update')) {
+          return redirect('not-authorized');
+      }
         $nota = $request->nota;
 
         $data = DB::table('d_purchase')

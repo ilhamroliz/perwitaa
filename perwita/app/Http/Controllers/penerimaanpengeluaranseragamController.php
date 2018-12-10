@@ -12,9 +12,15 @@ use Carbon\Carbon;
 
 use Session;
 
+use App\Http\Controllers\AksesUser;
+
 class penerimaanpengeluaranseragamController extends Controller
 {
     public function index(){
+      if (!AksesUser::checkAkses(30, 'read')) {
+          return redirect('not-authorized');
+      }
+
       $perwita = new perwitaController;
 
       if ($perwita->getComp()[0] == 'internal') {
@@ -121,6 +127,9 @@ class penerimaanpengeluaranseragamController extends Controller
     }
 
     public function simpan(Request $request){
+      if (!AksesUser::checkAkses(30, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

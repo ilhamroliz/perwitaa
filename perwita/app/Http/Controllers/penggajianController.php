@@ -14,10 +14,15 @@ use Session;
 
 use Terbilang;
 
+use App\Http\Controllers\AksesUser;
+
 class penggajianController extends Controller
 {
 
     public function index(){
+      if (!AksesUser::checkAkses(60, 'read')) {
+          return redirect('not-authorized');
+      }
       $data = DB::table('d_mitra')
               ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
               ->groupBy('m_name')

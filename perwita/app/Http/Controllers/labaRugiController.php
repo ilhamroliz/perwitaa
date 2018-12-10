@@ -12,15 +12,17 @@ use Session;
 
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 class labaRugiController extends Controller
 {
-    
+
      public function labarugiIndex() {
-         
+
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
 //         $chek = d_comp_jurnal_resume::select(DB::raw('substr(cjr_period,5,6) cjr_period'), 'cjr_value')->where('cjr_comp', $comp)
-//                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)        
+//                        ->where(DB::raw('substr(cjr_period,1,4)'), $year)->groupBy('cjr_period')->get(); //where('cjr_comp',$year)
 //        $bulan = [];
 //
 //        foreach ($chek as $index => $data) {
@@ -31,7 +33,7 @@ class labaRugiController extends Controller
          return view('laporan.labarugiIndex',compact('bulan'));
      }
      public function labarugi() {
-     
+
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
         //$tgl1 = Carbon::now()->format('Y-m-d');
@@ -47,7 +49,7 @@ class labaRugiController extends Controller
         $total_pendapata = 0;
         foreach ($pendapatan as $total_pendapatan) {
             $total_pendapata+=$total_pendapatan->jum;
-        }        
+        }
 //hpp ada isi
         $hpp = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
@@ -56,7 +58,7 @@ class labaRugiController extends Controller
                         and tt_code in ('20','21')
                         group by tr_code order by tr_code"));
         $total_hpp = 0;
-        foreach ($hpp as $total) {            
+        foreach ($hpp as $total) {
             $total_hpp+=$total->jum;
         }
 
@@ -86,8 +88,8 @@ class labaRugiController extends Controller
         foreach ($depresiasi as $total) {
             $total_depresiasi+=$total->jum;
         }
-        
-//amortisasi 
+
+//amortisasi
         $amortisasi = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
@@ -135,7 +137,7 @@ class labaRugiController extends Controller
         foreach ($bunggainvesi as $total) {
             $total_bunggainvesi+=$total->jum;
         }
-//PAJAK / TAX  
+//PAJAK / TAX
         $pajak = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
@@ -159,8 +161,8 @@ class labaRugiController extends Controller
      // tgl mulai sampai akhir
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
-        $coba=str_replace(' ', '-', $date).'-'.$year;        
-        $date = date('Y-m-d', strtotime($coba));        
+        $coba=str_replace(' ', '-', $date).'-'.$year;
+        $date = date('Y-m-d', strtotime($coba));
         //$tgl1 = Carbon::now()->format('Y-m-d');
         //$tgl2 = Carbon::now()->format('Y-m-d');
 
@@ -171,7 +173,7 @@ class labaRugiController extends Controller
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('10','11','12')
  and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date'                       
+								and '$date'
 
 
 
@@ -179,7 +181,7 @@ class labaRugiController extends Controller
         $total_pendapata = 0;
         foreach ($pendapatan as $total_pendapatan) {
             $total_pendapata+=$total_pendapatan->jum;
-        }        
+        }
 //hpp ada isi
         $hpp = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
@@ -187,11 +189,11 @@ class labaRugiController extends Controller
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('20','21')
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date'                         
+								and '$date'
 
                         group by tr_code order by tr_code"));
         $total_hpp = 0;
-        foreach ($hpp as $total) {            
+        foreach ($hpp as $total) {
             $total_hpp+=$total->jum;
         }
 
@@ -203,7 +205,7 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         and tt_code in ('30')
 
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
 
                         group by tr_code order by tr_code"));
 
@@ -219,25 +221,25 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('41')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_depresiasi = 0;
         foreach ($depresiasi as $total) {
             $total_depresiasi+=$total->jum;
         }
-        
-//amortisasi 
+
+//amortisasi
         $amortisasi = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('42')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_amortisasi = 0;
@@ -250,9 +252,9 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('51')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_pendapatanlain = 0;
@@ -265,9 +267,9 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('52')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_pengeluaranlain = 0;
@@ -280,24 +282,24 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('61')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_bunggainvesi = 0;
         foreach ($bunggainvesi as $total) {
             $total_bunggainvesi+=$total->jum;
         }
-//PAJAK / TAX  
+//PAJAK / TAX
         $pajak = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('62')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
 
@@ -316,8 +318,8 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
      // tgl mulai sampai akhir
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
-        $coba=str_replace(' ', '-', $date).'-'.$year;        
-        $date = date('Y-m-t', strtotime($coba));             
+        $coba=str_replace(' ', '-', $date).'-'.$year;
+        $date = date('Y-m-t', strtotime($coba));
         //$tgl1 = Carbon::now()->format('Y-m-d');
         //$tgl2 = Carbon::now()->format('Y-m-d');
 
@@ -328,7 +330,7 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('10','11','12')
  and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date'                       
+								and '$date'
 
 
 
@@ -336,7 +338,7 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
         $total_pendapata = 0;
         foreach ($pendapatan as $total_pendapatan) {
             $total_pendapata+=$total_pendapatan->jum;
-        }        
+        }
 //hpp ada isi
         $hpp = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
@@ -344,11 +346,11 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('20','21')
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date'                         
+								and '$date'
 
                         group by tr_code order by tr_code"));
         $total_hpp = 0;
-        foreach ($hpp as $total) {            
+        foreach ($hpp as $total) {
             $total_hpp+=$total->jum;
         }
 
@@ -360,7 +362,7 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         and tt_code in ('30')
 
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
 
                         group by tr_code order by tr_code"));
 
@@ -376,25 +378,25 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('41')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_depresiasi = 0;
         foreach ($depresiasi as $total) {
             $total_depresiasi+=$total->jum;
         }
-        
-//amortisasi 
+
+//amortisasi
         $amortisasi = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('42')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_amortisasi = 0;
@@ -407,9 +409,9 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('51')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_pendapatanlain = 0;
@@ -422,9 +424,9 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('52')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_pengeluaranlain = 0;
@@ -437,24 +439,24 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('61')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
         $total_bunggainvesi = 0;
         foreach ($bunggainvesi as $total) {
             $total_bunggainvesi+=$total->jum;
         }
-//PAJAK / TAX  
+//PAJAK / TAX
         $pajak = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('62')
-                        
+
 and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and jr_comp = '$comp')
-								and '$date' 
+								and '$date'
                         group by tr_code order by tr_code
                             "));
 
@@ -470,13 +472,13 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
                         , 'total_bunggainvesi', 'total_pajak'));
     }
      public function labarugiPercobaanPeriode($date) {
-         //per bulan     
+         //per bulan
         $comp = Session::get('mem_comp');
         $year = Session::get('mem_year');
-        $date=str_replace(' ', '-', $date).'-'.$year;        
+        $date=str_replace(' ', '-', $date).'-'.$year;
         $bulan = date('m', strtotime($date));
-        
-        
+
+
 //pendapatan ada isi
         $pendapatan = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
@@ -488,22 +490,22 @@ and jr_tgl BETWEEN (select min(jr_tgl) from d_jurnal where jr_year = '$year' and
 
 
                         group by tr_code order by tr_code"));
-        
+
         $total_pendapata = 0;
         foreach ($pendapatan as $total_pendapatan) {
             $total_pendapata+=$total_pendapatan->jum;
-        }        
+        }
 //hpp ada isi
         $hpp = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('20','21')
-and month(jr_tgl)=$bulan and Year(jr_tgl)=$year                        
+and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
 
                         group by tr_code order by tr_code"));
         $total_hpp = 0;
-        foreach ($hpp as $total) {            
+        foreach ($hpp as $total) {
             $total_hpp+=$total->jum;
         }
 
@@ -530,7 +532,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('41')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -538,14 +540,14 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
         foreach ($depresiasi as $total) {
             $total_depresiasi+=$total->jum;
         }
-        
-//amortisasi 
+
+//amortisasi
         $amortisasi = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('42')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -559,7 +561,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('51')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -573,7 +575,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('52')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -587,7 +589,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('61')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -595,13 +597,13 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
         foreach ($bunggainvesi as $total) {
             $total_bunggainvesi+=$total->jum;
         }
-//PAJAK / TAX  
+//PAJAK / TAX
         $pajak = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('62')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -618,10 +620,10 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         , 'total_bunggainvesi', 'total_pajak'));
     }
      public function labarugiFinalPeriode($date) {
-         //per bulan     
+         //per bulan
         $comp = Session::get('mem_comp');
-        $year = Session::get('mem_year');               
-        $bulan = $date;                
+        $year = Session::get('mem_year');
+        $bulan = $date;
 //pendapatan ada isi
         $pendapatan = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
@@ -633,22 +635,22 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
 
 
                         group by tr_code order by tr_code"));
-        
+
         $total_pendapata = 0;
         foreach ($pendapatan as $total_pendapatan) {
             $total_pendapata+=$total_pendapatan->jum;
-        }        
+        }
 //hpp ada isi
         $hpp = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('20','21')
-and month(jr_tgl)=$bulan and Year(jr_tgl)=$year                        
+and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
 
                         group by tr_code order by tr_code"));
         $total_hpp = 0;
-        foreach ($hpp as $total) {            
+        foreach ($hpp as $total) {
             $total_hpp+=$total->jum;
         }
 
@@ -675,7 +677,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('41')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -683,14 +685,14 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
         foreach ($depresiasi as $total) {
             $total_depresiasi+=$total->jum;
         }
-        
-//amortisasi 
+
+//amortisasi
         $amortisasi = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('42')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -704,7 +706,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('51')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -718,7 +720,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('52')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -732,7 +734,7 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('61')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));
@@ -740,13 +742,13 @@ and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
         foreach ($bunggainvesi as $total) {
             $total_bunggainvesi+=$total->jum;
         }
-//PAJAK / TAX  
+//PAJAK / TAX
         $pajak = DB::select(DB::raw("select tr_code,tr_name,sum(tt_income*jr_value) as jum from d_jurnal dj
                         left join m_trans_cat on left(jr_trans,2) = tt_code
                         left join d_comp_trans on jr_comp = tr_comp and jr_year = tr_year and jr_trans = tr_code
                         where jr_comp = '$comp' and jr_year = '$year'
                         and tt_code in ('62')
-                        
+
 and month(jr_tgl)=$bulan and Year(jr_tgl)=$year
                         group by tr_code order by tr_code
                             "));

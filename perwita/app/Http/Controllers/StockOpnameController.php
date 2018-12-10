@@ -12,12 +12,16 @@ use Session;
 use Mail;
 use Illuminate\Support\Facades\Input;
 use Dompdf\Dompdf;
-
+use App\Http\Controllers\AksesUser;
 
 class StockOpnameController extends Controller
 {
     public function index()
     {
+      if (!AksesUser::checkAkses(36, 'read')) {
+          return redirect('not-authorized');
+      }
+
         $data = DB::table('d_stock_opname')
             ->join('d_stock_opname_dt', 'so_id', '=', 'sod_stock_opname')
             ->join('d_item', 'i_id', '=', 'sod_item')

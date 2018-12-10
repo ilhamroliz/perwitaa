@@ -27,6 +27,8 @@ use Validator;
 use File;
 use DB;
 
+use App\Http\Controllers\AksesUser;
+
 use Carbon\carbon;
 
 use App\d_pegawai;
@@ -37,6 +39,10 @@ class pegawaiController extends Controller
         $this->middleware('auth');
     }
     public function index() {
+      if (!AksesUser::checkAkses(38, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('pegawai.index');
     }
     public function data() {

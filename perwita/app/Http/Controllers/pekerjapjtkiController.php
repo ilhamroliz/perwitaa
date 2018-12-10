@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Controllers\AksesUser;
+
 use App\d_pekerja;
 
 use App\d_pekerja_mutation;
@@ -38,6 +40,10 @@ class pekerjapjtkiController extends Controller
 
     public function index()
     {
+      if (!AksesUser::checkAkses(11, 'read')) {
+          return redirect('not-authorized');
+      }
+
         return view('pekerja-pjtki.index');
     }
 
@@ -62,7 +68,7 @@ class pekerjapjtkiController extends Controller
             ->addColumn('action', function ($pekerja) {
                 return '<div class="text-center">
                     <button style="margin-left:5px;" title="Detail" type="button" class="btn btn-info btn-xs" onclick="detail(' . $pekerja->pp_id . ')"><i class="glyphicon glyphicon-folder-open"></i></button>
-                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->pp_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>                  
+                    <a style="margin-left:5px;" title="Edit" type="button" class="btn btn-warning btn-xs" href="data-pekerja/' . $pekerja->pp_id . '/edit"><i class="glyphicon glyphicon-edit"></i></a>
                   </div>';
             })
             ->make(true);
