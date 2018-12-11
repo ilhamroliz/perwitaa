@@ -81,6 +81,9 @@ class JabatanController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(45, 'update')) {
+          return redirect('not-authorized');
+      }
         $pilih = $request->pilih;
         DB::table('d_jabatan')
             ->whereIn('j_id', $pilih)
@@ -101,6 +104,9 @@ class JabatanController extends Controller
 
     public function simpan(Request $request)
     {
+      if (!AksesUser::checkAkses(45, 'insert')) {
+          return redirect('not-authorized');
+      }
         $nama = $request->namatambah;
         $id = DB::table('d_jabatan')
             ->max('j_id');
@@ -121,6 +127,9 @@ class JabatanController extends Controller
 
     public function hapus(Request $request)
     {
+      if (!AksesUser::checkAkses(45, 'delete')) {
+          return redirect('not-authorized');
+      }
         $id = $request->id;
         DB::table('d_jabatan')
             ->where('j_id', '=', $id)

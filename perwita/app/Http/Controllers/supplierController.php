@@ -130,6 +130,9 @@ class supplierController extends Controller
         DB::beginTransaction();
         try {
             if ($request->id != null || $request->id != ''){
+              if (!AksesUser::checkAkses(63, 'update')) {
+                  return redirect('not-authorized');
+              }
                 $data = array(
                     's_id' => $request->id,
                     's_company' => $request->company,
@@ -143,6 +146,9 @@ class supplierController extends Controller
                 );
                 d_supplier::where('s_id', '=', $request->id)->update($data);
             } else {
+              if (!AksesUser::checkAkses(63, 'insert')) {
+                  return redirect('not-authorized');
+              }
                 $id = DB::table('d_supplier')
                     ->max('s_id');
 
@@ -178,6 +184,9 @@ class supplierController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(63, 'update')) {
+          return redirect('not-authorized');
+      }
         $data = DB::table('d_supplier')
             ->select('*')
             ->where('s_id', '=', $request->id)
@@ -190,6 +199,9 @@ class supplierController extends Controller
 
     public function delete(Request $request)
     {
+      if (!AksesUser::checkAkses(63, 'delete')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $id = $request->id;

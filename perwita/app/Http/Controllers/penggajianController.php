@@ -32,6 +32,9 @@ class penggajianController extends Controller
     }
 
     public function tambah(){
+      if (!AksesUser::checkAkses(60, 'insert')) {
+          return redirect('not-authorized');
+      }
       $data = DB::table('d_mitra')
               ->join('d_mitra_divisi', 'md_mitra', '=', 'm_id')
               ->groupBy('m_name')
@@ -162,6 +165,9 @@ class penggajianController extends Controller
     }
 
     public function simpan(Request $request){
+      if (!AksesUser::checkAkses(60, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -308,6 +314,9 @@ class penggajianController extends Controller
     }
 
     public function proses(Request $request){
+      if (!AksesUser::checkAkses(60, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -601,12 +610,18 @@ class penggajianController extends Controller
     }
 
     public function edit(Request $request){
+      if (!AksesUser::checkAkses(60, 'update')) {
+          return redirect('not-authorized');
+      }
       $nota = $request->nota;
 
       return view('penggajian.lanjutkan', compact('nota'));
     }
 
     public function editval(Request $request){
+      if (!AksesUser::checkAkses(60, 'update')) {
+          return redirect('not-authorized');
+      }
       $data = DB::table('d_payroll')
               ->join('d_payroll_dt', 'pd_payroll', '=', 'd_payroll.p_id')
               ->join('d_pekerja', 'd_pekerja.p_id', '=', 'pd_pekerja')
@@ -714,6 +729,9 @@ class penggajianController extends Controller
     }
 
     public function simpanedit(Request $request){
+      if (!AksesUser::checkAkses(60, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -858,6 +876,9 @@ class penggajianController extends Controller
     }
 
     public function prosesedit(Request $request){
+      if (!AksesUser::checkAkses(60, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

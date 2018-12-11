@@ -103,6 +103,9 @@ class pegawaipromosiController extends Controller
 
     public function simpan(Request $request)
     {
+      if (!AksesUser::checkAkses(39, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $note = $request->note;
@@ -350,6 +353,9 @@ class pegawaipromosiController extends Controller
   }
 
   public function hapus(Request $request){
+    if (!AksesUser::checkAkses(39, 'delete')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
 
@@ -392,6 +398,9 @@ class pegawaipromosiController extends Controller
   }
 
   public function edit(Request $request){
+    if (!AksesUser::checkAkses(39, 'update')) {
+        return redirect('not-authorized');
+    }
     $data = DB::table('d_pegawai_promosi_demosi')
           ->where('ppd_id', $request->id)
           ->get();
@@ -400,6 +409,9 @@ class pegawaipromosiController extends Controller
   }
 
   public function update(Request $request, $id){
+    if (!AksesUser::checkAkses(39, 'update')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
 

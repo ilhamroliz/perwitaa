@@ -63,6 +63,9 @@ class PenjualanController extends Controller
 
     public function create()
     {
+      if (!AksesUser::checkAkses(29, 'insert')) {
+          return redirect('not-authorized');
+      }
         $mitra = DB::table('d_mitra')
             ->select('m_id', 'm_name')
             ->orderBy('m_name')
@@ -301,6 +304,9 @@ class PenjualanController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(29, 'insert')) {
+          return redirect('not-authorized');
+      }
         $nota = $this->getnewnota();
         $mitra = $request->mitra;
         $divisi = $request->divisi;
@@ -553,6 +559,9 @@ class PenjualanController extends Controller
 
     public function edit(Request $request)
     {
+      if (!AksesUser::checkAkses(29, 'update')) {
+          return redirect('not-authorized');
+      }
         $id = $request->id;
 
         $data = DB::table('d_sales')
@@ -650,6 +659,9 @@ class PenjualanController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(29, 'update')) {
+          return redirect('not-authorized');
+      }
 
       DB::table('d_sales_dt')
           ->where('sd_sales', $request->id)

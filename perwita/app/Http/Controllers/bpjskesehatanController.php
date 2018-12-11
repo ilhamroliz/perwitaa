@@ -47,6 +47,9 @@ class bpjskesehatanController extends Controller
     }
 
     public function simpan(Request $request, $id){
+      if (!AksesUser::checkAkses(50, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -162,6 +165,9 @@ class bpjskesehatanController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(50, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

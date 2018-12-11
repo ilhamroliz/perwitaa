@@ -57,6 +57,9 @@ class PenerimaanController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(27, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $p_id = $request->id;

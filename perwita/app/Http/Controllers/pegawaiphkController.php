@@ -62,6 +62,9 @@ class pegawaiphkController extends Controller
     }
 
     public function simpan(Request $request, $idpekerja){
+      if (!AksesUser::checkAkses(41, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -176,6 +179,9 @@ class pegawaiphkController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(41, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

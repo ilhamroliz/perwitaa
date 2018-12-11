@@ -42,6 +42,9 @@ class rbhController extends Controller
   }
 
   public function simpan(Request $request, $id){
+    if (!AksesUser::checkAkses(52, 'insert')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
       $check = DB::table('d_rbh')
@@ -152,6 +155,9 @@ class rbhController extends Controller
   }
 
   public function hapus(Request $request){
+    if (!AksesUser::checkAkses(52, 'delete')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
 

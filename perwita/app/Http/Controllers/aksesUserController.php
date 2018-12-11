@@ -57,6 +57,9 @@ class aksesUserController extends Controller
 
     public function editUserAkses($id)
     {
+      if (!AksesUser::checkAkses(44, 'update')) {
+          return redirect('not-authorized');
+      }
         $id = Crypt::decrypt($id);
         $user = DB::table('d_mem')
             ->join('d_jabatan', 'j_id', '=', 'm_jabatan')
@@ -75,6 +78,9 @@ class aksesUserController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(44, 'insert')) {
+          return redirect('not-authorized');
+      }
         //dd($request);
         DB::beginTransaction();
         try {

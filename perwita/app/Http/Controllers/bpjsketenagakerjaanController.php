@@ -53,6 +53,9 @@ class bpjsketenagakerjaanController extends Controller
     }
 
     public function simpan(Request $request, $id){
+      if (!AksesUser::checkAkses(51, 'insert')) {
+          return redirect('not-authorized');
+      }
       $check = DB::table('d_bpjs_ketenagakerjaan')
               ->where('b_pekerja', $id)
               ->get();
@@ -162,6 +165,9 @@ class bpjsketenagakerjaanController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(51, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

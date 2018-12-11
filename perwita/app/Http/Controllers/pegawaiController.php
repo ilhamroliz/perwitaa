@@ -58,6 +58,9 @@ class pegawaiController extends Controller
                         ->make(true);
     }
     public function tambah() {
+      if (!AksesUser::checkAkses(38, 'insert')) {
+          return redirect('not-authorized');
+      }
       $jabPelamar = DB::table('d_jabatan')
           ->select('*')
           ->where('j_isactive', 'Y')
@@ -67,6 +70,9 @@ class pegawaiController extends Controller
         return view('pegawai.formTambah', compact('jabPelamar'));
     }
     public function simpan(Request $request) {
+      if (!AksesUser::checkAkses(38, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -453,6 +459,9 @@ class pegawaiController extends Controller
       }
     }
     public function edit($id) {
+      if (!AksesUser::checkAkses(38, 'update')) {
+          return redirect('not-authorized');
+      }
       $jabatan = DB::table('d_jabatan')
           ->select('j_name', 'j_id')->where('j_isactive', 'Y')->get();
 
@@ -584,6 +593,9 @@ group by ps_pegawai");
 
     }
     public function perbarui(Request $request) {
+      if (!AksesUser::checkAkses(38, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
        try {
      $id = $request->id;

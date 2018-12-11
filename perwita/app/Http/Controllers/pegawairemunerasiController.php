@@ -23,6 +23,9 @@ class pegawairemunerasiController extends Controller
     }
 
     public function simpan(Request $request, $idpekerja){
+      if (!AksesUser::checkAkses(40, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -202,6 +205,9 @@ class pegawairemunerasiController extends Controller
     }
 
     public function hapus(Request $request){
+      if (!AksesUser::checkAkses(40, 'delete')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 
@@ -243,6 +249,9 @@ class pegawairemunerasiController extends Controller
     }
 
     public function update(Request $request, $id){
+      if (!AksesUser::checkAkses(40, 'update')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
         $request->gajiawal = str_replace('Rp. ', '', $request->gajiawal);

@@ -25,6 +25,9 @@ class tunjanganController extends Controller
     }
 
     public function simpan(Request $request){
+      if (!AksesUser::checkAkses(58, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

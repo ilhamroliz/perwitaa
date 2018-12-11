@@ -86,6 +86,9 @@ class StockOpnameController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(36, 'insert')) {
+          return redirect('not-authorized');
+      }
         //dd($request);
         DB::beginTransaction();
         try{

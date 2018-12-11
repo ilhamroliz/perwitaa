@@ -71,6 +71,9 @@ class PerusahaanController extends Controller
 
     public function add()
     {
+      if (!AksesUser::checkAkses(46, 'insert')) {
+          return redirect('not-authorized');
+      }
         $mitra = DB::table('d_mitra')->select('m_id', 'm_name')->get();
         $mem = DB::table('d_mem')->select('m_id', 'm_name')->get();
         return view('master-perusahaan/add', compact('mem', 'mitra'));
@@ -78,6 +81,9 @@ class PerusahaanController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(46, 'insert')) {
+          return redirect('not-authorized');
+      }
         $comp = $request->comp;
         $owner = $request->owner;
         $alamat = $request->alamat;
@@ -132,6 +138,9 @@ class PerusahaanController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(46, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $pilih = $request->pilih;
@@ -163,6 +172,9 @@ class PerusahaanController extends Controller
 
     public function delete(Request $request)
     {
+      if (!AksesUser::checkAkses(46, 'delete')) {
+          return redirect('not-authorized');
+      }
         $id = Crypt::decrypt($request->id);
         DB::beginTransaction();
         try{

@@ -25,6 +25,9 @@ class potonganController extends Controller
     }
 
     public function simpan(Request $request){
+      if (!AksesUser::checkAkses(59, 'insert')) {
+          return redirect('not-authorized');
+      }
       DB::beginTransaction();
       try {
 

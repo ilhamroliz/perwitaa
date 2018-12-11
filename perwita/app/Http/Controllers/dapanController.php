@@ -42,6 +42,9 @@ class dapanController extends Controller
   }
 
   public function simpan(Request $request, $id){
+    if (!AksesUser::checkAkses(53, 'insert')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
       $check = DB::table('d_dapan')
@@ -150,6 +153,9 @@ class dapanController extends Controller
   }
 
   public function hapus(Request $request){
+    if (!AksesUser::checkAkses(53, 'delete')) {
+        return redirect('not-authorized');
+    }
     DB::beginTransaction();
     try {
 

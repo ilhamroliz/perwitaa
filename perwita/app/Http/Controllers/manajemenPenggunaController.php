@@ -42,6 +42,9 @@ class manajemenPenggunaController extends Controller
 
     public function edit($id)
     {
+      if (!AksesUser::checkAkses(43, 'update')) {
+          return redirect('not-authorized');
+      }
         $id = Crypt::decrypt($id);
         $mem = DB::table('d_mem')
             ->join('d_jabatan', 'j_id', '=', 'm_jabatan')
@@ -62,6 +65,9 @@ class manajemenPenggunaController extends Controller
 
     public function add()
     {
+      if (!AksesUser::checkAkses(43, 'insert')) {
+          return redirect('not-authorized');
+      }
         $jabatan = DB::table('d_jabatan')
             ->where('j_isactive', '=', 'Y')
             ->get();
@@ -124,6 +130,9 @@ class manajemenPenggunaController extends Controller
 
     public function save(Request $request)
     {
+      if (!AksesUser::checkAkses(43, 'insert')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $nama = $request->nama;
@@ -202,6 +211,9 @@ class manajemenPenggunaController extends Controller
 
     public function update(Request $request)
     {
+      if (!AksesUser::checkAkses(43, 'update')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try{
             $nama = $request->nama;
@@ -275,6 +287,9 @@ class manajemenPenggunaController extends Controller
 
     public function hapus($id)
     {
+      if (!AksesUser::checkAkses(43, 'delete')) {
+          return redirect('not-authorized');
+      }
         DB::beginTransaction();
         try {
             $id = Crypt::decrypt($id);
