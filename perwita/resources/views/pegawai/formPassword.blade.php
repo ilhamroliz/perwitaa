@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Data Pegawai')
 
 @section('extra_styles')
 
@@ -25,12 +25,12 @@
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
-                                </a>                                                                                            
+                                </a>
                             </div>
                         </div>
                         <div class="ibox-content">
                             <table class="table table-striped table-borderred formProfil">
-                                <tr>                                    
+                                <tr>
                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <th style="width:15%">Kata Sandi Lama</th>
                                     <td><input type="password" class="form-control huruf" name="Kata Sandi Lama" placeholder="Kata Sandi Lama"></td>
@@ -41,7 +41,7 @@
                                 </tr>
                                 <tr>
                                     <th>Konfirmasi Kata Sandi</th>
-                                    <td><input type="password" class="form-control huruf " name="Konfirmasi Kata Sandi" placeholder="Konfirmasi Kata Sandi"></td>                                    
+                                    <td><input type="password" class="form-control huruf " name="Konfirmasi Kata Sandi" placeholder="Konfirmasi Kata Sandi"></td>
                                 </tr>
                                 <tr style="border-top: 1px solid #ff0033">
                                     <th></th>
@@ -55,12 +55,12 @@
                                     </td>
                                 </tr>
                             </table>
-                             
+
                         </div>
                     </div>
                 </div>
             </div>
-</div>      
+</div>
 
 
 
@@ -78,7 +78,7 @@ function perbarui(){
                     timeout     : 10000,
                     data        : $('.formProfil :input').serialize(),
                     dataType    : 'json',
-                    success     : function(response){                                                
+                    success     : function(response){
                        if(response.status=='berhasil'){
                            window.location = baseUrl+'/profil';
                        }
@@ -101,10 +101,10 @@ function perbarui(){
                     }
                 });
 
-            
-        
-    
-    
+
+
+
+
 }
 </script>
 @endsection

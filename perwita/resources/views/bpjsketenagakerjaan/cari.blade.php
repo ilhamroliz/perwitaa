@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'BPJS Ketenagakerjaan')
 
 @section('extra_styles')
 

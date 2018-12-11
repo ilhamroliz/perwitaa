@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Remunerasi')
 
 @section('extra_styles')
 

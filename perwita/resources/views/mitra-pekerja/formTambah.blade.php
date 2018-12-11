@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Penerimaan Pekerja')
 
 @section('extra_styles')
 
@@ -501,7 +501,7 @@
         }
 
         $('#form-mitra-contract').on('submit', function(e){
-            table.search(''); 
+            table.search('');
             table.draw();
             var form = this;
 

@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Manajemen Pengguna')
 
 @section('extra_styles')
 
@@ -10,7 +10,7 @@
     .tambah{
         font-size: 100px;
     }
-    
+
 </style>
 
 @endsection

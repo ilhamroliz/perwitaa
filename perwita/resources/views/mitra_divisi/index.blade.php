@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'dashboard')
+@section('title', 'Mitra Divisi')
 
 @section('extra_styles')
 

@@ -1,8 +1,6 @@
 @extends ('main')
 
-    @section('title', 'Dashboard')
-
-
+    @section('title', 'Proses Gaji')
 
     @section ('extra_styles')
 

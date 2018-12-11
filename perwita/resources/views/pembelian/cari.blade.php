@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Pembelian Seragam')
 
 @section('extra_styles')
 
@@ -191,7 +191,7 @@ $(document).ready(function(){
      success : function(result){
        if (result.status == 'kosong') {
          html = '<tr><td colspan="7"><center>Tidak ada data</center></td></tr>';
-       } 
+       }
        else {
          if (result.pd_receivetime == null) {
            status += '<td class="text-center"><span class="label label-warning">Belum diterima</span></td>';
@@ -272,7 +272,7 @@ $(document).ready(function(){
                       '</tr>';
           }
         }
-        
+
         $("#tbody").html(html);
         $(".digits").digits();
         waitingDialog.hide();

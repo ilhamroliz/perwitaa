@@ -1,5 +1,5 @@
 @extends('main')
-@section('title', 'Dashboard')
+@section('title', 'Pengeluaran Seragam')
 @section('extra_styles')
 <style>
    .popover-navigation [data-role="next"] { display: none; }

@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Return Pembelian')
 
 @section('extra_styles')
 
@@ -17,7 +17,7 @@
 
 @section('content')
                 <div class="wrapper wrapper-content p-xl">
-                    <div class="ibox-content p-xl">                      
+                    <div class="ibox-content p-xl">
                       <div id="divuang">
                       <h2>Ganti Uang</h2>
                       <table id="tableuang" class="table table-bordered table-striped">

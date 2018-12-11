@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Mitra MOU')
 
 @section('extra_styles')
 
@@ -185,7 +185,7 @@
                 </div>
                 <br>
                 <div class="modal-footer">
-                    
+
                 </div>
             </div>
         </div>

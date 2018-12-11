@@ -3,7 +3,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>Perwita | @yield('title')</title>
+    <title> Perwita | @yield('title')</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/dboard/logo/sublogo2.png') }}"/>
     <link href="{{ asset('assets/vendors/chosen/chosen.css') }}" rel="stylesheet">
     <!-- Bootstrap -->

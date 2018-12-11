@@ -1,12 +1,6 @@
-
-
-
-
-
-
 @extends('main')
 
-@section('title', 'Dashboard')
+@section('title', 'Master Seragam')
 
 @section('extra_styles')
 
@@ -20,10 +14,10 @@
         margin-top:15px;
     }
     #upload-file-selector {
-        display:none;   
+        display:none;
     }
     .margin-correction {
-        margin-right: 10px;   
+        margin-right: 10px;
     }
     .spacing{
         margin-top:10px;
@@ -47,11 +41,11 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>                                                                                            
+                        </a>
                     </div>
-                </div>                    	
+                </div>
                 <div class="ibox-content">
-                    <table class="table table-striped table-bordered form-pegawai">   
+                    <table class="table table-striped table-bordered form-pegawai">
                         <tr>
                             <th style="width: 15%"><div class="spacing">Mitra</div></th>
                             <td colspan="2">
@@ -83,7 +77,7 @@
                                 </span>
                             </td>
                         </tr>
-                    
+
                         <tr>
                             <th>Jenis Seragam</th>
                             <td><input value="{{$editSeragam->s_jenis}}" id="jenis" class="form-control huruf" name="Jenis Seragam" placeholder="Jenis Seragam" required="">
@@ -93,7 +87,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Pilih Ukuran</th>                            
+                            <th>Pilih Ukuran</th>
                              <?php
                                 $ukuran = explode(',', $editSeragam->ukuran);
                                 $xs='';
@@ -103,7 +97,7 @@
                                 $xl='';
                                 $xxl='';
                              ?>
-                            @foreach ($ukuran as $data) 
+                            @foreach ($ukuran as $data)
                                 @if($data=="XS")
                                     <?php $xs="XS" ?>
                                 @elseif($data=="S")
@@ -118,9 +112,9 @@
                                     <?php $xxl="XXL" ?>
                                 @endif
                             @endforeach
-                            
+
                             <td colspan="2">
-                                
+
                                 <label class="checkbox-inline"><input @if($xs=="XS") checked @endif class="cxs" name="ukuran[]" onclick="ukuranxs()" type="checkbox" value="XS" >XS</label>
                                 <label class="checkbox-inline"><input  @if($s=="S") checked @endif   class="cs" name="ukuran[]" onchange="ukurans()" type="checkbox" value="S">S</label>
                                 <label class="checkbox-inline"><input @if($m=="M") checked @endif class="cm" name="ukuran[]" onchange="ukuranm()" type="checkbox" value="M">M</label>
@@ -130,18 +124,18 @@
                                 <span style="color:#ed5565;display: none " class="help-block m-b-none reset" id="jenis-error">
                                     <small>Ukuran Seragam harus diisi...!</small>
                                 </span>
-                                
+
                             </td>
-                        </tr>       
+                        </tr>
                         <tr>
                             <th>Nama Supplier</th>
-                            <th colspan="1"><input style="margin-bottom:10px;" type="hidden" id="id_supplier" class="form-control" placeholder="Masukkan Supplier"/>			
+                            <th colspan="1"><input style="margin-bottom:10px;" type="hidden" id="id_supplier" class="form-control" placeholder="Masukkan Supplier"/>
                                 <input style="margin-bottom:10px; width: 100%" type="text" id="supplier" class="form-control" placeholder="Masukkan Supplier"/>
                             </th>
                             <th style="width: 10%">
                                 <button id="tambah_supplier" type="button" class="btn btn-primary  btn-flat btn-sm">Tambah Supplier</button>
                             </th>
-                        </tr>                            
+                        </tr>
                         <tr>
                             <th></th>
                             <td>
@@ -161,27 +155,27 @@
                             <th>Aksi</th>
                         </thead>
                         <tbody id="div_item">
-                            @foreach($supplier as $index =>  $data)                             
+                            @foreach($supplier as $index =>  $data)
                            <?php
                            $jenis = explode(',', $data->i_jenis);
-                           $harga = explode(',', $data->is_price);                           
+                           $harga = explode(',', $data->is_price);
                            $id_item = explode(',', $data->is_item);
-                           
-                           
+
+
                             $cxs='';
                             $cs='';
                             $cm='';
                             $cl='';
                             $cxl='';
                             $cxxl='';
-                            
+
                             $hxs='';
                             $hs='';
                             $hm='';
                             $hl='';
                             $hxl='';
                             $hxxl='';
-                            
+
                             $ixs='';
                             $is='';
                             $im='';
@@ -189,47 +183,47 @@
                             $ixl='';
                             $ixxl='';
                            ?>
-                          @foreach ($jenis as $urutan => $data1)                           
-                                @if($data1=="XS")                                                                
-                                    <?php                                                             
-                                    $cxs="XS";                                    
+                          @foreach ($jenis as $urutan => $data1)
+                                @if($data1=="XS")
+                                    <?php
+                                    $cxs="XS";
                                     $hxs=$harga[$urutan];
                                     $ixs=$id_item[$urutan];
                                             ?>
                                 @elseif($data1=="S")
-                                    <?php 
+                                    <?php
                                     $cs="S";
                                     $hs=$harga[$urutan];
                                     $is=$id_item[$urutan];
                                             ?>
                                 @elseif($data1=="M")
-                                    <?php 
+                                    <?php
                                     $cm="M";
                                     $hm=$harga[$urutan];
                                     $im=$id_item[$urutan];
                                             ?>
                                 @elseif($data1=="L")
-                                    <?php 
+                                    <?php
                                     $cl="L";
                                     $hl=$harga[$urutan];
                                     $il=$id_item[$urutan];
                                             ?>
                                 @elseif($data1=="XL")
-                                    <?php 
+                                    <?php
                                     $cxl="XL";
                                     $hxl=$harga[$urutan];
                                     $ixl=$id_item[$urutan];
                                             ?>
                                 @elseif($data1=="XXL")
-                                    <?php 
+                                    <?php
                                     $cxxl="XXL";
                                     $hxxl=$harga[$urutan];
                                     $ixxl=$id_item[$urutan];
                                     ?>
                                 @endif
-                            @endforeach                            
+                            @endforeach
 
-                           
+
                             <tr id="tr{{$index+1}}" >
 <th width=3%;>{{$index+1}} </th>
     <td width=40%;>
@@ -284,7 +278,7 @@
 
 <script type="text/javascript">
     var rowCount = $('.hitung >tbody >tr').length;
-    
+
     var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -299,13 +293,13 @@
     var x = rowCount;
        ukuranxs();
        ukurans();
-       ukuranm();       
-       ukuranl();       
-       ukuranxl();       
-       ukuranxxl();       
-       
-       function ukuranxs(){			           
-          if($('.cxs').is(':checked')){			
+       ukuranm();
+       ukuranl();
+       ukuranxl();
+       ukuranxxl();
+
+       function ukuranxs(){
+          if($('.cxs').is(':checked')){
               $('.hargaXs').css('display','')
               $('#inputXs').removeAttr('disabled');
           }
@@ -314,11 +308,11 @@
               $('.hargaXs').css('display','none')
               $('#inputXs').attr('disabled',true);
           }
-          
+
         }
-       			           
-       function ukurans(){			           
-          if($('.cs').is(':checked')){			
+
+       function ukurans(){
+          if($('.cs').is(':checked')){
              $('.hargaS').css('display','')
              $('#inputS').removeAttr('disabled');
           }
@@ -326,57 +320,57 @@
              $('.hargaS').css('display','none')
              $('#inputS').attr('disabled',true);
           }
-          
+
         }
-       function ukuranm(){			           
-          if($('.cm').is(':checked')){			
+       function ukuranm(){
+          if($('.cm').is(':checked')){
               $('.hargaM').css('display','')
           }
           else{
               $('.hargaM').css('display','none')
           }
-          
+
         }
-       function ukuranl(){			           
-          if($('.cl').is(':checked')){			
+       function ukuranl(){
+          if($('.cl').is(':checked')){
              $('.hargaL').css('display','')
           }
           else{
             $('.hargaL').css('display','none')
           }
-          
+
         }
-       function ukuranxl(){			           
-          if($('.cxl').is(':checked')){			
+       function ukuranxl(){
+          if($('.cxl').is(':checked')){
               $('.hargaXl').css('display','')
           }
           else{
               $('.hargaXl').css('display','none')
           }
-          
+
         }
-       function ukuranxxl(){			           
-          if($('.cxxl').is(':checked')){			
+       function ukuranxxl(){
+          if($('.cxxl').is(':checked')){
              $('.hargaXxl').css('display','')
           }
           else{
             $('.hargaXxl').css('display','none')
           }
-          
+
         }
-    $(document).ready(function() {     
-             $("#supplier").attr("placeholder", "Masukkan Supplier").blur(); 
+    $(document).ready(function() {
+             $("#supplier").attr("placeholder", "Masukkan Supplier").blur();
 //             $( "#supplier" ).focusin(function() {
-//                 
+//
 //                    $('#id_supplier').val("");
 //                    $('#supplier').val("");
 //                    });
              $( "#supplier" ).autocomplete({
               source: baseUrl+'/ambil-data-supplier/autocomplete',
               minLength: 0,
-              select: function(event, ui) {                
+              select: function(event, ui) {
                     $('#id_supplier').val(ui.item.id);
-                    $('#supplier').val(ui.item.label);                                     
+                    $('#supplier').val(ui.item.label);
               }, response: function(event, ui) {
             if (!ui.content.length) {
                 var noResult = { value:"",label:"Data supplier tidak ada" };
@@ -384,12 +378,12 @@
             }
     }
             });
-            
+
         var wrapper         = $("#div_item");
         var add_button      = $("#tambah_supplier");
-            
-            
-        $(add_button).click(function(e){			
+
+
+        $(add_button).click(function(e){
             e.preventDefault();
 				var id_supplier			= $("#id_supplier").val();
 				var supplier			= $("#supplier").val();
@@ -398,8 +392,8 @@
 				var inputM			= $("#inputM").val();
 				var inputL			= $("#inputL").val();
 				var inputXl			= $("#inputXl").val();
-				var inputXxl			= $("#inputXxl").val();				
-				
+				var inputXxl			= $("#inputXxl").val();
+
 					x++;
 var isiSupplier='<tr id="tr'+x+'" >\n\
 <th width=3%;>'+x+'</th>\n\
@@ -418,7 +412,7 @@ var isiSupplier='<tr id="tr'+x+'" >\n\
 <input name="inputXL[]" readonly style="margin-bottom:10px;" type="text" id="inputXl'+x+'" class="form-control" value="" placeholder="Masukkan Harga Ukuran XL" /></div></div>\n\
 <div class="hargaXxl" style="display: none"><div class="col-md-2 spacing">Harga XXL</div><div class=" col-md-4">\n\
 <input name="inputXXL[]" readonly style="margin-bottom:10px;" type="text" id="inputXxl'+x+'" class="form-control" value="" placeholder="Masukkan Harga Ukuran XXL" />\n\
-</div></div></td><td width=10%;><button id="tambah_supplier" type="button" class="btn btn-danger btn-block btn-flat btn-sm" onclick="hapus('+x+')">Hapus</button></td></tr>';			
+</div></div></td><td width=10%;><button id="tambah_supplier" type="button" class="btn btn-danger btn-block btn-flat btn-sm" onclick="hapus('+x+')">Hapus</button></td></tr>';
 				$(wrapper).append(isiSupplier); //add input box
 ukuranxs();
 ukurans();
@@ -437,26 +431,26 @@ ukuranxxl();
 				$("#inputL"+x).val(inputL);
 				$("#inputXl"+x).val(inputXl);
 				$("#inputXxl"+x).val(inputXxl);
-				
-				
-				
-               
-				
-				
-				
-                
-     
+
+
+
+
+
+
+
+
+
         });
 
-        
-            
-            
-            
-            
-            
+
+
+
+
+
+
 	});
-    
-    
+
+
     var info       = $('.pesan');
     $(".select2").select2();
 
@@ -481,27 +475,27 @@ ukuranxxl();
          if(validateForm()){
         $.ajax({
             url: baseUrl + '/manajemen-seragam/data-seragam/simpan',
-            // type        : 'post',            
+            // type        : 'post',
             type: 'get',
             timeout: 10000,
             data: $('.form-pegawai :input').serialize(),
             dataType: 'json',
             enctype: 'multipart/form-data',
             processData: false,  // tell jQuery not to process the data
-            contentType: false,          
+            contentType: false,
             success: function (response) {
                 if (response.status == 'berhasil') {
                     window.location = baseUrl + '/manajemen-seragam/data-seragam';
                 } else if(response.status=='gagal'){
                     info.css('display','');
                     $.each(response.data, function(index, error) {
-                           info.find('ul').append('<li>' + error + '</li>');                      
-                    });                    
-                    buttonLadda.ladda('stop');                     
+                           info.find('ul').append('<li>' + error + '</li>');
+                    });
+                    buttonLadda.ladda('stop');
                 }
-                
-                
-                
+
+
+
             },
             error: function (xhr, status) {
                 if (status == 'timeout') {
@@ -521,17 +515,17 @@ ukuranxxl();
             }
         });
          }else{
-              buttonLadda.ladda('stop');              
+              buttonLadda.ladda('stop');
          }
     }
-    
+
         function validateForm(){
             $('.reset').css('display', 'none');
-                          
+
             var mitra = document.getElementById('mitra');
             var seragam = document.getElementById('seragam');
-            var warna = document.getElementById('warna');            
-            var jenis = document.getElementById('jenis');           
+            var warna = document.getElementById('warna');
+            var jenis = document.getElementById('jenis');
             if(mitra.validity.valueMissing){
                 $('#mitra-error').css('display', '');
                 return false;
@@ -548,7 +542,7 @@ ukuranxxl();
                 $('#jenis-error').css('display', '');
                 return false;
             }
-           
+
 
             return true;
         }
