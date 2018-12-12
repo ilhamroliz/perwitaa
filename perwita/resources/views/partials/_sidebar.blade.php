@@ -40,7 +40,7 @@ to {
                   @if (file_exists(Auth::user()->m_image))
                       <img alt="image" class="img-circle" width="35%" src="{{ asset('/') }}/{{Auth::user()->m_image}}" />
                   @else
-                      <img alt="image" class="img-circle" width="35%" src="{{ asset('assets/img/user.png') }}" />
+                      <img alt="image" class="img-circle" width="35%" src="{{ asset('assets/img/dboard/logo/sublogo1.png') }}" />
                   @endif
                     </span>
                     <span class="clear"> <span class="block m-t-xs">
