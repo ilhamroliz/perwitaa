@@ -356,9 +356,11 @@
 
             var contractid = $("#kontrak").find('option:selected').data('contractid');
 
+            var token = "{{csrf_token()}}";
             $.ajax({
                 url: baseUrl + '/get-data-mitra-kontrak/' + mitra + '/' + contractid,
-                type: 'get',
+                type: 'post',
+                data: {_token:token},
                 dataType: 'json',
                 success: function (response) {
                     waitingDialog.hide();
