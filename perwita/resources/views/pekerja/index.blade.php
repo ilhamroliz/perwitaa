@@ -759,7 +759,7 @@
       }
 
       function print(id){
-            window.location.href = baseUrl + '/approvalpelamar/print?id='+id;
+            window.open(baseUrl + '/approvalpelamar/print?id='+id, "", "width=500,height=500");
       }
 
 

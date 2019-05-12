@@ -206,6 +206,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/hapus/{mitra}/{iddetail}','mitraPekerjaController@hapus');
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/delete/{mp_pekerja}/{mp_contract}','suratController@delete');
     Route::get('get-data-mitra-kontrak/{mitra}/{kontrak}','mitraPekerjaController@mitraContrak');
+    Route::post('get-data-mitra-kontrak/{mitra}/{kontrak}','mitraPekerjaController@mitraContrak');
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari','mitraPekerjaController@cari');
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari/pencarian','mitraPekerjaController@pencarian');
     Route::get('manajemen-pekerja-mitra/data-pekerja-mitra/cari/getData','mitraPekerjaController@getDataPencarian');
