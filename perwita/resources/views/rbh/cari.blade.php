@@ -58,8 +58,8 @@
         <div class="ibox-content">
             <div class="row m-b-lg">
               <div class="col-md-12" style="float:left;">
-                <label for="pencarian">Cari Berdasarkan NIK Pekerja</label>
-                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="NIK Pekerja">
+                <label for="pencarian">Cari Berdasarkan NIK Pekerja / Nama Pekerja</label>
+                <input type="text" name="pencarian" id="pencarian" class="form-control" style="text-transform:uppercase" placeholder="NIK Pekerja / Nama Pekerja">
               </div>
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table table-hover table-bordered table-striped" id="tabelcari">
